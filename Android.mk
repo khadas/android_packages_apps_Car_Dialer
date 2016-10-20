@@ -25,7 +25,7 @@ include packages/apps/Car/libs/car-apps-common/car-apps-common.mk
 
 LOCAL_PACKAGE_NAME := CarDialerApp
 
-LOCAL_OVERRIDES_PACKAGES := Dialer
+LOCAL_OVERRIDES_PACKAGES := Dialer messaging
 
 LOCAL_MODULE_TAGS := optional
 
