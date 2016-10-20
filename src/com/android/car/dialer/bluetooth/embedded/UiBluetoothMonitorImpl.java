@@ -27,19 +27,30 @@ public class UiBluetoothMonitorImpl extends UiBluetoothMonitor {
 
     @Override
     public boolean isBluetoothEnabled() {
-        return getBluetoothAdapter().isEnabled();
+        BluetoothAdapter adapter = getBluetoothAdapter();
+        if (adapter == null) {
+            return false;
+        }
+        return adapter.isEnabled();
     }
 
     @Override
     public boolean isHfpConnected() {
-        int hfpState =
-                getBluetoothAdapter().getProfileConnectionState(BluetoothProfile.HEADSET_CLIENT);
+        BluetoothAdapter adapter = getBluetoothAdapter();
+        if (adapter == null) {
+            return false;
+        }
+        int hfpState = adapter.getProfileConnectionState(BluetoothProfile.HEADSET_CLIENT);
         return hfpState == BluetoothProfile.STATE_CONNECTED;
     }
 
     @Override
     public boolean isBluetoothPaired() {
-        return !getBluetoothAdapter().getBondedDevices().isEmpty();
+        BluetoothAdapter adapter = getBluetoothAdapter();
+        if (adapter == null) {
+            return false;
+        }
+        return !adapter.getBondedDevices().isEmpty();
     }
 
     private BluetoothAdapter getBluetoothAdapter() {
