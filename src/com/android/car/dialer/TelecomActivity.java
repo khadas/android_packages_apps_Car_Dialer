@@ -22,7 +22,6 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.car.Car;
 import android.support.car.app.menu.CarDrawerActivity;
 import android.support.car.app.menu.CarMenu;
@@ -57,33 +56,14 @@ public class TelecomActivity extends CarDrawerActivity implements
         DialerFragment.DialerBackButtonListener {
     private static final String TAG = "Em.TelecomActivity";
 
-    public static final String ACTION_ANSWER_CALL =
-            "com.android.car.dialer.ANSWER_CALL";
-    public static final String ACTION_END_CALL =
-            "com.android.car.dialer.END_CALL";
+    private static final String ACTION_ANSWER_CALL = "com.android.car.dialer.ANSWER_CALL";
+    private static final String ACTION_END_CALL = "com.android.car.dialer.END_CALL";
+    private static final String DIALER_BACKSTACK = "DialerBackstack";
+    private static final String FRAGMENT_CLASS_KEY = "FRAGMENT_CLASS_KEY";
 
     public static final String CALL_LOG_EMPTY_PLACEHOLDER = "call_log_empty_placeholder";
 
-    private static final String DIALER_BACKSTACK = "DialerBackstack";
-
-    // Delay after the last call disconnects to go back to the speed dial fragment
-    private static final int POST_DISCONNECT_DELAY_MS = 3000;
-    private static final String FRAGMENT_CLASS_KEY = "FRAGMENT_CLASS_KEY";
-
-    private final UiBluetoothMonitor.Listener mBluetoothListener =
-            new UiBluetoothMonitor.Listener() {
-        @Override
-        public void onStateChanged() {
-            updateCurrentFragment();
-        }
-    };
-
-    private final Runnable mSpeedDialRunnable = new Runnable() {
-        @Override
-        public void run() {
-            showSpeedDialFragment();
-        }
-    };
+    private final UiBluetoothMonitor.Listener mBluetoothListener = this::updateCurrentFragment;
 
     public TelecomActivity(Proxy proxy, Context context, Car car) {
         super(proxy, context, car);
@@ -105,8 +85,6 @@ public class TelecomActivity extends CarDrawerActivity implements
     private DialerFragment mDialerFragment;
     private boolean mDialerFragmentOpened;
 
-    private Handler mHandler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +97,6 @@ public class TelecomActivity extends CarDrawerActivity implements
         getWindow().getDecorView().setBackgroundColor(context.getColor(R.color.phone_theme));
         setTitle(context.getString(R.string.phone_app_name));
 
-        mHandler = new Handler();
         setCarMenuCallbacks(new TelecomMenuCallbacks());
 
         mUiCallManager = UiCallManager.getInstance(context);
@@ -146,7 +123,6 @@ public class TelecomActivity extends CarDrawerActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        mHandler.removeCallbacks(mSpeedDialRunnable);
         mUiCallManager.removeListener(mCarCallListener);
         mUiBluetoothMonitor.removeListener(mBluetoothListener);
     }
@@ -171,10 +147,14 @@ public class TelecomActivity extends CarDrawerActivity implements
             Log.d(TAG, "onResume");
         }
         super.onResume();
+
+        // Update the current fragment before handling the intent so that any UI updates in
+        // handleIntent() is not overridden by updateCurrentFragment().
+        updateCurrentFragment();
         handleIntent();
+
         mUiCallManager.addListener(mCarCallListener);
         mUiBluetoothMonitor.addListener(mBluetoothListener);
-        updateCurrentFragment();
     }
 
     // TODO: move to base class.
@@ -248,7 +228,7 @@ public class TelecomActivity extends CarDrawerActivity implements
      * Will switch to the drawer or no-hfp fragment as necessary.
      */
     private void updateCurrentFragment() {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
+        if (vdebug()) {
             Log.d(TAG, "updateCurrentFragment");
         }
 
@@ -264,30 +244,29 @@ public class TelecomActivity extends CarDrawerActivity implements
         } else {
             UiCall ongoingCall = mUiCallManager.getPrimaryCall();
 
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "ongoingCall: " + ongoingCall + ", mCurrentFragment: " + mCurrentFragment);
+            if (vdebug()) {
+                Log.d(TAG, "ongoingCall: " + ongoingCall + ", mCurrentFragment: "
+                        + mCurrentFragment);
             }
 
             if (ongoingCall == null && mCurrentFragment instanceof OngoingCallFragment) {
-                mHandler.postDelayed(mSpeedDialRunnable, POST_DISCONNECT_DELAY_MS);
+                showSpeedDialFragment();
             } else if (ongoingCall != null) {
-                mHandler.removeCallbacks(mSpeedDialRunnable);
                 showOngoingCallFragment();
             } else if (DialerFragment.class.getSimpleName().equals(mCurrentFragmentName)) {
                 showDialer();
             } else {
-                mHandler.removeCallbacks(mSpeedDialRunnable);
                 showSpeedDialFragment();
             }
         }
 
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
+        if (vdebug()) {
             Log.d(TAG, "updateCurrentFragment: done");
         }
     }
 
-    public void showSpeedDialFragment() {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
+    private void showSpeedDialFragment() {
+        if (vdebug()) {
             Log.d(TAG, "showSpeedDialFragment");
         }
 
@@ -309,7 +288,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     private void showOngoingCallFragment() {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
+        if (vdebug()) {
             Log.d(TAG, "showOngoingCallFragment");
         }
         if (mCurrentFragment instanceof OngoingCallFragment) {
@@ -404,7 +383,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     private void setContentFragmentWithSlideAndDelayAnimation(Fragment fragment) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
+        if (vdebug()) {
             Log.d(TAG, "setContentFragmentWithSlideAndDelayAnimation, fragment: " + fragment);
         }
         setContentFragmentWithAnimations(fragment,
@@ -412,7 +391,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     private void setContentFragmentWithFadeAnimation(Fragment fragment) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
+        if (vdebug()) {
             Log.d(TAG, "setContentFragmentWithFadeAnimation, fragment: " + fragment);
         }
         setContentFragmentWithAnimations(fragment,
