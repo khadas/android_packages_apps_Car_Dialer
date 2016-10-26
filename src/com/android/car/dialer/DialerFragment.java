@@ -63,7 +63,7 @@ public class DialerFragment extends Fragment {
     }
 
     private Context mContext;
-    private StringBuffer mNumber;
+    private final StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
     private AudioManager mAudioManager;
     private ToneGenerator mToneGenerator;
     private final Handler mHandler = new Handler();
@@ -211,7 +211,6 @@ public class DialerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mNumber = new StringBuffer(MAX_DIAL_NUMBER);
         synchronized (mToneGeneratorLock) {
             if (mToneGenerator == null) {
                 mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
@@ -263,7 +262,8 @@ public class DialerFragment extends Fragment {
     }
 
     private void setDialNumberInternal(final String number) {
-        mNumber = new StringBuffer(MAX_DIAL_NUMBER);
+        // Clear existing content in mNumber.
+        mNumber.setLength(0);
         mNumber.append(number);
         mNumberView.setText(getFormattedNumber(mNumber.toString()));
     }
