@@ -31,9 +31,9 @@
         android:label="@string/phone_app_name"
         android:icon="@drawable/ic_app_icon">
 
-        <activity android:name=".TelecomProxyActivity"
+        <activity android:name=".TelecomActivity"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.NoTitleBar"
+            android:theme="@style/CarDrawerActivityTheme"
             android:label="@string/phone_app_name"
             android:exported="true"
             android:resizeableActivity="true">

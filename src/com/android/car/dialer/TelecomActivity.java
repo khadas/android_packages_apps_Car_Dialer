@@ -15,31 +15,26 @@
  */
 package com.android.car.dialer;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.car.Car;
-import android.support.car.app.menu.CarDrawerActivity;
-import android.support.car.app.menu.CarMenu;
-import android.support.car.app.menu.CarMenuCallbacks;
-import android.support.car.app.menu.RootMenu;
-import android.support.car.app.menu.compat.CarMenuConstantsComapt;
-import android.support.car.input.CarInputManager;
 import android.support.v4.app.Fragment;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+
+import com.android.car.app.CarDrawerActivity;
+import com.android.car.app.CarDrawerAdapter;
+import com.android.car.app.CarDrawerEmptyAdapter;
+import com.android.car.app.CarDrawerListAdapter;
+import com.android.car.app.DrawerItemViewHolder;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.telecom.UiCallManager.CallListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,16 +56,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     private static final String DIALER_BACKSTACK = "DialerBackstack";
     private static final String FRAGMENT_CLASS_KEY = "FRAGMENT_CLASS_KEY";
 
-    public static final String CALL_LOG_EMPTY_PLACEHOLDER = "call_log_empty_placeholder";
-
     private final UiBluetoothMonitor.Listener mBluetoothListener = this::updateCurrentFragment;
-
-    public TelecomActivity(Proxy proxy, Context context, Car car) {
-        super(proxy, context, car);
-        if (vdebug()) {
-            Log.d(TAG, "ctor: proxy: " + proxy + ", context: " + context);
-        }
-    }
 
     private UiCallManager mUiCallManager;
     private UiBluetoothMonitor mUiBluetoothMonitor;
@@ -92,14 +78,10 @@ public class TelecomActivity extends CarDrawerActivity implements
         if (vdebug()) {
             Log.d(TAG, "onCreate");
         }
-        Context context = getContext();
-        setLightMode();
-        getWindow().getDecorView().setBackgroundColor(context.getColor(R.color.phone_theme));
-        setTitle(context.getString(R.string.phone_app_name));
+        getWindow().getDecorView().setBackgroundColor(getColor(R.color.phone_theme));
+        setTitle(getString(R.string.phone_app_name));
 
-        setCarMenuCallbacks(new TelecomMenuCallbacks());
-
-        mUiCallManager = UiCallManager.getInstance(context);
+        mUiCallManager = UiCallManager.getInstance(this);
         mUiBluetoothMonitor = UiBluetoothMonitor.getInstance();
 
         if (savedInstanceState != null) {
@@ -167,7 +149,7 @@ public class TelecomActivity extends CarDrawerActivity implements
 
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(enter, exit)
-                .replace(getFragmentContainerId(), fragment)
+                .replace(getContentContainerId(), fragment)
                 .commitAllowingStateLoss();
 
         mCurrentFragmentName = fragment.getClass().getSimpleName();
@@ -211,7 +193,7 @@ public class TelecomActivity extends CarDrawerActivity implements
                 break;
 
             case Intent.ACTION_DIAL:
-                String number = PhoneNumberUtils.getNumberFromIntent(intent, getContext());
+                String number = PhoneNumberUtils.getNumberFromIntent(intent, this);
                 if (!(mCurrentFragment instanceof NoHfpFragment)) {
                     showDialerWithNumber(number);
                 }
@@ -333,7 +315,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.telecom_slide_in, R.anim.telecom_slide_out,
                         R.anim.telecom_slide_in, R.anim.telecom_slide_out)
-                .add(getFragmentContainerId(), mDialerFragment)
+                .add(getContentContainerId(), mDialerFragment)
                 .addToBackStack(DIALER_BACKSTACK)
                 .commitAllowingStateLoss();
 
@@ -366,16 +348,12 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     private void showNoHfpFragment(int stringResId) {
-        if (getInputManager().isInputActive()) {
-            getInputManager().stopInput();
-        }
-
         if (mCurrentFragment instanceof NoHfpFragment && stringResId == mLastNoHfpMessageId) {
             return;
         }
 
         mLastNoHfpMessageId = stringResId;
-        String errorMessage = getContext().getString(stringResId);
+        String errorMessage = getString(stringResId);
         NoHfpFragment frag = new NoHfpFragment();
         frag.setErrorMessage(errorMessage);
         setContentFragment(frag);
@@ -432,139 +410,145 @@ public class TelecomActivity extends CarDrawerActivity implements
         }
     };
 
+    private void setContentFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(getContentContainerId(), fragment)
+                .commit();
+    }
+
     private static boolean vdebug() {
         return Log.isLoggable(TAG, Log.DEBUG);
     }
 
-    private final class TelecomMenuCallbacks extends CarMenuCallbacks {
-        /** Id for the telecom root menu */
-        private static final String ROOT = "TELECOM_MENU_ROOT";
-        private static final String VOICE_MAIL = "VOICE_MAIL";
-        private static final String DIAL_NUMBER = "DIAL_NUMBER";
-        private static final String CALL_HISTORY = "CALL_HISTORY";
-        private static final String MISSED_CALLS = "MISSED_CALLS";
+    @Override
+    protected CarDrawerAdapter getRootAdapter() {
+        return new DialerRootAdapter();
+    }
 
-        @Override
-        public RootMenu onGetRoot(Bundle hints) {
-            return new RootMenu(ROOT);
+    class CallLogAdapter extends CarDrawerListAdapter {
+        private final int mTitleResId;
+        private List<CallLogListingTask.CallLogItem> mItems;
+
+        public CallLogAdapter(int titleResId, List<CallLogListingTask.CallLogItem> items) {
+            super(true /* useNormalLayout */);
+            mTitleResId = titleResId;
+            mItems = items;
         }
 
         @Override
-        public void onLoadChildren(String parentId, CarMenu result) {
-            if (vdebug()) {
-                Log.d(TAG, "onLoadChildren, parentId: " + parentId + ", result: " + result);
-            }
-
-            switch (parentId) {
-                case ROOT:
-                    result.sendResult(generateTelecomRootMenu());
-                    break;
-
-                case CALL_HISTORY:
-                    loadCallHistoryAsync(PhoneLoader.CALL_TYPE_ALL, result, parentId);
-                    break;
-
-                case MISSED_CALLS:
-                    loadCallHistoryAsync(PhoneLoader.CALL_TYPE_MISSED, result, parentId);
-                    break;
-
-                default:
-                    throw new IllegalStateException("Shouldn't query on parentId: " + parentId);
-            }
+        protected int getActualItemCount() {
+            return mItems.size();
         }
 
         @Override
-        public void onItemClicked(String id) {
-            if (vdebug()) {
-                Log.d(TAG, "onItemClicked: " + id);
-            }
-
-            switch (id) {
-                case VOICE_MAIL:
-                    mUiCallManager.callVoicemail();
-                    break;
-
-                case DIAL_NUMBER:
-                    // The dialpad should not be shown if there is an on-going call.
-                    if (!(mCurrentFragment instanceof OngoingCallFragment)) {
-                        showDialer();
-                    }
-
-                    break;
-
-                case CALL_HISTORY:
-                case MISSED_CALLS:
-                case CALL_LOG_EMPTY_PLACEHOLDER:
-                    // No-op
-                    break;
-
-                default:
-                    mUiCallManager.safePlaceCall(
-                            CallLogListingTask.getNumberFromCarMenuId(id), false);
-            }
+        protected int getTitleResId() {
+            return mTitleResId;
         }
 
         @Override
-        public void onCarMenuOpened() {
-            super.onCarMenuOpened();
-            CarInputManager inputManager = getInputManager();
-            if (inputManager.isInputActive()) {
-                inputManager.stopInput();
-            }
+        public void populateViewHolder(DrawerItemViewHolder holder, int position) {
+            holder.getTitle().setText(mItems.get(position).mTitle);
+            holder.getText().setText(mItems.get(position).mText);
+            holder.getIcon().setImageBitmap(mItems.get(position).mIcon);
         }
 
-        private List<CarMenu.Item> generateTelecomRootMenu() {
-            List<CarMenu.Item> items = new ArrayList<>();
-            Context context = getContext();
+        @Override
+        public void onItemClick(int position) {
+            closeDrawer();
+            mUiCallManager.safePlaceCall(mItems.get(position).mNumber, false);
+        }
+    }
+
+    private class DialerRootAdapter extends CarDrawerListAdapter {
+        private static final int ITEM_DIAL = 0;
+        private static final int ITEM_CALLLOG_ALL = 1;
+        private static final int ITEM_CALLLOG_MISSED = 2;
+        private static final int ITEM_MAX = 3;
+
+        DialerRootAdapter() {
+            super(false /* useNormalLayout */);
+        }
+
+        @Override
+        protected int getActualItemCount() {
+            return ITEM_MAX;
+        }
+
+        @Override
+        protected int getTitleResId() {
+            return R.string.phone_app_name;
+        }
+
+        @Override
+        public void populateViewHolder(DrawerItemViewHolder holder, int position) {
             final int iconColor = getResources().getColor(R.color.car_tint);
-
-            Drawable drawable = context.getDrawable(R.drawable.ic_drawer_dialpad);
+            int textResId, iconResId;
+            switch (position) {
+                case ITEM_DIAL:
+                    textResId = R.string.calllog_dial_number;
+                    iconResId = R.drawable.ic_drawer_dialpad;
+                    break;
+                case ITEM_CALLLOG_ALL:
+                    textResId = R.string.calllog_all;
+                    iconResId = R.drawable.ic_drawer_history;
+                    break;
+                case ITEM_CALLLOG_MISSED:
+                    textResId = R.string.calllog_missed;
+                    iconResId = R.drawable.ic_drawer_call_missed;
+                    break;
+                default:
+                    Log.wtf(TAG, "Unexpected position: " + position);
+                    return;
+            }
+            holder.getTitle().setText(textResId);
+            Drawable drawable = getDrawable(iconResId);
             drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-            items.add(new CarMenu.Builder(DIAL_NUMBER)
-                    .setTitle(getResources().getString(R.string.calllog_dial_number))
-                    .setIconFromSnapshot(drawable)
-                    .build());
-
-            drawable = context.getDrawable(R.drawable.ic_drawer_history);
-            drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-            items.add(new CarMenu.Builder(CALL_HISTORY)
-                    .setTitle(getResources().getString(R.string.calllog_all))
-                    .setIconFromSnapshot(drawable)
-                    .setFlags(CarMenuConstantsComapt.MenuItemConstants.FLAG_BROWSABLE)
-                    .build());
-
-            drawable = context.getDrawable(R.drawable.ic_drawer_call_missed);
-            drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-            items.add(new CarMenu.Builder(MISSED_CALLS)
-                    .setTitle(getResources().getString(R.string.calllog_missed))
-                    .setIconFromSnapshot(drawable)
-                    .setFlags(CarMenuConstantsComapt.MenuItemConstants.FLAG_BROWSABLE)
-                    .build());
-
-            return items;
+            holder.getIcon().setImageDrawable(drawable);
+            if (position > 0) {
+                drawable = getDrawable(R.drawable.ic_chevron_right);
+                drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
+                holder.getRightIcon().setImageDrawable(drawable);
+            }
         }
 
-        private void loadCallHistoryAsync(int callType, CarMenu result, String parentId) {
-            result.detach();
-
-            // Warning: much callbackiness!
-            // First load up the call log cursor using the PhoneLoader so that happens in a
-            // background thread. TODO: Why isn't PhoneLoader using a LoaderManager?
-            PhoneLoader.registerCallObserver(callType, getContext(),
-                    new Loader.OnLoadCompleteListener<Cursor>() {
-                        @Override
-                        public void onLoadComplete(Loader<Cursor> cursorLoader, Cursor cursor) {
-                            // This callback runs on the thread that created the loader which is
-                            // the ui thread so spin off another async task because we still need
-                            // to pull together all the data along with the contact photo.
-                            CallLogListingTask query = new CallLogListingTask.Builder()
-                                    .setContext(getContext())
-                                    .setCursor(cursor)
-                                    .setResult(result)
-                                    .build();
-                            query.execute();
-                        }
-                    });
+        @Override
+        public void onItemClick(int position) {
+            switch (position) {
+                case ITEM_DIAL:
+                    closeDrawer();
+                    showDialer();
+                    break;
+                case ITEM_CALLLOG_ALL:
+                    loadCallHistoryAsync(PhoneLoader.CALL_TYPE_ALL, R.string.calllog_all);
+                    break;
+                case ITEM_CALLLOG_MISSED:
+                    loadCallHistoryAsync(PhoneLoader.CALL_TYPE_MISSED, R.string.calllog_missed);
+                    break;
+                default:
+                    Log.w(TAG, "Invalid position in ROOT menu! " + position);
+            }
         }
+    }
+
+    private void loadCallHistoryAsync(final int callType, final int titleResId) {
+        showLoadingProgressBar(true);
+        // Warning: much callbackiness!
+        // First load up the call log cursor using the PhoneLoader so that happens in a
+        // background thread. TODO: Why isn't PhoneLoader using a LoaderManager?
+        PhoneLoader.registerCallObserver(callType, this,
+            (loader, data) -> {
+                // This callback runs on the thread that created the loader which is
+                // the ui thread so spin off another async task because we still need
+                // to pull together all the data along with the contact photo.
+                CallLogListingTask task = new CallLogListingTask(TelecomActivity.this, data,
+                    (items) -> {
+                            showLoadingProgressBar(false);
+                            CarDrawerAdapter adapter = items.size() > 0
+                                ? new CallLogAdapter(titleResId, items)
+                                : new CarDrawerEmptyAdapter(TelecomActivity.this, titleResId);
+                            switchToAdapter(adapter);
+                        });
+                task.execute();
+            });
     }
 }

@@ -73,7 +73,7 @@ public class StrequentsFragment extends Fragment {
             Log.d(TAG, "onCreateView");
         }
 
-        mContext = getTelecomActivity().getContext();
+        mContext = getContext();
 
         View view = inflater.inflate(R.layout.strequents_fragment, container, false);
         mListView = (PagedListView) view.findViewById(R.id.list_view);
@@ -81,32 +81,26 @@ public class StrequentsFragment extends Fragment {
 
         Bundle args = getArguments();
         mSpeedialCursorLoader = PhoneLoader.registerCallObserver(PhoneLoader.CALL_TYPE_SPEED_DIAL,
-                mContext, new Loader.OnLoadCompleteListener<Cursor>() {
-                    @Override
-                    public void onLoadComplete(Loader<Cursor> loader, Cursor cursor) {
-                        if (Log.isLoggable(TAG, Log.DEBUG)) {
-                            Log.d(TAG, "PhoneLoader: onLoadComplete (CALL_TYPE_SPEED_DIAL)");
-                        }
+            mContext, (loader, cursor) -> {
+                if (Log.isLoggable(TAG, Log.DEBUG)) {
+                    Log.d(TAG, "PhoneLoader: onLoadComplete (CALL_TYPE_SPEED_DIAL)");
+                }
 
-                        onLoadStrequentCursor(cursor);
+                onLoadStrequentCursor(cursor);
 
-                        if (mContext != null) {
-                            mListView.setDefaultItemDecoration(new Decoration(mContext));
-                        }
-                    }
-                });
+                if (mContext != null) {
+                    mListView.setDefaultItemDecoration(new Decoration(mContext));
+                }
+            });
 
         // Get the latest call log from the call logs history.
         mCallLogCursorLoader = PhoneLoader.registerCallObserver(PhoneLoader.CALL_TYPE_ALL, mContext,
-                new Loader.OnLoadCompleteListener<Cursor>() {
-                    @Override
-                    public void onLoadComplete(Loader<Cursor> loader, Cursor cursor) {
-                        if (Log.isLoggable(TAG, Log.DEBUG)) {
-                            Log.d(TAG, "PhoneLoader: onLoadComplete (CALL_TYPE_ALL)");
-                        }
-                        onLoadCallLogCursor(cursor);
-                    }
-                });
+            (loader, cursor) -> {
+                if (Log.isLoggable(TAG, Log.DEBUG)) {
+                    Log.d(TAG, "PhoneLoader: onLoadComplete (CALL_TYPE_ALL)");
+                }
+                onLoadCallLogCursor(cursor);
+            });
 
         ContentResolver contentResolver = mContext.getContentResolver();
         contentResolver.registerContentObserver(mSpeedialCursorLoader.getUri(),
@@ -225,10 +219,6 @@ public class StrequentsFragment extends Fragment {
             }
         }
     };
-
-    private TelecomActivity getTelecomActivity() {
-        return (TelecomActivity) getHost();
-    }
 
     /**
      * A {@link ContentResolver} that is responsible for reloading the user's starred and frequent

@@ -110,7 +110,7 @@ public class OngoingCallFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUiCallManager = UiCallManager.getInstance(getTelecomActivity().getContext());
+        mUiCallManager = UiCallManager.getInstance(getContext());
         mUiBluetoothMonitor = UiBluetoothMonitor.getInstance();
         mHandler = new Handler();
     }
@@ -183,112 +183,89 @@ public class OngoingCallFragment extends Fragment {
         setDialPadFocusability(!hasTouch);
         setInCallControllerFocusability(!hasTouch);
 
-        mAnswerCallButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiCall call = mUiCallManager.getCallWithState(Call.STATE_RINGING);
-                if (call == null) {
-                    Log.w(TAG, "There is no incoming call to answer.");
-                    return;
-                }
-                mUiCallManager.answerCall(call);
+        mAnswerCallButton.setOnClickListener((unusedView) -> {
+            UiCall call = mUiCallManager.getCallWithState(Call.STATE_RINGING);
+            if (call == null) {
+                Log.w(TAG, "There is no incoming call to answer.");
+                return;
             }
+            mUiCallManager.answerCall(call);
         });
-        FabDrawable answerCallDrawable = new FabDrawable(getTelecomActivity().getContext());
+        Context context = getContext();
+        FabDrawable answerCallDrawable = new FabDrawable(context);
         answerCallDrawable.setFabAndStrokeColor(getResources().getColor(R.color.phone_call));
         mAnswerCallButton.setBackground(answerCallDrawable);
 
-        mRejectCallButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiCall call = mUiCallManager.getCallWithState(Call.STATE_RINGING);
-                if (call == null) {
-                    Log.w(TAG, "There is no incoming call to reject.");
-                    return;
-                }
-                mUiCallManager.rejectCall(call, false, null);
+        mRejectCallButton.setOnClickListener((unusedView) -> {
+            UiCall call = mUiCallManager.getCallWithState(Call.STATE_RINGING);
+            if (call == null) {
+                Log.w(TAG, "There is no incoming call to reject.");
+                return;
             }
+            mUiCallManager.rejectCall(call, false, null);
         });
 
-        mEndCallButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiCall call = mUiCallManager.getPrimaryCall();
-                if (call == null) {
-                    Log.w(TAG, "There is no active call to end.");
-                    return;
-                }
-                mUiCallManager.disconnectCall(call);
+        mEndCallButton.setOnClickListener((unusedView) -> {
+            UiCall call = mUiCallManager.getPrimaryCall();
+            if (call == null) {
+                Log.w(TAG, "There is no active call to end.");
+                return;
             }
+            mUiCallManager.disconnectCall(call);
         });
-        FabDrawable endCallDrawable = new FabDrawable(getTelecomActivity().getContext());
+        FabDrawable endCallDrawable = new FabDrawable(context);
         endCallDrawable.setFabAndStrokeColor(getResources().getColor(R.color.phone_end_call));
         mEndCallButton.setBackground(endCallDrawable);
 
-        mUnholdCallButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiCall call = mUiCallManager.getPrimaryCall();
-                if (call == null) {
-                    Log.w(TAG, "There is no active call to unhold.");
-                    return;
-                }
-                mUiCallManager.unholdCall(call);
+        mUnholdCallButton.setOnClickListener((unusedView) -> {
+            UiCall call = mUiCallManager.getPrimaryCall();
+            if (call == null) {
+                Log.w(TAG, "There is no active call to unhold.");
+                return;
             }
+            mUiCallManager.unholdCall(call);
         });
-        FabDrawable unholdCallDrawable = new FabDrawable(getTelecomActivity().getContext());
+        FabDrawable unholdCallDrawable = new FabDrawable(context);
         unholdCallDrawable.setFabAndStrokeColor(getResources().getColor(R.color.phone_call));
         mUnholdCallButton.setBackground(unholdCallDrawable);
 
-        mMuteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mUiCallManager.getMuted()) {
-                    mUiCallManager.setMuted(false);
-                } else {
-                    mUiCallManager.setMuted(true);
-                }
+        mMuteButton.setOnClickListener((unusedView) -> {
+            if (mUiCallManager.getMuted()) {
+                mUiCallManager.setMuted(false);
+            } else {
+                mUiCallManager.setMuted(true);
             }
         });
 
-        mSwapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiCall call = mUiCallManager.getPrimaryCall();
-                if (call == null) {
-                    Log.w(TAG, "There is no active call to hold.");
-                    return;
-                }
-                if (call.getState() == Call.STATE_HOLDING) {
-                    mUiCallManager.unholdCall(call);
-                } else {
-                    mUiCallManager.holdCall(call);
-                }
+        mSwapButton.setOnClickListener((unusedView) -> {
+            UiCall call = mUiCallManager.getPrimaryCall();
+            if (call == null) {
+                Log.w(TAG, "There is no active call to hold.");
+                return;
+            }
+            if (call.getState() == Call.STATE_HOLDING) {
+                mUiCallManager.unholdCall(call);
+            } else {
+                mUiCallManager.holdCall(call);
             }
         });
 
-        mMergeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiCall call = mUiCallManager.getPrimaryCall();
-                UiCall secondarycall = mUiCallManager.getSecondaryCall();
-                if (call == null || mSecondaryCall == null) {
-                    Log.w(TAG, "There aren't two call to merge.");
-                    return;
-                }
-
-                mUiCallManager.conference(call, secondarycall);
+        mMergeButton.setOnClickListener((unusedView) -> {
+            UiCall call = mUiCallManager.getPrimaryCall();
+            UiCall secondarycall = mUiCallManager.getSecondaryCall();
+            if (call == null || mSecondaryCall == null) {
+                Log.w(TAG, "There aren't two call to merge.");
+                return;
             }
+
+            mUiCallManager.conference(call, secondarycall);
         });
 
-        mToggleDialpadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mToggleDialpadButton.isActivated()) {
-                    closeDialpad();
-                } else {
-                    openDialpad(true /*animate*/);
-                }
+        mToggleDialpadButton.setOnClickListener((unusedView) -> {
+            if (mToggleDialpadButton.isActivated()) {
+                closeDialpad();
+            } else {
+                openDialpad(true /*animate*/);
             }
         });
 
@@ -345,7 +322,7 @@ public class OngoingCallFragment extends Fragment {
 
         // Show the primary contact photo in the large ImageView on the right if there is no
         // secondary call. Otherwise, show it in the small ImageView that is inside the card.
-        Context context = getTelecomActivity().getContext();
+        Context context = getContext();
         final ContentResolver cr = context.getContentResolver();
         final String primaryNumber = mPrimaryCall.getNumber();
         // Don't reload the image if the number is the same.
@@ -406,13 +383,13 @@ public class OngoingCallFragment extends Fragment {
             mSecondaryCallControls.setVisibility(View.GONE);
         }
 
-        String displayName = TelecomUtils.getDisplayName(getContext(), mPrimaryCall);
+        String displayName = TelecomUtils.getDisplayName(context, mPrimaryCall);
         mNameTextView.setText(displayName);
         mNameTextView.setVisibility(TextUtils.isEmpty(displayName) ? View.GONE : View.VISIBLE);
 
         if (mSecondaryCall != null) {
             mSecondaryNameTextView.setText(
-                    TelecomUtils.getDisplayName(getContext(), mSecondaryCall));
+                    TelecomUtils.getDisplayName(context, mSecondaryCall));
         }
 
         switch (mPrimaryCall.getState()) {
@@ -554,25 +531,19 @@ public class OngoingCallFragment extends Fragment {
                     .setStartDelay(0)
                     .setDuration(384)
                     .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
+                    .withEndAction(() -> {
                             mEndCallButton.setVisibility(View.INVISIBLE);
                             mEndCallButton.setFocusable(false);
-                        }
-                    }).start();
+                        }).start();
             mMuteButton.animate()
                     .alpha(0)
                     .setStartDelay(0)
                     .setDuration(240)
                     .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
+                    .withEndAction(() -> {
                             mMuteButton.setVisibility(View.INVISIBLE);
                             mMuteButton.setFocusable(false);
-                        }
-                    }).start();
+                        }).start();
             mToggleDialpadButton.animate()
                     .setStartDelay(0)
                     .translationX(-(mEndCallButton.getWidth() + muteButtonLeftMargin
@@ -589,9 +560,7 @@ public class OngoingCallFragment extends Fragment {
                     .setDuration(320)
                     .setInterpolator(mAccelerateDecelerateInterpolator)
                     .setStartDelay(240)
-                    .withStartAction(new Runnable() {
-                        @Override
-                        public void run() {
+                    .withStartAction(() -> {
                             mRotaryDialpad.setVisibility(View.VISIBLE);
                             int delay = 0;
                             for (View dialpadView : mDialpadViews) {
@@ -604,8 +573,7 @@ public class OngoingCallFragment extends Fragment {
                                         .start();
                                 delay += 10;
                             }
-                        }
-                    }).start();
+                        }).start();
         }
     }
 
@@ -615,7 +583,7 @@ public class OngoingCallFragment extends Fragment {
         }
         mToggleDialpadButton.setActivated(false);
         if (getResources().getBoolean(R.bool.has_touch)) {
-            Animation anim = new DialpadAnimation(getTelecomActivity().getContext(), true /* reverse */);
+            Animation anim = new DialpadAnimation(getContext(), true /* reverse */);
             mDialpadContainer.startAnimation(anim);
         } else {
             final int toggleButtonImageOffset = getResources().getDimensionPixelSize(
@@ -629,9 +597,7 @@ public class OngoingCallFragment extends Fragment {
                             + muteButtonLeftMargin + toggleButtonImageOffset))
                     .setDuration(320)
                     .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .withStartAction(new Runnable() {
-                        @Override
-                        public void run() {
+                    .withStartAction(() -> {
                             int delay = 0;
                             for (int i = mDialpadViews.size() - 1; i >= 0; i--) {
                                 View dialpadView = mDialpadViews.get(i);
@@ -643,15 +609,10 @@ public class OngoingCallFragment extends Fragment {
                                         .start();
                                 delay += 10;
                             }
-                        }
-                    })
-                    .withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
+                        }).withEndAction(() -> {
                             mRotaryDialpad.setVisibility(View.GONE);
                             mRotaryDialpad.setTranslationX(0);
-                        }
-                    }).start();
+                        }).start();
             mToggleDialpadButton.animate()
                     .translationX(0)
                     .setDuration(480)
@@ -663,25 +624,19 @@ public class OngoingCallFragment extends Fragment {
                     .setDuration(176)
                     .setInterpolator(mAccelerateDecelerateInterpolator)
                     .setStartDelay(384)
-                    .withStartAction(new Runnable() {
-                        @Override
-                        public void run() {
+                    .withStartAction(() -> {
                             mMuteButton.setVisibility(View.VISIBLE);
                             mMuteButton.setFocusable(true);
-                        }
-                    }).start();
+                        }).start();
             mEndCallButton.animate()
                     .alpha(1)
                     .setDuration(320)
                     .setInterpolator(mAccelerateDecelerateInterpolator)
                     .setStartDelay(240)
-                    .withStartAction(new Runnable() {
-                        @Override
-                        public void run() {
+                    .withStartAction(() -> {
                             mEndCallButton.setVisibility(View.VISIBLE);
                             mEndCallButton.setFocusable(true);
-                        }
-                    }).start();
+                        }).start();
         }
     }
 
@@ -713,10 +668,6 @@ public class OngoingCallFragment extends Fragment {
         for (View dialPadView : mDialpadViews) {
             dialPadView.setFocusable(focusable);
         }
-    }
-
-    private TelecomActivity getTelecomActivity() {
-        return (TelecomActivity) getHost();
     }
 
     private final View.OnTouchListener mDialpadTouchListener = new View.OnTouchListener() {
@@ -883,13 +834,8 @@ public class OngoingCallFragment extends Fragment {
         }
     };
 
-    private final UiBluetoothMonitor.Listener mBluetoothListener =
-            new UiBluetoothMonitor.Listener() {
-
-        @Override
-        public void onStateChanged() {
-            OngoingCallFragment.this.mIsHfpConnected =
-                    UiBluetoothMonitor.getInstance().isHfpConnected();
-        }
+    private final UiBluetoothMonitor.Listener mBluetoothListener = () -> {
+        OngoingCallFragment.this.mIsHfpConnected =
+                UiBluetoothMonitor.getInstance().isHfpConnected();
     };
 }

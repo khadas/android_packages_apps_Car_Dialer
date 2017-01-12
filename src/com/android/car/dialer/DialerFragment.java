@@ -111,19 +111,16 @@ public class DialerFragment extends Fragment {
             Log.d(TAG, "onCreateView");
         }
 
-        mContext = getTelecomActivity().getContext();
+        mContext = getContext();
         View view = inflater.inflate(R.layout.dialer_fragment, container, false);
 
         if (Log.isLoggable(TAG, Log.VERBOSE)) {
             Log.v(TAG, "onCreateView: inflated successfully");
         }
 
-        view.findViewById(R.id.exit_dialer_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBackListener != null) {
-                    mBackListener.onDialerBackClick();
-                }
+        view.findViewById(R.id.exit_dialer_button).setOnClickListener((unusedView) -> {
+            if (mBackListener != null) {
+                mBackListener.onDialerBackClick();
             }
         });
 
@@ -142,27 +139,21 @@ public class DialerFragment extends Fragment {
             answerCallDrawable.setFabAndStrokeColor(getResources().getColor(R.color.phone_call));
             callButton.setBackground(answerCallDrawable);
             callButton.setVisibility(View.VISIBLE);
-            callButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (Log.isLoggable(TAG, Log.DEBUG)) {
-                        Log.d(TAG, "Call button clicked, placing a call: " + mNumber.toString());
-                    }
+            callButton.setOnClickListener((unusedView) -> {
+                if (Log.isLoggable(TAG, Log.DEBUG)) {
+                    Log.d(TAG, "Call button clicked, placing a call: " + mNumber.toString());
+                }
 
-                    if (!TextUtils.isEmpty(mNumber.toString())) {
-                        getUiCallManager().safePlaceCall(mNumber.toString(), false);
-                    }
+                if (!TextUtils.isEmpty(mNumber.toString())) {
+                    getUiCallManager().safePlaceCall(mNumber.toString(), false);
                 }
             });
             View deleteButton = view.findViewById(R.id.delete);
             deleteButton.setVisibility(View.VISIBLE);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mNumber.length() != 0) {
-                        mNumber.deleteCharAt(mNumber.length() - 1);
-                        mNumberView.setText(getFormattedNumber(mNumber.toString()));
-                    }
+            deleteButton.setOnClickListener((unusedView) -> {
+                if (mNumber.length() != 0) {
+                    mNumber.deleteCharAt(mNumber.length() - 1);
+                    mNumberView.setText(getFormattedNumber(mNumber.toString()));
                 }
             });
         }
@@ -252,12 +243,7 @@ public class DialerFragment extends Fragment {
         if (mContext != null && mNumberView != null) {
             setDialNumberInternal(number);
         } else {
-            mPendingRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    setDialNumberInternal(number);
-                }
-            };
+            mPendingRunnable = () -> setDialNumberInternal(number);
         }
     }
 
@@ -292,10 +278,6 @@ public class DialerFragment extends Fragment {
 
     private String getFormattedNumber(String number) {
         return TelecomUtils.getFormattedNumber(mContext, number);
-    }
-
-    private TelecomActivity getTelecomActivity() {
-        return (TelecomActivity) getHost();
     }
 
     private final CallListener mCallListener = new CallListener() {

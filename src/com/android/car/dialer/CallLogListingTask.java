@@ -15,64 +15,62 @@
  */
 package com.android.car.dialer;
 
-import com.android.car.apps.common.LetterTileDrawable;
-import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.telecom.PhoneLoader;
-import com.android.car.dialer.telecom.TelecomUtils;
-
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.Loader;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.provider.CallLog;
-import android.support.car.app.menu.CarMenu;
+import android.support.annotation.NonNull;
 import android.support.car.ui.CircleBitmapDrawable;
-import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.RemoteViews;
+
+import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.telecom.PhoneLoader;
+import com.android.car.dialer.telecom.TelecomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
-    private static final String CALL_TYPE_ICON_ID_PREFIX = "call_type_icon_";
-    private static final int MAX_CALL_TYPE_ICONS = 3;
+class CallLogListingTask extends AsyncTask<Void, Void, Void> {
+    static class CallLogItem {
+        final String mTitle;
+        final String mText;
+        final String mNumber;
+        final Bitmap mIcon;
+        // TODO: need right icon.
+
+        public CallLogItem(String title, String text, String number, Bitmap icon) {
+            mTitle = title;
+            mText = text;
+            mNumber = number;
+            mIcon = icon;
+        }
+    }
+
+    interface LoadCompleteListener {
+        void onLoadComplete(List<CallLogItem> items);
+    }
+
 
     // Like a constant but needs a context so not static.
     private final String VOICEMAIL_NUMBER;
 
     private Context mContext;
-    private CarMenu mResult;
-    private List<CarMenu.Item> mItems = new ArrayList<>();
     private Cursor mCursor;
+    private List<CallLogItem> mItems;
+    private LoadCompleteListener mListener;
 
-    private CallLogListingTask(Builder builder) {
-        mContext = builder.mContext;
-        mResult = builder.mResult;
-        mCursor = builder.mCursor;
+    CallLogListingTask(Context context, Cursor cursor,
+            @NonNull LoadCompleteListener listener) {
+        mContext = context;
+        mCursor = cursor;
+        mItems = new ArrayList<>(mCursor.getCount());
+        mListener = listener;
         VOICEMAIL_NUMBER = TelecomUtils.getVoicemailNumber(mContext);
-    }
-
-    private CarMenu.Item getEmptyItem() {
-        final int iconColor = mContext.getColor(R.color.car_tint);
-        Drawable drawable = mContext.getDrawable(R.drawable.ic_list_view_disable);
-        drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-        return new CarMenu.Builder(TelecomActivity.CALL_LOG_EMPTY_PLACEHOLDER)
-                .setTitle(mContext.getString(R.string.recent_calls_empty))
-                .setIconFromSnapshot(drawable)
-                .setIsEmptyPlaceHolder(true)
-                .build();
     }
 
     private String maybeAppendCount(StringBuilder sb, int count) {
@@ -126,56 +124,6 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
                 DateUtils.FORMAT_ABBREV_RELATIVE) : null;
     }
 
-    private int getCallTypeDrawableResId(int callType) {
-        switch (callType) {
-            case PhoneLoader.INCOMING_TYPE:
-                return R.drawable.ic_call_received;
-            case PhoneLoader.OUTGOING_TYPE:
-                return R.drawable.ic_call_made;
-            case PhoneLoader.MISSED_TYPE:
-                return R.drawable.ic_call_missed;
-            case PhoneLoader.VOICEMAIL_TYPE:
-                return R.drawable.ic_call_voicemail;
-            default:
-                // It is possible for users to end up with calls with unknown call types in their
-                // call history, possibly due to 3rd party call log implementations (e.g. to
-                // distinguish between rejected and missed calls). Instead of crashing, just
-                // assume that all unknown call types are missed calls.
-                return R.drawable.ic_call_missed;
-        }
-    }
-
-    private RemoteViews getCallTypeIcon(Cursor cursor, int count) {
-        RemoteViews callTypeIconView = new RemoteViews(mContext.getPackageName(),
-                R.layout.call_type_icons);
-        int[] callTypes = UiCallManager.getInstance(mContext).getCallTypes(cursor, count);
-        int icons = Math.min(callTypes.length, MAX_CALL_TYPE_ICONS);
-
-        for (int i = 0; i < icons; i++) {
-            int viewId = mContext.getResources().getIdentifier(
-                    CALL_TYPE_ICON_ID_PREFIX + i, "id", mContext.getPackageName());
-            callTypeIconView.setImageViewResource(viewId, getCallTypeDrawableResId(callTypes[i]));
-            callTypeIconView.setViewVisibility(viewId, View.VISIBLE);
-        }
-
-        for (int i = icons; i < MAX_CALL_TYPE_ICONS; i++) {
-            int viewId = mContext.getResources().getIdentifier(
-                    CALL_TYPE_ICON_ID_PREFIX + i, "id", mContext.getPackageName());
-            callTypeIconView.setViewVisibility(viewId, View.GONE);
-        }
-
-        return callTypeIconView;
-    }
-
-    public static String getNumberFromCarMenuId(String id) {
-        // Call log menu item's id is formed by: PHONE_NUMBER + "_" + CURSOR_ID.
-        return id.substring(0, id.lastIndexOf('_'));
-    }
-
-    private String makeId(String number, long id) {
-        return number + "_" + id;
-    }
-
     @Override
     protected Void doInBackground(Void... voids) {
         ContentResolver resolver = mContext.getContentResolver();
@@ -185,7 +133,6 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
                 int cachedNameColumn = PhoneLoader.getNameColumnIndex(mCursor);
                 int numberColumn = PhoneLoader.getNumberColumnIndex(mCursor);
                 int dateColumn = mCursor.getColumnIndex(CallLog.Calls.DATE);
-                int rowIdColumn = PhoneLoader.getIdColumnIndex(mCursor);
 
                 while (mCursor.moveToNext()) {
                     int count = 1;
@@ -229,14 +176,11 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
                         secondaryText.append(relativeDate);
                     }
 
-                    String id = makeId(number, mCursor.getLong(rowIdColumn));
                     Bitmap contactImage = getContactImage(mContext, resolver, name, number);
-                    CarMenu.Builder builder = new CarMenu.Builder(id)
-                            .setTitle(name)
-                            .setText(secondaryText.toString())
-                            .setIcon(contactImage)
-                            .setRemoteViews(getCallTypeIcon(mCursor, count));
-                    mItems.add(builder.build());
+
+                    CallLogItem item =
+                            new CallLogItem(name, secondaryText.toString(), number, contactImage);
+                    mItems.add(item);
 
                     // Since we deduplicated count rows, we can move all the way to that row so the
                     // next iteration takes us to the row following the last duplicate row.
@@ -250,11 +194,12 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
                 mCursor.close();
             }
         }
-
-        if (mItems.isEmpty()) {
-            mItems.add(getEmptyItem());
-        }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        mListener.onLoadComplete(mItems);
     }
 
     /**
@@ -310,36 +255,5 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
             values[1] = number.substring(index);
         }
         return values;
-    }
-
-    @Override
-    protected void onPostExecute(Void unused) {
-        mResult.sendResult(mItems);
-    }
-
-    public static class Builder {
-        private Context mContext;
-        private String mParentId;
-        private CarMenu mResult;
-        private Cursor mCursor;
-
-        public Builder setContext(Context context) {
-            mContext = context;
-            return this;
-        }
-
-        public Builder setResult(CarMenu result) {
-            mResult = result;
-            return this;
-        }
-
-        public Builder setCursor(Cursor cursor) {
-            mCursor = cursor;
-            return this;
-        }
-
-        public CallLogListingTask build() {
-            return new CallLogListingTask(this);
-        }
     }
 }
