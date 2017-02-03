@@ -41,7 +41,6 @@ class CallLogListingTask extends AsyncTask<Void, Void, Void> {
         final String mText;
         final String mNumber;
         final Bitmap mIcon;
-        // TODO: need right icon.
 
         public CallLogItem(String title, String text, String number, Bitmap icon) {
             mTitle = title;
