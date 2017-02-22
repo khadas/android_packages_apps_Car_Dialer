@@ -26,8 +26,6 @@ import android.util.Log;
 
 import com.android.car.app.CarDrawerActivity;
 import com.android.car.app.CarDrawerAdapter;
-import com.android.car.app.CarDrawerEmptyAdapter;
-import com.android.car.app.CarDrawerListAdapter;
 import com.android.car.app.DrawerItemViewHolder;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.PhoneLoader;
@@ -425,12 +423,14 @@ public class TelecomActivity extends CarDrawerActivity implements
         return new DialerRootAdapter();
     }
 
-    class CallLogAdapter extends CarDrawerListAdapter {
+    class CallLogAdapter extends CarDrawerAdapter {
         private final int mTitleResId;
         private List<CallLogListingTask.CallLogItem> mItems;
 
         public CallLogAdapter(int titleResId, List<CallLogListingTask.CallLogItem> items) {
-            super(true /* useNormalLayout */);
+            super(TelecomActivity.this,
+                    true  /* showDisabledListOnEmpty */,
+                    false /* useSmallLayout */);
             mTitleResId = titleResId;
             mItems = items;
         }
@@ -459,14 +459,16 @@ public class TelecomActivity extends CarDrawerActivity implements
         }
     }
 
-    private class DialerRootAdapter extends CarDrawerListAdapter {
+    private class DialerRootAdapter extends CarDrawerAdapter {
         private static final int ITEM_DIAL = 0;
         private static final int ITEM_CALLLOG_ALL = 1;
         private static final int ITEM_CALLLOG_MISSED = 2;
         private static final int ITEM_MAX = 3;
 
         DialerRootAdapter() {
-            super(false /* useNormalLayout */);
+            super(TelecomActivity.this,
+                    false /* showDisabledListOnEmpty */,
+                    true  /* useSmallLayout */);
         }
 
         @Override
@@ -543,10 +545,7 @@ public class TelecomActivity extends CarDrawerActivity implements
                 CallLogListingTask task = new CallLogListingTask(TelecomActivity.this, data,
                     (items) -> {
                             showLoadingProgressBar(false);
-                            CarDrawerAdapter adapter = items.size() > 0
-                                ? new CallLogAdapter(titleResId, items)
-                                : new CarDrawerEmptyAdapter(TelecomActivity.this, titleResId);
-                            switchToAdapter(adapter);
+                            switchToAdapter(new CallLogAdapter(titleResId, items));
                         });
                 task.execute();
             });
