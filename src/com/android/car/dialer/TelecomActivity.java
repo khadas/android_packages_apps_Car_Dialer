@@ -424,25 +424,19 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     class CallLogAdapter extends CarDrawerAdapter {
-        private final int mTitleResId;
         private List<CallLogListingTask.CallLogItem> mItems;
 
         public CallLogAdapter(int titleResId, List<CallLogListingTask.CallLogItem> items) {
             super(TelecomActivity.this,
                     true  /* showDisabledListOnEmpty */,
                     false /* useSmallLayout */);
-            mTitleResId = titleResId;
+            setTitle(getString(titleResId));
             mItems = items;
         }
 
         @Override
         protected int getActualItemCount() {
             return mItems.size();
-        }
-
-        @Override
-        protected int getTitleResId() {
-            return mTitleResId;
         }
 
         @Override
@@ -469,16 +463,12 @@ public class TelecomActivity extends CarDrawerActivity implements
             super(TelecomActivity.this,
                     false /* showDisabledListOnEmpty */,
                     true  /* useSmallLayout */);
+            setTitle(getString(R.string.phone_app_name));
         }
 
         @Override
         protected int getActualItemCount() {
             return ITEM_MAX;
-        }
-
-        @Override
-        protected int getTitleResId() {
-            return R.string.phone_app_name;
         }
 
         @Override
