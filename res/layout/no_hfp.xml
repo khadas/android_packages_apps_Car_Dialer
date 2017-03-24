@@ -44,10 +44,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginRight="132dp"
             android:text="@string/no_hfp"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="normal"
-            android:textSize="@dimen/car_body2_size"
-            android:textColor="@color/car_title_light"
+            style="@style/CarBody2.Light"
             android:maxLines="3" />
     </LinearLayout>
 </FrameLayout>

@@ -20,9 +20,6 @@ LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
 
-include packages/apps/Car/libs/car-stream-ui-lib/car-stream-ui-lib.mk
-include packages/apps/Car/libs/car-apps-common/car-apps-common.mk
-
 LOCAL_PACKAGE_NAME := CarDialerApp
 
 LOCAL_OVERRIDES_PACKAGES := Dialer
@@ -37,7 +34,8 @@ LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_DEX_PREOPT := false
 
-include packages/services/Car/car-support-lib/car-support.mk
+include packages/apps/Car/libs/car-stream-ui-lib/car-stream-ui-lib.mk
+include packages/apps/Car/libs/car-apps-common/car-apps-common.mk
 
 include $(BUILD_PACKAGE)
 

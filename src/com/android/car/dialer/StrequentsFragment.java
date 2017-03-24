@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.car.ui.PagedListView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.view.PagedListView;
 
 /**
  * Contains a list of contacts. The call types can be any of the CALL_TYPE_* fields from
