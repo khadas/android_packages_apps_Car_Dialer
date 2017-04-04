@@ -427,11 +427,14 @@ public class TelecomActivity extends CarDrawerActivity implements
         private List<CallLogListingTask.CallLogItem> mItems;
 
         public CallLogAdapter(int titleResId, List<CallLogListingTask.CallLogItem> items) {
-            super(TelecomActivity.this,
-                    true  /* showDisabledListOnEmpty */,
-                    false /* useSmallLayout */);
+            super(TelecomActivity.this, true  /* showDisabledListOnEmpty */);
             setTitle(getString(titleResId));
             mItems = items;
+        }
+
+        @Override
+        protected boolean usesSmallLayout(int position) {
+            return false;
         }
 
         @Override
@@ -460,9 +463,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         private static final int ITEM_MAX = 3;
 
         DialerRootAdapter() {
-            super(TelecomActivity.this,
-                    false /* showDisabledListOnEmpty */,
-                    true  /* useSmallLayout */);
+            super(TelecomActivity.this, false /* showDisabledListOnEmpty */);
             setTitle(getString(R.string.phone_app_name));
         }
 
