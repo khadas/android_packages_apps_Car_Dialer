@@ -15,14 +15,22 @@
  */
 package com.android.car.dialer;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar.LayoutParams;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.EditText;
 
 import com.android.car.app.CarDrawerActivity;
 import com.android.car.app.CarDrawerAdapter;
@@ -34,6 +42,8 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.telecom.UiCallManager.CallListener;
 
 import java.util.List;
+
+import static android.support.v7.widget.Toolbar.LayoutParams.MATCH_PARENT;
 
 /**
  * Main activity for the Dialer app. Displays different fragments depending on call and
@@ -69,6 +79,8 @@ public class TelecomActivity extends CarDrawerActivity implements
     private DialerFragment mDialerFragment;
     private boolean mDialerFragmentOpened;
 
+    private SearchView mSearchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +101,24 @@ public class TelecomActivity extends CarDrawerActivity implements
         if (vdebug()) {
             Log.d(TAG, "onCreate done, mCurrentFragmentName:  " + mCurrentFragmentName);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (vdebug()) {
+            Log.d(TAG, "onCreateOptionsMenu");
+        }
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        mSearchView = searchView;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

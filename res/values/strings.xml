@@ -102,4 +102,7 @@
     <!-- Using spaces here so that the positioning of the number is consistent. -->
     <string name="star_letters"> </string>
     <string name="pound_letters"> </string>
+
+    <string name="search_title">Search contacts</string>
+    <string name="search_hint">Enter the name of a contact</string>
 </resources>
