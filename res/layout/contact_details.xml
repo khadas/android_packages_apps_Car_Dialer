@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2015 The Android Open Source Project
+<!-- Copyright (C) 2017 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,25 +13,13 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/telecom_display_scrim">
+    android:background="@color/telecom_display_scrim"
+    android:clickable="true"
+    android:clipChildren="false">
 
-    <ImageView
-        android:id="@+id/error_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/car_ic_bluetooth_disable_large" />
-
-    <TextView
-        android:id="@+id/error_string"
-        android:layout_width="@dimen/apps_max_content_width"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/error_icon"
-        android:layout_centerHorizontal="true"
-        android:text="@string/no_hfp"
-        style="@style/NoHfpText"/>
-</RelativeLayout>
+    <include layout="@layout/paged_list" />
+</FrameLayout>

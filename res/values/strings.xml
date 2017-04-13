@@ -105,4 +105,9 @@
 
     <string name="search_title">Search contacts</string>
     <string name="search_hint">Enter the name of a contact</string>
+    <string name="type_home">Home</string>
+    <string name="type_work">Work</string>
+    <string name="type_mobile">Mobile</string>
+    <string name="type_other">Other</string>
+
 </resources>

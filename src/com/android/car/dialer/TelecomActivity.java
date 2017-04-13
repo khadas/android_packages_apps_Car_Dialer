@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
@@ -28,6 +29,7 @@ import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -43,6 +45,7 @@ import com.android.car.dialer.telecom.UiCallManager.CallListener;
 
 import java.util.List;
 
+import static android.provider.Contacts.Intents.SEARCH_SUGGESTION_CLICKED;
 import static android.support.v7.widget.Toolbar.LayoutParams.MATCH_PARENT;
 
 /**
@@ -112,7 +115,24 @@ public class TelecomActivity extends CarDrawerActivity implements
         inflater.inflate(R.menu.options_menu, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        MenuItem searchItem = menu.findItem(R.id.search);
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                // The back arrow on the search view causes this to trigger. It isn't really a back
+                // at all so we can't use the back stack and instead we just set the speed dial
+                // fragment manually.
+                showSpeedDialFragment();
+                return true;
+            }
+        });
+
+        SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -225,6 +245,11 @@ public class TelecomActivity extends CarDrawerActivity implements
                 if (!(mCurrentFragment instanceof NoHfpFragment)) {
                     showDialerWithNumber(number);
                 }
+                break;
+
+            case SEARCH_SUGGESTION_CLICKED:
+                Uri contactUri = intent.getData();
+                showContactDetailFragment(contactUri);
                 break;
 
             default:
@@ -386,6 +411,13 @@ public class TelecomActivity extends CarDrawerActivity implements
         frag.setErrorMessage(errorMessage);
         setContentFragment(frag);
         mCurrentFragment = frag;
+    }
+
+
+    private void showContactDetailFragment(Uri contactUri) {
+        ContactDetailsFragment fragment = ContactDetailsFragment.newInstance(contactUri);
+        setContentFragment(fragment);
+        mCurrentFragment = fragment;
     }
 
     private void setContentFragmentWithSlideAndDelayAnimation(Fragment fragment) {
