@@ -43,7 +43,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.FabDrawable;
-import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -100,18 +99,21 @@ public class OngoingCallFragment extends Fragment {
     private List<View> mDialpadViews;
     private String mLoadedNumber;
     private CharSequence mCallInfoLabel;
-    private boolean mIsHfpConnected;
     private UiBluetoothMonitor mUiBluetoothMonitor;
 
     private final Interpolator
             mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator();
     private final Interpolator mAccelerateInterpolator = new AccelerateInterpolator(10);
 
+    // Should be set soon after construction.
+    void setUiBluetoothMonitor(UiBluetoothMonitor uiBluetoothMonitor) {
+        mUiBluetoothMonitor = uiBluetoothMonitor;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUiCallManager = UiCallManager.getInstance(getContext());
-        mUiBluetoothMonitor = UiBluetoothMonitor.getInstance();
         mHandler = new Handler();
     }
 
@@ -271,11 +273,6 @@ public class OngoingCallFragment extends Fragment {
 
         mUiCallManager.addListener(mCallListener);
 
-        // These must be called after the views are inflated because they have the side affect
-        // of updating the ui.
-        mUiBluetoothMonitor.addListener(mBluetoothListener);
-        mBluetoothListener.onStateChanged(); // Trigger state change to set initial state.
-
         updateCalls();
         updateRotaryFocus();
 
@@ -286,7 +283,6 @@ public class OngoingCallFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mUiCallManager.removeListener(mCallListener);
-        mUiBluetoothMonitor.removeListener(mBluetoothListener);
     }
 
     @Override
@@ -410,7 +406,7 @@ public class OngoingCallFragment extends Fragment {
                 setStateText(callInfoText);
                 break;
             case Call.STATE_ACTIVE:
-                if (mIsHfpConnected) {
+                if (mUiBluetoothMonitor.isHfpConnected()) {
                     mHandler.post(mUpdateDurationRunnable);
                 }
                 break;
@@ -832,10 +828,5 @@ public class OngoingCallFragment extends Fragment {
             }
             updateCalls();
         }
-    };
-
-    private final UiBluetoothMonitor.Listener mBluetoothListener = () -> {
-        OngoingCallFragment.this.mIsHfpConnected =
-                UiBluetoothMonitor.getInstance().isHfpConnected();
     };
 }

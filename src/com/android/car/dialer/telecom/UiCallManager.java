@@ -23,8 +23,9 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import com.android.car.dialer.ClassFactory;
+
 import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.embedded.TelecomUiCallManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,7 +72,7 @@ public abstract class UiCallManager {
                 if (Log.isLoggable(TAG, Log.DEBUG)) {
                     Log.d(TAG, "Creating an instance of CarTelecomManager");
                 }
-                sInstance = ClassFactory.getFactory().createCarTelecomManager();
+                sInstance = new TelecomUiCallManager();
                 sInstance.setUp(context.getApplicationContext());
             }
         }

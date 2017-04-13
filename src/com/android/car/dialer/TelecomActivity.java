@@ -29,13 +29,10 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.widget.EditText;
 
 import com.android.car.app.CarDrawerActivity;
 import com.android.car.app.CarDrawerAdapter;
 import com.android.car.app.DrawerItemViewHolder;
-import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -92,7 +89,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         setTitle(getString(R.string.phone_app_name));
 
         mUiCallManager = UiCallManager.getInstance(this);
-        mUiBluetoothMonitor = UiBluetoothMonitor.getInstance();
+        mUiBluetoothMonitor = new UiBluetoothMonitor(this);
 
         if (savedInstanceState != null) {
             mCurrentFragmentName = savedInstanceState.getString(FRAGMENT_CLASS_KEY);
@@ -127,6 +124,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         if (vdebug()) {
             Log.d(TAG, "onDestroy");
         }
+        mUiBluetoothMonitor.tearDown();
         mUiCallManager = null;
     }
 
@@ -307,7 +305,9 @@ public class TelecomActivity extends CarDrawerActivity implements
         }
 
         if (mOngoingCallFragment == null) {
-            mOngoingCallFragment = new OngoingCallFragment();
+            OngoingCallFragment fragment = new OngoingCallFragment();
+            fragment.setUiBluetoothMonitor(mUiBluetoothMonitor);
+            mOngoingCallFragment = fragment;
         }
 
         setContentFragmentWithFadeAnimation(mOngoingCallFragment);
