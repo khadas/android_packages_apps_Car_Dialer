@@ -19,7 +19,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
-import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Canvas;
@@ -132,9 +131,6 @@ public class StrequentsFragment extends Fragment {
         });
         mListView.setMaxPages(maxPages);
         mListView.setAdapter(mAdapter);
-        if (getResources().getConfiguration().navigation == Configuration.NAVIGATION_WHEEL) {
-            mAdapter.setFocusChangeListener(mFocusListener);
-        }
 
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "setItemAnimator");
@@ -207,18 +203,6 @@ public class StrequentsFragment extends Fragment {
             }
         }
     }
-
-    private final View.OnFocusChangeListener mFocusListener = new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            // You can only invalidate decorations when RecyclerView is not in the process
-            // of laying out or scrolling.
-            if (!mListView.getRecyclerView().isInLayout() &&
-                    !mListView.getLayoutManager().isSmoothScrolling()) {
-                mListView.getRecyclerView().invalidateItemDecorations();
-            }
-        }
-    };
 
     /**
      * A {@link ContentResolver} that is responsible for reloading the user's starred and frequent

@@ -38,4 +38,10 @@
         <item name="android:textSize">@dimen/keyboard_key_letter_height</item>
         <item name="android:textColor">@color/car_headline1</item>
     </style>
+
+    <style name="NoHfpText" parent="CarBody2.Light">
+        <item name="android:textColor">@color/car_body1_light</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">3</item>
+    </style>
 </resources>

@@ -17,12 +17,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/telecom_display_scrim"
     android:clipChildren="false" >
 
-    <FrameLayout
-        android:background="@color/telecom_display_scrim"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-        <include layout="@layout/paged_list" />
+    <include layout="@layout/paged_list" />
 </FrameLayout>
