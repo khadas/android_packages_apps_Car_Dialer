@@ -125,7 +125,6 @@ public class OngoingCallFragment extends Fragment {
         mHandler = null;
         mUiCallManager = null;
         mLoadedNumber = null;
-        mUiBluetoothMonitor = null;
     }
 
     @Override
@@ -297,7 +296,7 @@ public class OngoingCallFragment extends Fragment {
         // Toggle the visibility between the active call controls, ringing call controls,
         // and no controls.
         CharSequence disconnectCauseLabel = mLastRemovedCall == null ?
-                null : mLastRemovedCall.getDisconnectClause();
+                null : mLastRemovedCall.getDisconnectCause();
         if (mPrimaryCall == null && !TextUtils.isEmpty(disconnectCauseLabel)) {
             closeDialpad();
             setStateText(disconnectCauseLabel);

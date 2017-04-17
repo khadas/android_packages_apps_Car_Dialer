@@ -27,12 +27,17 @@ import android.os.IBinder;
 import android.telecom.Call;
 import android.telecom.Call.Details;
 import android.telecom.CallAudioState;
+import android.telecom.DisconnectCause;
+import android.telecom.GatewayInfo;
 import android.telecom.InCallService.VideoCall;
 import android.telecom.TelecomManager;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -40,11 +45,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class TelecomUiCallManager extends UiCallManager {
 
-    private static final String TAG = "Em.TelecomMgrImpl";
+    private static final String TAG = "Em.TelecomUiCallMgr";
+
+    // Used to assign id's to UiCall objects as they're created.
+    private static int nextCarPhoneCallId = 0;
 
     private TelecomManager mTelecomManager;
     private InCallServiceImpl mInCallService;
-    private TelecomUiCallList mCallList = new TelecomUiCallList();
+    private Map<UiCall, Call> mCallMapping = new HashMap<>();
 
     private List<CallListener> mCallListeners = new CopyOnWriteArrayList<>();
 
@@ -62,7 +70,7 @@ public class TelecomUiCallManager extends UiCallManager {
             mContext.unbindService(mInCallServiceConnection);
             mInCallService = null;
         }
-        mCallList.clearCalls();
+        mCallMapping.clear();
     }
 
     @Override
@@ -97,7 +105,7 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "answerCall: " + uiCall);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.answer(0);
         }
@@ -110,7 +118,7 @@ public class TelecomUiCallManager extends UiCallManager {
                     + "textMessage: " + textMessage);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.reject(rejectWithMessage, textMessage);
         }
@@ -122,7 +130,7 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "disconnectCall: " + uiCall);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.disconnect();
         }
@@ -130,7 +138,7 @@ public class TelecomUiCallManager extends UiCallManager {
 
     @Override
     public List<UiCall> getCalls() {
-        return mCallList.getCalls();
+        return new ArrayList<>(mCallMapping.keySet());
     }
 
     @Override
@@ -189,7 +197,7 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "holdCall: " + uiCall);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.hold();
         }
@@ -201,7 +209,7 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "unholdCall: " + uiCall);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.unhold();
         }
@@ -213,7 +221,7 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "playDtmfTone: call: " + uiCall + ", digit: " + digit);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.playDtmfTone(digit);
         }
@@ -225,7 +233,7 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "stopDtmfTone: call: " + uiCall);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.stopDtmfTone();
         }
@@ -237,7 +245,7 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "postDialContinue: call: " + uiCall + ", proceed: " + proceed);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.postDialContinue(proceed);
         }
@@ -249,8 +257,8 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "conference: call: " + uiCall + ", otherCall: " + otherUiCall);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
-        Call otherTelecomCall = mCallList.getTelecomCall(otherUiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
+        Call otherTelecomCall = mCallMapping.get(otherUiCall);
         if (telecomCall != null) {
             telecomCall.conference(otherTelecomCall);
         }
@@ -262,7 +270,7 @@ public class TelecomUiCallManager extends UiCallManager {
             Log.d(TAG, "splitFromConference: call: " + uiCall);
         }
 
-        Call telecomCall = mCallList.getTelecomCall(uiCall);
+        Call telecomCall = mCallMapping.get(uiCall);
         if (telecomCall != null) {
             telecomCall.splitFromConference();
         }
@@ -292,7 +300,7 @@ public class TelecomUiCallManager extends UiCallManager {
     private void doTelecomCallRemoved(Call telecomCall) {
         UiCall uiCall = getOrCreateCallContainer(telecomCall);
 
-        mCallList.remove(uiCall);
+        mCallMapping.remove(uiCall);
 
         for (CallListener listener : mCallListeners) {
             listener.onCallRemoved(uiCall);
@@ -377,7 +385,7 @@ public class TelecomUiCallManager extends UiCallManager {
             TelecomUiCallManager manager = mCarTelecomMangerRef.get();
             UiCall uiCall = mCallContainerRef.get();
             if (manager != null && uiCall != null) {
-                TelecomUiCallList.updateCallContainerFromTelecom(uiCall, telecomCall);
+                updateCallContainerFromTelecom(uiCall, telecomCall);
                 manager.onCallUpdated(uiCall);
             }
         }
@@ -430,9 +438,50 @@ public class TelecomUiCallManager extends UiCallManager {
     };
 
     private UiCall getOrCreateCallContainer(Call telecomCall) {
-        synchronized (mCallList) {
-            return mCallList.getOrCreate(telecomCall);
+        for (Map.Entry<UiCall, Call> entry : mCallMapping.entrySet()) {
+            if (entry.getValue() == telecomCall) {
+                return entry.getKey();
+            }
         }
+
+        UiCall uiCall = new UiCall(nextCarPhoneCallId++);
+        updateCallContainerFromTelecom(uiCall, telecomCall);
+        mCallMapping.put(uiCall, telecomCall);
+        return uiCall;
+    }
+
+    private static void updateCallContainerFromTelecom(UiCall uiCall, Call telecomCall) {
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, "updateCallContainerFromTelecom: call: " + uiCall + ", telecomCall: "
+                    + telecomCall);
+        }
+
+        uiCall.setState(telecomCall.getState());
+        uiCall.setHasChildren(!telecomCall.getChildren().isEmpty());
+        uiCall.setHasParent(telecomCall.getParent() != null);
+
+        Call.Details details = telecomCall.getDetails();
+        if (details == null) {
+            return;
+        }
+
+        uiCall.setConnectTimeMillis(details.getConnectTimeMillis());
+
+        DisconnectCause cause = details.getDisconnectCause();
+        uiCall.setDisconnectCause(cause == null ? null : cause.getLabel());
+
+        GatewayInfo gatewayInfo = details.getGatewayInfo();
+        uiCall.setGatewayInfoOriginalAddress(
+                gatewayInfo == null ? null : gatewayInfo.getOriginalAddress());
+
+        String number = "";
+        if (gatewayInfo != null) {
+            number = gatewayInfo.getOriginalAddress().getSchemeSpecificPart();
+        } else if (details.getHandle() != null) {
+            number = details.getHandle().getSchemeSpecificPart();
+        }
+        uiCall.setNumber(number);
+
     }
 
     private CallAudioState getCallAudioStateOrNull() {
