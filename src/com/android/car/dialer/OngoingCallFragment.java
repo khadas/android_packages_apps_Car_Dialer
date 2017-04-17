@@ -105,15 +105,17 @@ public class OngoingCallFragment extends Fragment {
             mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator();
     private final Interpolator mAccelerateInterpolator = new AccelerateInterpolator(10);
 
-    // Should be set soon after construction.
-    void setUiBluetoothMonitor(UiBluetoothMonitor uiBluetoothMonitor) {
-        mUiBluetoothMonitor = uiBluetoothMonitor;
+    public static OngoingCallFragment newInstance(
+            UiCallManager callManager, UiBluetoothMonitor btMonitor) {
+        OngoingCallFragment fragment = new OngoingCallFragment();
+        fragment.mUiCallManager = callManager;
+        fragment.mUiBluetoothMonitor = btMonitor;
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUiCallManager = UiCallManager.getInstance(getContext());
         mHandler = new Handler();
     }
 
@@ -123,7 +125,6 @@ public class OngoingCallFragment extends Fragment {
         mHandler.removeCallbacks(mUpdateDurationRunnable);
         mHandler.removeCallbacks(mStopDtmfToneRunnable);
         mHandler = null;
-        mUiCallManager = null;
         mLoadedNumber = null;
     }
 

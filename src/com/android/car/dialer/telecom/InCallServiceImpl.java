@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer.telecom.embedded;
+package com.android.car.dialer.telecom;
 
 import android.content.Intent;
 import android.os.Binder;
@@ -28,7 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * An implementation of {@link InCallService}. This service is bounded by android telecom and
- * {@link TelecomUiCallManager}. For incoming calls it will launch Dialer app.
+ * {@link UiCallManager}. For incoming calls it will launch Dialer app.
  */
 public class InCallServiceImpl extends InCallService {
     private static final String TAG = "Em.InCallService";

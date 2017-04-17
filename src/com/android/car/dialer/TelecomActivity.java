@@ -91,7 +91,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         getWindow().getDecorView().setBackgroundColor(getColor(R.color.phone_theme));
         setTitle(getString(R.string.phone_app_name));
 
-        mUiCallManager = UiCallManager.getInstance(this);
+        mUiCallManager = new UiCallManager(this);
         mUiBluetoothMonitor = new UiBluetoothMonitor(this);
 
         if (savedInstanceState != null) {
@@ -308,7 +308,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         }
 
         if (mSpeedDialFragment == null) {
-            mSpeedDialFragment = new StrequentsFragment();
+            mSpeedDialFragment = StrequentsFragment.newInstance(mUiCallManager);
             Bundle args = new Bundle();
             mSpeedDialFragment.setArguments(args);
         }
@@ -330,9 +330,8 @@ public class TelecomActivity extends CarDrawerActivity implements
         }
 
         if (mOngoingCallFragment == null) {
-            OngoingCallFragment fragment = new OngoingCallFragment();
-            fragment.setUiBluetoothMonitor(mUiBluetoothMonitor);
-            mOngoingCallFragment = fragment;
+            mOngoingCallFragment =
+                    OngoingCallFragment.newInstance(mUiCallManager, mUiBluetoothMonitor);
         }
 
         setContentFragmentWithFadeAnimation(mOngoingCallFragment);
@@ -356,7 +355,7 @@ public class TelecomActivity extends CarDrawerActivity implements
                 Log.v(TAG, "showDialer: creating dialer");
             }
 
-            mDialerFragment = new DialerFragment();
+            mDialerFragment = DialerFragment.newInstance(mUiCallManager);
             mDialerFragment.setDialerBackButtonListener(this);
         }
 

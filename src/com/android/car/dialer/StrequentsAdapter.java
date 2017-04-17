@@ -56,6 +56,7 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     private static final int VIEW_TYPE_STREQUENT = 2;
 
     private final Context mContext;
+    private final UiCallManager mUiCallManager;
     private List<ContactEntry> mData;
 
     private LastCallData mLastCallData;
@@ -73,8 +74,9 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     private int mMaxItems = -1;
     private boolean mIsEmpty;
 
-    public StrequentsAdapter(Context context) {
+    public StrequentsAdapter(Context context, UiCallManager callManager) {
         mContext = context;
+        mUiCallManager = callManager;
         mContentResolver = context.getContentResolver();
     }
 
@@ -315,7 +317,7 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             secondaryText.append(relativeDate);
         }
 
-        int[] callTypes = getCarTelecomManager().getCallTypes(cursor, 1);
+        int[] callTypes = mUiCallManager.getCallTypes(cursor, 1);
 
         return new LastCallData(number, nameSb.toString(), secondaryText.toString(), callTypes);
     }
@@ -392,10 +394,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
         return DateUtils.getRelativeTimeSpanString(millis, System.currentTimeMillis(),
                 DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE);
-    }
-
-    private UiCallManager getCarTelecomManager() {
-        return UiCallManager.getInstance(mContext);
     }
 
     /**

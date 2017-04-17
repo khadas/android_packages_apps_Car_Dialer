@@ -48,6 +48,7 @@ public class StrequentsFragment extends Fragment {
     public static final String KEY_MAX_CLICKS = "max_clicks";
     public static final int DEFAULT_MAX_CLICKS = 6;
 
+    private UiCallManager mUiCallManager;
     private StrequentsAdapter mAdapter;
     private CursorLoader mSpeedialCursorLoader;
     private CursorLoader mCallLogCursorLoader;
@@ -56,6 +57,12 @@ public class StrequentsFragment extends Fragment {
     private Cursor mStrequentCursor;
     private Cursor mCallLogCursor;
     private boolean mHasLoadedData;
+
+    public static StrequentsFragment newInstance(UiCallManager callManager) {
+        StrequentsFragment fragment = new StrequentsFragment();
+        fragment.mUiCallManager = callManager;
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,14 +127,13 @@ public class StrequentsFragment extends Fragment {
 
         mListView.removeDefaultItemDecoration();
         mListView.setLightMode();
-        mAdapter = new StrequentsAdapter(mContext);
+        mAdapter = new StrequentsAdapter(mContext, mUiCallManager);
         mAdapter.setStrequentsListener(viewHolder -> {
             if (Log.isLoggable(TAG, Log.DEBUG)) {
                 Log.d(TAG, "onContactedClicked");
             }
 
-            UiCallManager.getInstance(mContext).safePlaceCall(
-                    (String) viewHolder.itemView.getTag(), false);
+            mUiCallManager.safePlaceCall((String) viewHolder.itemView.getTag(), false);
         });
         mListView.setMaxPages(maxPages);
         mListView.setAdapter(mAdapter);

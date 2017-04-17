@@ -63,6 +63,7 @@ public class DialerFragment extends Fragment {
     }
 
     private Context mContext;
+    private UiCallManager mUiCallManager;
     private final StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
     private AudioManager mAudioManager;
     private ToneGenerator mToneGenerator;
@@ -84,6 +85,12 @@ public class DialerFragment extends Fragment {
          * the dialer fragment.
          */
         void onDialerBackClick();
+    }
+
+    public static DialerFragment newInstance(UiCallManager callManager) {
+        DialerFragment fragment = new DialerFragment();
+        fragment.mUiCallManager = callManager;
+        return fragment;
     }
 
     /**
@@ -145,7 +152,7 @@ public class DialerFragment extends Fragment {
                 }
 
                 if (!TextUtils.isEmpty(mNumber.toString())) {
-                    getUiCallManager().safePlaceCall(mNumber.toString(), false);
+                    mUiCallManager.safePlaceCall(mNumber.toString(), false);
                 }
             });
             View deleteButton = view.findViewById(R.id.delete);
@@ -207,7 +214,7 @@ public class DialerFragment extends Fragment {
                 mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
             }
         }
-        UiCallManager.getInstance(mContext).addListener(mCallListener);
+        mUiCallManager.addListener(mCallListener);
 
         if (mPendingRunnable != null) {
             mPendingRunnable.run();
@@ -218,7 +225,7 @@ public class DialerFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        UiCallManager.getInstance(mContext).removeListener(mCallListener);
+        mUiCallManager.removeListener(mCallListener);
         stopTone();
         synchronized (mToneGeneratorLock) {
             if (mToneGenerator != null) {
@@ -272,10 +279,6 @@ public class DialerFragment extends Fragment {
         }
     };
 
-    private UiCallManager getUiCallManager() {
-        return UiCallManager.getInstance(mContext);
-    }
-
     private String getFormattedNumber(String number) {
         return TelecomUtils.getFormattedNumber(mContext, number);
     }
@@ -286,7 +289,7 @@ public class DialerFragment extends Fragment {
             if (event.getKeyCode() == KeyEvent.KEYCODE_CALL &&
                     event.getAction() == KeyEvent.ACTION_UP &&
                     !TextUtils.isEmpty(mNumber.toString())) {
-                getUiCallManager().safePlaceCall(mNumber.toString(), false);
+                mUiCallManager.safePlaceCall(mNumber.toString(), false);
             }
         }
     };
