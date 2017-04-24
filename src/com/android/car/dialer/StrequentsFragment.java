@@ -261,7 +261,7 @@ public class StrequentsFragment extends Fragment {
      * speed dial item and the divider is offset but a couple of pixels to offset the fact that
      * the cards overlap.
      */
-    private static class Decoration extends PagedListView.Decoration {
+    private static class Decoration extends PagedListView.DividerDecoration {
         private final int mPaintAlpha;
 
         public Decoration(Context context) {
