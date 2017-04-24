@@ -414,7 +414,8 @@ public class TelecomActivity extends CarDrawerActivity implements
 
 
     private void showContactDetailFragment(Uri contactUri) {
-        ContactDetailsFragment fragment = ContactDetailsFragment.newInstance(contactUri);
+        ContactDetailsFragment fragment =
+                ContactDetailsFragment.newInstance(contactUri, mUiCallManager);
         setContentFragment(fragment);
         mCurrentFragment = fragment;
     }
