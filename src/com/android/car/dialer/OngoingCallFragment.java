@@ -95,7 +95,6 @@ public class OngoingCallFragment extends Fragment {
     private View mDialpadContainer;
     private View mSecondaryCallContainer;
     private View mSecondaryCallControls;
-    private LinearLayout mRotaryDialpad;
     private List<View> mDialpadViews;
     private String mLoadedNumber;
     private CharSequence mCallInfoLabel;
@@ -147,43 +146,32 @@ public class OngoingCallFragment extends Fragment {
         mSmallContactPhotoView = (ImageView) view.findViewById(R.id.small_contact_photo);
         mSecondaryCallContainer = view.findViewById(R.id.secondary_call_container);
         mSecondaryCallControls = view.findViewById(R.id.secondary_call_controls);
-        mRotaryDialpad = (LinearLayout) view.findViewById(R.id.rotary_dialpad);
         mSwapButton = (ImageButton) view.findViewById(R.id.swap);
         mMergeButton = (ImageButton) view.findViewById(R.id.merge);
         mAnswerCallButton = (ImageButton) view.findViewById(R.id.answer_call_button);
         mRejectCallButton = (ImageButton) view.findViewById(R.id.reject_call_button);
 
-        boolean hasTouch = getResources().getBoolean(R.bool.has_touch);
-        View dialPadContainer = hasTouch ? mDialpadContainer : mRotaryDialpad;
         mDialpadViews = Arrays.asList(
-                dialPadContainer.findViewById(R.id.one),
-                dialPadContainer.findViewById(R.id.two),
-                dialPadContainer.findViewById(R.id.three),
-                dialPadContainer.findViewById(R.id.four),
-                dialPadContainer.findViewById(R.id.five),
-                dialPadContainer.findViewById(R.id.six),
-                dialPadContainer.findViewById(R.id.seven),
-                dialPadContainer.findViewById(R.id.eight),
-                dialPadContainer.findViewById(R.id.nine),
-                dialPadContainer.findViewById(R.id.zero),
-                dialPadContainer.findViewById(R.id.pound),
-                dialPadContainer.findViewById(R.id.star)
+                mDialpadContainer.findViewById(R.id.one),
+                mDialpadContainer.findViewById(R.id.two),
+                mDialpadContainer.findViewById(R.id.three),
+                mDialpadContainer.findViewById(R.id.four),
+                mDialpadContainer.findViewById(R.id.five),
+                mDialpadContainer.findViewById(R.id.six),
+                mDialpadContainer.findViewById(R.id.seven),
+                mDialpadContainer.findViewById(R.id.eight),
+                mDialpadContainer.findViewById(R.id.nine),
+                mDialpadContainer.findViewById(R.id.zero),
+                mDialpadContainer.findViewById(R.id.pound),
+                mDialpadContainer.findViewById(R.id.star)
         );
-        if (hasTouch) {
-            // In touch screen, we need to adjust the InCall card for the narrow screen to show the
-            // full dial pad.
-            for (View dialpadView : mDialpadViews) {
-                dialpadView.setOnTouchListener(mDialpadTouchListener);
-                dialpadView.setOnKeyListener(mDialpadKeyListener);
-            }
-        } else {
-            for (View dialpadView : mDialpadViews) {
-                dialpadView.setOnKeyListener(mDialpadKeyListener);
-            }
-            mToggleDialpadButton.setImageResource(R.drawable.ic_rotary_dialpad);
+
+        // In touch screen, we need to adjust the InCall card for the narrow screen to show the
+        // full dial pad.
+        for (View dialpadView : mDialpadViews) {
+            dialpadView.setOnTouchListener(mDialpadTouchListener);
+            dialpadView.setOnKeyListener(mDialpadKeyListener);
         }
-        setDialPadFocusability(!hasTouch);
-        setInCallControllerFocusability(!hasTouch);
 
         mAnswerCallButton.setOnClickListener((unusedView) -> {
             UiCall call = mUiCallManager.getCallWithState(Call.STATE_RINGING);
@@ -274,7 +262,6 @@ public class OngoingCallFragment extends Fragment {
         mUiCallManager.addListener(mCallListener);
 
         updateCalls();
-        updateRotaryFocus();
 
         return view;
     }
@@ -425,13 +412,8 @@ public class OngoingCallFragment extends Fragment {
         // If it is a voicemail call, open the dialpad (with no animation).
         if (primaryNumber != null && primaryNumber.equals(
                 TelecomUtils.getVoicemailNumber(context))) {
-            if (getResources().getBoolean(R.bool.has_touch)) {
-                openDialpad(false /*animate*/);
-                mToggleDialpadButton.setVisibility(View.GONE);
-            } else {
-                mToggleDialpadButton.setVisibility(View.VISIBLE);
-                mToggleDialpadButton.requestFocus();
-            }
+            openDialpad(false /*animate*/);
+            mToggleDialpadButton.setVisibility(View.GONE);
         } else {
             mToggleDialpadButton.setVisibility(View.VISIBLE);
         }
@@ -498,79 +480,23 @@ public class OngoingCallFragment extends Fragment {
             return;
         }
         mToggleDialpadButton.setActivated(true);
-        if (getResources().getBoolean(R.bool.has_touch)) {
-            // This array of of size 2 because getLocationOnScreen returns (x,y) coordinates.
-            int[] location = new int[2];
-            mToggleDialpadButton.getLocationOnScreen(location);
+        // This array of of size 2 because getLocationOnScreen returns (x,y) coordinates.
+        int[] location = new int[2];
+        mToggleDialpadButton.getLocationOnScreen(location);
 
-            // The dialpad should be aligned with the right edge of mToggleDialpadButton.
-            int startingMargin = location[1] + mToggleDialpadButton.getWidth();
+        // The dialpad should be aligned with the right edge of mToggleDialpadButton.
+        int startingMargin = location[1] + mToggleDialpadButton.getWidth();
 
-            ViewGroup.MarginLayoutParams layoutParams =
-                    (ViewGroup.MarginLayoutParams) mDialpadContainer.getLayoutParams();
+        ViewGroup.MarginLayoutParams layoutParams =
+                (ViewGroup.MarginLayoutParams) mDialpadContainer.getLayoutParams();
 
-            if (layoutParams.getMarginStart() != startingMargin) {
-                layoutParams.setMarginStart(startingMargin);
-                mDialpadContainer.setLayoutParams(layoutParams);
-            }
-
-            Animation anim = new DialpadAnimation(getContext(), false /* reverse */, animate);
-            mDialpadContainer.startAnimation(anim);
-        } else {
-            final int toggleButtonImageOffset = getResources().getDimensionPixelSize(
-                    R.dimen.in_call_toggle_button_image_offset);
-            final int muteButtonLeftMargin =
-                    ((LinearLayout.LayoutParams) mMuteButton.getLayoutParams()).leftMargin;
-
-            mEndCallButton.animate()
-                    .alpha(0)
-                    .setStartDelay(0)
-                    .setDuration(384)
-                    .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .withEndAction(() -> {
-                            mEndCallButton.setVisibility(View.INVISIBLE);
-                            mEndCallButton.setFocusable(false);
-                        }).start();
-            mMuteButton.animate()
-                    .alpha(0)
-                    .setStartDelay(0)
-                    .setDuration(240)
-                    .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .withEndAction(() -> {
-                            mMuteButton.setVisibility(View.INVISIBLE);
-                            mMuteButton.setFocusable(false);
-                        }).start();
-            mToggleDialpadButton.animate()
-                    .setStartDelay(0)
-                    .translationX(-(mEndCallButton.getWidth() + muteButtonLeftMargin
-                            + mMuteButton.getWidth() + toggleButtonImageOffset))
-                    .setDuration(480)
-                    .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .start();
-
-            mRotaryDialpad.setTranslationX(
-                    -(mEndCallButton.getWidth() + muteButtonLeftMargin + toggleButtonImageOffset));
-            mRotaryDialpad.animate()
-                    .translationX(-(mEndCallButton.getWidth() + muteButtonLeftMargin
-                            + mMuteButton.getWidth() + toggleButtonImageOffset))
-                    .setDuration(320)
-                    .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .setStartDelay(240)
-                    .withStartAction(() -> {
-                            mRotaryDialpad.setVisibility(View.VISIBLE);
-                            int delay = 0;
-                            for (View dialpadView : mDialpadViews) {
-                                dialpadView.setAlpha(0);
-                                dialpadView.animate()
-                                        .alpha(1)
-                                        .setDuration(160)
-                                        .setStartDelay(delay)
-                                        .setInterpolator(mAccelerateInterpolator)
-                                        .start();
-                                delay += 10;
-                            }
-                        }).start();
+        if (layoutParams.getMarginStart() != startingMargin) {
+            layoutParams.setMarginStart(startingMargin);
+            mDialpadContainer.setLayoutParams(layoutParams);
         }
+
+        Animation anim = new DialpadAnimation(getContext(), false /* reverse */, animate);
+        mDialpadContainer.startAnimation(anim);
     }
 
     private void closeDialpad() {
@@ -578,92 +504,8 @@ public class OngoingCallFragment extends Fragment {
             return;
         }
         mToggleDialpadButton.setActivated(false);
-        if (getResources().getBoolean(R.bool.has_touch)) {
-            Animation anim = new DialpadAnimation(getContext(), true /* reverse */);
-            mDialpadContainer.startAnimation(anim);
-        } else {
-            final int toggleButtonImageOffset = getResources().getDimensionPixelSize(
-                    R.dimen.in_call_toggle_button_image_offset);
-            final int muteButtonLeftMargin =
-                    ((LinearLayout.LayoutParams) mMuteButton.getLayoutParams()).leftMargin;
-
-            mRotaryDialpad.animate()
-                    .setStartDelay(0)
-                    .translationX(-(mEndCallButton.getWidth()
-                            + muteButtonLeftMargin + toggleButtonImageOffset))
-                    .setDuration(320)
-                    .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .withStartAction(() -> {
-                            int delay = 0;
-                            for (int i = mDialpadViews.size() - 1; i >= 0; i--) {
-                                View dialpadView = mDialpadViews.get(i);
-                                dialpadView.animate()
-                                        .alpha(0)
-                                        .setDuration(160)
-                                        .setStartDelay(delay)
-                                        .setInterpolator(mAccelerateInterpolator)
-                                        .start();
-                                delay += 10;
-                            }
-                        }).withEndAction(() -> {
-                            mRotaryDialpad.setVisibility(View.GONE);
-                            mRotaryDialpad.setTranslationX(0);
-                        }).start();
-            mToggleDialpadButton.animate()
-                    .translationX(0)
-                    .setDuration(480)
-                    .setStartDelay(80)
-                    .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .start();
-            mMuteButton.animate()
-                    .alpha(1)
-                    .setDuration(176)
-                    .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .setStartDelay(384)
-                    .withStartAction(() -> {
-                            mMuteButton.setVisibility(View.VISIBLE);
-                            mMuteButton.setFocusable(true);
-                        }).start();
-            mEndCallButton.animate()
-                    .alpha(1)
-                    .setDuration(320)
-                    .setInterpolator(mAccelerateDecelerateInterpolator)
-                    .setStartDelay(240)
-                    .withStartAction(() -> {
-                            mEndCallButton.setVisibility(View.VISIBLE);
-                            mEndCallButton.setFocusable(true);
-                        }).start();
-        }
-    }
-
-    private void updateRotaryFocus() {
-        boolean hasTouch = getResources().getBoolean(R.bool.has_touch);
-        if (mPrimaryCall != null && !hasTouch) {
-            if (mPrimaryCall.getState() == Call.STATE_RINGING) {
-                mRingingCallControls.requestFocus();
-            } else {
-                mActiveCallControls.requestFocus();
-            }
-        }
-    }
-
-    private void setInCallControllerFocusability(boolean focusable) {
-        mSwapButton.setFocusable(focusable);
-        mMergeButton.setFocusable(focusable);
-
-        mAnswerCallButton.setFocusable(focusable);
-        mRejectCallButton.setFocusable(focusable);
-
-        mEndCallButton.setFocusable(focusable);
-        mUnholdCallButton.setFocusable(focusable);
-        mMuteButton.setFocusable(focusable);
-        mToggleDialpadButton.setFocusable(focusable);
-    }
-
-    private void setDialPadFocusability(boolean focusable) {
-        for (View dialPadView : mDialpadViews) {
-            dialPadView.setFocusable(focusable);
-        }
+        Animation anim = new DialpadAnimation(getContext(), true /* reverse */);
+        mDialpadContainer.startAnimation(anim);
     }
 
     private final View.OnTouchListener mDialpadTouchListener = new View.OnTouchListener() {
@@ -817,8 +659,6 @@ public class OngoingCallFragment extends Fragment {
                 Log.d(TAG, "onStateChanged");
             }
             updateCalls();
-            //  this will reset the focus if any state of any call changes on pure rotary devices.
-            updateRotaryFocus();
         }
 
         @Override

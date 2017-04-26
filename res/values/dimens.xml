@@ -14,8 +14,6 @@
      limitations under the License.
 -->
 <resources>
-    <dimen name="ongoing_call_rotary_dialpad_width">520dp</dimen>
-
     <!-- Dialer -->
     <dimen name="dial_container_vertical_margin">48dp</dimen>
     <dimen name="dial_number_call_button_width">80dp</dimen>

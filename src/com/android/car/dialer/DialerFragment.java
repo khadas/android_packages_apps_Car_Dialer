@@ -132,38 +132,33 @@ public class DialerFragment extends Fragment {
         });
 
         mNumberView = (TextView) view.findViewById(R.id.number);
-        final boolean hasTouch = getResources().getBoolean(R.bool.has_touch);
 
         if (Log.isLoggable(TAG, Log.VERBOSE)) {
-            Log.v(TAG, "hasTouch: " + hasTouch + ", mShowInput: " + mShowInput);
+            Log.v(TAG, "mShowInput: " + mShowInput);
         }
 
-        if (hasTouch) {
-            // Only show the delete and call buttons in touch mode.
-            // Buttons are in rotary input itself.
-            View callButton = view.findViewById(R.id.call);
-            FabDrawable answerCallDrawable = new FabDrawable(mContext);
-            answerCallDrawable.setFabAndStrokeColor(getResources().getColor(R.color.phone_call));
-            callButton.setBackground(answerCallDrawable);
-            callButton.setVisibility(View.VISIBLE);
-            callButton.setOnClickListener((unusedView) -> {
-                if (Log.isLoggable(TAG, Log.DEBUG)) {
-                    Log.d(TAG, "Call button clicked, placing a call: " + mNumber.toString());
-                }
+        View callButton = view.findViewById(R.id.call);
+        FabDrawable answerCallDrawable = new FabDrawable(mContext);
+        answerCallDrawable.setFabAndStrokeColor(getResources().getColor(R.color.phone_call));
+        callButton.setBackground(answerCallDrawable);
+        callButton.setVisibility(View.VISIBLE);
+        callButton.setOnClickListener((unusedView) -> {
+            if (Log.isLoggable(TAG, Log.DEBUG)) {
+                Log.d(TAG, "Call button clicked, placing a call: " + mNumber.toString());
+            }
 
-                if (!TextUtils.isEmpty(mNumber.toString())) {
-                    mUiCallManager.safePlaceCall(mNumber.toString(), false);
-                }
-            });
-            View deleteButton = view.findViewById(R.id.delete);
-            deleteButton.setVisibility(View.VISIBLE);
-            deleteButton.setOnClickListener((unusedView) -> {
-                if (mNumber.length() != 0) {
-                    mNumber.deleteCharAt(mNumber.length() - 1);
-                    mNumberView.setText(getFormattedNumber(mNumber.toString()));
-                }
-            });
-        }
+            if (!TextUtils.isEmpty(mNumber.toString())) {
+                mUiCallManager.safePlaceCall(mNumber.toString(), false);
+            }
+        });
+        View deleteButton = view.findViewById(R.id.delete);
+        deleteButton.setVisibility(View.VISIBLE);
+        deleteButton.setOnClickListener((unusedView) -> {
+            if (mNumber.length() != 0) {
+                mNumber.deleteCharAt(mNumber.length() - 1);
+                mNumberView.setText(getFormattedNumber(mNumber.toString()));
+            }
+        });
 
         setupKeypad(view);
 
