@@ -76,11 +76,6 @@ public class ContactDetailsFragment extends Fragment
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.contact_details, container, false);
         mListView = v.findViewById(R.id.list_view);
-        // Disable the default recyclerview decoration.
-        mListView.setDefaultItemDecoration(new PagedListView.DividerDecoration(getContext()) {
-            @Override
-            public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) { }
-        });
         return v;
     }
 
