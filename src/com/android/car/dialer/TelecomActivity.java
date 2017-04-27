@@ -22,6 +22,8 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar.LayoutParams;
@@ -57,29 +59,29 @@ import static android.support.v7.widget.Toolbar.LayoutParams.MATCH_PARENT;
  */
 public class TelecomActivity extends CarDrawerActivity implements
         DialerFragment.DialerBackButtonListener {
-    private static final String TAG = "Em.TelecomActivity";
+    private static final String TAG = "TelecomActivity";
 
     private static final String ACTION_ANSWER_CALL = "com.android.car.dialer.ANSWER_CALL";
     private static final String ACTION_END_CALL = "com.android.car.dialer.END_CALL";
+
     private static final String DIALER_BACKSTACK = "DialerBackstack";
-    private static final String FRAGMENT_CLASS_KEY = "FRAGMENT_CLASS_KEY";
+    private static final String CONTENT_FRAGMENT_TAG = "CONTENT_FRAGMENT_TAG";
+    private static final String DIALER_FRAGMENT_TAG = "DIALER_FRAGMENT_TAG";
 
     private final UiBluetoothMonitor.Listener mBluetoothListener = this::updateCurrentFragment;
 
     private UiCallManager mUiCallManager;
     private UiBluetoothMonitor mUiBluetoothMonitor;
 
-    private Fragment mCurrentFragment;
-    private String mCurrentFragmentName;
-
-    private int mLastNoHfpMessageId;
-    private StrequentsFragment mSpeedDialFragment;
-    private Fragment mOngoingCallFragment;
-
-    private DialerFragment mDialerFragment;
-    private boolean mDialerFragmentOpened;
-
-    private SearchView mSearchView;
+    /**
+     * Whether or not it is safe to make transactions on the
+     * {@link android.support.v4.app.FragmentManager}. This variable prevents a possible exception
+     * when calling commit() on the FragmentManager.
+     *
+     * <p>The default value is {@code true} because it is only after
+     * {@link #onSaveInstanceState(Bundle)} that fragment commits are not allowed.
+     */
+    private boolean mAllowFragmentCommits = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,14 +95,6 @@ public class TelecomActivity extends CarDrawerActivity implements
 
         mUiCallManager = new UiCallManager(this);
         mUiBluetoothMonitor = new UiBluetoothMonitor(this);
-
-        if (savedInstanceState != null) {
-            mCurrentFragmentName = savedInstanceState.getString(FRAGMENT_CLASS_KEY);
-        }
-
-        if (vdebug()) {
-            Log.d(TAG, "onCreate done, mCurrentFragmentName:  " + mCurrentFragmentName);
-        }
     }
 
     @Override
@@ -131,9 +125,7 @@ public class TelecomActivity extends CarDrawerActivity implements
 
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
-
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        mSearchView = searchView;
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -149,17 +141,17 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         mUiCallManager.removeListener(mCarCallListener);
         mUiBluetoothMonitor.removeListener(mBluetoothListener);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (mCurrentFragment != null) {
-            outState.putString(FRAGMENT_CLASS_KEY, mCurrentFragmentName);
-        }
+        // A transaction can only be committed with this method prior to its containing activity
+        // saving its state.
+        mAllowFragmentCommits = false;
         super.onSaveInstanceState(outState);
     }
 
@@ -170,11 +162,15 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     @Override
-    protected void onResume() {
+    protected void onStart() {
         if (vdebug()) {
-            Log.d(TAG, "onResume");
+            Log.d(TAG, "onStart");
         }
-        super.onResume();
+        super.onStart();
+
+        // Fragment commits are not allowed once the Activity's state has been saved. Once
+        // onStart() has been called, the FragmentManager should now allow commits.
+        mAllowFragmentCommits = true;
 
         // Update the current fragment before handling the intent so that any UI updates in
         // handleIntent() is not overridden by updateCurrentFragment().
@@ -183,27 +179,6 @@ public class TelecomActivity extends CarDrawerActivity implements
 
         mUiCallManager.addListener(mCarCallListener);
         mUiBluetoothMonitor.addListener(mBluetoothListener);
-    }
-
-    // TODO: move to base class.
-    private void setContentFragmentWithAnimations(Fragment fragment, int enter, int exit) {
-        if (vdebug()) {
-            Log.d(TAG, "setContentFragmentWithAnimations: " + fragment);
-        }
-
-        maybeHideDialer();
-
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(enter, exit)
-                .replace(getContentContainerId(), fragment)
-                .commitAllowingStateLoss();
-
-        mCurrentFragmentName = fragment.getClass().getSimpleName();
-        mCurrentFragment = fragment;
-
-        if (vdebug()) {
-            Log.d(TAG, "setContentFragmentWithAnimations, fragmentName:" + mCurrentFragmentName);
-        }
     }
 
     private void handleIntent() {
@@ -240,14 +215,15 @@ public class TelecomActivity extends CarDrawerActivity implements
 
             case Intent.ACTION_DIAL:
                 String number = PhoneNumberUtils.getNumberFromIntent(intent, this);
-                if (!(mCurrentFragment instanceof NoHfpFragment)) {
-                    showDialerWithNumber(number);
+                if (!(getCurrentFragment() instanceof NoHfpFragment)) {
+                    showDialer(number);
                 }
                 break;
 
             case SEARCH_SUGGESTION_CLICKED:
                 Uri contactUri = intent.getData();
-                showContactDetailFragment(contactUri);
+                setContentFragment(
+                        ContactDetailsFragment.newInstance(contactUri, mUiCallManager));
                 break;
 
             default:
@@ -258,14 +234,12 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     /**
-     * Will switch to the drawer or no-hfp fragment as necessary.
+     * Updates the content fragment of this Activity based on the state of the application.
      */
     private void updateCurrentFragment() {
         if (vdebug()) {
-            Log.d(TAG, "updateCurrentFragment");
+            Log.d(TAG, "updateCurrentFragment()");
         }
-
-        // TODO: do nothing when activity isFinishing() == true.
 
         boolean callEmpty = mUiCallManager.getCalls().isEmpty();
         if (!mUiBluetoothMonitor.isBluetoothEnabled() && callEmpty) {
@@ -279,15 +253,13 @@ public class TelecomActivity extends CarDrawerActivity implements
 
             if (vdebug()) {
                 Log.d(TAG, "ongoingCall: " + ongoingCall + ", mCurrentFragment: "
-                        + mCurrentFragment);
+                        + getCurrentFragment());
             }
 
-            if (ongoingCall == null && mCurrentFragment instanceof OngoingCallFragment) {
+            if (ongoingCall == null && getCurrentFragment() instanceof OngoingCallFragment) {
                 showSpeedDialFragment();
             } else if (ongoingCall != null) {
                 showOngoingCallFragment();
-            } else if (DialerFragment.class.getSimpleName().equals(mCurrentFragmentName)) {
-                showDialer();
             } else {
                 showSpeedDialFragment();
             }
@@ -303,20 +275,15 @@ public class TelecomActivity extends CarDrawerActivity implements
             Log.d(TAG, "showSpeedDialFragment");
         }
 
-        if (mCurrentFragment instanceof StrequentsFragment) {
+        if (!mAllowFragmentCommits || getCurrentFragment() instanceof StrequentsFragment) {
             return;
         }
 
-        if (mSpeedDialFragment == null) {
-            mSpeedDialFragment = StrequentsFragment.newInstance(mUiCallManager);
-            Bundle args = new Bundle();
-            mSpeedDialFragment.setArguments(args);
-        }
-
-        if (mCurrentFragment instanceof DialerFragment) {
-            setContentFragmentWithSlideAndDelayAnimation(mSpeedDialFragment);
+        Fragment fragment = StrequentsFragment.newInstance(mUiCallManager);
+        if (getCurrentFragment() instanceof DialerFragment) {
+            setContentFragmentWithSlideAndDelayAnimation(fragment);
         } else {
-            setContentFragmentWithFadeAnimation(mSpeedDialFragment);
+            setContentFragmentWithFadeAnimation(fragment);
         }
     }
 
@@ -324,40 +291,39 @@ public class TelecomActivity extends CarDrawerActivity implements
         if (vdebug()) {
             Log.d(TAG, "showOngoingCallFragment");
         }
-        if (mCurrentFragment instanceof OngoingCallFragment) {
+        if (!mAllowFragmentCommits || getCurrentFragment() instanceof OngoingCallFragment) {
             closeDrawer();
             return;
         }
 
-        if (mOngoingCallFragment == null) {
-            mOngoingCallFragment =
-                    OngoingCallFragment.newInstance(mUiCallManager, mUiBluetoothMonitor);
-        }
-
-        setContentFragmentWithFadeAnimation(mOngoingCallFragment);
+        Fragment fragment = OngoingCallFragment.newInstance(mUiCallManager, mUiBluetoothMonitor);
+        setContentFragmentWithFadeAnimation(fragment);
         closeDrawer();
     }
 
-    /**
-     * Displays the {@link DialerFragment} on top of the contents of the TelecomActivity.
-     */
     private void showDialer() {
         if (vdebug()) {
             Log.d(TAG, "showDialer");
         }
 
-        if (mDialerFragmentOpened) {
+        showDialer(null /* dialNumber */);
+    }
+
+    /**
+     * Displays the {@link DialerFragment} and initialize it with the given phone number.
+     */
+    private void showDialer(@Nullable String dialNumber) {
+        if (vdebug()) {
+            Log.d(TAG, "showDialer with number: " + dialNumber);
+        }
+
+        if (!mAllowFragmentCommits ||
+                getSupportFragmentManager().findFragmentByTag(DIALER_FRAGMENT_TAG) != null) {
             return;
         }
 
-        if (mDialerFragment == null) {
-            if (Log.isLoggable(TAG, Log.VERBOSE)) {
-                Log.v(TAG, "showDialer: creating dialer");
-            }
-
-            mDialerFragment = DialerFragment.newInstance(mUiCallManager);
-            mDialerFragment.setDialerBackButtonListener(this);
-        }
+        Fragment fragment =
+                DialerFragment.newInstance(mUiCallManager, this /* listener */, dialNumber);
 
         if (Log.isLoggable(TAG, Log.VERBOSE)) {
             Log.v(TAG, "adding dialer to fragment backstack");
@@ -367,11 +333,9 @@ public class TelecomActivity extends CarDrawerActivity implements
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.telecom_slide_in, R.anim.telecom_slide_out,
                         R.anim.telecom_slide_in, R.anim.telecom_slide_out)
-                .add(getContentContainerId(), mDialerFragment)
+                .add(getContentContainerId(), fragment, DIALER_FRAGMENT_TAG)
                 .addToBackStack(DIALER_BACKSTACK)
-                .commitAllowingStateLoss();
-
-        mDialerFragmentOpened = true;
+                .commit();
 
         if (Log.isLoggable(TAG, Log.VERBOSE)) {
             Log.v(TAG, "done adding fragment to backstack");
@@ -382,10 +346,10 @@ public class TelecomActivity extends CarDrawerActivity implements
      * Checks if the dialpad fragment is opened and hides it if it is.
      */
     private void maybeHideDialer() {
-        if (mDialerFragmentOpened) {
-            // Dismiss the dialer by removing it from the back stack.
+        // The dialer is the only fragment to be added to the back stack. Dismiss the dialer by
+        // removing it from the back stack.
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
-            mDialerFragmentOpened = false;
         }
     }
 
@@ -394,30 +358,19 @@ public class TelecomActivity extends CarDrawerActivity implements
         maybeHideDialer();
     }
 
-    private void showDialerWithNumber(String number) {
-        showDialer();
-        mDialerFragment.setDialNumber(number);
-    }
-
-    private void showNoHfpFragment(int stringResId) {
-        if (mCurrentFragment instanceof NoHfpFragment && stringResId == mLastNoHfpMessageId) {
+    private void showNoHfpFragment(@StringRes int stringResId) {
+        if (!mAllowFragmentCommits) {
             return;
         }
 
-        mLastNoHfpMessageId = stringResId;
         String errorMessage = getString(stringResId);
-        NoHfpFragment frag = new NoHfpFragment();
-        frag.setErrorMessage(errorMessage);
-        setContentFragment(frag);
-        mCurrentFragment = frag;
-    }
+        Fragment currentFragment = getCurrentFragment();
 
-
-    private void showContactDetailFragment(Uri contactUri) {
-        ContactDetailsFragment fragment =
-                ContactDetailsFragment.newInstance(contactUri, mUiCallManager);
-        setContentFragment(fragment);
-        mCurrentFragment = fragment;
+        if (currentFragment instanceof NoHfpFragment) {
+            ((NoHfpFragment) currentFragment).setErrorMessage(errorMessage);
+        } else {
+            setContentFragment(NoHfpFragment.newInstance(errorMessage));
+        }
     }
 
     private void setContentFragmentWithSlideAndDelayAnimation(Fragment fragment) {
@@ -434,6 +387,41 @@ public class TelecomActivity extends CarDrawerActivity implements
         }
         setContentFragmentWithAnimations(fragment,
                 R.anim.telecom_fade_in, R.anim.telecom_fade_out);
+    }
+
+    private void setContentFragmentWithAnimations(Fragment fragment, int enter, int exit) {
+        if (vdebug()) {
+            Log.d(TAG, "setContentFragmentWithAnimations: " + fragment);
+        }
+
+        maybeHideDialer();
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(enter, exit)
+                .replace(getContentContainerId(), fragment, CONTENT_FRAGMENT_TAG)
+                .commitNow();
+    }
+
+    /**
+     * Sets the fragment that will be shown as the main content of this Activity. Note that this
+     * fragment is not always visible. In particular, the dialer fragment can show up on top of this
+     * fragment.
+     */
+    private void setContentFragment(Fragment fragment) {
+        maybeHideDialer();
+        getSupportFragmentManager().beginTransaction()
+                .replace(getContentContainerId(), fragment, CONTENT_FRAGMENT_TAG)
+                .commitNow();
+    }
+
+    /**
+     * Returns the fragment that is currently being displayed as the content view. Note that this
+     * is not necessarily the fragment that is visible. For example, the returned fragment
+     * could be the content, but the dial fragment is being displayed on top of it. Check for
+     * the existence of the dial fragment with the TAG {@link #DIALER_FRAGMENT_TAG}.
+     */
+    @Nullable
+    private Fragment getCurrentFragment() {
+        return getSupportFragmentManager().findFragmentByTag(CONTENT_FRAGMENT_TAG);
     }
 
     private final CallListener mCarCallListener = new UiCallManager.CallListener() {
@@ -470,12 +458,6 @@ public class TelecomActivity extends CarDrawerActivity implements
         }
     };
 
-    private void setContentFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(getContentContainerId(), fragment)
-                .commit();
-    }
-
     private static boolean vdebug() {
         return Log.isLoggable(TAG, Log.DEBUG);
     }
@@ -506,9 +488,10 @@ public class TelecomActivity extends CarDrawerActivity implements
 
         @Override
         public void populateViewHolder(DrawerItemViewHolder holder, int position) {
-            holder.getTitle().setText(mItems.get(position).mTitle);
-            holder.getText().setText(mItems.get(position).mText);
-            holder.getIcon().setImageBitmap(mItems.get(position).mIcon);
+            CallLogListingTask.CallLogItem item = mItems.get(position);
+            holder.getTitle().setText(item.mTitle);
+            holder.getText().setText(item.mText);
+            holder.getIcon().setImageBitmap(item.mIcon);
         }
 
         @Override

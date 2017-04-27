@@ -18,7 +18,6 @@ package com.android.car.dialer;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Canvas;
@@ -27,13 +26,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.view.PagedListView;
@@ -45,8 +44,8 @@ import com.android.car.view.PagedListView;
 public class StrequentsFragment extends Fragment {
     private static final String TAG = "Em.StrequentsFrag";
 
-    public static final String KEY_MAX_CLICKS = "max_clicks";
-    public static final int DEFAULT_MAX_CLICKS = 6;
+    private static final String KEY_MAX_CLICKS = "max_clicks";
+    private static final int DEFAULT_MAX_CLICKS = 6;
 
     private UiCallManager mUiCallManager;
     private StrequentsAdapter mAdapter;
@@ -85,7 +84,6 @@ public class StrequentsFragment extends Fragment {
         mListView = (PagedListView) view.findViewById(R.id.list_view);
         mListView.getLayoutManager().setOffsetRows(true);
 
-        Bundle args = getArguments();
         mSpeedialCursorLoader = PhoneLoader.registerCallObserver(PhoneLoader.CALL_TYPE_SPEED_DIAL,
             mContext, (loader, cursor) -> {
                 if (Log.isLoggable(TAG, Log.DEBUG)) {
@@ -115,9 +113,10 @@ public class StrequentsFragment extends Fragment {
                 false, new CallLogContentObserver(new Handler()));
 
         // Maximum number of forward acting clicks the user can perform
-
-        int maxClicks = args.getInt(KEY_MAX_CLICKS,
-                DEFAULT_MAX_CLICKS /* G.maxForwardClicks.get() */);
+        Bundle args = getArguments();
+        int maxClicks = args == null
+                ? DEFAULT_MAX_CLICKS
+                : args.getInt(KEY_MAX_CLICKS, DEFAULT_MAX_CLICKS /* G.maxForwardClicks.get() */);
         // We want to show one fewer page than max clicks to allow clicking on an item,
         // but, the first page is "free" since it doesn't take any clicks to show
         final int maxPages = maxClicks < 0 ? -1 : maxClicks;
@@ -299,7 +298,7 @@ public class StrequentsFragment extends Fragment {
 
                 RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) child.getLayoutParams();
                 int bottom = child.getBottom() + lp.bottomMargin
-                        + Math.round(ViewCompat.getTranslationY(child));
+                        + Math.round(child.getTranslationY());
                 int top = bottom - mDividerHeight;
 
                 if (top >= c.getHeight() || top < 0) {

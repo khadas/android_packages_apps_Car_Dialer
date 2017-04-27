@@ -48,8 +48,8 @@ import java.util.List;
 public class ContactDetailsFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "ContactDetailsFragment";
-    private static final int DETAILS_QUERY_ID = 31415;
-    private static final int PHONE_QUERY_ID = 42;
+    private static final int DETAILS_LOADER_QUERY_ID = 1;
+    private static final int PHONE_LOADER_QUERY_ID = 2;
     private static final String KEY_URI = "uri";
 
     private static final String[] CONTACT_DETAILS_PROJECTION = {
@@ -64,10 +64,12 @@ public class ContactDetailsFragment extends Fragment
 
     public static ContactDetailsFragment newInstance(Uri uri, UiCallManager callManager) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
+        fragment.mCallManager = callManager;
+
         Bundle args = new Bundle();
         args.putParcelable(KEY_URI, uri);
         fragment.setArguments(args);
-        fragment.mCallManager = callManager;
+
         return fragment;
     }
 
@@ -82,7 +84,7 @@ public class ContactDetailsFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(DETAILS_QUERY_ID, null, this);
+        getLoaderManager().initLoader(DETAILS_LOADER_QUERY_ID, null, this);
     }
 
     @Override
@@ -91,7 +93,7 @@ public class ContactDetailsFragment extends Fragment
             Log.d(TAG, "onCreateLoader id=" + id);
         }
 
-        if (id != DETAILS_QUERY_ID) {
+        if (id != DETAILS_LOADER_QUERY_ID) {
             return null;
         }
 
@@ -125,8 +127,6 @@ public class ContactDetailsFragment extends Fragment
         public TextView text;
         public ImageView rightIcon;
 
-        private int mViewType;
-
         public ContactDetailViewHolder(View v) {
             super(v);
             card = v.findViewById(R.id.card);
@@ -143,24 +143,17 @@ public class ContactDetailsFragment extends Fragment
         private static final int ID_HEADER = 1;
         private static final int ID_CONTENT = 2;
 
-        private final List<ContactDetailViewHolder> mData = new ArrayList<>();
-        private final Cursor mCursor;
-
         private final String mContactName;
-        private final String mContactPhotoUri;
 
         private List<Pair<String, String>> mPhoneNumbers = new ArrayList<>();
 
         public ContactDetailsAdapter(Cursor cursor) {
             super();
-            mCursor = cursor;
 
             int idColIdx = cursor.getColumnIndex(ContactsContract.Contacts._ID);
             String contactId = cursor.getString(idColIdx);
             int nameColIdx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
             mContactName = cursor.getString(nameColIdx);
-            int photoColIdx = cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI);
-            mContactPhotoUri = cursor.getString(photoColIdx);
             int hasPhoneColIdx = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
             boolean hasPhoneNumber = Integer.parseInt(cursor.getString(hasPhoneColIdx)) > 0;
 
@@ -169,7 +162,7 @@ public class ContactDetailsFragment extends Fragment
             }
 
             // Fetch the phone number from the contacts db using another loader.
-            getLoaderManager().initLoader(PHONE_QUERY_ID, null,
+            getLoaderManager().initLoader(PHONE_LOADER_QUERY_ID, null,
                     new LoaderManager.LoaderCallbacks<Cursor>() {
                 @Override
                 public Loader<Cursor> onCreateLoader(int id, Bundle args) {

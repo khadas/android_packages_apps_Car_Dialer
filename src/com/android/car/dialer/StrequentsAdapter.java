@@ -40,12 +40,11 @@ import java.util.List;
 
 /**
  * Adapter class for populating Contact data as loaded from the DB to an AA GroupingRecyclerView.
- *
- * <p>It handles two types of contacts:
- *
+ * It handles two types of contacts:
+ * <p>
  * <ul>
- *     <li>Strequent contacts (starred and/or frequent)</li>
- *     <li>Last call contact</li>
+ *     <li>Strequent contacts (starred and/or frequent)
+ *     <li>Last call contact
  * </ul>
  */
 public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
@@ -82,10 +81,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
     public void setStrequentsListener(@Nullable StrequentsListener<CallLogViewHolder> listener) {
         mStrequentsListener = listener;
-    }
-
-    public void setFocusChangeListener(@Nullable View.OnFocusChangeListener listener) {
-        mFocusChangeListener = listener;
     }
 
     public void setLastCallCursor(@Nullable Cursor cursor) {
@@ -304,7 +299,7 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
         // If we set this to 0, getRelativeTime will return null and no relative time
         // will be displayed.
         long millis = column == -1 ? 0 : cursor.getLong(column);
-        StringBuffer secondaryText = new StringBuffer();
+        StringBuilder secondaryText = new StringBuilder();
         CharSequence relativeDate = getRelativeTime(millis);
         if (!isVoicemail) {
             CharSequence type = TelecomUtils.getTypeFromNumber(mContext, number);
