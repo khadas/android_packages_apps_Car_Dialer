@@ -15,6 +15,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          android:sharedUserId="com.android.car.dialermessenger.uid.shared"
     package="com.android.car.dialer">
 
     <uses-sdk android:minSdkVersion="23" android:targetSdkVersion='23'/>
