@@ -15,24 +15,20 @@
  */
 package com.android.car.dialer;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar.LayoutParams;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MenuInflater;
+import android.view.View;
 
 import com.android.car.app.CarDrawerActivity;
 import com.android.car.app.CarDrawerAdapter;
@@ -43,9 +39,6 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.telecom.UiCallManager.CallListener;
 
 import java.util.List;
-
-import static android.provider.Contacts.Intents.SEARCH_SUGGESTION_CLICKED;
-import static android.support.v7.widget.Toolbar.LayoutParams.MATCH_PARENT;
 
 /**
  * Main activity for the Dialer app. Displays different fragments depending on call and
@@ -90,44 +83,16 @@ public class TelecomActivity extends CarDrawerActivity implements
         if (vdebug()) {
             Log.d(TAG, "onCreate");
         }
+
+        setMainContent(R.layout.telecom_activity);
         getWindow().getDecorView().setBackgroundColor(getColor(R.color.phone_theme));
         setTitle(getString(R.string.phone_app_name));
 
         mUiCallManager = new UiCallManager(this);
         mUiBluetoothMonitor = new UiBluetoothMonitor(this);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (vdebug()) {
-            Log.d(TAG, "onCreateOptionsMenu");
-        }
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        MenuItem searchItem = menu.findItem(R.id.search);
-        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                // The back arrow on the search view causes this to trigger. It isn't really a back
-                // at all so we can't use the back stack and instead we just set the speed dial
-                // fragment manually.
-                showSpeedDialFragment();
-                return true;
-            }
-        });
-
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setLayoutParams(new LayoutParams(MATCH_PARENT, MATCH_PARENT));
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return super.onCreateOptionsMenu(menu);
+        findViewById(R.id.search).setOnClickListener(
+                v -> startActivity(new Intent(this, ContactSearchActivity.class)));
     }
 
     @Override
@@ -193,6 +158,7 @@ public class TelecomActivity extends CarDrawerActivity implements
             return;
         }
 
+        String number;
         UiCall ringingCall;
         switch (action) {
             case ACTION_ANSWER_CALL:
@@ -214,16 +180,15 @@ public class TelecomActivity extends CarDrawerActivity implements
                 break;
 
             case Intent.ACTION_DIAL:
-                String number = PhoneNumberUtils.getNumberFromIntent(intent, this);
+                number = PhoneNumberUtils.getNumberFromIntent(intent, this);
                 if (!(getCurrentFragment() instanceof NoHfpFragment)) {
                     showDialer(number);
                 }
                 break;
 
-            case SEARCH_SUGGESTION_CLICKED:
-                Uri contactUri = intent.getData();
-                setContentFragment(
-                        ContactDetailsFragment.newInstance(contactUri, mUiCallManager));
+            case Intent.ACTION_CALL:
+                number = PhoneNumberUtils.getNumberFromIntent(intent, this);
+                mUiCallManager.safePlaceCall(number, false /* bluetoothRequired */);
                 break;
 
             default:
@@ -333,7 +298,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.telecom_slide_in, R.anim.telecom_slide_out,
                         R.anim.telecom_slide_in, R.anim.telecom_slide_out)
-                .add(getContentContainerId(), fragment, DIALER_FRAGMENT_TAG)
+                .add(R.id.content_fragment_container, fragment, DIALER_FRAGMENT_TAG)
                 .addToBackStack(DIALER_BACKSTACK)
                 .commit();
 
@@ -397,7 +362,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         maybeHideDialer();
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(enter, exit)
-                .replace(getContentContainerId(), fragment, CONTENT_FRAGMENT_TAG)
+                .replace(R.id.content_fragment_container, fragment, CONTENT_FRAGMENT_TAG)
                 .commitNow();
     }
 
@@ -409,7 +374,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     private void setContentFragment(Fragment fragment) {
         maybeHideDialer();
         getSupportFragmentManager().beginTransaction()
-                .replace(getContentContainerId(), fragment, CONTENT_FRAGMENT_TAG)
+                .replace(R.id.content_fragment_container, fragment, CONTENT_FRAGMENT_TAG)
                 .commitNow();
     }
 

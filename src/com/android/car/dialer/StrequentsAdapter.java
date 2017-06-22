@@ -24,10 +24,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -84,8 +84,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     }
 
     public void setLastCallCursor(@Nullable Cursor cursor) {
-        Log.e("StrequentsAdapter", "cursor: " + cursor);
-        Log.e("StrequentsAdapter", "count: " + (cursor == null ? 0 : cursor.getCount()));
         mLastCallData = convertLastCallCursor(cursor);
         notifyDataSetChanged();
     }

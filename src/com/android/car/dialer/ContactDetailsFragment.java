@@ -15,15 +15,17 @@
  */
 package com.android.car.dialer;
 
+import android.app.Fragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.support.annotation.ColorInt;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
@@ -34,7 +36,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.car.dialer.telecom.TelecomUtils;
-import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.view.PagedListView;
 
 import java.util.ArrayList;
@@ -42,14 +43,17 @@ import java.util.List;
 
 /**
  * A fragment that shows the name of the contact, the photo and all listed phone numbers. It is
- * primarily used to respond to the results of search queries but supplying it with the content://
+ * primarily used to respond to the results of search queries but supplyig it with the content://
  * uri of a contact should work too.
  */
 public class ContactDetailsFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "ContactDetailsFragment";
+    private static final String TELEPHONE_URI_PREFIX = "tel:";
+
     private static final int DETAILS_LOADER_QUERY_ID = 1;
     private static final int PHONE_LOADER_QUERY_ID = 2;
+
     private static final String KEY_URI = "uri";
 
     private static final String[] CONTACT_DETAILS_PROJECTION = {
@@ -60,11 +64,12 @@ public class ContactDetailsFragment extends Fragment
     };
 
     private PagedListView mListView;
-    private UiCallManager mCallManager;
+    private List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
 
-    public static ContactDetailsFragment newInstance(Uri uri, UiCallManager callManager) {
+    public static ContactDetailsFragment newInstance(Uri uri,
+            @Nullable RecyclerView.OnScrollListener listener) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
-        fragment.mCallManager = callManager;
+        fragment.addOnScrollListener(listener);
 
         Bundle args = new Bundle();
         args.putParcelable(KEY_URI, uri);
@@ -76,15 +81,49 @@ public class ContactDetailsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.contact_details, container, false);
-        mListView = v.findViewById(R.id.list_view);
-        return v;
+        return inflater.inflate(R.layout.contact_details, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        mListView = view.findViewById(R.id.list_view);
+        mListView.setLightMode();
+
+        RecyclerView recyclerView = mListView.getRecyclerView();
+        for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
+            recyclerView.addOnScrollListener(listener);
+        }
+
+        mOnScrollListeners.clear();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(DETAILS_LOADER_QUERY_ID, null, this);
+    }
+
+    /**
+     * Adds a {@link android.support.v7.widget.RecyclerView.OnScrollListener} to be notified when
+     * the contact details are scrolled.
+     *
+     * @see RecyclerView#addOnScrollListener(RecyclerView.OnScrollListener)
+     */
+    public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
+        // If the view has not been created yet, then queue the setting of the scroll listener.
+        if (mListView == null) {
+            mOnScrollListeners.add(onScrollListener);
+            return;
+        }
+
+        mListView.getRecyclerView().addOnScrollListener(onScrollListener);
+    }
+
+    @Override
+    public void onDestroy() {
+        // Clear all scroll listeners.
+        mListView.getRecyclerView().removeOnScrollListener(null);
+        super.onDestroy();
     }
 
     @Override
@@ -120,7 +159,7 @@ public class ContactDetailsFragment extends Fragment
         return Log.isLoggable(TAG, Log.DEBUG);
     }
 
-    class ContactDetailViewHolder extends RecyclerView.ViewHolder {
+    private class ContactDetailViewHolder extends RecyclerView.ViewHolder {
         public View card;
         public ImageView leftIcon;
         public TextView title;
@@ -137,18 +176,21 @@ public class ContactDetailsFragment extends Fragment
         }
     }
 
-    class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailViewHolder>
+    private class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailViewHolder>
             implements PagedListView.ItemCap {
 
         private static final int ID_HEADER = 1;
         private static final int ID_CONTENT = 2;
 
         private final String mContactName;
+        @ColorInt private int mIconTint;
 
         private List<Pair<String, String>> mPhoneNumbers = new ArrayList<>();
 
         public ContactDetailsAdapter(Cursor cursor) {
             super();
+
+            mIconTint = getContext().getColor(R.color.contact_details_icon_tint);
 
             int idColIdx = cursor.getColumnIndex(ContactsContract.Contacts._ID);
             String contactId = cursor.getString(idColIdx);
@@ -164,47 +206,47 @@ public class ContactDetailsFragment extends Fragment
             // Fetch the phone number from the contacts db using another loader.
             getLoaderManager().initLoader(PHONE_LOADER_QUERY_ID, null,
                     new LoaderManager.LoaderCallbacks<Cursor>() {
-                @Override
-                public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-                    return new CursorLoader(getContext(),
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null, /* All columns **/
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
-                            new String[] { contactId },
-                            null /* sortOrder */);
-                }
-
-                public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-                    while (cursor.moveToNext()) {
-                        int typeColIdx = cursor.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.TYPE);
-                        int type = cursor.getInt(typeColIdx);
-                        int numberColIdx = cursor.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER);
-                        String number = cursor.getString(numberColIdx);
-                        String numberType;
-                        switch (type) {
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                                numberType = getString(R.string.type_home);
-                                break;
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-                                numberType = getString(R.string.type_work);
-                                break;
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                                numberType = getString(R.string.type_mobile);
-                                break;
-                            default:
-                                numberType = getString(R.string.type_other);
+                        @Override
+                        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+                            return new CursorLoader(getContext(),
+                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                    null, /* All columns **/
+                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                                    new String[] { contactId },
+                                    null /* sortOrder */);
                         }
-                        mPhoneNumbers.add(new Pair<>(numberType,
-                                TelecomUtils.getFormattedNumber(getContext(), number)));
-                        notifyItemInserted(mPhoneNumbers.size());
-                    }
-                    notifyDataSetChanged();
-                }
 
-                public void onLoaderReset(Loader loader) {  }
-            });
+                        public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+                            while (cursor.moveToNext()) {
+                                int typeColIdx = cursor.getColumnIndex(
+                                        ContactsContract.CommonDataKinds.Phone.TYPE);
+                                int type = cursor.getInt(typeColIdx);
+                                int numberColIdx = cursor.getColumnIndex(
+                                        ContactsContract.CommonDataKinds.Phone.NUMBER);
+                                String number = cursor.getString(numberColIdx);
+                                String numberType;
+                                switch (type) {
+                                    case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
+                                        numberType = getString(R.string.type_home);
+                                        break;
+                                    case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
+                                        numberType = getString(R.string.type_work);
+                                        break;
+                                    case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
+                                        numberType = getString(R.string.type_mobile);
+                                        break;
+                                    default:
+                                        numberType = getString(R.string.type_other);
+                                }
+                                mPhoneNumbers.add(new Pair<>(numberType,
+                                        TelecomUtils.getFormattedNumber(getContext(), number)));
+                                notifyItemInserted(mPhoneNumbers.size());
+                            }
+                            notifyDataSetChanged();
+                        }
+
+                        public void onLoaderReset(Loader loader) {  }
+                    });
         }
 
         /**
@@ -247,6 +289,7 @@ public class ContactDetailsFragment extends Fragment
             return mPhoneNumbers.size() + 1;  // +1 for the header row.
         }
 
+        @Override
         public ContactDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             int layoutResId;
             switch (viewType) {
@@ -265,6 +308,7 @@ public class ContactDetailsFragment extends Fragment
             return new ContactDetailViewHolder(view);
         }
 
+        @Override
         public void onBindViewHolder(ContactDetailViewHolder viewHolder, int position) {
             switch (viewHolder.getItemViewType()) {
                 case ID_HEADER:
@@ -282,8 +326,11 @@ public class ContactDetailsFragment extends Fragment
                     viewHolder.title.setText(data.first);  // Type.
                     viewHolder.text.setText(data.second);  // Number.
                     viewHolder.leftIcon.setImageResource(R.drawable.ic_phone);
+                    viewHolder.leftIcon.setColorFilter(mIconTint);
                     viewHolder.card.setOnClickListener(v -> {
-                        mCallManager.safePlaceCall(data.second, false);
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse(TELEPHONE_URI_PREFIX + data.second));
+                        getContext().startActivity(callIntent);
                     });
                     break;
                 default:
