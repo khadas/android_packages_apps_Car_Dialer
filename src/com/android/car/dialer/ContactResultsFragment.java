@@ -18,11 +18,9 @@ package com.android.car.dialer;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
@@ -89,7 +87,6 @@ public class ContactResultsFragment extends Fragment implements
         mContactResultList = view.findViewById(R.id.contact_result_list);
         mContactResultList.setLightMode();
         mContactResultList.setAdapter(mAdapter);
-        mContactResultList.setDefaultItemDecoration(new ItemSpacingDecoration(getContext()));
         mContactResultList.getLayoutManager().setOffsetRows(false);
 
         RecyclerView recyclerView = mContactResultList.getRecyclerView();
@@ -188,44 +185,5 @@ public class ContactResultsFragment extends Fragment implements
         }
 
         return fragment;
-    }
-
-    /**
-     * A {@link com.android.car.view.PagedListView.Decoration} that draws a line between
-     * the items.
-     */
-    public static class ItemSpacingDecoration extends PagedListView.DividerDecoration {
-        private final int mLineStart;
-
-        public ItemSpacingDecoration(Context context) {
-            super(context);
-            mLineStart = context.getResources()
-                    .getDimensionPixelSize(R.dimen.stream_card_keyline_2);
-        }
-
-        @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            View contactCard = parent.findViewById(R.id.contact_result_card);
-
-            if (contactCard == null) {
-                return;
-            }
-
-            int left = mLineStart + contactCard.getLeft();
-            int right = contactCard.getRight();
-            int childCount = parent.getChildCount();
-
-            for (int i = 0; i < childCount; i++) {
-                View child = parent.getChildAt(i);
-                int bottom = child.getBottom();
-                int top = bottom - mDividerHeight;
-
-                // Draw a divider line between each item. No need to draw the line for the last
-                // item.
-                if (i != childCount - 1) {
-                    c.drawRect(left, top, right, bottom, mPaint);
-                }
-            }
-        }
     }
 }

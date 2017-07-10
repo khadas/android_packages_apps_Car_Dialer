@@ -18,9 +18,11 @@ package com.android.car.dialer;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -93,7 +95,7 @@ public class StrequentsFragment extends Fragment {
                 onLoadStrequentCursor(cursor);
 
                 if (mContext != null) {
-                    mListView.setDefaultItemDecoration(new Decoration(mContext));
+                    mListView.addItemDecoration(new Decoration(mContext));
                 }
             });
 
@@ -124,7 +126,6 @@ public class StrequentsFragment extends Fragment {
             Log.v(TAG, "Max clicks: " + maxClicks + ", Max pages: " + maxPages);
         }
 
-        mListView.removeDefaultItemDecoration();
         mListView.setLightMode();
         mAdapter = new StrequentsAdapter(mContext, mUiCallManager);
         mAdapter.setStrequentsListener(viewHolder -> {
@@ -255,16 +256,20 @@ public class StrequentsFragment extends Fragment {
     }
 
     /**
-     * Decoration for the speed dial cards. This is basically copied from the one in
-     * {@link PagedListView} except it won't show a divider between the dialpad item and the first
-     * speed dial item and the divider is offset but a couple of pixels to offset the fact that
-     * the cards overlap.
+     * Decoration for the speed dial cards. This ItemDecoration will not show a divider between
+     * the dialpad item and the first speed dial item and the divider is offset but a couple of
+     * pixels to offset the fact that the cards overlap.
      */
-    private static class Decoration extends PagedListView.DividerDecoration {
+    private static class Decoration extends RecyclerView.ItemDecoration {
+        private final Paint mPaint;
         private final int mPaintAlpha;
+        private final int mDividerHeight;
 
         public Decoration(Context context) {
-            super(context);
+            Resources res = context.getResources();
+            mPaint = new Paint();
+            mPaint.setColor(res.getColor(R.color.car_list_divider));
+            mDividerHeight = res.getDimensionPixelSize(R.dimen.car_divider_height);
             mPaintAlpha = mPaint.getAlpha();
         }
 
@@ -289,7 +294,7 @@ public class StrequentsFragment extends Fragment {
                 }
 
                 // The left edge of the divider should align with the left edge of text_container.
-                final LinearLayout container = (LinearLayout) child.findViewById(R.id.container);
+                LinearLayout container = child.findViewById(R.id.container);
                 View textContainer = child.findViewById(R.id.text_container);
                 View card = child.findViewById(R.id.call_log_card);
 
