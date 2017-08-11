@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.view.CardListBackgroundResolver;
 import com.android.car.view.PagedListView;
 
 import java.util.ArrayList;
@@ -250,7 +251,8 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             viewHolder.callTypeIconsView.add(callTypes[i]);
         }
 
-        setBackground(viewHolder);
+        CardListBackgroundResolver.setBackground(viewHolder.card,
+                viewHolder.getAdapterPosition(), getItemCount());
 
         TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, primaryText, number);
     }
@@ -348,31 +350,8 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             viewHolder.smallIcon.setVisibility(View.GONE);
         }
 
-        setBackground(viewHolder);
-    }
-
-    /**
-     * Appropriately sets the background for the View that is being bound. This method will allow
-     * for rounded corners on either the top or bottom of a card.
-     */
-    private void setBackground(CallLogViewHolder viewHolder) {
-        int itemCount = getItemCount();
-        int adapterPosition = viewHolder.getAdapterPosition();
-
-        if (itemCount == 1) {
-            // Only element - all corners are rounded
-            viewHolder.card.setBackgroundResource(
-                    R.drawable.car_card_rounded_top_bottom_background);
-        } else if (adapterPosition == 0) {
-            // First element gets rounded top
-            viewHolder.card.setBackgroundResource(R.drawable.car_card_rounded_top_background);
-        } else if (adapterPosition == itemCount - 1) {
-            // Last one has a rounded bottom
-            viewHolder.card.setBackgroundResource(R.drawable.car_card_rounded_bottom_background);
-        } else {
-            // Middle have no rounded corners
-            viewHolder.card.setBackgroundResource(R.color.car_card);
-        }
+        CardListBackgroundResolver.setBackground(viewHolder.card,
+                viewHolder.getAdapterPosition(), getItemCount());
     }
 
     /**
