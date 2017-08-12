@@ -28,7 +28,10 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
 
+    <!-- The Dialer needs to be directBootAware so that it can reflect the correct call state
+         when the system boots up. -->
     <application
+        android:directBootAware="true"
         android:label="@string/phone_app_name"
         android:icon="@drawable/ic_app_icon">
 
