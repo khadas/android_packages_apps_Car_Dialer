@@ -257,6 +257,9 @@ public class TelecomActivity extends CarDrawerActivity implements
             Log.d(TAG, "showOngoingCallFragment");
         }
         if (!mAllowFragmentCommits || getCurrentFragment() instanceof OngoingCallFragment) {
+            // in case the dialer is still open, (e.g. when dialing the second phone during
+            // a phone call), close it
+            maybeHideDialer();
             closeDrawer();
             return;
         }
