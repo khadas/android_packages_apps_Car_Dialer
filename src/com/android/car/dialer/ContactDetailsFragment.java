@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.car.dialer.telecom.TelecomUtils;
+import com.android.car.view.CardListBackgroundResolver;
 import com.android.car.view.PagedListView;
 
 import java.util.ArrayList;
@@ -249,31 +250,6 @@ public class ContactDetailsFragment extends Fragment
                     });
         }
 
-        /**
-         * Appropriately sets the background for the View that is being bound. This method will
-         * allow for rounded corners on either the top or bottom of a card.
-         */
-        private void setBackground(ContactDetailViewHolder viewHolder) {
-            int itemCount = getItemCount();
-            int adapterPosition = viewHolder.getAdapterPosition();
-
-            if (itemCount == 1) {
-                // Only element - all corners are rounded
-                viewHolder.card.setBackgroundResource(
-                        R.drawable.car_card_rounded_top_bottom_background);
-            } else if (adapterPosition == 0) {
-                // First element gets rounded top
-                viewHolder.card.setBackgroundResource(R.drawable.car_card_rounded_top_background);
-            } else if (adapterPosition == itemCount - 1) {
-                // Last one has a rounded bottom
-                viewHolder.card.setBackgroundResource(
-                        R.drawable.car_card_rounded_bottom_background);
-            } else {
-                // Middle have no rounded corners
-                viewHolder.card.setBackgroundResource(R.color.car_card);
-            }
-        }
-
         @Override
         public int getItemViewType(int position) {
             return position == 0 ? ID_HEADER : ID_CONTENT;
@@ -337,7 +313,8 @@ public class ContactDetailsFragment extends Fragment
                     Log.e(TAG, "Unknown view type " + viewHolder.getItemViewType());
                     return;
             }
-            setBackground(viewHolder);
+            CardListBackgroundResolver.setBackground(viewHolder.card,
+                    viewHolder.getAdapterPosition(), getItemCount());
         }
     }
 }

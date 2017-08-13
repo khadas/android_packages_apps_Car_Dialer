@@ -40,5 +40,4 @@
 
     <dimen name="call_log_icon_size">76dp</dimen>
     <dimen name="call_log_last_card_bottom_margin">@dimen/call_log_card_overlap</dimen>
-    <dimen name="call_log_last_card_corner_radius">16dp</dimen>
 </resources>
