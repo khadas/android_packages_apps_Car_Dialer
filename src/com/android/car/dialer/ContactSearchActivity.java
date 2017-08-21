@@ -29,6 +29,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.android.car.view.CarLayoutManager;
@@ -143,6 +144,10 @@ public class ContactSearchActivity extends Activity {
                 break;
 
             case TelecomIntents.ACTION_SHOW_CONTACT_DETAILS:
+                // Hide the keyboard so there's room on the screen for the detail view.
+                InputMethodManager imm =
+                        (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mSearchField.getWindowToken(), 0);
                 Uri contactUri = Uri.parse(intent.getStringExtra(
                         TelecomIntents.CONTACT_LOOKUP_URI_EXTRA));
                 setContentFragment(ContactDetailsFragment.newInstance(contactUri,
