@@ -27,12 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <include layout="@layout/car_list_item_2" />
+        <include layout="@layout/contact_detail_card_content" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/car_divider_height"
             android:background="@color/car_list_divider"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="@dimen/stream_card_keyline_2" />
+            android:layout_marginStart="@dimen/stream_card_keyline_2" />
     </com.android.car.stream.ui.StreamCardView>
 </FrameLayout>

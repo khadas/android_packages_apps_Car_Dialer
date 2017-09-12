@@ -146,7 +146,7 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
             case VIEW_TYPE_EMPTY:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.car_list_item_empty, parent, false);
+                        .inflate(R.layout.call_log_list_item_empty, parent, false);
                 return new CallLogViewHolder(view);
 
             case VIEW_TYPE_STREQUENT:
