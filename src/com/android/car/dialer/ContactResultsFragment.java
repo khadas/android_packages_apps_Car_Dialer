@@ -23,6 +23,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.Data;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -47,18 +48,25 @@ public class ContactResultsFragment extends Fragment implements
     private static final String KEY_INITIAL_SEARCH_QUERY = "initial_search_query";
 
     private static final String[] CONTACT_DETAILS_PROJECTION = {
-            ContactsContract.Contacts._ID,
-            ContactsContract.Contacts.LOOKUP_KEY,
-            ContactsContract.Contacts.DISPLAY_NAME,
-            ContactsContract.Contacts.PHOTO_URI
+            Data.CONTACT_ID,
+            Data.LOOKUP_KEY,
+            Data.DISPLAY_NAME,
+            Data.PHOTO_URI
     };
 
     /**
      * A selection criteria to filter contacts based on the query given by {@link #mSearchQuery}.
-     * That query is assumed to be the name of a contact.
+     * The query is search against partial matches of the contact's name
+     * (StructuredName.DISPLAY_NAME) or phone number (Phone.NUMBER)
      */
     private static final String CONTACT_SELECTION =
-            ContactsContract.Contacts.DISPLAY_NAME + " LIKE ? ";
+            "(" + ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME + " LIKE ? "
+                    + " AND " + Data.MIMETYPE + " = '" +
+                    ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE + "'"
+                    + ") OR ("
+                    + ContactsContract.CommonDataKinds.Phone.NUMBER + " LIKE ? "
+                    + " AND " + Data.MIMETYPE + " = '" +
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "'" + ")";
 
     private final ContactResultsAdapter mAdapter = new ContactResultsAdapter();
     private PagedListView mContactResultList;
@@ -144,15 +152,21 @@ public class ContactResultsFragment extends Fragment implements
         data.close();
     }
 
+    /**
+     * Finds the contacts with names or phone numbers that match the search query
+     */
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "onCreateLoader(); loaderId: " + loaderId + " with query: " + mSearchQuery);
         }
 
-        return new CursorLoader(getContext(), ContactsContract.Contacts.CONTENT_URI,
+        String[] mSelectionArgs =
+                new String[] { "%" + mSearchQuery + "%", "%" + mSearchQuery + "%" };
+
+        return new CursorLoader(getContext(), Data.CONTENT_URI,
                 CONTACT_DETAILS_PROJECTION, CONTACT_SELECTION,
-                new String[] { "%" + mSearchQuery + "%" }, null);
+                mSelectionArgs, null);
     }
 
     @Override
