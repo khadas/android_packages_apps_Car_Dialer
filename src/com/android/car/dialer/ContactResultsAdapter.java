@@ -53,10 +53,10 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
         mContacts.clear();
 
         while (data.moveToNext()) {
-            int idColIdx = data.getColumnIndex(ContactsContract.Contacts._ID);
-            int lookupColIdx = data.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
-            int nameColIdx = data.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-            int photoUriColIdx = data.getColumnIndex(ContactsContract.Contacts.PHOTO_URI);
+            int idColIdx = data.getColumnIndex(ContactsContract.Data.CONTACT_ID);
+            int lookupColIdx = data.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
+            int nameColIdx = data.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
+            int photoUriColIdx = data.getColumnIndex(ContactsContract.Data.PHOTO_URI);
 
             Uri lookupUri = ContactsContract.Contacts.getLookupUri(
                     data.getLong(idColIdx), data.getString(lookupColIdx));
