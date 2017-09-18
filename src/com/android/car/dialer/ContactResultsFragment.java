@@ -22,8 +22,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.Data;
+import android.provider.ContactsContract.Contacts;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -31,6 +30,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.net.Uri;
 
 import com.android.car.view.PagedListView;
 
@@ -48,25 +48,11 @@ public class ContactResultsFragment extends Fragment implements
     private static final String KEY_INITIAL_SEARCH_QUERY = "initial_search_query";
 
     private static final String[] CONTACT_DETAILS_PROJECTION = {
-            Data.CONTACT_ID,
-            Data.LOOKUP_KEY,
-            Data.DISPLAY_NAME,
-            Data.PHOTO_URI
+            Contacts._ID,
+            Contacts.LOOKUP_KEY,
+            Contacts.DISPLAY_NAME,
+            Contacts.PHOTO_URI
     };
-
-    /**
-     * A selection criteria to filter contacts based on the query given by {@link #mSearchQuery}.
-     * The query is search against partial matches of the contact's name
-     * (StructuredName.DISPLAY_NAME) or phone number (Phone.NUMBER)
-     */
-    private static final String CONTACT_SELECTION =
-            "(" + ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME + " LIKE ? "
-                    + " AND " + Data.MIMETYPE + " = '" +
-                    ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE + "'"
-                    + ") OR ("
-                    + ContactsContract.CommonDataKinds.Phone.NUMBER + " LIKE ? "
-                    + " AND " + Data.MIMETYPE + " = '" +
-                    ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "'" + ")";
 
     private final ContactResultsAdapter mAdapter = new ContactResultsAdapter();
     private PagedListView mContactResultList;
@@ -153,7 +139,9 @@ public class ContactResultsFragment extends Fragment implements
     }
 
     /**
-     * Finds the contacts with names or phone numbers that match the search query
+     * Finds the contacts with any field that matches the search query. Typically, the search
+     * criteria appears to be matching the beginning of the value in that data field (name, phone
+     * number, etc.)
      */
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
@@ -161,12 +149,15 @@ public class ContactResultsFragment extends Fragment implements
             Log.d(TAG, "onCreateLoader(); loaderId: " + loaderId + " with query: " + mSearchQuery);
         }
 
-        String[] mSelectionArgs =
-                new String[] { "%" + mSearchQuery + "%", "%" + mSearchQuery + "%" };
+        /* To lookup against all fields, just append the search query to the content filter uri
+         * and perform a lookup without any selection
+         */
+        Uri lookupUri = Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI,
+                Uri.encode(mSearchQuery));
 
-        return new CursorLoader(getContext(), Data.CONTENT_URI,
-                CONTACT_DETAILS_PROJECTION, CONTACT_SELECTION,
-                mSelectionArgs, null);
+        return new CursorLoader(getContext(), lookupUri,
+                CONTACT_DETAILS_PROJECTION, null /* selection */,
+                null /* selectionArgs */, null /* sortOrder */);
     }
 
     @Override
