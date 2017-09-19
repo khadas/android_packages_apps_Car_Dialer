@@ -18,7 +18,7 @@ package com.android.car.dialer;
 
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,12 +53,12 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
         mContacts.clear();
 
         while (data.moveToNext()) {
-            int idColIdx = data.getColumnIndex(ContactsContract.Data.CONTACT_ID);
-            int lookupColIdx = data.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
-            int nameColIdx = data.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
-            int photoUriColIdx = data.getColumnIndex(ContactsContract.Data.PHOTO_URI);
+            int idColIdx = data.getColumnIndex(Contacts._ID);
+            int lookupColIdx = data.getColumnIndex(Contacts.LOOKUP_KEY);
+            int nameColIdx = data.getColumnIndex(Contacts.DISPLAY_NAME);
+            int photoUriColIdx = data.getColumnIndex(Contacts.PHOTO_URI);
 
-            Uri lookupUri = ContactsContract.Contacts.getLookupUri(
+            Uri lookupUri = Contacts.getLookupUri(
                     data.getLong(idColIdx), data.getString(lookupColIdx));
 
             mContacts.add(new ContactResultViewHolder.ContactDetails(
