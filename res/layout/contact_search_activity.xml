@@ -57,7 +57,7 @@
                 android:tint="@color/car_grey_50" />
         </FrameLayout>
 
-        <com.android.car.stream.ui.StreamCardView
+        <android.support.car.widget.ColumnCardView
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="@dimen/search_container_height"
@@ -94,7 +94,7 @@
                 android:src="@drawable/ic_cancel"
                 android:scaleType="center"
                 android:tint="@color/search_container_controls_tint"/>
-        </com.android.car.stream.ui.StreamCardView>
+        </android.support.car.widget.ColumnCardView>
     </FrameLayout>
 
     <FrameLayout

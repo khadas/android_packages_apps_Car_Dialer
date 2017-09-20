@@ -22,7 +22,7 @@
     android:layout_marginBottom="@dimen/call_log_card_overlap"
     android:focusable="true">
 
-    <com.android.car.stream.ui.StreamCardView
+    <android.support.car.widget.ColumnCardView
         android:id="@+id/call_log_card"
         android:foreground="@drawable/dialer_ripple_background"
         android:layout_gravity="center"
@@ -30,5 +30,5 @@
         android:layout_height="@dimen/call_log_item_height" >
 
         <include layout="@layout/call_log_list_item_card_base" />
-    </com.android.car.stream.ui.StreamCardView>
+    </android.support.car.widget.ColumnCardView>
 </FrameLayout>
