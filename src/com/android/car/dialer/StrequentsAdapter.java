@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.provider.CallLog;
 import android.support.annotation.Nullable;
+import android.support.car.widget.PagedListView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -32,7 +33,6 @@ import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.view.CardListBackgroundResolver;
-import com.android.car.view.PagedListView;
 
 import java.util.ArrayList;
 import java.util.Collections;

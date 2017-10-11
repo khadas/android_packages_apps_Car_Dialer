@@ -27,6 +27,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.car.widget.DayNightStyle;
+import android.support.car.widget.PagedListView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,7 +39,6 @@ import android.widget.LinearLayout;
 
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.view.PagedListView;
 
 /**
  * Contains a list of contacts. The call types can be any of the CALL_TYPE_* fields from
@@ -126,7 +127,7 @@ public class StrequentsFragment extends Fragment {
             Log.v(TAG, "Max clicks: " + maxClicks + ", Max pages: " + maxPages);
         }
 
-        mListView.setLightMode();
+        mListView.setDayNightStyle(DayNightStyle.FORCE_NIGHT);
         mAdapter = new StrequentsAdapter(mContext, mUiCallManager);
         mAdapter.setStrequentsListener(viewHolder -> {
             if (Log.isLoggable(TAG, Log.DEBUG)) {

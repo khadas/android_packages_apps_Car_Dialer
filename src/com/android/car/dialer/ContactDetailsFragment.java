@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.car.widget.DayNightStyle;
+import android.support.car.widget.PagedListView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
@@ -37,7 +39,6 @@ import android.widget.TextView;
 
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.view.CardListBackgroundResolver;
-import com.android.car.view.PagedListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,7 @@ public class ContactDetailsFragment extends Fragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mListView = view.findViewById(R.id.list_view);
-        mListView.setLightMode();
+        mListView.setDayNightStyle(DayNightStyle.FORCE_NIGHT);
 
         RecyclerView recyclerView = mListView.getRecyclerView();
         for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {

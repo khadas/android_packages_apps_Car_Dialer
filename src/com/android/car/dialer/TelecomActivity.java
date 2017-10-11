@@ -23,6 +23,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.car.drawer.CarDrawerActivity;
+import android.support.car.drawer.CarDrawerAdapter;
+import android.support.car.drawer.DrawerItemViewHolder;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.telecom.Call;
@@ -30,9 +33,6 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.android.car.app.CarDrawerActivity;
-import com.android.car.app.CarDrawerAdapter;
-import com.android.car.app.DrawerItemViewHolder;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -260,13 +260,13 @@ public class TelecomActivity extends CarDrawerActivity implements
             // in case the dialer is still open, (e.g. when dialing the second phone during
             // a phone call), close it
             maybeHideDialer();
-            closeDrawer();
+            getDrawerController().closeDrawer();
             return;
         }
 
         Fragment fragment = OngoingCallFragment.newInstance(mUiCallManager, mUiBluetoothMonitor);
         setContentFragmentWithFadeAnimation(fragment);
-        closeDrawer();
+        getDrawerController().closeDrawer();
     }
 
     private void showDialer() {
@@ -464,7 +464,7 @@ public class TelecomActivity extends CarDrawerActivity implements
 
         @Override
         public void onItemClick(int position) {
-            closeDrawer();
+            getDrawerController().closeDrawer();
             mUiCallManager.safePlaceCall(mItems.get(position).mNumber, false);
         }
     }
@@ -513,7 +513,7 @@ public class TelecomActivity extends CarDrawerActivity implements
             if (position > 0) {
                 drawable = getDrawable(R.drawable.ic_chevron_right);
                 drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-                holder.getRightIcon().setImageDrawable(drawable);
+                holder.getEndIcon().setImageDrawable(drawable);
             }
         }
 
@@ -521,7 +521,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         public void onItemClick(int position) {
             switch (position) {
                 case ITEM_DIAL:
-                    closeDrawer();
+                    getDrawerController().closeDrawer();
                     showDialer();
                     break;
                 case ITEM_CALLLOG_ALL:
@@ -537,7 +537,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     private void loadCallHistoryAsync(final int callType, final int titleResId) {
-        showLoadingProgressBar(true);
+        getDrawerController().showLoadingProgressBar(true);
         // Warning: much callbackiness!
         // First load up the call log cursor using the PhoneLoader so that happens in a
         // background thread. TODO: Why isn't PhoneLoader using a LoaderManager?
@@ -548,8 +548,9 @@ public class TelecomActivity extends CarDrawerActivity implements
                 // to pull together all the data along with the contact photo.
                 CallLogListingTask task = new CallLogListingTask(TelecomActivity.this, data,
                     (items) -> {
-                            showLoadingProgressBar(false);
-                            switchToAdapter(new CallLogAdapter(titleResId, items));
+                            getDrawerController().showLoadingProgressBar(false);
+                            getDrawerController().switchToAdapter(
+                                    new CallLogAdapter(titleResId, items));
                         });
                 task.execute();
             });
