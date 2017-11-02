@@ -24,6 +24,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts;
 import android.support.annotation.Nullable;
+import android.support.car.widget.DayNightStyle;
+import android.support.car.widget.PagedListView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,8 +33,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.net.Uri;
-
-import com.android.car.view.PagedListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +79,7 @@ public class ContactResultsFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mContactResultList = view.findViewById(R.id.contact_result_list);
-        mContactResultList.setLightMode();
+        mContactResultList.setDayNightStyle(DayNightStyle.FORCE_NIGHT);
         mContactResultList.setAdapter(mAdapter);
         mContactResultList.getLayoutManager().setOffsetRows(false);
 

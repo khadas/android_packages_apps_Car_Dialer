@@ -21,7 +21,7 @@
     android:clickable="true"
     android:clipChildren="false">
 
-    <com.android.car.view.PagedListView
+    <android.support.car.widget.PagedListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
