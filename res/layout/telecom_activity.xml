@@ -20,7 +20,7 @@
 
     <FrameLayout
         android:layout_gravity="top|end"
-        android:layout_width="@dimen/stream_content_keyline_1"
+        android:layout_width="@dimen/car_keyline_1"
         android:layout_height="@dimen/lens_header_height">
 
         <ImageView

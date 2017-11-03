@@ -30,7 +30,7 @@
     <dimen name="in_call_text_max_width">362dp</dimen>
     <dimen name="in_call_card_dialpad_width">300dp</dimen>
     <dimen name="in_call_large_contact_photo_size">480dp</dimen>
-    <dimen name="in_call_content_card_margin_start">@dimen/stream_content_keyline_1</dimen>
+    <dimen name="in_call_content_card_margin_start">@dimen/car_keyline_1</dimen>
     <dimen name="avatar_rounded_radius">60dp</dimen>
     <dimen name="in_call_small_contact_photo_size">120dp</dimen>
     <dimen name="in_call_toggle_button_image_offset">30dp</dimen>
