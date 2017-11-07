@@ -25,14 +25,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.car.widget.PagedLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import com.android.car.view.CarLayoutManager;
 
 /**
  * An activity that manages contact searching. This activity will display the result of a search
@@ -254,9 +253,9 @@ public class ContactSearchActivity extends Activity {
     public class ContactScrollListener extends RecyclerView.OnScrollListener {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            // Assuming CarLayoutManager is the layout manager as all car applications should be
+            // Assuming PagedLayoutManager is the layout manager as all car applications should be
             // using a PagedListView.
-            CarLayoutManager layoutManager = (CarLayoutManager) recyclerView.getLayoutManager();
+            PagedLayoutManager layoutManager = (PagedLayoutManager) recyclerView.getLayoutManager();
 
             if (layoutManager.isAtTop()) {
                 resetSearchPanelElevation();
