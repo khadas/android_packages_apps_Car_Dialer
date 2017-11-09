@@ -24,7 +24,7 @@
 
     <FrameLayout
         android:id="@+id/icon_container"
-        android:layout_width="@dimen/stream_card_keyline_2"
+        android:layout_width="@dimen/car_keyline_2"
         android:layout_height="@dimen/icon_container_height"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
@@ -34,7 +34,7 @@
             android:layout_width="@dimen/call_log_icon_size"
             android:layout_height="@dimen/call_log_icon_size"
             android:layout_gravity="center_vertical|start"
-            android:layout_marginStart="@dimen/stream_card_keyline_1"
+            android:layout_marginStart="@dimen/car_keyline_1"
             android:scaleType="centerCrop" />
         <ImageView
             android:id="@+id/small_icon"
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/car_text_vertical_margin"
-            android:layout_marginEnd="@dimen/stream_card_keyline_1"
+            android:layout_marginEnd="@dimen/car_keyline_1"
             android:ellipsize="end"
             android:maxLines="1" />
 

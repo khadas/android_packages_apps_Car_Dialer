@@ -53,8 +53,8 @@
                 android:background="@color/car_list_divider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/line_divider_height"
-                android:layout_marginLeft="@dimen/stream_content_keyline_1"
-                android:layout_marginRight="@dimen/stream_content_keyline_1"
+                android:layout_marginLeft="@dimen/car_keyline_1"
+                android:layout_marginRight="@dimen/car_keyline_1"
                 android:layout_below="@id/number" />
 
             <LinearLayout
@@ -107,8 +107,8 @@
              being smaller. -->
         <FrameLayout
             android:layout_gravity="start|top"
-            android:layout_width="@dimen/stream_content_keyline_1"
-            android:layout_height="@dimen/stream_content_keyline_1">
+            android:layout_width="@dimen/car_keyline_1"
+            android:layout_height="@dimen/car_keyline_1">
 
             <ImageView
                 android:id="@+id/exit_dialer_button"

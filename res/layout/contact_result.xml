@@ -29,9 +29,9 @@
         android:layout_height="@dimen/contact_result_card_height" >
 
         <!-- Using this FrameLayout to center the ImageView within a width of
-             stream_card_keyline_2. -->
+            car_keyline_2. -->
         <FrameLayout
-            android:layout_width="@dimen/stream_card_keyline_2"
+            android:layout_width="@dimen/car_keyline_2"
             android:layout_height="match_parent">
 
             <ImageView
@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/contact_name"
-            android:layout_marginStart="@dimen/stream_card_keyline_2"
+            android:layout_marginStart="@dimen/car_keyline_2"
             android:layout_gravity="center_vertical|start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

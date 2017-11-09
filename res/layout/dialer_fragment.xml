@@ -44,8 +44,8 @@
             <FrameLayout
                 android:layout_marginTop="@dimen/dialer_back_button_top_margin"
                 android:layout_gravity="start|top"
-                android:layout_width="@dimen/stream_content_keyline_1"
-                android:layout_height="@dimen/stream_content_keyline_1">
+                android:layout_width="@dimen/car_keyline_1"
+                android:layout_height="@dimen/car_keyline_1">
 
                 <ImageView
                     android:id="@+id/exit_dialer_button"
@@ -68,8 +68,8 @@
         <RelativeLayout
             android:layout_width="@dimen/dialer_dialed_number_container"
             android:layout_height="match_parent"
-            android:paddingStart="@dimen/stream_content_keyline_1"
-            android:paddingEnd="@dimen/stream_content_keyline_1"
+            android:paddingStart="@dimen/car_keyline_1"
+            android:paddingEnd="@dimen/car_keyline_1"
             android:paddingBottom="@dimen/dialer_dialed_number_bottom_padding">
 
             <TextView

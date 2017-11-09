@@ -41,9 +41,9 @@
             android:layout_height="match_parent" />
 
         <!-- This FrameLayout is used to center the ImageView in a space that is the width of
-             stream_content_keyline_1. -->
+             car_keyline_1. -->
         <FrameLayout
-            android:layout_width="@dimen/stream_content_keyline_1"
+            android:layout_width="@dimen/car_keyline_1"
             android:layout_height="match_parent">
 
             <ImageView
