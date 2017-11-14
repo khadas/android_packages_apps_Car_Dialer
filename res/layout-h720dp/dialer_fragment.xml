@@ -27,7 +27,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/lens_header_height"
+        android:layout_marginTop="@dimen/car_app_bar_height"
         android:clickable="true"
         card_view:cardBackgroundColor="@color/car_card"
         card_view:cardElevation="@dimen/dialer_card_elevation">
@@ -114,8 +114,8 @@
                 android:id="@+id/exit_dialer_button"
                 android:background="@drawable/dialpad_button_background"
                 android:layout_gravity="center"
-                android:layout_width="@dimen/stream_button_size"
-                android:layout_height="@dimen/stream_button_size"
+                android:layout_width="@dimen/car_touch_target"
+                android:layout_height="@dimen/car_touch_target"
                 android:scaleType="center"
                 android:tint="@color/car_tint"
                 android:src="@drawable/ic_down_outlined" />

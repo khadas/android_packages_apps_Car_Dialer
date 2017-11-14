@@ -18,8 +18,8 @@
     <!-- Phone -->
     <style name="DialpadKeyButtonStyle">
         <item name="android:clickable">true</item>
-        <item name="android:layout_width">@dimen/stream_button_size</item>
-        <item name="android:layout_height">@dimen/stream_button_size</item>
+        <item name="android:layout_width">@dimen/car_touch_target</item>
+        <item name="android:layout_height">@dimen/car_touch_target</item>
         <item name="android:background">@drawable/dialpad_button_background</item>
         <item name="android:focusable">true</item>
     </style>
@@ -39,7 +39,7 @@
         <item name="android:textColor">@color/car_headline1</item>
     </style>
 
-    <style name="NoHfpText" parent="CarBody2.Light">
+    <style name="NoHfpText" parent="CarBody2">
         <item name="android:textColor">@color/car_body1_light</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">3</item>
