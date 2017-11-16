@@ -20,8 +20,7 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
-LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res \
-    frameworks/support/car/res
+LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
 
 LOCAL_PACKAGE_NAME := CarDialerApp
 
@@ -29,10 +28,11 @@ LOCAL_OVERRIDES_PACKAGES := Dialer
 
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_STATIC_JAVA_LIBRARIES += android-support-v4 \
-    android-support-car \
+LOCAL_USE_AAPT2 := true
 
-LOCAL_AAPT_FLAGS += --extra-packages android.support.car
+LOCAL_STATIC_ANDROID_LIBRARIES += \
+    android-support-v4 \
+    android-support-car
 
 LOCAL_PROGUARD_ENABLED := disabled
 
