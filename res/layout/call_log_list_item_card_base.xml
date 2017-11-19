@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="@dimen/car_list_item_icon_right_margin"
+        android:layout_marginEnd="@dimen/car_padding_4"
         android:scaleType="center"
         android:visibility="gone" />
 

@@ -25,7 +25,7 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/lens_header_height"
+        android:layout_marginTop="@dimen/car_app_bar_height"
         android:clipChildren="false"
-        app:showDivider="false" />
+        app:showPagedListViewDivider="false" />
 </FrameLayout>

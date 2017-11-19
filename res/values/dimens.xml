@@ -62,9 +62,9 @@
     <dimen name="call_log_card_overlap">-4dp</dimen>
     <dimen name="call_log_icon_margin">4dp</dimen>
     <dimen name="call_log_item_height">91dp</dimen>
-    <dimen name="call_log_icon_size">@dimen/car_list_item_icon_size</dimen>
+    <dimen name="call_log_icon_size">@dimen/car_primary_icon_size</dimen>
 
-    <dimen name="icon_container_height">@dimen/car_list_item_icon_size</dimen>
+    <dimen name="icon_container_height">@dimen/car_primary_icon_size</dimen>
 
     <dimen name="contact_detail_image_size">@dimen/in_call_small_contact_photo_size</dimen>
     <dimen name="contact_detail_vertical_margin">16dp</dimen>

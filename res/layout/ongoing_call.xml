@@ -52,7 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxWidth="@dimen/in_call_text_max_width"
-            style="@style/CarHeadline2.Light" />
+            android:textAppearance="@style/CarHeadline2"
+            android:textColor="@color/car_headline1_light" />
         <TextView
             android:id="@+id/info_secondary"
             android:layout_width="match_parent"
@@ -71,7 +72,7 @@
         android:layout_width="@dimen/in_call_card_dialpad_width"
         android:layout_height="match_parent"
         android:layout_gravity="top|start"
-        android:layout_marginTop="@dimen/lens_header_height"
+        android:layout_marginTop="@dimen/car_app_bar_height"
         app:cardBackgroundColor="@color/car_card"
         app:cardCornerRadius="@dimen/in_call_card_dialpad_corner_radius"
         app:cardElevation="@dimen/in_call_card_elevation"
@@ -85,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/in_call_card_background"
-        android:layout_marginTop="@dimen/lens_header_height"
+        android:layout_marginTop="@dimen/car_app_bar_height"
         android:layout_marginEnd="@dimen/in_call_card_margin_right"
         android:paddingStart="@dimen/in_call_content_card_margin_start" >
         <LinearLayout
@@ -130,14 +131,14 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/action_panel_height"
+            android:layout_marginBottom="@dimen/car_action_bar_height"
             android:background="@color/separator" />
 
         <!-- TODO: Consider flattening out this part and updating logic. -->
         <FrameLayout
             android:id="@+id/controls_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/action_panel_height"
+            android:layout_height="@dimen/car_action_bar_height"
             android:layout_gravity="bottom" >
 
             <LinearLayout

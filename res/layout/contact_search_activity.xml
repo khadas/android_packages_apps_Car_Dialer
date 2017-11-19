@@ -33,7 +33,7 @@
         android:id="@+id/search_container"
         android:background="@color/phone_theme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/lens_header_height" >
+        android:layout_height="@dimen/car_app_bar_height" >
 
         <FrameLayout
             android:background="@color/telecom_display_scrim"
@@ -50,8 +50,8 @@
                 android:id="@+id/back"
                 android:background="@drawable/dialer_ripple_background"
                 android:layout_gravity="center"
-                android:layout_width="@dimen/stream_button_size"
-                android:layout_height="@dimen/stream_button_size"
+                android:layout_width="@dimen/car_touch_target"
+                android:layout_height="@dimen/car_touch_target"
                 android:src="@drawable/ic_arrow_back"
                 android:scaleType="center"
                 android:tint="@color/car_grey_50" />
@@ -67,16 +67,16 @@
 
             <ImageView
                 android:layout_gravity="start|center_vertical"
-                android:layout_width="@dimen/stream_button_size"
-                android:layout_height="@dimen/stream_button_size"
+                android:layout_width="@dimen/car_touch_target"
+                android:layout_height="@dimen/car_touch_target"
                 android:src="@drawable/ic_search"
                 android:scaleType="center"
                 android:tint="@color/search_container_controls_tint"/>
 
             <EditText
                 android:id="@+id/search_field"
-                android:layout_marginStart="@dimen/stream_button_size"
-                android:layout_marginEnd="@dimen/stream_button_size"
+                android:layout_marginStart="@dimen/car_touch_target"
+                android:layout_marginEnd="@dimen/car_touch_target"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,8 +89,8 @@
                 android:id="@+id/clear"
                 android:background="@drawable/dialer_ripple_background"
                 android:layout_gravity="end|center_vertical"
-                android:layout_width="@dimen/stream_button_size"
-                android:layout_height="@dimen/stream_button_size"
+                android:layout_width="@dimen/car_touch_target"
+                android:layout_height="@dimen/car_touch_target"
                 android:src="@drawable/ic_cancel"
                 android:scaleType="center"
                 android:tint="@color/search_container_controls_tint"/>
@@ -99,7 +99,7 @@
 
     <FrameLayout
         android:id="@+id/content_fragment_container"
-        android:layout_marginTop="@dimen/lens_header_height"
+        android:layout_marginTop="@dimen/car_app_bar_height"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
