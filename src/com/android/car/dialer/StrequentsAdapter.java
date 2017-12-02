@@ -21,7 +21,6 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.provider.CallLog;
 import android.support.annotation.Nullable;
-import android.support.car.widget.PagedListView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -38,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import androidx.car.widget.PagedListView;
 
 /**
  * Adapter class for populating Contact data as loaded from the DB to an AA GroupingRecyclerView.

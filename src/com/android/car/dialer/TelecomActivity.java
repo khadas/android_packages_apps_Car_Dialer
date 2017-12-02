@@ -21,9 +21,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.car.drawer.CarDrawerActivity;
-import android.support.car.drawer.CarDrawerAdapter;
-import android.support.car.drawer.DrawerItemViewHolder;
 import android.support.v4.app.Fragment;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
@@ -35,6 +32,10 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.telecom.UiCallManager.CallListener;
 
 import java.util.List;
+
+import androidx.car.drawer.CarDrawerActivity;
+import androidx.car.drawer.CarDrawerAdapter;
+import androidx.car.drawer.DrawerItemViewHolder;
 
 /**
  * Main activity for the Dialer app. Displays different fragments depending on call and
