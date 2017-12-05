@@ -31,7 +31,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/car_divider_height"
+            android:layout_height="@dimen/car_list_divider_height"
             android:background="@color/car_list_divider"
             android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/car_keyline_2" />
