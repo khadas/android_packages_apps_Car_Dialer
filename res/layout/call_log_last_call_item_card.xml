@@ -22,7 +22,7 @@
     android:layout_marginBottom="@dimen/call_log_last_card_bottom_margin"
     android:focusable="true">
 
-    <android.support.car.widget.ColumnCardView
+    <androidx.car.widget.ColumnCardView
         android:id="@+id/call_log_card"
         android:foreground="@drawable/dialer_ripple_background"
         android:layout_gravity="center"
@@ -30,5 +30,5 @@
         android:layout_height="@dimen/call_log_item_height" >
 
         <include layout="@layout/call_log_list_item_card_base" />
-    </android.support.car.widget.ColumnCardView>
+    </androidx.car.widget.ColumnCardView>
 </FrameLayout>

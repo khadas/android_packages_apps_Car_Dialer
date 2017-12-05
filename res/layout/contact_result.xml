@@ -21,7 +21,7 @@
     android:layout_height="wrap_content"
     android:focusable="true">
 
-    <android.support.car.widget.ColumnCardView
+    <androidx.car.widget.ColumnCardView
         android:id="@+id/contact_result_card"
         android:foreground="@drawable/dialer_ripple_background"
         android:layout_gravity="center"
@@ -51,5 +51,5 @@
             android:ellipsize="end"
             android:maxLines="2"
             style="@style/CarBody1" />
-    </android.support.car.widget.ColumnCardView>
+    </androidx.car.widget.ColumnCardView>
 </FrameLayout>

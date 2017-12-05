@@ -26,8 +26,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
-import android.support.car.widget.DayNightStyle;
-import android.support.car.widget.PagedListView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
@@ -42,6 +40,9 @@ import com.android.car.view.CardListBackgroundResolver;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.car.widget.DayNightStyle;
+import androidx.car.widget.PagedListView;
 
 /**
  * A fragment that shows the name of the contact, the photo and all listed phone numbers. It is
