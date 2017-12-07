@@ -27,8 +27,8 @@
             android:id="@+id/search"
             android:background="@drawable/dialer_ripple_background"
             android:layout_gravity="center"
-            android:layout_width="@dimen/car_touch_target"
-            android:layout_height="@dimen/car_touch_target"
+            android:layout_width="@dimen/car_touch_target_size"
+            android:layout_height="@dimen/car_touch_target_size"
             android:src="@drawable/ic_search"
             android:scaleType="center"
             android:tint="@color/car_grey_50"/>

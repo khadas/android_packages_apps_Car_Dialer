@@ -271,7 +271,7 @@ public class StrequentsFragment extends Fragment {
             Resources res = context.getResources();
             mPaint = new Paint();
             mPaint.setColor(res.getColor(R.color.car_list_divider));
-            mDividerHeight = res.getDimensionPixelSize(R.dimen.car_divider_height);
+            mDividerHeight = res.getDimensionPixelSize(R.dimen.car_list_divider_height);
             mPaintAlpha = mPaint.getAlpha();
         }
 

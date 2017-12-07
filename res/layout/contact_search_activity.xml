@@ -50,8 +50,8 @@
                 android:id="@+id/back"
                 android:background="@drawable/dialer_ripple_background"
                 android:layout_gravity="center"
-                android:layout_width="@dimen/car_touch_target"
-                android:layout_height="@dimen/car_touch_target"
+                android:layout_width="@dimen/car_touch_target_size"
+                android:layout_height="@dimen/car_touch_target_size"
                 android:src="@drawable/ic_arrow_back"
                 android:scaleType="center"
                 android:tint="@color/car_grey_50" />
@@ -67,16 +67,16 @@
 
             <ImageView
                 android:layout_gravity="start|center_vertical"
-                android:layout_width="@dimen/car_touch_target"
-                android:layout_height="@dimen/car_touch_target"
+                android:layout_width="@dimen/car_touch_target_size"
+                android:layout_height="@dimen/car_touch_target_size"
                 android:src="@drawable/ic_search"
                 android:scaleType="center"
                 android:tint="@color/search_container_controls_tint"/>
 
             <EditText
                 android:id="@+id/search_field"
-                android:layout_marginStart="@dimen/car_touch_target"
-                android:layout_marginEnd="@dimen/car_touch_target"
+                android:layout_marginStart="@dimen/car_touch_target_size"
+                android:layout_marginEnd="@dimen/car_touch_target_size"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,8 +89,8 @@
                 android:id="@+id/clear"
                 android:background="@drawable/dialer_ripple_background"
                 android:layout_gravity="end|center_vertical"
-                android:layout_width="@dimen/car_touch_target"
-                android:layout_height="@dimen/car_touch_target"
+                android:layout_width="@dimen/car_touch_target_size"
+                android:layout_height="@dimen/car_touch_target_size"
                 android:src="@drawable/ic_cancel"
                 android:scaleType="center"
                 android:tint="@color/search_container_controls_tint"/>
