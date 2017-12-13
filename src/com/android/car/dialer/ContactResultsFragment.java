@@ -82,7 +82,6 @@ public class ContactResultsFragment extends Fragment implements
         mContactResultList = view.findViewById(R.id.contact_result_list);
         mContactResultList.setDayNightStyle(DayNightStyle.FORCE_NIGHT);
         mContactResultList.setAdapter(mAdapter);
-        mContactResultList.getLayoutManager().setOffsetRows(false);
 
         RecyclerView recyclerView = mContactResultList.getRecyclerView();
         for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
