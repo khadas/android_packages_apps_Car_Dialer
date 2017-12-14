@@ -25,14 +25,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import androidx.car.widget.PagedLayoutManager;
 
 /**
  * An activity that manages contact searching. This activity will display the result of a search
@@ -254,11 +253,12 @@ public class ContactSearchActivity extends Activity {
     public class ContactScrollListener extends RecyclerView.OnScrollListener {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            // Assuming PagedLayoutManager is the layout manager as all car applications should be
-            // using a PagedListView.
-            PagedLayoutManager layoutManager = (PagedLayoutManager) recyclerView.getLayoutManager();
+            // The default LayoutManager for PagedListView is a LinearLayoutManager. Dialer does
+            // not change this.
+            LinearLayoutManager layoutManager =
+                    (LinearLayoutManager) recyclerView.getLayoutManager();
 
-            if (layoutManager.isAtTop()) {
+            if (layoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
                 resetSearchPanelElevation();
             } else {
                 // No animation needed when adding the elevation because the scroll masks the adding

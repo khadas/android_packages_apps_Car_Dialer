@@ -86,7 +86,6 @@ public class StrequentsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.strequents_fragment, container, false);
         mListView = (PagedListView) view.findViewById(R.id.list_view);
-        mListView.getLayoutManager().setOffsetRows(true);
 
         mSpeedialCursorLoader = PhoneLoader.registerCallObserver(PhoneLoader.CALL_TYPE_SPEED_DIAL,
             mContext, (loader, cursor) -> {
