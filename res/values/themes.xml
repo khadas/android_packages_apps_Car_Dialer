@@ -17,10 +17,14 @@ limitations under the License.
     <!-- The theme for the TelecomActivity. -->
     <style name="TelecomActivityTheme" parent="@style/CarDrawerActivityTheme" >
         <item name="android:statusBarColor">@color/phone_status_bar_theme</item>
+        <item name="android:colorPrimary">@android:color/transparent</item>
+        <item name="android:colorPrimaryDark">@color/phone_status_bar_theme</item>
     </style>
 
     <!-- The theme for the contact search page. -->
     <style name="ContactSearchActivityTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/phone_status_bar_theme</item>
+        <item name="android:colorPrimary">@android:color/transparent</item>
+        <item name="android:colorPrimaryDark">@color/phone_status_bar_theme</item>
     </style>
 </resources>
