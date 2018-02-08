@@ -30,9 +30,7 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_USE_AAPT2 := true
 
-LOCAL_STATIC_ANDROID_LIBRARIES += \
-    android-support-v4 \
-    android-support-car
+LOCAL_STATIC_ANDROID_LIBRARIES += $(ANDROID_SUPPORT_CAR_TARGETS)
 
 LOCAL_PROGUARD_ENABLED := disabled
 
