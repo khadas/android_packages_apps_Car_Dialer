@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxWidth="@dimen/in_call_text_max_width"
-            android:textAppearance="@style/CarHeadline2"
+            android:textAppearance="@style/TextAppearance.Car.Headline2"
             android:textColor="@color/car_headline1_light" />
         <TextView
             android:id="@+id/info_secondary"
@@ -62,7 +62,7 @@
             android:layout_below="@id/name_secondary"
             android:maxWidth="@dimen/in_call_text_max_width"
             android:alpha="0.6"
-            style="@style/CarBody2"
+            style="@style/TextAppearance.Car.Body2"
             android:textColor="@color/car_grey_100" />
     </RelativeLayout>
 
@@ -105,7 +105,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:visibility="gone"
-                    style="@style/CarHeadline2" />
+                    style="@style/TextAppearance.Car.Headline2" />
                 <TextView
                     android:id="@+id/info"
                     android:layout_below="@id/name"
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     android:textColor="@color/car_caption"
-                    style="@style/CarBody1" />
+                    style="@style/TextAppearance.Car.Body1" />
             </RelativeLayout>
             <ImageView
                 android:id="@+id/small_contact_photo"

@@ -49,7 +49,7 @@
                 android:layout_marginRight="@dimen/contact_detail_image_size"
                 android:singleLine="true"
                 android:ellipsize="end"
-                style="@style/CarHeadline1" />
+                style="@style/TextAppearance.Car.Headline1" />
 
             <ImageView
                 android:id="@+id/right_icon"

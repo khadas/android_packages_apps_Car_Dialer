@@ -46,7 +46,7 @@
             android:layout_marginBottom="@dimen/car_text_vertical_margin"
             android:ellipsize="end"
             android:maxLines="1"
-            style="@style/CarBody1" />
+            style="@style/TextAppearance.Car.Body1" />
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             android:ellipsize="end"
             android:gravity="end"
             android:maxLines="1"
-            style="@style/CarBody2" />
+            style="@style/TextAppearance.Car.Body2" />
     </LinearLayout>
     <ImageView
         android:id="@+id/right_icon"

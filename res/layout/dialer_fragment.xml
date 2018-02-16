@@ -83,7 +83,7 @@
                 android:gravity="center"
                 android:focusable="true"
                 android:text="@string/dial_a_number"
-                style="@style/CarBody1" />
+                style="@style/TextAppearance.Car.Body1" />
 
             <ImageButton
                 android:id="@+id/call"

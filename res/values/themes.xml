@@ -15,7 +15,7 @@ limitations under the License.
 -->
 <resources>
     <!-- The theme for the TelecomActivity. -->
-    <style name="TelecomActivityTheme" parent="@style/CarDrawerActivityTheme" >
+    <style name="TelecomActivityTheme" parent="@style/Theme.Car.Light.NoActionBar.Drawer" >
         <item name="android:statusBarColor">@color/phone_status_bar_theme</item>
         <item name="android:colorPrimary">@android:color/transparent</item>
         <item name="android:colorPrimaryDark">@color/phone_status_bar_theme</item>

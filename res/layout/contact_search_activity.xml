@@ -83,7 +83,7 @@
                 android:inputType="textPersonName|textCapWords"
                 android:hint="@string/search_hint"
                 android:textColorHint="@color/search_container_text_hint"
-                style="@style/CarBody1" />
+                style="@style/TextAppearance.Car.Body1" />
 
             <ImageView
                 android:id="@+id/clear"
