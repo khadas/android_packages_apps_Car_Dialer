@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/CarBody1"
+            style="@style/TextAppearance.Car.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/car_text_vertical_margin"
@@ -83,7 +83,7 @@
 
             <TextView
                 android:id="@+id/text"
-                style="@style/CarBody2"
+                style="@style/TextAppearance.Car.Body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical" />
