@@ -103,6 +103,7 @@ public class TelecomActivity extends CarDrawerActivity implements
             Log.d(TAG, "onDestroy");
         }
         mUiBluetoothMonitor.tearDown();
+        mUiCallManager.tearDown();
         mUiCallManager = null;
     }
 
