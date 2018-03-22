@@ -29,13 +29,13 @@ import android.util.Log;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.telecom.UiCallManager.CallListener;
 
 import java.util.List;
 
 import androidx.car.drawer.CarDrawerActivity;
 import androidx.car.drawer.CarDrawerAdapter;
 import androidx.car.drawer.DrawerItemViewHolder;
+import java.util.stream.Stream;
 
 /**
  * Main activity for the Dialer app. Displays different fragments depending on call and
@@ -48,7 +48,7 @@ import androidx.car.drawer.DrawerItemViewHolder;
  * </ul>
  */
 public class TelecomActivity extends CarDrawerActivity implements
-        DialerFragment.DialerBackButtonListener {
+        DialerFragment.DialerBackButtonListener, CallListener {
     private static final String TAG = "TelecomActivity";
 
     private static final String ACTION_ANSWER_CALL = "com.android.car.dialer.ANSWER_CALL";
@@ -109,7 +109,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        mUiCallManager.removeListener(mCarCallListener);
+        mUiCallManager.removeListener(this);
         mUiBluetoothMonitor.removeListener(mBluetoothListener);
     }
 
@@ -143,7 +143,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         updateCurrentFragment();
         handleIntent();
 
-        mUiCallManager.addListener(mCarCallListener);
+        mUiCallManager.addListener(this);
         mUiBluetoothMonitor.addListener(mBluetoothListener);
     }
 
@@ -393,40 +393,6 @@ public class TelecomActivity extends CarDrawerActivity implements
         return getSupportFragmentManager().findFragmentByTag(CONTENT_FRAGMENT_TAG);
     }
 
-    private final CallListener mCarCallListener = new UiCallManager.CallListener() {
-        @Override
-        public void onCallAdded(UiCall call) {
-            if (vdebug()) {
-                Log.d(TAG, "onCallAdded");
-            }
-            updateCurrentFragment();
-        }
-
-        @Override
-        public void onCallRemoved(UiCall call) {
-            if (vdebug()) {
-                Log.d(TAG, "onCallRemoved");
-            }
-            updateCurrentFragment();
-        }
-
-        @Override
-        public void onStateChanged(UiCall call, int state) {
-            if (vdebug()) {
-                Log.d(TAG, "onStateChanged");
-            }
-            updateCurrentFragment();
-        }
-
-        @Override
-        public void onCallUpdated(UiCall call) {
-            if (vdebug()) {
-                Log.d(TAG, "onCallUpdated");
-            }
-            updateCurrentFragment();
-        }
-    };
-
     private static boolean vdebug() {
         return Log.isLoggable(TAG, Log.DEBUG);
     }
@@ -434,6 +400,65 @@ public class TelecomActivity extends CarDrawerActivity implements
     @Override
     protected CarDrawerAdapter getRootAdapter() {
         return new DialerRootAdapter();
+    }
+
+    @Override
+    public void onAudioStateChanged(boolean isMuted, int route, int supportedRouteMask) {
+        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
+            .onAudioStateChanged(isMuted, route, supportedRouteMask));
+    }
+
+    @Override
+    public void onCallStateChanged(UiCall call, int state) {
+        if (vdebug()) {
+            Log.d(TAG, "onCallStateChanged");
+        }
+        updateCurrentFragment();
+
+        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
+            .onCallStateChanged(call, state));
+    }
+
+    @Override
+    public void onCallUpdated(UiCall call) {
+        if (vdebug()) {
+            Log.d(TAG, "onCallUpdated");
+        }
+        updateCurrentFragment();
+
+        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
+            .onCallUpdated(call));
+    }
+
+    @Override
+    public void onCallAdded(UiCall call) {
+        if (vdebug()) {
+            Log.d(TAG, "onCallAdded");
+        }
+        updateCurrentFragment();
+
+        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
+            .onCallAdded(call));
+    }
+
+    @Override
+    public void onCallRemoved(UiCall call) {
+        if (vdebug()) {
+            Log.d(TAG, "onCallRemoved");
+        }
+        updateCurrentFragment();
+
+        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
+            .onCallRemoved(call));
+    }
+
+    private static boolean shouldPropagateCallback(Fragment fragment) {
+        return fragment instanceof CallListener && fragment.isAdded();
+    }
+
+    private Stream<Fragment> fragmentsToPropagateCallback() {
+        return getSupportFragmentManager().getFragments().stream()
+            .filter(fragment -> shouldPropagateCallback(fragment));
     }
 
     class CallLogAdapter extends CarDrawerAdapter {

@@ -38,7 +38,6 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.car.apps.common.CircleBitmapDrawable;
@@ -46,7 +45,6 @@ import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.telecom.UiCallManager.CallListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +53,7 @@ import java.util.Objects;
 /**
  * A fragment that displays information about an on-going call with options to hang up.
  */
-public class OngoingCallFragment extends Fragment {
+public class OngoingCallFragment extends Fragment implements CallListener {
     private static final String TAG = "OngoingCall";
     private static final SparseArray<Character> mDialpadButtonMap = new SparseArray<>();
 
@@ -149,8 +147,6 @@ public class OngoingCallFragment extends Fragment {
             dialpadView.setOnTouchListener(mDialpadTouchListener);
             dialpadView.setOnKeyListener(mDialpadKeyListener);
         }
-
-        mUiCallManager.addListener(mCallListener);
 
         updateCalls();
 
@@ -268,7 +264,6 @@ public class OngoingCallFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUiCallManager.removeListener(mCallListener);
     }
 
     @Override
@@ -580,6 +575,51 @@ public class OngoingCallFragment extends Fragment {
     private final Runnable mStopDtmfToneRunnable =
             () -> mUiCallManager.stopDtmfTone(mUiCallManager.getPrimaryCall());
 
+    @Override
+    public void onAudioStateChanged(boolean isMuted, int route, int supportedRouteMask) {
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, String.format(
+                "onAudioStateChanged(); isMuted: %b, audioRoute: %d, supportedAudioRouteMask: %d",
+                isMuted, route, supportedRouteMask));
+        }
+        mMuteButton.setActivated(isMuted);
+        trySpeakerAudioRouteIfNecessary();
+    }
+
+    @Override
+    public void onCallStateChanged(UiCall call, int state) {
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, String.format("onCallStateChanged(); call: %s, state: %s", call, state));
+        }
+        updateCalls();
+    }
+
+    @Override
+    public void onCallUpdated(UiCall call) {
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, "onCallUpdated(); call: " + call);
+        }
+        updateCalls();
+    }
+
+    @Override
+    public void onCallAdded(UiCall call) {
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, "onCallAdded(); call: " + call);
+        }
+        updateCalls();
+        trySpeakerAudioRouteIfNecessary();
+    }
+
+    @Override
+    public void onCallRemoved(UiCall call) {
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, "onCallRemoved(); call: " + call);
+        }
+        mLastRemovedCall = call;
+        updateCalls();
+    }
+
     private final class DialpadAnimation extends Animation {
         private static final int DURATION = 300;
         private static final float MAX_SCRIM_ALPHA = 0.6f;
@@ -622,52 +662,4 @@ public class OngoingCallFragment extends Fragment {
             mSecondaryStateTextView.setAlpha(1f - interpolatedTime);
         }
     }
-
-    private final CallListener mCallListener = new CallListener() {
-        @Override
-        public void onCallAdded(UiCall call) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onCallAdded(); call: " + call);
-            }
-            updateCalls();
-            trySpeakerAudioRouteIfNecessary();
-        }
-
-        @Override
-        public void onCallRemoved(UiCall call) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onCallRemoved(); call: " + call);
-            }
-            mLastRemovedCall = call;
-            updateCalls();
-        }
-
-        @Override
-        public void onAudioStateChanged(boolean isMuted, int audioRoute,
-                int supportedAudioRouteMask) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, String.format("onAudioStateChanged(); isMuted: %b, audioRoute: %d, "
-                        + " supportedAudioRouteMask: %d", isMuted, audioRoute,
-                        supportedAudioRouteMask));
-            }
-            mMuteButton.setActivated(isMuted);
-            trySpeakerAudioRouteIfNecessary();
-        }
-
-        @Override
-        public void onStateChanged(UiCall call, int state) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onStateChanged(); call: " + call + ", state: " + state);
-            }
-            updateCalls();
-        }
-
-        @Override
-        public void onCallUpdated(UiCall call) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onCallUpdated(); call: " + call);
-            }
-            updateCalls();
-        }
-    };
 }
