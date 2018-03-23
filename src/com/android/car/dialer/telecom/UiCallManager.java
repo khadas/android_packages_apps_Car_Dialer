@@ -32,8 +32,8 @@ import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 
+import com.android.car.dialer.CallListener;
 import com.android.car.dialer.R;
 
 import java.lang.ref.WeakReference;
@@ -372,7 +372,7 @@ public class UiCallManager {
 
     private void onStateChanged(UiCall uiCall, int state) {
         for (CallListener listener : mCallListeners) {
-            listener.onStateChanged(uiCall, state);
+            listener.onCallStateChanged(uiCall, state);
         }
     }
 
@@ -430,21 +430,6 @@ public class UiCallManager {
 
     private CallAudioState getCallAudioStateOrNull() {
         return mInCallService != null ? mInCallService.getCallAudioState() : null;
-    }
-
-    public static class CallListener {
-        @SuppressWarnings("unused")
-        public void dispatchPhoneKeyEvent(KeyEvent event) {}
-        @SuppressWarnings("unused")
-        public void onAudioStateChanged(boolean isMuted, int route, int supportedRouteMask) {}
-        @SuppressWarnings("unused")
-        public void onCallAdded(UiCall call) {}
-        @SuppressWarnings("unused")
-        public void onStateChanged(UiCall call, int state) {}
-        @SuppressWarnings("unused")
-        public void onCallUpdated(UiCall call) {}
-        @SuppressWarnings("unused")
-        public void onCallRemoved(UiCall call) {}
     }
 
     /** Returns a first call that matches at least one provided call state */
