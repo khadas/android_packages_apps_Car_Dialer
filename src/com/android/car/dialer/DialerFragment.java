@@ -34,7 +34,6 @@ import android.widget.TextView;
 import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.telecom.UiCallManager.CallListener;
 
 /**
  * Fragment that controls the dialpad.
@@ -246,7 +245,6 @@ public class DialerFragment extends Fragment {
                 mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
             }
         }
-        mUiCallManager.addListener(mCallListener);
 
         if (mPendingRunnable != null) {
             mPendingRunnable.run();
@@ -257,7 +255,6 @@ public class DialerFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        mUiCallManager.removeListener(mCallListener);
         stopTone();
         synchronized (mToneGeneratorLock) {
             if (mToneGenerator != null) {
@@ -318,15 +315,5 @@ public class DialerFragment extends Fragment {
     private String getFormattedNumber(String number) {
         return TelecomUtils.getFormattedNumber(mContext, number);
     }
-
-    private final CallListener mCallListener = new CallListener() {
-        @Override
-        public void dispatchPhoneKeyEvent(KeyEvent event) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_CALL &&
-                    event.getAction() == KeyEvent.ACTION_UP &&
-                    !TextUtils.isEmpty(mNumber.toString())) {
-                mUiCallManager.safePlaceCall(mNumber.toString(), false);
-            }
-        }
-    };
 }
+
