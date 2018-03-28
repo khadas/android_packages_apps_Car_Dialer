@@ -27,6 +27,7 @@ import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,12 +44,13 @@ public class DialerFragment extends Fragment {
     private static final String INPUT_ACTIVE_KEY = "INPUT_ACTIVE_KEY";
     private static final String DIAL_NUMBER_KEY = "DIAL_NUMBER_KEY";
 
-    private static final int TONE_LENGTH_MS = 150;
+    private static final int TONE_LENGTH_INFINITE = -1;
     private static final int TONE_RELATIVE_VOLUME = 80;
     private static final int MAX_DIAL_NUMBER = 20;
 
     private static final SparseIntArray mToneMap = new SparseIntArray();
     private static final SparseArray<String> mDialValueMap = new SparseArray<>();
+    private static final SparseArray<Integer> mRIdMap = new SparseArray<>();
 
     static {
         mToneMap.put(KeyEvent.KEYCODE_1, ToneGenerator.TONE_DTMF_1);
@@ -76,6 +78,19 @@ public class DialerFragment extends Fragment {
         mDialValueMap.put(KeyEvent.KEYCODE_0, "0");
         mDialValueMap.put(KeyEvent.KEYCODE_STAR, "*");
         mDialValueMap.put(KeyEvent.KEYCODE_POUND, "#");
+
+        mRIdMap.put(KeyEvent.KEYCODE_1, R.id.one);
+        mRIdMap.put(KeyEvent.KEYCODE_2, R.id.two);
+        mRIdMap.put(KeyEvent.KEYCODE_3, R.id.three);
+        mRIdMap.put(KeyEvent.KEYCODE_4, R.id.four);
+        mRIdMap.put(KeyEvent.KEYCODE_5, R.id.five);
+        mRIdMap.put(KeyEvent.KEYCODE_6, R.id.six);
+        mRIdMap.put(KeyEvent.KEYCODE_7, R.id.seven);
+        mRIdMap.put(KeyEvent.KEYCODE_8, R.id.eight);
+        mRIdMap.put(KeyEvent.KEYCODE_9, R.id.nine);
+        mRIdMap.put(KeyEvent.KEYCODE_0, R.id.zero);
+        mRIdMap.put(KeyEvent.KEYCODE_STAR, R.id.star);
+        mRIdMap.put(KeyEvent.KEYCODE_POUND, R.id.pound);
     }
 
     private Context mContext;
@@ -153,7 +168,7 @@ public class DialerFragment extends Fragment {
             }
         });
 
-        mNumberView = (TextView) view.findViewById(R.id.number);
+        mNumberView = view.findViewById(R.id.number);
 
         if (Log.isLoggable(TAG, Log.VERBOSE)) {
             Log.v(TAG, "mShowInput: " + mShowInput);
@@ -183,6 +198,12 @@ public class DialerFragment extends Fragment {
                 mNumberView.setText(getFormattedNumber(mNumber.toString()));
             }
         });
+        deleteButton.setOnLongClickListener(v -> {
+            // Clear all on long-press
+            mNumber.delete(0, mNumber.length());
+            mNumberView.setText(getFormattedNumber(mNumber.toString()));
+            return true;
+        });
 
         setupKeypadClickListeners(view);
 
@@ -190,10 +211,10 @@ public class DialerFragment extends Fragment {
     }
 
     /**
-     * The default click listener for all dialpad buttons. This click listener will append its
-     * associated value to {@link #mNumber}.
+     * The click listener for all dialpad buttons.  Reacts to touch-down and touch-up events, as
+     * well as long-press for certain keys.  Mimics the behavior of the phone dialer app.
      */
-    private class DialpadClickListener implements View.OnClickListener {
+    private class DialpadClickListener implements View.OnTouchListener, View.OnLongClickListener {
         private final int mTone;
         private final String mValue;
 
@@ -203,38 +224,58 @@ public class DialerFragment extends Fragment {
         }
 
         @Override
-        public void onClick(View v) {
-            mNumber.append(mValue);
-            mNumberView.setText(getFormattedNumber(mNumber.toString()));
-            playTone(mTone);
+        public boolean onLongClick(View v) {
+            switch (mValue) {
+                case "0":
+                    mNumber.deleteCharAt(mNumber.length() - 1);
+                    appendDigitAndUpdate("+");
+                    stopTone();
+                    return true;
+                case "1":
+                    // TODO: this currently does not work (at least over bluetooth HFP), because
+                    // the framework is unable to get the voicemail number. Revisit later...
+                    mUiCallManager.callVoicemail();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                appendDigitAndUpdate(mValue);
+                playTone(mTone);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                stopTone();
+            }
+
+            // Continue propagating the touch event
+            return false;
         }
     }
 
     private void setupKeypadClickListeners(View parent) {
-        parent.findViewById(R.id.zero).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_0));
-        parent.findViewById(R.id.one).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_1));
-        parent.findViewById(R.id.two).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_2));
-        parent.findViewById(R.id.three).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_3));
-        parent.findViewById(R.id.four).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_4));
-        parent.findViewById(R.id.five).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_5));
-        parent.findViewById(R.id.six).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_6));
-        parent.findViewById(R.id.seven).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_7));
-        parent.findViewById(R.id.eight).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_8));
-        parent.findViewById(R.id.nine).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_9));
-        parent.findViewById(R.id.star).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_STAR));
-        parent.findViewById(R.id.pound).setOnClickListener(
-                new DialpadClickListener(KeyEvent.KEYCODE_POUND));
+        final int[] keys = {
+            KeyEvent.KEYCODE_1,
+            KeyEvent.KEYCODE_2,
+            KeyEvent.KEYCODE_3,
+            KeyEvent.KEYCODE_4,
+            KeyEvent.KEYCODE_5,
+            KeyEvent.KEYCODE_6,
+            KeyEvent.KEYCODE_7,
+            KeyEvent.KEYCODE_8,
+            KeyEvent.KEYCODE_9,
+            KeyEvent.KEYCODE_0,
+            KeyEvent.KEYCODE_STAR,
+            KeyEvent.KEYCODE_POUND,
+        };
+        for (int key : keys) {
+            DialpadClickListener clickListener = new DialpadClickListener(key);
+            View v = parent.findViewById(mRIdMap.get(key));
+            v.setOnTouchListener(clickListener);
+            v.setOnLongClickListener(clickListener);
+        }
     }
 
     @Override
@@ -286,8 +327,7 @@ public class DialerFragment extends Fragment {
     private void setDialNumberInternal(final String number) {
         // Clear existing content in mNumber.
         mNumber.setLength(0);
-        mNumber.append(number);
-        mNumberView.setText(getFormattedNumber(mNumber.toString()));
+        appendDigitAndUpdate(number);
     }
 
     private void playTone(int tone) {
@@ -297,8 +337,8 @@ public class DialerFragment extends Fragment {
                 return;
             }
 
-            // Start the new tone (will stop any playing tone)
-            mToneGenerator.startTone(tone, TONE_LENGTH_MS);
+            // Start the new tone
+            mToneGenerator.startTone(tone, TONE_LENGTH_INFINITE);
         }
     }
 
@@ -314,6 +354,11 @@ public class DialerFragment extends Fragment {
 
     private String getFormattedNumber(String number) {
         return TelecomUtils.getFormattedNumber(mContext, number);
+    }
+
+    private void appendDigitAndUpdate(String digit) {
+        mNumber.append(digit);
+        mNumberView.setText(getFormattedNumber(mNumber.toString()));
     }
 }
 
