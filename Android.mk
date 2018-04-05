@@ -31,7 +31,7 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_USE_AAPT2 := true
 
-LOCAL_STATIC_ANDROID_LIBRARIES += $(ANDROID_SUPPORT_CAR_TARGETS)
+LOCAL_STATIC_ANDROID_LIBRARIES += android-support-car
 
 LOCAL_PROGUARD_ENABLED := disabled
 
@@ -39,7 +39,6 @@ LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_DEX_PREOPT := false
 
-include packages/apps/Car/libs/car-stream-ui-lib/car-stream-ui-lib.mk
 include packages/apps/Car/libs/car-apps-common/car-apps-common.mk
 
 include $(BUILD_PACKAGE)
