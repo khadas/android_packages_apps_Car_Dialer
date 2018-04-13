@@ -537,11 +537,6 @@ public class TelecomActivity extends CarDrawerActivity implements
             Drawable drawable = getDrawable(iconResId);
             drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
             holder.getIcon().setImageDrawable(drawable);
-            if (position > 0) {
-                drawable = getDrawable(R.drawable.ic_chevron_right);
-                drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-                holder.getEndIcon().setImageDrawable(drawable);
-            }
         }
 
         @Override
