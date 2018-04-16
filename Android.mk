@@ -31,7 +31,9 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_USE_AAPT2 := true
 
-LOCAL_STATIC_ANDROID_LIBRARIES += android-support-car
+LOCAL_STATIC_ANDROID_LIBRARIES += \
+    android-support-car \
+    car-stream-ui-lib
 
 LOCAL_PROGUARD_ENABLED := disabled
 
