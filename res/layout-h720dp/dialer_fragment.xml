@@ -24,7 +24,7 @@
 
     <!-- This CardView is clickable so that clicks do not fall through to the fragment that
          is underneath the dialer_fragment. -->
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/car_app_bar_height"
@@ -120,5 +120,5 @@
                 android:tint="@color/car_tint"
                 android:src="@drawable/ic_down_outlined" />
         </FrameLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </FrameLayout>

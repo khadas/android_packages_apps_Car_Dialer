@@ -24,9 +24,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.ColorInt;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -35,14 +32,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
+import androidx.car.widget.DayNightStyle;
+import androidx.car.widget.PagedListView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.view.CardListBackgroundResolver;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.car.widget.DayNightStyle;
-import androidx.car.widget.PagedListView;
 
 /**
  * A fragment that shows the name of the contact, the photo and all listed phone numbers. It is
@@ -107,7 +107,7 @@ public class ContactDetailsFragment extends Fragment
     }
 
     /**
-     * Adds a {@link android.support.v7.widget.RecyclerView.OnScrollListener} to be notified when
+     * Adds a {@link androidx.recyclerview.widget.RecyclerView.OnScrollListener} to be notified when
      * the contact details are scrolled.
      *
      * @see RecyclerView#addOnScrollListener(RecyclerView.OnScrollListener)

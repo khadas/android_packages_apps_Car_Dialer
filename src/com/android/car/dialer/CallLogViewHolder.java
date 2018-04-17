@@ -15,7 +15,6 @@
  */
 package com.android.car.dialer;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -23,8 +22,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
- * A {@link android.support.v7.widget.RecyclerView.ViewHolder} that will hold layouts that
+ * A {@link androidx.recyclerview.widget.RecyclerView.ViewHolder} that will hold layouts that
  * are inflated by {@link StrequentsAdapter}.
  */
 public class CallLogViewHolder extends RecyclerView.ViewHolder {

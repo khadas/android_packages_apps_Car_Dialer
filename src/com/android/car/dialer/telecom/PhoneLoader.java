@@ -24,9 +24,10 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
-import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.IntDef;
 
 import java.util.ArrayList;
 import java.util.HashMap;

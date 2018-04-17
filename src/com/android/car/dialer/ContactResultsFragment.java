@@ -21,22 +21,22 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.net.Uri;
+
+import androidx.annotation.Nullable;
+import androidx.car.widget.DayNightStyle;
+import androidx.car.widget.PagedListView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.car.widget.DayNightStyle;
-import androidx.car.widget.PagedListView;
 
 /**
  * A fragment that will take a search query, look up contacts that match and display those
@@ -92,7 +92,7 @@ public class ContactResultsFragment extends Fragment implements
     }
 
     /**
-     * Adds a {@link android.support.v7.widget.RecyclerView.OnScrollListener} to be notified when
+     * Adds a {@link androidx.recyclerview.widget.RecyclerView.OnScrollListener} to be notified when
      * the contact list is scrolled.
      *
      * @see RecyclerView#addOnScrollListener(RecyclerView.OnScrollListener)

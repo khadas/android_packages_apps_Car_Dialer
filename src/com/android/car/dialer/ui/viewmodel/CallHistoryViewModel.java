@@ -14,11 +14,13 @@ package com.android.car.dialer.ui.viewmodel;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.livedata.MissedCallHistoryLiveData;

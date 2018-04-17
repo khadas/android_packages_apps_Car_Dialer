@@ -18,8 +18,10 @@ package com.android.car.dialer;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
+import androidx.annotation.Nullable;
+
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
 

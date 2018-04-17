@@ -18,9 +18,10 @@ package com.android.car.dialer.telecom;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.annotation.MainThread;
-import android.support.annotation.Nullable;
 import android.widget.ImageView;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 

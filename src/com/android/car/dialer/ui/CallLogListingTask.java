@@ -22,10 +22,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.provider.CallLog;
-import android.support.annotation.NonNull;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+
+import androidx.annotation.NonNull;
 
 import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;

@@ -21,7 +21,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.text.TextUtils;
@@ -39,6 +38,8 @@ import android.view.animation.Transformation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.FabDrawable;

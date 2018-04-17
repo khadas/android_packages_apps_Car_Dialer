@@ -15,18 +15,19 @@
  */
 package com.android.car.dialer;
 
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Branch from {@link android.support.v7.widget.DefaultItemAnimator} with changes on
+ * Branch from {@link androidx.recyclerview.widget.DefaultItemAnimator} with changes on
  * {@link #animateAddImpl}, {@link #animateAdd} and {@link #animateRemoveImpl}.
  */
 public class StrequentsItemAnimator extends SimpleItemAnimator {

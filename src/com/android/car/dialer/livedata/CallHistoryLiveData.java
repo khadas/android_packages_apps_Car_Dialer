@@ -15,13 +15,14 @@
  */
 package com.android.car.dialer.livedata;
 
-import android.arch.lifecycle.LiveData;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
+
+import androidx.lifecycle.LiveData;
 
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.ui.CallLogListingTask;

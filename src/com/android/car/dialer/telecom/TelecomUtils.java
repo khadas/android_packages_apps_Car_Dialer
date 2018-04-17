@@ -29,8 +29,6 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.PhoneLookup;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
@@ -38,6 +36,10 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+
 import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
