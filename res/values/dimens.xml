@@ -80,4 +80,17 @@
 
     <!-- The height of each of the cards that list the contact search results. -->
     <dimen name="contact_result_card_height">128dp</dimen>
+
+    <dimen name="call_log_last_card_bottom_margin">@dimen/call_log_card_overlap</dimen>
+
+    <dimen name="line_divider_height">1dp</dimen>
+
+    <dimen name="dialer_number_view_height">128dp</dimen>
+    <dimen name="dialer_number_view_padding">32dp</dimen>
+
+    <dimen name="call_fab_elevation">8dp</dimen>
+    <dimen name="bksp_button_width">160dp</dimen>
+
+    <dimen name="in_call_button_size">160dp</dimen>
+
 </resources>
