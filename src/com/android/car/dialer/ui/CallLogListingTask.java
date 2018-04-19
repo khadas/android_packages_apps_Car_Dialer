@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer;
+package com.android.car.dialer.ui;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -29,18 +29,19 @@ import android.text.format.DateUtils;
 
 import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class CallLogListingTask extends AsyncTask<Void, Void, Void> {
-    static class CallLogItem {
-        final String mTitle;
-        final String mText;
-        final String mNumber;
-        final Bitmap mIcon;
+public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
+    public static class CallLogItem {
+        public final String mTitle;
+        public final String mText;
+        public final String mNumber;
+        public final Bitmap mIcon;
 
         public CallLogItem(String title, String text, String number, Bitmap icon) {
             mTitle = title;
@@ -50,7 +51,7 @@ class CallLogListingTask extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    interface LoadCompleteListener {
+    public interface LoadCompleteListener {
         void onLoadComplete(List<CallLogItem> items);
     }
 
@@ -63,7 +64,7 @@ class CallLogListingTask extends AsyncTask<Void, Void, Void> {
     private List<CallLogItem> mItems;
     private LoadCompleteListener mListener;
 
-    CallLogListingTask(Context context, Cursor cursor,
+    public CallLogListingTask(Context context, Cursor cursor,
             @NonNull LoadCompleteListener listener) {
         mContext = context;
         mCursor = cursor;
