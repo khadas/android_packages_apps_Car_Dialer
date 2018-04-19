@@ -16,8 +16,8 @@
 <resources>
     <!-- rail -->
     <color name="phone_theme">@color/phone_theme_light</color>
-    <color name="phone_theme_light">@color/car_light_blue_800</color>
-    <color name="phone_status_bar_theme">@color/car_light_blue_900</color>
+    <color name="phone_theme_light">@color/car_grey_50</color>
+    <color name="phone_status_bar_theme">@color/car_grey_50</color>
     <color name="phone_call">@color/car_green_700</color>
     <color name="phone_end_call">@color/car_red_500a</color>
     <color name="phone_secondary_call_scrim">#990288d1</color>
