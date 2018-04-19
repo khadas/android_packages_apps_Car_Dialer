@@ -34,7 +34,9 @@ LOCAL_USE_AAPT2 := true
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     android-support-car \
     car-apps-common \
-    car-stream-ui-lib
+    car-stream-ui-lib \
+    android-arch-lifecycle-extensions \
+
 
 LOCAL_PROGUARD_ENABLED := disabled
 
