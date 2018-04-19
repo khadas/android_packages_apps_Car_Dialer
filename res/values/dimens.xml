@@ -63,6 +63,7 @@
     <dimen name="call_log_icon_margin">4dp</dimen>
     <dimen name="call_log_item_height">91dp</dimen>
     <dimen name="call_log_icon_size">@dimen/car_primary_icon_size</dimen>
+    <dimen name="car_card_view_corner_radius">0dp</dimen>
 
     <dimen name="icon_container_height">@dimen/car_primary_icon_size</dimen>
 
