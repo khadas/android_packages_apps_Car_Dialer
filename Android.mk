@@ -36,10 +36,10 @@ LOCAL_STATIC_ANDROID_LIBRARIES += \
     car-apps-common \
     car-stream-ui-lib \
     androidx.lifecycle_lifecycle-extensions \
-    android-support-constraint-layout \
+    androidx-constraintlayout_constraintlayout \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    android-support-constraint-layout-solver
+    androidx-constraintlayout_constraintlayout-solver
 
 LOCAL_PROGUARD_ENABLED := disabled
 

@@ -73,7 +73,7 @@
                         android:id="@+id/call"
                         android:scaleType="center"
                         android:src="@drawable/ic_phone"
-                        style="@style/DialpadCall"
+                        style="@style/DialpadPrimaryButton"
                         android:elevation="@dimen/call_fab_elevation"
                         android:layout_gravity="center" />
                 </FrameLayout>

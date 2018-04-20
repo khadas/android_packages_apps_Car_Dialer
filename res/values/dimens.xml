@@ -91,7 +91,7 @@
     <dimen name="dialer_number_view_padding">32dp</dimen>
 
     <dimen name="call_fab_elevation">8dp</dimen>
-    <dimen name="bksp_button_width">160dp</dimen>
+    <dimen name="bksp_button_width">@dimen/car_touch_target_size</dimen>
 
     <dimen name="in_call_button_size">160dp</dimen>
 
