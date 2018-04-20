@@ -58,11 +58,11 @@
                     android:src="@drawable/ic_down_outlined" />
             </FrameLayout>
 
-            <include
+            <FrameLayout
+                android:id="@+id/dialpad_fragment_container"
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                layout="@layout/dialpad" />
+                android:layout_width="wrap_content" />
         </FrameLayout>
 
         <RelativeLayout
