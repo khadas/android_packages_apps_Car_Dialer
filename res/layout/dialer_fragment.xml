@@ -20,7 +20,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/car_app_bar_height">
+    android:paddingTop="@dimen/car_app_bar_height"
+    android:paddingBottom="@dimen/car_app_bar_height">
 
     <!-- This LinearLayout is clickable so that clicks do not fall through to the fragment that
          is underneath the dialer_fragment. -->
@@ -29,89 +30,27 @@
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/dial_container_vertical_margin"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_marginTop="@dimen/dialer_dialpad_top_margin"
+            android:id="@+id/dialpad_fragment_container"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="match_parent"
             android:layout_width="0dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:background="@color/car_list_divider"
+            android:layout_gravity="end|top"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_width="@dimen/line_divider_height"/>
 
-            <!-- This FrameLayout ensures that the back button is centered within the
-             exit_dialer_button despite the button's touch target
-             being smaller. -->
-            <FrameLayout
-                android:layout_marginTop="@dimen/dialer_back_button_top_margin"
-                android:layout_gravity="start|top"
-                android:layout_width="@dimen/car_keyline_1"
-                android:layout_height="@dimen/car_keyline_1">
-
-                <ImageView
-                    android:id="@+id/exit_dialer_button"
-                    android:background="@drawable/dialpad_button_background"
-                    android:layout_gravity="center"
-                    android:layout_width="@dimen/car_touch_target_size"
-                    android:layout_height="@dimen/car_touch_target_size"
-                    android:scaleType="center"
-                    android:tint="@color/car_tint"
-                    android:src="@drawable/ic_down_outlined" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/dialpad_fragment_container"
-                android:layout_gravity="center_horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content" />
-        </FrameLayout>
-
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/dialer_info_fragment_container"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="match_parent"
             android:layout_width="@dimen/dialer_dialed_number_container"
-            android:layout_height="match_parent"
             android:paddingStart="@dimen/car_keyline_1"
-            android:paddingEnd="@dimen/car_keyline_1"
-            android:paddingBottom="@dimen/dialer_dialed_number_bottom_padding">
-
-            <TextView
-                android:id="@+id/number"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dialer_number_view_height"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:paddingTop="@dimen/dialer_number_view_padding"
-                android:paddingBottom="@dimen/dialer_number_view_padding"
-                android:gravity="center"
-                android:focusable="true"
-                android:text="@string/dial_a_number"
-                style="@style/TextAppearance.Car.Body1" />
-
-            <ImageButton
-                android:id="@+id/call"
-                android:scaleType="center"
-                android:src="@drawable/ic_phone"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:elevation="@dimen/call_fab_elevation"
-                style="@style/DialpadCall" />
-
-            <ImageButton
-                android:id="@+id/delete"
-                android:layout_alignParentBottom="true"
-                android:layout_width="@dimen/bksp_button_width"
-                android:layout_height="@dimen/bksp_button_width"
-                android:layout_toEndOf="@id/call"
-                android:layout_marginStart="16dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_backspace"
-                android:tint="@color/car_tint"
-                android:background="@drawable/dialpad_delete_button_background" />
-        </RelativeLayout>
+            android:paddingEnd="@dimen/car_keyline_1"/>
     </LinearLayout>
-
-    <View
-        android:background="@color/car_list_divider"
-        android:layout_gravity="end|top"
-        android:layout_height="match_parent"
-        android:layout_width="@dimen/line_divider_height"
-        android:layout_marginEnd="@dimen/dialer_dialed_number_container" />
 </FrameLayout>
