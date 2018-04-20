@@ -36,6 +36,7 @@
     <dimen name="in_call_toggle_button_image_offset">30dp</dimen>
     <dimen name="in_call_info_margin_top">72dp</dimen>
     <dimen name="in_call_card_elevation">12dp</dimen>
+    <dimen name="in_call_card_height">200dp</dimen>
 
     <!-- This should be -1 * in_call_card_right_margin -->
     <dimen name="in_call_card_dialpad_translation_x">-308dp</dimen>
@@ -63,7 +64,7 @@
     <dimen name="call_log_icon_margin">4dp</dimen>
     <dimen name="call_log_item_height">91dp</dimen>
     <dimen name="call_log_icon_size">@dimen/car_primary_icon_size</dimen>
-    <dimen name="car_card_view_corner_radius">0dp</dimen>
+    <dimen name="car_card_view_corner_radius">2dp</dimen>
 
     <dimen name="icon_container_height">@dimen/car_primary_icon_size</dimen>
 
