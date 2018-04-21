@@ -19,6 +19,7 @@ limitations under the License.
         <item name="android:statusBarColor">@color/phone_status_bar_theme</item>
         <item name="android:colorPrimary">@android:color/transparent</item>
         <item name="android:colorPrimaryDark">@color/phone_status_bar_theme</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
         <item name="drawerClosedHeaderColor">@color/car_title2</item>
     </style>
 
