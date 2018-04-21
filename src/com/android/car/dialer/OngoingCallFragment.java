@@ -54,6 +54,7 @@ import java.util.Objects;
 /**
  * A fragment that displays information about an on-going call with options to hang up.
  */
+@Deprecated
 public class OngoingCallFragment extends Fragment implements CallListener {
     private static final String TAG = "OngoingCall";
     private static final SparseArray<Character> mDialpadButtonMap = new SparseArray<>();

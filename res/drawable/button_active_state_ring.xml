@@ -13,10 +13,10 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:drawable="@drawable/button_active_state_ring"/>
-    <item
-        android:drawable="@drawable/ic_dialpad_normal"/>
-</layer-list>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:thickness="4dp"
+    android:innerRadius="34dp"
+    android:useLevel="false">
+</shape>
