@@ -16,10 +16,15 @@
 package com.android.car.dialer.ui.listitem;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 
 import androidx.car.widget.TextListItem;
 
+import com.android.car.apps.common.CircleBitmapDrawable;
+import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.telecom.ContactBitmapWorker;
+import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallHistoryListItemProvider;
 import com.android.car.dialer.ui.CallLogListingTask;
@@ -41,13 +46,21 @@ public class CallLogListItem extends TextListItem {
     @Override
     public void onBind(ViewHolder viewHolder) {
         super.onBind(viewHolder);
-        setPrimaryActionIcon(
-                new BitmapDrawable(mContext.getResources(), mCallLogItem.mIcon), true);
-        setTitle(mCallLogItem.mTitle);
-        setBody(mCallLogItem.mText);
-
-        viewHolder.itemView.setOnClickListener((v) -> {
-            UiCallManager.get().safePlaceCall(mCallLogItem.mNumber, false);
-        });
+        ContactBitmapWorker.loadBitmap(mContext.getContentResolver(), viewHolder.getPrimaryIcon(),
+                mCallLogItem.mNumber,
+                bitmap -> {
+                    Resources r = mContext.getResources();
+                    if (bitmap != null) {
+                        setPrimaryActionIcon(new CircleBitmapDrawable(r, bitmap), true);
+                    } else {
+                        LetterTileDrawable letterTileDrawable = new LetterTileDrawable(r);
+                        letterTileDrawable.setContactDetails(mCallLogItem.mTitle,
+                                mCallLogItem.mNumber);
+                        letterTileDrawable.setIsCircular(true);
+                        setPrimaryActionIcon(letterTileDrawable, true);
+                    }
+                    // force rebind the view.
+                    super.onBind(viewHolder);
+                });
     }
 }

@@ -40,7 +40,8 @@ LOCAL_STATIC_ANDROID_LIBRARIES += \
     android-support-v7-cardview \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    android-support-constraint-layout-solver
+    android-support-constraint-layout-solver \
+    guava \
 
 LOCAL_PROGUARD_ENABLED := disabled
 
