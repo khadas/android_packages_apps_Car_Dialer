@@ -35,6 +35,7 @@ import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallHistoryFragment;
 import com.android.car.dialer.ui.CallLogListingTask;
+import com.android.car.dialer.ui.ContactListFragment;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -296,9 +297,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         Fragment fragment = DialerFragment.newInstance(dialNumber);
 
         // Add the dialer fragment to the backstack so that it can be popped off to dismiss it.
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_fragment_container, fragment, DIALER_FRAGMENT_TAG)
-                .commit();
+        setContentFragment(fragment);
     }
 
     /**
@@ -349,6 +348,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         }
 
         maybeHideDialer();
+
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(enter, exit)
                 .replace(R.id.content_fragment_container, fragment, CONTENT_FRAGMENT_TAG)
@@ -484,9 +484,10 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         private static final int ITEM_FAVORITES = 0;
         private static final int ITEM_CALLLOG_ALL = 1;
         private static final int ITEM_CALLLOG_MISSED = 2;
-        private static final int ITEM_DIAL = 3;
+        private static final int ITEM_CONTACT = 3;
+        private static final int ITEM_DIAL = 4;
 
-        private static final int ITEM_COUNT = 4;
+        private static final int ITEM_COUNT = 5;
 
         DialerRootAdapter() {
             super(TelecomActivity.this, false /* showDisabledListOnEmpty */);
@@ -519,6 +520,10 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
                     textResId = R.string.calllog_favorites;
                     iconResId = R.drawable.ic_favorite;
                     break;
+                case ITEM_CONTACT:
+                    textResId = R.string.contact_menu_label;
+                    iconResId = R.drawable.ic_contact;
+                    break;
                 default:
                     Log.wtf(TAG, "Unexpected position: " + position);
                     return;
@@ -545,6 +550,9 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
                 case ITEM_FAVORITES:
                     showSpeedDialFragment();
                     break;
+                case ITEM_CONTACT:
+                    showContact();
+                    break;
                 default:
                     Log.w(TAG, "Invalid position in ROOT menu! " + position);
             }
@@ -552,9 +560,10 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
     }
 
     private void showCallHistory(@PhoneLoader.CallType int callType) {
-        Fragment fragment = CallHistoryFragment.newInstance(callType);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_fragment_container, fragment)
-                .commit();
+        setContentFragment(CallHistoryFragment.newInstance(callType));
+    }
+
+    private void showContact() {
+        setContentFragment(ContactListFragment.newInstance());
     }
 }
