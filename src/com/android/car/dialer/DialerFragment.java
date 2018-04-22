@@ -16,18 +16,12 @@
 package com.android.car.dialer;
 
 import android.content.Context;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,69 +29,22 @@ import android.widget.TextView;
 import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.DialpadFragment;
 
 /**
  * Fragment that controls the dialpad.
  */
-public class DialerFragment extends Fragment {
+public class DialerFragment extends Fragment implements DialpadFragment.DialpadCallback {
     private static final String TAG = "Em.DialerFragment";
     private static final String INPUT_ACTIVE_KEY = "INPUT_ACTIVE_KEY";
     private static final String DIAL_NUMBER_KEY = "DIAL_NUMBER_KEY";
+    private static final String PLUS_DIGIT = "+";
 
-    private static final int TONE_LENGTH_INFINITE = -1;
-    private static final int TONE_RELATIVE_VOLUME = 80;
     private static final int MAX_DIAL_NUMBER = 20;
-
-    private static final SparseIntArray mToneMap = new SparseIntArray();
-    private static final SparseArray<String> mDialValueMap = new SparseArray<>();
-    private static final SparseArray<Integer> mRIdMap = new SparseArray<>();
-
-    static {
-        mToneMap.put(KeyEvent.KEYCODE_1, ToneGenerator.TONE_DTMF_1);
-        mToneMap.put(KeyEvent.KEYCODE_2, ToneGenerator.TONE_DTMF_2);
-        mToneMap.put(KeyEvent.KEYCODE_3, ToneGenerator.TONE_DTMF_3);
-        mToneMap.put(KeyEvent.KEYCODE_4, ToneGenerator.TONE_DTMF_4);
-        mToneMap.put(KeyEvent.KEYCODE_5, ToneGenerator.TONE_DTMF_5);
-        mToneMap.put(KeyEvent.KEYCODE_6, ToneGenerator.TONE_DTMF_6);
-        mToneMap.put(KeyEvent.KEYCODE_7, ToneGenerator.TONE_DTMF_7);
-        mToneMap.put(KeyEvent.KEYCODE_8, ToneGenerator.TONE_DTMF_8);
-        mToneMap.put(KeyEvent.KEYCODE_9, ToneGenerator.TONE_DTMF_9);
-        mToneMap.put(KeyEvent.KEYCODE_0, ToneGenerator.TONE_DTMF_0);
-        mToneMap.put(KeyEvent.KEYCODE_STAR, ToneGenerator.TONE_DTMF_S);
-        mToneMap.put(KeyEvent.KEYCODE_POUND, ToneGenerator.TONE_DTMF_P);
-
-        mDialValueMap.put(KeyEvent.KEYCODE_1, "1");
-        mDialValueMap.put(KeyEvent.KEYCODE_2, "2");
-        mDialValueMap.put(KeyEvent.KEYCODE_3, "3");
-        mDialValueMap.put(KeyEvent.KEYCODE_4, "4");
-        mDialValueMap.put(KeyEvent.KEYCODE_5, "5");
-        mDialValueMap.put(KeyEvent.KEYCODE_6, "6");
-        mDialValueMap.put(KeyEvent.KEYCODE_7, "7");
-        mDialValueMap.put(KeyEvent.KEYCODE_8, "8");
-        mDialValueMap.put(KeyEvent.KEYCODE_9, "9");
-        mDialValueMap.put(KeyEvent.KEYCODE_0, "0");
-        mDialValueMap.put(KeyEvent.KEYCODE_STAR, "*");
-        mDialValueMap.put(KeyEvent.KEYCODE_POUND, "#");
-
-        mRIdMap.put(KeyEvent.KEYCODE_1, R.id.one);
-        mRIdMap.put(KeyEvent.KEYCODE_2, R.id.two);
-        mRIdMap.put(KeyEvent.KEYCODE_3, R.id.three);
-        mRIdMap.put(KeyEvent.KEYCODE_4, R.id.four);
-        mRIdMap.put(KeyEvent.KEYCODE_5, R.id.five);
-        mRIdMap.put(KeyEvent.KEYCODE_6, R.id.six);
-        mRIdMap.put(KeyEvent.KEYCODE_7, R.id.seven);
-        mRIdMap.put(KeyEvent.KEYCODE_8, R.id.eight);
-        mRIdMap.put(KeyEvent.KEYCODE_9, R.id.nine);
-        mRIdMap.put(KeyEvent.KEYCODE_0, R.id.zero);
-        mRIdMap.put(KeyEvent.KEYCODE_STAR, R.id.star);
-        mRIdMap.put(KeyEvent.KEYCODE_POUND, R.id.pound);
-    }
 
     private Context mContext;
     private UiCallManager mUiCallManager;
     private final StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
-    private ToneGenerator mToneGenerator;
-    private final Object mToneGeneratorLock = new Object();
     private TextView mNumberView;
     private boolean mShowInput = true;
     private Runnable mPendingRunnable;
@@ -205,103 +152,20 @@ public class DialerFragment extends Fragment {
             return true;
         });
 
-        setupKeypadClickListeners(view);
+        Fragment dialpadFragment = DialpadFragment.newInstance();
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.dialpad_fragment_container, dialpadFragment)
+                .commit();
 
         return view;
-    }
-
-    /**
-     * The click listener for all dialpad buttons.  Reacts to touch-down and touch-up events, as
-     * well as long-press for certain keys.  Mimics the behavior of the phone dialer app.
-     */
-    private class DialpadClickListener implements View.OnTouchListener, View.OnLongClickListener {
-        private final int mTone;
-        private final String mValue;
-
-        DialpadClickListener(int keyCode) {
-            mTone = mToneMap.get(keyCode);
-            mValue = mDialValueMap.get(keyCode);
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            switch (mValue) {
-                case "0":
-                    mNumber.deleteCharAt(mNumber.length() - 1);
-                    appendDigitAndUpdate("+");
-                    stopTone();
-                    return true;
-                case "1":
-                    // TODO: this currently does not work (at least over bluetooth HFP), because
-                    // the framework is unable to get the voicemail number. Revisit later...
-                    mUiCallManager.callVoicemail();
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                appendDigitAndUpdate(mValue);
-                playTone(mTone);
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                stopTone();
-            }
-
-            // Continue propagating the touch event
-            return false;
-        }
-    }
-
-    private void setupKeypadClickListeners(View parent) {
-        final int[] keys = {
-            KeyEvent.KEYCODE_1,
-            KeyEvent.KEYCODE_2,
-            KeyEvent.KEYCODE_3,
-            KeyEvent.KEYCODE_4,
-            KeyEvent.KEYCODE_5,
-            KeyEvent.KEYCODE_6,
-            KeyEvent.KEYCODE_7,
-            KeyEvent.KEYCODE_8,
-            KeyEvent.KEYCODE_9,
-            KeyEvent.KEYCODE_0,
-            KeyEvent.KEYCODE_STAR,
-            KeyEvent.KEYCODE_POUND,
-        };
-        for (int key : keys) {
-            DialpadClickListener clickListener = new DialpadClickListener(key);
-            View v = parent.findViewById(mRIdMap.get(key));
-            v.setOnTouchListener(clickListener);
-            v.setOnLongClickListener(clickListener);
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        synchronized (mToneGeneratorLock) {
-            if (mToneGenerator == null) {
-                mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
-            }
-        }
-
         if (mPendingRunnable != null) {
             mPendingRunnable.run();
             mPendingRunnable = null;
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        stopTone();
-        synchronized (mToneGeneratorLock) {
-            if (mToneGenerator != null) {
-                mToneGenerator.release();
-                mToneGenerator = null;
-            }
         }
     }
 
@@ -310,6 +174,19 @@ public class DialerFragment extends Fragment {
         super.onDestroyView();
         mContext = null;
         mNumberView = null;
+    }
+
+    @Override
+    public void onDialVoiceMail() {
+        mUiCallManager.callVoicemail();
+    }
+
+    @Override
+    public void onAppendDigit(String digit) {
+        if (PLUS_DIGIT.equals(digit)) {
+            mNumber.deleteCharAt(mNumber.length() - 1);
+        }
+        appendDigitAndUpdate(digit);
     }
 
     private void setDialNumber(final String number) {
@@ -330,28 +207,6 @@ public class DialerFragment extends Fragment {
         appendDigitAndUpdate(number);
     }
 
-    private void playTone(int tone) {
-        synchronized (mToneGeneratorLock) {
-            if (mToneGenerator == null) {
-                Log.w(TAG, "playTone: mToneGenerator == null, tone: " + tone);
-                return;
-            }
-
-            // Start the new tone
-            mToneGenerator.startTone(tone, TONE_LENGTH_INFINITE);
-        }
-    }
-
-    private void stopTone() {
-        synchronized (mToneGeneratorLock) {
-            if (mToneGenerator == null) {
-                Log.w(TAG, "stopTone: mToneGenerator == null");
-                return;
-            }
-            mToneGenerator.stopTone();
-        }
-    }
-
     private String getFormattedNumber(String number) {
         return TelecomUtils.getFormattedNumber(mContext, number);
     }
@@ -361,4 +216,3 @@ public class DialerFragment extends Fragment {
         mNumberView.setText(getFormattedNumber(mNumber.toString()));
     }
 }
-
