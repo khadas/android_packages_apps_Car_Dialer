@@ -60,10 +60,10 @@ public class ContactDetailsFragment extends Fragment
     private static final String KEY_URI = "uri";
 
     private static final String[] CONTACT_DETAILS_PROJECTION = {
-        ContactsContract.Contacts._ID,
-        ContactsContract.Contacts.DISPLAY_NAME,
-        ContactsContract.Contacts.PHOTO_URI,
-        ContactsContract.Contacts.HAS_PHONE_NUMBER
+            ContactsContract.Contacts._ID,
+            ContactsContract.Contacts.DISPLAY_NAME,
+            ContactsContract.Contacts.PHOTO_URI,
+            ContactsContract.Contacts.HAS_PHONE_NUMBER
     };
 
     private PagedListView mListView;
@@ -156,7 +156,8 @@ public class ContactDetailsFragment extends Fragment
     }
 
     @Override
-    public void onLoaderReset(Loader loader) {  }
+    public void onLoaderReset(Loader loader) {
+    }
 
     private boolean vdebug() {
         return Log.isLoggable(TAG, Log.DEBUG);
@@ -167,7 +168,7 @@ public class ContactDetailsFragment extends Fragment
         public ImageView leftIcon;
         public TextView title;
         public TextView text;
-        public ImageView rightIcon;
+        public ImageView avatar;
 
         public ContactDetailViewHolder(View v) {
             super(v);
@@ -175,7 +176,7 @@ public class ContactDetailsFragment extends Fragment
             leftIcon = v.findViewById(R.id.icon);
             title = v.findViewById(R.id.title);
             text = v.findViewById(R.id.text);
-            rightIcon = v.findViewById(R.id.right_icon);
+            avatar = v.findViewById(R.id.avatar);
         }
     }
 
@@ -186,7 +187,8 @@ public class ContactDetailsFragment extends Fragment
         private static final int ID_CONTENT = 2;
 
         private final String mContactName;
-        @ColorInt private int mIconTint;
+        @ColorInt
+        private int mIconTint;
 
         private List<Pair<String, String>> mPhoneNumbers = new ArrayList<>();
 
@@ -215,7 +217,7 @@ public class ContactDetailsFragment extends Fragment
                                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                                     null, /* All columns **/
                                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                                    new String[] { contactId },
+                                    new String[]{contactId},
                                     null /* sortOrder */);
                         }
 
@@ -248,7 +250,8 @@ public class ContactDetailsFragment extends Fragment
                             notifyDataSetChanged();
                         }
 
-                        public void onLoaderReset(Loader loader) {  }
+                        public void onLoaderReset(Loader loader) {
+                        }
                     });
         }
 
@@ -282,7 +285,8 @@ public class ContactDetailsFragment extends Fragment
                     return null;
             }
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(layoutResId, null);
+            View view = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent,
+                    false);
             return new ContactDetailViewHolder(view);
         }
 
@@ -293,7 +297,7 @@ public class ContactDetailsFragment extends Fragment
                     viewHolder.title.setText(mContactName);
                     if (!mPhoneNumbers.isEmpty()) {
                         String firstNumber = mPhoneNumbers.get(0).second;
-                        TelecomUtils.setContactBitmapAsync(getContext(), viewHolder.rightIcon,
+                        TelecomUtils.setContactBitmapAsync(getContext(), viewHolder.avatar,
                                 mContactName, firstNumber);
                     }
                     // Just in case a viewholder object gets recycled.
@@ -301,8 +305,8 @@ public class ContactDetailsFragment extends Fragment
                     break;
                 case ID_CONTENT:
                     Pair<String, String> data = mPhoneNumbers.get(position - 1);
-                    viewHolder.title.setText(data.first);  // Type.
-                    viewHolder.text.setText(data.second);  // Number.
+                    viewHolder.title.setText(data.second);  // Type.
+                    viewHolder.text.setText(data.first);  // Number.
                     viewHolder.leftIcon.setImageResource(R.drawable.ic_phone);
                     viewHolder.leftIcon.setColorFilter(mIconTint);
                     viewHolder.card.setOnClickListener(v -> {

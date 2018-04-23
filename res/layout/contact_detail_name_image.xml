@@ -26,37 +26,36 @@
         android:id="@+id/card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/car_grey_200"
-        android:backgroundTintMode="multiply"
+        android:backgroundTint="@android:color/white"
         android:layout_gravity="center">
 
         <!-- Used to provide common margins and also allow for the textview to set its right margin
              to the width of the image to allow it to ellipsize.
         -->
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_marginLeft="@dimen/car_keyline_1"
             android:layout_marginRight="@dimen/car_keyline_1"
             android:layout_marginTop="@dimen/contact_detail_vertical_margin"
             android:layout_marginBottom="@dimen/contact_detail_vertical_margin">
 
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="@dimen/contact_detail_image_size"
+                android:layout_height="@dimen/contact_detail_image_size"
+                android:background="@drawable/avatar_rounded_bg"
+                android:layout_gravity="center" />
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|left"
-                android:layout_marginRight="@dimen/contact_detail_image_size"
+                android:layout_gravity="center"
                 android:singleLine="true"
                 android:ellipsize="end"
                 style="@style/TextAppearance.Car.Headline1" />
-
-            <ImageView
-                android:id="@+id/right_icon"
-                android:layout_width="@dimen/contact_detail_image_size"
-                android:layout_height="@dimen/contact_detail_image_size"
-                android:background="@drawable/avatar_rounded_bg"
-                android:layout_gravity="right" />
-        </FrameLayout>
+        </LinearLayout>
     </androidx.car.widget.ColumnCardView>
 </FrameLayout>
