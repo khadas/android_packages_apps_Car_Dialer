@@ -15,5 +15,4 @@
 -->
 <resources>
     <dimen name="avatar_rounded_radius">98dp</dimen>
-    <dimen name="in_call_small_contact_photo_size">196dp</dimen>
 </resources>
