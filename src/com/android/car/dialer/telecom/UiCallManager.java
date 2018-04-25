@@ -55,6 +55,7 @@ public class UiCallManager {
     // Rate limit how often you can place outgoing calls.
     private static final long MIN_TIME_BETWEEN_CALLS_MS = 3000;
     private static final List<Integer> sCallStateRank = new ArrayList<>();
+    private static UiCallManager sUiCallManager;
 
     // Used to assign id's to UiCall objects as they're created.
     private static int nextCarPhoneCallId = 0;
@@ -81,7 +82,35 @@ public class UiCallManager {
     private final Map<UiCall, Call> mCallMapping = new HashMap<>();
     private final List<CallListener> mCallListeners = new CopyOnWriteArrayList<>();
 
-    public UiCallManager(Context context) {
+    /**
+     * Initialized a globally accessible {@link UiCallManager} which can be retrieved by
+     * {@link #get}. If this function is called a second time before calling {@link #tearDown()},
+     * an exception will be thrown.
+     *
+     * @param applicationContext Application context.
+     */
+    public static UiCallManager init(Context applicationContext) {
+        if (sUiCallManager == null) {
+            sUiCallManager = new UiCallManager(applicationContext);
+        } else {
+            throw new IllegalStateException("UiCallManager has been initialized.");
+        }
+        return sUiCallManager;
+    }
+
+    /**
+     * Gets the global {@link UiCallManager} instance. Make sure
+     * {@link #init(Context)} is called before calling this method.
+     */
+    public static UiCallManager get() {
+        if (sUiCallManager == null) {
+            throw new IllegalStateException(
+                    "Call UiCallManager.init(Context) before calling this function");
+        }
+        return sUiCallManager;
+    }
+
+    private UiCallManager(Context context) {
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "SetUp");
         }
@@ -140,12 +169,20 @@ public class UiCallManager {
                 };
     };
 
+    /**
+     * Tears down the {@link UiCallManager}. Calling this function will null out the global
+     * accessible {@link UiCallManager} instance. Remember to re-initialize the
+     * {@link UiCallManager}.
+     */
     public void tearDown() {
         if (mInCallService != null) {
             mContext.unbindService(mInCallServiceConnection);
             mInCallService = null;
         }
         mCallMapping.clear();
+        // Clear out the mContext reference to avoid memory leak.
+        mContext = null;
+        sUiCallManager = null;
     }
 
     public void addListener(CallListener listener) {
