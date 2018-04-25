@@ -49,8 +49,7 @@ import java.util.stream.Stream;
  * <li>StrequentFragment
  * </ul>
  */
-public class TelecomActivity extends CarDrawerActivity implements
-        DialerFragment.DialerBackButtonListener, CallListener {
+public class TelecomActivity extends CarDrawerActivity implements CallListener {
     private static final String TAG = "TelecomActivity";
 
     private static final String ACTION_ANSWER_CALL = "com.android.car.dialer.ANSWER_CALL";
@@ -91,7 +90,7 @@ public class TelecomActivity extends CarDrawerActivity implements
         getWindow().getDecorView().setBackgroundColor(getColor(R.color.phone_theme));
         setTitle(getString(R.string.phone_app_name));
 
-        mUiCallManager = new UiCallManager(this);
+        mUiCallManager = UiCallManager.init(getApplicationContext());
         mUiBluetoothMonitor = new UiBluetoothMonitor(this);
 
         findViewById(R.id.search).setOnClickListener(
@@ -294,24 +293,12 @@ public class TelecomActivity extends CarDrawerActivity implements
             return;
         }
 
-        Fragment fragment =
-                DialerFragment.newInstance(mUiCallManager, this /* listener */, dialNumber);
-
-        if (Log.isLoggable(TAG, Log.VERBOSE)) {
-            Log.v(TAG, "adding dialer to fragment backstack");
-        }
+        Fragment fragment = DialerFragment.newInstance(dialNumber);
 
         // Add the dialer fragment to the backstack so that it can be popped off to dismiss it.
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.telecom_slide_in, R.anim.telecom_slide_out,
-                        R.anim.telecom_slide_in, R.anim.telecom_slide_out)
-                .add(R.id.content_fragment_container, fragment, DIALER_FRAGMENT_TAG)
-                .addToBackStack(DIALER_BACKSTACK)
+                .replace(R.id.content_fragment_container, fragment, DIALER_FRAGMENT_TAG)
                 .commit();
-
-        if (Log.isLoggable(TAG, Log.VERBOSE)) {
-            Log.v(TAG, "done adding fragment to backstack");
-        }
     }
 
     /**
@@ -323,11 +310,6 @@ public class TelecomActivity extends CarDrawerActivity implements
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         }
-    }
-
-    @Override
-    public void onDialerBackClick() {
-        maybeHideDialer();
     }
 
     private void showNoHfpFragment(@StringRes int stringResId) {
