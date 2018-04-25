@@ -26,9 +26,20 @@
         <item name="android:focusable">true</item>
     </style>
 
-    <style name="DialpadCall">
-        <item name="android:layout_width">@dimen/dial_number_call_button_width</item>
-        <item name="android:layout_height">@dimen/dial_number_call_button_width</item>
+    <style name="DialpadPrimaryButton">
+        <item name="android:layout_width">@dimen/bksp_button_width</item>
+        <item name="android:layout_height">@dimen/bksp_button_width</item>
+        <item name="android:elevation">@dimen/call_fab_elevation</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:src">@drawable/ic_phone</item>
+    </style>
+
+    <style name="DialpadSecondaryButton">
+        <item name="android:layout_width">@dimen/bksp_button_width</item>
+        <item name="android:layout_height">@dimen/bksp_button_width</item>
+        <item name="android:background">@drawable/dialpad_delete_button_background</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:tint">@color/car_tint</item>
     </style>
 
     <style name="InCallDialpad">
