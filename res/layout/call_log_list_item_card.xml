@@ -13,22 +13,17 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<!-- This FrameLayout is used to center the CardView since the CardView's container will be larger
-     than its width. -->
-<FrameLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/call_log_card"
+    android:foreground="@drawable/dialer_ripple_background"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/call_log_card_overlap"
-    android:focusable="true">
+    android:layout_height="@dimen/call_log_item_height"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="@dimen/car_radius_5"
+    app:cardElevation="@dimen/car_action_bar_elevation">
 
-    <androidx.car.widget.ColumnCardView
-        android:id="@+id/call_log_card"
-        android:foreground="@drawable/dialer_ripple_background"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/call_log_item_height" >
-
-        <include layout="@layout/call_log_list_item_card_base" />
-    </androidx.car.widget.ColumnCardView>
-</FrameLayout>
+    <include layout="@layout/call_log_list_item_card_base"/>
+</androidx.cardview.widget.CardView>

@@ -481,10 +481,12 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
     }
 
     private class DialerRootAdapter extends CarDrawerAdapter {
-        private static final int ITEM_DIAL = 0;
+        private static final int ITEM_FAVORITES = 0;
         private static final int ITEM_CALLLOG_ALL = 1;
         private static final int ITEM_CALLLOG_MISSED = 2;
-        private static final int ITEM_MAX = 3;
+        private static final int ITEM_DIAL = 3;
+
+        private static final int ITEM_COUNT = 4;
 
         DialerRootAdapter() {
             super(TelecomActivity.this, false /* showDisabledListOnEmpty */);
@@ -493,7 +495,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
 
         @Override
         protected int getActualItemCount() {
-            return ITEM_MAX;
+            return ITEM_COUNT;
         }
 
         @Override
@@ -511,7 +513,11 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
                     break;
                 case ITEM_CALLLOG_MISSED:
                     textResId = R.string.calllog_missed;
-                    iconResId = R.drawable.ic_drawer_call_missed;
+                    iconResId = R.drawable.ic_call_missed;
+                    break;
+                case ITEM_FAVORITES:
+                    textResId = R.string.calllog_favorites;
+                    iconResId = R.drawable.ic_favorite;
                     break;
                 default:
                     Log.wtf(TAG, "Unexpected position: " + position);
@@ -535,6 +541,9 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
                     break;
                 case ITEM_CALLLOG_MISSED:
                     showCallHistory(PhoneLoader.CallType.MISSED_TYPE);
+                    break;
+                case ITEM_FAVORITES:
+                    showSpeedDialFragment();
                     break;
                 default:
                     Log.w(TAG, "Invalid position in ROOT menu! " + position);

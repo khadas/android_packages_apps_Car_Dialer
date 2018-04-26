@@ -18,11 +18,9 @@ package com.android.car.dialer;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,11 +30,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.car.widget.DayNightStyle;
 import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.car.dialer.telecom.PhoneLoader;
+import com.android.car.dialer.telecom.UiCallManager;
 
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -85,29 +88,30 @@ public class StrequentsFragment extends Fragment {
         mContext = getContext();
 
         View view = inflater.inflate(R.layout.strequents_fragment, container, false);
-        mListView = (PagedListView) view.findViewById(R.id.list_view);
+        mListView = view.findViewById(R.id.list_view);
+        int numOfColumn = getContext().getResources().getInteger(
+                R.integer.favorite_fragment_grid_column);
+        mListView.getRecyclerView().setLayoutManager(
+                new GridLayoutManager(getContext(), numOfColumn));
+        mListView.getRecyclerView().addItemDecoration(new ItemSpacingDecoration());
 
         mSpeedialCursorLoader = PhoneLoader.registerCallObserver(PhoneLoader.CALL_TYPE_SPEED_DIAL,
-            mContext, (loader, cursor) -> {
-                if (Log.isLoggable(TAG, Log.DEBUG)) {
-                    Log.d(TAG, "PhoneLoader: onLoadComplete (CALL_TYPE_SPEED_DIAL)");
-                }
+                mContext, (loader, cursor) -> {
+                    if (Log.isLoggable(TAG, Log.DEBUG)) {
+                        Log.d(TAG, "PhoneLoader: onLoadComplete (CALL_TYPE_SPEED_DIAL)");
+                    }
 
-                onLoadStrequentCursor(cursor);
-
-                if (mContext != null) {
-                    mListView.addItemDecoration(new Decoration(mContext));
-                }
-            });
+                    onLoadStrequentCursor(cursor);
+                });
 
         // Get the latest call log from the call logs history.
         mCallLogCursorLoader = PhoneLoader.registerCallObserver(PhoneLoader.CALL_TYPE_ALL, mContext,
-            (loader, cursor) -> {
-                if (Log.isLoggable(TAG, Log.DEBUG)) {
-                    Log.d(TAG, "PhoneLoader: onLoadComplete (CALL_TYPE_ALL)");
-                }
-                onLoadCallLogCursor(cursor);
-            });
+                (loader, cursor) -> {
+                    if (Log.isLoggable(TAG, Log.DEBUG)) {
+                        Log.d(TAG, "PhoneLoader: onLoadComplete (CALL_TYPE_ALL)");
+                    }
+                    onLoadCallLogCursor(cursor);
+                });
 
         ContentResolver contentResolver = mContext.getContentResolver();
         contentResolver.registerContentObserver(mSpeedialCursorLoader.getUri(),
@@ -256,64 +260,24 @@ public class StrequentsFragment extends Fragment {
         }
     }
 
-    /**
-     * Decoration for the speed dial cards. This ItemDecoration will not show a divider between
-     * the dialpad item and the first speed dial item and the divider is offset but a couple of
-     * pixels to offset the fact that the cards overlap.
-     */
-    private static class Decoration extends RecyclerView.ItemDecoration {
-        private final Paint mPaint;
-        private final int mPaintAlpha;
-        private final int mDividerHeight;
-
-        public Decoration(Context context) {
-            Resources res = context.getResources();
-            mPaint = new Paint();
-            mPaint.setColor(res.getColor(R.color.car_list_divider));
-            mDividerHeight = res.getDimensionPixelSize(R.dimen.car_list_divider_height);
-            mPaintAlpha = mPaint.getAlpha();
-        }
+    private class ItemSpacingDecoration extends RecyclerView.ItemDecoration {
 
         @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            StrequentsAdapter adapter = (StrequentsAdapter) parent.getAdapter();
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+                @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            int carPadding1 = mContext.getResources().getDimensionPixelOffset(
+                    R.dimen.car_padding_1);
 
-            if (adapter.getItemCount() <= 0) {
-                return;
+            int leftPadding = 0;
+            int rightPadding = 0;
+            if (parent.getChildAdapterPosition(view) % 2 == 0) {
+                rightPadding = carPadding1;
+            } else {
+                leftPadding = carPadding1;
             }
 
-            final int childCount = parent.getChildCount();
-
-            // Don't draw decoration line on last item of the list.
-            for (int i = 0; i < childCount - 1; i++) {
-                final View child = parent.getChildAt(i);
-
-                // If the child is focused then the decoration will look bad with the focus
-                // highlight so don't draw it.
-                if (child.isFocused()) {
-                    continue;
-                }
-
-                // The left edge of the divider should align with the left edge of text_container.
-                LinearLayout container = child.findViewById(R.id.container);
-                View textContainer = child.findViewById(R.id.text_container);
-                View card = child.findViewById(R.id.call_log_card);
-
-                int left = textContainer.getLeft() + container.getLeft() + card.getLeft();
-                int right = left + textContainer.getWidth();
-
-                RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) child.getLayoutParams();
-                int bottom = child.getBottom() + lp.bottomMargin
-                        + Math.round(child.getTranslationY());
-                int top = bottom - mDividerHeight;
-
-                if (top >= c.getHeight() || top < 0) {
-                    break;
-                }
-
-                mPaint.setAlpha(Math.round(container.getAlpha() * mPaintAlpha));
-                c.drawRect(left, top, right, bottom, mPaint);
-            }
+            outRect.set(leftPadding, carPadding1, rightPadding, carPadding1);
         }
     }
 }

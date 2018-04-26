@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.view.CardListBackgroundResolver;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -252,9 +251,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             viewHolder.callTypeIconsView.add(callTypes[i]);
         }
 
-        CardListBackgroundResolver.setBackground(viewHolder.card,
-                viewHolder.getAdapterPosition(), getItemCount());
-
         TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, primaryText, number);
     }
 
@@ -351,8 +347,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             viewHolder.smallIcon.setVisibility(View.GONE);
         }
 
-        CardListBackgroundResolver.setBackground(viewHolder.card,
-                viewHolder.getAdapterPosition(), getItemCount());
     }
 
     /**

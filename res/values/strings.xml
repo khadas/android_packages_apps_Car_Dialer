@@ -70,8 +70,10 @@
     <string name="calllog_all">Call History</string>
     <!-- Menu label for the missed call history [CHAR LIMIT=30] -->
     <string name="calllog_missed">Missed</string>
+    <!-- Menu label for the favorites [CHAR LIMIT=30] -->
+    <string name="calllog_favorites">Favorites</string>
     <!-- Menu label for dial a number [CHAR LIMIT=30] -->
-    <string name="calllog_dial_number">Dial a number</string>
+    <string name="calllog_dial_number">Dialpad</string>
     <!-- Button label to dial a manually entered phone number -->
     <string name="dial_a_number">Dial a number</string>
 
