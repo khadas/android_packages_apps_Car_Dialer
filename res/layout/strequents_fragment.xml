@@ -18,7 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/telecom_display_scrim"
+    android:background="@color/car_grey_200"
     android:clipChildren="false" >
 
     <androidx.car.widget.PagedListView

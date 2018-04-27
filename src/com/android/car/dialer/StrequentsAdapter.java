@@ -28,17 +28,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.car.widget.PagedListView;
+
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.view.CardListBackgroundResolver;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-import androidx.car.widget.PagedListView;
 
 /**
  * Adapter class for populating Contact data as loaded from the DB to an AA GroupingRecyclerView.
@@ -252,9 +251,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             viewHolder.callTypeIconsView.add(callTypes[i]);
         }
 
-        CardListBackgroundResolver.setBackground(viewHolder.card,
-                viewHolder.getAdapterPosition(), getItemCount());
-
         TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, primaryText, number);
     }
 
@@ -351,8 +347,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             viewHolder.smallIcon.setVisibility(View.GONE);
         }
 
-        CardListBackgroundResolver.setBackground(viewHolder.card,
-                viewHolder.getAdapterPosition(), getItemCount());
     }
 
     /**
