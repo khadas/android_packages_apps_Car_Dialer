@@ -21,7 +21,7 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="@dimen/call_log_item_height"
-    app:cardBackgroundColor="@android:color/white"
+    app:cardBackgroundColor="@color/phone_theme"
     app:cardCornerRadius="@dimen/car_radius_5"
     app:cardElevation="@dimen/car_action_bar_elevation">
 

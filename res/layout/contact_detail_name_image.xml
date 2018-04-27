@@ -26,7 +26,7 @@
         android:id="@+id/card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/white"
+        android:backgroundTint="@color/phone_theme"
         android:layout_gravity="center">
 
         <!-- Used to provide common margins and also allow for the textview to set its right margin
