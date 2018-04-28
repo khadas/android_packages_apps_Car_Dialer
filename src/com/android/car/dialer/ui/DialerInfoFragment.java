@@ -75,6 +75,9 @@ public class DialerInfoFragment extends Fragment {
         mEndCallButton = fragmentView.findViewById(R.id.end_call_button);
         mMuteButton = fragmentView.findViewById(R.id.mute_button);
 
+        FabDrawable answerCallDrawable = new FabDrawable(getContext());
+        answerCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_call));
+        mCallButton.setBackground(answerCallDrawable);
         mCallButton.setOnClickListener((unusedView) -> {
             if (!TextUtils.isEmpty(mNumber.toString())) {
                 UiCallManager.get().safePlaceCall(mNumber.toString(), false);
@@ -131,9 +134,6 @@ public class DialerInfoFragment extends Fragment {
     }
 
     private void showPreDialUi() {
-        FabDrawable answerCallDrawable = new FabDrawable(getContext());
-        answerCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_call));
-        mCallButton.setBackground(answerCallDrawable);
         mCallButton.setVisibility(View.VISIBLE);
         mDeleteButton.setVisibility(View.VISIBLE);
 
