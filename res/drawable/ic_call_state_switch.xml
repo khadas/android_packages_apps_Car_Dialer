@@ -13,10 +13,12 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<layer-list
+<selector
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:drawable="@drawable/button_active_state_ring"/>
+        android:state_activated="true"
+        android:drawable="@drawable/ic_play" />
     <item
-        android:drawable="@drawable/ic_dialpad_normal"/>
-</layer-list>
+        android:state_activated="false"
+        android:drawable="@drawable/ic_pause" />
+</selector>

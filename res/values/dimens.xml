@@ -92,7 +92,9 @@
 
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/car_touch_target_size</dimen>
+    <!-- Fab button size is touch target (76dp) + stroke width (8dp) * 2-->
+    <dimen name="fab_button_size">92dp</dimen>
 
-    <dimen name="in_call_button_size">160dp</dimen>
+    <dimen name="in_call_button_size">@dimen/car_touch_target_size</dimen>
 
 </resources>
