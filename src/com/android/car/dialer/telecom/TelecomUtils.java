@@ -39,9 +39,9 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.CircleBitmapDrawable;
 
 import java.io.InputStream;
 import java.util.Locale;

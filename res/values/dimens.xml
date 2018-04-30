@@ -92,6 +92,7 @@
     <dimen name="dialer_number_view_height">128dp</dimen>
     <dimen name="dialer_number_view_padding">32dp</dimen>
 
+    <dimen name="dialer_fab_size">80dp</dimen>
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/car_touch_target_size</dimen>
     <!-- Fab button size is touch target (76dp) + stroke width (8dp) * 2-->
@@ -102,4 +103,6 @@
     <dimen name="user_profile_title_margin_top">@dimen/car_padding_3</dimen>
     <dimen name="user_profile_body_margin_top">@dimen/car_padding_3</dimen>
 
+    <dimen name="car_key1_size">40sp</dimen>
+    <dimen name="car_key2_size">18sp</dimen>
 </resources>

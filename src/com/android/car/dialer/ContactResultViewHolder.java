@@ -27,8 +27,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.ui.CircleBitmapDrawable;
 import com.android.car.view.CardListBackgroundResolver;
 
 import java.io.FileNotFoundException;
