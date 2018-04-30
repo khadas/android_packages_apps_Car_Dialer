@@ -62,16 +62,19 @@
          in_call_card_right_margin + car_card_view_corner_radius - card_margin.  -->
     <dimen name="call_log_card_overlap">-4dp</dimen>
     <dimen name="call_log_icon_margin">4dp</dimen>
-    <dimen name="call_log_item_height">91dp</dimen>
+    <dimen name="call_log_item_height">@dimen/car_single_line_list_item_height</dimen>
     <dimen name="call_log_icon_size">@dimen/car_primary_icon_size</dimen>
     <dimen name="car_card_view_corner_radius">2dp</dimen>
     <dimen name="favorite_card_corner_radius">@dimen/car_radius_5</dimen>
+    <dimen name="favorite_card_space">@dimen/car_padding_1</dimen>
 
     <dimen name="icon_container_height">@dimen/car_primary_icon_size</dimen>
+    <dimen name="avatar_icon_size">@dimen/car_avatar_size</dimen>
 
     <dimen name="contact_detail_image_size">@dimen/car_primary_icon_size</dimen>
     <dimen name="contact_detail_vertical_margin">16dp</dimen>
     <dimen name="contact_detail_name_card_height">192dp</dimen>
+    <dimen name="contact_detail_card_corner_radius">@dimen/car_radius_3</dimen>
 
     <!-- The height of the container that contains the contact search field. -->
     <dimen name="search_container_height">128dp</dimen>

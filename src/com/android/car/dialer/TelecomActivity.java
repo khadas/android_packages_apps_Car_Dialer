@@ -255,7 +255,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
             return;
         }
 
-        Fragment fragment = StrequentsFragment.newInstance(mUiCallManager);
+        Fragment fragment = StrequentsFragment.newInstance();
         setContentFragment(fragment);
     }
 
@@ -540,7 +540,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         int titleResId = R.string.phone_app_name;
 
         if (currentFragment instanceof StrequentsFragment) {
-            setTitle(getString(R.string.contacts_title));
+            titleResId = R.string.contacts_title;
         } else if (currentFragment instanceof CallHistoryFragment) {
             int callType = currentFragment.getArguments().getInt(CALL_TYPE_KEY);
             if (callType == PhoneLoader.CallType.MISSED_TYPE) {

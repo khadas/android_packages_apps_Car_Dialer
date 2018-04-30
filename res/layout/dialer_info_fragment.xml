@@ -54,6 +54,7 @@
         android:id="@+id/call_button"
         style="@style/DialpadPrimaryButton"
         android:src="@drawable/ic_phone"
+        android:backgroundTint="@color/phone_call"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/delete_button"
         app:layout_constraintHorizontal_chainStyle="packed"
