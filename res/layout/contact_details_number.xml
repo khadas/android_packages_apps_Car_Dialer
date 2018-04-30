@@ -19,6 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/call_log_card_overlap"
+    android:background="@color/phone_theme"
     android:focusable="true">
 
     <androidx.car.widget.ColumnCardView
