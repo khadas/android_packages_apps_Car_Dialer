@@ -41,11 +41,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.CircleBitmapDrawable;
 
 import java.util.Arrays;
 import java.util.List;

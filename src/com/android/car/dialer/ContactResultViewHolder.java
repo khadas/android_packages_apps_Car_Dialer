@@ -28,8 +28,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.ui.CircleBitmapDrawable;
 import com.android.car.view.CardListBackgroundResolver;
 
 import java.io.FileNotFoundException;

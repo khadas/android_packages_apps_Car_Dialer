@@ -35,6 +35,7 @@ LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.car_car \
     androidx.lifecycle_lifecycle-extensions \
     androidx-constraintlayout_constraintlayout \
+    androidx.legacy_legacy-support-v4 \
     androidx.cardview_cardview \
     car-apps-common \
     car-stream-ui-lib

@@ -149,16 +149,16 @@
                 android:visibility="gone" >
                 <ImageButton
                     android:id="@+id/answer_call_button"
-                    android:layout_width="@dimen/stream_fab_size"
-                    android:layout_height="@dimen/stream_fab_size"
+                    android:layout_width="@dimen/dialer_fab_size"
+                    android:layout_height="@dimen/dialer_fab_size"
                     android:layout_gravity="center_vertical"
                     android:scaleType="center"
                     android:elevation="8dp"
                     android:src="@drawable/ic_phone" />
                 <ImageButton
                     android:id="@+id/reject_call_button"
-                    android:layout_width="@dimen/stream_fab_size"
-                    android:layout_height="@dimen/stream_fab_size"
+                    android:layout_width="@dimen/dialer_fab_size"
+                    android:layout_height="@dimen/dialer_fab_size"
                     android:layout_marginStart="@dimen/in_call_button_spacing"
                     android:layout_gravity="center_vertical"
                     android:scaleType="center"
@@ -176,16 +176,16 @@
                 android:visibility="gone" >
                 <ImageButton
                     android:id="@+id/end_call"
-                    android:layout_width="@dimen/stream_fab_size"
-                    android:layout_height="@dimen/stream_fab_size"
+                    android:layout_width="@dimen/dialer_fab_size"
+                    android:layout_height="@dimen/dialer_fab_size"
                     android:layout_gravity="center_vertical"
                     android:scaleType="center"
                     android:elevation="8dp"
                     android:src="@drawable/ic_call_end" />
                 <ImageButton
                     android:id="@+id/unhold_call"
-                    android:layout_width="@dimen/stream_fab_size"
-                    android:layout_height="@dimen/stream_fab_size"
+                    android:layout_width="@dimen/dialer_fab_size"
+                    android:layout_height="@dimen/dialer_fab_size"
                     android:layout_gravity="center_vertical"
                     android:scaleType="center"
                     android:elevation="8dp"
@@ -193,8 +193,8 @@
                     android:visibility="gone" />
                 <ImageButton
                     android:id="@+id/mute"
-                    android:layout_width="@dimen/stream_fab_size"
-                    android:layout_height="@dimen/stream_fab_size"
+                    android:layout_width="@dimen/dialer_fab_size"
+                    android:layout_height="@dimen/dialer_fab_size"
                     android:layout_marginStart="@dimen/in_call_button_spacing"
                     android:scaleType="center"
                     android:src="@drawable/ic_mute"
@@ -202,8 +202,8 @@
                     android:background="@drawable/ongoing_call_action_background" />
                 <ImageButton
                     android:id="@+id/toggle_dialpad"
-                    android:layout_width="@dimen/stream_fab_size"
-                    android:layout_height="@dimen/stream_fab_size"
+                    android:layout_width="@dimen/dialer_fab_size"
+                    android:layout_height="@dimen/dialer_fab_size"
                     android:layout_marginStart="@dimen/in_call_button_spacing"
                     android:scaleType="center"
                     android:src="@drawable/ic_dialpad"
@@ -224,15 +224,15 @@
         android:visibility="gone" >
         <ImageButton
             android:id="@+id/swap"
-            android:layout_width="@dimen/stream_fab_size"
-            android:layout_height="@dimen/stream_fab_size"
+            android:layout_width="@dimen/dialer_fab_size"
+            android:layout_height="@dimen/dialer_fab_size"
             android:scaleType="center"
             android:src="@drawable/ic_swap_calls"
             android:background="@drawable/ongoing_call_secondary_action_background" />
         <ImageButton
             android:id="@+id/merge"
-            android:layout_width="@dimen/stream_fab_size"
-            android:layout_height="@dimen/stream_fab_size"
+            android:layout_width="@dimen/dialer_fab_size"
+            android:layout_height="@dimen/dialer_fab_size"
             android:scaleType="center"
             android:src="@drawable/ic_call_merge"
             android:background="@drawable/ongoing_call_secondary_action_background" />

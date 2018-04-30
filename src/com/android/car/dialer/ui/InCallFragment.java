@@ -27,7 +27,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.dialer.BitmapWorkerTask;
 import com.android.car.dialer.DialerFragment;
 import com.android.car.dialer.R;

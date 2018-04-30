@@ -40,9 +40,9 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
-import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.CircleBitmapDrawable;
 
 import java.io.InputStream;
 import java.util.Locale;
