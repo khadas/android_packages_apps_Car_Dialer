@@ -77,6 +77,9 @@
     <!-- Button label to dial a manually entered phone number -->
     <string name="dial_a_number">Dial a number</string>
 
+    <!-- Menu label for the call history [CHAR LIMIT=30] -->
+    <string name="contact_menu_label">Contact</string>
+
     <!-- TODO: we do not need to localize this, figure out how to build ignoring it -->
     <string name="one">1</string>
     <string name="two">2</string>
