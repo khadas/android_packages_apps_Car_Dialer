@@ -15,15 +15,10 @@
  */
 package com.android.car.dialer.ui;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.telecom.Call;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -34,11 +29,10 @@ import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
 
 /**
- * Holds dialer information such as dialed number and shows proper action based on current call
- * state such as call/mute.
+ * Controls dialer information such as dialed number and shows proper action based on current call
+ * state.
  */
-public class DialerInfoFragment extends Fragment {
-    private static final String DIAL_NUMBER_KEY = "DIAL_NUMBER_KEY";
+public class DialerInfoController {
     private static final int MAX_DIAL_NUMBER = 20;
 
     private TextView mTitleView;
@@ -50,33 +44,25 @@ public class DialerInfoFragment extends Fragment {
     private ImageButton mEndCallButton;
     private ImageButton mMuteButton;
 
+    private Context mContext;
+
     private final StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
 
-    public static DialerInfoFragment newInstance(@Nullable String dialNumber) {
-        DialerInfoFragment fragment = new DialerInfoFragment();
-
-        if (!TextUtils.isEmpty(dialNumber)) {
-            Bundle args = new Bundle();
-            args.putString(DIAL_NUMBER_KEY, dialNumber);
-            fragment.setArguments(args);
-        }
-
-        return fragment;
+    public DialerInfoController(Context context, View container) {
+        mContext = context;
+        init(container);
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.dialer_info_fragment, container, false);
-        mTitleView = fragmentView.findViewById(R.id.title);
-        mBodyView = fragmentView.findViewById(R.id.body);
-        mCallButton = fragmentView.findViewById(R.id.call_button);
-        mDeleteButton = fragmentView.findViewById(R.id.delete_button);
-        mEndCallButton = fragmentView.findViewById(R.id.end_call_button);
-        mMuteButton = fragmentView.findViewById(R.id.mute_button);
+    public View init(View container) {
+        mTitleView = container.findViewById(R.id.title);
+        mBodyView = container.findViewById(R.id.body);
+        mCallButton = container.findViewById(R.id.call_button);
+        mDeleteButton = container.findViewById(R.id.delete_button);
+        mEndCallButton = container.findViewById(R.id.end_call_button);
+        mMuteButton = container.findViewById(R.id.mute_button);
 
-        FabDrawable answerCallDrawable = new FabDrawable(getContext());
-        answerCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_call));
+        FabDrawable answerCallDrawable = new FabDrawable(mContext);
+        answerCallDrawable.setFabAndStrokeColor(mContext.getColor(R.color.phone_call));
         mCallButton.setBackground(answerCallDrawable);
         mCallButton.setOnClickListener((unusedView) -> {
             if (!TextUtils.isEmpty(mNumber.toString())) {
@@ -94,13 +80,7 @@ public class DialerInfoFragment extends Fragment {
 
         updateView();
 
-        Bundle args = getArguments();
-        if (args != null) {
-            clearDialedNumber();
-            appendDialedNumber(args.getString(DIAL_NUMBER_KEY));
-        }
-
-        return fragmentView;
+        return container;
     }
 
     /**
@@ -142,8 +122,8 @@ public class DialerInfoFragment extends Fragment {
     }
 
     private void showDialingUi(UiCall uiCall) {
-        FabDrawable answerCallDrawable = new FabDrawable(getContext());
-        answerCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_end_call));
+        FabDrawable answerCallDrawable = new FabDrawable(mContext);
+        answerCallDrawable.setFabAndStrokeColor(mContext.getColor(R.color.phone_end_call));
         mEndCallButton.setBackground(answerCallDrawable);
         mEndCallButton.setVisibility(View.VISIBLE);
         mMuteButton.setVisibility(View.VISIBLE);
@@ -158,7 +138,7 @@ public class DialerInfoFragment extends Fragment {
     }
 
     private String getFormattedNumber(String number) {
-        return TelecomUtils.getFormattedNumber(getContext(), number);
+        return TelecomUtils.getFormattedNumber(mContext, number);
     }
 
     private void clearDialedNumber() {
