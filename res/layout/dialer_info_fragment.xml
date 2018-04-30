@@ -68,7 +68,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/call_button"/>
 
-
     <ImageButton
         android:id="@+id/end_call_button"
         style="@style/DialpadPrimaryButton"

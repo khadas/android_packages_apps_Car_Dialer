@@ -171,6 +171,7 @@ public class ContactDetailsFragment extends Fragment
         public TextView title;
         public TextView text;
         public ImageView avatar;
+        public View divier;
 
         public ContactDetailViewHolder(View v) {
             super(v);
@@ -179,6 +180,7 @@ public class ContactDetailsFragment extends Fragment
             title = v.findViewById(R.id.title);
             text = v.findViewById(R.id.text);
             avatar = v.findViewById(R.id.avatar);
+            divier = v.findViewById(R.id.divider);
         }
     }
 
@@ -321,6 +323,13 @@ public class ContactDetailsFragment extends Fragment
                 default:
                     Log.e(TAG, "Unknown view type " + viewHolder.getItemViewType());
                     return;
+            }
+
+            if (position == (getItemCount() - 1)) {
+                // hide divider for last item.
+                viewHolder.divier.setVisibility(View.GONE);
+            } else {
+                viewHolder.divier.setVisibility(View.VISIBLE);
             }
             CardListBackgroundResolver.setBackground(viewHolder.card,
                     viewHolder.getAdapterPosition(), getItemCount());

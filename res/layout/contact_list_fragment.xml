@@ -35,13 +35,15 @@
         android:visibility="gone">
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/car_app_bar_height">
+            android:layout_height="@dimen/car_app_bar_height"
+            android:background="@color/phone_theme_secondary">
             <ImageView
                 android:id="@+id/back_button"
                 android:layout_width="@dimen/car_touch_target_size"
                 android:layout_height="@dimen/car_touch_target_size"
                 android:scaleType="center"
                 android:src="@drawable/ic_arrow_back"
+                android:tint="@color/car_tint"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/margin_guideline"

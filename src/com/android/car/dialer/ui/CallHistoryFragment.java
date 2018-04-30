@@ -35,7 +35,7 @@ import com.android.car.dialer.ui.viewmodel.CallHistoryViewModel;
 import java.util.List;
 
 public class CallHistoryFragment extends Fragment {
-    private static final String CALL_TYPE_KEY = "CALL_TYPE_KEY";
+    public static final String CALL_TYPE_KEY = "CALL_TYPE_KEY";
 
     public static CallHistoryFragment newInstance(@PhoneLoader.CallType int callType) {
         CallHistoryFragment fragment = new CallHistoryFragment();
