@@ -17,6 +17,12 @@ package com.android.car.dialer.ui.listitem;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.car.widget.TextListItem;
 
@@ -25,6 +31,7 @@ import com.android.car.dialer.telecom.ContactBitmapWorker;
 import com.android.car.dialer.ui.CallHistoryListItemProvider;
 import com.android.car.dialer.ui.CallLogListingTask;
 import com.android.car.dialer.ui.CircleBitmapDrawable;
+import com.android.car.dialer.R;
 
 /**
  * List item which is created by {@link CallHistoryListItemProvider} binds a call list item to a
@@ -47,17 +54,36 @@ public class CallLogListItem extends TextListItem {
                 mCallLogItem.mNumber,
                 bitmap -> {
                     Resources r = mContext.getResources();
+                    viewHolder.getPrimaryIcon().setScaleType(ImageView.ScaleType.CENTER);
+                    Drawable avatarDrawable;
                     if (bitmap != null) {
+                        avatarDrawable = new CircleBitmapDrawable(r, bitmap);
                         setPrimaryActionIcon(new CircleBitmapDrawable(r, bitmap), true);
                     } else {
                         LetterTileDrawable letterTileDrawable = new LetterTileDrawable(r);
                         letterTileDrawable.setContactDetails(mCallLogItem.mTitle,
                                 mCallLogItem.mNumber);
                         letterTileDrawable.setIsCircular(true);
-                        setPrimaryActionIcon(letterTileDrawable, true);
+                        avatarDrawable = letterTileDrawable;
                     }
-                    // force rebind the view.
+
+                    int iconSize = mContext.getResources().getDimensionPixelSize(
+                            R.dimen.avatar_icon_size);
+                    setPrimaryActionIcon(scaleDrawable(avatarDrawable, iconSize), true);
                     super.onBind(viewHolder);
                 });
+
+        viewHolder.getContainerLayout().setBackgroundColor(
+                mContext.getColor(R.color.call_history_list_item_color));
+    }
+
+    private Drawable scaleDrawable(Drawable targetDrawable, int sizeInPixel) {
+        Bitmap bitmap = null;
+        if (targetDrawable instanceof CircleBitmapDrawable) {
+            bitmap = ((CircleBitmapDrawable) targetDrawable).toBitmap(sizeInPixel);
+        } else if (targetDrawable instanceof LetterTileDrawable){
+            bitmap = ((LetterTileDrawable) targetDrawable).toBitmap(sizeInPixel);
+        }
+        return new BitmapDrawable(mContext.getResources(), bitmap);
     }
 }

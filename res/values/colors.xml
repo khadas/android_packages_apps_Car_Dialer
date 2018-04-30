@@ -23,11 +23,22 @@
     <color name="phone_theme_secondary_light">@color/car_grey_200</color>
     <color name="phone_theme_secondary_dark">@color/car_dark_blue_grey_800</color>
 
+    <color name="primary_icon_color">@color/car_tint</color>
+
     <color name="phone_status_bar_theme">@android:color/transparent</color>
     <color name="phone_call">@color/car_green_700</color>
     <color name="phone_end_call">@color/car_red_500a</color>
     <color name="phone_secondary_call_scrim">#990288d1</color>
     <color name="separator">#1f000000</color>
+
+    <color name="call_history_list_item_color">@color/phone_theme</color>
+    <color name="call_list_fragment_background">@color/phone_theme</color>
+
+    <color name="contact_fragment_background">@color/phone_theme</color>
+    <color name="contact_list_item_color">@color/phone_theme</color>
+
+    <color name="dialer_fragment_background_color">@color/phone_theme</color>
+    <color name="telecom_activity_background_color">@color/phone_theme</color>
 
     <!-- phone -->
     <color name="secondary_call_scrim">#990288d1</color>
@@ -40,6 +51,8 @@
 
     <!-- The color of the icons in the contact details page. -->
     <color name="contact_details_icon_tint">@color/search_container_controls_tint</color>
+    <color name="contact_detail_fragment_background_color">@color/phone_theme_secondary</color>
+    <color name="contact_detail_card_background_color">@color/phone_theme</color>
 
     <!-- The color of the hint text in the search field. -->
     <color name="search_container_text_hint">@color/car_grey_400</color>

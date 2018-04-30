@@ -68,7 +68,6 @@ public class DialerFragment extends Fragment implements DialpadFragment.DialpadC
                 .replace(R.id.dialpad_fragment_container, dialpadFragment)
                 .commit();
 
-
         View dialerInfoContainer = view.findViewById(R.id.dialer_info_fragment_container);
         mDialerInfoController = new DialerInfoController(getContext(), dialerInfoContainer);
 
