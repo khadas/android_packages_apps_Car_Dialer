@@ -15,17 +15,17 @@
  */
 package com.android.car.dialer;
 
-import android.app.Fragment;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
@@ -72,7 +72,9 @@ public class ContactDetailsFragment extends Fragment
     public static ContactDetailsFragment newInstance(Uri uri,
             @Nullable RecyclerView.OnScrollListener listener) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
-        fragment.addOnScrollListener(listener);
+        if (listener != null) {
+            fragment.addOnScrollListener(listener);
+        }
 
         Bundle args = new Bundle();
         args.putParcelable(KEY_URI, uri);
@@ -209,7 +211,8 @@ public class ContactDetailsFragment extends Fragment
             }
 
             // Fetch the phone number from the contacts db using another loader.
-            getLoaderManager().initLoader(PHONE_LOADER_QUERY_ID, null,
+            LoaderManager.getInstance(ContactDetailsFragment.this).initLoader(PHONE_LOADER_QUERY_ID,
+                    null,
                     new LoaderManager.LoaderCallbacks<Cursor>() {
                         @Override
                         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
