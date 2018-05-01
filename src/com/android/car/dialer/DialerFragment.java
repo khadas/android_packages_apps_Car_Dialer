@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.DialerInfoFragment;
+import com.android.car.dialer.ui.DialerInfoController;
 import com.android.car.dialer.ui.DialpadFragment;
 
 /**
@@ -37,7 +37,7 @@ public class DialerFragment extends Fragment implements DialpadFragment.DialpadC
     private static final String DIAL_NUMBER_KEY = "DIAL_NUMBER_KEY";
     private static final String PLUS_DIGIT = "+";
 
-    private DialerInfoFragment mDialerInfoFragment;
+    private DialerInfoController mDialerInfoController;
     private L logger = L.logger(TAG);
 
     /**
@@ -67,12 +67,13 @@ public class DialerFragment extends Fragment implements DialpadFragment.DialpadC
                 .replace(R.id.dialpad_fragment_container, dialpadFragment)
                 .commit();
 
-        String dialedNumber = getArguments() == null ? null : getArguments().getString(
-                DIAL_NUMBER_KEY);
-        mDialerInfoFragment = DialerInfoFragment.newInstance(dialedNumber);
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.dialer_info_fragment_container, mDialerInfoFragment)
-                .commit();
+
+        View dialerInfoContainer = view.findViewById(R.id.dialer_info_fragment_container);
+        mDialerInfoController = new DialerInfoController(getContext(), dialerInfoContainer);
+
+        if (getArguments() != null) {
+            mDialerInfoController.appendDialedNumber(getArguments().getString(DIAL_NUMBER_KEY));
+        }
 
         return view;
     }
@@ -85,8 +86,8 @@ public class DialerFragment extends Fragment implements DialpadFragment.DialpadC
     @Override
     public void onAppendDigit(String digit) {
         if (PLUS_DIGIT.equals(digit)) {
-            mDialerInfoFragment.removeLastDigit();
+            mDialerInfoController.removeLastDigit();
         }
-        mDialerInfoFragment.appendDialedNumber(digit);
+        mDialerInfoController.appendDialedNumber(digit);
     }
 }
