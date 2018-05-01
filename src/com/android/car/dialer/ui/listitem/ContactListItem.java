@@ -16,10 +16,13 @@
 package com.android.car.dialer.ui.listitem;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import androidx.car.widget.TextListItem;
 
-import com.android.car.dialer.telecom.TelecomUtils;
+import com.android.car.apps.common.CircleBitmapDrawable;
+import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.telecom.ContactBitmapWorker;
 import com.android.car.dialer.ui.ContactListFragment;
 
 /**
@@ -38,7 +41,21 @@ public class ContactListItem extends TextListItem {
     @Override
     public void onBind(ViewHolder viewHolder) {
         super.onBind(viewHolder);
-        TelecomUtils.setContactBitmapAsync(mContext, viewHolder.getPrimaryIcon(),
-                mContactItem.mDisplayName, mContactItem.mNumber);
+        ContactBitmapWorker.loadBitmap(mContext.getContentResolver(), viewHolder.getPrimaryIcon(),
+                mContactItem.mNumber,
+                bitmap -> {
+                    Resources r = mContext.getResources();
+                    if (bitmap != null) {
+                        setPrimaryActionIcon(new CircleBitmapDrawable(r, bitmap), true);
+                    } else {
+                        LetterTileDrawable letterTileDrawable = new LetterTileDrawable(r);
+                        letterTileDrawable.setContactDetails(mContactItem.mDisplayName,
+                                mContactItem.mNumber);
+                        letterTileDrawable.setIsCircular(true);
+                        setPrimaryActionIcon(letterTileDrawable, true);
+                    }
+                    // force rebind the view.
+                    super.onBind(viewHolder);
+                });
     }
 }

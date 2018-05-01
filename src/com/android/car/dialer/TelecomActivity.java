@@ -30,6 +30,7 @@ import androidx.car.drawer.CarDrawerActivity;
 import androidx.car.drawer.CarDrawerAdapter;
 import androidx.car.drawer.DrawerItemViewHolder;
 
+import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -94,6 +95,8 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         mUiCallManager = UiCallManager.init(getApplicationContext());
         mUiBluetoothMonitor = new UiBluetoothMonitor(this);
 
+        InMemoryPhoneBook.init(getApplicationContext());
+
         findViewById(R.id.search).setOnClickListener(
                 v -> startActivity(new Intent(this, ContactSearchActivity.class)));
     }
@@ -105,6 +108,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
             Log.d(TAG, "onDestroy");
         }
         mUiBluetoothMonitor.tearDown();
+        InMemoryPhoneBook.tearDown();
         mUiCallManager.tearDown();
         mUiCallManager = null;
     }
@@ -249,11 +253,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         }
 
         Fragment fragment = StrequentsFragment.newInstance(mUiCallManager);
-        if (getCurrentFragment() instanceof DialerFragment) {
-            setContentFragmentWithSlideAndDelayAnimation(fragment);
-        } else {
-            setContentFragmentWithFadeAnimation(fragment);
-        }
+        setContentFragment(fragment);
     }
 
     private void showOngoingCallFragment() {
