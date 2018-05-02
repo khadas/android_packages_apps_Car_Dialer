@@ -17,40 +17,45 @@ package com.android.car.dialer.ui.listitem;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
 
 import androidx.car.widget.TextListItem;
 
 import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.telecom.ContactBitmapWorker;
-import com.android.car.dialer.ui.ContactListFragment;
+import com.android.car.dialer.telecom.TelecomUtils;
+import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.CallHistoryListItemProvider;
+import com.android.car.dialer.ui.CallLogListingTask;
 
 /**
- * ListItem for contact.
+ * List item which is created by {@link CallHistoryListItemProvider} binds a call list item to a
+ * list view item.
  */
-public class ContactListItem extends TextListItem {
-    private Context mContext;
-    private ContactListFragment.ContactItem mContactItem;
+public class CallLogListItem extends TextListItem {
+    private final CallLogListingTask.CallLogItem mCallLogItem;
+    private final Context mContext;
 
-    public ContactListItem(Context context, ContactListFragment.ContactItem contactItem) {
+    public CallLogListItem(Context context, CallLogListingTask.CallLogItem callLog) {
         super(context);
+        mCallLogItem = callLog;
         mContext = context;
-        mContactItem = contactItem;
     }
 
     @Override
     public void onBind(ViewHolder viewHolder) {
         super.onBind(viewHolder);
         ContactBitmapWorker.loadBitmap(mContext.getContentResolver(), viewHolder.getPrimaryIcon(),
-                mContactItem.mNumber,
+                mCallLogItem.mNumber,
                 bitmap -> {
                     Resources r = mContext.getResources();
                     if (bitmap != null) {
                         setPrimaryActionIcon(new CircleBitmapDrawable(r, bitmap), true);
                     } else {
                         LetterTileDrawable letterTileDrawable = new LetterTileDrawable(r);
-                        letterTileDrawable.setContactDetails(mContactItem.mDisplayName,
-                                mContactItem.mNumber);
+                        letterTileDrawable.setContactDetails(mCallLogItem.mTitle,
+                                mCallLogItem.mNumber);
                         letterTileDrawable.setIsCircular(true);
                         setPrimaryActionIcon(letterTileDrawable, true);
                     }
