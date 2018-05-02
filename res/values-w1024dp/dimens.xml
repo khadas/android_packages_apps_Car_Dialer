@@ -30,7 +30,6 @@
     <dimen name="in_call_text_max_width">460dp</dimen>
     <dimen name="in_call_button_spacing">48dp</dimen>
     <dimen name="in_call_card_dialpad_width">468dp</dimen>
-    <dimen name="in_call_card_dialpad_horizontal_spacing">56dp</dimen>
 
     <dimen name="car_card_view_corner_radius">0dp</dimen>
 

@@ -17,15 +17,12 @@ package com.android.car.dialer.ui.listitem;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.BitmapDrawable;
 
 import androidx.car.widget.TextListItem;
 
 import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.telecom.ContactBitmapWorker;
-import com.android.car.dialer.telecom.TelecomUtils;
-import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallHistoryListItemProvider;
 import com.android.car.dialer.ui.CallLogListingTask;
 

@@ -17,6 +17,7 @@ package com.android.car.dialer.ui;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import androidx.car.widget.ListItem;
 import androidx.car.widget.ListItemProvider;
@@ -51,7 +52,12 @@ public class ContactListItemProvider extends ListItemProvider {
             textListItem.setTitle(contactItem.mDisplayName);
             textListItem.setOnClickListener(
                     (v) -> UiCallManager.get().safePlaceCall(contactItem.mNumber, true));
-            textListItem.setSupplementalIcon(R.drawable.ic_contact, true, (v) -> {
+            Drawable supplementalIconDrawable = context.getDrawable(R.drawable.ic_contact);
+            supplementalIconDrawable.setTint(context.getColor(R.color.car_tint));
+            int iconSize = context.getResources().getDimensionPixelSize(
+                    R.dimen.car_primary_icon_size);
+            supplementalIconDrawable.setBounds(0, 0, iconSize, iconSize);
+            textListItem.setSupplementalIcon(supplementalIconDrawable, true, (v) -> {
                 mOnShowContactDetailListener.onShowContactDetail(contactItem.mId,
                         contactItem.mLookupKey);
             });
