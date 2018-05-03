@@ -28,7 +28,6 @@
     <dimen name="in_call_card_margin_right">304dp</dimen>
     <dimen name="in_call_content_card_margin_start">@dimen/car_keyline_1</dimen>
     <dimen name="in_call_text_max_width">460dp</dimen>
-    <dimen name="in_call_button_size">160dp</dimen>
     <dimen name="in_call_button_spacing">48dp</dimen>
     <dimen name="in_call_card_dialpad_width">468dp</dimen>
     <dimen name="in_call_card_dialpad_horizontal_spacing">56dp</dimen>

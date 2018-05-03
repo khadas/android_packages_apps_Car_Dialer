@@ -25,6 +25,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.UiCall;
+import com.android.car.dialer.telecom.UiCallManager;
 
 /**
  * A Fragment of the bar which controls on going call. Its host or parent Fragment is expected to
@@ -40,21 +42,9 @@ public class OnGoingCallControllerBarFragment extends Fragment {
      * Callback for control bar buttons.
      */
     public interface OnGoingCallControllerBarCallback {
-        void onEndCall();
-
         void onOpenDialpad();
 
         void onCloseDialpad();
-
-        void onMuteMic();
-
-        void onUnmuteMic();
-
-        void onPauseCall();
-
-        void onResumeCall();
-
-        void onVoiceOutputChannelChanged(int channel);
     }
 
     private OnGoingCallControllerBarCallback mOnGoingCallControllerBarCallback;
@@ -82,9 +72,11 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 return;
             }
             if (v.isActivated()) {
-                mOnGoingCallControllerBarCallback.onMuteMic();
+                v.setActivated(false);
+                onMuteMic();
             } else {
-                mOnGoingCallControllerBarCallback.onUnmuteMic();
+                v.setActivated(true);
+                onUnmuteMic();
             }
         });
 
@@ -93,8 +85,10 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 return;
             }
             if (v.isActivated()) {
+                v.setActivated(false);
                 mOnGoingCallControllerBarCallback.onCloseDialpad();
             } else {
+                v.setActivated(true);
                 mOnGoingCallControllerBarCallback.onOpenDialpad();
             }
         });
@@ -103,7 +97,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
             }
-            mOnGoingCallControllerBarCallback.onEndCall();
+            onEndCall();
         });
 
         fragmentView.findViewById(R.id.voice_channel_button).setOnClickListener((v) -> {
@@ -114,11 +108,43 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 return;
             }
             if (v.isActivated()) {
-                mOnGoingCallControllerBarCallback.onPauseCall();
+                v.setActivated(false);
+                onHoldCall();
             } else {
-                mOnGoingCallControllerBarCallback.onResumeCall();
+                v.setActivated(true);
+                onUnholdCall();
             }
         });
         return fragmentView;
+    }
+
+    private void onMuteMic() {
+        UiCallManager.get().setMuted(true);
+    }
+
+    private void onUnmuteMic() {
+        UiCallManager.get().setMuted(false);
+    }
+
+    private void onHoldCall() {
+        UiCallManager uiCallManager = UiCallManager.get();
+        UiCall primaryCall = UiCallManager.get().getPrimaryCall();
+        uiCallManager.holdCall(primaryCall);
+    }
+
+    private void onUnholdCall() {
+        UiCallManager uiCallManager = UiCallManager.get();
+        UiCall primaryCall = UiCallManager.get().getPrimaryCall();
+        uiCallManager.unholdCall(primaryCall);
+    }
+
+    private void onVoiceOutputChannelChanged(int channel) {
+        // TODO: implement this function.
+    }
+
+    private void onEndCall() {
+        UiCallManager uiCallManager = UiCallManager.get();
+        UiCall primaryCall = UiCallManager.get().getPrimaryCall();
+        uiCallManager.disconnectCall(primaryCall);
     }
 }

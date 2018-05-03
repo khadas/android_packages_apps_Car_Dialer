@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <vector android:height="44dp" android:viewportHeight="48.0"
-        android:viewportWidth="48.0" android:width="44dp"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="#000000"
-          android:pathData="M12,38h8L20,10h-8v28zM28,10v28h8L36,10h-8z"/>
+    android:viewportWidth="48.0" android:width="44dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#000000" android:pathData="M16,10v28l22,-14z"/>
 </vector>
