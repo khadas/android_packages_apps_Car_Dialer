@@ -22,7 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/call_log_item_height"
     app:cardBackgroundColor="@color/phone_theme"
-    app:cardCornerRadius="@dimen/car_radius_5"
+    app:cardCornerRadius="@dimen/favorite_card_corner_radius"
     app:cardElevation="@dimen/car_action_bar_elevation">
 
     <include layout="@layout/call_log_list_item_card_base"/>

@@ -15,6 +15,8 @@
  */
 package com.android.car.dialer;
 
+import static com.android.car.dialer.ui.CallHistoryFragment.CALL_TYPE_KEY;
+
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -35,10 +37,9 @@ import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallHistoryFragment;
-import com.android.car.dialer.ui.CallLogListingTask;
 import com.android.car.dialer.ui.ContactListFragment;
+import com.android.car.dialer.ui.InCallFragment;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -90,7 +91,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
 
         setMainContent(R.layout.telecom_activity);
         getWindow().getDecorView().setBackgroundColor(getColor(R.color.phone_theme));
-        setTitle(getString(R.string.phone_app_name));
+        updateTitle();
 
         mUiCallManager = UiCallManager.init(getApplicationContext());
         mUiBluetoothMonitor = new UiBluetoothMonitor(this);
@@ -99,6 +100,8 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
 
         findViewById(R.id.search).setOnClickListener(
                 v -> startActivity(new Intent(this, ContactSearchActivity.class)));
+
+        getDrawerController().setRootAdapter(new DialerRootAdapter());
     }
 
     @Override
@@ -267,7 +270,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
             getDrawerController().closeDrawer();
             return;
         }
-
         Fragment fragment = OngoingCallFragment.newInstance(mUiCallManager, mUiBluetoothMonitor);
         setContentFragmentWithFadeAnimation(fragment);
         getDrawerController().closeDrawer();
@@ -295,7 +297,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         }
 
         Fragment fragment = DialerFragment.newInstance(dialNumber);
-
         // Add the dialer fragment to the backstack so that it can be popped off to dismiss it.
         setContentFragment(fragment);
     }
@@ -365,6 +366,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_fragment_container, fragment, CONTENT_FRAGMENT_TAG)
                 .commitNow();
+        updateTitle();
     }
 
     /**
@@ -380,11 +382,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
 
     private static boolean vdebug() {
         return Log.isLoggable(TAG, Log.DEBUG);
-    }
-
-    @Override
-    protected CarDrawerAdapter getRootAdapter() {
-        return new DialerRootAdapter();
     }
 
     @Override
@@ -446,40 +443,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
                 .filter(fragment -> shouldPropagateCallback(fragment));
     }
 
-    class CallLogAdapter extends CarDrawerAdapter {
-        private List<CallLogListingTask.CallLogItem> mItems;
-
-        public CallLogAdapter(int titleResId, List<CallLogListingTask.CallLogItem> items) {
-            super(TelecomActivity.this, true  /* showDisabledListOnEmpty */);
-            setTitle(getString(titleResId));
-            mItems = items;
-        }
-
-        @Override
-        protected boolean usesSmallLayout(int position) {
-            return false;
-        }
-
-        @Override
-        protected int getActualItemCount() {
-            return mItems.size();
-        }
-
-        @Override
-        public void populateViewHolder(DrawerItemViewHolder holder, int position) {
-            CallLogListingTask.CallLogItem item = mItems.get(position);
-            holder.getTitle().setText(item.mTitle);
-            holder.getText().setText(item.mText);
-            holder.getIcon().setImageBitmap(item.mIcon);
-        }
-
-        @Override
-        public void onItemClick(int position) {
-            getDrawerController().closeDrawer();
-            mUiCallManager.safePlaceCall(mItems.get(position).mNumber, false);
-        }
-    }
-
     private class DialerRootAdapter extends CarDrawerAdapter {
         private static final int ITEM_FAVORITES = 0;
         private static final int ITEM_CALLLOG_ALL = 1;
@@ -491,7 +454,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
 
         DialerRootAdapter() {
             super(TelecomActivity.this, false /* showDisabledListOnEmpty */);
-            setTitle(getString(R.string.phone_app_name));
         }
 
         @Override
@@ -556,6 +518,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
                 default:
                     Log.w(TAG, "Invalid position in ROOT menu! " + position);
             }
+            setTitle(getTitleString());
         }
     }
 
@@ -565,5 +528,35 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
 
     private void showContact() {
         setContentFragment(ContactListFragment.newInstance());
+    }
+
+    private void updateTitle() {
+        setTitle(getTitleString());
+    }
+
+    private String getTitleString() {
+        Fragment currentFragment = getCurrentFragment();
+
+        int titleResId = R.string.phone_app_name;
+
+        if (currentFragment instanceof StrequentsFragment) {
+            setTitle(getString(R.string.contacts_title));
+        } else if (currentFragment instanceof CallHistoryFragment) {
+            int callType = currentFragment.getArguments().getInt(CALL_TYPE_KEY);
+            if (callType == PhoneLoader.CallType.MISSED_TYPE) {
+                titleResId = R.string.missed_call_title;
+            } else {
+                titleResId = R.string.call_history_title;
+            }
+        } else if (currentFragment instanceof ContactListFragment) {
+            titleResId = R.string.contacts_title;
+        } else if (currentFragment instanceof DialerFragment) {
+            titleResId = R.string.dialpad_title;
+        } else if (currentFragment instanceof InCallFragment
+                || currentFragment instanceof OngoingCallFragment) {
+            titleResId = R.string.in_call_title;
+        }
+
+        return getString(titleResId);
     }
 }
