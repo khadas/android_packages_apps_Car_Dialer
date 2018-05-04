@@ -33,7 +33,7 @@ limitations under the License.
         style="@style/TextAppearance.Car.Headline2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/car_padding_3"
+        android:paddingTop="@dimen/user_profile_title_margin_top"
         android:focusable="true"
         android:maxLines="1"
         android:gravity="center"/>
@@ -43,7 +43,7 @@ limitations under the License.
         style="@style/TextAppearance.Car.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/car_padding_3"
+        android:paddingTop="@dimen/user_profile_body_margin_top"
         android:gravity="center"
         android:maxLines="1"/>
 </LinearLayout>

@@ -17,8 +17,6 @@ package com.android.car.dialer.ui;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.telecom.Call;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +29,8 @@ import androidx.fragment.app.Fragment;
 
 import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.dialer.BitmapWorkerTask;
-import com.android.car.dialer.R;
 import com.android.car.dialer.DialerFragment;
+import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;

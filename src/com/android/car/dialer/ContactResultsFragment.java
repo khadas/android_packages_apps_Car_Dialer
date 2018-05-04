@@ -16,10 +16,6 @@
 
 package com.android.car.dialer;
 
-import android.app.Fragment;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +29,10 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.car.widget.DayNightStyle;
 import androidx.car.widget.PagedListView;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public class ContactResultsFragment extends Fragment implements
         if (!TextUtils.isEmpty(mSearchQuery)) {
             // Calling restartLoader so that the loader is always re-created with the new
             // search query.
-            getLoaderManager().restartLoader(0, null /* args */, this /* callback */);
+            LoaderManager.getInstance(this).restartLoader(0, null /* args */, this /* callback */);
         }
     }
 
@@ -161,7 +161,8 @@ public class ContactResultsFragment extends Fragment implements
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {}
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
 
     @Override
     public void onDestroy() {
@@ -173,8 +174,9 @@ public class ContactResultsFragment extends Fragment implements
     /**
      * Creates a new instance of the {@link ContactResultsFragment}.
      *
-     * @param listener A scroll listener that will be notified when the list of search results has
-     *                 been scrolled.
+     * @param listener           A scroll listener that will be notified when the list of search
+     *                           results has
+     *                           been scrolled.
      * @param initialSearchQuery An optional search query that will be inputted when the fragment
      *                           starts up.
      */

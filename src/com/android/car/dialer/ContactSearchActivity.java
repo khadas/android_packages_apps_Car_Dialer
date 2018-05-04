@@ -18,7 +18,6 @@ package com.android.car.dialer;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -31,6 +30,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * An activity that manages contact searching. This activity will display the result of a search
  * as well as show the details of a contact when that contact is clicked.
  */
-public class ContactSearchActivity extends Activity {
+public class ContactSearchActivity extends FragmentActivity {
     private static final String CONTENT_FRAGMENT_TAG = "CONTENT_FRAGMENT_TAG";
     private static final int ANIMATION_DURATION_MS = 100;
 
@@ -76,10 +77,12 @@ public class ContactSearchActivity extends Activity {
 
         mSearchField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -187,7 +190,7 @@ public class ContactSearchActivity extends Activity {
         // changes since any lists in it will be reset to the top.
         resetSearchPanelElevation();
 
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
                 .replace(R.id.content_fragment_container, fragment, CONTENT_FRAGMENT_TAG)
                 .commitNow();
@@ -198,7 +201,7 @@ public class ContactSearchActivity extends Activity {
      */
     @Nullable
     private Fragment getCurrentFragment() {
-        return getFragmentManager().findFragmentByTag(CONTENT_FRAGMENT_TAG);
+        return getSupportFragmentManager().findFragmentByTag(CONTENT_FRAGMENT_TAG);
     }
 
     @Override

@@ -77,6 +77,23 @@
     <!-- Button label to dial a manually entered phone number -->
     <string name="dial_a_number">Dial a number</string>
 
+    <!-- Menu label for the call history [CHAR LIMIT=30] -->
+    <string name="contact_menu_label">Contact</string>
+
+    <!-- Titles -->
+    <!-- Title for the favorites [CHAR LIMIT=30] -->
+    <string name="favorites_title">Favorites</string>
+    <!-- Title for the call history [CHAR LIMIT=30] -->
+    <string name="call_history_title">Call History</string>
+    <!-- Title for the missed call history [CHAR LIMIT=30] -->
+    <string name="missed_call_title">Missed</string>
+    <!-- Title for the contacts [CHAR LIMIT=30] -->
+    <string name="contacts_title">Contacts</string>
+    <!-- Title for the dialpad [CHAR LIMIT=30] -->
+    <string name="dialpad_title">Dialpad</string>
+    <!-- Title for the in call [CHAR LIMIT=30] -->
+    <string name="in_call_title">In Call</string>
+
     <!-- TODO: we do not need to localize this, figure out how to build ignoring it -->
     <string name="one">1</string>
     <string name="two">2</string>
@@ -111,5 +128,4 @@
     <string name="type_work">Work</string>
     <string name="type_mobile">Mobile</string>
     <string name="type_other">Other</string>
-
 </resources>

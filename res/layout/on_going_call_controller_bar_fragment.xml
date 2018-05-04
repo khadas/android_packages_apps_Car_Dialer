@@ -19,7 +19,7 @@ limitations under the License.
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/car_action_bar_height"
-    android:background="@android:color/white"
+    android:background="@color/phone_theme"
     android:elevation = "@dimen/in_call_card_elevation">
     <ImageView
         android:id="@+id/mute_button"

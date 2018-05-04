@@ -22,6 +22,7 @@ import androidx.car.widget.ListItem;
 import androidx.car.widget.ListItemProvider;
 import androidx.car.widget.TextListItem;
 
+import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.listitem.CallLogListItem;
 
 import java.util.ArrayList;
@@ -34,7 +35,16 @@ public class CallHistoryListItemProvider extends ListItemProvider {
     public void setCallHistoryListItems(Context context,
             List<CallLogListingTask.CallLogItem> items) {
         for (CallLogListingTask.CallLogItem callLogItem : items) {
-            mItems.add(new CallLogListItem(context, callLogItem));
+            TextListItem callLogListItem = new CallLogListItem(context, callLogItem);
+
+            callLogListItem.setPrimaryActionIcon(
+                    new BitmapDrawable(context.getResources(), callLogItem.mIcon), true);
+            callLogListItem.setTitle(callLogItem.mTitle);
+            callLogListItem.setBody(callLogItem.mText);
+            callLogListItem.setOnClickListener(
+                    (v) -> UiCallManager.get().safePlaceCall(callLogItem.mNumber, false));
+
+            mItems.add(callLogListItem);
         }
     }
 
