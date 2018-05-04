@@ -33,11 +33,12 @@ LOCAL_USE_AAPT2 := true
 
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     android-support-car \
-    car-apps-common \
-    car-stream-ui-lib \
     android-arch-lifecycle-extensions \
     android-support-constraint-layout \
+    android-support-v4 \
     android-support-v7-cardview \
+    car-apps-common \
+    car-stream-ui-lib \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-constraint-layout-solver \
