@@ -20,9 +20,9 @@ import android.content.res.Resources;
 
 import androidx.car.widget.TextListItem;
 
-import com.android.car.apps.common.CircleBitmapDrawable;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.telecom.ContactBitmapWorker;
+import com.android.car.dialer.ui.CircleBitmapDrawable;
 import com.android.car.dialer.ui.ContactListFragment;
 
 /**
