@@ -20,6 +20,7 @@ import android.telecom.Call;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.car.apps.common.FabDrawable;
@@ -87,8 +88,10 @@ public class DialerInfoController {
      * Append more number to the end of dialed number.
      */
     public void appendDialedNumber(String number) {
-        mNumber.append(number);
-        mTitleView.setText(getFormattedNumber(mNumber.toString()));
+        if (mNumber.length() < MAX_DIAL_NUMBER) {
+            mNumber.append(number);
+            mTitleView.setText(getFormattedNumber(mNumber.toString()));
+        }
     }
 
     /**
@@ -99,6 +102,12 @@ public class DialerInfoController {
         if (mNumber.length() != 0) {
             mNumber.deleteCharAt(mNumber.length() - 1);
             mTitleView.setText(getFormattedNumber(mNumber.toString()));
+        }
+        UiCall primaryCall = UiCallManager.get().getPrimaryCall();
+
+        if (mNumber.length() == 0 && primaryCall != null
+                && primaryCall.getState() != Call.STATE_ACTIVE) {
+            mTitleView.setText(R.string.dial_a_number);
         }
     }
 
@@ -122,19 +131,28 @@ public class DialerInfoController {
     }
 
     private void showDialingUi(UiCall uiCall) {
-        FabDrawable answerCallDrawable = new FabDrawable(mContext);
-        answerCallDrawable.setFabAndStrokeColor(mContext.getColor(R.color.phone_end_call));
-        mEndCallButton.setBackground(answerCallDrawable);
+        if (mTitleView.getText().equals(mContext.getString(R.string.dial_a_number))) {
+            mTitleView.setText("");
+        }
+        FabDrawable endCallDrawable = new FabDrawable(mContext);
+        endCallDrawable.setFabAndStrokeColor(mContext.getColor(R.color.phone_end_call));
+        mEndCallButton.setBackground(endCallDrawable);
         mEndCallButton.setVisibility(View.VISIBLE);
         mMuteButton.setVisibility(View.VISIBLE);
         mBodyView.setVisibility(View.VISIBLE);
 
         mDeleteButton.setVisibility(View.GONE);
         mCallButton.setVisibility(View.GONE);
+        bindUserProfileView(uiCall);
     }
 
     private void showInCallUi() {
-        // TODO: Implement this function.
+        if (mTitleView.getText().equals(mContext.getString(R.string.dial_a_number))) {
+            mTitleView.setText("");
+        }
+        mEndCallButton.setVisibility(View.GONE);
+        mDeleteButton.setVisibility(View.GONE);
+        mCallButton.setVisibility(View.GONE);
     }
 
     private String getFormattedNumber(String number) {
@@ -144,5 +162,12 @@ public class DialerInfoController {
     private void clearDialedNumber() {
         mNumber.setLength(0);
         mTitleView.setText(getFormattedNumber(mNumber.toString()));
+    }
+
+    private void bindUserProfileView(UiCall primaryCall) {
+        if (primaryCall == null) {
+            return;
+        }
+        mTitleView.setText(TelecomUtils.getDisplayName(mContext, primaryCall));
     }
 }

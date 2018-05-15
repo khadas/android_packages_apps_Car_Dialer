@@ -22,7 +22,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -92,13 +94,16 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             }
         });
 
-        fragmentView.findViewById(R.id.end_call_button).setOnClickListener((v) -> {
+        ImageView endCallButton = fragmentView.findViewById(R.id.end_call_button);
+        FabDrawable answerCallDrawable = new FabDrawable(getContext());
+        answerCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_end_call));
+        endCallButton.setBackground(answerCallDrawable);
+        endCallButton.setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
             }
             onEndCall();
         });
-
         fragmentView.findViewById(R.id.voice_channel_button).setOnClickListener((v) -> {
         });
 
