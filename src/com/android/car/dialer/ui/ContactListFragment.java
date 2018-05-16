@@ -30,6 +30,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.car.widget.AlphaJumpBucketer;
 import androidx.car.widget.IAlphaJumpAdapter;
@@ -71,6 +72,8 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
             @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.contact_list_fragment, container, false);
         mPagedListView = fragmentView.findViewById(R.id.list_view);
+        ((TextView) fragmentView.findViewById(R.id.title)).setText(
+                getContext().getString(R.string.contacts_title));
         return fragmentView;
     }
 
@@ -107,8 +110,8 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
             contactItems.add(new ContactItem(number, id, displayName, null, lookupKey));
         }
 
-        ContactListAdapter contactListAdapter = new ContactListAdapter(getContext(),
-                contactItems);
+        ListItemAdapter contactListAdapter = new ListItemAdapter(getContext(),
+                new ContactListItemProvider(getContext(), contactItems, ContactListFragment.this));
         mPagedListView.setAdapter(contactListAdapter);
         contactListAdapter.notifyDataSetChanged();
     }
@@ -164,6 +167,9 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
         }
     }
 
+    /**
+     * Use this Adapter to enabled AlphaJump.
+     */
     private class ContactListAdapter extends ListItemAdapter implements IAlphaJumpAdapter {
 
         List<ContactItem> mContactItems;

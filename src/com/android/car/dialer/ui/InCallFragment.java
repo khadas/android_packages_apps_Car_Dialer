@@ -15,18 +15,24 @@
  */
 package com.android.car.dialer.ui;
 
-import android.content.res.Resources;
+import static android.telecom.Call.STATE_RINGING;
+
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.telecom.Call;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.car.dialer.BitmapWorkerTask;
+import com.android.car.dialer.CallListener;
 import com.android.car.dialer.DialerFragment;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.TelecomUtils;
@@ -37,11 +43,15 @@ import com.android.car.dialer.telecom.UiCallManager;
  * A fragment that displays information about an on-going call with options to hang up.
  */
 public class InCallFragment extends Fragment implements
-        OnGoingCallControllerBarFragment.OnGoingCallControllerBarCallback {
+        OnGoingCallControllerBarFragment.OnGoingCallControllerBarCallback, CallListener {
 
     private Fragment mDialerFragment;
     private View mUserProfileContainerView;
     private View mDialerFragmentContainer;
+    private TextView mUserProfileBodyText;
+
+    private Handler mHandler = new Handler();
+    private CharSequence mCallInfoLabel;
 
     public static InCallFragment newInstance() {
         return new InCallFragment();
@@ -53,6 +63,7 @@ public class InCallFragment extends Fragment implements
         View fragmentView = inflater.inflate(R.layout.in_call_fragment, container, false);
         mUserProfileContainerView = fragmentView.findViewById(R.id.user_profile_container);
         mDialerFragmentContainer = fragmentView.findViewById(R.id.dialer_container);
+        mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.body);
         mDialerFragment = new DialerFragment();
 
         Fragment onGoingCallControllerBarFragment = OnGoingCallControllerBarFragment.newInstance();
@@ -89,23 +100,73 @@ public class InCallFragment extends Fragment implements
             return;
         }
         String number = primaryCall.getNumber();
-        ImageView avatar = container.findViewById(R.id.avatar);
-        BitmapWorkerTask.BitmapRunnable runnable = new BitmapWorkerTask.BitmapRunnable() {
-            @Override
-            public void run() {
-                if (mBitmap != null) {
-                    Resources r = getResources();
-                    avatar.setImageDrawable(new CircleBitmapDrawable(r, mBitmap));
-                    avatar.setImageBitmap(mBitmap);
-                    avatar.clearColorFilter();
-                } else {
-                    avatar.setImageResource(R.drawable.logo_avatar);
-                    avatar.setImageResource(R.drawable.ic_avatar_bg);
-                }
-            }
-        };
-        BitmapWorkerTask.loadBitmap(getContext().getContentResolver(), avatar, number, runnable);
+        String displayName = TelecomUtils.getDisplayName(getContext(), primaryCall);
+
         TextView nameView = container.findViewById(R.id.title);
-        nameView.setText(TelecomUtils.getDisplayName(getContext(), primaryCall));
+        nameView.setText(displayName);
+
+        ImageView avatar = container.findViewById(R.id.avatar);
+        TelecomUtils.setContactBitmapAsync(getContext(), avatar, displayName, number);
+
+        mCallInfoLabel = TelecomUtils.getTypeFromNumber(getContext(), primaryCall.getNumber());
+    }
+
+    @Override
+    public void onAudioStateChanged(boolean isMuted, int route, int supportedRouteMask) {
+
+    }
+
+    @Override
+    public void onCallStateChanged(UiCall call, int state) {
+        int callState = call.getState();
+        switch (callState) {
+            case Call.STATE_NEW:
+            case Call.STATE_CONNECTING:
+            case Call.STATE_DIALING:
+            case Call.STATE_SELECT_PHONE_ACCOUNT:
+            case Call.STATE_HOLDING:
+            case Call.STATE_DISCONNECTED:
+                mHandler.removeCallbacks(mUpdateDurationRunnable);
+                updateBody(call);
+                break;
+            case Call.STATE_ACTIVE:
+                mHandler.post(mUpdateDurationRunnable);
+                break;
+        }
+    }
+
+    @Override
+    public void onCallUpdated(UiCall call) {
+
+    }
+
+    @Override
+    public void onCallAdded(UiCall call) {
+
+    }
+
+    @Override
+    public void onCallRemoved(UiCall call) {
+
+    }
+
+    private final Runnable mUpdateDurationRunnable = new Runnable() {
+        @Override
+        public void run() {
+            UiCall primaryCall = UiCallManager.get().getPrimaryCall();
+            if (primaryCall.getState() != Call.STATE_ACTIVE) {
+                return;
+            }
+            updateBody(primaryCall);
+            mHandler.postDelayed(this /* runnable */, DateUtils.SECOND_IN_MILLIS);
+        }
+    };
+
+    private void updateBody(UiCall primaryCall) {
+        String callInfoText = TelecomUtils.getCallInfoText(getContext(),
+                primaryCall, mCallInfoLabel);
+        mUserProfileBodyText.setText(callInfoText);
+        mUserProfileBodyText.setVisibility(
+                TextUtils.isEmpty(callInfoText) ? View.GONE : View.VISIBLE);
     }
 }
