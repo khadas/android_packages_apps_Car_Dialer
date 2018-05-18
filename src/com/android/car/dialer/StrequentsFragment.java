@@ -141,7 +141,7 @@ public class StrequentsFragment extends Fragment {
             Log.d(TAG, "setItemAnimator");
         }
 
-        mListView.getRecyclerView().setItemAnimator(new StrequentsItemAnimator());
+        mListView.getRecyclerView().setItemAnimator(null);
         return view;
     }
 

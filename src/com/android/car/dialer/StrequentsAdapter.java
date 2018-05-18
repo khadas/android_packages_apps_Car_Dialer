@@ -19,6 +19,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
+import android.os.Handler;
 import android.provider.CallLog;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -44,8 +45,8 @@ import java.util.List;
  * It handles two types of contacts:
  * <p>
  * <ul>
- *     <li>Strequent contacts (starred and/or frequent)
- *     <li>Last call contact
+ * <li>Strequent contacts (starred and/or frequent)
+ * <li>Last call contact
  * </ul>
  */
 public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
@@ -54,12 +55,16 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_LASTCALL = 1;
     private static final int VIEW_TYPE_STREQUENT = 2;
+    private static final long LAST_CALL_REFRESH_INTERVAL_MILLIS = 60 * 1000L;
 
     private final Context mContext;
     private final UiCallManager mUiCallManager;
     private List<ContactEntry> mData;
+    private Handler mMainThreadHandler = new Handler();
 
     private LastCallData mLastCallData;
+    private Cursor mLastCallCursor;
+    private LastCallPeriodicalUpdater mLastCallPeriodicalUpdater = new LastCallPeriodicalUpdater();
 
     private final ContentResolver mContentResolver;
 
@@ -85,7 +90,15 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     }
 
     public void setLastCallCursor(@Nullable Cursor cursor) {
+        mLastCallCursor = cursor;
         mLastCallData = convertLastCallCursor(cursor);
+        if (cursor != null) {
+            mMainThreadHandler.postDelayed(mLastCallPeriodicalUpdater,
+                    LAST_CALL_REFRESH_INTERVAL_MILLIS);
+        } else {
+            mMainThreadHandler.removeCallbacks(mLastCallPeriodicalUpdater);
+        }
+
         notifyDataSetChanged();
     }
 
@@ -139,16 +152,12 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     public CallLogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (viewType) {
-            case VIEW_TYPE_LASTCALL:
-                view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.call_log_last_call_item_card, parent, false);
-                return new CallLogViewHolder(view);
-
             case VIEW_TYPE_EMPTY:
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.call_log_list_item_empty, parent, false);
                 return new CallLogViewHolder(view);
 
+            case VIEW_TYPE_LASTCALL:
             case VIEW_TYPE_STREQUENT:
             default:
                 view = LayoutInflater.from(parent.getContext())
@@ -236,22 +245,26 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
         String primaryText = mLastCallData.getPrimaryText();
         String number = mLastCallData.getNumber();
 
-        viewHolder.title.setText(mLastCallData.getPrimaryText());
-        viewHolder.text.setText(mLastCallData.getSecondaryText());
-        viewHolder.itemView.setTag(number);
-        viewHolder.callTypeIconsView.clear();
-        viewHolder.callTypeIconsView.setVisibility(View.VISIBLE);
+        if (!number.equals(viewHolder.itemView.getTag())) {
+            viewHolder.title.setText(mLastCallData.getPrimaryText());
+            viewHolder.itemView.setTag(number);
+            viewHolder.callTypeIconsView.clear();
+            viewHolder.callTypeIconsView.setVisibility(View.VISIBLE);
 
-        // mHasFirstItem is true only in main screen, or else it is in drawer, then we need to add
-        // call type icons for call history items.
-        viewHolder.smallIcon.setVisibility(View.GONE);
-        int[] callTypes = mLastCallData.getCallTypes();
-        int icons = Math.min(callTypes.length, CallTypeIconsView.MAX_CALL_TYPE_ICONS);
-        for (int i = 0; i < icons; i++) {
-            viewHolder.callTypeIconsView.add(callTypes[i]);
+            // mHasFirstItem is true only in main screen, or else it is in drawer, then we need
+            // to add
+            // call type icons for call history items.
+            viewHolder.smallIcon.setVisibility(View.GONE);
+            int[] callTypes = mLastCallData.getCallTypes();
+            int icons = Math.min(callTypes.length, CallTypeIconsView.MAX_CALL_TYPE_ICONS);
+            for (int i = 0; i < icons; i++) {
+                viewHolder.callTypeIconsView.add(callTypes[i]);
+            }
+
+            TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, primaryText, number);
         }
 
-        TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, primaryText, number);
+        viewHolder.text.setText(mLastCallData.getSecondaryText());
     }
 
     /**
@@ -393,6 +406,16 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
         public int[] getCallTypes() {
             return mCallTypes;
+        }
+    }
+
+    private class LastCallPeriodicalUpdater implements Runnable {
+
+        @Override
+        public void run() {
+            mLastCallData = convertLastCallCursor(mLastCallCursor);
+            notifyItemChanged(0);
+            mMainThreadHandler.postDelayed(this, LAST_CALL_REFRESH_INTERVAL_MILLIS);
         }
     }
 }
