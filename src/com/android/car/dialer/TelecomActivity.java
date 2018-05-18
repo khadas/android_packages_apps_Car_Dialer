@@ -232,7 +232,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
                         + getCurrentFragment());
             }
 
-            if (ongoingCall == null && getCurrentFragment() instanceof OngoingCallFragment) {
+            if (ongoingCall == null && getCurrentFragment() instanceof InCallFragment) {
                 showSpeedDialFragment();
             } else if (ongoingCall != null) {
                 showOngoingCallFragment();
@@ -263,14 +263,14 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         if (vdebug()) {
             Log.d(TAG, "showOngoingCallFragment");
         }
-        if (!mAllowFragmentCommits || getCurrentFragment() instanceof OngoingCallFragment) {
+        if (!mAllowFragmentCommits || getCurrentFragment() instanceof InCallFragment) {
             // in case the dialer is still open, (e.g. when dialing the second phone during
             // a phone call), close it
             maybeHideDialer();
             getDrawerController().closeDrawer();
             return;
         }
-        Fragment fragment = OngoingCallFragment.newInstance(mUiCallManager, mUiBluetoothMonitor);
+        Fragment fragment = InCallFragment.newInstance();
         setContentFragmentWithFadeAnimation(fragment);
         getDrawerController().closeDrawer();
     }
