@@ -107,7 +107,6 @@ public class ContactEntry implements Comparable<ContactEntry> {
         int pinnedPosition = cursor.getInt(pinnedColumn);
         ContactEntry contactEntry = new ContactEntry(context, name, number, starred > 0,
                 pinnedPosition);
-        Log.i("test-jia", "phone book number is " + number);
         contactEntry.setId(cursor.getInt(idColumnIndex));
         contactEntry.setAvatarUri(cursor.getString(avatarUriColumnIndex));
         contactEntry.setAvatarThumbnailUri(cursor.getString(avatarThumbnailColumnIndex));

@@ -19,11 +19,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -93,7 +95,11 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             }
         });
 
-        fragmentView.findViewById(R.id.end_call_button).setOnClickListener((v) -> {
+        ImageView endCallButton = fragmentView.findViewById(R.id.end_call_button);
+        FabDrawable answerCallDrawable = new FabDrawable(getContext());
+        answerCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_end_call));
+        endCallButton.setBackground(answerCallDrawable);
+        endCallButton.setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
             }

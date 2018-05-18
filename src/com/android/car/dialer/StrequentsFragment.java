@@ -60,10 +60,8 @@ public class StrequentsFragment extends Fragment {
     private Cursor mCallLogCursor;
     private boolean mHasLoadedData;
 
-    public static StrequentsFragment newInstance(UiCallManager callManager) {
-        StrequentsFragment fragment = new StrequentsFragment();
-        fragment.mUiCallManager = callManager;
-        return fragment;
+    public static StrequentsFragment newInstance() {
+        return new StrequentsFragment();
     }
 
     @Override
@@ -82,6 +80,7 @@ public class StrequentsFragment extends Fragment {
         }
 
         mContext = getContext();
+        mUiCallManager = UiCallManager.get();
 
         View view = inflater.inflate(R.layout.strequents_fragment, container, false);
         mListView = view.findViewById(R.id.list_view);
@@ -127,7 +126,6 @@ public class StrequentsFragment extends Fragment {
             Log.v(TAG, "Max clicks: " + maxClicks + ", Max pages: " + maxPages);
         }
 
-        mListView.setDayNightStyle(DayNightStyle.FORCE_NIGHT);
         mAdapter = new StrequentsAdapter(mContext, mUiCallManager);
         mAdapter.setStrequentsListener(viewHolder -> {
             if (Log.isLoggable(TAG, Log.DEBUG)) {
