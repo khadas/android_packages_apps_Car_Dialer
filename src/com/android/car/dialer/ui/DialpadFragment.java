@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.UiCallManager;
 
 /**
  * Dialpad Fragment which displays a dialpad.
@@ -168,13 +169,23 @@ public class DialpadFragment extends Fragment {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            UiCallManager uiCallmanager = UiCallManager.get();
+            boolean hasActiveCall = uiCallmanager.getPrimaryCall() != null;
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (mDialpadCallback != null) {
                     mDialpadCallback.onAppendDigit(mValue);
                 }
-                playTone(mTone);
+                if (hasActiveCall) {
+                    uiCallmanager.playDtmfTone(uiCallmanager.getPrimaryCall(), mValue.charAt(0));
+                } else {
+                    playTone(mTone);
+                }
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                stopTone();
+                if (hasActiveCall) {
+                    uiCallmanager.stopDtmfTone(uiCallmanager.getPrimaryCall());
+                } else {
+                    stopTone();
+                }
             }
 
             // Continue propagating the touch event
