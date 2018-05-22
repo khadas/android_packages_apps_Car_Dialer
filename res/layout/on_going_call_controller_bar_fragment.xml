@@ -74,6 +74,18 @@ limitations under the License.
         tools:src="@color/contact_badge"/>
 
     <ImageView
+        android:id="@+id/voice_channel_chevron"
+        android:layout_width="@dimen/car_secondary_icon_size"
+        android:layout_height="@dimen/car_secondary_icon_size"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_arrow_down"
+        android:tint="@color/primary_icon_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/voice_channel_button"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@color/contact_badge"/>
+
+    <ImageView
         android:id="@+id/pause_button"
         android:layout_width="@dimen/in_call_button_size"
         android:layout_height="@dimen/in_call_button_size"
