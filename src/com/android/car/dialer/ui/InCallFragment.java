@@ -72,6 +72,12 @@ public class InCallFragment extends Fragment implements
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(mUpdateDurationRunnable);
+    }
+
+    @Override
     public void onOpenDialpad() {
         mDialerFragment = new DialerFragment();
         getChildFragmentManager().beginTransaction()

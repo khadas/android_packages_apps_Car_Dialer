@@ -66,6 +66,14 @@
     <!-- Label for when a call is a conference call [CHAR LIMIT=30] -->
     <string name="conference_call">Conference call</string>
 
+    <!-- Audio route -->
+    <!-- Label for routing phone audio to the vehicle [CHAR LIMIT=30] -->
+    <string name="audio_route_vehicle">Vehicle bluetooth</string>
+    <!-- Label for routing phone audio to the phone speaker [CHAR LIMIT=30] -->
+    <string name="audio_route_phone_speaker">Speaker phone</string>
+    <!-- Label for routing phone audio to the phone earpiece. [CHAR LIMIT=30] -->
+    <string name="audio_route_handset">Handset</string>
+
     <!-- Menu label for the call history [CHAR LIMIT=30] -->
     <string name="calllog_all">Call History</string>
     <!-- Menu label for the missed call history [CHAR LIMIT=30] -->
