@@ -28,9 +28,6 @@ public class RingingCallControllerBarFragment extends Fragment {
                 container, false);
 
         ImageView endCallButton = fragmentView.findViewById(R.id.end_call_button);
-        FabDrawable endCallDrawable = new FabDrawable(getContext());
-        endCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_end_call));
-        endCallButton.setBackground(endCallDrawable);
         endCallButton.setOnClickListener((v) -> {
             UiCallManager uiCallManager = UiCallManager.get();
             UiCall primaryCall = uiCallManager.getPrimaryCall();
@@ -38,9 +35,6 @@ public class RingingCallControllerBarFragment extends Fragment {
         });
 
         ImageView answerCallButton = fragmentView.findViewById(R.id.answer_call_button);
-        FabDrawable answerCallDrawable = new FabDrawable(getContext());
-        answerCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_call));
-        answerCallButton.setBackground(answerCallDrawable);
         answerCallButton.setOnClickListener((v) -> {
             UiCallManager uiCallManager = UiCallManager.get();
             UiCall primaryCall = uiCallManager.getPrimaryCall();
