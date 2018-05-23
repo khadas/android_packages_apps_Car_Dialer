@@ -66,11 +66,7 @@ public class InCallFragment extends Fragment implements
         mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.body);
         mDialerFragment = new DialerFragment();
 
-        Fragment onGoingCallControllerBarFragment = OnGoingCallControllerBarFragment.newInstance();
-
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.controller_bar_container, onGoingCallControllerBarFragment)
-                .commit();
+        updateControllerBarFragment(UiCallManager.get().getPrimaryCall().getState());
         bindUserProfileView(fragmentView.findViewById(R.id.user_profile_container));
         return fragmentView;
     }
@@ -111,6 +107,19 @@ public class InCallFragment extends Fragment implements
         mCallInfoLabel = TelecomUtils.getTypeFromNumber(getContext(), primaryCall.getNumber());
     }
 
+    private void updateControllerBarFragment(int callState) {
+        Fragment controllerBarFragment;
+        if (callState == Call.STATE_RINGING) {
+            controllerBarFragment = RingingCallControllerBarFragment.newInstance();
+        } else {
+            controllerBarFragment = OnGoingCallControllerBarFragment.newInstance();
+        }
+
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.controller_bar_container, controllerBarFragment)
+                .commit();
+    }
+
     @Override
     public void onAudioStateChanged(boolean isMuted, int route, int supportedRouteMask) {
 
@@ -131,6 +140,7 @@ public class InCallFragment extends Fragment implements
                 break;
             case Call.STATE_ACTIVE:
                 mHandler.post(mUpdateDurationRunnable);
+                updateControllerBarFragment(call.getState());
                 break;
         }
     }
