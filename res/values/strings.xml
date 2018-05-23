@@ -54,6 +54,11 @@
     <!-- Status label for phone state [CHAR LIMIT=20] -->
     <string name="call_state_call_ending">Disconnecting</string>
 
+    <!-- Decline an in coming call [CHAR LIMIT=20] -->
+    <string name="decline_call">Decline</string>
+    <!-- Answer an in coming call [CHAR LIMIT=20] -->
+    <string name="answer_call">Answer</string>
+
     <!-- Label for voicemail [CHAR LIMIT=30] -->
     <string name="voicemail">Voicemail</string>
     <!-- Label for current phone call [CHAR LIMIT=30] -->
