@@ -23,6 +23,7 @@ import android.util.Log;
 public class L {
 
     private String mTag;
+
     public L(String tag) {
         mTag = tag;
     }
@@ -39,6 +40,10 @@ public class L {
         }
     }
 
+    public void w(String msg) {
+        Log.w(mTag, msg);
+    }
+
     public static L logger(String tag) {
         return new L(tag);
     }
@@ -53,5 +58,13 @@ public class L {
         if (Log.isLoggable(tag, Log.DEBUG)) {
             Log.d(tag, msg);
         }
+    }
+
+    public static void w(String tag, String msg) {
+        Log.w(tag, msg);
+    }
+
+    public static void i(String tag, String msg) {
+        Log.i(tag, msg);
     }
 }
