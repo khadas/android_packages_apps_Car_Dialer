@@ -54,6 +54,11 @@
     <!-- Status label for phone state [CHAR LIMIT=20] -->
     <string name="call_state_call_ending">Disconnecting</string>
 
+    <!-- Decline an in coming call [CHAR LIMIT=20] -->
+    <string name="decline_call">Decline</string>
+    <!-- Answer an in coming call [CHAR LIMIT=20] -->
+    <string name="answer_call">Answer</string>
+
     <!-- Label for voicemail [CHAR LIMIT=30] -->
     <string name="voicemail">Voicemail</string>
     <!-- Label for current phone call [CHAR LIMIT=30] -->
@@ -65,6 +70,14 @@
     <string name="unknown">Unknown</string>
     <!-- Label for when a call is a conference call [CHAR LIMIT=30] -->
     <string name="conference_call">Conference call</string>
+
+    <!-- Audio route -->
+    <!-- Label for routing phone audio to the vehicle [CHAR LIMIT=30] -->
+    <string name="audio_route_vehicle">Vehicle bluetooth</string>
+    <!-- Label for routing phone audio to the phone speaker [CHAR LIMIT=30] -->
+    <string name="audio_route_phone_speaker">Speaker phone</string>
+    <!-- Label for routing phone audio to the phone earpiece. [CHAR LIMIT=30] -->
+    <string name="audio_route_handset">Handset</string>
 
     <!-- Menu label for the call history [CHAR LIMIT=30] -->
     <string name="calllog_all">Call History</string>
