@@ -27,19 +27,23 @@ public class RingingCallControllerBarFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.ringing_call_controller_bar_fragment,
                 container, false);
 
-        ImageView endCallButton = fragmentView.findViewById(R.id.end_call_button);
-        endCallButton.setOnClickListener((v) -> {
-            UiCallManager uiCallManager = UiCallManager.get();
-            UiCall primaryCall = uiCallManager.getPrimaryCall();
-            uiCallManager.rejectCall(primaryCall, false, null);
-        });
+        fragmentView.findViewById(R.id.answer_call_button).setOnClickListener((v) -> answerCall());
+        fragmentView.findViewById(R.id.answer_call_text).setOnClickListener((v) -> answerCall());
+        fragmentView.findViewById(R.id.end_call_button).setOnClickListener((v) -> declineCall());
+        fragmentView.findViewById(R.id.end_call_text).setOnClickListener((v) -> declineCall());
 
-        ImageView answerCallButton = fragmentView.findViewById(R.id.answer_call_button);
-        answerCallButton.setOnClickListener((v) -> {
-            UiCallManager uiCallManager = UiCallManager.get();
-            UiCall primaryCall = uiCallManager.getPrimaryCall();
-            uiCallManager.answerCall(primaryCall);
-        });
         return fragmentView;
+    }
+
+    private void answerCall() {
+        UiCallManager uiCallManager = UiCallManager.get();
+        UiCall primaryCall = uiCallManager.getPrimaryCall();
+        uiCallManager.answerCall(primaryCall);
+    }
+
+    private void declineCall() {
+        UiCallManager uiCallManager = UiCallManager.get();
+        UiCall primaryCall = uiCallManager.getPrimaryCall();
+        uiCallManager.rejectCall(primaryCall, false, null);
     }
 }
