@@ -91,7 +91,7 @@ public class ContactDetailsFragment extends Fragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mListView = view.findViewById(R.id.list_view);
-        mListView.setDayNightStyle(DayNightStyle.FORCE_NIGHT);
+        mListView.setDayNightStyle(DayNightStyle.ALWAYS_LIGHT);
 
         RecyclerView recyclerView = mListView.getRecyclerView();
         for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
