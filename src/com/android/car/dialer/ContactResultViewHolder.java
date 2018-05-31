@@ -27,10 +27,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.car.utils.ListItemBackgroundResolver;
 
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.ui.CircleBitmapDrawable;
-import com.android.car.view.CardListBackgroundResolver;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -58,7 +58,7 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
      * provided {@link ContactDetails}.
      */
     public void bind(ContactDetails details, int itemCount) {
-        CardListBackgroundResolver.setBackground(mContactCard, getAdapterPosition(), itemCount);
+        ListItemBackgroundResolver.setBackground(mContactCard, getAdapterPosition(), itemCount);
 
         mContactCard.setOnClickListener(v -> {
             Intent intent = new Intent();

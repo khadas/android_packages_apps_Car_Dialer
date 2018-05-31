@@ -38,7 +38,6 @@ LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.legacy_legacy-support-v4 \
     androidx.cardview_cardview \
     car-apps-common \
-    car-stream-ui-lib
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     androidx-constraintlayout_constraintlayout-solver \
