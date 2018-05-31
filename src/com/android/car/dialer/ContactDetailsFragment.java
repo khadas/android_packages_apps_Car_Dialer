@@ -40,6 +40,7 @@ import com.android.car.dialer.telecom.TelecomUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.car.utils.ListItemBackgroundResolver;
 import androidx.car.widget.DayNightStyle;
 import androidx.car.widget.PagedListView;
 
@@ -330,36 +331,8 @@ public class ContactDetailsFragment extends Fragment
             } else {
                 viewHolder.divier.setVisibility(View.VISIBLE);
             }
-            setBackground(viewHolder.card,
+            ListItemBackgroundResolver.setBackground(viewHolder.card,
                     viewHolder.getAdapterPosition(), getItemCount());
-        }
-    }
-
-    private void setBackground(View view, int currentPosition, int totalItems) {
-        if (currentPosition < 0) {
-            throw new IllegalArgumentException("currentPosition cannot be less than zero.");
-        }
-
-        if (currentPosition >= totalItems) {
-            throw new IndexOutOfBoundsException("currentPosition: " + currentPosition + "; "
-                    + "totalItems: " + totalItems);
-        }
-
-        // Correctly set the background for each card. Only the top and last card should
-        // have rounded corners.
-        if (totalItems == 1) {
-            // One card - all corners are rounded
-            view.setBackgroundResource(
-                    R.drawable.car_card_rounded_top_bottom_background);
-        } else if (currentPosition == 0) {
-            // First card gets rounded top
-            view.setBackgroundResource(R.drawable.car_card_rounded_top_background);
-        } else if (currentPosition == totalItems - 1) {
-            // Last one has a rounded bottom
-            view.setBackgroundResource(R.drawable.car_card_rounded_bottom_background);
-        } else {
-            // Middle has no rounded corners
-            view.setBackgroundResource(R.color.phone_theme);
         }
     }
 }
