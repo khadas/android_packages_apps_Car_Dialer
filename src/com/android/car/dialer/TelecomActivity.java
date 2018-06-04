@@ -21,16 +21,9 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
-
-import androidx.car.drawer.CarDrawerActivity;
-import androidx.car.drawer.CarDrawerAdapter;
-import androidx.car.drawer.DrawerItemViewHolder;
 
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.PhoneLoader;
@@ -41,6 +34,13 @@ import com.android.car.dialer.ui.ContactListFragment;
 import com.android.car.dialer.ui.InCallFragment;
 
 import java.util.stream.Stream;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.car.drawer.CarDrawerActivity;
+import androidx.car.drawer.CarDrawerAdapter;
+import androidx.car.drawer.DrawerItemViewHolder;
+import androidx.fragment.app.Fragment;
 
 /**
  * Main activity for the Dialer app. Displays different fragments depending on call and
@@ -69,7 +69,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
 
     /**
      * Whether or not it is safe to make transactions on the
-     * {@link android.support.v4.app.FragmentManager}. This variable prevents a possible exception
+     * {@link androidx.fragment.app.FragmentManager}. This variable prevents a possible exception
      * when calling commit() on the FragmentManager.
      *
      * <p>The default value is {@code true} because it is only after
