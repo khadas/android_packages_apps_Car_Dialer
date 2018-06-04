@@ -21,7 +21,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.text.TextUtils;
@@ -49,6 +48,8 @@ import com.android.car.dialer.ui.CircleBitmapDrawable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A fragment that displays information about an on-going call with options to hang up.

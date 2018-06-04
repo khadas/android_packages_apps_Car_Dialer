@@ -14,17 +14,19 @@ package com.android.car.dialer.ui.viewmodel;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.livedata.MissedCallHistoryLiveData;
 import com.android.car.dialer.ui.CallLogListingTask;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 /**
  * View model for CallHistoryFragment which provides call history live data.

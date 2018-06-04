@@ -37,7 +37,7 @@ limitations under the License.
         <include layout="@layout/user_profile_large"/>
     </FrameLayout>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/controller_bar_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/car_action_bar_height"
