@@ -82,9 +82,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         super.onCreate(savedInstanceState);
         setToolbarElevation(0f);
 
-        // Set toolbar to be click through so that the search icon can be clicked.
-        setToolbarClickThrough(true);
-
         if (vdebug()) {
             Log.d(TAG, "onCreate");
         }
