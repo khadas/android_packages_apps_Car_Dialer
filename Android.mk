@@ -32,16 +32,22 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_USE_AAPT2 := true
 
 LOCAL_STATIC_ANDROID_LIBRARIES += \
-    android-support-v4
+    android-support-car \
+    android-arch-lifecycle-extensions \
+    android-support-constraint-layout \
+    android-support-v4 \
+    android-support-v7-cardview \
+    car-apps-common \
+
+LOCAL_STATIC_JAVA_LIBRARIES := \
+    android-support-constraint-layout-solver \
+    guava \
 
 LOCAL_PROGUARD_ENABLED := disabled
 
 LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_DEX_PREOPT := false
-
-include packages/apps/Car/libs/car-stream-ui-lib/car-stream-ui-lib.mk
-include packages/apps/Car/libs/car-apps-common/car-apps-common.mk
 
 include $(BUILD_PACKAGE)
 
