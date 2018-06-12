@@ -15,7 +15,6 @@
  */
 package com.android.car.dialer.livedata;
 
-import android.arch.lifecycle.LiveData;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -27,6 +26,8 @@ import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.ui.CallLogListingTask;
 
 import java.util.List;
+
+import androidx.lifecycle.LiveData;
 
 /**
  * Live data which loads call history.

@@ -32,15 +32,15 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_USE_AAPT2 := true
 
 LOCAL_STATIC_ANDROID_LIBRARIES += \
-    android-support-car \
-    android-arch-lifecycle-extensions \
-    android-support-constraint-layout \
-    android-support-v4 \
-    android-support-v7-cardview \
+    androidx.car_car \
+    androidx.lifecycle_lifecycle-extensions \
+    androidx-constraintlayout_constraintlayout \
+    androidx.legacy_legacy-support-v4 \
+    androidx.cardview_cardview \
     car-apps-common \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    android-support-constraint-layout-solver \
+    androidx-constraintlayout_constraintlayout-solver \
     guava \
 
 LOCAL_PROGUARD_ENABLED := disabled

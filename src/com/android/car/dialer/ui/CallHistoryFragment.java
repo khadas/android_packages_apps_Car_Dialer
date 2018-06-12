@@ -15,24 +15,24 @@
  */
 package com.android.car.dialer.ui;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.car.widget.ListItemAdapter;
-import androidx.car.widget.PagedListView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.ui.viewmodel.CallHistoryViewModel;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.car.widget.ListItemAdapter;
+import androidx.car.widget.PagedListView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 
 public class CallHistoryFragment extends Fragment {
     public static final String CALL_TYPE_KEY = "CALL_TYPE_KEY";
