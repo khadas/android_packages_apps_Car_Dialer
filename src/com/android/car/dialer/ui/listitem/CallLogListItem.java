@@ -20,18 +20,16 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.car.widget.TextListItem;
-
 import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.ContactBitmapWorker;
 import com.android.car.dialer.ui.CallHistoryListItemProvider;
 import com.android.car.dialer.ui.CallLogListingTask;
 import com.android.car.dialer.ui.CircleBitmapDrawable;
-import com.android.car.dialer.R;
+
+import androidx.car.widget.TextListItem;
 
 /**
  * List item which is created by {@link CallHistoryListItemProvider} binds a call list item to a

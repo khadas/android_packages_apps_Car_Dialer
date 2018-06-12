@@ -16,12 +16,13 @@
 package com.android.car.dialer;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A fragment that informs the user that there is no bluetooth device attached that can make

@@ -22,13 +22,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import androidx.car.widget.TextListItem;
-
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.ContactBitmapWorker;
 import com.android.car.dialer.ui.CircleBitmapDrawable;
 import com.android.car.dialer.ui.ContactListFragment;
+
+import androidx.car.widget.TextListItem;
 
 /**
  * ListItem for contact.
