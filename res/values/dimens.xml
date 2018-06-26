@@ -16,12 +16,10 @@
 <resources>
     <!-- Dialer -->
     <dimen name="dial_container_vertical_margin">48dp</dimen>
-    <dimen name="dial_number_call_button_width">80dp</dimen>
 
     <dimen name="dialer_card_elevation">2dp</dimen>
     <dimen name="dialer_dialpad_top_margin">-16dp</dimen>
     <dimen name="dialer_back_button_top_margin">-4dp</dimen>
-    <dimen name="dialer_dialed_number_container">320dp</dimen>
     <dimen name="dialer_dialed_number_bottom_padding">16dp</dimen>
     <dimen name="dialer_menu_icon_container_width">64dp</dimen>
 
@@ -88,13 +86,10 @@
     <!-- The height of each of the cards that list the contact search results. -->
     <dimen name="contact_result_card_height">128dp</dimen>
 
-    <dimen name="call_log_last_card_bottom_margin">@dimen/call_log_card_overlap</dimen>
-
     <dimen name="line_divider_height">1dp</dimen>
 
-    <dimen name="dialer_number_view_height">128dp</dimen>
     <dimen name="dialer_number_view_padding">32dp</dimen>
-
+    
     <dimen name="dialer_fab_size">80dp</dimen>
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/car_touch_target_size</dimen>

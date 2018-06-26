@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/error_string"
-        android:layout_width="@dimen/apps_max_content_width"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/error_icon"
         android:layout_centerHorizontal="true"

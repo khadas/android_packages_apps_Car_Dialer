@@ -117,7 +117,6 @@
             </RelativeLayout>
             <ImageView
                 android:id="@+id/small_contact_photo"
-                android:background="@drawable/avatar_rounded_bg"
                 android:layout_width="@dimen/in_call_small_contact_photo_size"
                 android:layout_height="@dimen/in_call_small_contact_photo_size"
                 android:layout_gravity="end|top"

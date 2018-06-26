@@ -42,7 +42,6 @@
                 android:id="@+id/avatar"
                 android:layout_width="@dimen/contact_detail_image_size"
                 android:layout_height="@dimen/contact_detail_image_size"
-                android:background="@drawable/avatar_rounded_bg"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintBottom_toTopOf="@+id/title"
                 app:layout_constraintStart_toStartOf="parent"
