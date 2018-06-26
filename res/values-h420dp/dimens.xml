@@ -14,8 +14,5 @@
      limitations under the License.
 -->
 <resources>
-    <dimen name="in_call_controls_container_height">192dp</dimen>
-    <dimen name="in_call_info_margin_top">72dp</dimen>
     <dimen name="in_call_card_dialpad_vertical_spacing">@dimen/car_padding_2</dimen>
-    <dimen name="small_contact_photo_margin_end">72dp</dimen>
 </resources>

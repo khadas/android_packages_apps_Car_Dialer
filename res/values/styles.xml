@@ -16,14 +16,14 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="TextAppearance.Car.Key1" >
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/car_key1_size</item>
-        <item name="android:textColor">@color/car_key1</item>
+        <item name="android:textSize">@dimen/car_body1_size</item>
+        <item name="android:textColor">@color/car_body1</item>
     </style>
 
     <style name="TextAppearance.Car.Key2" >
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/car_key2_size</item>
-        <item name="android:textColor">@color/car_key2</item>
+        <item name="android:textSize">@dimen/car_body5_size</item>
+        <item name="android:textColor">@color/car_body4</item>
     </style>
 
     <!-- Phone -->
