@@ -549,8 +549,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
             titleResId = R.string.contacts_title;
         } else if (currentFragment instanceof DialerFragment) {
             titleResId = R.string.dialpad_title;
-        } else if (currentFragment instanceof InCallFragment
-                || currentFragment instanceof OngoingCallFragment) {
+        } else if (currentFragment instanceof InCallFragment) {
             titleResId = R.string.in_call_title;
         }
 
