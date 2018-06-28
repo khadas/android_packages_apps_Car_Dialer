@@ -37,15 +37,18 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
-
 import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
-import com.android.car.dialer.ui.CircleBitmapDrawable;
 
 import java.io.InputStream;
 import java.util.Locale;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 public class TelecomUtils {
     private final static String TAG = "Em.TelecomUtils";
@@ -345,30 +348,35 @@ public class TelecomUtils {
     }
 
     /**
-     * Sets a Contact bitmap on the provided image taking into account fail cases.
-     * It will attempt to load a Bitmap from the Contacts store, otherwise it will paint
-     * a the first letter of the contact name.
+     * Sets a Contact avatar onto the provided {@param icon}. The first letter of the contact
+     * {@param name} will be used as a fallback resource if avatar loading fails.
      *
-     * @param number A key to have a consisten color per phone number.
-     * @return A worker task if a new one was needed to load the bitmap.
+     * @param number The phone number of the contact which will be used for looking up the contact.
      */
     @Nullable
-    public static ContactBitmapWorker setContactBitmapAsync(Context context,
+    public static void setContactBitmapAsync(Context context,
             final ImageView icon, final @Nullable String name, final String number) {
-        return ContactBitmapWorker.loadBitmap(context.getContentResolver(), icon, number,
-                bitmap -> {
-                    Resources r = icon.getResources();
-                    if (bitmap != null) {
-                        icon.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        icon.setImageDrawable(new CircleBitmapDrawable(r, bitmap));
-                    } else {
-                        icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                        LetterTileDrawable letterTileDrawable = new LetterTileDrawable(r);
-                        letterTileDrawable.setContactDetails(name, number);
-                        letterTileDrawable.setIsCircular(true);
-                        icon.setImageDrawable(letterTileDrawable);
-                    }
-                });
+        Resources r = icon.getResources();
+        ContactEntry contactEntry = InMemoryPhoneBook.get().lookupContactEntry(number);
+        LetterTileDrawable letterTileDrawable = new LetterTileDrawable(r);
+        letterTileDrawable.setContactDetails(name, number);
+        letterTileDrawable.setIsCircular(true);
+        if (contactEntry != null) {
+            Uri uri = null;
+            if (contactEntry.getAvatarThumbnailUri() != null) {
+                uri = Uri.parse(contactEntry.getAvatarThumbnailUri());
+            } else if (contactEntry.getAvatarUri() != null) {
+                uri = Uri.parse(contactEntry.getAvatarUri());
+            }
+
+            Glide.with(context)
+                    .load(uri)
+                    .apply(new RequestOptions().circleCrop().error(letterTileDrawable))
+                    .into(icon);
+        } else {
+            icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            icon.setImageDrawable(letterTileDrawable);
+        }
     }
 
 }

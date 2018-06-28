@@ -41,7 +41,10 @@ LOCAL_STATIC_ANDROID_LIBRARIES += \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     androidx-constraintlayout_constraintlayout-solver \
-    guava
+    guava \
+    car-glide \
+    car-glide-disklrucache \
+    car-gifdecoder
 
 LOCAL_PROGUARD_ENABLED := disabled
 

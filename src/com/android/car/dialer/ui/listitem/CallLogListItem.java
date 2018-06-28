@@ -16,22 +16,15 @@
 package com.android.car.dialer.ui.listitem;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.car.widget.TextListItem;
 
-import com.android.car.apps.common.LetterTileDrawable;
-import com.android.car.dialer.telecom.ContactBitmapWorker;
+import com.android.car.dialer.ContactEntry;
+import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.InMemoryPhoneBook;
+import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.CallHistoryListItemProvider;
 import com.android.car.dialer.ui.CallLogListingTask;
-import com.android.car.dialer.ui.CircleBitmapDrawable;
-import com.android.car.dialer.R;
 
 /**
  * List item which is created by {@link CallHistoryListItemProvider} binds a call list item to a
@@ -50,40 +43,13 @@ public class CallLogListItem extends TextListItem {
     @Override
     public void onBind(ViewHolder viewHolder) {
         super.onBind(viewHolder);
-        ContactBitmapWorker.loadBitmap(mContext.getContentResolver(), viewHolder.getPrimaryIcon(),
-                mCallLogItem.mNumber,
-                bitmap -> {
-                    Resources r = mContext.getResources();
-                    viewHolder.getPrimaryIcon().setScaleType(ImageView.ScaleType.CENTER);
-                    Drawable avatarDrawable;
-                    if (bitmap != null) {
-                        avatarDrawable = new CircleBitmapDrawable(r, bitmap);
-                        setPrimaryActionIcon(new CircleBitmapDrawable(r, bitmap), true);
-                    } else {
-                        LetterTileDrawable letterTileDrawable = new LetterTileDrawable(r);
-                        letterTileDrawable.setContactDetails(mCallLogItem.mTitle,
-                                mCallLogItem.mNumber);
-                        letterTileDrawable.setIsCircular(true);
-                        avatarDrawable = letterTileDrawable;
-                    }
-
-                    int iconSize = mContext.getResources().getDimensionPixelSize(
-                            R.dimen.avatar_icon_size);
-                    setPrimaryActionIcon(scaleDrawable(avatarDrawable, iconSize), true);
-                    super.onBind(viewHolder);
-                });
+        ContactEntry contactEntry = InMemoryPhoneBook.get().lookupContactEntry(
+                mCallLogItem.mNumber);
+        String displayName = contactEntry != null ? contactEntry.getDisplayName() : null;
+        TelecomUtils.setContactBitmapAsync(mContext, viewHolder.getPrimaryIcon(),
+                displayName, mCallLogItem.mNumber);
 
         viewHolder.getContainerLayout().setBackgroundColor(
                 mContext.getColor(R.color.call_history_list_item_color));
-    }
-
-    private Drawable scaleDrawable(Drawable targetDrawable, int sizeInPixel) {
-        Bitmap bitmap = null;
-        if (targetDrawable instanceof CircleBitmapDrawable) {
-            bitmap = ((CircleBitmapDrawable) targetDrawable).toBitmap(sizeInPixel);
-        } else if (targetDrawable instanceof LetterTileDrawable){
-            bitmap = ((LetterTileDrawable) targetDrawable).toBitmap(sizeInPixel);
-        }
-        return new BitmapDrawable(mContext.getResources(), bitmap);
     }
 }
