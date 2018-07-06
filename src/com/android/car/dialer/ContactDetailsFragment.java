@@ -35,7 +35,7 @@ import java.util.List;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
-import androidx.car.utils.ListItemBackgroundResolver;
+import androidx.car.util.ListItemBackgroundResolver;
 import androidx.car.widget.DayNightStyle;
 import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;

@@ -79,7 +79,15 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 R.layout.audio_route_switch_dialog, null, false);
         PagedListView list = dialogView.findViewById(R.id.list);
         List<Integer> availableRoutes = UiCallManager.get().getSupportedAudioRoute();
-        list.setDividerVisibilityManager(position -> position == (availableRoutes.size() - 1));
+        list.setDividerVisibilityManager(new PagedListView.DividerVisibilityManager() {
+            public boolean getShowDivider(int position) {
+                return !(position == (availableRoutes.size() - 1));
+            }
+
+            public boolean shouldHideDivider(int position) {
+                return !getShowDivider(position);
+            }
+        });
 
         mAudioRouteSelectionDialog = new AlertDialog.Builder(getContext())
                 .setView(dialogView)

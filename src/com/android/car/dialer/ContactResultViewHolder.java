@@ -32,7 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import androidx.annotation.Nullable;
-import androidx.car.utils.ListItemBackgroundResolver;
+import androidx.car.util.ListItemBackgroundResolver;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
