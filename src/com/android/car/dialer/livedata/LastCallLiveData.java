@@ -13,23 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer.livedata;
 
 import android.content.Context;
 
-import com.android.car.dialer.telecom.PhoneLoader;
-
 /**
- * Live data which loads missed call history.
+ * Provides the last call history.
  */
-public class MissedCallHistoryLiveData extends CallHistoryLiveData {
+public class LastCallLiveData extends CallHistoryLiveData {
 
-    public MissedCallHistoryLiveData(Context context) {
+    public LastCallLiveData(Context context) {
         super(context);
     }
 
     @Override
-    protected int getCallType() {
-        return PhoneLoader.MISSED_TYPE;
+    protected int getLimit() {
+        return 1;
     }
 }
