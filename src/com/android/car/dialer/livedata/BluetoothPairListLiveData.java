@@ -37,7 +37,7 @@ public class BluetoothPairListLiveData extends LiveData<Set<BluetoothDevice>> {
     private final Context mContext;
     private final IntentFilter mIntentFilter = new IntentFilter();
 
-    private BroadcastReceiver mBluetoothPairListReceiver= new BroadcastReceiver() {
+    private BroadcastReceiver mBluetoothPairListReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             updateList();
@@ -47,7 +47,7 @@ public class BluetoothPairListLiveData extends LiveData<Set<BluetoothDevice>> {
     public BluetoothPairListLiveData(Context context) {
         mContext = context;
         mIntentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        setValue(Collections.emptySet());
+        postValue(Collections.emptySet());
     }
 
     @Override
@@ -66,8 +66,6 @@ public class BluetoothPairListLiveData extends LiveData<Set<BluetoothDevice>> {
     }
 
     private void updateList() {
-        if (mBluetoothAdapter != null) {
-            setValue(mBluetoothAdapter.getBondedDevices());
-        }
+        setValue(mBluetoothAdapter.getBondedDevices());
     }
 }
