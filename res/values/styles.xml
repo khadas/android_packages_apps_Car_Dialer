@@ -63,7 +63,6 @@
     </style>
 
     <style name="NoHfpText" parent="TextAppearance.Car.Body2">
-        <item name="android:textColor">@color/car_body1_light</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">3</item>
     </style>

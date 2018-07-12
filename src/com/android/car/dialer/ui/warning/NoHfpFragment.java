@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer;
+
+package com.android.car.dialer.ui.warning;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +24,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.android.car.dialer.R;
 
 /**
  * A fragment that informs the user that there is no bluetooth device attached that can make
@@ -38,7 +43,7 @@ public class NoHfpFragment extends Fragment {
      * Returns an instance of the {@link NoHfpFragment} with the given error message as the one to
      * display.
      */
-    static NoHfpFragment newInstance(String errorMessage) {
+    public static NoHfpFragment newInstance(String errorMessage) {
         NoHfpFragment fragment = new NoHfpFragment();
 
         Bundle args = new Bundle();
@@ -60,7 +65,7 @@ public class NoHfpFragment extends Fragment {
     /**
      * Sets the given error message to be displayed.
      */
-    void setErrorMessage(String errorMessage) {
+    public void setErrorMessage(String errorMessage) {
         mErrorMessage = errorMessage;
 
         // If this method is called before the error message view is available, then no need to
