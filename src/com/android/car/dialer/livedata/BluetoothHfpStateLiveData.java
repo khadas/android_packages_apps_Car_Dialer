@@ -51,7 +51,7 @@ public class BluetoothHfpStateLiveData extends LiveData<Integer> {
         mContext = context;
         if (mBluetoothAdapter != null) {
             mIntentFilter.addAction(BluetoothHeadsetClient.ACTION_CONNECTION_STATE_CHANGED);
-            setValue(mBluetoothAdapter.getProfileConnectionState(
+            postValue(mBluetoothAdapter.getProfileConnectionState(
                     BluetoothProfile.HEADSET_CLIENT));
         }
     }
