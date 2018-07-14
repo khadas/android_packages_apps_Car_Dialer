@@ -58,28 +58,33 @@ public class BluetoothStateLiveData extends LiveData<Integer> {
     public BluetoothStateLiveData(Context context) {
         mContext = context;
         mIntentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        setValue(BluetoothState.UNKNOWN);
+        postValue(BluetoothState.UNKNOWN);
     }
 
     @Override
     protected void onActive() {
-        updateState();
-        mContext.registerReceiver(mBluetoothStateReceiver, mIntentFilter);
+        if (mBluetoothAdapter != null) {
+            updateState();
+            mContext.registerReceiver(mBluetoothStateReceiver, mIntentFilter);
+        }
+
     }
 
     @Override
     protected void onInactive() {
-        mContext.unregisterReceiver(mBluetoothStateReceiver);
+        if (mBluetoothAdapter != null) {
+            mContext.unregisterReceiver(mBluetoothStateReceiver);
+        }
     }
 
     private void updateState() {
         @BluetoothState int state;
         if (mBluetoothAdapter == null) {
-            state = BluetoothState.UNKNOWN;
-        } else {
-            state = mBluetoothAdapter.isEnabled() ? BluetoothState.ENABLED
-                    : BluetoothState.DISABLED;
+            return;
         }
+
+        state = mBluetoothAdapter.isEnabled() ? BluetoothState.ENABLED
+                : BluetoothState.DISABLED;
 
         if (state != getValue()) {
             setValue(state);
