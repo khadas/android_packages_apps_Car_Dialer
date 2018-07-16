@@ -26,8 +26,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.car.util.ListItemBackgroundResolver;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.ui.CircleBitmapDrawable;

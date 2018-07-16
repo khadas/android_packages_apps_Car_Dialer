@@ -15,14 +15,11 @@
  */
 package com.android.car.dialer.ui;
 
-import static android.telecom.Call.STATE_RINGING;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.telecom.Call;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
