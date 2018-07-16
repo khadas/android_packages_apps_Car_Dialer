@@ -27,11 +27,11 @@ import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.IntDef;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import androidx.annotation.IntDef;
 
 /**
  * Manages loading different types of call logs.

@@ -37,18 +37,18 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
 
-import java.io.InputStream;
-import java.util.Locale;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+
+import java.io.InputStream;
+import java.util.Locale;
 
 public class TelecomUtils {
     private final static String TAG = "Em.TelecomUtils";

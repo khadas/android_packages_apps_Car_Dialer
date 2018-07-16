@@ -26,6 +26,8 @@ import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
+import androidx.annotation.NonNull;
+
 import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
@@ -34,8 +36,6 @@ import com.android.car.dialer.telecom.TelecomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 /**
  * Async task which loads call history.

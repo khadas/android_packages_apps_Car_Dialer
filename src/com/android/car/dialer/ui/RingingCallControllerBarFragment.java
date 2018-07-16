@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.car.dialer.R;
-import com.android.car.dialer.telecom.UiCall;
-import com.android.car.dialer.telecom.UiCallManager;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.UiCall;
+import com.android.car.dialer.telecom.UiCallManager;
 
 public class RingingCallControllerBarFragment extends Fragment {
 
