@@ -13,15 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer.telecom;
 
 import android.net.Uri;
+import android.telecom.Call;
+import android.telecom.DisconnectCause;
+import android.telecom.GatewayInfo;
 
 /**
  * Represents a single call on UI. It is an abstraction of {@code android.telecom.Call}.
  */
 public class UiCall {
+    /**
+     *  the next value of a monotonic increasing id.
+     */
+    private static int sNextCarPhoneCallId = 0;
+
     private final int mId;
+    private final Call mCall;
 
     private int mState;
     private boolean mHasParent;
@@ -31,8 +41,9 @@ public class UiCall {
     private Uri mGatewayInfoOriginalAddress;
     private long connectTimeMillis;
 
-    public UiCall(int id) {
+    private UiCall(int id, Call call) {
         mId = id;
+        mCall = call;
     }
 
     public int getId() {
@@ -93,5 +104,55 @@ public class UiCall {
 
     public void setConnectTimeMillis(long connectTimeMillis) {
         this.connectTimeMillis = connectTimeMillis;
+    }
+
+    /**
+     * Returns the {@link Call} represented by this UiCall.
+     */
+    public Call getTelecomCall() {
+        return mCall;
+    }
+
+    /**
+     * Creates a UiCall from {@param telecomCall}.
+     *
+     * @returns an empty default {@link UiCall} if the given call doesn't contains any call details.
+     */
+    public static UiCall createFromTelecomCall(Call telecomCall) {
+        return updateFromTelecomCall(new UiCall(sNextCarPhoneCallId++, telecomCall), telecomCall);
+    }
+
+    /**
+     * Updates the uiCall with a {@link Call}.
+     */
+    // TODO: read states from telecomCall dynamically instead of read and set values before hand.
+    public static UiCall updateFromTelecomCall(UiCall uiCall, Call telecomCall) {
+        uiCall.setState(telecomCall.getState());
+        uiCall.setHasChildren(!telecomCall.getChildren().isEmpty());
+        uiCall.setHasParent(telecomCall.getParent() != null);
+
+        Call.Details details = telecomCall.getDetails();
+        if (details == null) {
+            return uiCall;
+        }
+
+        uiCall.setConnectTimeMillis(details.getConnectTimeMillis());
+
+        DisconnectCause cause = details.getDisconnectCause();
+        uiCall.setDisconnectCause(cause == null ? null : cause.getLabel());
+
+        GatewayInfo gatewayInfo = details.getGatewayInfo();
+        uiCall.setGatewayInfoOriginalAddress(
+                gatewayInfo == null ? null : gatewayInfo.getOriginalAddress());
+
+        String number = "";
+        if (gatewayInfo != null) {
+            number = gatewayInfo.getOriginalAddress().getSchemeSpecificPart();
+        } else if (details.getHandle() != null) {
+            number = details.getHandle().getSchemeSpecificPart();
+        }
+        uiCall.setNumber(number);
+
+        return uiCall;
     }
 }
