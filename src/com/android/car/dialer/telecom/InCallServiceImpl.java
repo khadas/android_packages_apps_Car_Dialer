@@ -17,13 +17,16 @@ package com.android.car.dialer.telecom;
 
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.InCallService;
 import android.telecom.TelecomManager;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -33,11 +36,34 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class InCallServiceImpl extends InCallService {
     private static final String TAG = "Em.InCallService";
 
-    static final String ACTION_LOCAL_BIND = "local_bind";
+    /** An action which indicates a bind is from local component. */
+    @Deprecated
+    public static final String ACTION_LOCAL_BIND = "local_bind";
 
     private CopyOnWriteArrayList<Callback> mCallbacks = new CopyOnWriteArrayList<>();
 
+    private ArrayList<ActiveCallListChangedCallback> mActiveCallListChangedCallbacks =
+            new ArrayList<>();
+
     private TelecomManager mTelecomManager;
+
+    private Handler mMainHanlder = new Handler(Looper.getMainLooper());
+
+    /**
+     * Listens on active call list changes. Callbacks will be called on main thread.
+     */
+    public interface ActiveCallListChangedCallback {
+
+        /**
+         * Called when a new call is added.
+         */
+        void onTelecomCallAdded(Call telecomCall);
+
+        /**
+         * Called when an existing call is removed.
+         */
+        void onTelecomCallRemoved(Call telecomCall);
+    }
 
     @Override
     public void onCreate() {
@@ -58,6 +84,11 @@ public class InCallServiceImpl extends InCallService {
         for (Callback callback : mCallbacks) {
             callback.onTelecomCallAdded(telecomCall);
         }
+
+        for (ActiveCallListChangedCallback activeCallListChangedCallback :
+                mActiveCallListChangedCallbacks) {
+            activeCallListChangedCallback.onTelecomCallAdded(telecomCall);
+        }
     }
 
     @Override
@@ -67,6 +98,11 @@ public class InCallServiceImpl extends InCallService {
         }
         for (Callback callback : mCallbacks) {
             callback.onTelecomCallRemoved(telecomCall);
+        }
+
+        for (ActiveCallListChangedCallback activeCallListChangedCallback :
+                mActiveCallListChangedCallbacks) {
+            activeCallListChangedCallback.onTelecomCallRemoved(telecomCall);
         }
         telecomCall.unregisterCallback(mCallListener);
         super.onCallRemoved(telecomCall);
@@ -87,7 +123,7 @@ public class InCallServiceImpl extends InCallService {
         @Override
         public void onStateChanged(Call call, int state) {
             if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onStateChanged call: " + call + ", state: " + state );
+                Log.d(TAG, "onStateChanged call: " + call + ", state: " + state);
             }
 
             if (state == Call.STATE_RINGING || state == Call.STATE_DIALING) {
@@ -128,14 +164,27 @@ public class InCallServiceImpl extends InCallService {
         mCallbacks.remove(callback);
     }
 
+    public void addActiveCallListChangedCallback(ActiveCallListChangedCallback callback) {
+        mMainHanlder.post(() -> mActiveCallListChangedCallbacks.add(callback));
+    }
+
+    public void removeActiveCallListChangedCallback(ActiveCallListChangedCallback callback) {
+        mMainHanlder.post(() -> mActiveCallListChangedCallbacks.remove(callback));
+    }
+
+    @Deprecated
     interface Callback {
         void onTelecomCallAdded(Call telecomCall);
+
         void onTelecomCallRemoved(Call telecomCall);
+
         void onCallAudioStateChanged(CallAudioState audioState);
     }
 
-    class LocalBinder extends Binder {
-        InCallServiceImpl getService() {
+    public class LocalBinder extends Binder {
+        public InCallServiceImpl getService() {
+            // TODO: check whether the caller is from the same process instead of checking
+            // the Intent action in onBind().
             return InCallServiceImpl.this;
         }
     }

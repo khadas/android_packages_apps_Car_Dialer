@@ -66,9 +66,6 @@ public class UiCallManager {
     private static final List<Integer> sCallStateRank = new ArrayList<>();
     private static UiCallManager sUiCallManager;
 
-    // Used to assign id's to UiCall objects as they're created.
-    private static int nextCarPhoneCallId = 0;
-
     static {
         // States should be added from lowest rank to highest
         sCallStateRank.add(Call.STATE_DISCONNECTED);
@@ -506,43 +503,9 @@ public class UiCallManager {
             }
         }
 
-        UiCall uiCall = new UiCall(nextCarPhoneCallId++);
-        updateCallContainerFromTelecom(uiCall, telecomCall);
+        UiCall uiCall = UiCall.createFromTelecomCall(telecomCall);
         mCallMapping.put(uiCall, telecomCall);
         return uiCall;
-    }
-
-    private static void updateCallContainerFromTelecom(UiCall uiCall, Call telecomCall) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "updateCallContainerFromTelecom: call: " + uiCall + ", telecomCall: "
-                    + telecomCall);
-        }
-
-        uiCall.setState(telecomCall.getState());
-        uiCall.setHasChildren(!telecomCall.getChildren().isEmpty());
-        uiCall.setHasParent(telecomCall.getParent() != null);
-
-        Call.Details details = telecomCall.getDetails();
-        if (details == null) {
-            return;
-        }
-
-        uiCall.setConnectTimeMillis(details.getConnectTimeMillis());
-
-        DisconnectCause cause = details.getDisconnectCause();
-        uiCall.setDisconnectCause(cause == null ? null : cause.getLabel());
-
-        GatewayInfo gatewayInfo = details.getGatewayInfo();
-        uiCall.setGatewayInfoOriginalAddress(
-                gatewayInfo == null ? null : gatewayInfo.getOriginalAddress());
-
-        String number = "";
-        if (gatewayInfo != null) {
-            number = gatewayInfo.getOriginalAddress().getSchemeSpecificPart();
-        } else if (details.getHandle() != null) {
-            number = details.getHandle().getSchemeSpecificPart();
-        }
-        uiCall.setNumber(number);
     }
 
     private CallAudioState getCallAudioStateOrNull() {
@@ -772,7 +735,7 @@ public class UiCallManager {
             UiCallManager manager = mCarTelecomMangerRef.get();
             UiCall uiCall = mCallContainerRef.get();
             if (manager != null && uiCall != null) {
-                updateCallContainerFromTelecom(uiCall, telecomCall);
+                UiCall.updateFromTelecomCall(uiCall, telecomCall);
                 manager.onCallUpdated(uiCall);
             }
         }
