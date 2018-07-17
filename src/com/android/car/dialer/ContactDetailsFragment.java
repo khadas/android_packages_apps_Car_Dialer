@@ -28,11 +28,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.car.dialer.telecom.TelecomUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.car.util.ListItemBackgroundResolver;
@@ -43,6 +38,11 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.car.dialer.telecom.TelecomUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment that shows the name of the contact, the photo and all listed phone numbers. It is

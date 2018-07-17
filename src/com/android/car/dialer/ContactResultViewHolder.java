@@ -25,15 +25,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.car.util.ListItemBackgroundResolver;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.ui.CircleBitmapDrawable;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
-import androidx.annotation.Nullable;
-import androidx.car.util.ListItemBackgroundResolver;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A {@link androidx.recyclerview.widget.RecyclerView.ViewHolder} that will parse relevant

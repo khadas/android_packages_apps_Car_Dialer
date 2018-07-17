@@ -18,15 +18,15 @@ package com.android.car.dialer.ui.viewmodel;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.livedata.MissedCallHistoryLiveData;
 import com.android.car.dialer.ui.CallLogListingTask;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 /**
  * View model for CallHistoryFragment which provides call history live data.

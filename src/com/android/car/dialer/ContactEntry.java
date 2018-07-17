@@ -20,10 +20,10 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 
+import androidx.annotation.Nullable;
+
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
-
-import androidx.annotation.Nullable;
 
 /**
  * Encapsulates data about a phone Contact entry. Typically loaded from the local Contact store.

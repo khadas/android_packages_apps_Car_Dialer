@@ -26,14 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.car.dialer.ContactDetailsFragment;
-import com.android.car.dialer.R;
-import com.android.car.dialer.telecom.PhoneLoader;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.car.widget.AlphaJumpBucketer;
@@ -44,6 +36,14 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+
+import com.android.car.dialer.ContactDetailsFragment;
+import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.PhoneLoader;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Contact Fragment.

@@ -5,17 +5,17 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+
 import com.android.car.dialer.ContactEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
 
 /**
  * A singleton statically accessible helper class which pre-loads contacts list into memory so
