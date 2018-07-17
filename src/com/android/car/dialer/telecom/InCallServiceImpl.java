@@ -20,11 +20,13 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Process;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.InCallService;
 import android.telecom.TelecomManager;
-import android.util.Log;
+
+import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -34,10 +36,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * {@link UiCallManager}. For incoming calls it will launch Dialer app.
  */
 public class InCallServiceImpl extends InCallService {
-    private static final String TAG = "Em.InCallService";
+    private static final String TAG = "CD.InCallService";
 
     /** An action which indicates a bind is from local component. */
-    @Deprecated
     public static final String ACTION_LOCAL_BIND = "local_bind";
 
     private CopyOnWriteArrayList<Callback> mCallbacks = new CopyOnWriteArrayList<>();
@@ -74,9 +75,7 @@ public class InCallServiceImpl extends InCallService {
     @Override
     public void onCallAdded(Call telecomCall) {
         super.onCallAdded(telecomCall);
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "onCallAdded: " + telecomCall + ", state: " + telecomCall);
-        }
+        L.d(TAG, "onCallAdded: " + telecomCall + ", state: " + telecomCall);
 
         telecomCall.registerCallback(mCallListener);
         mCallListener.onStateChanged(telecomCall, telecomCall.getState());
@@ -93,9 +92,7 @@ public class InCallServiceImpl extends InCallService {
 
     @Override
     public void onCallRemoved(Call telecomCall) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "onCallRemoved: " + telecomCall);
-        }
+        L.d(TAG, "onCallRemoved: " + telecomCall);
         for (Callback callback : mCallbacks) {
             callback.onTelecomCallRemoved(telecomCall);
         }
@@ -110,10 +107,7 @@ public class InCallServiceImpl extends InCallService {
 
     @Override
     public IBinder onBind(Intent intent) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "onBind: " + intent);
-        }
-
+        L.d(TAG, "onBind: " + intent);
         return ACTION_LOCAL_BIND.equals(intent.getAction())
                 ? new LocalBinder()
                 : super.onBind(intent);
@@ -122,14 +116,10 @@ public class InCallServiceImpl extends InCallService {
     private final Call.Callback mCallListener = new Call.Callback() {
         @Override
         public void onStateChanged(Call call, int state) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onStateChanged call: " + call + ", state: " + state);
-            }
+            L.d(TAG, "onStateChanged call: " + call + ", state: " + state);
 
             if (state == Call.STATE_RINGING || state == Call.STATE_DIALING) {
-                if (Log.isLoggable(TAG, Log.INFO)) {
-                    Log.i(TAG, "Incoming/outgoing call: " + call);
-                }
+                L.i(TAG, "Incoming/outgoing call: " + call);
 
                 // TODO(b/25190782): here we should show heads-up notification for incoming call,
                 // however system notifications are disabled by System UI and we haven't implemented
@@ -143,9 +133,7 @@ public class InCallServiceImpl extends InCallService {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "onUnbind, intent: " + intent);
-        }
+        L.d(TAG, "onUnbind, intent: " + intent);
         return super.onUnbind(intent);
     }
 
@@ -181,11 +169,20 @@ public class InCallServiceImpl extends InCallService {
         void onCallAudioStateChanged(CallAudioState audioState);
     }
 
+    /**
+     * Local binder only available for Car Dialer package.
+     */
     public class LocalBinder extends Binder {
+
+        /**
+         * Returns a reference to {@link InCallServiceImpl}. Any process other than Dialer
+         * process won't be able to get a reference.
+         */
         public InCallServiceImpl getService() {
-            // TODO: check whether the caller is from the same process instead of checking
-            // the Intent action in onBind().
-            return InCallServiceImpl.this;
+            if (getCallingPid() == Process.myPid()) {
+                return InCallServiceImpl.this;
+            }
+            return null;
         }
     }
 }
