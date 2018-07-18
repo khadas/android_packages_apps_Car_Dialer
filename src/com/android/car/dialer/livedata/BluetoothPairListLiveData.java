@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 
 import java.util.Collections;
@@ -44,10 +45,12 @@ public class BluetoothPairListLiveData extends LiveData<Set<BluetoothDevice>> {
         }
     };
 
+    /** Creates a new {@link BluetoothPairListLiveData}. Call on main thread. */
+    @MainThread
     public BluetoothPairListLiveData(Context context) {
         mContext = context;
         mIntentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        postValue(Collections.emptySet());
+        setValue(Collections.emptySet());
     }
 
     @Override
