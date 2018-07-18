@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 
 /**
@@ -47,11 +48,13 @@ public class BluetoothHfpStateLiveData extends LiveData<Integer> {
         }
     };
 
+    /** Creates a new {@link BluetoothHfpStateLiveData}. Call on main thread. */
+    @MainThread
     public BluetoothHfpStateLiveData(Context context) {
         mContext = context;
         if (mBluetoothAdapter != null) {
             mIntentFilter.addAction(BluetoothHeadsetClient.ACTION_CONNECTION_STATE_CHANGED);
-            postValue(mBluetoothAdapter.getProfileConnectionState(
+            setValue(mBluetoothAdapter.getProfileConnectionState(
                     BluetoothProfile.HEADSET_CLIENT));
         }
     }

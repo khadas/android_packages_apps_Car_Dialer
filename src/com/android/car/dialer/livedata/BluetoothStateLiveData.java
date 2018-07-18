@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 
 /**
@@ -55,10 +56,12 @@ public class BluetoothStateLiveData extends LiveData<Integer> {
         }
     };
 
+    /** Creates a new {@link BluetoothStateLiveData}. Call on main thread. */
+    @MainThread
     public BluetoothStateLiveData(Context context) {
         mContext = context;
         mIntentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        postValue(BluetoothState.UNKNOWN);
+        setValue(BluetoothState.UNKNOWN);
     }
 
     @Override
