@@ -18,6 +18,8 @@
     <string name="phone_app_name">Phone</string>
     <!-- Full-screen error text for when the phone can not be used because Bluetooth isn't connected [CHAR LIMIT=NONE]-->
     <string name="no_hfp">To make or receive calls, connect your phone to your car via Bluetooth.</string>
+    <!-- Error text shown on the dialer facet when bluetooth is not supported -->
+    <string name="bluetooth_unavailable">Bluetooth is not available.</string>
     <!-- Error text shown on the dialer facet for when bluetooth is disabled -->
     <string name="bluetooth_disabled">To make or receive calls, turn Bluetooth on.</string>
     <!-- Error text shown on the dialer facet for when bluetooth is not paired -->

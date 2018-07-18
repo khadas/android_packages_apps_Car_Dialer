@@ -26,19 +26,23 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.car.drawer.CarDrawerActivity;
 import androidx.car.drawer.CarDrawerAdapter;
 import androidx.car.drawer.DrawerItemViewHolder;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.PhoneLoader;
+import com.android.car.dialer.telecom.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallHistoryFragment;
 import com.android.car.dialer.ui.ContactListFragment;
 import com.android.car.dialer.ui.InCallFragment;
+import com.android.car.dialer.ui.TelecomActivityViewModel;
+import com.android.car.dialer.ui.warning.NoHfpFragment;
 
 import java.util.stream.Stream;
 
@@ -53,16 +57,13 @@ import java.util.stream.Stream;
  * </ul>
  */
 public class TelecomActivity extends CarDrawerActivity implements CallListener {
-    private static final String TAG = "TelecomActivity";
+    private static final String TAG = "CD.TelecomActivity";
 
     private static final String ACTION_ANSWER_CALL = "com.android.car.dialer.ANSWER_CALL";
     private static final String ACTION_END_CALL = "com.android.car.dialer.END_CALL";
 
-    private static final String DIALER_BACKSTACK = "DialerBackstack";
     private static final String CONTENT_FRAGMENT_TAG = "CONTENT_FRAGMENT_TAG";
     private static final String DIALER_FRAGMENT_TAG = "DIALER_FRAGMENT_TAG";
-
-    private final UiBluetoothMonitor.Listener mBluetoothListener = this::updateCurrentFragment;
 
     private UiCallManager mUiCallManager;
     private UiBluetoothMonitor mUiBluetoothMonitor;
@@ -76,6 +77,8 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
      * {@link #onSaveInstanceState(Bundle)} that fragment commits are not allowed.
      */
     private boolean mAllowFragmentCommits = true;
+
+    private LiveData<String> mBluetoothErrorMsgLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         updateTitle();
 
         mUiCallManager = UiCallManager.init(getApplicationContext());
-        mUiBluetoothMonitor = new UiBluetoothMonitor(this);
+        mUiBluetoothMonitor = UiBluetoothMonitor.init(getApplicationContext());
 
         InMemoryPhoneBook.init(getApplicationContext());
 
@@ -99,6 +102,10 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
                 v -> startActivity(new Intent(this, ContactSearchActivity.class)));
 
         getDrawerController().setRootAdapter(new DialerRootAdapter());
+        TelecomActivityViewModel viewModel = ViewModelProviders.of(this).get(
+                TelecomActivityViewModel.class);
+        mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
+        mBluetoothErrorMsgLiveData.observe(this, errorMsg -> updateCurrentFragment());
     }
 
     @Override
@@ -117,7 +124,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
     protected void onStop() {
         super.onStop();
         mUiCallManager.removeListener(this);
-        mUiBluetoothMonitor.removeListener(mBluetoothListener);
     }
 
     @Override
@@ -151,7 +157,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         handleIntent();
 
         mUiCallManager.addListener(this);
-        mUiBluetoothMonitor.addListener(mBluetoothListener);
     }
 
     private void handleIntent() {
@@ -214,13 +219,8 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
             Log.d(TAG, "updateCurrentFragment()");
         }
 
-        boolean callEmpty = mUiCallManager.getCalls().isEmpty();
-        if (!mUiBluetoothMonitor.isBluetoothEnabled() && callEmpty) {
-            showNoHfpFragment(R.string.bluetooth_disabled);
-        } else if (!mUiBluetoothMonitor.isBluetoothPaired() && callEmpty) {
-            showNoHfpFragment(R.string.bluetooth_unpaired);
-        } else if (!mUiBluetoothMonitor.isHfpConnected() && callEmpty) {
-            showNoHfpFragment(R.string.no_hfp);
+        if (!mBluetoothErrorMsgLiveData.getValue().equals(TelecomActivityViewModel.NO_BT_ERROR) ) {
+            showNoHfpFragment(mBluetoothErrorMsgLiveData.getValue());
         } else {
             UiCall ongoingCall = mUiCallManager.getPrimaryCall();
 
@@ -309,27 +309,16 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         }
     }
 
-    private void showNoHfpFragment(@StringRes int stringResId) {
+    private void showNoHfpFragment(String errorMsg) {
         if (!mAllowFragmentCommits) {
             return;
         }
 
-        String errorMessage = getString(stringResId);
-        Fragment currentFragment = getCurrentFragment();
-
-        if (currentFragment instanceof NoHfpFragment) {
-            ((NoHfpFragment) currentFragment).setErrorMessage(errorMessage);
+        if (getCurrentFragment() instanceof NoHfpFragment) {
+            ((NoHfpFragment) getCurrentFragment()).setErrorMessage(errorMsg);
         } else {
-            setContentFragment(NoHfpFragment.newInstance(errorMessage));
+            setContentFragment(NoHfpFragment.newInstance(errorMsg));
         }
-    }
-
-    private void setContentFragmentWithSlideAndDelayAnimation(Fragment fragment) {
-        if (vdebug()) {
-            Log.d(TAG, "setContentFragmentWithSlideAndDelayAnimation, fragment: " + fragment);
-        }
-        setContentFragmentWithAnimations(fragment,
-                R.anim.telecom_slide_in_with_delay, R.anim.telecom_slide_out);
     }
 
     private void setContentFragmentWithFadeAnimation(Fragment fragment) {
