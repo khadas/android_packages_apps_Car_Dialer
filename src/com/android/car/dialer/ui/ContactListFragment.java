@@ -40,6 +40,7 @@ import androidx.loader.content.Loader;
 import com.android.car.dialer.ContactDetailsFragment;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.PhoneLoader;
+import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,7 +49,8 @@ import java.util.List;
 /**
  * Contact Fragment.
  */
-public class ContactListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+public class ContactListFragment extends DialerBaseFragment implements
+        LoaderManager.LoaderCallbacks<Cursor>,
         ContactListItemProvider.OnShowContactDetailListener {
     private static final int CONTACT_LOADER_ID = 1;
 

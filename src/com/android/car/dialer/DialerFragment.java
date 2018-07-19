@@ -27,12 +27,13 @@ import androidx.fragment.app.Fragment;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.DialerInfoController;
-import com.android.car.dialer.ui.DialpadFragment;
+import com.android.car.dialer.ui.common.DialpadFragment;
+import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 /**
  * Fragment that controls the dialpad.
  */
-public class DialerFragment extends Fragment implements DialpadFragment.DialpadCallback {
+public class DialerFragment extends DialerBaseFragment implements DialpadFragment.DialpadCallback {
     private static final String TAG = "Em.DialerFragment";
 
     private static final String DIAL_NUMBER_KEY = "DIAL_NUMBER_KEY";

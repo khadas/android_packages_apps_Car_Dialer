@@ -21,6 +21,8 @@ import android.content.CursorLoader;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,18 +34,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.car.widget.PagedListView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 /**
  * Contains a list of contacts. The call types can be any of the CALL_TYPE_* fields from
  * {@link PhoneLoader}.
  */
-public class StrequentsFragment extends Fragment {
+public class StrequentsFragment extends DialerBaseFragment {
     private static final String TAG = "Em.StrequentsFrag";
 
     private static final String KEY_MAX_CLICKS = "max_clicks";
@@ -141,7 +143,13 @@ public class StrequentsFragment extends Fragment {
         }
 
         mListView.getRecyclerView().setItemAnimator(null);
+
         return view;
+    }
+
+    @Override
+    protected Drawable getFullScreenBackgroundColor() {
+        return new ColorDrawable(getContext().getColor(R.color.phone_theme_secondary));
     }
 
     @Override
