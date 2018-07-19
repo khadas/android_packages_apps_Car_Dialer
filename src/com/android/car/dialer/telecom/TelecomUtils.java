@@ -29,8 +29,6 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.PhoneLookup;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
@@ -45,6 +43,9 @@ import com.android.car.dialer.ui.CircleBitmapDrawable;
 
 import java.io.InputStream;
 import java.util.Locale;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 
 public class TelecomUtils {
     private final static String TAG = "Em.TelecomUtils";

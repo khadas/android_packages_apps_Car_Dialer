@@ -15,12 +15,12 @@
  */
 package com.android.car.dialer;
 
-import com.android.car.dialer.telecom.TelecomUtils;
-
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+
+import com.android.car.dialer.telecom.TelecomUtils;
 
 import java.lang.ref.WeakReference;
 

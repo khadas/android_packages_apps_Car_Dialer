@@ -24,13 +24,14 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
-import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import androidx.annotation.IntDef;
 
 /**
  * Manages loading different types of call logs.
