@@ -21,89 +21,90 @@ import android.telecom.Call;
 import android.telecom.DisconnectCause;
 import android.telecom.GatewayInfo;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /**
  * Represents a single call on UI. It is an abstraction of {@code android.telecom.Call}.
+ *
+ * <p> Deprecated. Use CallDetailLiveData and CallStateLiveData instead.
  */
+@Deprecated
 public class UiCall {
-    /**
-     *  the next value of a monotonic increasing id.
-     */
-    private static int sNextCarPhoneCallId = 0;
-
-    private final int mId;
     private final Call mCall;
 
-    private int mState;
-    private boolean mHasParent;
-    private String mNumber;
-    private CharSequence mDisconnectCause;
-    private boolean mHasChildren;
-    private Uri mGatewayInfoOriginalAddress;
-    private long connectTimeMillis;
-
-    private UiCall(int id, Call call) {
-        mId = id;
+    public UiCall(@NonNull Call call) {
         mCall = call;
     }
 
-    public int getId() {
-        return mId;
-    }
-
+    /**
+     * @see Call#getState()
+     */
     public int getState() {
-        return mState;
+        return mCall.getState();
     }
 
-    public void setState(int state) {
-        mState = state;
-    }
-
+    /**
+     * Returns true if the current call has a parent call.
+     */
     public boolean hasParent() {
-        return mHasParent;
+        return mCall.getParent() != null;
     }
 
-    public void setHasParent(boolean hasParent) {
-        mHasParent = hasParent;
-    }
-
-    public void setHasChildren(boolean hasChildren) {
-        mHasChildren = hasChildren;
-    }
-
+    /**
+     * Returns true if the current call has a child call.
+     */
     public boolean hasChildren() {
-        return mHasChildren;
+        return !mCall.getChildren().isEmpty();
     }
 
+    /**
+     * Returns the phone number of this call.
+     */
     public String getNumber() {
-        return mNumber;
+        Call.Details details = mCall.getDetails();
+        GatewayInfo gatewayInfo = mCall.getDetails().getGatewayInfo();
+        String number;
+        if (gatewayInfo != null) {
+            number = gatewayInfo.getOriginalAddress().getSchemeSpecificPart();
+        } else if (details.getHandle() != null) {
+            number = details.getHandle().getSchemeSpecificPart();
+        } else {
+            number = "";
+        }
+        return number;
     }
 
-    public void setNumber(String number) {
-        mNumber = number;
-    }
-
+    /**
+     * Returns the disconnect reason.
+     */
+    @Nullable
     public CharSequence getDisconnectCause() {
-        return mDisconnectCause;
+        Call.Details details = mCall.getDetails();
+        DisconnectCause cause =
+                details == null ? null : details.getDisconnectCause();
+        return cause == null ? null : cause.getLabel();
     }
 
-    public void setDisconnectCause(CharSequence disconnectCause) {
-        mDisconnectCause = disconnectCause;
-    }
-
+    /**
+     * @see GatewayInfo#getOriginalAddress()
+     */
+    @Nullable
     public Uri getGatewayInfoOriginalAddress() {
-        return mGatewayInfoOriginalAddress;
+        GatewayInfo gatewayInfo = mCall.getDetails().getGatewayInfo();
+        return gatewayInfo == null ? null : gatewayInfo.getOriginalAddress();
     }
 
-    public void setGatewayInfoOriginalAddress(Uri gatewayInfoOriginalAddress) {
-        mGatewayInfoOriginalAddress = gatewayInfoOriginalAddress;
-    }
-
+    /**
+     * @see Call.Details#getConnectTimeMillis()
+     */
     public long getConnectTimeMillis() {
-        return connectTimeMillis;
-    }
-
-    public void setConnectTimeMillis(long connectTimeMillis) {
-        this.connectTimeMillis = connectTimeMillis;
+        Call.Details details = mCall.getDetails();
+        if (details != null) {
+            return details.getConnectTimeMillis();
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -113,46 +114,16 @@ public class UiCall {
         return mCall;
     }
 
-    /**
-     * Creates a UiCall from {@param telecomCall}.
-     *
-     * @returns an empty default {@link UiCall} if the given call doesn't contains any call details.
-     */
-    public static UiCall createFromTelecomCall(Call telecomCall) {
-        return updateFromTelecomCall(new UiCall(sNextCarPhoneCallId++, telecomCall), telecomCall);
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof UiCall) {
+            return mCall.equals(((UiCall) obj).mCall);
+        }
+        return false;
     }
 
-    /**
-     * Updates the uiCall with a {@link Call}.
-     */
-    // TODO: read states from telecomCall dynamically instead of read and set values before hand.
-    public static UiCall updateFromTelecomCall(UiCall uiCall, Call telecomCall) {
-        uiCall.setState(telecomCall.getState());
-        uiCall.setHasChildren(!telecomCall.getChildren().isEmpty());
-        uiCall.setHasParent(telecomCall.getParent() != null);
-
-        Call.Details details = telecomCall.getDetails();
-        if (details == null) {
-            return uiCall;
-        }
-
-        uiCall.setConnectTimeMillis(details.getConnectTimeMillis());
-
-        DisconnectCause cause = details.getDisconnectCause();
-        uiCall.setDisconnectCause(cause == null ? null : cause.getLabel());
-
-        GatewayInfo gatewayInfo = details.getGatewayInfo();
-        uiCall.setGatewayInfoOriginalAddress(
-                gatewayInfo == null ? null : gatewayInfo.getOriginalAddress());
-
-        String number = "";
-        if (gatewayInfo != null) {
-            number = gatewayInfo.getOriginalAddress().getSchemeSpecificPart();
-        } else if (details.getHandle() != null) {
-            number = details.getHandle().getSchemeSpecificPart();
-        }
-        uiCall.setNumber(number);
-
-        return uiCall;
+    @Override
+    public int hashCode() {
+        return mCall.hashCode();
     }
 }
