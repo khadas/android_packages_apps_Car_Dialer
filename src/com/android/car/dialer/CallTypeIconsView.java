@@ -125,7 +125,7 @@ public class CallTypeIconsView extends View {
             incoming = r.getDrawable(R.drawable.ic_call_received);
             outgoing = r.getDrawable(R.drawable.ic_call_made);
             missed = r.getDrawable(R.drawable.ic_call_missed);
-            voicemail = r.getDrawable(R.drawable.ic_call_voicemail);
+            voicemail = r.getDrawable(R.drawable.ic_voicemail);
             iconMargin = r.getDimensionPixelSize(R.dimen.call_log_icon_margin);
         }
     }

@@ -15,6 +15,8 @@
  */
 package com.android.car.dialer.ui;
 
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telecom.Call;
@@ -36,11 +38,12 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 /**
  * A fragment that displays information about an on-going call with options to hang up.
  */
-public class InCallFragment extends Fragment implements
+public class InCallFragment extends DialerBaseFragment implements
         OnGoingCallControllerBarFragment.OnGoingCallControllerBarCallback, CallListener {
 
     private Fragment mDialerFragment;
@@ -92,6 +95,11 @@ public class InCallFragment extends Fragment implements
                 .commit();
         mDialerFragmentContainer.setVisibility(View.GONE);
         mUserProfileContainerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected Drawable getFullScreenBackgroundColor() {
+        return new ColorDrawable(getContext().getColor(R.color.phone_theme_secondary));
     }
 
     private void bindUserProfileView(View container) {

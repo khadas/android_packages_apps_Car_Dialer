@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.common.DialerBaseFragment;
 
-public class RingingCallControllerBarFragment extends Fragment {
+public class RingingCallControllerBarFragment extends DialerBaseFragment {
 
     public static RingingCallControllerBarFragment newInstance() {
         return new RingingCallControllerBarFragment();

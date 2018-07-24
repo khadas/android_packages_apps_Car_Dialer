@@ -24,17 +24,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.car.widget.ListItemAdapter;
 import androidx.car.widget.PagedListView;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.PhoneLoader;
+import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.viewmodel.CallHistoryViewModel;
 
 import java.util.List;
 
-public class CallHistoryFragment extends Fragment {
+public class CallHistoryFragment extends DialerBaseFragment {
     public static final String CALL_TYPE_KEY = "CALL_TYPE_KEY";
 
     public static CallHistoryFragment newInstance(@PhoneLoader.CallType int callType) {
