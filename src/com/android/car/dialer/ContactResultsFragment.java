@@ -80,7 +80,6 @@ public class ContactResultsFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mContactResultList = view.findViewById(R.id.contact_result_list);
-        mContactResultList.setDayNightStyle(DayNightStyle.ALWAYS_LIGHT);
         mContactResultList.setAdapter(mAdapter);
 
         RecyclerView recyclerView = mContactResultList.getRecyclerView();
