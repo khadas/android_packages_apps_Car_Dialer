@@ -46,12 +46,20 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
         public final String mText;
         public final String mNumber;
         public final Bitmap mIcon;
+        public final int[] mCallTypes;
+        public final long mCallTimestamp;
 
-        public CallLogItem(String title, String text, String number, Bitmap icon) {
+        public CallLogItem(String title, String text, String number, Bitmap icon,
+                Integer[] callTypes, long timestamp) {
             mTitle = title;
             mText = text;
             mNumber = number;
             mIcon = icon;
+            mCallTypes = new int[callTypes.length];
+            for (int i = 0; i < callTypes.length; i++) {
+                mCallTypes[i] = callTypes[i];
+            }
+            mCallTimestamp = timestamp;
         }
     }
 
@@ -102,74 +110,76 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
                 DateUtils.FORMAT_ABBREV_RELATIVE) : null;
     }
 
+    // TODO: populate data field only instead of constructing UI related strings.
     @Override
     protected Void doInBackground(Void... voids) {
         if (mCursor != null) {
-            try {
-                int numberColumn = PhoneLoader.getNumberColumnIndex(mCursor);
-                int dateColumn = mCursor.getColumnIndex(CallLog.Calls.DATE);
+            int numberColumn = PhoneLoader.getNumberColumnIndex(mCursor);
+            int dateColumn = mCursor.getColumnIndex(CallLog.Calls.DATE);
+            int timestampColumn = mCursor.getColumnIndex(CallLog.Calls.DATE);
+            int typeColumn = mCursor.getColumnIndex(CallLog.Calls.TYPE);
 
+            while (mCursor.moveToNext()) {
+                int count = 1;
+                String number = mCursor.getString(numberColumn);
+                long timestamp = mCursor.getLong(timestampColumn);
+                // We want to group calls to the same number into one so seek
+                // forward as many
+                // entries as possible as long as the number is the same.
+                int position = mCursor.getPosition();
+                List<Integer> callTypeList = new ArrayList<>();
                 while (mCursor.moveToNext()) {
-                    int count = 1;
-                    String number = mCursor.getString(numberColumn);
-                    // We want to group calls to the same number into one so seek
-                    // forward as many
-                    // entries as possible as long as the number is the same.
-                    int position = mCursor.getPosition();
-                    while (mCursor.moveToNext()) {
-                        String nextNumber = mCursor.getString(numberColumn);
-                        if (PhoneNumberUtils.compare(mContext, number, nextNumber)) {
-                            count++;
-                        } else {
-                            break;
-                        }
-                    }
-
-                    mCursor.moveToPosition(position);
-
-                    boolean isVoicemail = PhoneNumberUtils.isVoiceMailNumber(number);
-                    ContactEntry contactEntry = InMemoryPhoneBook.get().lookupContactEntry(number);
-                    String nameWithCount = getContactName(
-                            contactEntry != null ? contactEntry.getDisplayName() : null,
-                            number,
-                            count,
-                            isVoicemail);
-
-                    // Not sure why this is the only column checked here but I'm
-                    // assuming this was to work around some bug on some device.
-                    long millis = dateColumn == -1 ? 0 : mCursor.getLong(dateColumn);
-
-                    StringBuffer secondaryTextStringBuilder = new StringBuffer();
-                    CharSequence relativeDate = getRelativeTime(millis);
-
-                    // Append the type (work, mobile etc.) if it isn't voicemail.
-                    if (!isVoicemail) {
-                        CharSequence type = contactEntry != null
-                                ? getTypeLabel(mContext.getResources(), contactEntry.getType(),
-                                contactEntry.getLabel())
-                                : "";
-                        secondaryTextStringBuilder.append(type);
-                        if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(relativeDate)) {
-                            secondaryTextStringBuilder.append(", ");
-                        }
-                    }
-                    // Add in the timestamp.
-                    if (relativeDate != null) {
-                        secondaryTextStringBuilder.append(relativeDate);
-                    }
-
-                    CallLogItem item = new CallLogItem(nameWithCount,
-                            secondaryTextStringBuilder.toString(),
-                            number, null);
-                    mItems.add(item);
-                    // Since we deduplicated count rows, we can move all the way to that row so the
-                    // next iteration takes us to the row following the last duplicate row.
-                    if (count > 1) {
-                        mCursor.moveToPosition(position + count - 1);
+                    String nextNumber = mCursor.getString(numberColumn);
+                    if (PhoneNumberUtils.compare(mContext, number, nextNumber)) {
+                        callTypeList.add(mCursor.getInt(typeColumn));
+                        count++;
+                    } else {
+                        break;
                     }
                 }
-            } finally {
-                mCursor.close();
+
+                mCursor.moveToPosition(position);
+
+                boolean isVoicemail = PhoneNumberUtils.isVoiceMailNumber(number);
+                ContactEntry contactEntry = InMemoryPhoneBook.get().lookupContactEntry(number);
+                String nameWithCount = getContactName(
+                        contactEntry != null ? contactEntry.getDisplayName() : null,
+                        number,
+                        count,
+                        isVoicemail);
+
+                // Not sure why this is the only column checked here but I'm
+                // assuming this was to work around some bug on some device.
+                long millis = dateColumn == -1 ? 0 : mCursor.getLong(dateColumn);
+
+                StringBuffer secondaryTextStringBuilder = new StringBuffer();
+                CharSequence relativeDate = getRelativeTime(millis);
+
+                // Append the type (work, mobile etc.) if it isn't voicemail.
+                if (!isVoicemail) {
+                    CharSequence type = contactEntry != null
+                            ? getTypeLabel(mContext.getResources(), contactEntry.getType(),
+                            contactEntry.getLabel())
+                            : "";
+                    secondaryTextStringBuilder.append(type);
+                    if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(relativeDate)) {
+                        secondaryTextStringBuilder.append(", ");
+                    }
+                }
+                // Add in the timestamp.
+                if (relativeDate != null) {
+                    secondaryTextStringBuilder.append(relativeDate);
+                }
+
+                CallLogItem item = new CallLogItem(nameWithCount,
+                        secondaryTextStringBuilder.toString(),
+                        number, null, callTypeList.toArray(new Integer[0]), timestamp);
+                mItems.add(item);
+                // Since we deduplicated count rows, we can move all the way to that row so the
+                // next iteration takes us to the row following the last duplicate row.
+                if (count > 1) {
+                    mCursor.moveToPosition(position + count - 1);
+                }
             }
         }
         return null;

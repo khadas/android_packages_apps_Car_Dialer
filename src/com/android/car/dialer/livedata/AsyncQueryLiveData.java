@@ -23,6 +23,7 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -32,7 +33,6 @@ import androidx.lifecycle.LiveData;
  * for changes, reloading if necessary.
  */
 public abstract class AsyncQueryLiveData<T> extends LiveData<T> {
-
     /**
      * Represents query parameters.
      */
@@ -76,12 +76,14 @@ public abstract class AsyncQueryLiveData<T> extends LiveData<T> {
     }
 
     /**
-     * Override this function to convert the loaded data.
+     * Override this function to convert the loaded data. This function is called on main thread.
      */
+    @MainThread
     protected abstract T convertToEntity(Cursor cursor);
 
     private void onCursorLoaded(Cursor cursor) {
         setValue(convertToEntity(cursor));
+        cursor.close();
     }
 
     private static class ObservableAsyncQuery extends AsyncQueryHandler {
@@ -113,8 +115,8 @@ public abstract class AsyncQueryLiveData<T> extends LiveData<T> {
 
         /**
          * @param queryParam Query arguments for the current query.
-         * @param cr        ContentResolver.
-         * @param listener  Listener which will be called when data is available.
+         * @param cr         ContentResolver.
+         * @param listener   Listener which will be called when data is available.
          */
         public ObservableAsyncQuery(@NonNull QueryParam queryParam, @NonNull ContentResolver cr,
                 @NonNull OnQueryFinishedListener listener) {
