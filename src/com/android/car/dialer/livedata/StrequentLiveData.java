@@ -19,13 +19,12 @@ package com.android.car.dialer.livedata;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.provider.ContactsContract;
 
 import androidx.lifecycle.LiveData;
-import androidx.loader.content.CursorLoader;
 
 import com.android.car.dialer.ContactEntry;
+import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,54 +35,39 @@ import java.util.Set;
 /**
  * Live data which loads call strequent list.
  */
-public class StrequentLiveData extends LiveData<List<ContactEntry>> {
+public class StrequentLiveData extends AsyncQueryLiveData<List<ContactEntry>> {
+    private final static Uri STREQUENT_URI =
+            ContactsContract.Contacts.CONTENT_STREQUENT_URI.buildUpon()
+                    .appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true")
+                    .appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES,
+                            "true").build();
+    private static StrequentLiveData sStrequentLiveData;
     private final Context mContext;
-    private CursorLoader mCursorLoader;
 
-    public StrequentLiveData(Context context) {
-        mContext = context;
-        mCursorLoader = newStrequentContactLoader(mContext);
-        mCursorLoader.registerListener(0 /* loader id */,
-                (loader, cursor) -> new StrequentCursorConversionTask().execute(cursor));
-    }
-
-    @Override
-    protected void onActive() {
-        super.onActive();
-        mCursorLoader.startLoading();
-    }
-
-    @Override
-    protected void onInactive() {
-        super.onInactive();
-        mCursorLoader.stopLoading();
-    }
-
-    private CursorLoader newStrequentContactLoader(Context context) {
-        Uri uri = ContactsContract.Contacts.CONTENT_STREQUENT_URI.buildUpon()
-                .appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true")
-                .appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true").build();
-
-        return new CursorLoader(context, uri, null, null, null, null);
-    }
-
-    private class StrequentCursorConversionTask extends AsyncTask<Cursor, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Cursor... cursors) {
-            Set<ContactEntry> entrySet = new HashSet<>();
-
-            Cursor cursor = cursors[0];
-            while (cursor.moveToNext()) {
-                ContactEntry entry = ContactEntry.fromCursor(cursor, mContext);
-                entrySet.add(entry);
-            }
-
-            List<ContactEntry> strequentContactEntries = new ArrayList<>(entrySet);
-            Collections.sort(strequentContactEntries);
-            postValue(strequentContactEntries);
-
-            return null;
+    public static StrequentLiveData getInstance(Context applicationContext) {
+        if (sStrequentLiveData == null) {
+            sStrequentLiveData = new StrequentLiveData(applicationContext,
+                    new QueryParam(STREQUENT_URI, null, null, null, null));
         }
+        return sStrequentLiveData;
+    }
+
+    private StrequentLiveData(Context context, QueryParam queryParam) {
+        super(context, queryParam);
+        mContext = context;
+    }
+
+    @Override
+    protected List<ContactEntry> convertToEntity(Cursor cursor) {
+        Set<ContactEntry> entrySet = new HashSet<>();
+
+        while (cursor.moveToNext()) {
+            ContactEntry entry = ContactEntry.fromCursor(cursor, mContext);
+            entrySet.add(entry);
+        }
+
+        List<ContactEntry> strequentContactEntries = new ArrayList<>(entrySet);
+        Collections.sort(strequentContactEntries);
+        return strequentContactEntries;
     }
 }

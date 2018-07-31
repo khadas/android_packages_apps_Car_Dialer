@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.PorterDuff;
-import android.os.Handler;
-import android.provider.CallLog;
+import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -31,88 +29,60 @@ import androidx.annotation.Nullable;
 import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.car.dialer.telecom.PhoneLoader;
+import com.android.car.dialer.CallLogViewHolder;
+import com.android.car.dialer.CallTypeIconsView;
+import com.android.car.dialer.ContactEntry;
+import com.android.car.dialer.R;
+import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
-import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.CallLogListingTask;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
- * Adapter class for populating Contact data as loaded from the DB to an AA GroupingRecyclerView.
- * It handles two types of contacts:
- * <p>
- * <ul>
- * <li>Strequent contacts (starred and/or frequent)
- * <li>Last call contact
- * </ul>
+ * Adapter class for binding strequent and last call.
  */
 public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
         implements PagedListView.ItemCap {
+    private static final String TAG = "CD.StrequentAdapter";
+
     // The possible view types in this adapter.
-    private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_LASTCALL = 1;
     private static final int VIEW_TYPE_STREQUENT = 2;
-    private static final long LAST_CALL_REFRESH_INTERVAL_MILLIS = 60 * 1000L;
 
     private final Context mContext;
-    private final UiCallManager mUiCallManager;
-    private List<ContactEntry> mData;
-    private Handler mMainThreadHandler = new Handler();
-
-    private LastCallData mLastCallData;
-    private Cursor mLastCallCursor;
-    private LastCallPeriodicalUpdater mLastCallPeriodicalUpdater = new LastCallPeriodicalUpdater();
-
-    private final ContentResolver mContentResolver;
+    private int mMaxItems = -1;
+    private List<ContactEntry> mStrequentList;
+    private CallLogListingTask.CallLogItem mLastCall;
+    private StrequentsListener<CallLogViewHolder> mStrequentsListener;
 
     public interface StrequentsListener<T> {
         /** Notified when a row corresponding an individual Contact (not group) was clicked. */
         void onContactClicked(T viewHolder);
     }
 
-    private View.OnFocusChangeListener mFocusChangeListener;
-    private StrequentsListener<CallLogViewHolder> mStrequentsListener;
-
-    private int mMaxItems = -1;
-    private boolean mIsEmpty;
-
-    public StrequentsAdapter(Context context, UiCallManager callManager) {
+    public StrequentsAdapter(Context context) {
         mContext = context;
-        mUiCallManager = callManager;
-        mContentResolver = context.getContentResolver();
     }
 
     public void setStrequentsListener(@Nullable StrequentsListener<CallLogViewHolder> listener) {
         mStrequentsListener = listener;
     }
 
-    public void setLastCallCursor(@Nullable Cursor cursor) {
-        mLastCallCursor = cursor;
-        mLastCallData = convertLastCallCursor(cursor);
-        if (cursor != null) {
-            mMainThreadHandler.postDelayed(mLastCallPeriodicalUpdater,
-                    LAST_CALL_REFRESH_INTERVAL_MILLIS);
+    /** Sets the last call.*/
+    public void setLastCall(CallLogListingTask.CallLogItem lastCall) {
+        L.i(TAG, "setLastCall " + lastCall);
+        if (mLastCall != null) {
+            notifyItemChanged(0);
         } else {
-            mMainThreadHandler.removeCallbacks(mLastCallPeriodicalUpdater);
+            notifyDataSetChanged();
         }
-
-        notifyDataSetChanged();
+        mLastCall = lastCall;
     }
 
-    public void setStrequentCursor(@Nullable Cursor cursor) {
-        if (cursor != null) {
-            setData(convertStrequentCursorToArray(cursor));
-        } else {
-            setData(null);
-        }
-        notifyDataSetChanged();
-    }
-
-    private void setData(List<ContactEntry> data) {
-        mData = data;
+    /** Sets the strequent list.*/
+    public void setStrequentList(List<ContactEntry> strequentList) {
+        mStrequentList = strequentList;
         notifyDataSetChanged();
     }
 
@@ -123,9 +93,7 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        if (mIsEmpty) {
-            return VIEW_TYPE_EMPTY;
-        } else if (position == 0 && mLastCallData != null) {
+        if (position == 0 && mLastCall != null) {
             return VIEW_TYPE_LASTCALL;
         } else {
             return VIEW_TYPE_STREQUENT;
@@ -134,36 +102,17 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
     @Override
     public int getItemCount() {
-        int itemCount = mData == null ? 0 : mData.size();
-        itemCount += mLastCallData == null ? 0 : 1;
-
-        mIsEmpty = itemCount == 0;
-
-        // If there is no data to display, add one to the item count to display the card in the
-        // empty state.
-        if (mIsEmpty) {
-            itemCount++;
-        }
+        int itemCount = mStrequentList == null ? 0 : mStrequentList.size();
+        itemCount += mLastCall == null ? 0 : 1;
 
         return mMaxItems >= 0 ? Math.min(mMaxItems, itemCount) : itemCount;
     }
 
     @Override
     public CallLogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        switch (viewType) {
-            case VIEW_TYPE_EMPTY:
-                view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.call_log_list_item_empty, parent, false);
-                return new CallLogViewHolder(view);
-
-            case VIEW_TYPE_LASTCALL:
-            case VIEW_TYPE_STREQUENT:
-            default:
-                view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.call_log_list_item_card, parent, false);
-                return new CallLogViewHolder(view);
-        }
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.call_log_list_item_card, parent, false);
+        return new CallLogViewHolder(view);
     }
 
     @Override
@@ -172,24 +121,17 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             case VIEW_TYPE_LASTCALL:
                 onBindLastCallRow(viewHolder);
                 break;
-
-            case VIEW_TYPE_EMPTY:
-                viewHolder.icon.setImageResource(R.drawable.ic_empty_speed_dial);
-                viewHolder.title.setText(R.string.speed_dial_empty);
-                viewHolder.title.setTextColor(mContext.getColor(R.color.car_body1_light));
-                break;
-
             case VIEW_TYPE_STREQUENT:
             default:
                 int positionIntoData = position;
 
                 // If there is last call data, then decrement the position so there is not an out of
                 // bounds error on the mData.
-                if (mLastCallData != null) {
+                if (mLastCall != null) {
                     positionIntoData--;
                 }
 
-                onBindView(viewHolder, mData.get(positionIntoData));
+                onBindStrequentView(viewHolder, mStrequentList.get(positionIntoData));
                 viewHolder.callType.setVisibility(View.VISIBLE);
         }
     }
@@ -201,33 +143,8 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     }
 
     @Override
-    public void onViewAttachedToWindow(CallLogViewHolder holder) {
-        if (mFocusChangeListener != null) {
-            holder.itemView.setOnFocusChangeListener(mFocusChangeListener);
-        }
-    }
-
-    @Override
     public void onViewDetachedFromWindow(CallLogViewHolder holder) {
         holder.itemView.setOnFocusChangeListener(null);
-    }
-
-    /**
-     * Converts the strequents data in the given cursor into a list of {@link ContactEntry}s.
-     */
-    private List<ContactEntry> convertStrequentCursorToArray(Cursor cursor) {
-        List<ContactEntry> strequentContactEntries = new ArrayList<>();
-        HashMap<Integer, ContactEntry> entryMap = new HashMap<>();
-        cursor.moveToPosition(-1);
-
-        while (cursor.moveToNext()) {
-            final ContactEntry entry = ContactEntry.fromCursor(cursor, mContext);
-            entryMap.put(entry.hashCode(), entry);
-        }
-
-        strequentContactEntries.addAll(entryMap.values());
-        Collections.sort(strequentContactEntries);
-        return strequentContactEntries;
     }
 
     /**
@@ -236,17 +153,18 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
      * @param viewHolder the view holder corresponding to this entry
      */
     private void onBindLastCallRow(final CallLogViewHolder viewHolder) {
-        if (mLastCallData == null) {
+        L.i(TAG, "onBindLastCallRow");
+        if (mLastCall == null) {
             return;
         }
 
         viewHolder.itemView.setOnClickListener(v -> onViewClicked(viewHolder));
 
-        String primaryText = mLastCallData.getPrimaryText();
-        String number = mLastCallData.getNumber();
+        String number = mLastCall.mNumber;
+        String primaryText = mLastCall.mTitle;
 
         if (!number.equals(viewHolder.itemView.getTag())) {
-            viewHolder.title.setText(mLastCallData.getPrimaryText());
+            viewHolder.title.setText(mLastCall.mTitle);
             viewHolder.itemView.setTag(number);
             viewHolder.callTypeIconsView.clear();
             viewHolder.callTypeIconsView.setVisibility(View.VISIBLE);
@@ -255,7 +173,7 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             // to add
             // call type icons for call history items.
             viewHolder.smallIcon.setVisibility(View.GONE);
-            int[] callTypes = mLastCallData.getCallTypes();
+            int[] callTypes = mLastCall.mCallTypes;
             int icons = Math.min(callTypes.length, CallTypeIconsView.MAX_CALL_TYPE_ICONS);
             for (int i = 0; i < icons; i++) {
                 viewHolder.callTypeIconsView.add(callTypes[i]);
@@ -264,54 +182,9 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, primaryText, number);
         }
 
-        viewHolder.text.setText(mLastCallData.getSecondaryText());
-    }
-
-    /**
-     * Converts the last call information in the given cursor into a {@link LastCallData} object
-     * so that the cursor can be closed.
-     *
-     * @return A valid {@link LastCallData} or {@code null} if the cursor is {@code null} or has no
-     * data in it.
-     */
-    @Nullable
-    public LastCallData convertLastCallCursor(@Nullable Cursor cursor) {
-        if (cursor == null || cursor.getCount() == 0) {
-            return null;
-        }
-
-        cursor.moveToFirst();
-
-        final StringBuilder nameSb = new StringBuilder();
-        int column = PhoneLoader.getNameColumnIndex(cursor);
-        String cachedName = cursor.getString(column);
-        final String number = PhoneLoader.getPhoneNumber(cursor, mContentResolver);
-        if (cachedName == null) {
-            cachedName = TelecomUtils.getDisplayName(mContext, number);
-        }
-
-        boolean isVoicemail = false;
-        if (cachedName == null) {
-            if (number.equals(TelecomUtils.getVoicemailNumber(mContext))) {
-                isVoicemail = true;
-                nameSb.append(mContext.getString(R.string.voicemail));
-            } else {
-                String displayName = TelecomUtils.getFormattedNumber(mContext, number);
-                if (TextUtils.isEmpty(displayName)) {
-                    displayName = mContext.getString(R.string.unknown);
-                }
-                nameSb.append(displayName);
-            }
-        } else {
-            nameSb.append(cachedName);
-        }
-        column = cursor.getColumnIndex(CallLog.Calls.DATE);
-        // If we set this to 0, getRelativeTime will return null and no relative time
-        // will be displayed.
-        long millis = column == -1 ? 0 : cursor.getLong(column);
         StringBuilder secondaryText = new StringBuilder();
-        CharSequence relativeDate = getRelativeTime(millis);
-        if (!isVoicemail) {
+        CharSequence relativeDate = getRelativeTime(mLastCall.mCallTimestamp);
+        if (!PhoneNumberUtils.isVoiceMailNumber(number)) {
             CharSequence type = TelecomUtils.getTypeFromNumber(mContext, number);
             secondaryText.append(type);
             if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(relativeDate)) {
@@ -322,22 +195,18 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
             secondaryText.append(relativeDate);
         }
 
-        int[] callTypes = mUiCallManager.getCallTypes(cursor, 1);
-
-        return new LastCallData(number, nameSb.toString(), secondaryText.toString(), callTypes);
+        viewHolder.text.setText(secondaryText.toString());
     }
 
     /**
      * Bind view function for frequent call row.
      */
-    private void onBindView(final CallLogViewHolder viewHolder, final ContactEntry entry) {
+    private void onBindStrequentView(final CallLogViewHolder viewHolder, final ContactEntry entry) {
         viewHolder.itemView.setOnClickListener(v -> onViewClicked(viewHolder));
 
         final String number = entry.getNumber();
-        // TODO: Why is being a voicemail related to not having a name?
-        boolean isVoicemail = entry.isVoicemail();
         String secondaryText = "";
-        if (!isVoicemail) {
+        if (!entry.isVoicemail()) {
             secondaryText = String.valueOf(TelecomUtils.getTypeFromNumber(mContext, number));
         }
 
@@ -358,7 +227,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
         } else {
             viewHolder.smallIcon.setVisibility(View.GONE);
         }
-
     }
 
     /**
@@ -373,49 +241,5 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
         return DateUtils.getRelativeTimeSpanString(millis, System.currentTimeMillis(),
                 DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE);
-    }
-
-    /**
-     * A container for data relating to a last call entry.
-     */
-    private class LastCallData {
-        private final String mNumber;
-        private final String mPrimaryText;
-        private final String mSecondaryText;
-        private final int[] mCallTypes;
-
-        LastCallData(String number, String primaryText, String secondaryText,
-                int[] callTypes) {
-            mNumber = number;
-            mPrimaryText = primaryText;
-            mSecondaryText = secondaryText;
-            mCallTypes = callTypes;
-        }
-
-        public String getNumber() {
-            return mNumber;
-        }
-
-        public String getPrimaryText() {
-            return mPrimaryText;
-        }
-
-        public String getSecondaryText() {
-            return mSecondaryText;
-        }
-
-        public int[] getCallTypes() {
-            return mCallTypes;
-        }
-    }
-
-    private class LastCallPeriodicalUpdater implements Runnable {
-
-        @Override
-        public void run() {
-            mLastCallData = convertLastCallCursor(mLastCallCursor);
-            notifyItemChanged(0);
-            mMainThreadHandler.postDelayed(this, LAST_CALL_REFRESH_INTERVAL_MILLIS);
-        }
     }
 }

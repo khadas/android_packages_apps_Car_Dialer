@@ -44,6 +44,7 @@ import com.android.car.dialer.ui.ContactListFragment;
 import com.android.car.dialer.ui.InCallFragment;
 import com.android.car.dialer.ui.TelecomActivityViewModel;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.strequent.StrequentsFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
 
 import java.util.stream.Stream;
