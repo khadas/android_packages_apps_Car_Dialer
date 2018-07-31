@@ -15,8 +15,6 @@
  */
 package com.android.car.dialer;
 
-import static com.android.car.dialer.ui.CallHistoryFragment.CALL_TYPE_KEY;
-
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -35,14 +33,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
-import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallHistoryFragment;
 import com.android.car.dialer.ui.ContactListFragment;
-import com.android.car.dialer.ui.activecall.InCallFragment;
 import com.android.car.dialer.ui.TelecomActivityViewModel;
+import com.android.car.dialer.ui.activecall.InCallFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.strequent.StrequentsFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
@@ -402,11 +399,10 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
     private class DialerRootAdapter extends CarDrawerAdapter {
         private static final int ITEM_FAVORITES = 0;
         private static final int ITEM_CALLLOG_ALL = 1;
-        private static final int ITEM_CALLLOG_MISSED = 2;
-        private static final int ITEM_CONTACT = 3;
-        private static final int ITEM_DIAL = 4;
+        private static final int ITEM_CONTACT = 2;
+        private static final int ITEM_DIAL = 3;
 
-        private static final int ITEM_COUNT = 5;
+        private static final int ITEM_COUNT = 4;
         private LiveData<String> mBluetoothError;
 
         DialerRootAdapter(LiveData<String> bluetoothErrorMsg) {
@@ -437,10 +433,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
                     textResId = R.string.calllog_all;
                     iconResId = R.drawable.ic_history;
                     break;
-                case ITEM_CALLLOG_MISSED:
-                    textResId = R.string.calllog_missed;
-                    iconResId = R.drawable.ic_call_missed;
-                    break;
                 case ITEM_FAVORITES:
                     textResId = R.string.calllog_favorites;
                     iconResId = R.drawable.ic_favorite;
@@ -467,10 +459,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
                     showDialer(/* dialNumber= */ null);
                     break;
                 case ITEM_CALLLOG_ALL:
-                    showCallHistory(PhoneLoader.CallType.CALL_TYPE_ALL);
-                    break;
-                case ITEM_CALLLOG_MISSED:
-                    showCallHistory(PhoneLoader.CallType.MISSED_TYPE);
+                    showCallHistory();
                     break;
                 case ITEM_FAVORITES:
                     showSpeedDialFragment();
@@ -485,8 +474,8 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
         }
     }
 
-    private void showCallHistory(@PhoneLoader.CallType int callType) {
-        setContentFragment(CallHistoryFragment.newInstance(callType));
+    private void showCallHistory() {
+        setContentFragment(CallHistoryFragment.newInstance());
     }
 
     private void showContact() {
@@ -503,14 +492,9 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
         int titleResId = R.string.phone_app_name;
 
         if (currentFragment instanceof StrequentsFragment) {
-            titleResId = R.string.contacts_title;
+            titleResId = R.string.favorites_title;
         } else if (currentFragment instanceof CallHistoryFragment) {
-            int callType = currentFragment.getArguments().getInt(CALL_TYPE_KEY);
-            if (callType == PhoneLoader.CallType.MISSED_TYPE) {
-                titleResId = R.string.missed_call_title;
-            } else {
-                titleResId = R.string.call_history_title;
-            }
+            titleResId = R.string.call_history_title;
         } else if (currentFragment instanceof ContactListFragment) {
             titleResId = R.string.contacts_title;
         } else if (currentFragment instanceof DialerFragment) {
