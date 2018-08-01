@@ -43,6 +43,7 @@ import androidx.annotation.WorkerThread;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.CallDetail;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -283,10 +284,12 @@ public class TelecomUtils {
      * "Mobile · 1:05"
      * "Bluetooth disconnected"
      */
-    public static String getCallInfoText(Context context, UiCall call, CharSequence label) {
+    public static String getCallInfoText(Context context, CallDetail callDetail, int callState,
+            String number) {
+        CharSequence label = TelecomUtils.getTypeFromNumber(context, number);
         String text;
-        if (call.getState() == Call.STATE_ACTIVE) {
-            long duration = System.currentTimeMillis() - call.getConnectTimeMillis();
+        if (callState == Call.STATE_ACTIVE) {
+            long duration = System.currentTimeMillis() - callDetail.getConnectTimeMillis();
             String durationString = DateUtils.formatElapsedTime(duration / 1000);
             if (!TextUtils.isEmpty(durationString) && !TextUtils.isEmpty(label)) {
                 text = context.getString(R.string.phone_label_with_info, label, durationString);
@@ -298,7 +301,7 @@ public class TelecomUtils {
                 text = "";
             }
         } else {
-            String state = callStateToUiString(context, call.getState());
+            String state = callStateToUiString(context, callState);
             if (!TextUtils.isEmpty(label)) {
                 text = context.getString(R.string.phone_label_with_info, label, state);
             } else {

@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer.ui;
+
+package com.android.car.dialer.ui.activecall;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telecom.Call;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,28 +30,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
-import com.android.car.dialer.CallListener;
 import com.android.car.dialer.DialerFragment;
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.CallDetail;
+import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
-import com.android.car.dialer.telecom.UiCall;
-import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 /**
  * A fragment that displays information about an on-going call with options to hang up.
  */
 public class InCallFragment extends DialerBaseFragment implements
-        OnGoingCallControllerBarFragment.OnGoingCallControllerBarCallback, CallListener {
+        OnGoingCallControllerBarFragment.OnGoingCallControllerBarCallback {
+    private static final String TAG = "CD.InCallFragment";
 
     private Fragment mDialerFragment;
     private View mUserProfileContainerView;
     private View mDialerFragmentContainer;
     private TextView mUserProfileBodyText;
-
-    private Handler mHandler = new Handler();
-    private CharSequence mCallInfoLabel;
 
     public static InCallFragment newInstance() {
         return new InCallFragment();
@@ -67,15 +64,12 @@ public class InCallFragment extends DialerBaseFragment implements
         mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.body);
         mDialerFragment = new DialerFragment();
 
-        updateControllerBarFragment(UiCallManager.get().getPrimaryCall().getState());
-        bindUserProfileView(fragmentView.findViewById(R.id.user_profile_container));
-        return fragmentView;
-    }
+        InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mHandler.removeCallbacks(mUpdateDurationRunnable);
+        inCallViewModel.getPrimaryCallDetail().observe(this, this::bindUserProfileView);
+        inCallViewModel.getPrimaryCallState().observe(this, this::updateControllerBarFragment);
+        inCallViewModel.getCallStateDescription().observe(this, this::updateBody);
+        return fragmentView;
     }
 
     @Override
@@ -102,24 +96,28 @@ public class InCallFragment extends DialerBaseFragment implements
         return new ColorDrawable(getContext().getColor(R.color.phone_theme_secondary));
     }
 
-    private void bindUserProfileView(View container) {
-        UiCall primaryCall = UiCallManager.get().getPrimaryCall();
-        if (primaryCall == null) {
+    private void bindUserProfileView(@Nullable CallDetail callDetail) {
+        L.i(TAG, "bindUserProfileView " + callDetail);
+        if (callDetail == null) {
             return;
         }
-        String number = primaryCall.getNumber();
-        String displayName = TelecomUtils.getDisplayName(getContext(), primaryCall);
 
-        TextView nameView = container.findViewById(R.id.title);
+        String number = callDetail.getNumber();
+        String displayName = TelecomUtils.getDisplayName(getContext(), number);
+
+        TextView nameView = mUserProfileContainerView.findViewById(R.id.title);
         nameView.setText(displayName);
 
-        ImageView avatar = container.findViewById(R.id.avatar);
+        ImageView avatar = mUserProfileContainerView.findViewById(R.id.avatar);
         TelecomUtils.setContactBitmapAsync(getContext(), avatar, displayName, number);
-
-        mCallInfoLabel = TelecomUtils.getTypeFromNumber(getContext(), primaryCall.getNumber());
     }
 
-    private void updateControllerBarFragment(int callState) {
+    private void updateControllerBarFragment(@Nullable Integer callState) {
+        L.i(TAG, "updateControllerBarFragment " + callState);
+        if (callState == null) {
+            return;
+        }
+
         Fragment controllerBarFragment;
         if (callState == Call.STATE_RINGING) {
             controllerBarFragment = RingingCallControllerBarFragment.newInstance();
@@ -132,63 +130,9 @@ public class InCallFragment extends DialerBaseFragment implements
                 .commit();
     }
 
-    @Override
-    public void onAudioStateChanged(boolean isMuted, int route, int supportedRouteMask) {
-
-    }
-
-    @Override
-    public void onCallStateChanged(UiCall call, int state) {
-        int callState = call.getState();
-        switch (callState) {
-            case Call.STATE_NEW:
-            case Call.STATE_CONNECTING:
-            case Call.STATE_DIALING:
-            case Call.STATE_SELECT_PHONE_ACCOUNT:
-            case Call.STATE_HOLDING:
-            case Call.STATE_DISCONNECTED:
-                mHandler.removeCallbacks(mUpdateDurationRunnable);
-                updateBody(call);
-                break;
-            case Call.STATE_ACTIVE:
-                mHandler.post(mUpdateDurationRunnable);
-                updateControllerBarFragment(call.getState());
-                break;
-        }
-    }
-
-    @Override
-    public void onCallUpdated(UiCall call) {
-
-    }
-
-    @Override
-    public void onCallAdded(UiCall call) {
-
-    }
-
-    @Override
-    public void onCallRemoved(UiCall call) {
-
-    }
-
-    private final Runnable mUpdateDurationRunnable = new Runnable() {
-        @Override
-        public void run() {
-            UiCall primaryCall = UiCallManager.get().getPrimaryCall();
-            if (primaryCall.getState() != Call.STATE_ACTIVE) {
-                return;
-            }
-            updateBody(primaryCall);
-            mHandler.postDelayed(this /* runnable */, DateUtils.SECOND_IN_MILLIS);
-        }
-    };
-
-    private void updateBody(UiCall primaryCall) {
-        String callInfoText = TelecomUtils.getCallInfoText(getContext(),
-                primaryCall, mCallInfoLabel);
-        mUserProfileBodyText.setText(callInfoText);
-        mUserProfileBodyText.setVisibility(
-                TextUtils.isEmpty(callInfoText) ? View.GONE : View.VISIBLE);
+    private void updateBody(String text) {
+        L.i(TAG, "updateBody " + text);
+        mUserProfileBodyText.setText(text);
+        mUserProfileBodyText.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
     }
 }
