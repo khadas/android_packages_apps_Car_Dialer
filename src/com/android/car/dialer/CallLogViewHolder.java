@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.dialer.ui.strequent.StrequentsAdapter;
+
 /**
  * A {@link androidx.recyclerview.widget.RecyclerView.ViewHolder} that will hold layouts that
  * are inflated by {@link StrequentsAdapter}.

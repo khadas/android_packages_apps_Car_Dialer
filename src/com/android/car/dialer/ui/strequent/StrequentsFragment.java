@@ -32,7 +32,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
-import com.android.car.dialer.StrequentsAdapter;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallLogListingTask;
