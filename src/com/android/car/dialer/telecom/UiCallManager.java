@@ -503,7 +503,7 @@ public class UiCallManager {
             }
         }
 
-        UiCall uiCall = UiCall.createFromTelecomCall(telecomCall);
+        UiCall uiCall = new UiCall(telecomCall);
         mCallMapping.put(uiCall, telecomCall);
         return uiCall;
     }
@@ -693,7 +693,6 @@ public class UiCallManager {
             UiCallManager manager = mCarTelecomMangerRef.get();
             UiCall call = mCallContainerRef.get();
             if (manager != null && call != null) {
-                call.setState(state);
                 manager.onStateChanged(call, state);
             }
         }
@@ -735,7 +734,6 @@ public class UiCallManager {
             UiCallManager manager = mCarTelecomMangerRef.get();
             UiCall uiCall = mCallContainerRef.get();
             if (manager != null && uiCall != null) {
-                UiCall.updateFromTelecomCall(uiCall, telecomCall);
                 manager.onCallUpdated(uiCall);
             }
         }

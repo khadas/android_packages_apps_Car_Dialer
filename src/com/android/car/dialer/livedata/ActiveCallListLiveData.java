@@ -25,27 +25,48 @@ import android.telecom.Call;
 
 import androidx.lifecycle.LiveData;
 
+import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.InCallServiceImpl;
-import com.android.car.dialer.telecom.UiCall;
+
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Monitors the change of active call list.
  */
-public class ActiveCallListLiveData extends LiveData<List<UiCall>> implements
+public class ActiveCallListLiveData extends LiveData<List<Call>> implements
         InCallServiceImpl.ActiveCallListChangedCallback {
+    private static final String TAG = "CD.ActiveCallsLD";
+
+    /**
+     * The rank of call state. Used for sorting active calls. Rank is listed from lowest to
+     * highest
+     */
+    private static final List<Integer> CALL_STATE_RANK = Lists.newArrayList(
+            Call.STATE_DISCONNECTED,
+            Call.STATE_DISCONNECTING,
+            Call.STATE_NEW,
+            Call.STATE_CONNECTING,
+            Call.STATE_SELECT_PHONE_ACCOUNT,
+            Call.STATE_HOLDING,
+            Call.STATE_ACTIVE,
+            Call.STATE_DIALING,
+            Call.STATE_RINGING);
 
     private Context mContext;
     private Intent mServiceIntent;
     private InCallServiceImpl mInCallService;
-    private List<UiCall> mUiCalls = new ArrayList<>();
+    private List<Call> mCalls = new ArrayList<>();
 
     private ServiceConnection mInCallServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
+            L.i(TAG, "onServiceConnected " + name);
             mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
             mInCallService.addActiveCallListChangedCallback(ActiveCallListLiveData.this);
             updateActiveCallList();
@@ -59,6 +80,7 @@ public class ActiveCallListLiveData extends LiveData<List<UiCall>> implements
 
     public ActiveCallListLiveData(Context context) {
         mContext = context;
+        setValue(Collections.emptyList());
         mServiceIntent = new Intent(mContext, InCallServiceImpl.class);
         mServiceIntent.setAction(InCallServiceImpl.ACTION_LOCAL_BIND);
     }
@@ -76,22 +98,35 @@ public class ActiveCallListLiveData extends LiveData<List<UiCall>> implements
 
     @Override
     public void onTelecomCallAdded(Call telecomCall) {
+        L.i(TAG, "onTelecomCallAdded " + telecomCall);
         updateActiveCallList();
-        setValue(mUiCalls);
     }
 
     @Override
     public void onTelecomCallRemoved(Call telecomCall) {
+        L.i(TAG, "onTelecomCallRemoved " + telecomCall);
         updateActiveCallList();
-        setValue(mUiCalls);
     }
 
     private void updateActiveCallList() {
-        mUiCalls.clear();
-        if (mInCallService != null) {
-            for (Call call : mInCallService.getCalls()) {
-                mUiCalls.add(UiCall.createFromTelecomCall(call));
-            }
-        }
+        mCalls.clear();
+        mCalls.addAll(mInCallService.getCalls());
+        mCalls.sort(mCallComparator);
+        setValue(mCalls);
     }
+
+    private Comparator<Call> mCallComparator = (call, otherCall) -> {
+        boolean callHasParent = call.getParent() != null;
+        boolean otherCallHasParent = otherCall.getParent() != null;
+
+        if (callHasParent && !otherCallHasParent) {
+            return 1;
+        } else if (!callHasParent && otherCallHasParent) {
+            return -1;
+        }
+        int carCallRank = CALL_STATE_RANK.indexOf(call.getState());
+        int otherCarCallRank = CALL_STATE_RANK.indexOf(otherCall.getState());
+
+        return otherCarCallRank - carCallRank;
+    };
 }
