@@ -34,7 +34,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
-import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallHistoryFragment;
 import com.android.car.dialer.ui.ContactListFragment;
@@ -43,8 +42,6 @@ import com.android.car.dialer.ui.activecall.InCallFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.strequent.StrequentsFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
-
-import java.util.stream.Stream;
 
 /**
  * Main activity for the Dialer app. Displays different fragments depending on call and
@@ -56,7 +53,7 @@ import java.util.stream.Stream;
  * <li>StrequentFragment
  * </ul>
  */
-public class TelecomActivity extends CarDrawerActivity implements CallListener,
+public class TelecomActivity extends CarDrawerActivity implements
         DialerBaseFragment.DialerFragmentParent {
     private static final String TAG = "CD.TelecomActivity";
 
@@ -77,6 +74,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
     private boolean mAllowFragmentCommits = true;
 
     private LiveData<String> mBluetoothErrorMsgLiveData;
+    private LiveData<Boolean> mHasOngoingCallLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +99,9 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
         mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
         mBluetoothErrorMsgLiveData.observe(this, errorMsg -> updateCurrentFragment());
 
+        mHasOngoingCallLiveData = viewModel.hasOngoingCall();
+        mHasOngoingCallLiveData.observe(this, hasOngoingCall -> updateCurrentFragment());
+
         getDrawerController().setRootAdapter(new DialerRootAdapter(mBluetoothErrorMsgLiveData));
     }
 
@@ -114,12 +115,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
         InMemoryPhoneBook.tearDown();
         mUiCallManager.tearDown();
         mUiCallManager = null;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mUiCallManager.removeListener(this);
     }
 
     @Override
@@ -151,10 +146,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
         // handleIntent() is not overridden by updateCurrentFragment().
         updateCurrentFragment();
         handleIntent();
-
-        mUiCallManager.addListener(this);
     }
-
 
     @Override
     public void setBackground(Drawable background) {
@@ -201,18 +193,15 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
         if (!mBluetoothErrorMsgLiveData.getValue().equals(TelecomActivityViewModel.NO_BT_ERROR)) {
             showNoHfpFragment(mBluetoothErrorMsgLiveData.getValue());
         } else {
-            UiCall ongoingCall = mUiCallManager.getPrimaryCall();
+            boolean hasOngoingCall = mHasOngoingCallLiveData.getValue() != null
+                    ? mHasOngoingCallLiveData.getValue()
+                    : false;
 
-            if (vdebug()) {
-                Log.d(TAG, "ongoingCall: " + ongoingCall + ", mCurrentFragment: "
-                        + getCurrentFragment());
-            }
-
-            if (ongoingCall == null && getCurrentFragment() instanceof InCallFragment) {
+            if (!hasOngoingCall && getCurrentFragment() instanceof InCallFragment) {
                 showSpeedDialFragment();
-            } else if (ongoingCall != null) {
+            } else if (hasOngoingCall) {
                 showOngoingCallFragment();
-            } else {
+            } else if (getCurrentFragment() == null) {
                 showSpeedDialFragment();
             }
         }
@@ -335,65 +324,6 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
 
     private static boolean vdebug() {
         return Log.isLoggable(TAG, Log.DEBUG);
-    }
-
-    @Override
-    public void onAudioStateChanged(boolean isMuted, int route, int supportedRouteMask) {
-        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
-                .onAudioStateChanged(isMuted, route, supportedRouteMask));
-    }
-
-    @Override
-    public void onCallStateChanged(UiCall call, int state) {
-        if (vdebug()) {
-            Log.d(TAG, "onCallStateChanged");
-        }
-        updateCurrentFragment();
-
-        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
-                .onCallStateChanged(call, state));
-    }
-
-    @Override
-    public void onCallUpdated(UiCall call) {
-        if (vdebug()) {
-            Log.d(TAG, "onCallUpdated");
-        }
-        updateCurrentFragment();
-
-        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
-                .onCallUpdated(call));
-    }
-
-    @Override
-    public void onCallAdded(UiCall call) {
-        if (vdebug()) {
-            Log.d(TAG, "onCallAdded");
-        }
-        updateCurrentFragment();
-
-        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
-                .onCallAdded(call));
-    }
-
-    @Override
-    public void onCallRemoved(UiCall call) {
-        if (vdebug()) {
-            Log.d(TAG, "onCallRemoved");
-        }
-        updateCurrentFragment();
-
-        fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
-                .onCallRemoved(call));
-    }
-
-    private static boolean shouldPropagateCallback(Fragment fragment) {
-        return fragment instanceof CallListener && fragment.isAdded();
-    }
-
-    private Stream<Fragment> fragmentsToPropagateCallback() {
-        return getSupportFragmentManager().getFragments().stream()
-                .filter(fragment -> shouldPropagateCallback(fragment));
     }
 
     private class DialerRootAdapter extends CarDrawerAdapter {
