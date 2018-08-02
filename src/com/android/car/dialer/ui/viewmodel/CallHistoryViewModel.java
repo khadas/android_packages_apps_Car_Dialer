@@ -23,7 +23,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.android.car.dialer.livedata.CallHistoryLiveData;
-import com.android.car.dialer.livedata.MissedCallHistoryLiveData;
 import com.android.car.dialer.ui.CallLogListingTask;
 
 import java.util.List;
@@ -33,7 +32,6 @@ import java.util.List;
  */
 public class CallHistoryViewModel extends AndroidViewModel {
     private CallHistoryLiveData mCallHistoryLiveData;
-    private MissedCallHistoryLiveData mMissedCallHistoryLiveData;
 
     private Context mContext;
 
@@ -43,18 +41,13 @@ public class CallHistoryViewModel extends AndroidViewModel {
         mContext = application;
     }
 
+    /**
+     * Returns the live data for call history list.
+     */
     public LiveData<List<CallLogListingTask.CallLogItem>> getCallHistory() {
         if (mCallHistoryLiveData == null) {
             mCallHistoryLiveData = new CallHistoryLiveData(mContext);
         }
         return mCallHistoryLiveData;
-    }
-
-    public LiveData<List<CallLogListingTask.CallLogItem>> getMissedCallHistory() {
-        if (mMissedCallHistoryLiveData == null) {
-            mMissedCallHistoryLiveData = new MissedCallHistoryLiveData(mContext);
-        }
-
-        return mMissedCallHistoryLiveData;
     }
 }
