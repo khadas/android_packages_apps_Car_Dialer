@@ -83,8 +83,6 @@
 
     <!-- Menu label for the call history [CHAR LIMIT=30] -->
     <string name="calllog_all">Call History</string>
-    <!-- Menu label for the missed call history [CHAR LIMIT=30] -->
-    <string name="calllog_missed">Missed</string>
     <!-- Menu label for the favorites [CHAR LIMIT=30] -->
     <string name="calllog_favorites">Favorites</string>
     <!-- Menu label for dial a number [CHAR LIMIT=30] -->
@@ -100,8 +98,6 @@
     <string name="favorites_title">Favorites</string>
     <!-- Title for the call history [CHAR LIMIT=30] -->
     <string name="call_history_title">Call History</string>
-    <!-- Title for the missed call history [CHAR LIMIT=30] -->
-    <string name="missed_call_title">Missed</string>
     <!-- Title for the contacts [CHAR LIMIT=30] -->
     <string name="contacts_title">Contacts</string>
     <!-- Title for the dialpad [CHAR LIMIT=30] -->

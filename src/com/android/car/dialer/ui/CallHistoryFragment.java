@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer.ui;
 
 import android.os.Bundle;
@@ -24,25 +25,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.car.widget.ListItemAdapter;
 import androidx.car.widget.PagedListView;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.viewmodel.CallHistoryViewModel;
 
-import java.util.List;
-
 public class CallHistoryFragment extends DialerBaseFragment {
-    public static final String CALL_TYPE_KEY = "CALL_TYPE_KEY";
-
-    public static CallHistoryFragment newInstance(@PhoneLoader.CallType int callType) {
-        CallHistoryFragment fragment = new CallHistoryFragment();
-        Bundle arg = new Bundle();
-        arg.putInt(CALL_TYPE_KEY, callType);
-        fragment.setArguments(arg);
-        return fragment;
+    public static CallHistoryFragment newInstance() {
+        return new CallHistoryFragment();
     }
 
     @Nullable
@@ -55,26 +46,15 @@ public class CallHistoryFragment extends DialerBaseFragment {
         ListItemAdapter adapter = new ListItemAdapter(getContext(), callHistoryListItemProvider);
         pagedListView.setAdapter(adapter);
 
-        int callType = getArguments().getInt(CALL_TYPE_KEY);
-
         CallHistoryViewModel viewModel = ViewModelProviders.of(this).get(
                 CallHistoryViewModel.class);
 
-        LiveData<List<CallLogListingTask.CallLogItem>> liveData = null;
-        if (callType == PhoneLoader.CallType.CALL_TYPE_ALL) {
-            liveData = viewModel.getCallHistory();
-        } else if (callType == PhoneLoader.CallType.MISSED_TYPE) {
-            liveData = viewModel.getMissedCallHistory();
-        }
-
-        if (liveData != null) {
-            liveData.observe(this,
-                    callHistoryItems -> {
-                        callHistoryListItemProvider.setCallHistoryListItems(getContext(),
-                                callHistoryItems);
-                        adapter.notifyDataSetChanged();
-                    });
-        }
+        viewModel.getCallHistory().observe(this,
+                callHistoryItems -> {
+                    callHistoryListItemProvider.setCallHistoryListItems(getContext(),
+                            callHistoryItems);
+                    adapter.notifyDataSetChanged();
+                });
 
         return fragmentView;
     }
