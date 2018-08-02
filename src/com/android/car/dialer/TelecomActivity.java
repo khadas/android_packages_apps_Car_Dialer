@@ -453,10 +453,10 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener,
                     Log.wtf(TAG, "Unexpected position: " + position);
                     return;
             }
-            holder.getTitle().setText(textResId);
+            holder.getTitleView().setText(textResId);
             Drawable drawable = getDrawable(iconResId);
             drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-            holder.getIcon().setImageDrawable(drawable);
+            holder.getIconView().setImageDrawable(drawable);
         }
 
         @Override
