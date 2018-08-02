@@ -31,19 +31,14 @@ import android.provider.CallLog;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.CallAudioState.CallAudioRoute;
-import android.telecom.DisconnectCause;
-import android.telecom.GatewayInfo;
-import android.telecom.InCallService;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.car.dialer.CallListener;
 import com.android.car.dialer.R;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -51,7 +46,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The entry point for all interactions between UI and telecom.
@@ -87,7 +81,6 @@ public class UiCallManager {
     private InCallServiceImpl mInCallService;
     private BluetoothHeadsetClient mBluetoothHeadsetClient;
     private final Map<UiCall, Call> mCallMapping = new HashMap<>();
-    private final List<CallListener> mCallListeners = new CopyOnWriteArrayList<>();
 
     /**
      * Initialized a globally accessible {@link UiCallManager} which can be retrieved by
@@ -156,13 +149,6 @@ public class UiCallManager {
             }
             mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
             mInCallService.registerCallback(mInCallServiceCallback);
-
-            // The InCallServiceImpl could be bound when we already have some active calls, let's
-            // notify UI about these calls.
-            for (Call telecomCall : mInCallService.getCalls()) {
-                UiCall uiCall = doTelecomCallAdded(telecomCall);
-                onStateChanged(uiCall, uiCall.getState());
-            }
         }
 
         @Override
@@ -187,7 +173,6 @@ public class UiCallManager {
 
                     @Override
                     public void onCallAudioStateChanged(CallAudioState audioState) {
-                        doCallAudioStateChanged(audioState);
                     }
                 };
     };
@@ -206,20 +191,6 @@ public class UiCallManager {
         // Clear out the mContext reference to avoid memory leak.
         mContext = null;
         sUiCallManager = null;
-    }
-
-    public void addListener(CallListener listener) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "addListener: " + listener);
-        }
-        mCallListeners.add(listener);
-    }
-
-    public void removeListener(CallListener listener) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "removeListener: " + listener);
-        }
-        mCallListeners.remove(listener);
     }
 
     protected void placeCall(String number) {
@@ -448,52 +419,11 @@ public class UiCallManager {
 
     private UiCall doTelecomCallAdded(final Call telecomCall) {
         Log.d(TAG, "doTelecomCallAdded: " + telecomCall);
-
-        UiCall uiCall = getOrCreateCallContainer(telecomCall);
-        telecomCall.registerCallback(new TelecomCallListener(this, uiCall));
-        for (CallListener listener : mCallListeners) {
-            listener.onCallAdded(uiCall);
-        }
-        Log.d(TAG, "Call backs registered");
-
-        if (telecomCall.getState() == Call.STATE_SELECT_PHONE_ACCOUNT) {
-            // TODO(b/26189994): need to show Phone Account picker to let user choose a phone
-            // account. It should be an account from TelecomManager#getCallCapablePhoneAccounts
-            // list.
-            Log.w(TAG, "Need to select phone account for the given call: " + telecomCall + ", "
-                    + "but this feature is not implemented yet.");
-            telecomCall.disconnect();
-        }
-        return uiCall;
+        return getOrCreateCallContainer(telecomCall);
     }
 
     private void doTelecomCallRemoved(Call telecomCall) {
-        UiCall uiCall = getOrCreateCallContainer(telecomCall);
-
-        mCallMapping.remove(uiCall);
-
-        for (CallListener listener : mCallListeners) {
-            listener.onCallRemoved(uiCall);
-        }
-    }
-
-    private void doCallAudioStateChanged(CallAudioState audioState) {
-        for (CallListener listener : mCallListeners) {
-            listener.onAudioStateChanged(audioState.isMuted(), audioState.getRoute(),
-                    audioState.getSupportedRouteMask());
-        }
-    }
-
-    private void onStateChanged(UiCall uiCall, int state) {
-        for (CallListener listener : mCallListeners) {
-            listener.onCallStateChanged(uiCall, state);
-        }
-    }
-
-    private void onCallUpdated(UiCall uiCall) {
-        for (CallListener listener : mCallListeners) {
-            listener.onCallUpdated(uiCall);
-        }
+        mCallMapping.remove(getOrCreateCallContainer(telecomCall));
     }
 
     private UiCall getOrCreateCallContainer(Call telecomCall) {
@@ -628,37 +558,6 @@ public class UiCallManager {
         safePlaceCall(voicemailNumber, false);
     }
 
-    /**
-     * Returns the call types for the given number of items in the cursor.
-     * <p/>
-     * It uses the next {@code count} rows in the cursor to extract the types.
-     * <p/>
-     * Its position in the cursor is unchanged by this function.
-     */
-    public int[] getCallTypes(Cursor cursor, int count) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "getCallTypes: cursor: " + cursor + ", count: " + count);
-        }
-
-        int position = cursor.getPosition();
-        int[] callTypes = new int[count];
-        String voicemailNumber = mTelephonyManager.getVoiceMailNumber();
-        int column;
-        for (int index = 0; index < count; ++index) {
-            column = cursor.getColumnIndex(CallLog.Calls.NUMBER);
-            String phoneNumber = cursor.getString(column);
-            if (phoneNumber != null && phoneNumber.equals(voicemailNumber)) {
-                callTypes[index] = PhoneLoader.VOICEMAIL_TYPE;
-            } else {
-                column = cursor.getColumnIndex(CallLog.Calls.TYPE);
-                callTypes[index] = cursor.getInt(column);
-            }
-            cursor.moveToNext();
-        }
-        cursor.moveToPosition(position);
-        return callTypes;
-    }
-
     private static Comparator<UiCall> getCallComparator() {
         return new Comparator<UiCall>() {
             @Override
@@ -674,68 +573,5 @@ public class UiCallManager {
                 return otherCarCallRank - carCallRank;
             }
         };
-    }
-
-    private static class TelecomCallListener extends Call.Callback {
-        private final WeakReference<UiCallManager> mCarTelecomMangerRef;
-        private final WeakReference<UiCall> mCallContainerRef;
-
-        TelecomCallListener(UiCallManager carTelecomManager, UiCall uiCall) {
-            mCarTelecomMangerRef = new WeakReference<>(carTelecomManager);
-            mCallContainerRef = new WeakReference<>(uiCall);
-        }
-
-        @Override
-        public void onStateChanged(Call telecomCall, int state) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onStateChanged: " + state);
-            }
-            UiCallManager manager = mCarTelecomMangerRef.get();
-            UiCall call = mCallContainerRef.get();
-            if (manager != null && call != null) {
-                manager.onStateChanged(call, state);
-            }
-        }
-
-        @Override
-        public void onParentChanged(Call telecomCall, Call parent) {
-            doCallUpdated(telecomCall);
-        }
-
-        @Override
-        public void onCallDestroyed(Call telecomCall) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onCallDestroyed");
-            }
-        }
-
-        @Override
-        public void onDetailsChanged(Call telecomCall, Call.Details details) {
-            doCallUpdated(telecomCall);
-        }
-
-        @Override
-        public void onVideoCallChanged(Call telecomCall, InCallService.VideoCall videoCall) {
-            doCallUpdated(telecomCall);
-        }
-
-        @Override
-        public void onCannedTextResponsesLoaded(Call telecomCall,
-                List<String> cannedTextResponses) {
-            doCallUpdated(telecomCall);
-        }
-
-        @Override
-        public void onChildrenChanged(Call telecomCall, List<Call> children) {
-            doCallUpdated(telecomCall);
-        }
-
-        private void doCallUpdated(Call telecomCall) {
-            UiCallManager manager = mCarTelecomMangerRef.get();
-            UiCall uiCall = mCallContainerRef.get();
-            if (manager != null && uiCall != null) {
-                manager.onCallUpdated(uiCall);
-            }
-        }
     }
 }
