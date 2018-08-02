@@ -16,49 +16,24 @@
 
 package com.android.car.dialer.livedata;
 
-import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.database.ContentObserver;
 import android.database.Cursor;
-import android.net.Uri;
 
 import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+
+import com.android.car.dialer.common.ObservableAsyncQuery;
 
 /**
  * Asynchronously queries a {@link ContentResolver} for a given query and observes the loaded data
  * for changes, reloading if necessary.
  */
 public abstract class AsyncQueryLiveData<T> extends LiveData<T> {
-    /**
-     * Represents query parameters.
-     */
-    public static class QueryParam {
-        final Uri mUri;
-        final String[] mProjection;
-        final String mSelection;
-        final String[] mSelectionArgs;
-        final String mOrderBy;
-
-        public QueryParam(@NonNull Uri uri,
-                @Nullable String[] projection,
-                @Nullable String selection,
-                @Nullable String[] selectionArgs,
-                @Nullable String orderBy) {
-            mUri = uri;
-            mProjection = projection;
-            mSelection = selection;
-            mSelectionArgs = selectionArgs;
-            mOrderBy = orderBy;
-        }
-    }
 
     private ObservableAsyncQuery mObservableAsyncQuery;
 
-    public AsyncQueryLiveData(Context context, QueryParam queryParam) {
+    public AsyncQueryLiveData(Context context, ObservableAsyncQuery.QueryParam queryParam) {
         mObservableAsyncQuery = new ObservableAsyncQuery(queryParam,
                 context.getContentResolver(), this::onCursorLoaded);
     }
@@ -84,87 +59,5 @@ public abstract class AsyncQueryLiveData<T> extends LiveData<T> {
     private void onCursorLoaded(Cursor cursor) {
         setValue(convertToEntity(cursor));
         cursor.close();
-    }
-
-    private static class ObservableAsyncQuery extends AsyncQueryHandler {
-        private static final int QUERY_TOKEN = 0;
-
-        /**
-         * Called when query is finished.
-         */
-        interface OnQueryFinishedListener {
-            /**
-             * Called when the query is finished loading. This callbacks will also be called if data
-             * changed.
-             *
-             * <p>Called on main thread.
-             */
-            void onQueryFinished(Cursor cursor);
-        }
-
-        private QueryParam mQueryParam;
-        private Cursor mCurrentCursor;
-        private OnQueryFinishedListener mOnQueryFinishedListener;
-        private ContentObserver mContentObserver = new ContentObserver(this) {
-            @Override
-            public void onChange(boolean selfChange) {
-                super.onChange(selfChange);
-                startQuery();
-            }
-        };
-
-        /**
-         * @param queryParam Query arguments for the current query.
-         * @param cr         ContentResolver.
-         * @param listener   Listener which will be called when data is available.
-         */
-        public ObservableAsyncQuery(@NonNull QueryParam queryParam, @NonNull ContentResolver cr,
-                @NonNull OnQueryFinishedListener listener) {
-            super(cr);
-            mQueryParam = queryParam;
-            mOnQueryFinishedListener = listener;
-        }
-
-        /**
-         * Starts the query and stops any pending query.
-         */
-        void startQuery() {
-            cancelOperation(QUERY_TOKEN);
-            startQuery(QUERY_TOKEN, null,
-                    mQueryParam.mUri,
-                    mQueryParam.mProjection,
-                    mQueryParam.mSelection,
-                    mQueryParam.mSelectionArgs,
-                    mQueryParam.mOrderBy);
-        }
-
-        /**
-         * Stops any pending query and also stops listening on the data set change.
-         */
-        void stopQuery() {
-            if (mCurrentCursor != null) {
-                mCurrentCursor.unregisterContentObserver(mContentObserver);
-            }
-            closeCurrentCursorIfNecessary();
-            mCurrentCursor = null;
-            cancelOperation(QUERY_TOKEN);
-        }
-
-        @Override
-        protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
-            super.onQueryComplete(token, cookie, cursor);
-            cursor.registerContentObserver(mContentObserver);
-            closeCurrentCursorIfNecessary();
-            mCurrentCursor = cursor;
-            if (mOnQueryFinishedListener != null) {
-                mOnQueryFinishedListener.onQueryFinished(cursor);
-            }
-        }
-
-        private void closeCurrentCursorIfNecessary() {
-            if (mCurrentCursor != null && !mCurrentCursor.isClosed()) {
-                mCurrentCursor.close();
-            }
-        }
     }
 }

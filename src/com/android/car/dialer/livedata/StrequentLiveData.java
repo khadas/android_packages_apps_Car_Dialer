@@ -24,6 +24,7 @@ import android.provider.ContactsContract;
 import androidx.lifecycle.LiveData;
 
 import com.android.car.dialer.ContactEntry;
+import com.android.car.dialer.common.ObservableAsyncQuery;
 import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
@@ -47,12 +48,12 @@ public class StrequentLiveData extends AsyncQueryLiveData<List<ContactEntry>> {
     public static StrequentLiveData getInstance(Context applicationContext) {
         if (sStrequentLiveData == null) {
             sStrequentLiveData = new StrequentLiveData(applicationContext,
-                    new QueryParam(STREQUENT_URI, null, null, null, null));
+                    new ObservableAsyncQuery.QueryParam(STREQUENT_URI, null, null, null, null));
         }
         return sStrequentLiveData;
     }
 
-    private StrequentLiveData(Context context, QueryParam queryParam) {
+    private StrequentLiveData(Context context, ObservableAsyncQuery.QueryParam queryParam) {
         super(context, queryParam);
         mContext = context;
     }

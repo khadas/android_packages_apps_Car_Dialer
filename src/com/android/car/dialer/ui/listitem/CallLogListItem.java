@@ -19,8 +19,8 @@ import android.content.Context;
 
 import androidx.car.widget.TextListItem;
 
-import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.CallHistoryListItemProvider;
@@ -43,9 +43,9 @@ public class CallLogListItem extends TextListItem {
     @Override
     public void onBind(ViewHolder viewHolder) {
         super.onBind(viewHolder);
-        ContactEntry contactEntry = InMemoryPhoneBook.get().lookupContactEntry(
+        Contact contact = InMemoryPhoneBook.get().lookupContactEntry(
                 mCallLogItem.mNumber);
-        String displayName = contactEntry != null ? contactEntry.getDisplayName() : null;
+        String displayName = contact != null ? contact.getDisplayName() : null;
         TelecomUtils.setContactBitmapAsync(mContext, viewHolder.getPrimaryIcon(),
                 displayName, mCallLogItem.mNumber);
 
