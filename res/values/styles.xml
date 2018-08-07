@@ -22,8 +22,8 @@
 
     <style name="TextAppearance.Car.Key2" >
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/car_body5_size</item>
-        <item name="android:textColor">@color/car_body4</item>
+        <item name="android:textSize">@dimen/car_subtext4_size</item>
+        <item name="android:textColor">@color/car_subtext4</item>
     </style>
 
     <!-- Phone -->
@@ -59,7 +59,7 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/keyboard_key_letter_height</item>
-        <item name="android:textColor">@color/car_headline1</item>
+        <item name="android:textColor">@color/car_display3</item>
     </style>
 
     <style name="NoHfpText" parent="TextAppearance.Car.Body2">

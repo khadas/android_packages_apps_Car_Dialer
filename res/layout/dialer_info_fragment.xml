@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/TextAppearance.Car.Headline2"
+        android:textAppearance="@style/TextAppearance.Car.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/car_padding_4"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/body"
-        style="@style/TextAppearance.Car.Body1"
+        android:textAppearance="@style/TextAppearance.Car.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/car_padding_4"
