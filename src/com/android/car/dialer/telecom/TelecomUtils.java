@@ -44,6 +44,7 @@ import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.CallDetail;
+import com.android.car.dialer.entity.Contact;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -360,16 +361,16 @@ public class TelecomUtils {
     public static void setContactBitmapAsync(Context context,
             final ImageView icon, final @Nullable String name, final String number) {
         Resources r = icon.getResources();
-        ContactEntry contactEntry = InMemoryPhoneBook.get().lookupContactEntry(number);
+        Contact contact = InMemoryPhoneBook.get().lookupContactEntry(number);
         LetterTileDrawable letterTileDrawable = new LetterTileDrawable(r);
         letterTileDrawable.setContactDetails(name, number);
         letterTileDrawable.setIsCircular(true);
-        if (contactEntry != null) {
+        if (contact != null) {
             Uri uri = null;
-            if (contactEntry.getAvatarThumbnailUri() != null) {
-                uri = Uri.parse(contactEntry.getAvatarThumbnailUri());
-            } else if (contactEntry.getAvatarUri() != null) {
-                uri = Uri.parse(contactEntry.getAvatarUri());
+            if (contact.getAvatarThumbnailUri() != null) {
+                uri = contact.getAvatarThumbnailUri();
+            } else if (contact.getAvatarUri() != null) {
+                uri = contact.getAvatarUri();
             }
 
             Glide.with(context)

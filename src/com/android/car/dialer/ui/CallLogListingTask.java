@@ -28,8 +28,9 @@ import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
 
-import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.Contact;
+import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
@@ -141,9 +142,9 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
                 mCursor.moveToPosition(position);
 
                 boolean isVoicemail = PhoneNumberUtils.isVoiceMailNumber(number);
-                ContactEntry contactEntry = InMemoryPhoneBook.get().lookupContactEntry(number);
+                Contact contact = InMemoryPhoneBook.get().lookupContactEntry(number);
                 String nameWithCount = getContactName(
-                        contactEntry != null ? contactEntry.getDisplayName() : null,
+                        contact != null ? contact.getDisplayName() : null,
                         number,
                         count,
                         isVoicemail);
@@ -157,9 +158,11 @@ public class CallLogListingTask extends AsyncTask<Void, Void, Void> {
 
                 // Append the type (work, mobile etc.) if it isn't voicemail.
                 if (!isVoicemail) {
-                    CharSequence type = contactEntry != null
-                            ? getTypeLabel(mContext.getResources(), contactEntry.getType(),
-                            contactEntry.getLabel())
+                    PhoneNumber phoneNumber = contact != null ? contact.getPhoneNumber(number)
+                            : null;
+                    CharSequence type = phoneNumber != null
+                            ? getTypeLabel(mContext.getResources(), phoneNumber.getType(),
+                            phoneNumber.getLabel())
                             : "";
                     secondaryTextStringBuilder.append(type);
                     if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(relativeDate)) {

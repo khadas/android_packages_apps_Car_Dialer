@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
+import android.telephony.PhoneNumberUtils;
 
 import androidx.annotation.Nullable;
 
@@ -187,5 +188,19 @@ public class Contact {
             mPhoneNumbers.addAll(contact.getNumbers());
         }
         return this;
+    }
+
+    /**
+     * Looks up a {@link PhoneNumber} of this contact for the given phone number. Returns {@code
+     * null} if this contact doesn't contain the given phone number.
+     */
+    @Nullable
+    public PhoneNumber getPhoneNumber(String number) {
+        for (PhoneNumber phoneNumber : mPhoneNumbers) {
+            if (PhoneNumberUtils.compare(phoneNumber.getNumber(), number)) {
+                return phoneNumber;
+            }
+        }
+        return null;
     }
 }

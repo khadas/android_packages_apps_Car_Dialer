@@ -5,35 +5,41 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.ContactEntry;
+import com.android.car.dialer.common.ObservableAsyncQuery;
+import com.android.car.dialer.entity.Contact;
+import com.android.car.dialer.entity.PhoneNumber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A singleton statically accessible helper class which pre-loads contacts list into memory so
  * that they can be accessed more easily and quickly.
  */
-public class InMemoryPhoneBook implements Loader.OnLoadCompleteListener<Cursor> {
+public class InMemoryPhoneBook {
     private static InMemoryPhoneBook sInMemoryPhoneBook;
 
     private final Context mContext;
 
     private boolean mIsLoaded = false;
-    private List<ContactEntry> mContactEntries = new ArrayList<>();
-    Map<Integer, List<ContactEntry>> mIdToContactEntryMap;
+
+    private ObservableAsyncQuery mObservableAsyncQuery;
+    private List<Contact> mContacts = new ArrayList<>();
+    private MutableLiveData<List<Contact>> mContactsLiveData = new MutableLiveData<>();
 
     private InMemoryPhoneBook(Context context) {
         mContext = context;
     }
 
+    /**
+     * Initialize the globally accessible {@link InMemoryPhoneBook}.
+     */
     public static InMemoryPhoneBook init(Context context) {
         if (sInMemoryPhoneBook == null) {
             sInMemoryPhoneBook = new InMemoryPhoneBook(context);
@@ -52,14 +58,29 @@ public class InMemoryPhoneBook implements Loader.OnLoadCompleteListener<Cursor> 
         }
     }
 
+    /**
+     * Tears down the globally accessible {@link InMemoryPhoneBook}.
+     */
     public static void tearDown() {
+        sInMemoryPhoneBook.mObservableAsyncQuery.stopQuery();
         sInMemoryPhoneBook = null;
     }
 
     private void onInit() {
-        CursorLoader cursorLoader = createPhoneBookCursorLoader();
-        cursorLoader.registerListener(0, this);
-        cursorLoader.startLoading();
+        String selection = ContactsContract.Data.MIMETYPE + " = ?";
+        String[] selectionArgs = new String[1];
+        selectionArgs[0] = ContactsContract.CommonDataKinds.Phone
+                .CONTENT_ITEM_TYPE;
+        ObservableAsyncQuery.QueryParam contactListQueryParam = new ObservableAsyncQuery.QueryParam(
+                ContactsContract.Data.CONTENT_URI,
+                null,
+                selection,
+                selectionArgs,
+                ContactsContract.Contacts.DISPLAY_NAME + " ASC ");
+
+        mObservableAsyncQuery = new ObservableAsyncQuery(contactListQueryParam,
+                mContext.getContentResolver(), this::onDataLoaded);
+        mObservableAsyncQuery.startQuery();
     }
 
     public boolean isLoaded() {
@@ -67,56 +88,48 @@ public class InMemoryPhoneBook implements Loader.OnLoadCompleteListener<Cursor> 
     }
 
     /**
-     * Returns a alphabetically sorted contact list.
+     * Returns a {@link LiveData} which monitors the contact list changes.
      */
-    public List<ContactEntry> getOrderedContactEntries() {
-        return mContactEntries;
+    public LiveData<List<Contact>> getContactsLiveData() {
+        return mContactsLiveData;
     }
 
+    /**
+     * Looks up a {@link Contact} by the given phone number. Returns null if can't find a Contact or
+     * the {@link InMemoryPhoneBook} is still loading.
+     */
     @Nullable
-    public ContactEntry lookupContactEntry(String phoneNumber) {
-        for (ContactEntry contactEntry : mContactEntries) {
-            if (PhoneNumberUtils.compare(mContext, phoneNumber, contactEntry.getNumber())) {
-                return contactEntry;
+    public Contact lookupContactEntry(String phoneNumber) {
+        if (!isLoaded()) {
+            return null;
+        }
+
+        for (Contact contact : mContacts) {
+            for (PhoneNumber number : contact.getNumbers()) {
+                if (PhoneNumberUtils.compare(mContext, phoneNumber, number.getNumber())) {
+                    return contact;
+                }
             }
         }
         return null;
     }
 
-    public Map<Integer, List<ContactEntry>> getIdToContactEntryMap() {
-        if (mIdToContactEntryMap == null) {
-            mIdToContactEntryMap = new HashMap<>();
-            for (ContactEntry contactEntry : mContactEntries) {
-                List<ContactEntry> list;
-                if (mIdToContactEntryMap.containsKey(contactEntry.getId())) {
-                    list = mIdToContactEntryMap.get(contactEntry.getId());
-                } else {
-                    list = new ArrayList<>();
-                }
-                list.add(contactEntry);
-            }
-        }
-        return mIdToContactEntryMap;
-    }
-
-    @Override
-    public void onLoadComplete(@NonNull Loader<Cursor> loader, @Nullable Cursor cursor) {
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                mContactEntries.add(ContactEntry.fromCursor(cursor, mContext));
+    private void onDataLoaded(Cursor cursor) {
+        HashMap<String, Contact> result = new HashMap<>();
+        while (cursor.moveToNext()) {
+            Contact contact = Contact.fromCursor(cursor);
+            String lookupKey = contact.getLookupKey();
+            if (result.containsKey(lookupKey)) {
+                Contact existingContact = result.get(lookupKey);
+                existingContact.merge(contact);
+            } else {
+                result.put(lookupKey, contact);
             }
         }
         mIsLoaded = true;
-    }
-
-    private CursorLoader createPhoneBookCursorLoader() {
-        return new CursorLoader(mContext,
-                ContactsContract.Data.CONTENT_URI,
-                null,
-                ContactsContract.Data.MIMETYPE + " = '"
-                        + ContactsContract.CommonDataKinds.Phone
-                        .CONTENT_ITEM_TYPE + "'",
-                null,
-                ContactsContract.Contacts.DISPLAY_NAME + " ASC ");
+        mContacts.clear();
+        mContacts.addAll(result.values());
+        mContactsLiveData.setValue(mContacts);
+        cursor.close();
     }
 }
