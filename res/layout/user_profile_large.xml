@@ -24,7 +24,7 @@ limitations under the License.
         android:scaleType="fitCenter" />
     <TextView
         android:id="@+id/title"
-        style="@style/TextAppearance.Car.Headline2"
+        android:textAppearance="@style/TextAppearance.Car.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/car_padding_3"
@@ -33,7 +33,7 @@ limitations under the License.
         android:gravity="center"/>
     <TextView
         android:id="@+id/body"
-        style="@style/TextAppearance.Car.Body2"
+        android:textAppearance="@style/TextAppearance.Car.Body3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/car_padding_3"
