@@ -36,6 +36,11 @@ public class DialerBaseFragment extends Fragment {
 
         /** Sets the background drawable*/
         void setBackground(Drawable background);
+
+        /**
+         * Sets the visibility of action bar.
+         */
+        void setActionBarVisibility(boolean isVisible);
     }
 
     @Override
@@ -51,6 +56,26 @@ public class DialerBaseFragment extends Fragment {
         Activity parentActivity = getActivity();
         if (parentActivity instanceof DialerFragmentParent) {
             ((DialerFragmentParent) parentActivity).setBackground(getFullScreenBackgroundColor());
+        }
+    }
+
+    /**
+     * Hides the action bar of its parent Activity.
+     */
+    protected void hideActionBar() {
+        Activity parentActivity = getActivity();
+        if (parentActivity instanceof DialerFragmentParent) {
+            ((DialerFragmentParent) parentActivity).setActionBarVisibility(false);
+        }
+    }
+
+    /**
+     * Shows the action bar of its parent Activity.
+     */
+    protected void showActionBar() {
+        Activity parentActivity = getActivity();
+        if (parentActivity instanceof DialerFragmentParent) {
+            ((DialerFragmentParent) parentActivity).setActionBarVisibility(true);
         }
     }
 

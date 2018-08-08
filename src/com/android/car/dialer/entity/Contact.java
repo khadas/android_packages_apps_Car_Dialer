@@ -26,7 +26,9 @@ import androidx.annotation.Nullable;
 
 import com.android.car.dialer.log.L;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -166,8 +168,11 @@ public class Contact {
         return mAvatarThumbnailUri;
     }
 
-    public Set<PhoneNumber> getNumbers() {
-        return mPhoneNumbers;
+    /**
+     * Returns a copy of all phone numbers associated with this contact.
+     */
+    public List<PhoneNumber> getNumbers() {
+        return new ArrayList<>(mPhoneNumbers);
     }
 
     public boolean isStarred() {

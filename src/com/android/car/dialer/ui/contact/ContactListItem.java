@@ -13,34 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer.ui.listitem;
+package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
 
 import androidx.car.widget.TextListItem;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.Contact;
+import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.telecom.TelecomUtils;
-import com.android.car.dialer.ui.ContactListFragment;
 
 /**
  * ListItem for contact.
  */
 public class ContactListItem extends TextListItem {
     private Context mContext;
-    private ContactListFragment.ContactItem mContactItem;
+    private Contact mContact;
 
-    public ContactListItem(Context context, ContactListFragment.ContactItem contactItem) {
+    public ContactListItem(Context context, Contact contact) {
         super(context);
         mContext = context;
-        mContactItem = contactItem;
+        mContact = contact;
     }
 
     @Override
     public void onBind(ViewHolder viewHolder) {
         super.onBind(viewHolder);
+        String firstPhoneNumberString =
+                mContact.getNumbers().isEmpty() ? "" : mContact.getNumbers().get(0).getNumber();
         TelecomUtils.setContactBitmapAsync(mContext, viewHolder.getPrimaryIcon(),
-                mContactItem.mDisplayName, mContactItem.mNumber);
+                mContact.getDisplayName(), firstPhoneNumberString);
         viewHolder.getContainerLayout().setBackgroundColor(
                 mContext.getColor(R.color.contact_list_item_color));
     }
