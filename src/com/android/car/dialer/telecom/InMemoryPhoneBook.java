@@ -9,14 +9,14 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.common.ObservableAsyncQuery;
 import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.entity.PhoneNumber;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A singleton statically accessible helper class which pre-loads contacts list into memory so
@@ -115,7 +115,7 @@ public class InMemoryPhoneBook {
     }
 
     private void onDataLoaded(Cursor cursor) {
-        HashMap<String, Contact> result = new HashMap<>();
+        Map<String, Contact> result = new LinkedHashMap<>();
         while (cursor.moveToNext()) {
             Contact contact = Contact.fromCursor(cursor);
             String lookupKey = contact.getLookupKey();

@@ -24,6 +24,7 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.car.drawer.CarDrawerActivity;
 import androidx.car.drawer.CarDrawerAdapter;
 import androidx.car.drawer.DrawerItemViewHolder;
@@ -36,7 +37,7 @@ import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.CallHistoryFragment;
-import com.android.car.dialer.ui.ContactListFragment;
+import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.TelecomActivityViewModel;
 import com.android.car.dialer.ui.activecall.InCallFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
@@ -151,6 +152,18 @@ public class TelecomActivity extends CarDrawerActivity implements
     @Override
     public void setBackground(Drawable background) {
         findViewById(android.R.id.content).setBackground(background);
+    }
+
+    @Override
+    public void setActionBarVisibility(boolean isVisible) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            if (isVisible) {
+                actionBar.show();
+            } else {
+                actionBar.hide();
+            }
+        }
     }
 
     private void handleIntent() {
