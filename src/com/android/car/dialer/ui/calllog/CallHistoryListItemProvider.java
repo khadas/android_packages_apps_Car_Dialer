@@ -16,7 +16,6 @@
 package com.android.car.dialer.ui.calllog;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 
 import androidx.car.widget.ListItem;
 import androidx.car.widget.ListItemProvider;
@@ -48,7 +47,7 @@ public class CallHistoryListItemProvider extends ListItemProvider {
             callLogListItem.setTitle(callLogItem.getTitle());
             callLogListItem.setBody(callLogItem.getText());
             callLogListItem.setOnClickListener(
-                    (v) -> UiCallManager.get().safePlaceCall(callLogItem.getNumber(), false));
+                    (v) -> UiCallManager.get().placeCall(callLogItem.getNumber()));
 
             mItems.add(callLogListItem);
         }

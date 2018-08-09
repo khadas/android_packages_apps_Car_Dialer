@@ -42,7 +42,6 @@ import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
-import com.android.car.dialer.ui.search.ContactSearchActivity;
 import com.android.car.dialer.ui.strequent.StrequentsFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
 
@@ -184,7 +183,7 @@ public class TelecomActivity extends CarDrawerActivity implements
 
             case Intent.ACTION_CALL:
                 number = PhoneNumberUtils.getNumberFromIntent(intent, this);
-                mUiCallManager.safePlaceCall(number, false /* bluetoothRequired */);
+                mUiCallManager.placeCall(number);
                 break;
 
             default:

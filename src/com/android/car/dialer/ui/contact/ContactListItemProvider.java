@@ -17,7 +17,6 @@
 package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
 import androidx.car.widget.ListItem;
@@ -60,8 +59,8 @@ public class ContactListItemProvider extends ListItemProvider {
                     (v) -> {
                         // TODO: create visual different between these two case.
                         if (contact.getNumbers().size() == 1) {
-                            UiCallManager.get().safePlaceCall(
-                                    contact.getNumbers().get(0).getNumber(), true);
+                            UiCallManager.get().placeCall(
+                                    contact.getNumbers().get(0).getNumber());
                         } else {
                             mOnShowContactDetailListener.onShowContactDetail(contact.getId(),
                                     contact.getLookupKey());
