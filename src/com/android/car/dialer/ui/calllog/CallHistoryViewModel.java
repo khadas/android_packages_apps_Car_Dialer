@@ -1,4 +1,3 @@
-package com.android.car.dialer.ui.viewmodel;
 /*
  * Copyright (C) 2018 The Android Open Source Project
  *
@@ -15,15 +14,20 @@ package com.android.car.dialer.ui.viewmodel;
  * limitations under the License.
  */
 
+package com.android.car.dialer.ui.calllog;
+
 import android.app.Application;
-import android.content.Context;
+import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.android.car.dialer.livedata.CallHistoryLiveData;
-import com.android.car.dialer.ui.CallLogListingTask;
+import com.android.car.dialer.livedata.HeartBeatLiveData;
+import com.android.car.dialer.telecom.InMemoryPhoneBook;
+import com.android.car.dialer.ui.common.UiCallLogLiveData;
+import com.android.car.dialer.ui.common.entity.UiCallLog;
 
 import java.util.List;
 
@@ -31,23 +35,20 @@ import java.util.List;
  * View model for CallHistoryFragment which provides call history live data.
  */
 public class CallHistoryViewModel extends AndroidViewModel {
-    private CallHistoryLiveData mCallHistoryLiveData;
+    private UiCallLogLiveData mUiCallLogLiveData;
 
-    private Context mContext;
-
-    public CallHistoryViewModel(
-            @NonNull Application application) {
+    public CallHistoryViewModel(@NonNull Application application) {
         super(application);
-        mContext = application;
+        mUiCallLogLiveData = new UiCallLogLiveData(application.getApplicationContext(),
+                new HeartBeatLiveData(DateUtils.MINUTE_IN_MILLIS),
+                CallHistoryLiveData.newInstance(application.getApplicationContext()),
+                InMemoryPhoneBook.get().getContactsLiveData());
     }
 
     /**
      * Returns the live data for call history list.
      */
-    public LiveData<List<CallLogListingTask.CallLogItem>> getCallHistory() {
-        if (mCallHistoryLiveData == null) {
-            mCallHistoryLiveData = new CallHistoryLiveData(mContext);
-        }
-        return mCallHistoryLiveData;
+    public LiveData<List<UiCallLog>> getCallHistory() {
+        return mUiCallLogLiveData;
     }
 }

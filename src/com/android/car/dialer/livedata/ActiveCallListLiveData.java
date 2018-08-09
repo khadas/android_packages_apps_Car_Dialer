@@ -92,7 +92,9 @@ public class ActiveCallListLiveData extends LiveData<List<Call>> implements
 
     @Override
     protected void onInactive() {
-        mInCallService.removeActiveCallListChangedCallback(this);
+        if (mInCallService != null) {
+            mInCallService.removeActiveCallListChangedCallback(this);
+        }
         mContext.unbindService(mInCallServiceConnection);
     }
 

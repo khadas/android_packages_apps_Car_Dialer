@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer.ui;
+package com.android.car.dialer.ui.calllog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +29,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
-import com.android.car.dialer.ui.viewmodel.CallHistoryViewModel;
 
 public class CallHistoryFragment extends DialerBaseFragment {
     public static CallHistoryFragment newInstance() {
@@ -50,9 +49,8 @@ public class CallHistoryFragment extends DialerBaseFragment {
                 CallHistoryViewModel.class);
 
         viewModel.getCallHistory().observe(this,
-                callHistoryItems -> {
-                    callHistoryListItemProvider.setCallHistoryListItems(getContext(),
-                            callHistoryItems);
+                callLogs -> {
+                    callHistoryListItemProvider.setCallHistoryListItems(getContext(), callLogs);
                     adapter.notifyDataSetChanged();
                 });
 

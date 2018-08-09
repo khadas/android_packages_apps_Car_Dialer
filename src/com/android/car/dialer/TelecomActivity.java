@@ -36,7 +36,7 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.CallHistoryFragment;
+import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.TelecomActivityViewModel;
 import com.android.car.dialer.ui.activecall.InCallFragment;
