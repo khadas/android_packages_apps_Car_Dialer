@@ -47,7 +47,6 @@
             app:layout_constraintTop_toTopOf="@+id/dialpad_fragment_container"/>
 
         <FrameLayout
-            android:id="@+id/dialer_info_fragment_container"
             android:layout_height="0dp"
             android:layout_width="0dp"
             android:paddingStart="@dimen/car_keyline_1"
@@ -56,7 +55,7 @@
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/dialpad_fragment_container">
-            <include layout="@layout/dialer_info_fragment"/>
+            <include layout="@layout/dialpad_info"/>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

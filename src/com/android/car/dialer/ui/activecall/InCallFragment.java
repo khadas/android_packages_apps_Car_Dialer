@@ -32,12 +32,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.android.car.dialer.DialerFragment;
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.CallDetail;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.dialpad.DialpadFragment;
 
 /**
  * A fragment that displays information about an on-going call with options to hang up.
@@ -62,7 +62,7 @@ public class InCallFragment extends DialerBaseFragment implements
         mUserProfileContainerView = fragmentView.findViewById(R.id.user_profile_container);
         mDialerFragmentContainer = fragmentView.findViewById(R.id.dialer_container);
         mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.body);
-        mDialerFragment = new DialerFragment();
+        mDialerFragment = DialpadFragment.newInCallDialpad();
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
 
@@ -74,7 +74,6 @@ public class InCallFragment extends DialerBaseFragment implements
 
     @Override
     public void onOpenDialpad() {
-        mDialerFragment = new DialerFragment();
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.dialer_container, mDialerFragment)
                 .commit();
