@@ -18,15 +18,15 @@ package com.android.car.dialer.ui;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 
-import androidx.car.widget.ListItem;
-import androidx.car.widget.ListItemProvider;
-import androidx.car.widget.TextListItem;
-
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.listitem.CallLogListItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.car.widget.ListItem;
+import androidx.car.widget.ListItemProvider;
+import androidx.car.widget.TextListItem;
 
 public class CallHistoryListItemProvider extends ListItemProvider {
 
