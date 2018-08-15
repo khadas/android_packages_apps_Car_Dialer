@@ -60,10 +60,6 @@ public class PhoneNumber {
         return Objects.hash(mNumber, mType);
     }
 
-    public boolean isVoiceMail() {
-        return PhoneNumberUtils.isVoiceMailNumber(mNumber);
-    }
-
     /**
      * Returns a human readable string label. For example, Home, Work, etc.
      */

@@ -20,6 +20,8 @@ import android.database.Cursor;
 import android.provider.CallLog;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ import java.util.List;
  */
 public class PhoneCallLog {
     /** Call log record. */
-    public static class Record {
+    public static class Record implements Comparable<Record> {
         private final long mCallEndTimestamp;
         private final int mCallType;
 
@@ -50,6 +52,11 @@ public class PhoneCallLog {
          */
         public int getCallType() {
             return mCallType;
+        }
+
+        @Override
+        public int compareTo(Record otherRecord) {
+            return (int) (mCallEndTimestamp - otherRecord.getCallEndTimestamp());
         }
     }
 
@@ -94,7 +101,10 @@ public class PhoneCallLog {
         return mCallRecords.size();
     }
 
-    /** Returns a copy of records from the phone number. */
+    /**
+     * Returns a copy of records from the phone number. Logs are sorted from most recent to least
+     * recent call end time.
+     */
     public List<Record> getAllCallRecords() {
         return new ArrayList<>(mCallRecords);
     }
@@ -106,6 +116,8 @@ public class PhoneCallLog {
     public void merge(PhoneCallLog phoneCallLog) {
         if (mPhoneNumberString.equals(phoneCallLog.mPhoneNumberString)) {
             mCallRecords.addAll(phoneCallLog.mCallRecords);
+            Collections.sort(mCallRecords);
+            Collections.reverse(mCallRecords);
         }
     }
 }

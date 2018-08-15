@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.entity;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -25,6 +26,7 @@ import android.telephony.PhoneNumberUtils;
 import androidx.annotation.Nullable;
 
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.telecom.TelecomUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -89,7 +91,7 @@ public class Contact {
     /**
      * Parses a Contact entry for a Cursor loaded from the Contact Database.
      */
-    public static Contact fromCursor(Cursor cursor) {
+    public static Contact fromCursor(Context context, Cursor cursor) {
         int idColumn = cursor.getColumnIndex(BaseColumns._ID);
         int starredColumn = cursor.getColumnIndex(ContactsContract.Contacts.STARRED);
         int pinnedColumn = cursor.getColumnIndex(ContactsContract.Contacts.PINNED);
@@ -112,7 +114,7 @@ public class Contact {
         contact.mPhoneNumbers.add(number);
         contact.mIsStarred = cursor.getInt(starredColumn) > 0;
         contact.mPinnedPosition = cursor.getInt(pinnedColumn);
-        contact.mIsVoiceMail = number.isVoiceMail();
+        contact.mIsVoiceMail = TelecomUtils.isVoicemailNumber(context, number.getNumber());
         contact.mId = cursor.getInt(idColumn);
 
         String avatarUriStr = cursor.getString(avatarUriColumn);

@@ -18,9 +18,6 @@ package com.android.car.dialer.ui.strequent;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.telephony.PhoneNumberUtils;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +27,12 @@ import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.CallLogViewHolder;
-import com.android.car.dialer.CallTypeIconsView;
 import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.PhoneCallLog;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
-import com.android.car.dialer.ui.CallLogListingTask;
+import com.android.car.dialer.ui.common.entity.UiCallLog;
 
 import java.util.List;
 
@@ -49,11 +46,15 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     // The possible view types in this adapter.
     private static final int VIEW_TYPE_LASTCALL = 1;
     private static final int VIEW_TYPE_STREQUENT = 2;
+    /**
+     * The max number of call records shown for a single combined log.
+     */
+    private static final int MAX_NUM_CALL_RECORDS = 3;
 
     private final Context mContext;
     private int mMaxItems = -1;
     private List<ContactEntry> mStrequentList;
-    private CallLogListingTask.CallLogItem mLastCall;
+    private UiCallLog mLastCall;
     private StrequentsListener<CallLogViewHolder> mStrequentsListener;
 
     public interface StrequentsListener<T> {
@@ -69,8 +70,8 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
         mStrequentsListener = listener;
     }
 
-    /** Sets the last call.*/
-    public void setLastCall(CallLogListingTask.CallLogItem lastCall) {
+    /** Sets the last call. */
+    public void setLastCall(@Nullable UiCallLog lastCall) {
         L.i(TAG, "setLastCall " + lastCall);
         if (mLastCall != null) {
             notifyItemChanged(0);
@@ -80,7 +81,7 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
         mLastCall = lastCall;
     }
 
-    /** Sets the strequent list.*/
+    /** Sets the strequent list. */
     public void setStrequentList(List<ContactEntry> strequentList) {
         mStrequentList = strequentList;
         notifyDataSetChanged();
@@ -160,42 +161,19 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
         viewHolder.itemView.setOnClickListener(v -> onViewClicked(viewHolder));
 
-        String number = mLastCall.mNumber;
-        String primaryText = mLastCall.mTitle;
-
-        if (!number.equals(viewHolder.itemView.getTag())) {
-            viewHolder.title.setText(mLastCall.mTitle);
-            viewHolder.itemView.setTag(number);
-            viewHolder.callTypeIconsView.clear();
-            viewHolder.callTypeIconsView.setVisibility(View.VISIBLE);
-
-            // mHasFirstItem is true only in main screen, or else it is in drawer, then we need
-            // to add
-            // call type icons for call history items.
-            viewHolder.smallIcon.setVisibility(View.GONE);
-            int[] callTypes = mLastCall.mCallTypes;
-            int icons = Math.min(callTypes.length, CallTypeIconsView.MAX_CALL_TYPE_ICONS);
-            for (int i = 0; i < icons; i++) {
-                viewHolder.callTypeIconsView.add(callTypes[i]);
-            }
-
-            TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, primaryText, number);
+        viewHolder.title.setText(mLastCall.getTitle());
+        viewHolder.text.setText(mLastCall.getText());
+        viewHolder.itemView.setTag(mLastCall.getNumber());
+        viewHolder.smallIcon.setVisibility(View.GONE);
+        viewHolder.callTypeIconsView.clear();
+        viewHolder.callTypeIconsView.setVisibility(View.VISIBLE);
+        List<PhoneCallLog.Record> records = mLastCall.getCallRecords(MAX_NUM_CALL_RECORDS);
+        for (PhoneCallLog.Record record : records) {
+            viewHolder.callTypeIconsView.add(record.getCallType());
         }
 
-        StringBuilder secondaryText = new StringBuilder();
-        CharSequence relativeDate = getRelativeTime(mLastCall.mCallTimestamp);
-        if (!PhoneNumberUtils.isVoiceMailNumber(number)) {
-            CharSequence type = TelecomUtils.getTypeFromNumber(mContext, number);
-            secondaryText.append(type);
-            if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(relativeDate)) {
-                secondaryText.append(", ");
-            }
-        }
-        if (relativeDate != null) {
-            secondaryText.append(relativeDate);
-        }
-
-        viewHolder.text.setText(secondaryText.toString());
+        TelecomUtils.setContactBitmapAsync(mContext, viewHolder.icon, mLastCall.getTitle(),
+                mLastCall.getNumber());
     }
 
     /**
@@ -227,19 +205,5 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
         } else {
             viewHolder.smallIcon.setVisibility(View.GONE);
         }
-    }
-
-    /**
-     * Build any timestamp and label into a single string. If the given timestamp is invalid, then
-     * {@code null} is returned.
-     */
-    @Nullable
-    private static CharSequence getRelativeTime(long millis) {
-        if (millis <= 0) {
-            return null;
-        }
-
-        return DateUtils.getRelativeTimeSpanString(millis, System.currentTimeMillis(),
-                DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE);
     }
 }
