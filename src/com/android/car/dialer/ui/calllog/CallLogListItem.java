@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer.ui.listitem;
+package com.android.car.dialer.ui.calllog;
 
 import android.content.Context;
 
@@ -23,18 +23,17 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.TelecomUtils;
-import com.android.car.dialer.ui.CallHistoryListItemProvider;
-import com.android.car.dialer.ui.CallLogListingTask;
+import com.android.car.dialer.ui.common.entity.UiCallLog;
 
 /**
  * List item which is created by {@link CallHistoryListItemProvider} binds a call list item to a
  * list view item.
  */
 public class CallLogListItem extends TextListItem {
-    private final CallLogListingTask.CallLogItem mCallLogItem;
+    private final UiCallLog mCallLogItem;
     private final Context mContext;
 
-    public CallLogListItem(Context context, CallLogListingTask.CallLogItem callLog) {
+    public CallLogListItem(Context context, UiCallLog callLog) {
         super(context);
         mCallLogItem = callLog;
         mContext = context;
@@ -44,10 +43,10 @@ public class CallLogListItem extends TextListItem {
     public void onBind(ViewHolder viewHolder) {
         super.onBind(viewHolder);
         Contact contact = InMemoryPhoneBook.get().lookupContactEntry(
-                mCallLogItem.mNumber);
+                mCallLogItem.getNumber());
         String displayName = contact != null ? contact.getDisplayName() : null;
         TelecomUtils.setContactBitmapAsync(mContext, viewHolder.getPrimaryIcon(),
-                displayName, mCallLogItem.mNumber);
+                displayName, mCallLogItem.getNumber());
 
         viewHolder.getContainerLayout().setBackgroundColor(
                 mContext.getColor(R.color.call_history_list_item_color));

@@ -54,8 +54,7 @@ public class ContactListItemProvider extends ListItemProvider {
         for (Contact contact : contacts) {
             ContactListItem textListItem = new ContactListItem(mContext, contact);
             // set a primary icon place holder drawable.
-            textListItem.setPrimaryActionIcon(new ColorDrawable(), true);
-            textListItem.setPrimaryActionIconSize(TextListItem.PRIMARY_ACTION_ICON_SIZE_MEDIUM);
+            textListItem.setPrimaryActionIcon(null, TextListItem.PRIMARY_ACTION_ICON_SIZE_MEDIUM);
             textListItem.setTitle(contact.getDisplayName());
             textListItem.setOnClickListener(
                     (v) -> {

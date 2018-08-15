@@ -34,8 +34,8 @@ import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.CallLogListingTask;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.common.entity.UiCallLog;
 
 import java.util.List;
 
@@ -76,7 +76,7 @@ public class StrequentsFragment extends DialerBaseFragment {
         StrequentViewModel strequentViewModel = ViewModelProviders.of(this).get(
                 StrequentViewModel.class);
         LiveData<List<ContactEntry>> strequentList = strequentViewModel.getStrequents();
-        LiveData<CallLogListingTask.CallLogItem> lastCall = strequentViewModel.getLastCall();
+        LiveData<UiCallLog> lastCall = strequentViewModel.getLastCall();
         adapter.setStrequentList(strequentList.getValue());
         adapter.setLastCall(lastCall.getValue());
 

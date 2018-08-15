@@ -22,12 +22,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
+import android.telephony.PhoneNumberUtils;
 
-import androidx.lifecycle.LiveData;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
-
-import com.android.car.dialer.ui.CallLogListingTask;
+import com.android.car.dialer.common.ObservableAsyncQuery;
+import com.android.car.dialer.entity.PhoneCallLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,57 +33,32 @@ import java.util.List;
 /**
  * Live data which loads call history.
  */
-public class CallHistoryLiveData extends LiveData<List<CallLogListingTask.CallLogItem>> {
+//TODO: Rename to PhoneCallLogLiveData
+public class CallHistoryLiveData extends AsyncQueryLiveData<List<PhoneCallLog>> {
     /** The default limit of loading call logs */
-    public final static int DEFAULT_CALL_LOG_LIMIT = 100;
+    private final static int DEFAULT_CALL_LOG_LIMIT = 100;
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
-    private final Context mContext;
-    private CursorLoader mCursorLoader;
-
-    public CallHistoryLiveData(Context context) {
-        mContext = context;
-        mCursorLoader = createCallLogCursor(
-                (loader, cursor) -> new CallLogListingTask(mContext, cursor,
-                        this::setValue).execute());
-    }
-
-    @Override
-    protected void onActive() {
-        super.onActive();
-        mCursorLoader.startLoading();
-    }
-
-    @Override
-    protected void onInactive() {
-        super.onInactive();
-        mCursorLoader.stopLoading();
+    /**
+     * Creates a new instance of call history live data which loads all types of call history
+     * with a limit of 100 logs.
+     */
+    public static CallHistoryLiveData newInstance(Context context) {
+        return newInstance(context, CALL_TYPE_ALL, DEFAULT_CALL_LOG_LIMIT);
     }
 
     /**
-     * Subclass override this function to filter different call log type. By default it filters
-     * nothing.
+     * Returns a new instance of last call live data.
      */
-    protected int getCallType() {
-        return CALL_TYPE_ALL;
+    public static CallHistoryLiveData newLastCallLiveData(Context context) {
+        return newInstance(context, CALL_TYPE_ALL, 1);
     }
 
-    /**
-     * Subclass override this function to limit the number of logs being loaded. By default, the
-     * limit is {@link #DEFAULT_CALL_LOG_LIMIT}.
-     */
-    protected int getLimit() {
-        return DEFAULT_CALL_LOG_LIMIT;
-    }
-
-    private CursorLoader createCallLogCursor(Loader.OnLoadCompleteListener<Cursor> listener) {
-        // We need to check for NULL explicitly otherwise entries with where READ is NULL
-        // may not match either the query or its negation.
-        // We consider the calls that are not yet consumed (i.e. IS_READ = 0) as "new".
+    private static CallHistoryLiveData newInstance(Context context, int callType, int limit) {
         StringBuilder where = new StringBuilder();
-        List<String> selectionArgs = new ArrayList<String>();
+        List<String> selectionArgs = new ArrayList<>();
+        limit = limit < 0 ? 0 : limit;
 
-        int callType = getCallType();
         if (callType != CALL_TYPE_ALL) {
             // add a filter for call type
             where.append(String.format("(%s = ?)", CallLog.Calls.TYPE));
@@ -95,11 +68,37 @@ public class CallHistoryLiveData extends LiveData<List<CallLogListingTask.CallLo
 
         Uri uri = CallLog.Calls.CONTENT_URI.buildUpon()
                 .appendQueryParameter(CallLog.Calls.LIMIT_PARAM_KEY,
-                        Integer.toString(getLimit()))
+                        Integer.toString(limit))
                 .build();
-        CursorLoader loader = new CursorLoader(mContext, uri, null, selection,
-                selectionArgs.toArray(EMPTY_STRING_ARRAY), CallLog.Calls.DEFAULT_SORT_ORDER);
-        loader.registerListener(0, listener);
-        return loader;
+        ObservableAsyncQuery.QueryParam queryParam = new ObservableAsyncQuery.QueryParam(
+                uri,
+                null,
+                selection,
+                selectionArgs.toArray(EMPTY_STRING_ARRAY),
+                CallLog.Calls.DEFAULT_SORT_ORDER);
+        return new CallHistoryLiveData(context, queryParam);
+    }
+
+    private CallHistoryLiveData(Context context, ObservableAsyncQuery.QueryParam queryParam) {
+        super(context, queryParam);
+    }
+
+    @Override
+    protected List<PhoneCallLog> convertToEntity(Cursor cursor) {
+        List<PhoneCallLog> resultList = new ArrayList<>();
+        PhoneCallLog previousCallLog = null;
+
+        while (cursor.moveToNext()) {
+            PhoneCallLog phoneCallLog = PhoneCallLog.fromCursor(cursor);
+            if (previousCallLog != null
+                    && PhoneNumberUtils.compare(
+                    previousCallLog.getPhoneNumberString(), phoneCallLog.getPhoneNumberString())) {
+                previousCallLog.merge(phoneCallLog);
+            } else {
+                resultList.add(phoneCallLog);
+            }
+            previousCallLog = phoneCallLog;
+        }
+        return resultList;
     }
 }

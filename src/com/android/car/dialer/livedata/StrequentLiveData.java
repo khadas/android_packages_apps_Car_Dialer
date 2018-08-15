@@ -21,11 +21,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
-import androidx.lifecycle.LiveData;
-
 import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.common.ObservableAsyncQuery;
-import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,7 +58,6 @@ public class StrequentLiveData extends AsyncQueryLiveData<List<ContactEntry>> {
     @Override
     protected List<ContactEntry> convertToEntity(Cursor cursor) {
         Set<ContactEntry> entrySet = new HashSet<>();
-
         while (cursor.moveToNext()) {
             ContactEntry entry = ContactEntry.fromCursor(cursor, mContext);
             entrySet.add(entry);

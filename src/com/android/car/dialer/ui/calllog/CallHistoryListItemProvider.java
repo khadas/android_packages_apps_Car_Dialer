@@ -13,36 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer.ui;
+package com.android.car.dialer.ui.calllog;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 
 import androidx.car.widget.ListItem;
 import androidx.car.widget.ListItemProvider;
 import androidx.car.widget.TextListItem;
 
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.listitem.CallLogListItem;
+import com.android.car.dialer.ui.common.entity.UiCallLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides {@link TextListItem} for call history.
+ */
 public class CallHistoryListItemProvider extends ListItemProvider {
 
     private List<TextListItem> mItems = new ArrayList<>();
 
-    public void setCallHistoryListItems(Context context,
-            List<CallLogListingTask.CallLogItem> items) {
-        for (CallLogListingTask.CallLogItem callLogItem : items) {
+    /**
+     * Sets the call history list as the data source.
+     */
+    public void setCallHistoryListItems(Context context, List<UiCallLog> items) {
+        mItems.clear();
+        for (UiCallLog callLogItem : items) {
             TextListItem callLogListItem = new CallLogListItem(context, callLogItem);
-
-            callLogListItem.setPrimaryActionIcon(
-                    new BitmapDrawable(context.getResources(), callLogItem.mIcon), true);
-            callLogListItem.setTitle(callLogItem.mTitle);
-            callLogListItem.setBody(callLogItem.mText);
+            // set a default icon drawable.
+            callLogListItem.setPrimaryActionIcon(null,
+                    TextListItem.PRIMARY_ACTION_ICON_SIZE_MEDIUM);
+            callLogListItem.setTitle(callLogItem.getTitle());
+            callLogListItem.setBody(callLogItem.getText());
             callLogListItem.setOnClickListener(
-                    (v) -> UiCallManager.get().safePlaceCall(callLogItem.mNumber, false));
+                    (v) -> UiCallManager.get().safePlaceCall(callLogItem.getNumber(), false));
 
             mItems.add(callLogListItem);
         }

@@ -178,6 +178,15 @@ public class TelecomUtils {
         return sVoicemailNumber;
     }
 
+    /**
+     * Returns {@code true} if the given number is a voice mail number.
+     *
+     * @see TelephonyManager#getVoiceMailNumber()
+     */
+    public static boolean isVoicemailNumber(Context context, String number) {
+        return getVoicemailNumber(context).equals(number);
+    }
+
     public static TelephonyManager getTelephonyManager(Context context) {
         if (sTelephonyManager == null) {
             sTelephonyManager =

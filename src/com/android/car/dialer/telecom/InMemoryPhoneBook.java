@@ -117,7 +117,7 @@ public class InMemoryPhoneBook {
     private void onDataLoaded(Cursor cursor) {
         Map<String, Contact> result = new LinkedHashMap<>();
         while (cursor.moveToNext()) {
-            Contact contact = Contact.fromCursor(cursor);
+            Contact contact = Contact.fromCursor(mContext, cursor);
             String lookupKey = contact.getLookupKey();
             if (result.containsKey(lookupKey)) {
                 Contact existingContact = result.get(lookupKey);
