@@ -31,7 +31,6 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.car.util.ListItemBackgroundResolver;
-import androidx.car.widget.DayNightStyle;
 import androidx.car.widget.PagedListView;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
