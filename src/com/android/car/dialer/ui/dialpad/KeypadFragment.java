@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer.ui.common;
+package com.android.car.dialer.ui.dialpad;
 
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -35,9 +35,9 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 
 /**
- * Dialpad Fragment which displays a dialpad.
+ * Fragment which displays a pad of keys.
  */
-public class DialpadFragment extends Fragment {
+public class KeypadFragment extends Fragment {
     private static final SparseIntArray sToneMap = new SparseIntArray();
     private static final SparseArray<String> sDialValueMap = new SparseArray<>();
     private static final SparseArray<Integer> sRIdMap = new SparseArray<>();
@@ -86,14 +86,14 @@ public class DialpadFragment extends Fragment {
         sRIdMap.put(KeyEvent.KEYCODE_POUND, R.id.pound);
     }
 
-    public static DialpadFragment newInstance() {
-        return new DialpadFragment();
+    public static KeypadFragment newInstance() {
+        return new KeypadFragment();
     }
 
     /**
-     * Callback for dialpad to interact with its host.
+     * Callback for keypad to interact with its host.
      */
-    public interface DialpadCallback {
+    public interface KeypadCallback {
         /**
          * Called when voice mail should be dialed.
          */
@@ -106,7 +106,7 @@ public class DialpadFragment extends Fragment {
     }
 
     private ToneGenerator mToneGenerator;
-    private DialpadCallback mDialpadCallback;
+    private KeypadCallback mKeypadCallback;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,15 +117,15 @@ public class DialpadFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        if (getParentFragment() != null && getParentFragment() instanceof DialpadCallback) {
-            mDialpadCallback = (DialpadCallback) getParentFragment();
-        } else if (getHost() instanceof DialpadCallback) {
-            mDialpadCallback = (DialpadCallback) getHost();
+        if (getParentFragment() != null && getParentFragment() instanceof KeypadCallback) {
+            mKeypadCallback = (KeypadCallback) getParentFragment();
+        } else if (getHost() instanceof KeypadCallback) {
+            mKeypadCallback = (KeypadCallback) getHost();
         }
 
-        View dialpadView = inflater.inflate(R.layout.dialpad, container, false);
-        setupKeypadClickListeners(dialpadView);
-        return dialpadView;
+        View keypadView = inflater.inflate(R.layout.keypad, container, false);
+        setupKeypadClickListeners(keypadView);
+        return keypadView;
     }
 
     @Override
@@ -135,15 +135,15 @@ public class DialpadFragment extends Fragment {
     }
 
     /**
-     * The click listener for all dialpad buttons.  Reacts to touch-down and touch-up events, as
+     * The click listener for all keypad buttons.  Reacts to touch-down and touch-up events, as
      * well as long-press for certain keys.  Mimics the behavior of the phone dialer app.
      */
-    private class DialpadClickListener implements View.OnTouchListener,
+    private class KeypadClickListener implements View.OnTouchListener,
             View.OnLongClickListener {
         private final int mTone;
         private final String mValue;
 
-        DialpadClickListener(int keyCode) {
+        KeypadClickListener(int keyCode) {
             mTone = sToneMap.get(keyCode);
             mValue = sDialValueMap.get(keyCode);
         }
@@ -152,16 +152,16 @@ public class DialpadFragment extends Fragment {
         public boolean onLongClick(View v) {
             switch (mValue) {
                 case "0":
-                    if (mDialpadCallback != null) {
-                        mDialpadCallback.onAppendDigit("+");
+                    if (mKeypadCallback != null) {
+                        mKeypadCallback.onAppendDigit("+");
                     }
                     stopTone();
                     return true;
                 case "1":
                     // TODO: this currently does not work (at least over bluetooth HFP), because
                     // the framework is unable to get the voicemail number. Revisit later...
-                    if (mDialpadCallback != null) {
-                        mDialpadCallback.onDialVoiceMail();
+                    if (mKeypadCallback != null) {
+                        mKeypadCallback.onDialVoiceMail();
                     }
                     return true;
                 default:
@@ -174,8 +174,8 @@ public class DialpadFragment extends Fragment {
             UiCallManager uiCallmanager = UiCallManager.get();
             boolean hasActiveCall = uiCallmanager.getPrimaryCall() != null;
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                if (mDialpadCallback != null) {
-                    mDialpadCallback.onAppendDigit(mValue);
+                if (mKeypadCallback != null) {
+                    mKeypadCallback.onAppendDigit(mValue);
                 }
                 if (hasActiveCall) {
                     uiCallmanager.playDtmfTone(uiCallmanager.getPrimaryCall(), mValue.charAt(0));
@@ -215,7 +215,7 @@ public class DialpadFragment extends Fragment {
     private void setupKeypadClickListeners(View parent) {
         for (int i = 0; i < sRIdMap.size(); i++) {
             int key = sRIdMap.keyAt(i);
-            DialpadClickListener clickListener = new DialpadClickListener(key);
+            KeypadClickListener clickListener = new KeypadClickListener(key);
             View v = parent.findViewById(sRIdMap.get(key));
             v.setOnTouchListener(clickListener);
             v.setOnLongClickListener(clickListener);

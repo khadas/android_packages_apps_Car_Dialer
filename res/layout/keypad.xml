@@ -16,120 +16,119 @@ limitations under the License.
 <GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dialpad_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:columnCount="5">
 
     <!-- Row 1 -->
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/one"
         app:numberText="@string/one"
         app:image="@drawable/ic_voicemail"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
     <Space
-        android:layout_width="@dimen/in_call_card_dialpad_horizontal_spacing"
+        android:layout_width="@dimen/keypad_horizontal_spacing"
         android:layout_height="0dp"/>
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/two"
         app:numberText="@string/two"
         app:letterText="@string/two_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
     <Space
-        android:layout_width="@dimen/in_call_card_dialpad_horizontal_spacing"
+        android:layout_width="@dimen/keypad_horizontal_spacing"
         android:layout_height="0dp"/>
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/three"
         app:numberText="@string/three"
         app:letterText="@string/three_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
 
     <!-- Vertical spacing between rows. -->
     <Space
-        android:layout_height="@dimen/in_call_card_dialpad_vertical_spacing"
+        android:layout_height="@dimen/keypad_vertical_spacing"
         android:layout_width="0dp"
         android:layout_columnSpan="5" />
 
     <!-- Row 2 -->
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/four"
         app:numberText="@string/four"
         app:letterText="@string/four_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
     <Space
-        android:layout_width="@dimen/in_call_card_dialpad_horizontal_spacing"
+        android:layout_width="@dimen/keypad_horizontal_spacing"
         android:layout_height="0dp"/>
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/five"
         app:numberText="@string/five"
         app:letterText="@string/five_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
     <Space
-        android:layout_width="@dimen/in_call_card_dialpad_horizontal_spacing"
+        android:layout_width="@dimen/keypad_horizontal_spacing"
         android:layout_height="0dp"/>
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/six"
         app:numberText="@string/six"
         app:letterText="@string/six_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
 
     <!-- Vertical spacing between rows. -->
     <Space
-        android:layout_height="@dimen/in_call_card_dialpad_vertical_spacing"
+        android:layout_height="@dimen/keypad_vertical_spacing"
         android:layout_width="0dp"
         android:layout_columnSpan="5" />
 
     <!-- Row 3 -->
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/seven"
         app:numberText="@string/seven"
         app:letterText="@string/seven_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
     <Space
-        android:layout_width="@dimen/in_call_card_dialpad_horizontal_spacing"
+        android:layout_width="@dimen/keypad_horizontal_spacing"
         android:layout_height="0dp"/>
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/eight"
         app:numberText="@string/eight"
         app:letterText="@string/eight_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
     <Space
-        android:layout_width="@dimen/in_call_card_dialpad_horizontal_spacing"
+        android:layout_width="@dimen/keypad_horizontal_spacing"
         android:layout_height="0dp"/>
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/nine"
         app:numberText="@string/nine"
         app:letterText="@string/nine_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
 
     <!-- Vertical spacing between rows. -->
     <Space
-        android:layout_height="@dimen/in_call_card_dialpad_vertical_spacing"
+        android:layout_height="@dimen/keypad_vertical_spacing"
         android:layout_width="0dp"
         android:layout_columnSpan="5" />
 
     <!-- Row 4 -->
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/star"
         app:numberText="@string/star"
         app:letterText="@string/star_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
     <Space
-        android:layout_width="@dimen/in_call_card_dialpad_horizontal_spacing"
+        android:layout_width="@dimen/keypad_horizontal_spacing"
         android:layout_height="0dp"/>
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/zero"
         app:numberText="@string/zero"
         app:letterText="@string/zero_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
     <Space
-        android:layout_width="@dimen/in_call_card_dialpad_horizontal_spacing"
+        android:layout_width="@dimen/keypad_horizontal_spacing"
         android:layout_height="0dp"/>
-    <com.android.car.dialer.DialpadButton
+    <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/pound"
         app:numberText="@string/pound"
         app:letterText="@string/pound_letters"
-        style="@style/DialpadKeyButtonStyle"/>
+        style="@style/KeypadButtonStyle"/>
 
 </GridLayout>

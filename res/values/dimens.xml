@@ -39,8 +39,8 @@
     <!-- This should be -1 * in_call_card_right_margin -->
     <dimen name="in_call_card_dialpad_translation_x">-308dp</dimen>
     <dimen name="in_call_card_dialpad_corner_radius">16dp</dimen>
-    <dimen name="in_call_card_dialpad_horizontal_spacing">@dimen/car_padding_5</dimen>
-    <dimen name="in_call_card_dialpad_vertical_spacing">@dimen/car_padding_4</dimen>
+    <dimen name="keypad_horizontal_spacing">@dimen/car_padding_5</dimen>
+    <dimen name="keypad_vertical_spacing">@dimen/car_padding_4</dimen>
 
     <dimen name="in_call_button_spacing">32dp</dimen>
     <dimen name="in_call_card_corner_radius">@dimen/car_card_view_corner_radius</dimen>
