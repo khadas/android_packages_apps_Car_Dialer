@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer;
+
+package com.android.car.dialer.ui.dialpad;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -22,46 +23,48 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.car.dialer.R;
+
 /**
- * A View that represents a single button on the dialpad. This View display a number above letters
+ * A View that represents a single button on the keypad. This View display a number above letters
  * or an image.
  */
-public class DialpadButton extends FrameLayout {
+public class KeypadButton extends FrameLayout {
     private static final int INVALID_IMAGE_RES = -1;
 
     private String mNumberText;
     private String mLetterText;
     private int mImageRes = INVALID_IMAGE_RES;
 
-    public DialpadButton(Context context) {
+    public KeypadButton(Context context) {
         super(context);
         init(context, null);
     }
 
-    public DialpadButton(Context context, AttributeSet attrs) {
+    public KeypadButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public DialpadButton(Context context, AttributeSet attrs, int defStyleAttrs) {
+    public KeypadButton(Context context, AttributeSet attrs, int defStyleAttrs) {
         super(context, attrs, defStyleAttrs);
         init(context, attrs);
     }
 
-    public DialpadButton(Context context, AttributeSet attrs, int defStyleAttrs, int defStyleRes) {
+    public KeypadButton(Context context, AttributeSet attrs, int defStyleAttrs, int defStyleRes) {
         super(context, attrs, defStyleAttrs, defStyleRes);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.dialpad_button, this /* root */);
+        inflate(context, R.layout.keypad_button, this /* root */);
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DialpadButton);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.KeypadButton);
 
         try {
-            mNumberText = ta.getString(R.styleable.DialpadButton_numberText);
-            mLetterText = ta.getString(R.styleable.DialpadButton_letterText);
-            mImageRes = ta.getResourceId(R.styleable.DialpadButton_image, INVALID_IMAGE_RES);
+            mNumberText = ta.getString(R.styleable.KeypadButton_numberText);
+            mLetterText = ta.getString(R.styleable.KeypadButton_letterText);
+            mImageRes = ta.getResourceId(R.styleable.KeypadButton_image, INVALID_IMAGE_RES);
         } finally {
             if (ta != null) {
                 ta.recycle();
@@ -76,19 +79,19 @@ public class DialpadButton extends FrameLayout {
         // Using null check instead of a TextUtils.isEmpty() check so that an empty number/letter
         // can be used to keep the positioning of non-empty numbers/letters consistent.
         if (mNumberText != null) {
-            TextView numberTextView = (TextView) findViewById(R.id.dialpad_number);
+            TextView numberTextView = (TextView) findViewById(R.id.keypad_number);
             numberTextView.setText(mNumberText);
             numberTextView.setVisibility(VISIBLE);
         }
 
         if (mLetterText != null) {
-            TextView letterTextView = (TextView) findViewById(R.id.dialpad_letters);
+            TextView letterTextView = (TextView) findViewById(R.id.keypad_letters);
             letterTextView.setText(mLetterText);
             letterTextView.setVisibility(VISIBLE);
         }
 
         if (mImageRes != INVALID_IMAGE_RES) {
-            ImageView imageView = (ImageView) findViewById(R.id.dialpad_image);
+            ImageView imageView = (ImageView) findViewById(R.id.keypad_image);
             imageView.setImageResource(mImageRes);
             imageView.setVisibility(VISIBLE);
         }

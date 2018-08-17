@@ -27,13 +27,13 @@
     </style>
 
     <!-- Phone -->
-    <style name="DialpadKeyButtonStyle">
+    <style name="KeypadButtonStyle">
         <item name="android:clickable">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minWidth">@dimen/car_touch_target_size</item>
         <item name="android:minHeight">@dimen/car_touch_target_size</item>
-        <item name="android:background">@drawable/dialpad_button_background</item>
+        <item name="android:background">@drawable/keypad_button_background</item>
         <item name="android:focusable">true</item>
     </style>
 
@@ -47,19 +47,9 @@
     <style name="DialpadSecondaryButton">
         <item name="android:layout_width">@dimen/bksp_button_width</item>
         <item name="android:layout_height">@dimen/bksp_button_width</item>
-        <item name="android:background">@drawable/dialpad_delete_button_background</item>
+        <item name="android:background">@drawable/dialpad_secondary_button_background</item>
         <item name="android:scaleType">centerInside</item>
         <item name="android:tint">@color/car_tint</item>
-    </style>
-
-    <style name="InCallDialpad">
-        <item name="android:focusable">true</item>
-        <item name="android:background">@drawable/rotary_in_call_dialpad_button_background</item>
-        <item name="android:gravity">center</item>
-        <item name="android:fontFamily">sans-serif-condensed</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/keyboard_key_letter_height</item>
-        <item name="android:textColor">@color/car_display3</item>
     </style>
 
     <style name="NoHfpText" parent="TextAppearance.Car.Body2">

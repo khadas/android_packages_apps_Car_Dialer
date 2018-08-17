@@ -36,11 +36,12 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.calllog.CallHistoryFragment;
-import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.TelecomActivityViewModel;
 import com.android.car.dialer.ui.activecall.InCallFragment;
+import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.contact.ContactListFragment;
+import com.android.car.dialer.ui.dialpad.DialpadFragment;
 import com.android.car.dialer.ui.strequent.StrequentsFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
 
@@ -50,7 +51,7 @@ import com.android.car.dialer.ui.warning.NoHfpFragment;
  * <ul>
  * <li>OngoingCallFragment
  * <li>NoHfpFragment
- * <li>DialerFragment
+ * <li>DialpadFragment
  * <li>StrequentFragment
  * </ul>
  */
@@ -250,7 +251,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     /**
-     * Displays the {@link DialerFragment} and initialize it with the given phone number.
+     * Displays the {@link DialpadFragment} and initialize it with the given phone number.
      */
     private void showDialer(@Nullable String dialNumber) {
         if (vdebug()) {
@@ -262,7 +263,7 @@ public class TelecomActivity extends CarDrawerActivity implements
             return;
         }
 
-        Fragment fragment = DialerFragment.newInstance(dialNumber);
+        Fragment fragment = DialpadFragment.newPlaceCallDialpad(dialNumber);
         // Add the dialer fragment to the backstack so that it can be popped off to dismiss it.
         setContentFragment(fragment);
     }
@@ -440,7 +441,7 @@ public class TelecomActivity extends CarDrawerActivity implements
             titleResId = R.string.call_history_title;
         } else if (currentFragment instanceof ContactListFragment) {
             titleResId = R.string.contacts_title;
-        } else if (currentFragment instanceof DialerFragment) {
+        } else if (currentFragment instanceof DialpadFragment) {
             titleResId = R.string.dialpad_title;
         } else if (currentFragment instanceof InCallFragment) {
             titleResId = R.string.in_call_title;
