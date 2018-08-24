@@ -43,12 +43,6 @@ import java.util.List;
 public class PhoneLoader {
     private static final String TAG = "Em.PhoneLoader";
 
-    /** CALL_TYPE_ALL and _MISSED's values are assigned to be consistent with the Dialer **/
-    public final static int CALL_TYPE_ALL = -1;
-    public final static int CALL_TYPE_MISSED = CallLog.Calls.MISSED_TYPE;
-    /** Starred and frequent **/
-    public final static int CALL_TYPE_SPEED_DIAL = 2;
-
     @IntDef({
             CallType.CALL_TYPE_ALL,
             CallType.INCOMING_TYPE,
@@ -62,85 +56,12 @@ public class PhoneLoader {
         int MISSED_TYPE = CallLog.Calls.MISSED_TYPE;
     }
 
-    private static final int NUM_LOGS_TO_DISPLAY = 100;
-    private static final String[] EMPTY_STRING_ARRAY = new String[0];
-
     public static final int INCOMING_TYPE = 1;
     public static final int OUTGOING_TYPE = 2;
     public static final int MISSED_TYPE = 3;
     public static final int VOICEMAIL_TYPE = 4;
 
     private static HashMap<String, String> sNumberCache;
-
-    /**
-     * Hybrid Factory for creating a Contact Loader that also immediately starts its execution.
-     * Note: NOT to be used wit LoaderManagers.
-     */
-    public static CursorLoader registerCallObserver(int type,
-            Context context, Loader.OnLoadCompleteListener<Cursor> listener) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "registerCallObserver: type: " + type + ", listener: " + listener);
-        }
-
-        switch (type) {
-            case CALL_TYPE_ALL:
-            case CALL_TYPE_MISSED:
-                return fetchCallLog(type, context, listener);
-            case CALL_TYPE_SPEED_DIAL:
-                CursorLoader loader = newStrequentContactLoader(context);
-                loader.registerListener(0, listener);
-                loader.startLoading();
-                return loader;
-            default:
-                throw new UnsupportedOperationException("Unknown CALL_TYPE " + type + ".");
-        }
-    }
-
-    /**
-     * Factory method for creating a Loader that will fetch strequent contacts from the phone.
-     */
-    public static CursorLoader newStrequentContactLoader(Context context) {
-        Uri uri = ContactsContract.Contacts.CONTENT_STREQUENT_URI.buildUpon()
-                .appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true")
-                .appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true").build();
-
-        return new CursorLoader(context, uri, null, null, null, null);
-    }
-
-    // TODO(mcrico): Separate into a factory method and move configuration to registerCallObserver
-    private static CursorLoader fetchCallLog(int callType,
-            Context context, Loader.OnLoadCompleteListener<Cursor> listener) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "fetchCallLog");
-        }
-
-        // We need to check for NULL explicitly otherwise entries with where READ is NULL
-        // may not match either the query or its negation.
-        // We consider the calls that are not yet consumed (i.e. IS_READ = 0) as "new".
-        StringBuilder where = new StringBuilder();
-        List<String> selectionArgs = new ArrayList<String>();
-
-        if (callType > CALL_TYPE_ALL) {
-            // add a filter for call type
-            where.append(String.format("(%s = ?)", CallLog.Calls.TYPE));
-            selectionArgs.add(Integer.toString(callType));
-        }
-        String selection = where.length() > 0 ? where.toString() : null;
-
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "accessingCallLog");
-        }
-
-        Uri uri = CallLog.Calls.CONTENT_URI.buildUpon()
-                .appendQueryParameter(CallLog.Calls.LIMIT_PARAM_KEY,
-                        Integer.toString(NUM_LOGS_TO_DISPLAY))
-                .build();
-        CursorLoader loader = new CursorLoader(context, uri, null, selection,
-                selectionArgs.toArray(EMPTY_STRING_ARRAY), CallLog.Calls.DEFAULT_SORT_ORDER);
-        loader.registerListener(0, listener);
-        loader.startLoading();
-        return loader;
-    }
 
     /**
      * @return The column index of the contact id. It should be {@link BaseColumns#_ID}. However,
@@ -176,31 +97,6 @@ public class PhoneLoader {
             numberColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
         }
         return numberColumn;
-    }
-
-
-    /**
-     * @return The column index of the number type.
-     * Will return a valid column for call log or contacts queries.
-     */
-    public static int getTypeColumnIndex(Cursor cursor) {
-        int typeColumn = cursor.getColumnIndex(CallLog.Calls.TYPE);
-        if (typeColumn == -1) {
-            typeColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-        }
-        return typeColumn;
-    }
-
-    /**
-     * @return The column index of the name.
-     * Will return a valid column for call log or contacts queries.
-     */
-    public static int getNameColumnIndex(Cursor cursor) {
-        int typeColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME);
-        if (typeColumn == -1) {
-            typeColumn = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-        }
-        return typeColumn;
     }
 
     /**
