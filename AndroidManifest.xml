@@ -61,7 +61,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ContactSearchActivity"
+        <activity android:name=".ui.search.ContactSearchActivity"
             android:label="@string/phone_app_name"
             android:theme="@style/ContactSearchActivityTheme"
             android:exported="true"

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer;
+package com.android.car.dialer.ui.search;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -34,6 +34,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.car.dialer.ui.contact.ContactDetailsFragment;
+import com.android.car.dialer.R;
+import com.android.car.dialer.TelecomIntents;
 
 /**
  * An activity that manages contact searching. This activity will display the result of a search

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer;
+package com.android.car.dialer.ui.search;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +30,8 @@ import androidx.car.util.ListItemBackgroundResolver;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.dialer.R;
+import com.android.car.dialer.TelecomIntents;
 import com.android.car.dialer.ui.CircleBitmapDrawable;
 
 import java.io.FileNotFoundException;

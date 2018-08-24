@@ -32,7 +32,6 @@ import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.android.car.dialer.ContactDetailsFragment;
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.ui.common.DialerBaseFragment;

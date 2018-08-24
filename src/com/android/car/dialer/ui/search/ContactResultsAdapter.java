@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer;
+package com.android.car.dialer.ui.search;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 
 import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.car.dialer.R;
 
 import java.util.ArrayList;
 import java.util.List;
