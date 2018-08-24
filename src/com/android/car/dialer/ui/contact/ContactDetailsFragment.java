@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer;
+package com.android.car.dialer.ui.contact;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -37,6 +37,7 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
