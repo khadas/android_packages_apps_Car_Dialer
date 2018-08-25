@@ -12,6 +12,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.android.car.dialer.log.L;
 import com.android.car.dialer.R;
 import com.android.car.dialer.TelecomActivity;
 import com.android.car.dialer.livedata.ActiveCallListLiveData;
@@ -26,6 +27,7 @@ import java.util.Set;
  * View model for {@link TelecomActivity}.
  */
 public class TelecomActivityViewModel extends AndroidViewModel {
+    private static final String TAG = "CD.TelecomActivityViewModel";
     /** A constant which indicates that there's no Bluetooth error. */
     public static final String NO_BT_ERROR = "NO_ERROR";
 
@@ -93,25 +95,34 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         private void onHfpStateChanged(Integer state) {
-            mIsHfpConnected = state == BluetoothProfile.STATE_CONNECTED;
-            if (mIsBluetoothEnabled && mHasPairedDevices && !mIsHfpConnected) {
-                setValue(mContext.getString(R.string.no_hfp));
-            } else {
-                setValue(NO_BT_ERROR);
-            }
+            mIsHfpConnected = (state != null && state == BluetoothProfile.STATE_CONNECTED);
+            update();
         }
 
         private void onPairListChanged(Set<BluetoothDevice> pairedDevices) {
-            mHasPairedDevices = pairedDevices != null && !pairedDevices.isEmpty();
-            if (mIsBluetoothEnabled && !mHasPairedDevices) {
-                setValue(mContext.getString(R.string.bluetooth_unpaired));
-            }
+            mHasPairedDevices = (pairedDevices != null && !pairedDevices.isEmpty());
+            update();
         }
 
         private void onBluetoothStateChanged(Integer state) {
-            mIsBluetoothEnabled = state == BluetoothStateLiveData.BluetoothState.ENABLED;
+            mIsBluetoothEnabled = (state != null
+                    && state == BluetoothStateLiveData.BluetoothState.ENABLED);
+            update();
+        }
+
+        private void update() {
+            L.d(TAG, "Update error string."
+                    + " mIsBluetoothEnabled : " + mIsBluetoothEnabled
+                    + " mHasPairedDevices : " + mHasPairedDevices
+                    + " mIsHfpConnected : " + mIsHfpConnected);
             if (!mIsBluetoothEnabled) {
                 setValue(mContext.getString(R.string.bluetooth_disabled));
+            } else if (!mHasPairedDevices) {
+                setValue(mContext.getString(R.string.bluetooth_unpaired));
+            } else if (!mIsHfpConnected) {
+                setValue(mContext.getString(R.string.no_hfp));
+            } else {
+                setValue(NO_BT_ERROR);
             }
         }
     }

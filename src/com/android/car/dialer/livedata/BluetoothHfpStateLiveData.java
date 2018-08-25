@@ -24,7 +24,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import androidx.annotation.MainThread;
+import com.android.car.dialer.log.L;
+
 import androidx.lifecycle.LiveData;
 
 /**
@@ -37,6 +38,8 @@ import androidx.lifecycle.LiveData;
  * </ul>
  */
 public class BluetoothHfpStateLiveData extends LiveData<Integer> {
+    private static final String TAG = "CD.BluetoothHfpStateLiveData";
+
     private final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private final Context mContext;
     private final IntentFilter mIntentFilter = new IntentFilter();
@@ -49,14 +52,9 @@ public class BluetoothHfpStateLiveData extends LiveData<Integer> {
     };
 
     /** Creates a new {@link BluetoothHfpStateLiveData}. Call on main thread. */
-    @MainThread
     public BluetoothHfpStateLiveData(Context context) {
         mContext = context;
-        if (mBluetoothAdapter != null) {
-            mIntentFilter.addAction(BluetoothHeadsetClient.ACTION_CONNECTION_STATE_CHANGED);
-            setValue(mBluetoothAdapter.getProfileConnectionState(
-                    BluetoothProfile.HEADSET_CLIENT));
-        }
+        mIntentFilter.addAction(BluetoothHeadsetClient.ACTION_CONNECTION_STATE_CHANGED);
     }
 
     @Override
@@ -77,7 +75,8 @@ public class BluetoothHfpStateLiveData extends LiveData<Integer> {
     private void updateState() {
         int state = mBluetoothAdapter.getProfileConnectionState(
                 BluetoothProfile.HEADSET_CLIENT);
-        if (state != getValue()) {
+        if (getValue() == null || state != getValue()) {
+            L.d(TAG, "updateState to " + state);
             setValue(state);
         }
     }
