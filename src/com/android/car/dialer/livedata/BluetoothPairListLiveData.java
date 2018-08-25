@@ -26,6 +26,8 @@ import android.content.IntentFilter;
 import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 
+import com.android.car.dialer.log.L;
+
 import java.util.Collections;
 import java.util.Set;
 
@@ -33,6 +35,7 @@ import java.util.Set;
  * Provides a list of paired Bluetooth devices.
  */
 public class BluetoothPairListLiveData extends LiveData<Set<BluetoothDevice>> {
+    private static final String TAG = "CD.BluetoothPairListLiveData";
 
     private final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private final Context mContext;
@@ -69,6 +72,8 @@ public class BluetoothPairListLiveData extends LiveData<Set<BluetoothDevice>> {
     }
 
     private void updateList() {
-        setValue(mBluetoothAdapter.getBondedDevices());
+        Set<BluetoothDevice> devices = mBluetoothAdapter.getBondedDevices();
+        L.d(TAG, "updateList to " + devices);
+        setValue(devices);
     }
 }
