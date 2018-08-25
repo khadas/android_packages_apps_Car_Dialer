@@ -24,16 +24,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
-import android.provider.CallLog;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.CallAudioState.CallAudioRoute;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -74,7 +71,6 @@ public class UiCallManager {
     }
 
     private Context mContext;
-    private TelephonyManager mTelephonyManager;
     private long mLastPlacedCallTimeMs;
 
     private TelecomManager mTelecomManager;
@@ -116,7 +112,6 @@ public class UiCallManager {
         }
 
         mContext = context;
-        mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
 
         mTelecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
         Intent intent = new Intent(context, InCallServiceImpl.class);

@@ -16,7 +16,7 @@
 
 package com.android.car.dialer.livedata;
 
-import static com.android.car.dialer.telecom.PhoneLoader.CALL_TYPE_ALL;
+import static com.android.car.dialer.telecom.PhoneLoader.CallType.CALL_TYPE_ALL;
 
 import android.content.Context;
 import android.database.Cursor;

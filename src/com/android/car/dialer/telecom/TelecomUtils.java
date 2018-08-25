@@ -65,73 +65,6 @@ public class TelecomUtils {
     private static String sVoicemailNumber;
     private static TelephonyManager sTelephonyManager;
 
-    @WorkerThread
-    public static Bitmap getContactPhotoFromNumber(ContentResolver contentResolver, String number) {
-        if (number == null) {
-            return null;
-        }
-
-        int id = getContactIdFromNumber(contentResolver, number);
-        if (id == 0) {
-            return null;
-        }
-        return getContactPhotoFromId(contentResolver, id);
-    }
-
-    /**
-     * Return the contact id for the given contact id
-     *
-     * @param id the contact id to get the photo for
-     * @return the contact photo if it is found, null otherwise.
-     */
-    public static Bitmap getContactPhotoFromId(ContentResolver contentResolver, long id) {
-        Uri photoUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
-        InputStream photoDataStream = ContactsContract.Contacts.openContactPhotoInputStream(
-                contentResolver, photoUri, true);
-
-        Options options = new Options();
-        options.inPreferQualityOverSpeed = true;
-        // Scaling will be handled by later. We shouldn't scale multiple times to avoid
-        // quality lost due to multiple potential scaling up and down.
-        options.inScaled = false;
-
-        Rect nullPadding = null;
-        Bitmap photo = BitmapFactory.decodeStream(photoDataStream, nullPadding, options);
-        if (photo != null) {
-            photo.setDensity(Bitmap.DENSITY_NONE);
-        }
-        return photo;
-    }
-
-    /**
-     * Return the contact id for the given phone number.
-     *
-     * @param number Caller phone number
-     * @return the contact id if it is found, 0 otherwise.
-     */
-    public static int getContactIdFromNumber(ContentResolver cr, String number) {
-        if (number == null || number.isEmpty()) {
-            return 0;
-        }
-
-        Uri uri = Uri.withAppendedPath(
-                ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
-                Uri.encode(number));
-        Cursor cursor = cr.query(uri, CONTACT_ID_PROJECTION, null, null, null);
-
-        try {
-            if (cursor != null && cursor.moveToFirst()) {
-                int id = cursor.getInt(cursor.getColumnIndex(ContactsContract.PhoneLookup._ID));
-                return id;
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return 0;
-    }
-
     /**
      * Return the label for the given phone number.
      *
@@ -223,30 +156,15 @@ public class TelecomUtils {
         return formattedNumber;
     }
 
-    public static String getDisplayName(Context context, UiCall call) {
-        // A call might get created before its children are added. In that case, the display name
-        // would go from "Unknown" to "Conference call" therefore we don't want to cache it.
-        if (call.hasChildren()) {
-            return context.getString(R.string.conference_call);
-        }
-
-        return getDisplayName(context, call.getNumber(), call.getGatewayInfoOriginalAddress());
-    }
-
     public static String getDisplayName(Context context, String number) {
-        return getDisplayName(context, number, null);
-    }
-
-    private static String getDisplayName(Context context, String number,
-            Uri gatewayOriginalAddress) {
         if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "getDisplayName: " + number
-                    + ", gatewayOriginalAddress: " + gatewayOriginalAddress);
+            Log.d(TAG, "getDisplayName: " + number);
         }
 
         if (TextUtils.isEmpty(number)) {
             return context.getString(R.string.unknown);
         }
+
         ContentResolver cr = context.getContentResolver();
         String name;
         if (number.equals(getVoicemailNumber(context))) {
@@ -258,9 +176,7 @@ public class TelecomUtils {
         if (name == null) {
             name = getFormattedNumber(context, number);
         }
-        if (name == null && gatewayOriginalAddress != null) {
-            name = gatewayOriginalAddress.getSchemeSpecificPart();
-        }
+
         if (name == null) {
             name = context.getString(R.string.unknown);
         }
