@@ -394,10 +394,10 @@ public class TelecomActivity extends CarDrawerActivity implements
             Drawable drawable = getDrawable(iconResId);
             drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
             holder.getIconView().setImageDrawable(drawable);
+            holder.itemView.setOnClickListener(v -> onItemClick(holder.getAdapterPosition()));
         }
 
-        @Override
-        public void onItemClick(int position) {
+        private void onItemClick(int position) {
             getDrawerController().closeDrawer();
             switch (position) {
                 case ITEM_DIAL:
