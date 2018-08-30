@@ -17,8 +17,13 @@
 package com.android.car.dialer.ui.dialpad;
 
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +48,41 @@ public class DialpadFragment extends DialerBaseFragment implements
     private static final String TAG = "CD.DialpadFragment";
     private static final String DIAL_NUMBER_KEY = "DIAL_NUMBER_KEY";
     private static final String DIALPAD_MODE_KEY = "DIALPAD_MODE_KEY";
-    private static final String PLUS_DIGIT = "+";
     private static final int MAX_DIAL_NUMBER = 20;
+
+    private static final SparseIntArray sToneMap = new SparseIntArray();
+    private static final SparseArray<Character> sDialValueMap = new SparseArray<>();
+
+    private static final int TONE_LENGTH_INFINITE = -1;
+    private static final int TONE_RELATIVE_VOLUME = 80;
+
+    static {
+        sToneMap.put(KeyEvent.KEYCODE_1, ToneGenerator.TONE_DTMF_1);
+        sToneMap.put(KeyEvent.KEYCODE_2, ToneGenerator.TONE_DTMF_2);
+        sToneMap.put(KeyEvent.KEYCODE_3, ToneGenerator.TONE_DTMF_3);
+        sToneMap.put(KeyEvent.KEYCODE_4, ToneGenerator.TONE_DTMF_4);
+        sToneMap.put(KeyEvent.KEYCODE_5, ToneGenerator.TONE_DTMF_5);
+        sToneMap.put(KeyEvent.KEYCODE_6, ToneGenerator.TONE_DTMF_6);
+        sToneMap.put(KeyEvent.KEYCODE_7, ToneGenerator.TONE_DTMF_7);
+        sToneMap.put(KeyEvent.KEYCODE_8, ToneGenerator.TONE_DTMF_8);
+        sToneMap.put(KeyEvent.KEYCODE_9, ToneGenerator.TONE_DTMF_9);
+        sToneMap.put(KeyEvent.KEYCODE_0, ToneGenerator.TONE_DTMF_0);
+        sToneMap.put(KeyEvent.KEYCODE_STAR, ToneGenerator.TONE_DTMF_S);
+        sToneMap.put(KeyEvent.KEYCODE_POUND, ToneGenerator.TONE_DTMF_P);
+
+        sDialValueMap.put(KeyEvent.KEYCODE_1, '1');
+        sDialValueMap.put(KeyEvent.KEYCODE_2, '2');
+        sDialValueMap.put(KeyEvent.KEYCODE_3, '3');
+        sDialValueMap.put(KeyEvent.KEYCODE_4, '4');
+        sDialValueMap.put(KeyEvent.KEYCODE_5, '5');
+        sDialValueMap.put(KeyEvent.KEYCODE_6, '6');
+        sDialValueMap.put(KeyEvent.KEYCODE_7, '7');
+        sDialValueMap.put(KeyEvent.KEYCODE_8, '8');
+        sDialValueMap.put(KeyEvent.KEYCODE_9, '9');
+        sDialValueMap.put(KeyEvent.KEYCODE_0, '0');
+        sDialValueMap.put(KeyEvent.KEYCODE_STAR, '*');
+        sDialValueMap.put(KeyEvent.KEYCODE_POUND, '#');
+    }
 
     /**
      * Shows the dialpad for an active phone call.
@@ -59,6 +97,7 @@ public class DialpadFragment extends DialerBaseFragment implements
     private TextView mTitleView;
     private int mMode;
     private StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
+    private ToneGenerator mToneGenerator;
 
     /**
      * Creates a new instance of the {@link DialpadFragment} which is used for dialing a number.
@@ -88,6 +127,12 @@ public class DialpadFragment extends DialerBaseFragment implements
         args.putInt(DIALPAD_MODE_KEY, MODE_IN_CALL);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
     }
 
     @Override
@@ -137,20 +182,46 @@ public class DialpadFragment extends DialerBaseFragment implements
     }
 
     @Override
-    public void onDialVoiceMail() {
-        UiCallManager.get().callVoicemail();
+    public void onPause() {
+        super.onPause();
+        mToneGenerator.stopTone();
     }
 
     @Override
-    public void onAppendDigit(String digit) {
-        if (PLUS_DIGIT.equals(digit)) {
-            removeLastDigit();
+    public void onKeyLongPressed(@KeypadFragment.DialKeyCode int keycode) {
+        switch (keycode) {
+            case KeyEvent.KEYCODE_0:
+                removeLastDigit();
+                appendDialedNumber("+");
+                break;
+            case KeyEvent.KEYCODE_1:
+                UiCallManager.get().callVoicemail();
         }
-        appendDialedNumber(digit);
     }
 
-    private String getFormattedNumber(String number) {
-        return TelecomUtils.getFormattedNumber(getContext(), number);
+    @Override
+    public void onKeyDown(@KeypadFragment.DialKeyCode int keycode) {
+        String digit = sDialValueMap.get(keycode).toString();
+        appendDialedNumber(digit);
+
+        UiCallManager uiCallmanager = UiCallManager.get();
+        boolean hasActiveCall = uiCallmanager.getPrimaryCall() != null;
+        if (hasActiveCall) {
+            uiCallmanager.playDtmfTone(uiCallmanager.getPrimaryCall(), sDialValueMap.get(keycode));
+        } else {
+            mToneGenerator.startTone(sToneMap.get(keycode), TONE_LENGTH_INFINITE);
+        }
+    }
+
+    @Override
+    public void onKeyUp(@KeypadFragment.DialKeyCode int keycode) {
+        UiCallManager uiCallmanager = UiCallManager.get();
+        boolean hasActiveCall = uiCallmanager.getPrimaryCall() != null;
+        if (hasActiveCall) {
+            uiCallmanager.stopDtmfTone(uiCallmanager.getPrimaryCall());
+        } else {
+            mToneGenerator.stopTone();
+        }
     }
 
     private void clearDialedNumber() {
@@ -161,7 +232,7 @@ public class DialpadFragment extends DialerBaseFragment implements
     private void removeLastDigit() {
         if (mNumber.length() != 0) {
             mNumber.deleteCharAt(mNumber.length() - 1);
-            mTitleView.setText(getFormattedNumber(mNumber.toString()));
+            mTitleView.setText(TelecomUtils.getFormattedNumber(getContext(), mNumber.toString()));
         }
 
         if (mNumber.length() == 0 && mMode == MODE_DIAL) {
@@ -172,7 +243,7 @@ public class DialpadFragment extends DialerBaseFragment implements
     private void appendDialedNumber(String number) {
         mNumber.append(number);
         if (mMode == MODE_DIAL && mNumber.length() < MAX_DIAL_NUMBER) {
-            mTitleView.setText(getFormattedNumber(mNumber.toString()));
+            mTitleView.setText(TelecomUtils.getFormattedNumber(getContext(), mNumber.toString()));
         } else {
             mTitleView.setText(mNumber.toString());
         }
