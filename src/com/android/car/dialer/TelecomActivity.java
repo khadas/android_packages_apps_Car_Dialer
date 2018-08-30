@@ -94,9 +94,6 @@ public class TelecomActivity extends CarDrawerActivity implements
 
         InMemoryPhoneBook.init(getApplicationContext());
 
-        findViewById(R.id.search).setOnClickListener(
-                v -> startActivity(new Intent(this, ContactSearchActivity.class)));
-
         TelecomActivityViewModel viewModel = ViewModelProviders.of(this).get(
                 TelecomActivityViewModel.class);
         mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
