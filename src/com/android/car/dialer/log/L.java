@@ -15,6 +15,7 @@
  */
 package com.android.car.dialer.log;
 
+import android.os.Build;
 import android.util.Log;
 
 /**
@@ -49,13 +50,13 @@ public class L {
     }
 
     public static void v(String tag, String msg) {
-        if (Log.isLoggable(tag, Log.VERBOSE)) {
+        if (Log.isLoggable(tag, Log.VERBOSE) || Build.IS_DEBUGGABLE) {
             Log.v(tag, msg);
         }
     }
 
     public static void d(String tag, String msg) {
-        if (Log.isLoggable(tag, Log.DEBUG)) {
+        if (Log.isLoggable(tag, Log.DEBUG) || Build.IS_DEBUGGABLE) {
             Log.d(tag, msg);
         }
     }
