@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.android.car.dialer.common.ObservableAsyncQuery;
 import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.entity.PhoneNumber;
+import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,6 +24,7 @@ import java.util.Map;
  * that they can be accessed more easily and quickly.
  */
 public class InMemoryPhoneBook {
+    private static final String TAG = "CD.InMemoryPhoneBook";
     private static InMemoryPhoneBook sInMemoryPhoneBook;
 
     private final Context mContext;
@@ -67,6 +69,7 @@ public class InMemoryPhoneBook {
     }
 
     private void onInit() {
+        L.v(TAG, "onInit");
         String selection = ContactsContract.Data.MIMETYPE + " = ?";
         String[] selectionArgs = new String[1];
         selectionArgs[0] = ContactsContract.CommonDataKinds.Phone
@@ -100,7 +103,9 @@ public class InMemoryPhoneBook {
      */
     @Nullable
     public Contact lookupContactEntry(String phoneNumber) {
+        L.v(TAG, "lookupContactEntry: " + phoneNumber);
         if (!isLoaded()) {
+            L.w(TAG, "looking up a contact while loading.");
             return null;
         }
 
@@ -130,6 +135,7 @@ public class InMemoryPhoneBook {
         mContacts.clear();
         mContacts.addAll(result.values());
         mContactsLiveData.setValue(mContacts);
+        L.d(TAG, "onDataLoaded " + mContacts);
         cursor.close();
     }
 }
