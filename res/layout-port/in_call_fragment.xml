@@ -22,7 +22,7 @@ limitations under the License.
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/dialer_container"
+        android:id="@+id/dialpad_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"

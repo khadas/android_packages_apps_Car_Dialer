@@ -43,6 +43,7 @@ public class InCallViewModel extends AndroidViewModel {
     private LiveData<CallDetail> mCallDetailLiveData;
     private LiveData<Integer> mCallStateLiveData;
     private LiveData<String> mCallStateDescriptionLiveData;
+    private LiveData<Call> mPrimaryCallLiveData;
     private Context mContext;
 
     public InCallViewModel(@NonNull Application application) {
@@ -50,11 +51,11 @@ public class InCallViewModel extends AndroidViewModel {
         mContext = application.getApplicationContext();
         LiveData<List<Call>> activeCallListLiveData = new ActiveCallListLiveData(
                 application.getApplicationContext());
-        LiveData<Call> primaryCallLiveData = Transformations.map(activeCallListLiveData,
+        mPrimaryCallLiveData = Transformations.map(activeCallListLiveData,
                 input -> (input != null && !input.isEmpty()) ? input.get(0) : null);
-        mCallDetailLiveData = Transformations.switchMap(primaryCallLiveData,
+        mCallDetailLiveData = Transformations.switchMap(mPrimaryCallLiveData,
                 input -> input != null ? new CallDetailLiveData(input) : null);
-        mCallStateLiveData = Transformations.switchMap(primaryCallLiveData,
+        mCallStateLiveData = Transformations.switchMap(mPrimaryCallLiveData,
                 input -> input != null ? new CallStateLiveData(input) : null);
         mCallStateDescriptionLiveData = new SelfRefreshDescriptionLiveData(mContext,
                 new HeartBeatLiveData(DateUtils.SECOND_IN_MILLIS), mCallDetailLiveData,
@@ -73,6 +74,13 @@ public class InCallViewModel extends AndroidViewModel {
      */
     public LiveData<Integer> getPrimaryCallState() {
         return mCallStateLiveData;
+    }
+
+    /**
+     * Returns the live data which monitor the primary call.
+     */
+    public LiveData<Call> getPrimaryCall() {
+        return mPrimaryCallLiveData;
     }
 
     /**

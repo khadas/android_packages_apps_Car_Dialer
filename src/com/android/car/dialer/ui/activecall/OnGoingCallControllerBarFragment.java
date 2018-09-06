@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer.ui.activecall;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.CallAudioState.CallAudioRoute;
 import android.view.LayoutInflater;
@@ -30,12 +32,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.UiCall;
 import com.android.car.dialer.telecom.UiCallManager;
 
 import java.util.List;
@@ -48,6 +50,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     private static String TAG = "CDialer.OngoingCallCtlFrg";
     private AlertDialog mAudioRouteSelectionDialog;
     private ImageView mAudioRouteButton;
+    private Call mActiveCall;
 
     public static OnGoingCallControllerBarFragment newInstance() {
         return new OnGoingCallControllerBarFragment();
@@ -95,6 +98,10 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         mAudioRouteSelectionDialog.getWindow().setBackgroundDrawableResource(
                 android.R.color.transpare‌​nt);
         list.setAdapter(new AudioRouteListAdapter(getContext(), availableRoutes));
+
+        InCallViewModel inCallViewModel = ViewModelProviders.of(getParentFragment()).get(
+                InCallViewModel.class);
+        mActiveCall = inCallViewModel.getPrimaryCall().getValue();
     }
 
     @Nullable
@@ -183,15 +190,15 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     }
 
     private void onHoldCall() {
-        UiCallManager uiCallManager = UiCallManager.get();
-        UiCall primaryCall = UiCallManager.get().getPrimaryCall();
-        uiCallManager.holdCall(primaryCall);
+        if (mActiveCall != null) {
+            mActiveCall.hold();
+        }
     }
 
     private void onUnholdCall() {
-        UiCallManager uiCallManager = UiCallManager.get();
-        UiCall primaryCall = UiCallManager.get().getPrimaryCall();
-        uiCallManager.unholdCall(primaryCall);
+        if (mActiveCall != null) {
+            mActiveCall.unhold();
+        }
     }
 
     private void onVoiceOutputChannelChanged(@CallAudioRoute int audioRoute) {
@@ -201,9 +208,9 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     }
 
     private void onEndCall() {
-        UiCallManager uiCallManager = UiCallManager.get();
-        UiCall primaryCall = UiCallManager.get().getPrimaryCall();
-        uiCallManager.disconnectCall(primaryCall);
+        if (mActiveCall != null) {
+            mActiveCall.disconnect();
+        }
     }
 
     private int getAudioRouteIconRes(@CallAudioRoute int audioRoute) {

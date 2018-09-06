@@ -70,7 +70,7 @@ public class StrequentsFragment extends DialerBaseFragment {
         StrequentsAdapter adapter = new StrequentsAdapter(getContext());
         adapter.setStrequentsListener(viewHolder -> {
             L.d(TAG, "onContactedClicked");
-            UiCallManager.get().safePlaceCall((String) viewHolder.itemView.getTag(), false);
+            UiCallManager.get().placeCall((String) viewHolder.itemView.getTag());
         });
 
         StrequentViewModel strequentViewModel = ViewModelProviders.of(this).get(

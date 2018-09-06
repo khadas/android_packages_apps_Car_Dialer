@@ -20,6 +20,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -32,12 +33,14 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.activecall.InCallViewModel;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 /**
@@ -98,6 +101,11 @@ public class DialpadFragment extends DialerBaseFragment implements
     private int mMode;
     private StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
     private ToneGenerator mToneGenerator;
+    /**
+     * An active call which this DialpadFragment is serving for.
+     */
+    @Nullable
+    private Call mActiveCall;
 
     /**
      * Creates a new instance of the {@link DialpadFragment} which is used for dialing a number.
@@ -158,6 +166,8 @@ public class DialpadFragment extends DialerBaseFragment implements
             mTitleView.setText("");
             deleteButton.setVisibility(View.GONE);
             callButton.setVisibility(View.GONE);
+            mActiveCall = ViewModelProviders.of(getParentFragment()).get(
+                    InCallViewModel.class).getPrimaryCall().getValue();
         } else {
             mTitleView.setText(getContext().getString(R.string.dial_a_number));
             callButton.setVisibility(View.VISIBLE);
@@ -168,7 +178,7 @@ public class DialpadFragment extends DialerBaseFragment implements
             callButton.setBackground(callDrawable);
             callButton.setOnClickListener((unusedView) -> {
                 if (!TextUtils.isEmpty(mNumber.toString()) && mMode == MODE_DIAL) {
-                    UiCallManager.get().safePlaceCall(mNumber.toString(), false);
+                    UiCallManager.get().placeCall(mNumber.toString());
                 }
             });
             deleteButton.setOnClickListener(v -> removeLastDigit());
@@ -204,22 +214,22 @@ public class DialpadFragment extends DialerBaseFragment implements
         String digit = sDialValueMap.get(keycode).toString();
         appendDialedNumber(digit);
 
-        UiCallManager uiCallmanager = UiCallManager.get();
-        boolean hasActiveCall = uiCallmanager.getPrimaryCall() != null;
-        if (hasActiveCall) {
-            uiCallmanager.playDtmfTone(uiCallmanager.getPrimaryCall(), sDialValueMap.get(keycode));
+        if (mActiveCall != null) {
+            L.d(TAG, "start DTMF tone for " + keycode);
+            mActiveCall.playDtmfTone(sDialValueMap.get(keycode));
         } else {
+            L.d(TAG, "start key pressed tone for " + keycode);
             mToneGenerator.startTone(sToneMap.get(keycode), TONE_LENGTH_INFINITE);
         }
     }
 
     @Override
     public void onKeyUp(@KeypadFragment.DialKeyCode int keycode) {
-        UiCallManager uiCallmanager = UiCallManager.get();
-        boolean hasActiveCall = uiCallmanager.getPrimaryCall() != null;
-        if (hasActiveCall) {
-            uiCallmanager.stopDtmfTone(uiCallmanager.getPrimaryCall());
+        if (mActiveCall != null) {
+            L.d(TAG, "stop DTMF tone");
+            mActiveCall.stopDtmfTone();
         } else {
+            L.d(TAG, "stop key pressed tone");
             mToneGenerator.stopTone();
         }
     }

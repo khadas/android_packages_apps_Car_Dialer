@@ -1,19 +1,21 @@
 package com.android.car.dialer.ui.activecall;
 
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.telecom.UiCall;
-import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 public class RingingCallControllerBarFragment extends DialerBaseFragment {
+
+    private Call mActiveCall;
 
     public static RingingCallControllerBarFragment newInstance() {
         return new RingingCallControllerBarFragment();
@@ -31,18 +33,21 @@ public class RingingCallControllerBarFragment extends DialerBaseFragment {
         fragmentView.findViewById(R.id.end_call_button).setOnClickListener((v) -> declineCall());
         fragmentView.findViewById(R.id.end_call_text).setOnClickListener((v) -> declineCall());
 
+        InCallViewModel inCallViewModel = ViewModelProviders.of(getParentFragment()).get(
+                InCallViewModel.class);
+        mActiveCall = inCallViewModel.getPrimaryCall().getValue();
         return fragmentView;
     }
 
     private void answerCall() {
-        UiCallManager uiCallManager = UiCallManager.get();
-        UiCall primaryCall = uiCallManager.getPrimaryCall();
-        uiCallManager.answerCall(primaryCall);
+        if (mActiveCall != null) {
+            mActiveCall.answer(/* videoState= */0);
+        }
     }
 
     private void declineCall() {
-        UiCallManager uiCallManager = UiCallManager.get();
-        UiCall primaryCall = uiCallManager.getPrimaryCall();
-        uiCallManager.rejectCall(primaryCall, false, null);
+        if (mActiveCall != null) {
+            mActiveCall.reject(/* rejectWithMessage= */false, /* textMessage= */null);
+        }
     }
 }
