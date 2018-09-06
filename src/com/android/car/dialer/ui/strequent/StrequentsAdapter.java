@@ -72,7 +72,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
     /** Sets the last call. */
     public void setLastCall(@Nullable UiCallLog lastCall) {
-        L.i(TAG, "setLastCall " + lastCall);
         if (mLastCall != null) {
             notifyItemChanged(0);
         } else {
@@ -154,7 +153,6 @@ public class StrequentsAdapter extends RecyclerView.Adapter<CallLogViewHolder>
      * @param viewHolder the view holder corresponding to this entry
      */
     private void onBindLastCallRow(final CallLogViewHolder viewHolder) {
-        L.i(TAG, "onBindLastCallRow");
         if (mLastCall == null) {
             return;
         }
