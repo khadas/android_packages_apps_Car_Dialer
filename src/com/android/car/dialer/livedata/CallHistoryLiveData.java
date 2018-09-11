@@ -86,10 +86,12 @@ public class CallHistoryLiveData extends AsyncQueryLiveData<List<PhoneCallLog>> 
     @Override
     protected List<PhoneCallLog> convertToEntity(Cursor cursor) {
         List<PhoneCallLog> resultList = new ArrayList<>();
-        PhoneCallLog previousCallLog = null;
 
         while (cursor.moveToNext()) {
             PhoneCallLog phoneCallLog = PhoneCallLog.fromCursor(cursor);
+            PhoneCallLog previousCallLog = resultList.isEmpty() ? null : resultList.get(
+                    resultList.size() - 1);
+
             if (previousCallLog != null
                     && PhoneNumberUtils.compare(
                     previousCallLog.getPhoneNumberString(), phoneCallLog.getPhoneNumberString())) {
@@ -97,7 +99,6 @@ public class CallHistoryLiveData extends AsyncQueryLiveData<List<PhoneCallLog>> 
             } else {
                 resultList.add(phoneCallLog);
             }
-            previousCallLog = phoneCallLog;
         }
         return resultList;
     }
