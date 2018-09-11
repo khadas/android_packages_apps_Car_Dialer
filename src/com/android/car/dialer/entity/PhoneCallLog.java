@@ -18,17 +18,24 @@ package com.android.car.dialer.entity;
 
 import android.database.Cursor;
 import android.provider.CallLog;
+import android.telephony.PhoneNumberUtils;
+
+import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 /**
  * Entity class for call logs of a phone number. This call log may contains multiple call
  * records.
  */
 public class PhoneCallLog {
+    private static final String TAG = "CD.PhoneCallLog";
+
     /** Call log record. */
     public static class Record implements Comparable<Record> {
         private final long mCallEndTimestamp;
@@ -113,8 +120,9 @@ public class PhoneCallLog {
      * Merges all call records with this call log's call records if they are representing the same
      * phone number.
      */
-    public void merge(PhoneCallLog phoneCallLog) {
-        if (mPhoneNumberString.equals(phoneCallLog.mPhoneNumberString)) {
+    public void merge(@Nonnull PhoneCallLog phoneCallLog) {
+        if (PhoneNumberUtils.compare(mPhoneNumberString, phoneCallLog.mPhoneNumberString)) {
+            L.d(TAG, "Merging call log " + phoneCallLog.getAllCallRecords());
             mCallRecords.addAll(phoneCallLog.mCallRecords);
             Collections.sort(mCallRecords);
             Collections.reverse(mCallRecords);
