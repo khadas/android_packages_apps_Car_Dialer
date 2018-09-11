@@ -16,6 +16,4 @@
 <resources>
     <dimen name="in_call_card_corner_radius">160dp</dimen>
     <dimen name="car_card_view_corner_radius">0dp</dimen>
-    <dimen name="icon_container_height">@dimen/call_log_item_height</dimen>
-    <dimen name="call_log_icon_size">76dp</dimen>
 </resources>
