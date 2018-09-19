@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.car.widget.PagedListView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
@@ -125,5 +126,11 @@ public class StrequentsFragment extends DialerBaseFragment {
 
             outRect.set(leftPadding, carPadding1, rightPadding, carPadding1);
         }
+    }
+
+    @StringRes
+    @Override
+    protected int getActionBarTitleRes() {
+        return R.string.favorites_title;
     }
 }

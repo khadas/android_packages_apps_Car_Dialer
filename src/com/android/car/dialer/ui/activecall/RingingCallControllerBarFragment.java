@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
-public class RingingCallControllerBarFragment extends DialerBaseFragment {
+public class RingingCallControllerBarFragment extends Fragment {
 
     private Call mActiveCall;
 

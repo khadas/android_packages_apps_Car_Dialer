@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.car.widget.ListItemAdapter;
 import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;
@@ -93,5 +94,11 @@ public class ContactListFragment extends DialerBaseFragment implements
         Fragment contactDetailFragment = ContactDetailsFragment.newInstance(uri, null);
         getChildFragmentManager().beginTransaction().replace(R.id.contact_detail_fragment_container,
                 contactDetailFragment).commit();
+    }
+
+    @StringRes
+    @Override
+    protected int getActionBarTitleRes() {
+        return R.string.contacts_title;
     }
 }
