@@ -32,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -232,6 +233,12 @@ public class DialpadFragment extends DialerBaseFragment implements
             L.d(TAG, "stop key pressed tone");
             mToneGenerator.stopTone();
         }
+    }
+
+    @StringRes
+    @Override
+    protected int getActionBarTitleRes() {
+        return R.string.dialpad_title;
     }
 
     private void clearDialedNumber() {

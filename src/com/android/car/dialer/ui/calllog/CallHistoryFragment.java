@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.car.widget.ListItemAdapter;
 import androidx.car.widget.PagedListView;
 import androidx.lifecycle.ViewModelProviders;
@@ -55,5 +56,11 @@ public class CallHistoryFragment extends DialerBaseFragment {
                 });
 
         return fragmentView;
+    }
+
+    @StringRes
+    @Override
+    protected int getActionBarTitleRes() {
+        return R.string.call_history_title;
     }
 }

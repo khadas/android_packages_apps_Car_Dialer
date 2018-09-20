@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import com.android.car.dialer.R;
@@ -41,11 +42,17 @@ public class DialerBaseFragment extends Fragment {
          * Sets the visibility of action bar.
          */
         void setActionBarVisibility(boolean isVisible);
+
+        /**
+         * Sets the title of the action bar.
+         */
+        void setActionBarTitle(@StringRes int titleRes);
     }
 
     @Override
     public void onResume() {
         setFullScreenBackground();
+        setActionBarTitle();
         super.onResume();
     }
 
@@ -56,6 +63,16 @@ public class DialerBaseFragment extends Fragment {
         Activity parentActivity = getActivity();
         if (parentActivity instanceof DialerFragmentParent) {
             ((DialerFragmentParent) parentActivity).setBackground(getFullScreenBackgroundColor());
+        }
+    }
+
+    /**
+     * Sets the title of the action bar.
+     */
+    protected void setActionBarTitle() {
+        Activity parentActivity = getActivity();
+        if (parentActivity instanceof DialerFragmentParent) {
+            ((DialerFragmentParent) parentActivity).setActionBarTitle(getActionBarTitleRes());
         }
     }
 
@@ -85,5 +102,13 @@ public class DialerBaseFragment extends Fragment {
      */
     protected Drawable getFullScreenBackgroundColor() {
         return new ColorDrawable(getContext().getColor(R.color.phone_theme));
+    }
+
+    /**
+     * Return the string resources id for the action bar title.
+     */
+    @StringRes
+    protected int getActionBarTitleRes() {
+        return R.string.phone_app_name;
     }
 }

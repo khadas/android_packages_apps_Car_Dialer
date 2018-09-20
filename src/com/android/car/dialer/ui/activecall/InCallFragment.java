@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -133,5 +134,11 @@ public class InCallFragment extends DialerBaseFragment implements
         L.i(TAG, "updateBody " + text);
         mUserProfileBodyText.setText(text);
         mUserProfileBodyText.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
+    }
+
+    @StringRes
+    @Override
+    protected int getActionBarTitleRes() {
+        return R.string.in_call_title;
     }
 }

@@ -24,6 +24,7 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.car.drawer.CarDrawerActivity;
 import androidx.car.drawer.CarDrawerAdapter;
@@ -85,7 +86,6 @@ public class TelecomActivity extends CarDrawerActivity implements
 
         setToolbarElevation(0f);
         setMainContent(R.layout.telecom_activity);
-        updateTitle();
         getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(getColor(android.R.color.transparent)));
         mUiCallManager = UiCallManager.init(getApplicationContext());
@@ -162,6 +162,11 @@ public class TelecomActivity extends CarDrawerActivity implements
                 actionBar.hide();
             }
         }
+    }
+
+    @Override
+    public void setActionBarTitle(@StringRes int titleRes) {
+        setTitle(titleRes);
     }
 
     private void handleIntent() {
@@ -265,6 +270,14 @@ public class TelecomActivity extends CarDrawerActivity implements
         setContentFragment(fragment);
     }
 
+    private void showCallHistory() {
+        setContentFragment(CallHistoryFragment.newInstance());
+    }
+
+    private void showContact() {
+        setContentFragment(ContactListFragment.newInstance());
+    }
+
     /**
      * Checks if the dialpad fragment is opened and hides it if it is.
      */
@@ -289,18 +302,13 @@ public class TelecomActivity extends CarDrawerActivity implements
     }
 
     private void setContentFragmentWithFadeAnimation(Fragment fragment) {
-        if (vdebug()) {
-            Log.d(TAG, "setContentFragmentWithFadeAnimation, fragment: " + fragment);
-        }
+        L.d(TAG, "setContentFragmentWithFadeAnimation, fragment: " + fragment);
         setContentFragmentWithAnimations(fragment,
                 R.anim.telecom_fade_in, R.anim.telecom_fade_out);
     }
 
     private void setContentFragmentWithAnimations(Fragment fragment, int enter, int exit) {
-        if (vdebug()) {
-            Log.d(TAG, "setContentFragmentWithAnimations: " + fragment);
-        }
-
+        L.d(TAG, "setContentFragmentWithAnimations: " + fragment);
         maybeHideDialer();
 
         getSupportFragmentManager().beginTransaction()
@@ -319,7 +327,6 @@ public class TelecomActivity extends CarDrawerActivity implements
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_fragment_container, fragment, CONTENT_FRAGMENT_TAG)
                 .commitNow();
-        updateTitle();
     }
 
     /**
@@ -411,39 +418,6 @@ public class TelecomActivity extends CarDrawerActivity implements
                 default:
                     Log.w(TAG, "Invalid position in ROOT menu! " + position);
             }
-            setTitle(getTitleString());
         }
-    }
-
-    private void showCallHistory() {
-        setContentFragment(CallHistoryFragment.newInstance());
-    }
-
-    private void showContact() {
-        setContentFragment(ContactListFragment.newInstance());
-    }
-
-    private void updateTitle() {
-        setTitle(getTitleString());
-    }
-
-    private String getTitleString() {
-        Fragment currentFragment = getCurrentFragment();
-
-        int titleResId = R.string.phone_app_name;
-
-        if (currentFragment instanceof StrequentsFragment) {
-            titleResId = R.string.favorites_title;
-        } else if (currentFragment instanceof CallHistoryFragment) {
-            titleResId = R.string.call_history_title;
-        } else if (currentFragment instanceof ContactListFragment) {
-            titleResId = R.string.contacts_title;
-        } else if (currentFragment instanceof DialpadFragment) {
-            titleResId = R.string.dialpad_title;
-        } else if (currentFragment instanceof InCallFragment) {
-            titleResId = R.string.in_call_title;
-        }
-
-        return getString(titleResId);
     }
 }
