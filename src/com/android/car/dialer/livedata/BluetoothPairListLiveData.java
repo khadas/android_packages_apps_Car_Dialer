@@ -53,7 +53,6 @@ public class BluetoothPairListLiveData extends LiveData<Set<BluetoothDevice>> {
     public BluetoothPairListLiveData(Context context) {
         mContext = context;
         mIntentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        setValue(Collections.emptySet());
     }
 
     @Override

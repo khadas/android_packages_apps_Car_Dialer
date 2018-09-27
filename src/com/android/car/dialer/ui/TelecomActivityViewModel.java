@@ -74,9 +74,9 @@ public class TelecomActivityViewModel extends AndroidViewModel {
     }
 
     private static class ErrorStringLiveData extends MediatorLiveData<String> {
-        private boolean mIsHfpConnected;
-        private boolean mIsBluetoothEnabled;
-        private boolean mHasPairedDevices;
+        private LiveData<Integer> mHfpStateLiveData;
+        private LiveData<Set<BluetoothDevice>> mPairedListLiveData;
+        private LiveData<Integer> mBluetoothStateLiveData;
 
         private Context mContext;
 
@@ -85,9 +85,10 @@ public class TelecomActivityViewModel extends AndroidViewModel {
                 BluetoothPairListLiveData pairListLiveData,
                 BluetoothStateLiveData bluetoothStateLiveData) {
             mContext = context;
-            onBluetoothStateChanged(bluetoothStateLiveData.getValue());
-            onPairListChanged(pairListLiveData.getValue());
-            onHfpStateChanged(hfpStateLiveData.getValue());
+            mHfpStateLiveData = hfpStateLiveData;
+            mPairedListLiveData = pairListLiveData;
+            mBluetoothStateLiveData = bluetoothStateLiveData;
+            setValue(NO_BT_ERROR);
 
             addSource(hfpStateLiveData, this::onHfpStateChanged);
             addSource(pairListLiveData, this::onPairListChanged);
@@ -95,35 +96,58 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         private void onHfpStateChanged(Integer state) {
-            mIsHfpConnected = (state != null && state == BluetoothProfile.STATE_CONNECTED);
             update();
         }
 
         private void onPairListChanged(Set<BluetoothDevice> pairedDevices) {
-            mHasPairedDevices = (pairedDevices != null && !pairedDevices.isEmpty());
             update();
         }
 
         private void onBluetoothStateChanged(Integer state) {
-            mIsBluetoothEnabled = (state != null
-                    && state == BluetoothStateLiveData.BluetoothState.ENABLED);
+            update();
+        }
+
+        @Override
+        protected void onActive() {
+            super.onActive();
             update();
         }
 
         private void update() {
+            boolean isBluetoothEnabled = isBluetoothEnabled();
+            boolean hasPairedDevices = hasPairedDevices();
+            boolean isHfpConnected = isHfpConnected();
             L.d(TAG, "Update error string."
-                    + " mIsBluetoothEnabled : " + mIsBluetoothEnabled
-                    + " mHasPairedDevices : " + mHasPairedDevices
-                    + " mIsHfpConnected : " + mIsHfpConnected);
-            if (!mIsBluetoothEnabled) {
+                    + " isBluetoothEnabled : " + isBluetoothEnabled
+                    + " hasPairedDevices : " + hasPairedDevices
+                    + " isHfpConnected : " + isHfpConnected);
+            if (!isBluetoothEnabled) {
                 setValue(mContext.getString(R.string.bluetooth_disabled));
-            } else if (!mHasPairedDevices) {
+            } else if (!hasPairedDevices) {
                 setValue(mContext.getString(R.string.bluetooth_unpaired));
-            } else if (!mIsHfpConnected) {
+            } else if (!isHfpConnected) {
                 setValue(mContext.getString(R.string.no_hfp));
             } else {
-                setValue(NO_BT_ERROR);
+                if (!NO_BT_ERROR.equals(getValue())) {
+                    setValue(NO_BT_ERROR);
+                }
             }
+        }
+
+        private boolean isHfpConnected() {
+            Integer hfpState = mHfpStateLiveData.getValue();
+            return hfpState == null || hfpState == BluetoothProfile.STATE_CONNECTED;
+        }
+
+        private boolean isBluetoothEnabled() {
+            Integer bluetoothState = mBluetoothStateLiveData.getValue();
+            return bluetoothState == null
+                    || bluetoothState != BluetoothStateLiveData.BluetoothState.DISABLED;
+        }
+
+        private boolean hasPairedDevices() {
+            Set<BluetoothDevice> pairedDevices = mPairedListLiveData.getValue();
+            return pairedDevices == null || !pairedDevices.isEmpty();
         }
     }
 }
