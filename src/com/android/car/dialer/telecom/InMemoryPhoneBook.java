@@ -136,6 +136,5 @@ public class InMemoryPhoneBook {
         mContacts.addAll(result.values());
         mContactsLiveData.setValue(mContacts);
         L.d(TAG, "onDataLoaded " + mContacts);
-        cursor.close();
     }
 }
