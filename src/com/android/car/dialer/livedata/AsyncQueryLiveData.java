@@ -58,6 +58,5 @@ public abstract class AsyncQueryLiveData<T> extends LiveData<T> {
 
     private void onCursorLoaded(Cursor cursor) {
         setValue(convertToEntity(cursor));
-        cursor.close();
     }
 }
