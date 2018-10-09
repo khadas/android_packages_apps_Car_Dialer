@@ -18,6 +18,7 @@ package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 
 import androidx.car.widget.ListItem;
 import androidx.car.widget.ListItemProvider;
@@ -53,7 +54,8 @@ public class ContactListItemProvider extends ListItemProvider {
         for (Contact contact : contacts) {
             ContactListItem textListItem = new ContactListItem(mContext, contact);
             // set a primary icon place holder drawable.
-            textListItem.setPrimaryActionIcon(null, TextListItem.PRIMARY_ACTION_ICON_SIZE_MEDIUM);
+            textListItem.setPrimaryActionIcon((Icon) null,
+                    TextListItem.PRIMARY_ACTION_ICON_SIZE_MEDIUM);
             textListItem.setTitle(contact.getDisplayName());
             textListItem.setOnClickListener(
                     (v) -> {
