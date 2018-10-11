@@ -38,6 +38,7 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
@@ -51,7 +52,7 @@ import java.util.List;
  */
 public class ContactDetailsFragment extends DialerBaseFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String TAG = "ContactDetailsFragment";
+    private static final String TAG = "CD.ContactDetailsFrag";
     private static final String TELEPHONE_URI_PREFIX = "tel:";
 
     private static final int DETAILS_LOADER_QUERY_ID = 1;
@@ -102,9 +103,18 @@ public class ContactDetailsFragment extends DialerBaseFragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onStart() {
+        super.onStart();
+        L.d(TAG, "onStart");
+        hideActionBar();
         getLoaderManager().initLoader(DETAILS_LOADER_QUERY_ID, null, this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        L.d(TAG, "onStop");
+        showActionBar();
     }
 
     /**
@@ -132,9 +142,7 @@ public class ContactDetailsFragment extends DialerBaseFragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if (vdebug()) {
-            Log.d(TAG, "onCreateLoader id=" + id);
-        }
+        L.d(TAG, "onCreateLoader id=" + id);
 
         if (id != DETAILS_LOADER_QUERY_ID) {
             return null;
@@ -147,10 +155,7 @@ public class ContactDetailsFragment extends DialerBaseFragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if (vdebug()) {
-            Log.d(TAG, "onLoadFinished");
-        }
-
+        L.d(TAG, "onLoadFinished");
         if (cursor.moveToFirst()) {
             mListView.setAdapter(new ContactDetailsAdapter(cursor));
         }
@@ -158,10 +163,6 @@ public class ContactDetailsFragment extends DialerBaseFragment
 
     @Override
     public void onLoaderReset(Loader loader) {
-    }
-
-    private boolean vdebug() {
-        return Log.isLoggable(TAG, Log.DEBUG);
     }
 
     private class ContactDetailViewHolder extends RecyclerView.ViewHolder {
@@ -226,6 +227,7 @@ public class ContactDetailsFragment extends DialerBaseFragment
                         }
 
                         public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+                            cursor.moveToFirst();
                             while (cursor.moveToNext()) {
                                 int typeColIdx = cursor.getColumnIndex(
                                         ContactsContract.CommonDataKinds.Phone.TYPE);
