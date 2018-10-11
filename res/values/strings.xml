@@ -44,7 +44,7 @@
     <!-- Status label for phone state [CHAR LIMIT=20] -->
     <string name="call_state_connecting">Connecting</string>
     <!-- Status label for phone state [CHAR LIMIT=20] -->
-    <string name="call_state_dialing">Dialing</string>
+    <string name="call_state_dialing">Dialing...</string>
     <!-- Status label for phone state [CHAR LIMIT=20] -->
     <string name="call_state_hold">On Hold</string>
     <!-- Status label for phone state [CHAR LIMIT=20] -->
