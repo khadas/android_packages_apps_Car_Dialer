@@ -44,6 +44,7 @@ import java.util.List;
  */
 public class ContactListFragment extends DialerBaseFragment implements
         ContactListItemProvider.OnShowContactDetailListener {
+    private String CONTACT_DETAIL_FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
     private ContactListItemProvider mContactListItemProvider;
     private ListItemAdapter mContactListAdapter;
     private View mContactDetailContainer;
@@ -71,10 +72,8 @@ public class ContactListFragment extends DialerBaseFragment implements
         mContactListAdapter.notifyDataSetChanged();
 
         mContactDetailContainer = fragmentView.findViewById(R.id.contact_detail_container);
-        fragmentView.findViewById(R.id.back_button).setOnClickListener((v) -> {
-            mContactDetailContainer.setVisibility(View.GONE);
-            showActionBar();
-        });
+        fragmentView.findViewById(R.id.back_button).setOnClickListener(
+                (v) -> hideContactDetailFragment());
         return fragmentView;
     }
 
@@ -83,17 +82,26 @@ public class ContactListFragment extends DialerBaseFragment implements
         mContactListAdapter.notifyDataSetChanged();
     }
 
+    private void hideContactDetailFragment() {
+        Fragment contactDetailFragment = getChildFragmentManager().findFragmentByTag(
+                CONTACT_DETAIL_FRAGMENT_TAG);
+        if (contactDetailFragment != null) {
+            getChildFragmentManager().beginTransaction().remove(contactDetailFragment).commit();
+        }
+
+        mContactDetailContainer.setVisibility(View.GONE);
+    }
+
     @Override
     public void onShowContactDetail(int contactId, String lookupKey) {
         mContactDetailContainer.setVisibility(View.VISIBLE);
-        hideActionBar();
 
         final Uri uri = ContactsContract.Contacts.getLookupUri(contactId, lookupKey);
         // TODO: pass this Contact entity to ContactDetailFragment instead of having it loaded on
         // its own.
         Fragment contactDetailFragment = ContactDetailsFragment.newInstance(uri, null);
         getChildFragmentManager().beginTransaction().replace(R.id.contact_detail_fragment_container,
-                contactDetailFragment).commit();
+                contactDetailFragment, CONTACT_DETAIL_FRAGMENT_TAG).commit();
     }
 
     @StringRes
