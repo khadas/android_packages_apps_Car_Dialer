@@ -45,7 +45,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     guava \
     car-glide \
     car-glide-disklrucache \
-    car-gifdecoder
+    car-gifdecoder \
+    libphonenumber
 
 LOCAL_PROGUARD_ENABLED := disabled
 
