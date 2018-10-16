@@ -16,10 +16,13 @@
 
 package com.android.car.dialer.entity;
 
+import static com.google.i18n.phonenumbers.PhoneNumberUtil.MatchType.EXACT_MATCH;
+import static com.google.i18n.phonenumbers.PhoneNumberUtil.MatchType.NSN_MATCH;
+
 import android.content.res.Resources;
-import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.telephony.PhoneNumberUtils;
+
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.util.Objects;
 
@@ -49,15 +52,16 @@ public class PhoneNumber {
     public boolean equals(Object obj) {
         if (obj instanceof PhoneNumber) {
             PhoneNumber other = (PhoneNumber) obj;
-            return mNumber.equals(other.mNumber) && mType == other.mType;
-
+            PhoneNumberUtil.MatchType matchType = PhoneNumberUtil.getInstance().isNumberMatch(
+                    mNumber, other.mNumber);
+            return (matchType == EXACT_MATCH || matchType == NSN_MATCH) && mType == other.mType;
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mNumber, mType);
+        return Objects.hash(mType);
     }
 
     /**
@@ -89,5 +93,10 @@ public class PhoneNumber {
     @Nullable
     public String getLabel() {
         return mLabel;
+    }
+
+    @Override
+    public String toString() {
+        return mNumber + " " + String.valueOf(mLabel);
     }
 }

@@ -1,9 +1,11 @@
 package com.android.car.dialer.telecom;
 
+import static com.google.i18n.phonenumbers.PhoneNumberUtil.MatchType.EXACT_MATCH;
+import static com.google.i18n.phonenumbers.PhoneNumberUtil.MatchType.NSN_MATCH;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.telephony.PhoneNumberUtils;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -13,6 +15,8 @@ import com.android.car.dialer.common.ObservableAsyncQuery;
 import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
+
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -111,7 +115,9 @@ public class InMemoryPhoneBook {
 
         for (Contact contact : mContacts) {
             for (PhoneNumber number : contact.getNumbers()) {
-                if (PhoneNumberUtils.compare(mContext, phoneNumber, number.getNumber())) {
+                PhoneNumberUtil.MatchType matchType = PhoneNumberUtil.getInstance().isNumberMatch(
+                        number.getNumber(), phoneNumber);
+                if (matchType == EXACT_MATCH || matchType == NSN_MATCH) {
                     return contact;
                 }
             }

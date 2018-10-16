@@ -144,6 +144,11 @@ public class Contact {
         return mLookupKey.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return mDisplayName + mPhoneNumbers;
+    }
+
     public String getDisplayName() {
         return mDisplayName;
     }
