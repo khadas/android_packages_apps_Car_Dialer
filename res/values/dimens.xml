@@ -55,14 +55,10 @@
 
     <dimen name="apps_max_content_width">748dp</dimen>
 
-    <!-- The width of the dialpad. It's left should align with the beginning of the in call
-         card's right rounded corner and extend to card margin. Therefore, this value should be
-         in_call_card_right_margin + car_card_view_corner_radius - card_margin.  -->
-    <dimen name="call_log_card_overlap">-4dp</dimen>
     <dimen name="call_log_icon_margin">4dp</dimen>
-    <dimen name="call_log_item_height">@dimen/car_single_line_list_item_height</dimen>
-    <dimen name="call_log_icon_size">@dimen/car_primary_icon_size</dimen>
+
     <dimen name="car_card_view_corner_radius">2dp</dimen>
+    <dimen name="favorite_item_height">@dimen/car_single_line_list_item_height</dimen>
     <dimen name="favorite_card_corner_radius">@dimen/car_radius_5</dimen>
     <dimen name="favorite_card_space">@dimen/car_padding_1</dimen>
 

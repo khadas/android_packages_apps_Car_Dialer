@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer.ui.strequent;
 
+package com.android.car.dialer.ui.favorite;
+
+import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -25,32 +27,34 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.car.app.CarListDialog;
 import androidx.car.widget.PagedListView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.Contact;
+import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
-import com.android.car.dialer.ui.common.entity.UiCallLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains a list of contacts.
+ * Contains a list of favorite contacts.
  */
-public class StrequentsFragment extends DialerBaseFragment {
-    private static final String TAG = "CD.StrequentsFrag";
+public class FavoriteFragment extends DialerBaseFragment {
+    private static final String TAG = "CD.FavoriteFrag";
 
     private static final String KEY_MAX_CLICKS = "max_clicks";
     private static final int DEFAULT_MAX_CLICKS = 6;
 
-    public static StrequentsFragment newInstance() {
-        return new StrequentsFragment();
+    public static FavoriteFragment newInstance() {
+        return new FavoriteFragment();
     }
 
     @Override
@@ -58,7 +62,7 @@ public class StrequentsFragment extends DialerBaseFragment {
             Bundle savedInstanceState) {
         L.d(TAG, "onCreateView");
 
-        View view = inflater.inflate(R.layout.strequents_fragment, container, false);
+        View view = inflater.inflate(R.layout.favorite_fragment, container, false);
         PagedListView listView = view.findViewById(R.id.list_view);
         int numOfColumn = getContext().getResources().getInteger(
                 R.integer.favorite_fragment_grid_column);
@@ -68,21 +72,13 @@ public class StrequentsFragment extends DialerBaseFragment {
         listView.getRecyclerView().setItemAnimator(null);
         listView.setMaxPages(getMaxPages());
 
-        StrequentsAdapter adapter = new StrequentsAdapter(getContext());
-        adapter.setStrequentsListener(viewHolder -> {
-            L.d(TAG, "onContactedClicked");
-            UiCallManager.get().placeCall((String) viewHolder.itemView.getTag());
-        });
+        FavoriteAdapter adapter = new FavoriteAdapter();
 
-        StrequentViewModel strequentViewModel = ViewModelProviders.of(this).get(
-                StrequentViewModel.class);
-        LiveData<List<ContactEntry>> strequentList = strequentViewModel.getStrequents();
-        LiveData<UiCallLog> lastCall = strequentViewModel.getLastCall();
-        adapter.setStrequentList(strequentList.getValue());
-        adapter.setLastCall(lastCall.getValue());
-
-        strequentList.observe(this, adapter::setStrequentList);
-        lastCall.observe(this, adapter::setLastCall);
+        FavoriteViewModel favoriteViewModel = ViewModelProviders.of(this).get(
+                FavoriteViewModel.class);
+        LiveData<List<Contact>> favoriteContacts = favoriteViewModel.getFavoriteContacts();
+        adapter.setOnListItemClickedListener(this::onItemClicked);
+        favoriteContacts.observe(this, adapter::setFavoriteContacts);
 
         listView.setAdapter(adapter);
         return view;
@@ -91,6 +87,35 @@ public class StrequentsFragment extends DialerBaseFragment {
     @Override
     protected Drawable getFullScreenBackgroundColor() {
         return new ColorDrawable(getContext().getColor(R.color.phone_theme_secondary));
+    }
+
+    private void onItemClicked(Contact contact) {
+        Context context = getContext();
+        // TODO: check whether a default entry is set, if set, directly connect that entry
+        // instead of showing a dialog.
+        if (contact.getNumbers().size() > 1) {
+            ArrayList<String> numberListItems = new ArrayList<>();
+            // TODO: customize the CarListDialog to show list items up-to-spec.
+            for (PhoneNumber phoneNumber : contact.getNumbers()) {
+                numberListItems.add(
+                        phoneNumber.getNumber() + " " + phoneNumber.getReadableLabel(
+                                context.getResources()));
+            }
+            new CarListDialog.Builder(context)
+                    .setTitle(R.string.select_number_dialog_title)
+                    .setItems(numberListItems.toArray(new String[0]), (dialog, which) -> placeCall(
+                            contact.getNumbers().get(which).getNumber()))
+                    .create()
+                    .show();
+        } else if (contact.getNumbers().size() == 1) {
+            placeCall(contact.getNumbers().get(0).getNumber());
+        } else {
+            L.w(TAG, "Contact " + contact.getDisplayName() + " doesn't have any phone number");
+        }
+    }
+
+    private void placeCall(String number) {
+        UiCallManager.get().placeCall(number);
     }
 
     private int getMaxPages() {
@@ -113,7 +138,7 @@ public class StrequentsFragment extends DialerBaseFragment {
                 @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
             int carPadding1 =
-                    StrequentsFragment.this.getContext().getResources().getDimensionPixelOffset(
+                    FavoriteFragment.this.getContext().getResources().getDimensionPixelOffset(
                             R.dimen.car_padding_1);
 
             int leftPadding = 0;

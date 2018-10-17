@@ -37,8 +37,8 @@
             <ImageView
                 android:id="@+id/contact_picture"
                 android:layout_gravity="center"
-                android:layout_width="@dimen/call_log_icon_size"
-                android:layout_height="@dimen/call_log_icon_size"
+                android:layout_width="@dimen/avatar_icon_size"
+                android:layout_height="@dimen/avatar_icon_size"
                 android:scaleType="centerCrop" />
         </FrameLayout>
 

@@ -16,14 +16,9 @@
 package com.android.car.dialer.telecom;
 
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapFactory.Options;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -38,10 +33,8 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
 
 import com.android.car.apps.common.LetterTileDrawable;
-import com.android.car.dialer.ContactEntry;
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.CallDetail;
 import com.android.car.dialer.entity.Contact;
@@ -49,7 +42,6 @@ import com.android.car.dialer.entity.Contact;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.io.InputStream;
 import java.util.Locale;
 
 public class TelecomUtils {
