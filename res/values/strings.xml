@@ -138,5 +138,8 @@
     <string name="type_home">Home</string>
     <string name="type_work">Work</string>
     <string name="type_mobile">Mobile</string>
+    <string name="type_multiple">Multiple</string>
     <string name="type_other">Other</string>
+
+    <string name="select_number_dialog_title">Choose a phone number</string>
 </resources>

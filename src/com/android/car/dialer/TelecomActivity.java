@@ -43,7 +43,7 @@ import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
-import com.android.car.dialer.ui.strequent.StrequentsFragment;
+import com.android.car.dialer.ui.favorite.FavoriteFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
 
 /**
@@ -53,7 +53,7 @@ import com.android.car.dialer.ui.warning.NoHfpFragment;
  * <li>OngoingCallFragment
  * <li>NoHfpFragment
  * <li>DialpadFragment
- * <li>StrequentFragment
+ * <li>FavoriteFragment
  * </ul>
  */
 public class TelecomActivity extends CarDrawerActivity implements
@@ -185,7 +185,7 @@ public class TelecomActivity extends CarDrawerActivity implements
             if (currentFragment == null
                     || currentFragment instanceof InCallFragment
                     || currentFragment instanceof NoHfpFragment) {
-                setContentFragment(StrequentsFragment.newInstance());
+                setContentFragment(FavoriteFragment.newInstance());
             }
         }
     }
@@ -286,7 +286,7 @@ public class TelecomActivity extends CarDrawerActivity implements
                     setContentFragment(CallHistoryFragment.newInstance());
                     break;
                 case ITEM_FAVORITES:
-                    setContentFragment(StrequentsFragment.newInstance());
+                    setContentFragment(FavoriteFragment.newInstance());
                     break;
                 case ITEM_CONTACT:
                     setContentFragment(ContactListFragment.newInstance());
