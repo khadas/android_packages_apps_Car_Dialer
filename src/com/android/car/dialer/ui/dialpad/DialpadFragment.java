@@ -155,10 +155,6 @@ public class DialpadFragment extends DialerBaseFragment implements
                 .replace(R.id.dialpad_fragment_container, keypadFragment)
                 .commit();
 
-        if (getArguments() != null && getArguments().containsKey(DIAL_NUMBER_KEY)) {
-            appendDialedNumber(getArguments().getString(DIAL_NUMBER_KEY));
-        }
-
         mTitleView = rootView.findViewById(R.id.title);
         ImageButton callButton = rootView.findViewById(R.id.call_button);
         ImageButton deleteButton = rootView.findViewById(R.id.delete_button);
@@ -170,7 +166,11 @@ public class DialpadFragment extends DialerBaseFragment implements
             mActiveCall = ViewModelProviders.of(getParentFragment()).get(
                     InCallViewModel.class).getPrimaryCall().getValue();
         } else {
-            mTitleView.setText(getContext().getString(R.string.dial_a_number));
+            if (getArguments() != null && getArguments().containsKey(DIAL_NUMBER_KEY)) {
+                appendDialedNumber(getArguments().getString(DIAL_NUMBER_KEY));
+            } else {
+                mTitleView.setText(getContext().getString(R.string.dial_a_number));
+            }
             callButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.VISIBLE);
             Context context = getContext();
