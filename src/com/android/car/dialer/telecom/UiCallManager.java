@@ -134,18 +134,20 @@ public class UiCallManager {
         context.bindService(intent, mInCallServiceConnection, Context.BIND_AUTO_CREATE);
 
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        adapter.getProfileProxy(mContext, new BluetoothProfile.ServiceListener() {
-            @Override
-            public void onServiceConnected(int profile, BluetoothProfile proxy) {
-                if (profile == BluetoothProfile.HEADSET_CLIENT) {
-                    mBluetoothHeadsetClient = (BluetoothHeadsetClient) proxy;
+        if (adapter != null) {
+            adapter.getProfileProxy(mContext, new BluetoothProfile.ServiceListener() {
+                @Override
+                public void onServiceConnected(int profile, BluetoothProfile proxy) {
+                    if (profile == BluetoothProfile.HEADSET_CLIENT) {
+                        mBluetoothHeadsetClient = (BluetoothHeadsetClient) proxy;
+                    }
                 }
-            }
 
-            @Override
-            public void onServiceDisconnected(int profile) {
-            }
-        }, BluetoothProfile.HEADSET_CLIENT);
+                @Override
+                public void onServiceDisconnected(int profile) {
+                }
+            }, BluetoothProfile.HEADSET_CLIENT);
+        }
     }
 
     private final ServiceConnection mInCallServiceConnection = new ServiceConnection() {

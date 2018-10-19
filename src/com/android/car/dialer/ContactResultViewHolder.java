@@ -21,13 +21,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.car.utils.ListItemBackgroundResolver;
 
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.ui.CircleBitmapDrawable;
@@ -35,8 +31,12 @@ import com.android.car.dialer.ui.CircleBitmapDrawable;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import androidx.annotation.Nullable;
+import androidx.car.utils.ListItemBackgroundResolver;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
- * A {@link android.support.v7.widget.RecyclerView.ViewHolder} that will parse relevant
+ * A {@link androidx.recyclerview.widget.RecyclerView.ViewHolder} that will parse relevant
  * views out of a {@code contact_result} layout.
  */
 public class ContactResultViewHolder extends RecyclerView.ViewHolder {

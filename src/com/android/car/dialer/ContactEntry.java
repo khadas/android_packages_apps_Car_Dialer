@@ -18,12 +18,12 @@ package com.android.car.dialer;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
+
+import androidx.annotation.Nullable;
 
 /**
  * Encapsulates data about a phone Contact entry. Typically loaded from the local Contact store.
