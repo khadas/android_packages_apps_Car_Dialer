@@ -41,6 +41,9 @@ import com.android.car.dialer.entity.Contact;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.Locale;
 
@@ -128,13 +131,7 @@ public class TelecomUtils {
             return "";
         }
 
-        String countryIso = getTelephonyManager(context).getSimCountryIso().toUpperCase(Locale.US);
-        if (countryIso.length() != 2) {
-            countryIso = Locale.getDefault().getCountry();
-            if (countryIso == null || countryIso.length() != 2) {
-                countryIso = "US";
-            }
-        }
+        String countryIso = getIsoDefaultCountryNumber(context);
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "PhoneNumberUtils.formatNumberToE16, number: "
                     + number + ", country: " + countryIso);
@@ -146,6 +143,31 @@ public class TelecomUtils {
             Log.d(TAG, "getFormattedNumber, result: " + formattedNumber);
         }
         return formattedNumber;
+    }
+
+    private static String getIsoDefaultCountryNumber(Context context) {
+        String countryIso = getTelephonyManager(context).getSimCountryIso().toUpperCase(Locale.US);
+        if (countryIso.length() != 2) {
+            countryIso = Locale.getDefault().getCountry();
+            if (countryIso == null || countryIso.length() != 2) {
+                countryIso = "US";
+            }
+        }
+
+        return countryIso;
+    }
+
+    /**
+     * Creates a new instance of {@link Phonenumber#Phonenumber} base on the given number and sim
+     * card country code. Returns {@code null} if the number in an invalid number.
+     */
+    @Nullable
+    public static Phonenumber.PhoneNumber createI18nPhoneNumber(Context context, String number) {
+        try {
+            return PhoneNumberUtil.getInstance().parse(number, getIsoDefaultCountryNumber(context));
+        } catch (NumberParseException e) {
+            return null;
+        }
     }
 
     public static String getDisplayName(Context context, String number) {

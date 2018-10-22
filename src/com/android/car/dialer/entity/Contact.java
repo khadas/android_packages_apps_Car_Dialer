@@ -104,7 +104,7 @@ public class Contact {
         int labelColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL);
         int numberColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-        PhoneNumber number = new PhoneNumber(
+        PhoneNumber number = PhoneNumber.newInstance(context,
                 cursor.getString(numberColumn),
                 cursor.getInt(typeColumn),
                 cursor.getString(labelColumn));

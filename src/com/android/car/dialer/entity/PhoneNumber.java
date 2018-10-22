@@ -16,13 +16,12 @@
 
 package com.android.car.dialer.entity;
 
-import static com.google.i18n.phonenumbers.PhoneNumberUtil.MatchType.EXACT_MATCH;
-import static com.google.i18n.phonenumbers.PhoneNumberUtil.MatchType.NSN_MATCH;
-
+import android.content.Context;
 import android.content.res.Resources;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.Objects;
 
@@ -33,35 +32,44 @@ import javax.annotation.Nullable;
  */
 public class PhoneNumber {
 
-    private final String mNumber;
     private final int mType;
+    private final I18nPhoneNumberWrapper mI18nPhoneNumber;
     @Nullable
     private final String mLabel;
 
-    public PhoneNumber(String number, int type) {
-        this(number, type, null);
+    /**
+     * Creates a new {@link PhoneNumber}.
+     *
+     * @param rawNumber A potential phone number.
+     * @param type      The phone number type. See more at
+     *                  {@link ContactsContract.CommonDataKinds.CommonColumns#TYPE}
+     * @param label     The user defined label. See more at
+     *                  {@link ContactsContract.CommonDataKinds.CommonColumns#LABEL}
+     */
+    public static PhoneNumber newInstance(Context context, String rawNumber, int type,
+            @Nullable String label) {
+        I18nPhoneNumberWrapper i18nPhoneNumber = I18nPhoneNumberWrapper.newInstance(context,
+                rawNumber);
+        return new PhoneNumber(i18nPhoneNumber, type, label);
     }
 
-    public PhoneNumber(String number, int type, String label) {
-        mNumber = number;
+    private PhoneNumber(I18nPhoneNumberWrapper i18nNumber, int type, @Nullable String label) {
         mType = type;
+        mI18nPhoneNumber = i18nNumber;
         mLabel = label;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof PhoneNumber) {
-            PhoneNumber other = (PhoneNumber) obj;
-            PhoneNumberUtil.MatchType matchType = PhoneNumberUtil.getInstance().isNumberMatch(
-                    mNumber, other.mNumber);
-            return (matchType == EXACT_MATCH || matchType == NSN_MATCH) && mType == other.mType;
-        }
-        return false;
+        return obj instanceof PhoneNumber
+                && ((PhoneNumber) obj).mType == mType
+                && Objects.equals(((PhoneNumber) obj).mLabel, mLabel)
+                && mI18nPhoneNumber.equals(((PhoneNumber) obj).mI18nPhoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mType);
+        return Objects.hash(mI18nPhoneNumber, mType, mLabel);
     }
 
     /**
@@ -72,12 +80,18 @@ public class PhoneNumber {
     }
 
     /**
-     * Gets phone number.
+     * Gets a phone number in the international format if valid. Otherwise, returns the raw number.
      */
     public String getNumber() {
-        return mNumber;
+        return mI18nPhoneNumber.getNumber();
     }
 
+    /**
+     * Returns the format independent i18n {@link I18nPhoneNumberWrapper wrapper} class.
+     */
+    public I18nPhoneNumberWrapper getI18nPhoneNumberWrapper() {
+        return mI18nPhoneNumber;
+    }
 
     /**
      * Gets the type of phone number, for example Home or Work. Possible values are defined in
@@ -97,6 +111,6 @@ public class PhoneNumber {
 
     @Override
     public String toString() {
-        return mNumber + " " + String.valueOf(mLabel);
+        return getNumber() + " " + String.valueOf(mLabel);
     }
 }
