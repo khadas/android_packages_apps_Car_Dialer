@@ -140,16 +140,17 @@ public class InMemoryPhoneBook {
             }
         }
 
+        mIsLoaded = true;
+        mContacts.clear();
+        mContacts.addAll(result.values());
+        mContactsLiveData.setValue(mContacts);
+
         for (Contact contact : mContacts) {
             for (PhoneNumber phoneNumber : contact.getNumbers()) {
                 mPhoneNumberContactMap.put(phoneNumber.getI18nPhoneNumberWrapper(), contact);
             }
         }
 
-        mIsLoaded = true;
-        mContacts.clear();
-        mContacts.addAll(result.values());
-        mContactsLiveData.setValue(mContacts);
         L.d(TAG, "onDataLoaded " + mContacts);
     }
 }
