@@ -109,7 +109,7 @@ public class InMemoryPhoneBook {
      */
     @Nullable
     public Contact lookupContactEntry(String phoneNumber) {
-        L.v(TAG, "lookupContactEntry: " + phoneNumber);
+        L.v(TAG, "lookupContactEntry: %s", phoneNumber);
         if (!isLoaded()) {
             L.w(TAG, "looking up a contact while loading.");
             return null;
@@ -151,6 +151,6 @@ public class InMemoryPhoneBook {
             }
         }
 
-        L.d(TAG, "onDataLoaded " + mContacts);
+        L.d(TAG, "onDataLoaded %s", mContacts);
     }
 }

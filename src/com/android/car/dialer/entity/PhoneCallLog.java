@@ -23,7 +23,6 @@ import android.telephony.PhoneNumberUtils;
 import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -122,7 +121,7 @@ public class PhoneCallLog {
      */
     public void merge(@Nonnull PhoneCallLog phoneCallLog) {
         if (PhoneNumberUtils.compare(mPhoneNumberString, phoneCallLog.mPhoneNumberString)) {
-            L.d(TAG, "Merging call log " + phoneCallLog.getAllCallRecords());
+            L.d(TAG, "Merging call log %s", phoneCallLog.getAllCallRecords());
             mCallRecords.addAll(phoneCallLog.mCallRecords);
             Collections.sort(mCallRecords);
             Collections.reverse(mCallRecords);

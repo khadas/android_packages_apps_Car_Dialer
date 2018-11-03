@@ -112,13 +112,13 @@ public class UiCallManager {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
-            L.d(TAG, "onServiceConnected: " + name + ", service: " + binder);
+            L.d(TAG, "onServiceConnected: %s, service: %s", name, binder);
             mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            L.d(TAG, "onServiceDisconnected: " + name);
+            L.d(TAG, "onServiceDisconnected: %s", name);
         }
     };
 

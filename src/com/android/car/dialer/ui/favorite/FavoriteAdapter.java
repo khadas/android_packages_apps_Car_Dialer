@@ -51,14 +51,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
 
     /** Sets the favorite contact list. */
     public void setFavoriteContacts(List<Contact> favoriteContacts) {
-        L.d(TAG, "setFavoriteContacts " + favoriteContacts);
+        L.d(TAG, "setFavoriteContacts %s", favoriteContacts);
         mFavoriteContacts = (favoriteContacts != null) ? favoriteContacts : Collections.emptyList();
         notifyDataSetChanged();
     }
 
     @Override
     public void setMaxItems(int maxItems) {
-        L.d(TAG, "setMaxItems " + maxItems);
+        L.d(TAG, "setMaxItems %s", maxItems);
         mMaxItems = maxItems;
     }
 

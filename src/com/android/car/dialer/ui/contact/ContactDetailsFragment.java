@@ -142,7 +142,7 @@ public class ContactDetailsFragment extends DialerBaseFragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        L.d(TAG, "onCreateLoader id=" + id);
+        L.d(TAG, "onCreateLoader id = %s", id);
 
         if (id != DETAILS_LOADER_QUERY_ID) {
             return null;

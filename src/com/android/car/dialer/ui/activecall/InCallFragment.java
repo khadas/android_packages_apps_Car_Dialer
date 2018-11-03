@@ -97,7 +97,7 @@ public class InCallFragment extends DialerBaseFragment implements
     }
 
     private void bindUserProfileView(@Nullable CallDetail callDetail) {
-        L.i(TAG, "bindUserProfileView " + callDetail);
+        L.i(TAG, "bindUserProfileView: %s", callDetail);
         if (callDetail == null) {
             return;
         }
@@ -113,7 +113,7 @@ public class InCallFragment extends DialerBaseFragment implements
     }
 
     private void updateControllerBarFragment(@Nullable Integer callState) {
-        L.i(TAG, "updateControllerBarFragment " + callState);
+        L.i(TAG, "updateControllerBarFragment %s", callState);
         if (callState == null) {
             return;
         }
@@ -131,7 +131,7 @@ public class InCallFragment extends DialerBaseFragment implements
     }
 
     private void updateBody(String text) {
-        L.i(TAG, "updateBody " + text);
+        L.i(TAG, "updateBody: %s", text);
         mUserProfileBodyText.setText(text);
         mUserProfileBodyText.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
     }

@@ -57,7 +57,7 @@ class FavoriteContactViewHolder extends RecyclerView.ViewHolder {
         mTitle.setText(displayName);
 
         if (contact.getNumbers().isEmpty()) {
-            L.w(TAG, "contact " + contact.getDisplayName() + " doesn't have any phone number");
+            L.w(TAG, "contact %s doesn't have any phone number", contact.getDisplayName());
             return;
         }
 
