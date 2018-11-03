@@ -93,10 +93,10 @@ public class UiCallLog {
     }
 
     /**
-     * Returns the last call end timestamp of this log in milliseconds since the epoch.
+     * Returns the most recent call end timestamp of this log in milliseconds since the epoch.
      */
-    public long getLastCallEndTimestamp() {
+    public long getMostRecentCallEndTimestamp() {
         return mCallRecords.isEmpty() ? 0
-                : mCallRecords.get(mCallRecords.size() - 1).getCallEndTimestamp();
+                : mCallRecords.get(0).getCallEndTimestamp();
     }
 }

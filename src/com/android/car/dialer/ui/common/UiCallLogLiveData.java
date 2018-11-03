@@ -90,7 +90,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<UiCallLog>> {
                 return;
             }
 
-            String newRelativeTime = getRelativeTime(uiCallLog.getLastCallEndTimestamp());
+            String newRelativeTime = getRelativeTime(uiCallLog.getMostRecentCallEndTimestamp());
             if (!oldRelativeTime.equals(newRelativeTime)) {
                 String newSecondaryText = getSecondaryText(type, newRelativeTime);
                 uiCallLog.setText(newSecondaryText);
