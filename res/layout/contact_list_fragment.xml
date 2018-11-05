@@ -25,7 +25,8 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false"/>
+        android:clipChildren="false"
+        android:theme="@style/PagedListViewTheme" />
 
     <FrameLayout
         android:id="@+id/contact_detail_container"
