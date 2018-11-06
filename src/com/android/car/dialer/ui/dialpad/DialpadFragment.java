@@ -148,7 +148,7 @@ public class DialpadFragment extends DialerBaseFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         mMode = getArguments().getInt(DIALPAD_MODE_KEY);
-        L.d(TAG, "onCreateView mode: " + mMode);
+        L.d(TAG, "onCreateView mode: %s", mMode);
         View rootView = inflater.inflate(R.layout.dialpad_fragment, container, false);
         Fragment keypadFragment = KeypadFragment.newInstance();
         getChildFragmentManager().beginTransaction()
@@ -216,10 +216,10 @@ public class DialpadFragment extends DialerBaseFragment implements
         appendDialedNumber(digit);
 
         if (mActiveCall != null) {
-            L.d(TAG, "start DTMF tone for " + keycode);
+            L.d(TAG, "start DTMF tone for %s", keycode);
             mActiveCall.playDtmfTone(sDialValueMap.get(keycode));
         } else {
-            L.d(TAG, "start key pressed tone for " + keycode);
+            L.d(TAG, "start key pressed tone for %s", keycode);
             mToneGenerator.startTone(sToneMap.get(keycode), TONE_LENGTH_INFINITE);
         }
     }

@@ -110,7 +110,7 @@ public class FavoriteFragment extends DialerBaseFragment {
         } else if (contact.getNumbers().size() == 1) {
             placeCall(contact.getNumbers().get(0).getNumber());
         } else {
-            L.w(TAG, "Contact " + contact.getDisplayName() + " doesn't have any phone number");
+            L.w(TAG, "contact %s doesn't have any phone number", contact.getDisplayName());
         }
     }
 
@@ -127,7 +127,7 @@ public class FavoriteFragment extends DialerBaseFragment {
         // We want to show one fewer page than max clicks to allow clicking on an item,
         // but, the first page is "free" since it doesn't take any clicks to show
         final int maxPages = maxClicks < 0 ? -1 : maxClicks;
-        L.v(TAG, "Max clicks: " + maxClicks + ", Max pages: " + maxPages);
+        L.v(TAG, "Max clicks: %s, Max pages: %s", maxClicks, maxPages);
         return maxPages;
     }
 

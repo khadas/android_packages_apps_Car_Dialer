@@ -138,7 +138,7 @@ public class TelecomActivity extends CarDrawerActivity implements
     private void handleIntent() {
         Intent intent = getIntent();
         String action = intent != null ? intent.getAction() : null;
-        L.d(TAG, "handleIntent, intent: " + intent + ", action: " + action);
+        L.d(TAG, "handleIntent, intent: %s, action: %s", intent, action);
         if (action == null || action.length() == 0) {
             return;
         }
@@ -202,7 +202,7 @@ public class TelecomActivity extends CarDrawerActivity implements
      * Sets the fragment that will be shown as the main content of this Activity.
      */
     private void setContentFragment(Fragment fragment) {
-        L.d(TAG, "setContentFragment: " + fragment);
+        L.d(TAG, "setContentFragment: %s", fragment);
         if (fragment == null) {
             return;
         }

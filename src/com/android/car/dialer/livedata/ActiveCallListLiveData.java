@@ -66,7 +66,7 @@ public class ActiveCallListLiveData extends LiveData<List<Call>> implements
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
-            L.i(TAG, "onServiceConnected " + name);
+            L.i(TAG, "onServiceConnected %s", name);
             mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
             mInCallService.addActiveCallListChangedCallback(ActiveCallListLiveData.this);
             updateActiveCallList();
@@ -100,13 +100,13 @@ public class ActiveCallListLiveData extends LiveData<List<Call>> implements
 
     @Override
     public void onTelecomCallAdded(Call telecomCall) {
-        L.i(TAG, "onTelecomCallAdded " + telecomCall);
+        L.i(TAG, "onTelecomCallAdded %s", telecomCall);
         updateActiveCallList();
     }
 
     @Override
     public void onTelecomCallRemoved(Call telecomCall) {
-        L.i(TAG, "onTelecomCallRemoved " + telecomCall);
+        L.i(TAG, "onTelecomCallRemoved %s", telecomCall);
         updateActiveCallList();
     }
 

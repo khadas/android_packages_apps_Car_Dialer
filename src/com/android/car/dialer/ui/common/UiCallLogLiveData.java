@@ -86,7 +86,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<UiCallLog>> {
                 type = splittedSecondaryText.get(0);
                 oldRelativeTime = splittedSecondaryText.get(1);
             } else {
-                L.w(TAG, "secondary text format is incorrect: " + secondaryText);
+                L.w(TAG, "secondary text format is incorrect: %s", secondaryText);
                 return;
             }
 

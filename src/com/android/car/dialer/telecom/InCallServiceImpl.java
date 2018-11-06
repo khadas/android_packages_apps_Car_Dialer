@@ -75,7 +75,7 @@ public class InCallServiceImpl extends InCallService {
     @Override
     public void onCallAdded(Call telecomCall) {
         super.onCallAdded(telecomCall);
-        L.d(TAG, "onCallAdded: " + telecomCall + ", state: " + telecomCall);
+        L.d(TAG, "onCallAdded: %s", telecomCall);
 
         telecomCall.registerCallback(mCallListener);
         mCallListener.onStateChanged(telecomCall, telecomCall.getState());
@@ -92,7 +92,7 @@ public class InCallServiceImpl extends InCallService {
 
     @Override
     public void onCallRemoved(Call telecomCall) {
-        L.d(TAG, "onCallRemoved: " + telecomCall);
+        L.d(TAG, "onCallRemoved: %s", telecomCall);
         for (Callback callback : mCallbacks) {
             callback.onTelecomCallRemoved(telecomCall);
         }
@@ -107,7 +107,7 @@ public class InCallServiceImpl extends InCallService {
 
     @Override
     public IBinder onBind(Intent intent) {
-        L.d(TAG, "onBind: " + intent);
+        L.d(TAG, "onBind: %s", intent);
         return ACTION_LOCAL_BIND.equals(intent.getAction())
                 ? new LocalBinder()
                 : super.onBind(intent);
@@ -116,10 +116,10 @@ public class InCallServiceImpl extends InCallService {
     private final Call.Callback mCallListener = new Call.Callback() {
         @Override
         public void onStateChanged(Call call, int state) {
-            L.d(TAG, "onStateChanged call: " + call + ", state: " + state);
+            L.d(TAG, "onStateChanged call: %s, state: %s", call, state);
 
             if (state == Call.STATE_RINGING || state == Call.STATE_DIALING) {
-                L.i(TAG, "Incoming/outgoing call: " + call);
+                L.i(TAG, "Incoming/outgoing call: %s", call);
 
                 // TODO(b/25190782): here we should show heads-up notification for incoming call,
                 // however system notifications are disabled by System UI and we haven't implemented
@@ -133,7 +133,7 @@ public class InCallServiceImpl extends InCallService {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        L.d(TAG, "onUnbind, intent: " + intent);
+        L.d(TAG, "onUnbind, intent: %s", intent);
         return super.onUnbind(intent);
     }
 

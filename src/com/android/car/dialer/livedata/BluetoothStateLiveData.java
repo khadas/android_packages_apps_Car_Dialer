@@ -88,7 +88,7 @@ public class BluetoothStateLiveData extends LiveData<Integer> {
         }
 
         if (getValue() == null || state != getValue()) {
-            L.d(TAG, "updateState to " + state);
+            L.d(TAG, "updateState to %s", state);
             setValue(state);
         }
     }
