@@ -76,7 +76,7 @@ public class BluetoothHfpStateLiveData extends LiveData<Integer> {
         int state = mBluetoothAdapter.getProfileConnectionState(
                 BluetoothProfile.HEADSET_CLIENT);
         if (getValue() == null || state != getValue()) {
-            L.d(TAG, "updateState to " + state);
+            L.d(TAG, "updateState to %s", state);
             setValue(state);
         }
     }

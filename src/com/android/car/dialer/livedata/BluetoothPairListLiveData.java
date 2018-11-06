@@ -72,7 +72,7 @@ public class BluetoothPairListLiveData extends LiveData<Set<BluetoothDevice>> {
 
     private void updateList() {
         Set<BluetoothDevice> devices = mBluetoothAdapter.getBondedDevices();
-        L.d(TAG, "updateList to " + devices);
+        L.d(TAG, "updateList to %s", devices);
         setValue(devices);
     }
 }

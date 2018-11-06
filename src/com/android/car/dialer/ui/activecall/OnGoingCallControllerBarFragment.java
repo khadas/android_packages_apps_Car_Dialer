@@ -223,7 +223,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             case CallAudioState.ROUTE_SPEAKER:
                 return R.drawable.ic_speaker_phone;
             default:
-                L.w(TAG, "Unknown audio route: " + audioRoute);
+                L.w(TAG, "Unknown audio route: %s", audioRoute);
                 return -1;
         }
     }
@@ -238,7 +238,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             case CallAudioState.ROUTE_SPEAKER:
                 return R.string.audio_route_phone_speaker;
             default:
-                L.w(TAG, "Unknown audio route: " + audioRoute);
+                L.w(TAG, "Unknown audio route: %s", audioRoute);
                 return -1;
         }
     }

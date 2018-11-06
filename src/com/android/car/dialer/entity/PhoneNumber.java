@@ -21,8 +21,6 @@ import android.content.res.Resources;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
-import com.google.i18n.phonenumbers.Phonenumber;
-
 import java.util.Objects;
 
 import javax.annotation.Nullable;

@@ -118,9 +118,12 @@ public class TelecomActivityViewModel extends AndroidViewModel {
             boolean hasPairedDevices = hasPairedDevices();
             boolean isHfpConnected = isHfpConnected();
             L.d(TAG, "Update error string."
-                    + " isBluetoothEnabled : " + isBluetoothEnabled
-                    + " hasPairedDevices : " + hasPairedDevices
-                    + " isHfpConnected : " + isHfpConnected);
+                            + " isBluetoothEnabled: %s"
+                            + " hasPairedDevices: %s"
+                            + " isHfpConnected: %s",
+                    isBluetoothEnabled,
+                    hasPairedDevices,
+                    isHfpConnected);
             if (!isBluetoothEnabled) {
                 setValue(mContext.getString(R.string.bluetooth_disabled));
             } else if (!hasPairedDevices) {
