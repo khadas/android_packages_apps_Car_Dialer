@@ -18,5 +18,6 @@
     android:id="@+id/content_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/car_app_bar_height"
     android:background="@color/telecom_activity_background_color">
 </FrameLayout>

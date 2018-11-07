@@ -15,7 +15,7 @@ limitations under the License.
 -->
 <resources>
     <!-- The theme for the TelecomActivity. -->
-    <style name="TelecomActivityTheme" parent="@style/Theme.Car.Light.NoActionBar.Drawer" >
+    <style name="Theme.Dialer" parent="Theme.NoActionBar.Drawer" >
         <item name="android:statusBarColor">@color/phone_status_bar_theme</item>
         <item name="android:colorPrimary">@android:color/transparent</item>
         <item name="android:colorPrimaryDark">@color/phone_status_bar_theme</item>
@@ -24,10 +24,5 @@ limitations under the License.
         <item name="drawerBackgroundColor">@color/phone_theme</item>
     </style>
 
-    <!-- The theme for the contact search page. -->
-    <style name="ContactSearchActivityTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/phone_status_bar_theme</item>
-        <item name="android:colorPrimary">@android:color/transparent</item>
-        <item name="android:colorPrimaryDark">@color/phone_status_bar_theme</item>
-    </style>
+    <style name="PagedListViewTheme" parent="Theme.CarSupportWrapper.NoActionBar"></style>
 </resources>
