@@ -39,6 +39,7 @@ LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.cardview_cardview \
     car-apps-common \
     car-arch-common \
+    car-theme-lib \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     androidx-constraintlayout_constraintlayout-solver \

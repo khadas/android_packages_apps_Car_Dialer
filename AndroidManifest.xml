@@ -37,7 +37,7 @@
 
         <activity android:name=".TelecomActivity"
             android:launchMode="singleInstance"
-            android:theme="@style/TelecomActivityTheme"
+            android:theme="@style/Theme.Dialer"
             android:label="@string/phone_app_name"
             android:exported="true"
             android:resizeableActivity="true">
@@ -63,7 +63,7 @@
 
         <activity android:name=".ui.search.ContactSearchActivity"
             android:label="@string/phone_app_name"
-            android:theme="@style/ContactSearchActivityTheme"
+            android:theme="@style/Theme.Dialer"
             android:exported="true"
             android:launchMode="singleTop"
             android:resizeableActivity="true">

@@ -15,6 +15,7 @@
  */
 package com.android.car.dialer;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -25,14 +26,13 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.ActionBar;
-import androidx.car.drawer.CarDrawerActivity;
 import androidx.car.drawer.CarDrawerAdapter;
 import androidx.car.drawer.DrawerItemViewHolder;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.apps.common.DrawerActivity;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
@@ -56,7 +56,7 @@ import com.android.car.dialer.ui.warning.NoHfpFragment;
  * <li>FavoriteFragment
  * </ul>
  */
-public class TelecomActivity extends CarDrawerActivity implements
+public class TelecomActivity extends DrawerActivity implements
         DialerBaseFragment.DialerFragmentParent {
     private static final String TAG = "CD.TelecomActivity";
 
@@ -72,10 +72,8 @@ public class TelecomActivity extends CarDrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         L.d(TAG, "onCreate");
-
-        setToolbarElevation(0f);
-        setMainContent(R.layout.telecom_activity);
-        getSupportActionBar().setBackgroundDrawable(
+        setContentView(R.layout.telecom_activity);
+        getActionBar().setBackgroundDrawable(
                 new ColorDrawable(getColor(android.R.color.transparent)));
         mUiCallManager = UiCallManager.init(getApplicationContext());
         mUiBluetoothMonitor = UiBluetoothMonitor.init(getApplicationContext());
@@ -120,7 +118,7 @@ public class TelecomActivity extends CarDrawerActivity implements
 
     @Override
     public void setActionBarVisibility(boolean isVisible) {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             if (isVisible) {
                 actionBar.show();
