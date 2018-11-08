@@ -41,6 +41,7 @@
             android:label="@string/phone_app_name"
             android:exported="true"
             android:resizeableActivity="true">
+            <meta-data android:name="distractionOptimized" android:value="true"/>
             <intent-filter>
                 <action android:name="android.intent.action.DIAL"/>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -67,6 +68,7 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:resizeableActivity="true">
+            <meta-data android:name="distractionOptimized" android:value="true"/>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />
