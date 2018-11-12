@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
@@ -124,7 +125,6 @@ public class ContactDetailsFragment extends DialerBaseFragment
     public void onStart() {
         super.onStart();
         L.d(TAG, "onStart");
-        hideActionBar();
 
         Uri contactUri = getArguments().getParcelable(KEY_CONTACT_QUERY_URI);
         if (contactUri != null) {
@@ -135,13 +135,6 @@ public class ContactDetailsFragment extends DialerBaseFragment
         if (contact != null) {
             mListView.setAdapter(new ContactDetailsEntityAdapter(getContext(), contact));
         }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        L.d(TAG, "onStop");
-        showActionBar();
     }
 
     /**
@@ -194,6 +187,12 @@ public class ContactDetailsFragment extends DialerBaseFragment
     @Override
     public void onLoaderReset(Loader loader) {
         // No-op
+    }
+
+    @StringRes
+    @Override
+    protected int getActionBarTitleRes() {
+        return R.string.contacts_title;
     }
 
     private static class ContactDetailsEntityAdapter extends ContactDetailsAdapter {

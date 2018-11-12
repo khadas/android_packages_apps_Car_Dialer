@@ -13,60 +13,10 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<FrameLayout
+<androidx.car.widget.PagedListView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false">
-
-    <androidx.car.widget.PagedListView
-        android:id="@+id/list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:theme="@style/PagedListViewTheme" />
-
-    <FrameLayout
-        android:id="@+id/contact_detail_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/contact_detail_bar_height">
-            <ImageView
-                android:id="@+id/back_button"
-                android:layout_width="@dimen/contact_list_back_target_size"
-                android:layout_height="@dimen/contact_list_back_target_size"
-                android:scaleType="center"
-                android:src="@drawable/ic_arrow_back"
-                android:tint="@color/dialer_tint"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/margin_guideline"
-                app:layout_constraintTop_toTopOf="parent"/>
-            <androidx.constraintlayout.widget.Guideline
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/margin_guideline"
-                app:layout_constraintGuide_begin="@dimen/contact_list_guideline_begin"
-                android:orientation="vertical"/>
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/contacts_title"
-                style="?android:attr/textAppearanceLarge"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/back_button"
-                app:layout_constraintTop_toTopOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <FrameLayout
-            android:id="@+id/contact_detail_fragment_container"
-            android:layout_marginTop="@dimen/contact_list_fragment_margin"
-            android:background="@android:color/transparent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </FrameLayout>
-</FrameLayout>
+    android:clipChildren="false"
+    android:theme="@style/PagedListViewTheme"/>
