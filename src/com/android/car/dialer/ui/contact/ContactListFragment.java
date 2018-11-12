@@ -45,7 +45,6 @@ public class ContactListFragment extends DialerBaseFragment implements
     private static final String CONTACT_DETAIL_FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
     private ContactListItemProvider mContactListItemProvider;
     private ListItemAdapter mContactListAdapter;
-    private View mContactDetailContainer;
 
     public static ContactListFragment newInstance() {
         return new ContactListFragment();
@@ -66,10 +65,6 @@ public class ContactListFragment extends DialerBaseFragment implements
         ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
                 ContactListViewModel.class);
         contactListViewModel.getAllContacts().observe(this, this::onContactListChanged);
-
-        mContactDetailContainer = fragmentView.findViewById(R.id.contact_detail_container);
-        fragmentView.findViewById(R.id.back_button).setOnClickListener(
-                (v) -> hideContactDetailFragment());
         return fragmentView;
     }
 
@@ -78,23 +73,10 @@ public class ContactListFragment extends DialerBaseFragment implements
         mContactListAdapter.notifyDataSetChanged();
     }
 
-    private void hideContactDetailFragment() {
-        Fragment contactDetailFragment = getChildFragmentManager().findFragmentByTag(
-                CONTACT_DETAIL_FRAGMENT_TAG);
-        if (contactDetailFragment != null) {
-            getChildFragmentManager().beginTransaction().remove(contactDetailFragment).commit();
-        }
-
-        mContactDetailContainer.setVisibility(View.GONE);
-    }
-
     @Override
     public void onShowContactDetail(Contact contact) {
-        mContactDetailContainer.setVisibility(View.VISIBLE);
-
         Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact, null);
-        getChildFragmentManager().beginTransaction().replace(R.id.contact_detail_fragment_container,
-                contactDetailsFragment, CONTACT_DETAIL_FRAGMENT_TAG).commit();
+        pushContentFragment(contactDetailsFragment, CONTACT_DETAIL_FRAGMENT_TAG);
     }
 
 

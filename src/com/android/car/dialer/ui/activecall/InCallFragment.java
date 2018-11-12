@@ -27,7 +27,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -35,13 +34,12 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.entity.CallDetail;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
-import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 
 /**
  * A fragment that displays information about an on-going call with options to hang up.
  */
-public class InCallFragment extends DialerBaseFragment implements
+public class InCallFragment extends Fragment implements
         OnGoingCallControllerBarFragment.OnGoingCallControllerBarCallback {
     private static final String TAG = "CD.InCallFragment";
 
@@ -127,11 +125,5 @@ public class InCallFragment extends DialerBaseFragment implements
         L.i(TAG, "updateBody: %s", text);
         mUserProfileBodyText.setText(text);
         mUserProfileBodyText.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
-    }
-
-    @StringRes
-    @Override
-    protected int getActionBarTitleRes() {
-        return R.string.in_call_title;
     }
 }
