@@ -77,6 +77,11 @@ public class InCallServiceImpl extends InCallService {
         super.onCallAdded(telecomCall);
         L.d(TAG, "onCallAdded: %s", telecomCall);
 
+        // Launch the dialer app whenever there is a new incoming/outgoing call.
+        Intent launchIntent = getPackageManager()
+                .getLaunchIntentForPackage(mTelecomManager.getDefaultDialerPackage());
+        startActivity(launchIntent);
+
         telecomCall.registerCallback(mCallListener);
         mCallListener.onStateChanged(telecomCall, telecomCall.getState());
 
@@ -117,17 +122,9 @@ public class InCallServiceImpl extends InCallService {
         @Override
         public void onStateChanged(Call call, int state) {
             L.d(TAG, "onStateChanged call: %s, state: %s", call, state);
-
-            if (state == Call.STATE_RINGING || state == Call.STATE_DIALING) {
-                L.i(TAG, "Incoming/outgoing call: %s", call);
-
-                // TODO(b/25190782): here we should show heads-up notification for incoming call,
-                // however system notifications are disabled by System UI and we haven't implemented
-                // a way to show heads-up notifications in embedded mode.
-                Intent launchIntent = getPackageManager()
-                        .getLaunchIntentForPackage(mTelecomManager.getDefaultDialerPackage());
-                startActivity(launchIntent);
-            }
+            // TODO(b/25190782): here we should show heads-up notification for incoming call,
+            // however system notifications are disabled by System UI and we haven't implemented
+            // a way to show heads-up notifications in embedded mode.
         }
     };
 
