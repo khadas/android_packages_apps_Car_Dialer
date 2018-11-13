@@ -24,6 +24,7 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import com.android.car.dialer.R;
+import com.android.car.theme.Themes;
 
 /**
  * The base class for top level Dialer Fragments.
@@ -101,7 +102,7 @@ public class DialerBaseFragment extends Fragment {
      * change the background.
      */
     protected Drawable getFullScreenBackgroundColor() {
-        return new ColorDrawable(getContext().getColor(R.color.phone_theme));
+        return new ColorDrawable(Themes.getAttrColor(getContext(), R.attr.background));
     }
 
     /**

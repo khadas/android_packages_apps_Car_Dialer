@@ -19,11 +19,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardBackgroundColor="@color/phone_theme"
-    app:contentPadding="@dimen/car_keyline_1"
-    app:cardCornerRadius="@dimen/car_radius_3"
-    app:cardElevation="@dimen/car_action_bar_elevation">
+    app:contentPadding="@dimen/audio_route_content_padding"
+    app:cardCornerRadius="@dimen/audio_route_corner_radius"
+    app:cardElevation="@dimen/audio_route_card_elevation">
 
     <androidx.car.widget.PagedListView
+        android:theme="@style/PagedListViewTheme"
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

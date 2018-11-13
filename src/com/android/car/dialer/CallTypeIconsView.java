@@ -50,7 +50,7 @@ public class CallTypeIconsView extends View {
         super(context, attrs);
         mResources = new Resources(context);
         mResources.voicemail.setColorFilter(
-                getResources().getColor(R.color.car_tint), PorterDuff.Mode.SRC_IN);
+                getResources().getColor(R.color.dialer_tint), PorterDuff.Mode.SRC_IN);
     }
 
     public void clear() {

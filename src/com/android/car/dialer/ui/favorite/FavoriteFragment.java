@@ -84,11 +84,6 @@ public class FavoriteFragment extends DialerBaseFragment {
         return view;
     }
 
-    @Override
-    protected Drawable getFullScreenBackgroundColor() {
-        return new ColorDrawable(getContext().getColor(R.color.phone_theme_secondary));
-    }
-
     private void onItemClicked(Contact contact) {
         Context context = getContext();
         // TODO: check whether a default entry is set, if set, directly connect that entry

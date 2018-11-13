@@ -70,7 +70,7 @@ public class ContactListItemProvider extends ListItemProvider {
 
                     });
             Drawable supplementalIconDrawable = mContext.getDrawable(R.drawable.ic_contact);
-            supplementalIconDrawable.setTint(mContext.getColor(R.color.car_tint));
+            supplementalIconDrawable.setTint(mContext.getColor(R.color.dialer_tint));
             int iconSize = mContext.getResources().getDimensionPixelSize(
                     R.dimen.car_primary_icon_size);
             supplementalIconDrawable.setBounds(0, 0, iconSize, iconSize);

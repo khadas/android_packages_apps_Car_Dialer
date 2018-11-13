@@ -281,7 +281,7 @@ public class TelecomActivity extends DrawerActivity implements
 
         @Override
         public void populateViewHolder(DrawerItemViewHolder holder, int position) {
-            final int iconColor = getResources().getColor(R.color.car_tint);
+            final int iconColor = getResources().getColor(R.color.dialer_tint);
             int textResId, iconResId;
             switch (position) {
                 case ITEM_DIAL:

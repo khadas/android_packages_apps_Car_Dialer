@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:theme="@style/Theme.Car.Light.List"
         app:showPagedListViewDivider="true"
-        app:dividerStartMargin="@dimen/car_keyline_2"
+        app:dividerStartMargin="@dimen/contact_result_list_margin"
         app:alignDividerEndTo="@id/contact_result_card"
         app:alignDividerStartTo="@id/contact_result_card" />
 </FrameLayout>

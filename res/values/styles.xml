@@ -14,16 +14,12 @@
      limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="TextAppearance.Car.Key1" >
-        <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/car_body1_size</item>
-        <item name="android:textColor">@color/car_body1</item>
+    <style name="KeypadNumber" parent="@android:TextAppearance.DeviceDefault.Large">
+        <item name="android:textSize">@dimen/car_key1_size</item>
     </style>
 
-    <style name="TextAppearance.Car.Key2" >
-        <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/car_subtext4_size</item>
-        <item name="android:textColor">@color/car_subtext4</item>
+    <style name="KeypadLetter" parent="@android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textSize">@dimen/car_key2_size</item>
     </style>
 
     <!-- Phone -->
@@ -49,10 +45,10 @@
         <item name="android:layout_height">@dimen/bksp_button_width</item>
         <item name="android:background">@drawable/dialpad_secondary_button_background</item>
         <item name="android:scaleType">centerInside</item>
-        <item name="android:tint">@color/car_tint</item>
+        <item name="android:tint">@*android:color/car_tint</item>
     </style>
 
-    <style name="NoHfpText" parent="TextAppearance.Car.Body2">
+    <style name="NoHfpText" parent="@android:TextAppearance.DeviceDefault.Medium">
         <item name="android:gravity">center</item>
         <item name="android:maxLines">3</item>
     </style>
