@@ -227,7 +227,12 @@ public class ContactDetailsFragment extends DialerBaseFragment
                         }
 
                         public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-                            cursor.moveToFirst();
+                            if (cursor == null) {
+                                return;
+                            }
+
+                            int itemCount = getItemCount();
+                            cursor.moveToPosition(-1);
                             while (cursor.moveToNext()) {
                                 int typeColIdx = cursor.getColumnIndex(
                                         ContactsContract.CommonDataKinds.Phone.TYPE);
@@ -253,7 +258,8 @@ public class ContactDetailsFragment extends DialerBaseFragment
                                         TelecomUtils.getFormattedNumber(getContext(), number)));
                                 notifyItemInserted(mPhoneNumbers.size());
                             }
-                            notifyDataSetChanged();
+                            // Notify  header to load avatar.
+                            notifyItemRangeChanged(0, itemCount);
                         }
 
                         public void onLoaderReset(Loader loader) {
