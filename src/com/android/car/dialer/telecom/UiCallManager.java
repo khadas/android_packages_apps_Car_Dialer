@@ -243,7 +243,7 @@ public class UiCallManager {
     /** Places call through TelecomManager */
     public void placeCall(String number) {
         Uri uri = Uri.fromParts("tel", number, null);
-        L.d(TAG, "android.telecom.TelecomManager#placeCall: " + uri);
+        L.d(TAG, "android.telecom.TelecomManager#placeCall: %s", number);
         mTelecomManager.placeCall(uri, null);
     }
 
