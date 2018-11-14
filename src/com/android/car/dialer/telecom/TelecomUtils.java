@@ -229,7 +229,8 @@ public class TelecomUtils {
         CharSequence label = TelecomUtils.getTypeFromNumber(context, number);
         String text;
         if (callState == Call.STATE_ACTIVE) {
-            long duration = System.currentTimeMillis() - callDetail.getConnectTimeMillis();
+            long duration = callDetail.getConnectTimeMillis() > 0 ? System.currentTimeMillis()
+                    - callDetail.getConnectTimeMillis() : 0;
             String durationString = DateUtils.formatElapsedTime(duration / 1000);
             if (!TextUtils.isEmpty(durationString) && !TextUtils.isEmpty(label)) {
                 text = context.getString(R.string.phone_label_with_info, label, durationString);

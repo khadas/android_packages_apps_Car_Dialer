@@ -23,11 +23,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.car.drawer.CarDrawerAdapter;
 import androidx.car.drawer.DrawerItemViewHolder;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
@@ -47,20 +50,17 @@ import com.android.car.dialer.ui.favorite.FavoriteFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
 
 /**
- * Main activity for the Dialer app. Displays different fragments depending on call and
- * connectivity status:
+ * Main activity for the Dialer app. It contains two layers:
  * <ul>
- * <li>OngoingCallFragment
- * <li>NoHfpFragment
- * <li>DialpadFragment
- * <li>FavoriteFragment
- * </ul>
+ * <li>Overlay layer for {@link NoHfpFragment} and {@link InCallFragment}
+ * <li>Content layer for {@link FavoriteFragment} {@link CallHistoryFragment} {@link
+ * ContactListFragment} and {@link DialpadFragment}
+ *
+ * <p>Based on call and connectivity status, it will choose the right page to display.
  */
 public class TelecomActivity extends DrawerActivity implements
         DialerBaseFragment.DialerFragmentParent {
     private static final String TAG = "CD.TelecomActivity";
-
-    private static final String CONTENT_FRAGMENT_TAG = "CONTENT_FRAGMENT_TAG";
 
     private UiCallManager mUiCallManager;
     private UiBluetoothMonitor mUiBluetoothMonitor;
@@ -88,7 +88,7 @@ public class TelecomActivity extends DrawerActivity implements
         mHasOngoingCallLiveData = viewModel.hasOngoingCall();
         mHasOngoingCallLiveData.observe(this, hasOngoingCall -> updateCurrentFragment());
 
-        getDrawerController().setRootAdapter(new DialerRootAdapter(mBluetoothErrorMsgLiveData));
+        getDrawerController().setRootAdapter(new DialerRootAdapter());
 
         updateCurrentFragment();
         handleIntent();
@@ -145,8 +145,7 @@ public class TelecomActivity extends DrawerActivity implements
         switch (action) {
             case Intent.ACTION_DIAL:
                 number = PhoneNumberUtils.getNumberFromIntent(intent, this);
-                if (!(getCurrentFragment() instanceof NoHfpFragment)) {
-                    getDrawerController().closeDrawer();
+                if (isBluetoothConnected()) {
                     setContentFragment(DialpadFragment.newPlaceCallDialpad(number));
                 }
                 break;
@@ -164,58 +163,103 @@ public class TelecomActivity extends DrawerActivity implements
     }
 
     /**
-     * Updates the content fragment of this Activity based on the state of the application.
+     * Update the current visible fragment of this Activity based on the state of the application.
+     * <ul>
+     * <li> If bluetooth is not connected or there is an active call, show overlay, lock drawer,
+     * hide action bar and hide the content layer.
+     * <li> Otherwise, show the content layer, show action bar, hide the overlay and reset drawer
+     * lock mode.
      */
     private void updateCurrentFragment() {
         L.d(TAG, "updateCurrentFragment()");
 
-        boolean hasOngoingCall = mHasOngoingCallLiveData.getValue() != null
-                ? mHasOngoingCallLiveData.getValue()
-                : false;
+        boolean hasBluetoothError = !isBluetoothConnected();
+        boolean hasOngoingCall = hasOngoingCall();
 
-        if (!TelecomActivityViewModel.NO_BT_ERROR.equals(mBluetoothErrorMsgLiveData.getValue())) {
-            showNoHfpFragment(mBluetoothErrorMsgLiveData.getValue());
+        boolean isOverlayFragmentVisible = hasBluetoothError || hasOngoingCall;
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(
+                isOverlayFragmentVisible
+                        ? DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+                        : DrawerLayout.LOCK_MODE_UNLOCKED);
+        findViewById(R.id.content_fragment_container)
+                .setVisibility(isOverlayFragmentVisible ? View.GONE : View.VISIBLE);
+        findViewById(R.id.overlay_fragment_container)
+                .setVisibility(isOverlayFragmentVisible ? View.VISIBLE : View.GONE);
+        setActionBarVisibility(!isOverlayFragmentVisible);
+
+        if (hasBluetoothError) {
+            showNoHfpOverlay(mBluetoothErrorMsgLiveData.getValue());
         } else if (hasOngoingCall) {
-            getDrawerController().closeDrawer();
-            setContentFragment(InCallFragment.newInstance());
+            showInCallOverlay();
         } else {
-            Fragment currentFragment = getCurrentFragment();
-            if (currentFragment == null
-                    || currentFragment instanceof InCallFragment
-                    || currentFragment instanceof NoHfpFragment) {
+            Fragment currentContentFragment = getCurrentContentFragment();
+            if (currentContentFragment == null) {
                 setContentFragment(FavoriteFragment.newInstance());
             }
         }
     }
 
-    private void showNoHfpFragment(String errorMsg) {
-        if (getCurrentFragment() instanceof NoHfpFragment) {
-            ((NoHfpFragment) getCurrentFragment()).setErrorMessage(errorMsg);
+    private void showNoHfpOverlay(String errorMsg) {
+        Fragment overlayFragment = getCurrentOverlayFragment();
+        if (overlayFragment instanceof NoHfpFragment) {
+            ((NoHfpFragment) overlayFragment).setErrorMessage(errorMsg);
         } else {
-            setContentFragment(NoHfpFragment.newInstance(errorMsg));
+            setOverlayFragment(NoHfpFragment.newInstance(errorMsg));
         }
+    }
+
+    private void showInCallOverlay() {
+        Fragment overlayFragment = getCurrentOverlayFragment();
+        if (overlayFragment instanceof InCallFragment) {
+            return;
+        }
+
+        setOverlayFragment(InCallFragment.newInstance());
     }
 
     /**
      * Sets the fragment that will be shown as the main content of this Activity.
      */
-    private void setContentFragment(Fragment fragment) {
-        L.d(TAG, "setContentFragment: %s", fragment);
-        if (fragment == null) {
-            return;
-        }
+    private void setContentFragment(@NonNull Fragment contentFragment) {
+        L.d(TAG, "setContentFragment: %s", contentFragment);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_fragment_container, fragment, CONTENT_FRAGMENT_TAG)
+        getDrawerController().closeDrawer();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_fragment_container, contentFragment)
                 .commitNow();
     }
 
-    /**
-     * Returns the fragment that is currently being displayed as the content view.
-     */
+    private void setOverlayFragment(@NonNull Fragment overlayFragment) {
+        L.d(TAG, "setOverlayFragment: %s", overlayFragment);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.overlay_fragment_container, overlayFragment)
+                .commitNow();
+    }
+
+    /** Returns the fragment that is currently being displayed as the content view. */
     @Nullable
-    private Fragment getCurrentFragment() {
-        return getSupportFragmentManager().findFragmentByTag(CONTENT_FRAGMENT_TAG);
+    private Fragment getCurrentContentFragment() {
+        return getSupportFragmentManager().findFragmentById(R.id.content_fragment_container);
+    }
+
+    /** Returns the fragment that is currently being displayed as the overlay view on top. */
+    @Nullable
+    private Fragment getCurrentOverlayFragment() {
+        return getSupportFragmentManager().findFragmentById(R.id.overlay_fragment_container);
+    }
+
+    private boolean isBluetoothConnected() {
+        return TelecomActivityViewModel.NO_BT_ERROR.equals(mBluetoothErrorMsgLiveData.getValue());
+    }
+
+    private boolean hasOngoingCall() {
+        return mHasOngoingCallLiveData.getValue() != null
+                ? mHasOngoingCallLiveData.getValue()
+                : false;
     }
 
     private class DialerRootAdapter extends CarDrawerAdapter {
@@ -225,21 +269,14 @@ public class TelecomActivity extends DrawerActivity implements
         private static final int ITEM_DIAL = 3;
 
         private static final int ITEM_COUNT = 4;
-        private LiveData<String> mBluetoothError;
 
-        DialerRootAdapter(LiveData<String> bluetoothErrorMsg) {
+        DialerRootAdapter() {
             super(TelecomActivity.this, false /* showDisabledListOnEmpty */);
-            mBluetoothError = bluetoothErrorMsg;
-            bluetoothErrorMsg.observe(TelecomActivity.this, errorMsg -> notifyDataSetChanged());
         }
 
         @Override
         protected int getActualItemCount() {
-            if (TelecomActivityViewModel.NO_BT_ERROR.equals(mBluetoothError.getValue())) {
-                return ITEM_COUNT;
-            } else {
-                return 0;
-            }
+            return ITEM_COUNT;
         }
 
         @Override
@@ -275,7 +312,6 @@ public class TelecomActivity extends DrawerActivity implements
         }
 
         private void onItemClick(int position) {
-            getDrawerController().closeDrawer();
             switch (position) {
                 case ITEM_DIAL:
                     setContentFragment(DialpadFragment.newPlaceCallDialpad(/* dialNumber= */ null));

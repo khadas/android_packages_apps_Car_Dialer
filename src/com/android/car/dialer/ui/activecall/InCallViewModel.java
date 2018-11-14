@@ -109,6 +109,8 @@ public class InCallViewModel extends AndroidViewModel {
             mContext = context;
             mCallDetailLiveData = callDetailLiveData;
             mCallStateLiveData = callStateLiveData;
+
+            addSource(mCallStateLiveData, (trigger) -> updateDescription());
             addSource(heartBeatLiveData, (trigger) -> updateDescription());
         }
 
