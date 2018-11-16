@@ -44,7 +44,7 @@ import java.util.List;
  */
 public class ContactListFragment extends DialerBaseFragment implements
         ContactListItemProvider.OnShowContactDetailListener {
-    private String CONTACT_DETAIL_FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
+    private static final String CONTACT_DETAIL_FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
     private ContactListItemProvider mContactListItemProvider;
     private ListItemAdapter mContactListAdapter;
     private View mContactDetailContainer;
@@ -58,18 +58,16 @@ public class ContactListFragment extends DialerBaseFragment implements
             @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.contact_list_fragment, container, false);
 
-        ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
-                ContactListViewModel.class);
-        contactListViewModel.getAllContacts().observe(this, this::onContactListChanged);
         mContactListItemProvider = new ContactListItemProvider(
-                getContext(), /* onShowContactDetailListener = */this);
-        mContactListItemProvider.setContacts(contactListViewModel.getAllContacts().getValue());
+                getContext(), /* onShowContactDetailListener= */this);
         mContactListAdapter = new ListItemAdapter(getContext(), mContactListItemProvider);
-
         PagedListView pagedListView = fragmentView.findViewById(R.id.list_view);
         pagedListView.setAdapter(mContactListAdapter);
         pagedListView.setMaxPages(UNLIMITED_PAGES);
-        mContactListAdapter.notifyDataSetChanged();
+
+        ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
+                ContactListViewModel.class);
+        contactListViewModel.getAllContacts().observe(this, this::onContactListChanged);
 
         mContactDetailContainer = fragmentView.findViewById(R.id.contact_detail_container);
         fragmentView.findViewById(R.id.back_button).setOnClickListener(
