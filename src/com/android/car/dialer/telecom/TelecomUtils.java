@@ -112,7 +112,7 @@ public class TelecomUtils {
      * @see TelephonyManager#getVoiceMailNumber()
      */
     public static boolean isVoicemailNumber(Context context, String number) {
-        return getVoicemailNumber(context).equals(number);
+        return !TextUtils.isEmpty(number) && number.equals(getVoicemailNumber(context));
     }
 
     public static TelephonyManager getTelephonyManager(Context context) {
