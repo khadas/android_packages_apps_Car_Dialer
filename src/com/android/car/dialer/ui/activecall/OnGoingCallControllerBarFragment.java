@@ -123,7 +123,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             }
         });
 
-        fragmentView.findViewById(R.id.toggle_dialpad_button).setOnClickListener((v) -> {
+        View dialPadButton = fragmentView.findViewById(R.id.toggle_dialpad_button);
+        dialPadButton.setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
             }
@@ -135,6 +136,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 mOnGoingCallControllerBarCallback.onOpenDialpad();
             }
         });
+        dialPadButton.setActivated(false);
+        mOnGoingCallControllerBarCallback.onCloseDialpad();
 
         ImageView endCallButton = fragmentView.findViewById(R.id.end_call_button);
         FabDrawable answerCallDrawable = new FabDrawable(getContext());
