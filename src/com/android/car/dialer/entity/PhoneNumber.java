@@ -18,6 +18,8 @@ package com.android.car.dialer.entity;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
@@ -28,7 +30,7 @@ import javax.annotation.Nullable;
 /**
  * Contact phone number and its meta data.
  */
-public class PhoneNumber {
+public class PhoneNumber implements Parcelable {
 
     private final int mType;
     private final I18nPhoneNumberWrapper mI18nPhoneNumber;
@@ -111,4 +113,33 @@ public class PhoneNumber {
     public String toString() {
         return getNumber() + " " + String.valueOf(mLabel);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mType);
+        dest.writeString(mLabel);
+        dest.writeParcelable(mI18nPhoneNumber, flags);
+    }
+
+    public static Creator<PhoneNumber> CREATOR = new Creator<PhoneNumber>() {
+        @Override
+        public PhoneNumber createFromParcel(Parcel source) {
+            int type = source.readInt();
+            String label = source.readString();
+            I18nPhoneNumberWrapper i18nPhoneNumberWrapper = source.readParcelable(
+                    I18nPhoneNumberWrapper.class.getClassLoader());
+            PhoneNumber phoneNumber = new PhoneNumber(i18nPhoneNumberWrapper, type, label);
+            return phoneNumber;
+        }
+
+        @Override
+        public PhoneNumber[] newArray(int size) {
+            return new PhoneNumber[size];
+        }
+    };
 }

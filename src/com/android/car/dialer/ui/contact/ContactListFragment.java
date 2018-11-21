@@ -18,9 +18,7 @@ package com.android.car.dialer.ui.contact;
 
 import static androidx.car.widget.PagedListView.UNLIMITED_PAGES;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,16 +89,14 @@ public class ContactListFragment extends DialerBaseFragment implements
     }
 
     @Override
-    public void onShowContactDetail(int contactId, String lookupKey) {
+    public void onShowContactDetail(Contact contact) {
         mContactDetailContainer.setVisibility(View.VISIBLE);
 
-        final Uri uri = ContactsContract.Contacts.getLookupUri(contactId, lookupKey);
-        // TODO: pass this Contact entity to ContactDetailFragment instead of having it loaded on
-        // its own.
-        Fragment contactDetailFragment = ContactDetailsFragment.newInstance(uri, null);
+        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact, null);
         getChildFragmentManager().beginTransaction().replace(R.id.contact_detail_fragment_container,
-                contactDetailFragment, CONTACT_DETAIL_FRAGMENT_TAG).commit();
+                contactDetailsFragment, CONTACT_DETAIL_FRAGMENT_TAG).commit();
     }
+
 
     @StringRes
     @Override
