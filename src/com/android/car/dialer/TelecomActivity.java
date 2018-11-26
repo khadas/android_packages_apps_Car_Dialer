@@ -70,13 +70,14 @@ public class TelecomActivity extends DrawerActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mUiCallManager = UiCallManager.init(getApplicationContext());
+        mUiBluetoothMonitor = UiBluetoothMonitor.init(getApplicationContext());
+
         super.onCreate(savedInstanceState);
         L.d(TAG, "onCreate");
         setContentView(R.layout.telecom_activity);
         getActionBar().setBackgroundDrawable(
                 new ColorDrawable(getColor(android.R.color.transparent)));
-        mUiCallManager = UiCallManager.init(getApplicationContext());
-        mUiBluetoothMonitor = UiBluetoothMonitor.init(getApplicationContext());
 
         InMemoryPhoneBook.init(getApplicationContext());
 
