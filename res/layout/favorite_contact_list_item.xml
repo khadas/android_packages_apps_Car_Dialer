@@ -21,9 +21,8 @@
     android:foreground="@drawable/dialer_ripple_background"
     android:layout_width="match_parent"
     android:layout_height="@dimen/favorite_item_height"
-    app:cardBackgroundColor="@color/phone_theme"
     app:cardCornerRadius="@dimen/favorite_card_corner_radius"
-    app:cardElevation="@dimen/car_action_bar_elevation">
+    app:cardElevation="@dimen/favorites_card_elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,7 +31,7 @@
             android:id="@+id/icon"
             android:layout_width="@dimen/avatar_icon_size"
             android:layout_height="@dimen/avatar_icon_size"
-            android:layout_marginStart="@dimen/car_keyline_1"
+            android:layout_marginStart="@dimen/favorites_icon_margin"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +42,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/keyline_3"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/car_keyline_3" />
+            app:layout_constraintGuide_begin="@dimen/favorites_guideline"/>
 
         <LinearLayout
             android:id="@+id/text_container"
@@ -57,17 +56,17 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/TextAppearance.Car.Body1"
+                style="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/car_padding_1"
-                android:layout_marginEnd="@dimen/car_keyline_1"
+                android:layout_marginBottom="@dimen/favorites_text_margin_bottom"
+                android:layout_marginEnd="@dimen/favorites_text_margin_end"
                 android:ellipsize="end"
                 android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/text"
-                style="@style/TextAppearance.Car.Body3"
+                style="?android:attr/textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

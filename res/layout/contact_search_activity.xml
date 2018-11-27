@@ -33,28 +33,26 @@
         android:id="@+id/search_container"
         android:background="@color/phone_theme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/car_app_bar_height" >
+        android:layout_height="@dimen/contact_search_container_height" >
 
         <FrameLayout
             android:background="@color/telecom_display_scrim"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <!-- This FrameLayout is used to center the ImageView in a space that is the width of
-             car_keyline_1. -->
         <FrameLayout
-            android:layout_width="@dimen/car_keyline_1"
+            android:layout_width="@dimen/contact_search_back_frame_width"
             android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/back"
                 android:background="@drawable/dialer_ripple_background"
                 android:layout_gravity="center"
-                android:layout_width="@dimen/car_touch_target_size"
-                android:layout_height="@dimen/car_touch_target_size"
+                android:layout_width="@dimen/contact_search_back_target_size"
+                android:layout_height="@dimen/contact_search_back_target_size"
                 android:src="@drawable/ic_arrow_back"
                 android:scaleType="center"
-                android:tint="@color/car_grey_50" />
+                android:tint="@color/search_back_tint" />
         </FrameLayout>
 
         <androidx.car.widget.ColumnCardView
@@ -62,35 +60,35 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/search_container_height"
             android:elevation="0dp"
-            app:cardBackgroundColor="@color/car_card"
+            app:cardBackgroundColor="@color/dialer_card_background"
             app:cardCornerRadius="@dimen/search_container_radius">
 
             <ImageView
                 android:layout_gravity="start|center_vertical"
-                android:layout_width="@dimen/car_touch_target_size"
-                android:layout_height="@dimen/car_touch_target_size"
+                android:layout_width="@dimen/contact_search_icon_size"
+                android:layout_height="@dimen/contact_search_icon_size"
                 android:src="@drawable/ic_search"
                 android:scaleType="center"
                 android:tint="@color/search_container_controls_tint"/>
 
             <EditText
                 android:id="@+id/search_field"
-                android:layout_marginStart="@dimen/car_touch_target_size"
-                android:layout_marginEnd="@dimen/car_touch_target_size"
+                android:layout_marginStart="@dimen/contact_search_text_margin"
+                android:layout_marginEnd="@dimen/contact_search_text_margin"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName|textCapWords"
                 android:hint="@string/search_hint"
                 android:textColorHint="@color/search_container_text_hint"
-                style="@style/TextAppearance.Car.Body1" />
+                style="?android:attr/textAppearanceLarge" />
 
             <ImageView
                 android:id="@+id/clear"
                 android:background="@drawable/dialer_ripple_background"
                 android:layout_gravity="end|center_vertical"
-                android:layout_width="@dimen/car_touch_target_size"
-                android:layout_height="@dimen/car_touch_target_size"
+                android:layout_width="@dimen/contact_search_clear_size"
+                android:layout_height="@dimen/contact_search_clear_size"
                 android:src="@drawable/ic_cancel"
                 android:scaleType="center"
                 android:tint="@color/search_container_controls_tint"/>
@@ -99,7 +97,7 @@
 
     <FrameLayout
         android:id="@+id/content_fragment_container"
-        android:layout_marginTop="@dimen/car_app_bar_height"
+        android:layout_marginTop="@dimen/contact_search_content_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

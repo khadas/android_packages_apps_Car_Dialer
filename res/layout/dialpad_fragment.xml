@@ -37,10 +37,10 @@
 
         <View
             android:id="@+id/divider"
-            android:background="@color/car_list_divider"
+            android:background="@color/dialpad_fragment_background_color"
             android:layout_gravity="end|top"
             android:layout_height="0dp"
-            android:layout_width="@dimen/line_divider_height"
+            android:layout_width="@dimen/dialpad_line_divider_height"
             app:layout_constraintBottom_toBottomOf="@+id/dialpad_fragment_container"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +49,8 @@
         <FrameLayout
             android:layout_height="0dp"
             android:layout_width="0dp"
-            android:paddingStart="@dimen/car_keyline_1"
-            android:paddingEnd="@dimen/car_keyline_1"
+            android:paddingStart="@dimen/dialpad_info_padding_size"
+            android:paddingEnd="@dimen/dialpad_fragment_info_padding_size"
             app:layout_constraintBottom_toBottomOf="@+id/dialpad_fragment_container"
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintEnd_toEndOf="parent"

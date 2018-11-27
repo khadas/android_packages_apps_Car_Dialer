@@ -28,10 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/contact_result_card_height" >
 
-        <!-- Using this FrameLayout to center the ImageView within a width of
-            car_keyline_2. -->
         <FrameLayout
-            android:layout_width="@dimen/car_keyline_2"
+            android:layout_width="@dimen/contact_result_image_size"
             android:layout_height="match_parent">
 
             <ImageView
@@ -44,12 +42,12 @@
 
         <TextView
             android:id="@+id/contact_name"
-            android:layout_marginStart="@dimen/car_keyline_2"
+            android:layout_marginStart="@dimen/contact_result_name_margin"
             android:layout_gravity="center_vertical|start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            style="@style/TextAppearance.Car.Body1" />
+            style="?android:attr/textAppearanceLarge" />
     </androidx.car.widget.ColumnCardView>
 </FrameLayout>

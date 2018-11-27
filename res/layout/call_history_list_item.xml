@@ -17,10 +17,9 @@ limitations under the License.
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/car_action_bar_height"
-    android:background="@color/phone_theme"
-    android:paddingRight="@dimen/car_keyline_1"
-    android:paddingLeft="@dimen/car_keyline_1"
+    android:layout_height="@dimen/call_history_item_height"
+    android:paddingRight="@dimen/call_history_item_padding"
+    android:paddingLeft="@dimen/call_history_item_padding"
     android:elevation = "@dimen/in_call_card_elevation">
 
     <androidx.constraintlayout.widget.Guideline
@@ -28,12 +27,12 @@ limitations under the License.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/car_keyline_1" />
+        app:layout_constraintGuide_begin="@dimen/call_history_guideline" />
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="@dimen/car_avatar_size"
-        android:layout_height="@dimen/car_avatar_size"
+        android:layout_width="@dimen/call_history_avatar_size"
+        android:layout_height="@dimen/call_history_avatar_size"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

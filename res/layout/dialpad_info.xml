@@ -21,12 +21,12 @@
 
     <TextView
         android:id="@+id/title"
-        android:textAppearance="@style/TextAppearance.Car.Body1"
+        android:textAppearance="@style/KeypadNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/car_padding_4"
-        android:paddingRight="@dimen/car_padding_4"
-        android:paddingBottom="@dimen/dialer_number_view_padding"
+        android:paddingLeft="@dimen/dialpad_info_title_padding_size"
+        android:paddingRight="@dimen/dialpad_info_title_padding_size"
+        android:paddingBottom="@dimen/dialpad_info_number_view_padding"
         android:gravity="center"
         android:focusable="true"
         android:maxLines="1"
@@ -48,7 +48,7 @@
     <ImageButton
         android:id="@+id/delete_button"
         style="@style/DialpadSecondaryButton"
-        android:layout_marginStart="@dimen/car_padding_6"
+        android:layout_marginStart="@dimen/dialpad_info_delete_button_margin"
         android:src="@drawable/ic_backspace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

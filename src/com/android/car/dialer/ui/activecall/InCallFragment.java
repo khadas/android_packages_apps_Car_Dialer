@@ -91,11 +91,6 @@ public class InCallFragment extends DialerBaseFragment implements
         mUserProfileContainerView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    protected Drawable getFullScreenBackgroundColor() {
-        return new ColorDrawable(getContext().getColor(R.color.phone_theme_secondary));
-    }
-
     private void bindUserProfileView(@Nullable CallDetail callDetail) {
         L.i(TAG, "bindUserProfileView: %s", callDetail);
         if (callDetail == null) {
