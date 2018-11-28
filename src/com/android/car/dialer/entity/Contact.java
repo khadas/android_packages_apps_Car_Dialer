@@ -19,6 +19,8 @@ package com.android.car.dialer.entity;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
@@ -36,7 +38,7 @@ import java.util.Set;
 /**
  * Encapsulates data about a phone Contact entry. Typically loaded from the local Contact store.
  */
-public class Contact {
+public class Contact implements Parcelable {
     private static final String TAG = "CD.Contact";
 
     /**
@@ -214,5 +216,57 @@ public class Contact {
             }
         }
         return null;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeBoolean(mIsStarred);
+        dest.writeInt(mPinnedPosition);
+        dest.writeInt(mPhoneNumbers.size());
+        for (PhoneNumber phoneNumber : mPhoneNumbers) {
+            dest.writeParcelable(phoneNumber, flags);
+        }
+        dest.writeString(mDisplayName);
+        dest.writeParcelable(mAvatarThumbnailUri, 0);
+        dest.writeParcelable(mAvatarUri, 0);
+        dest.writeString(mLookupKey);
+        dest.writeBoolean(mIsVoiceMail);
+    }
+
+    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
+        @Override
+        public Contact createFromParcel(Parcel source) {
+            return Contact.fromParcel(source);
+        }
+
+        @Override
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
+
+    /** Create {@link Contact} object from saved parcelable. */
+    private static Contact fromParcel(Parcel source) {
+        Contact contact = new Contact();
+        contact.mId = source.readInt();
+        contact.mIsStarred = source.readBoolean();
+        contact.mPinnedPosition = source.readInt();
+        int phoneNumberListLength = source.readInt();
+        contact.mPhoneNumbers = new HashSet<>();
+        for (int i = 0; i < phoneNumberListLength; i++) {
+            contact.mPhoneNumbers.add(source.readParcelable(PhoneNumber.class.getClassLoader()));
+        }
+        contact.mDisplayName = source.readString();
+        contact.mAvatarThumbnailUri = source.readParcelable(Uri.class.getClassLoader());
+        contact.mAvatarUri = source.readParcelable(Uri.class.getClassLoader());
+        contact.mLookupKey = source.readString();
+        contact.mIsVoiceMail = source.readBoolean();
+        return contact;
     }
 }

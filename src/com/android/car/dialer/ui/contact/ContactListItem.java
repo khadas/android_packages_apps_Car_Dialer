@@ -21,7 +21,6 @@ import androidx.car.widget.TextListItem;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.Contact;
-import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.telecom.TelecomUtils;
 
 /**

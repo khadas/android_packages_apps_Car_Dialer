@@ -21,6 +21,8 @@ import static com.google.i18n.phonenumbers.PhoneNumberUtil.MatchType.NSN_MATCH;
 import static com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
 
@@ -38,7 +40,7 @@ import javax.annotation.Nonnull;
  * facilitates the invalid phone number comparison where a raw phone number can't be converted into
  * an i18n phone number.
  */
-public class I18nPhoneNumberWrapper {
+public class I18nPhoneNumberWrapper implements Parcelable {
     private final Phonenumber.PhoneNumber mI18nPhoneNumber;
     private final String mRawNumber;
     private final String mNumber;
@@ -105,4 +107,30 @@ public class I18nPhoneNumberWrapper {
     public String getNumber() {
         return mNumber;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mRawNumber);
+        dest.writeSerializable(mI18nPhoneNumber);
+    }
+
+    public static Creator<I18nPhoneNumberWrapper> CREATOR = new Creator<I18nPhoneNumberWrapper>() {
+        @Override
+        public I18nPhoneNumberWrapper createFromParcel(Parcel source) {
+            String rawNumber = source.readString();
+            Phonenumber.PhoneNumber i18nPhoneNumber =
+                    (Phonenumber.PhoneNumber) source.readSerializable();
+            return new I18nPhoneNumberWrapper(rawNumber, i18nPhoneNumber);
+        }
+
+        @Override
+        public I18nPhoneNumberWrapper[] newArray(int size) {
+            return new I18nPhoneNumberWrapper[size];
+        }
+    };
 }

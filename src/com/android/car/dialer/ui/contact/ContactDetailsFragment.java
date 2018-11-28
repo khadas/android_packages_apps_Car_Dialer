@@ -15,29 +15,28 @@
  */
 package com.android.car.dialer.ui.contact;
 
-import android.content.Intent;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.car.util.ListItemBackgroundResolver;
 import androidx.car.widget.PagedListView;
+import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.Contact;
+import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
@@ -53,12 +52,16 @@ import java.util.List;
 public class ContactDetailsFragment extends DialerBaseFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "CD.ContactDetailsFrag";
-    private static final String TELEPHONE_URI_PREFIX = "tel:";
+
+    // Key to load the contact details by passing in the Contact entity.
+    private static final String KEY_CONTACT_ENTITY = "ContactEntity";
+
+    // Key to load the contact details by passing in the content provider query uri.
+    @Deprecated
+    private static final String KEY_CONTACT_QUERY_URI = "ContactQueryUri";
 
     private static final int DETAILS_LOADER_QUERY_ID = 1;
     private static final int PHONE_LOADER_QUERY_ID = 2;
-
-    private static final String KEY_URI = "uri";
 
     private static final String[] CONTACT_DETAILS_PROJECTION = {
             ContactsContract.Contacts._ID,
@@ -70,15 +73,30 @@ public class ContactDetailsFragment extends DialerBaseFragment
     private PagedListView mListView;
     private List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
 
-    public static ContactDetailsFragment newInstance(Uri uri,
-            @Nullable RecyclerView.OnScrollListener listener) {
+    @Deprecated
+    public static ContactDetailsFragment newInstance(
+            Uri uri, @Nullable RecyclerView.OnScrollListener listener) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
         if (listener != null) {
             fragment.addOnScrollListener(listener);
         }
 
         Bundle args = new Bundle();
-        args.putParcelable(KEY_URI, uri);
+        args.putParcelable(KEY_CONTACT_QUERY_URI, uri);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static ContactDetailsFragment newInstance(
+            Contact contact, @Nullable RecyclerView.OnScrollListener listener) {
+        ContactDetailsFragment fragment = new ContactDetailsFragment();
+        if (listener != null) {
+            fragment.addOnScrollListener(listener);
+        }
+
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_CONTACT_ENTITY, contact);
         fragment.setArguments(args);
 
         return fragment;
@@ -107,7 +125,16 @@ public class ContactDetailsFragment extends DialerBaseFragment
         super.onStart();
         L.d(TAG, "onStart");
         hideActionBar();
-        getLoaderManager().initLoader(DETAILS_LOADER_QUERY_ID, null, this);
+
+        Uri contactUri = getArguments().getParcelable(KEY_CONTACT_QUERY_URI);
+        if (contactUri != null) {
+            getLoaderManager().initLoader(DETAILS_LOADER_QUERY_ID, null, this);
+        }
+
+        Contact contact = getArguments().getParcelable(KEY_CONTACT_ENTITY);
+        if (contact != null) {
+            mListView.setAdapter(new ContactDetailsEntityAdapter(getContext(), contact));
+        }
     }
 
     @Override
@@ -140,6 +167,7 @@ public class ContactDetailsFragment extends DialerBaseFragment
         super.onDestroy();
     }
 
+    @Deprecated
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         L.d(TAG, "onCreateLoader id = %s", id);
@@ -148,63 +176,50 @@ public class ContactDetailsFragment extends DialerBaseFragment
             return null;
         }
 
-        Uri contactUri = getArguments().getParcelable(KEY_URI);
+        Uri contactUri = getArguments().getParcelable(KEY_CONTACT_QUERY_URI);
         return new CursorLoader(getContext(), contactUri, CONTACT_DETAILS_PROJECTION,
                 null /* selection */, null /* selectionArgs */, null /* sortOrder */);
     }
 
+    @Deprecated
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         L.d(TAG, "onLoadFinished");
         if (cursor.moveToFirst()) {
-            mListView.setAdapter(new ContactDetailsAdapter(cursor));
+            mListView.setAdapter(new ContactDetailsCursorAdapter(getContext(), this, cursor));
         }
     }
 
+    @Deprecated
     @Override
     public void onLoaderReset(Loader loader) {
+        // No-op
     }
 
-    private class ContactDetailViewHolder extends RecyclerView.ViewHolder {
-        public View card;
-        public ImageView leftIcon;
-        public TextView title;
-        public TextView text;
-        public ImageView avatar;
-        public View divier;
-
-        public ContactDetailViewHolder(View v) {
-            super(v);
-            card = v.findViewById(R.id.card);
-            leftIcon = v.findViewById(R.id.icon);
-            title = v.findViewById(R.id.title);
-            text = v.findViewById(R.id.text);
-            avatar = v.findViewById(R.id.avatar);
-            divier = v.findViewById(R.id.divider);
+    private static class ContactDetailsEntityAdapter extends ContactDetailsAdapter {
+        public ContactDetailsEntityAdapter(@NonNull Context context, @NonNull Contact contact) {
+            super(context);
+            setContactName(contact.getDisplayName());
+            for (PhoneNumber phoneNumber : contact.getNumbers()) {
+                getPhoneNumbers().add(new Pair<>(getReadablePhoneType(phoneNumber.getType()),
+                        phoneNumber.getNumber()));
+            }
         }
     }
 
-    private class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailViewHolder>
-            implements PagedListView.ItemCap {
+    @Deprecated
+    private static class ContactDetailsCursorAdapter extends ContactDetailsAdapter {
+        private final Context mContext;
 
-        private static final int ID_HEADER = 1;
-        private static final int ID_CONTENT = 2;
-
-        private final String mContactName;
-        @ColorInt
-        private int mIconTint;
-
-        private List<Pair<String, String>> mPhoneNumbers = new ArrayList<>();
-
-        public ContactDetailsAdapter(Cursor cursor) {
-            super();
-
-            mIconTint = getContext().getColor(R.color.contact_details_icon_tint);
+        public ContactDetailsCursorAdapter(@NonNull Context context,
+                @NonNull Fragment ownerFragment, Cursor cursor) {
+            super(context);
+            mContext = context;
 
             int idColIdx = cursor.getColumnIndex(ContactsContract.Contacts._ID);
             String contactId = cursor.getString(idColIdx);
             int nameColIdx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-            mContactName = cursor.getString(nameColIdx);
+            setContactName(cursor.getString(nameColIdx));
             int hasPhoneColIdx = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
             boolean hasPhoneNumber = Integer.parseInt(cursor.getString(hasPhoneColIdx)) > 0;
 
@@ -213,12 +228,13 @@ public class ContactDetailsFragment extends DialerBaseFragment
             }
 
             // Fetch the phone number from the contacts db using another loader.
-            LoaderManager.getInstance(ContactDetailsFragment.this).initLoader(PHONE_LOADER_QUERY_ID,
+            LoaderManager.getInstance(ownerFragment).initLoader(PHONE_LOADER_QUERY_ID,
                     null,
                     new LoaderManager.LoaderCallbacks<Cursor>() {
                         @Override
                         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-                            return new CursorLoader(getContext(),
+                            return new CursorLoader(
+                                    mContext,
                                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                                     null, /* All columns **/
                                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
@@ -240,23 +256,10 @@ public class ContactDetailsFragment extends DialerBaseFragment
                                 int numberColIdx = cursor.getColumnIndex(
                                         ContactsContract.CommonDataKinds.Phone.NUMBER);
                                 String number = cursor.getString(numberColIdx);
-                                String numberType;
-                                switch (type) {
-                                    case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                                        numberType = getString(R.string.type_home);
-                                        break;
-                                    case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-                                        numberType = getString(R.string.type_work);
-                                        break;
-                                    case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                                        numberType = getString(R.string.type_mobile);
-                                        break;
-                                    default:
-                                        numberType = getString(R.string.type_other);
-                                }
-                                mPhoneNumbers.add(new Pair<>(numberType,
-                                        TelecomUtils.getFormattedNumber(getContext(), number)));
-                                notifyItemInserted(mPhoneNumbers.size());
+                                String numberType = getReadablePhoneType(type);
+                                getPhoneNumbers().add(new Pair<>(numberType,
+                                        TelecomUtils.getFormattedNumber(mContext, number)));
+                                notifyItemInserted(getPhoneNumbers().size());
                             }
                             // Notify  header to load avatar.
                             notifyItemRangeChanged(0, itemCount);
@@ -265,81 +268,6 @@ public class ContactDetailsFragment extends DialerBaseFragment
                         public void onLoaderReset(Loader loader) {
                         }
                     });
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return position == 0 ? ID_HEADER : ID_CONTENT;
-        }
-
-        @Override
-        public void setMaxItems(int maxItems) {
-            // Ignore.
-        }
-
-        @Override
-        public int getItemCount() {
-            return mPhoneNumbers.size() + 1;  // +1 for the header row.
-        }
-
-        @Override
-        public ContactDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            int layoutResId;
-            switch (viewType) {
-                case ID_HEADER:
-                    layoutResId = R.layout.contact_detail_name_image;
-                    break;
-                case ID_CONTENT:
-                    layoutResId = R.layout.contact_details_number;
-                    break;
-                default:
-                    Log.e(TAG, "Unknown view type " + viewType);
-                    return null;
-            }
-
-            View view = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent,
-                    false);
-            return new ContactDetailViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ContactDetailViewHolder viewHolder, int position) {
-            switch (viewHolder.getItemViewType()) {
-                case ID_HEADER:
-                    viewHolder.title.setText(mContactName);
-                    if (!mPhoneNumbers.isEmpty()) {
-                        String firstNumber = mPhoneNumbers.get(0).second;
-                        TelecomUtils.setContactBitmapAsync(getContext(), viewHolder.avatar,
-                                mContactName, firstNumber);
-                    }
-                    // Just in case a viewholder object gets recycled.
-                    viewHolder.card.setOnClickListener(null);
-                    break;
-                case ID_CONTENT:
-                    Pair<String, String> data = mPhoneNumbers.get(position - 1);
-                    viewHolder.title.setText(data.second);  // Type.
-                    viewHolder.text.setText(data.first);  // Number.
-                    viewHolder.leftIcon.setImageResource(R.drawable.ic_phone);
-                    viewHolder.leftIcon.setColorFilter(mIconTint);
-                    viewHolder.card.setOnClickListener(v -> {
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse(TELEPHONE_URI_PREFIX + data.second));
-                        getContext().startActivity(callIntent);
-                    });
-                    break;
-                default:
-                    Log.e(TAG, "Unknown view type " + viewHolder.getItemViewType());
-                    return;
-            }
-
-            if (position == (getItemCount() - 1)) {
-                // hide divider for last item.
-                viewHolder.divier.setVisibility(View.GONE);
-            } else {
-                viewHolder.divier.setVisibility(View.VISIBLE);
-            }
-            ListItemBackgroundResolver.setBackground(viewHolder.card,
-                    viewHolder.getAdapterPosition(), getItemCount());
         }
     }
 }
