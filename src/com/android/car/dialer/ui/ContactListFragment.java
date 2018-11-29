@@ -21,30 +21,29 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.car.widget.AlphaJumpBucketer;
-import androidx.car.widget.IAlphaJumpAdapter;
-import androidx.car.widget.ListItemAdapter;
-import androidx.car.widget.PagedListView;
-
 import com.android.car.dialer.ContactDetailsFragment;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.PhoneLoader;
-import com.android.car.dialer.telecom.TelecomUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.car.widget.AlphaJumpBucketer;
+import androidx.car.widget.IAlphaJumpAdapter;
+import androidx.car.widget.ListItemAdapter;
+import androidx.car.widget.PagedListView;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 /**
  * Contact Fragment.

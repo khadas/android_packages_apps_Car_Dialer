@@ -21,15 +21,11 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.provider.CallLog;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.car.widget.PagedListView;
 
 import com.android.car.dialer.telecom.PhoneLoader;
 import com.android.car.dialer.telecom.TelecomUtils;
@@ -39,6 +35,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.car.widget.PagedListView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Adapter class for populating Contact data as loaded from the DB to an AA GroupingRecyclerView.

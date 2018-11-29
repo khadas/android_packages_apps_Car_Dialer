@@ -32,7 +32,7 @@
         <!-- Used to provide common margins and also allow for the textview to set its right margin
              to the width of the image to allow it to ellipsize.
         -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/contact_detail_name_card_height"
             android:layout_marginLeft="@dimen/car_keyline_1"
@@ -61,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/avatar"/>
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
