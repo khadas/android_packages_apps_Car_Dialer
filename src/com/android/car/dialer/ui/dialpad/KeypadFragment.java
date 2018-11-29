@@ -63,10 +63,6 @@ public class KeypadFragment extends Fragment {
     @interface DialKeyCode {
     }
 
-    public static KeypadFragment newInstance() {
-        return new KeypadFragment();
-    }
-
     /**
      * Callback for keypad to interact with its host.
      */

@@ -16,8 +16,6 @@
 
 package com.android.car.dialer.ui.activecall;
 
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telecom.Call;
 import android.text.TextUtils;
