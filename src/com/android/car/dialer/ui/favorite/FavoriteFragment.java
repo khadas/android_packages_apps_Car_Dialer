@@ -16,15 +16,16 @@
 
 package com.android.car.dialer.ui.favorite;
 
+import android.annotation.Nullable;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -38,6 +39,7 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
@@ -86,30 +88,52 @@ public class FavoriteFragment extends DialerBaseFragment {
 
     private void onItemClicked(Contact contact) {
         Context context = getContext();
-        // TODO: check whether a default entry is set, if set, directly connect that entry
-        // instead of showing a dialog.
-        if (contact.getNumbers().size() > 1) {
-            ArrayList<String> numberListItems = new ArrayList<>();
-            // TODO: customize the CarListDialog to show list items up-to-spec.
-            for (PhoneNumber phoneNumber : contact.getNumbers()) {
-                numberListItems.add(
-                        phoneNumber.getNumber() + " " + phoneNumber.getReadableLabel(
-                                context.getResources()));
-            }
+
+        if (contact.hasPrimaryPhoneNumber()) {
+            placeCall(contact.getPrimaryPhoneNumber(), false);
+            return;
+        }
+
+        List<PhoneNumber> contactPhoneNumbers = contact.getNumbers();
+        if (contactPhoneNumbers.isEmpty()) {
+            L.w(TAG, "contact %s doesn't have any phone number", contact.getDisplayName());
+            return;
+        }
+
+        if (contactPhoneNumbers.size() == 1) {
+            placeCall(contactPhoneNumbers.get(0), false);
+        } else if (contactPhoneNumbers.size() > 1) {
+            final List<PhoneNumber> selectedPhoneNumber = new ArrayList<>();
             new AlertDialog.Builder(context)
                     .setTitle(R.string.select_number_dialog_title)
-                    .setItems(numberListItems.toArray(new String[0]), (dialog, which) -> placeCall(
-                            contact.getNumbers().get(which).getNumber()))
+                    .setSingleChoiceItems(
+                            new PhoneNumberListAdapter(context, contactPhoneNumbers),
+                            -1,
+                            ((dialog, which) -> {
+                                selectedPhoneNumber.clear();
+                                selectedPhoneNumber.add(contactPhoneNumbers.get(which));
+                            }))
+                    .setNeutralButton(R.string.select_number_dialog_just_once_button,
+                            (dialog, which) -> {
+                                if (!selectedPhoneNumber.isEmpty()) {
+                                    placeCall(selectedPhoneNumber.get(0), false);
+                                }
+                            })
+                    .setPositiveButton(R.string.select_number_dialog_always_button,
+                            (dialog, which) -> {
+                                if (!selectedPhoneNumber.isEmpty()) {
+                                    placeCall(selectedPhoneNumber.get(0), true);
+                                }
+                            })
                     .show();
-        } else if (contact.getNumbers().size() == 1) {
-            placeCall(contact.getNumbers().get(0).getNumber());
-        } else {
-            L.w(TAG, "contact %s doesn't have any phone number", contact.getDisplayName());
         }
     }
 
-    private void placeCall(String number) {
-        UiCallManager.get().placeCall(number);
+    private void placeCall(PhoneNumber number, boolean setAsPrimary) {
+        UiCallManager.get().placeCall(number.getNumber());
+        if (setAsPrimary) {
+            TelecomUtils.setAsPrimaryPhoneNumber(getContext(), number);
+        }
     }
 
     private int getMaxPages() {
@@ -144,6 +168,31 @@ public class FavoriteFragment extends DialerBaseFragment {
             }
 
             outRect.set(leftPadding, carPadding1, rightPadding, carPadding1);
+        }
+    }
+
+    private static class PhoneNumberListAdapter extends ArrayAdapter<PhoneNumber> {
+        private final Context mContext;
+
+        public PhoneNumberListAdapter(Context context, List<PhoneNumber> phoneNumbers) {
+            super(context, R.layout.phone_number_list_item, R.id.phone_number, phoneNumbers);
+            mContext = context;
+        }
+
+        @Override
+        public View getView(int position, @Nullable View convertView,
+                @android.annotation.NonNull ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            PhoneNumber phoneNumber = getItem(position);
+            if (phoneNumber == null) {
+                return view;
+            }
+            TextView phoneNumberView = view.findViewById(R.id.phone_number);
+            phoneNumberView.setText(phoneNumber.getNumber());
+            TextView phoneNumberDescriptionView = view.findViewById(R.id.phone_number_description);
+            phoneNumberDescriptionView.setText(
+                    phoneNumber.getReadableLabel(mContext.getResources()));
+            return view;
         }
     }
 

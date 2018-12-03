@@ -143,6 +143,7 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
                 viewHolder.getAdapterPosition(), getItemCount());
     }
 
+    @Deprecated
     String getReadablePhoneType(int phoneType) {
         switch (phoneType) {
             case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
