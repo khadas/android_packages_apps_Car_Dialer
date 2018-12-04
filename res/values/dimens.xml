@@ -38,6 +38,7 @@
     <dimen name="call_history_avatar_size">@dimen/car_avatar_size</dimen>
 
     <!-- Contact details dimensions -->
+    <dimen name="contact_detail_list_top_padding">@*android:dimen/car_padding_1</dimen>
     <dimen name="contact_detail_margin">@*android:dimen/car_keyline_1</dimen>
     <dimen name="contact_detail_text_margin_start">@*android:dimen/car_keyline_2</dimen>
     <dimen name="contact_detail_text_margin_bottom">@*android:dimen/car_padding_1</dimen>

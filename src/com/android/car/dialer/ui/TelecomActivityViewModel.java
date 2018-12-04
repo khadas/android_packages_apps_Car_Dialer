@@ -1,5 +1,6 @@
 package com.android.car.dialer.ui;
 
+import android.annotation.IntDef;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -21,6 +22,8 @@ import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Set;
 
 /**
@@ -32,15 +35,50 @@ public class TelecomActivityViewModel extends AndroidViewModel {
     public static final String NO_BT_ERROR = "NO_ERROR";
 
     private final Context mApplicationContext;
-    private ErrorStringLiveData mErrorStringLiveData;
-    private LiveData<Boolean> mHasOngoingCallLiveData;
+    private final LiveData<String> mErrorStringLiveData;
+    private final LiveData<Boolean> mHasOngoingCallLiveData;
+    private final LiveData<Integer> mDialerAppStateLiveData;
+
+    /**
+     * App state indicates if bluetooth is connected, there is ongoing call or it should just show
+     * the content fragments.
+     */
+    @IntDef({DialerAppState.DEFAULT, DialerAppState.BLUETOOTH_ERROR,
+            DialerAppState.HAS_ONGOING_CALL})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DialerAppState {
+        int DEFAULT = 0;
+        int BLUETOOTH_ERROR = 1;
+        int HAS_ONGOING_CALL = 2;
+    }
 
     public TelecomActivityViewModel(Application application) {
         super(application);
         mApplicationContext = application.getApplicationContext();
-        mHasOngoingCallLiveData = Transformations.map(
-                new ActiveCallListLiveData(application.getApplicationContext()),
+
+        if (BluetoothAdapter.getDefaultAdapter() == null) {
+            MutableLiveData<String> bluetoothUnavailableLiveData = new MutableLiveData<>();
+            bluetoothUnavailableLiveData.setValue(
+                    mApplicationContext.getString(R.string.bluetooth_unavailable));
+            mErrorStringLiveData = bluetoothUnavailableLiveData;
+        } else {
+            UiBluetoothMonitor uiBluetoothMonitor = UiBluetoothMonitor.get();
+            mErrorStringLiveData = new ErrorStringLiveData(
+                    mApplicationContext,
+                    uiBluetoothMonitor.getHfpStateLiveData(),
+                    uiBluetoothMonitor.getPairListLiveData(),
+                    uiBluetoothMonitor.getBluetoothStateLiveData());
+        }
+
+        mHasOngoingCallLiveData = Transformations.map(new ActiveCallListLiveData(application),
                 (calls) -> !calls.isEmpty());
+
+        mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData,
+                mHasOngoingCallLiveData);
+    }
+
+    public LiveData<Integer> getDialerAppState() {
+        return mDialerAppStateLiveData;
     }
 
     /**
@@ -48,29 +86,42 @@ public class TelecomActivityViewModel extends AndroidViewModel {
      * {@link #NO_BT_ERROR} if there's no error.
      */
     public LiveData<String> getErrorMessage() {
-        if (BluetoothAdapter.getDefaultAdapter() == null) {
-            MutableLiveData<String> bluetoothUnavailableLiveData = new MutableLiveData<>();
-            bluetoothUnavailableLiveData.setValue(
-                    mApplicationContext.getString(R.string.bluetooth_unavailable));
-            return bluetoothUnavailableLiveData;
-        }
-
-        if (mErrorStringLiveData == null) {
-            UiBluetoothMonitor uiBluetoothMonitor = UiBluetoothMonitor.get();
-            mErrorStringLiveData = new ErrorStringLiveData(mApplicationContext,
-                    uiBluetoothMonitor.getHfpStateLiveData(),
-                    uiBluetoothMonitor.getPairListLiveData(),
-                    uiBluetoothMonitor.getBluetoothStateLiveData());
-        }
-
         return mErrorStringLiveData;
     }
 
-    /**
-     * Returns a live data which monitors whether there are any active ongoing calls.
-     */
-    public LiveData<Boolean> hasOngoingCall() {
-        return mHasOngoingCallLiveData;
+    private static class DialerAppStateLiveData extends MediatorLiveData<Integer> {
+        private final LiveData<String> mErrorStringLiveData;
+        private final LiveData<Boolean> mHasOngoingCallLiveData;
+
+        private DialerAppStateLiveData(LiveData<String> errorStringLiveData,
+                LiveData<Boolean> hasOngoingCallLiveData) {
+            this.mErrorStringLiveData = errorStringLiveData;
+            this.mHasOngoingCallLiveData = hasOngoingCallLiveData;
+            setValue(DialerAppState.DEFAULT);
+
+            addSource(mErrorStringLiveData, errorMsg -> updateDialerAppState());
+            addSource(mHasOngoingCallLiveData, hasOngoingCall -> updateDialerAppState());
+        }
+
+        private void updateDialerAppState() {
+            L.d(TAG, "updateDialerAppState, error: %s, hasOngoingCall: %s",
+                    mErrorStringLiveData.getValue(), mHasOngoingCallLiveData.getValue());
+
+            if (NO_BT_ERROR.equals(mErrorStringLiveData.getValue())) {
+                setValue(mHasOngoingCallLiveData.getValue() == Boolean.TRUE
+                        ? DialerAppState.HAS_ONGOING_CALL : DialerAppState.DEFAULT);
+                return;
+            }
+            setValue(DialerAppState.BLUETOOTH_ERROR);
+        }
+
+        @Override
+        public void setValue(@DialerAppState Integer newValue) {
+            // Only set value and notify observers when the value changes.
+            if (getValue() != newValue) {
+                super.setValue(newValue);
+            }
+        }
     }
 
     private static class ErrorStringLiveData extends MediatorLiveData<String> {
@@ -104,12 +155,6 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         private void onBluetoothStateChanged(Integer state) {
-            update();
-        }
-
-        @Override
-        protected void onActive() {
-            super.onActive();
             update();
         }
 
