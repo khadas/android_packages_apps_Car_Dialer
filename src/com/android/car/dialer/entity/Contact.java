@@ -18,6 +18,7 @@ package com.android.car.dialer.entity;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.icu.text.Collator;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -30,6 +31,8 @@ import androidx.annotation.Nullable;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,8 +41,24 @@ import java.util.Set;
 /**
  * Encapsulates data about a phone Contact entry. Typically loaded from the local Contact store.
  */
-public class Contact implements Parcelable {
+public class Contact implements Parcelable, Comparable<Contact> {
     private static final String TAG = "CD.Contact";
+
+    /**
+     * Contact belongs to TYPE_LETTER if its display name starts with a letter
+     */
+    private static final int TYPE_LETTER = 1;
+
+    /**
+     * Contact belongs to TYPE_DIGIT if its display name starts with a digit
+     */
+    private static final int TYPE_DIGIT = 2;
+
+    /**
+     * Contact belongs to TYPE_OTHER if it does not belong to TYPE_LETTER or TYPE_DIGIT
+     * Such as empty display name or the display name starts with "_"
+     */
+    private static final int TYPE_OTHER = 3;
 
     /**
      * An unique primary key for searching an entry.
@@ -268,5 +287,30 @@ public class Contact implements Parcelable {
         contact.mLookupKey = source.readString();
         contact.mIsVoiceMail = source.readBoolean();
         return contact;
+    }
+
+    @Override
+    public int compareTo(Contact otherContact) {
+        // Use a helper function to classify Contacts
+        int type = getNameType(mDisplayName);
+        int otherType = getNameType(otherContact.mDisplayName);
+        if (type != otherType) {
+            return Integer.compare(type, otherType);
+        }
+        Collator collator = Collator.getInstance();
+        return collator.compare(mDisplayName, otherContact.mDisplayName);
+    }
+
+    private static int getNameType(String displayName) {
+        // A helper function to classify Contacts
+        if (!TextUtils.isEmpty(displayName)) {
+            if (Character.isLetter(displayName.charAt(0))) {
+                return TYPE_LETTER;
+            }
+            if (Character.isDigit(displayName.charAt(0))) {
+                return TYPE_DIGIT;
+            }
+        }
+        return TYPE_OTHER;
     }
 }

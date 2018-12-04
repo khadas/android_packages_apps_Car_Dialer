@@ -16,6 +16,7 @@ import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -143,6 +144,7 @@ public class InMemoryPhoneBook {
         mIsLoaded = true;
         mContacts.clear();
         mContacts.addAll(result.values());
+        Collections.sort(mContacts);
         mContactsLiveData.setValue(mContacts);
 
         for (Contact contact : mContacts) {
