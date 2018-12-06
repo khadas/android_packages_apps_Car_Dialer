@@ -15,6 +15,8 @@ limitations under the License.
 -->
 <resources>
     <!-- The theme for the Dialer app. -->
-    <style name="Theme.Dialer" parent="Theme.NoActionBar.Drawer" ></style>
+    <style name="Theme.Dialer" parent="Theme.NoActionBar.Drawer">
+        <item name="android:listDivider">@drawable/list_divider</item>
+    </style>
     <style name="PagedListViewTheme" parent="Theme.CarSupportWrapper.NoActionBar"></style>
 </resources>

@@ -16,26 +16,48 @@ limitations under the License.
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:foreground="@drawable/dialer_ripple_background"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/call_history_item_height"
-    android:paddingRight="@dimen/call_history_item_padding"
-    android:paddingLeft="@dimen/call_history_item_padding"
-    android:elevation = "@dimen/in_call_card_elevation">
+    android:layout_height="@dimen/call_history_item_height">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/list_item_left_edge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/guideline_begin"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/call_history_guideline" />
+        app:layout_constraintGuide_begin="@dimen/call_history_guideline"/>
 
     <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="@dimen/call_history_avatar_size"
-        android:layout_height="@dimen/call_history_avatar_size"
-        android:scaleType="center"
+        android:id="@+id/icon"
+        android:layout_width="@dimen/avatar_icon_size"
+        android:layout_height="@dimen/avatar_icon_size"
+        android:layout_marginStart="@dimen/call_history_item_padding"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/toggle_dialpad_button"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/title"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginEnd="@dimen/call_history_item_padding"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/guideline_begin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text"/>
+
+    <TextView
+        android:id="@id/text"
+        style="?android:attr/textAppearanceSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/guideline_begin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

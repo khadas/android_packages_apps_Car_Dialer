@@ -21,22 +21,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.car.app.CarListDialog;
 import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.Contact;
-import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.OnItemClickedListener;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nonnull;
 
 /**
  * Adapter class for binding favorite contacts.
