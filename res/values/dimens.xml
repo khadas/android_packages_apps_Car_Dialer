@@ -74,7 +74,7 @@
 
 
     <!-- In-call dimensions -->
-    <dimen name="in_call_controller_bar_height">@dimen/car_action_bar_height</dimen>
+    <dimen name="in_call_controller_bar_height">@dimen/control_bar_height</dimen>
     <dimen name="in_call_card_margin_right">304dp</dimen>
     <dimen name="in_call_text_max_width">362dp</dimen>
     <dimen name="in_call_card_dialpad_width">300dp</dimen>
