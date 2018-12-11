@@ -24,7 +24,7 @@
     <dimen name="dialer_menu_icon_container_width">64dp</dimen>
 
     <!-- Audio route dimentions -->
-    <dimen name="audio_route_height">@dimen/car_action_bar_height</dimen>
+    <dimen name="audio_route_height">@dimen/control_bar_height</dimen>
     <dimen name="audio_route_content_padding">@*android:dimen/car_keyline_1</dimen>
     <dimen name="audio_route_corner_radius">@*android:dimen/car_radius_3</dimen>
     <dimen name="audio_route_card_elevation">@dimen/control_bar_elevation</dimen>
@@ -32,7 +32,7 @@
     <dimen name="audio_route_constraint_guide_begin">124dp</dimen>
 
     <!-- Call list dimentions -->
-    <dimen name="call_history_item_height">@dimen/car_action_bar_height</dimen>
+    <dimen name="call_history_item_height">@dimen/control_bar_height</dimen>
     <dimen name="call_history_item_padding">@*android:dimen/car_keyline_1</dimen>
     <dimen name="call_history_guideline">@*android:dimen/car_keyline_1</dimen>
     <dimen name="call_history_avatar_size">@dimen/car_avatar_size</dimen>
