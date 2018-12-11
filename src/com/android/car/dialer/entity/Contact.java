@@ -298,7 +298,8 @@ public class Contact implements Parcelable, Comparable<Contact> {
             return Integer.compare(type, otherType);
         }
         Collator collator = Collator.getInstance();
-        return collator.compare(mDisplayName, otherContact.mDisplayName);
+        return collator.compare(mDisplayName == null ? "" : mDisplayName,
+                otherContact.mDisplayName == null ? "" : otherContact.mDisplayName);
     }
 
     private static int getNameType(String displayName) {
