@@ -165,12 +165,14 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
             }
+
+            // If the view is active, it means the call is on hold right now.
             if (v.isActivated()) {
                 v.setActivated(false);
-                onHoldCall();
+                onUnholdCall();
             } else {
                 v.setActivated(true);
-                onUnholdCall();
+                onHoldCall();
             }
         });
         return fragmentView;
