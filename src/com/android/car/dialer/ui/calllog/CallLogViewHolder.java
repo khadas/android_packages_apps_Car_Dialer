@@ -23,9 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.PhoneCallLog;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
+import com.android.car.dialer.widget.CallTypeIconsView;
 
 /**
  * {@link RecyclerView.ViewHolder} for call history list item, responsible for presenting and
@@ -35,12 +37,14 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
     private ImageView mAvatarView;
     private TextView mTitleView;
     private TextView mTextView;
+    private CallTypeIconsView mCallTypeIconsView;
 
     public CallLogViewHolder(@NonNull View itemView) {
         super(itemView);
         mAvatarView = itemView.findViewById(R.id.icon);
         mTitleView = itemView.findViewById(R.id.title);
         mTextView = itemView.findViewById(R.id.text);
+        mCallTypeIconsView = itemView.findViewById(R.id.call_type_icons);
     }
 
     public void onBind(UiCallLog uiCallLog) {
@@ -48,8 +52,15 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
                 uiCallLog.getTitle(), uiCallLog.getNumber());
         mTitleView.setText(uiCallLog.getTitle());
         mTextView.setText(uiCallLog.getText());
+        for (PhoneCallLog.Record record : uiCallLog.getCallRecords()) {
+            mCallTypeIconsView.add(record.getCallType());
+        }
 
         super.itemView.setOnClickListener(
                 view -> UiCallManager.get().placeCall(uiCallLog.getNumber()));
+    }
+
+    public void onRecycle() {
+        mCallTypeIconsView.clear();
     }
 }

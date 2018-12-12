@@ -96,16 +96,9 @@ public class PhoneCallLog {
      */
     public long getLastCallEndTimestamp() {
         if (!mCallRecords.isEmpty()) {
-            return mCallRecords.get(mCallRecords.size() - 1).getCallEndTimestamp();
+            return mCallRecords.get(0).getCallEndTimestamp();
         }
         return -1;
-    }
-
-    /**
-     * Returns the number of call records in this call log.
-     */
-    public int getNumberOfCallRecords() {
-        return mCallRecords.size();
     }
 
     /**

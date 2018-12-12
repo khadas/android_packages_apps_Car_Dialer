@@ -70,6 +70,11 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder>
     }
 
     @Override
+    public void onViewRecycled(@NonNull CallLogViewHolder holder) {
+        holder.onRecycle();
+    }
+
+    @Override
     public int getItemCount() {
         return mMaxItems == PagedListView.ItemCap.UNLIMITED
                 ? mUiCallLogs.size()
