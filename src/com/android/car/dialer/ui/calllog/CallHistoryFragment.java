@@ -15,6 +15,8 @@
  */
 package com.android.car.dialer.ui.calllog;
 
+import static androidx.car.widget.PagedListView.UNLIMITED_PAGES;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +48,7 @@ public class CallHistoryFragment extends DialerBaseFragment {
         pagedListView.setAdapter(callLogAdapter);
         pagedListView.getRecyclerView().addItemDecoration(
                 new VerticalListDividerDecoration(getContext(), true));
+        pagedListView.setMaxPages(UNLIMITED_PAGES);
 
         CallHistoryViewModel viewModel = ViewModelProviders.of(this).get(
                 CallHistoryViewModel.class);

@@ -23,18 +23,10 @@
     <color name="phone_theme_secondary_light">@*android:color/car_grey_200</color>
     <color name="phone_theme_secondary_dark">@*android:color/car_dark_blue_grey_800</color>
 
-    <color name="primary_icon_color">@*android:color/car_tint</color>
-
     <color name="phone_status_bar_theme">@*android:color/transparent</color>
     <color name="phone_call">@*android:color/car_green_700</color>
     <color name="phone_end_call">@*android:color/car_red_500a</color>
     <color name="phone_secondary_call_scrim">#990288d1</color>
-    <color name="separator">#1f000000</color>
-
-    <color name="call_history_list_item_color">@color/phone_theme</color>
-
-    <color name="contact_fragment_background">@color/phone_theme</color>
-    <color name="contact_list_item_color">@color/phone_theme</color>
 
     <color name="dialer_fragment_background_color">@color/phone_theme</color>
     <color name="telecom_activity_background_color">@color/phone_theme</color>
@@ -78,6 +70,14 @@
     <color name="dialer_card_background">@color/car_card</color>
 
     <!-- Components -->
-    <color name="dialer_list_divider_color">@*android:color/car_list_divider</color>
+    <color name="divider_color">@color/divider_color_light</color>
+    <color name="divider_color_dark">#1EFFFFFF</color>
+    <color name="divider_color_light">#38FFFFFF</color>
+
+    <color name="primary_icon_color">@*android:color/car_tint</color>
+
+    <color name="secondary_icon_color">@color/secondary_icon_color_light</color>
+    <color name="secondary_icon_color_dark">#8ADADCE0</color>
+    <color name="secondary_icon_color_light">#99FFFFFF</color>
 
 </resources>
