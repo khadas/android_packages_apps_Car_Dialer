@@ -131,6 +131,9 @@ public class InCallServiceImpl extends InCallService {
     @Override
     public boolean onUnbind(Intent intent) {
         L.d(TAG, "onUnbind, intent: %s", intent);
+        if (ACTION_LOCAL_BIND.equals(intent.getAction())) {
+            return false;
+        }
         return super.onUnbind(intent);
     }
 
