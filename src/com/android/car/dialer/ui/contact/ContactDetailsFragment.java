@@ -200,8 +200,15 @@ public class ContactDetailsFragment extends DialerBaseFragment
             super(context);
             setContactName(contact.getDisplayName());
             for (PhoneNumber phoneNumber : contact.getNumbers()) {
-                getPhoneNumbers().add(new Pair<>(getReadablePhoneType(phoneNumber.getType()),
-                        phoneNumber.getNumber()));
+                CharSequence readableLabel = phoneNumber.getReadableLabel(context.getResources());
+                if (phoneNumber.equals(contact.getPrimaryPhoneNumber())) {
+                    getPhoneNumbers().add(new Pair<>(
+                            context.getString(R.string.primary_number_description, readableLabel),
+                            phoneNumber.getNumber()));
+                } else {
+                    getPhoneNumbers().add(
+                            new Pair<>(String.valueOf(readableLabel), phoneNumber.getNumber()));
+                }
             }
         }
     }

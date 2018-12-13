@@ -16,6 +16,8 @@
 package com.android.car.dialer.telecom;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -38,6 +40,7 @@ import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.CallDetail;
 import com.android.car.dialer.entity.Contact;
+import com.android.car.dialer.entity.PhoneNumber;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -321,6 +324,18 @@ public class TelecomUtils {
             icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             icon.setImageDrawable(letterTileDrawable);
         }
+    }
+
+    /** Set the given phone number as the primary phone number for its associated contact. */
+    public static void setAsPrimaryPhoneNumber(Context context, PhoneNumber phoneNumber) {
+        // Update the primary values in the data record.
+        ContentValues values = new ContentValues(1);
+        values.put(ContactsContract.Data.IS_SUPER_PRIMARY, 1);
+        values.put(ContactsContract.Data.IS_PRIMARY, 1);
+
+        context.getContentResolver().update(
+                ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, phoneNumber.getId()),
+                values, null, null);
     }
 
 }
