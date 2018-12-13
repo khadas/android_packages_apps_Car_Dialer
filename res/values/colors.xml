@@ -32,7 +32,6 @@
     <color name="separator">#1f000000</color>
 
     <color name="call_history_list_item_color">@color/phone_theme</color>
-    <color name="call_list_fragment_background">@color/phone_theme</color>
 
     <color name="contact_fragment_background">@color/phone_theme</color>
     <color name="contact_list_item_color">@color/phone_theme</color>
@@ -60,7 +59,6 @@
     <color name="contact_details_icon_tint">@color/search_container_controls_tint</color>
     <color name="contact_detail_fragment_background_color">@color/phone_theme_secondary</color>
     <color name="contact_detail_card_background_color">@color/phone_theme</color>
-    <color name="contact_detail_divider_color">@*android:color/car_list_divider</color>
 
     <!-- TextAppearances -->
     <color name="car_caption_light">@*android:color/car_grey_400</color>
@@ -78,4 +76,8 @@
     <color name="dialer_tint">@color/car_key2_dark</color>
 
     <color name="dialer_card_background">@color/car_card</color>
+
+    <!-- Components -->
+    <color name="dialer_list_divider_color">@*android:color/car_list_divider</color>
+
 </resources>

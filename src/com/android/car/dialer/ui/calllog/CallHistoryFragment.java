@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.android.car.dialer.ui.calllog;
 
 import android.os.Bundle;
@@ -24,11 +23,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.car.widget.ListItemAdapter;
 import androidx.car.widget.PagedListView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.VerticalListDividerDecoration;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 public class CallHistoryFragment extends DialerBaseFragment {
@@ -42,18 +41,16 @@ public class CallHistoryFragment extends DialerBaseFragment {
             @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.call_list_fragment, container, false);
         PagedListView pagedListView = fragmentView.findViewById(R.id.list_view);
-        CallHistoryListItemProvider callHistoryListItemProvider = new CallHistoryListItemProvider();
-        ListItemAdapter adapter = new ListItemAdapter(getContext(), callHistoryListItemProvider);
-        pagedListView.setAdapter(adapter);
+
+        CallLogAdapter callLogAdapter = new CallLogAdapter(getContext());
+        pagedListView.setAdapter(callLogAdapter);
+        pagedListView.getRecyclerView().addItemDecoration(
+                new VerticalListDividerDecoration(getContext(), true));
 
         CallHistoryViewModel viewModel = ViewModelProviders.of(this).get(
                 CallHistoryViewModel.class);
 
-        viewModel.getCallHistory().observe(this,
-                callLogs -> {
-                    callHistoryListItemProvider.setCallHistoryListItems(getContext(), callLogs);
-                    adapter.notifyDataSetChanged();
-                });
+        viewModel.getCallHistory().observe(this, callLogAdapter::setUiCallLogs);
 
         return fragmentView;
     }

@@ -34,7 +34,7 @@
     <!-- Call list dimentions -->
     <dimen name="call_history_item_height">@dimen/control_bar_height</dimen>
     <dimen name="call_history_item_padding">@*android:dimen/car_keyline_1</dimen>
-    <dimen name="call_history_guideline">@*android:dimen/car_keyline_1</dimen>
+    <dimen name="call_history_guideline">@*android:dimen/car_keyline_3</dimen>
     <dimen name="call_history_avatar_size">@dimen/car_avatar_size</dimen>
 
     <!-- Contact details dimensions -->
@@ -170,4 +170,8 @@
     <dimen name="telecom_activity_padding">@*android:dimen/car_app_bar_height</dimen>
 
     <dimen name="user_profile_text_padding">@*android:dimen/car_padding_3</dimen>
+
+    <!-- Components -->
+    <dimen name="dialer_list_divider_inset">@*android:dimen/car_keyline_1</dimen>
+    <dimen name="dialer_list_divider_height">1dp</dimen>
 </resources>
