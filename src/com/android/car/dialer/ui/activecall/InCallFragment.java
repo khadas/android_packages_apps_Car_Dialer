@@ -32,7 +32,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.CallDetail;
+import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 
@@ -100,7 +102,8 @@ public class InCallFragment extends Fragment implements
         nameView.setText(displayName);
 
         ImageView avatar = mUserProfileContainerView.findViewById(R.id.avatar);
-        TelecomUtils.setContactBitmapAsync(getContext(), avatar, displayName, number);
+        Contact contact = InMemoryPhoneBook.get().lookupContactEntry(number);
+        TelecomUtils.setContactBitmapAsync(getContext(), avatar, contact, displayName);
     }
 
     private void updateControllerBarFragment(@Nullable Integer callState) {

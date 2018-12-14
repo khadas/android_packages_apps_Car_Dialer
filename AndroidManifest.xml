@@ -33,6 +33,7 @@
     <!-- The Dialer needs to be directBootAware so that it can reflect the correct call state
          when the system boots up. -->
     <application
+        android:name=".DialerApplication"
         android:directBootAware="true"
         android:label="@string/phone_app_name"
         android:icon="@drawable/ic_app_icon">

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
@@ -20,7 +21,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.Contact;
-import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 import java.util.ArrayList;
@@ -198,18 +196,7 @@ public class ContactDetailsFragment extends DialerBaseFragment
     private static class ContactDetailsEntityAdapter extends ContactDetailsAdapter {
         public ContactDetailsEntityAdapter(@NonNull Context context, @NonNull Contact contact) {
             super(context);
-            setContactName(contact.getDisplayName());
-            for (PhoneNumber phoneNumber : contact.getNumbers()) {
-                CharSequence readableLabel = phoneNumber.getReadableLabel(context.getResources());
-                if (phoneNumber.equals(contact.getPrimaryPhoneNumber())) {
-                    getPhoneNumbers().add(new Pair<>(
-                            context.getString(R.string.primary_number_description, readableLabel),
-                            phoneNumber.getNumber()));
-                } else {
-                    getPhoneNumbers().add(
-                            new Pair<>(String.valueOf(readableLabel), phoneNumber.getNumber()));
-                }
-            }
+            setContact(contact);
         }
     }
 
@@ -224,8 +211,6 @@ public class ContactDetailsFragment extends DialerBaseFragment
 
             int idColIdx = cursor.getColumnIndex(ContactsContract.Contacts._ID);
             String contactId = cursor.getString(idColIdx);
-            int nameColIdx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-            setContactName(cursor.getString(nameColIdx));
             int hasPhoneColIdx = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
             boolean hasPhoneNumber = Integer.parseInt(cursor.getString(hasPhoneColIdx)) > 0;
 
@@ -253,22 +238,12 @@ public class ContactDetailsFragment extends DialerBaseFragment
                                 return;
                             }
 
-                            int itemCount = getItemCount();
-                            cursor.moveToPosition(-1);
+                            cursor.moveToFirst();
+                            Contact contact = Contact.fromCursor(context, cursor);
                             while (cursor.moveToNext()) {
-                                int typeColIdx = cursor.getColumnIndex(
-                                        ContactsContract.CommonDataKinds.Phone.TYPE);
-                                int type = cursor.getInt(typeColIdx);
-                                int numberColIdx = cursor.getColumnIndex(
-                                        ContactsContract.CommonDataKinds.Phone.NUMBER);
-                                String number = cursor.getString(numberColIdx);
-                                String numberType = getReadablePhoneType(type);
-                                getPhoneNumbers().add(new Pair<>(numberType,
-                                        TelecomUtils.getFormattedNumber(mContext, number)));
-                                notifyItemInserted(getPhoneNumbers().size());
+                                contact.merge(Contact.fromCursor(context, cursor));
                             }
-                            // Notify  header to load avatar.
-                            notifyItemRangeChanged(0, itemCount);
+                            setContact(contact);
                         }
 
                         public void onLoaderReset(Loader loader) {

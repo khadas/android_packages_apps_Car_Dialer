@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer.ui.contact;
 
 import android.view.View;
@@ -51,9 +52,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
 
     public void onBind(Contact contact) {
         List<PhoneNumber> phoneNumbers = contact.getNumbers();
-        TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView,
-                contact.getDisplayName(),
-                phoneNumbers.isEmpty() ? null : phoneNumbers.get(0).getNumber());
+        TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact, null);
         mTitleView.setText(contact.getDisplayName());
         mActionButton.setOnClickListener(
                 view -> mOnShowContactDetailListener.onShowContactDetail(contact));

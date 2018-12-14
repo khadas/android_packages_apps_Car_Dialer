@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer;
 
 import android.app.ActionBar;
@@ -66,9 +67,6 @@ public class TelecomActivity extends DrawerActivity implements
     private static final String TAG = "CD.TelecomActivity";
     private static final String CONTENT_FRAGMENT_TAG = "CONTENT_FRAGMENT_TAG";
 
-    private UiCallManager mUiCallManager;
-    private UiBluetoothMonitor mUiBluetoothMonitor;
-
     private LiveData<String> mBluetoothErrorMsgLiveData;
     private LiveData<Integer> mDialerAppStateLiveData;
 
@@ -76,16 +74,12 @@ public class TelecomActivity extends DrawerActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mUiCallManager = UiCallManager.init(getApplicationContext());
-        mUiBluetoothMonitor = UiBluetoothMonitor.init(getApplicationContext());
-
         super.onCreate(savedInstanceState);
         L.d(TAG, "onCreate");
         setContentView(R.layout.telecom_activity);
         getActionBar().setBackgroundDrawable(
                 new ColorDrawable(getColor(android.R.color.transparent)));
 
-        InMemoryPhoneBook.init(getApplicationContext());
         getDrawerController().setRootAdapter(new DialerRootAdapter());
 
         TelecomActivityViewModel viewModel = ViewModelProviders.of(this).get(
@@ -114,16 +108,6 @@ public class TelecomActivity extends DrawerActivity implements
         super.onStop();
         L.d(TAG, "onStop");
         getSupportFragmentManager().removeOnBackStackChangedListener(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        L.d(TAG, "onDestroy");
-        mUiBluetoothMonitor.tearDown();
-        InMemoryPhoneBook.tearDown();
-        mUiCallManager.tearDown();
-        mUiCallManager = null;
     }
 
     @Override
@@ -175,7 +159,7 @@ public class TelecomActivity extends DrawerActivity implements
 
             case Intent.ACTION_CALL:
                 number = PhoneNumberUtils.getNumberFromIntent(intent, this);
-                mUiCallManager.placeCall(number);
+                UiCallManager.get().placeCall(number);
                 break;
 
             default:

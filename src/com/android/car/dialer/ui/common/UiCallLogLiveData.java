@@ -17,6 +17,7 @@
 package com.android.car.dialer.ui.common;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
@@ -116,7 +117,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<UiCallLog>> {
             if (TelecomUtils.isVoicemailNumber(mContext, number)) {
                 String title = mContext.getString(R.string.voicemail);
                 UiCallLog uiCallLog = new UiCallLog(title,
-                        relativeTime, number, phoneCallLog.getAllCallRecords());
+                        relativeTime, number, null, phoneCallLog.getAllCallRecords());
                 uiCallLogs.add(uiCallLog);
                 continue;
             }
@@ -136,6 +137,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<UiCallLog>> {
                     title,
                     getSecondaryText(getType(phoneNumber), relativeTime),
                     number,
+                    contact != null ? contact.getAvatarUri() : null,
                     phoneCallLog.getAllCallRecords());
 
             uiCallLogs.add(uiCallLog);

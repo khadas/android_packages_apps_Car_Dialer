@@ -65,23 +65,19 @@ class FavoriteContactViewHolder extends RecyclerView.ViewHolder {
         }
 
         String secondaryText;
-        PhoneNumber number; // Used for getting the avatar of associated contact.
         if (!contact.isVoicemail() && contactPhoneNumbers.size() > 1) {
             if (contact.hasPrimaryPhoneNumber()) {
-                number = contact.getPrimaryPhoneNumber();
                 secondaryText = context.getString(R.string.primary_number_description,
-                        number.getReadableLabel(context.getResources()));
+                        contact.getPrimaryPhoneNumber().getReadableLabel(context.getResources()));
             } else {
-                number = contactPhoneNumbers.get(0);
                 secondaryText = context.getString(R.string.type_multiple);
             }
         } else {
-            number = contactPhoneNumbers.get(0);
-            secondaryText = String.valueOf(number.getReadableLabel(context.getResources()));
+            secondaryText = String.valueOf(
+                    contactPhoneNumbers.get(0).getReadableLabel(context.getResources()));
         }
-
         mText.setText(secondaryText);
 
-        TelecomUtils.setContactBitmapAsync(context, mIcon, displayName, number.getNumber());
+        TelecomUtils.setContactBitmapAsync(context, mIcon, contact, null);
     }
 }
