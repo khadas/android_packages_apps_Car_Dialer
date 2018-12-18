@@ -57,6 +57,51 @@ LOCAL_DEX_PREOPT := false
 
 include $(BUILD_PACKAGE)
 
+###################################################################################
+# Duplicate of CarDialerApp which includes testing only resources for Robolectric #
+###################################################################################
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := $(call all-java-files-under, src)
+
+LOCAL_RESOURCE_DIR := \
+    $(LOCAL_PATH)/res \
+    $(LOCAL_PATH)/tests/robotests/res
+
+LOCAL_PACKAGE_NAME := CarDialerAppForTesting
+LOCAL_PRIVATE_PLATFORM_APIS := true
+
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_USE_AAPT2 := true
+
+LOCAL_STATIC_ANDROID_LIBRARIES += \
+    androidx.car_car \
+    androidx.lifecycle_lifecycle-extensions \
+    androidx-constraintlayout_constraintlayout \
+    androidx.legacy_legacy-support-v4 \
+    androidx.cardview_cardview \
+    car-apps-common \
+    car-arch-common \
+    car-theme-lib \
+
+LOCAL_STATIC_JAVA_LIBRARIES := \
+    androidx-constraintlayout_constraintlayout-solver \
+    guava \
+    car-glide \
+    car-glide-disklrucache \
+    car-gifdecoder \
+    libphonenumber
+
+LOCAL_PROGUARD_ENABLED := disabled
+
+LOCAL_PRIVILEGED_MODULE := true
+
+LOCAL_DEX_PREOPT := false
+
+include $(BUILD_PACKAGE)
+###################################################################################
+
 # Use the following include to make our test apk.
 ifeq (,$(ONE_SHOT_MAKEFILE))
 include $(call all-makefiles-under,$(LOCAL_PATH))

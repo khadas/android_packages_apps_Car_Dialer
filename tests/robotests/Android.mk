@@ -1,7 +1,7 @@
-#############################################################
-# Car Dialer Robolectric test target.                    #
-#############################################################
 LOCAL_PATH := $(call my-dir)
+#############################################################
+# Car Dialer Robolectric test target.                       #
+#############################################################
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := CarDialerRoboTests
@@ -17,14 +17,14 @@ LOCAL_JAVA_LIBRARIES := \
     mockito-robolectric-prebuilt \
     truth-prebuilt
 
-LOCAL_INSTRUMENTATION_FOR := CarDialerApp
+LOCAL_INSTRUMENTATION_FOR := CarDialerAppForTesting
 
 LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_STATIC_JAVA_LIBRARY)
 
 #############################################################
-# Car Dialer runner target to run the previous target.   #
+# Car Dialer runner target to run the previous target.      #
 #############################################################
 include $(CLEAR_VARS)
 
@@ -37,7 +37,8 @@ LOCAL_JAVA_LIBRARIES := \
     mockito-robolectric-prebuilt \
     truth-prebuilt
 
-LOCAL_TEST_PACKAGE := CarDialerApp
+
+LOCAL_TEST_PACKAGE := CarDialerAppForTesting
 
 LOCAL_INSTRUMENT_SOURCE_DIRS := $(dir $(LOCAL_PATH))../src
 
