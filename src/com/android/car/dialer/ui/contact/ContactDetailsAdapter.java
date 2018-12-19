@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +31,10 @@ import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.entity.Contact;
+import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder>
         implements PagedListView.ItemCap {
@@ -51,8 +49,7 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
     @ColorInt
     private final int mIconTint;
 
-    private final List<Pair<String, String>> mPhoneNumbers = new ArrayList<>();
-    private String mContactName;
+    private Contact mContact;
 
     public ContactDetailsAdapter(@NonNull Context context) {
         super();
@@ -60,12 +57,9 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
         mIconTint = mContext.getColor(R.color.contact_details_icon_tint);
     }
 
-    void setContactName(String contactName) {
-        mContactName = contactName;
-    }
-
-    List<Pair<String, String>> getPhoneNumbers() {
-        return mPhoneNumbers;
+    void setContact(Contact contact) {
+        mContact = contact;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -80,7 +74,7 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
 
     @Override
     public int getItemCount() {
-        return mPhoneNumbers.size() + 1;  // +1 for the header row.
+        return mContact == null ? 0 : mContact.getNumbers().size() + 1;  // +1 for the header row.
     }
 
     @Override
@@ -107,24 +101,21 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
     public void onBindViewHolder(ContactDetailsViewHolder viewHolder, int position) {
         switch (viewHolder.getItemViewType()) {
             case ID_HEADER:
-                viewHolder.title.setText(mContactName);
-                if (!mPhoneNumbers.isEmpty()) {
-                    String firstNumber = mPhoneNumbers.get(0).second;
-                    TelecomUtils.setContactBitmapAsync(mContext, viewHolder.avatar,
-                            mContactName, firstNumber);
-                }
+                viewHolder.title.setText(mContact == null ? null : mContact.getDisplayName());
+                TelecomUtils.setContactBitmapAsync(mContext, viewHolder.avatar, mContact, null);
                 // Just in case a viewholder object gets recycled.
                 viewHolder.card.setOnClickListener(null);
                 break;
             case ID_CONTENT:
-                Pair<String, String> data = mPhoneNumbers.get(position - 1);
-                viewHolder.title.setText(data.second);  // Type.
-                viewHolder.text.setText(data.first);  // Number.
+                PhoneNumber phoneNumber = mContact.getNumbers().get(position - 1);
+                viewHolder.title.setText(
+                        phoneNumber.getReadableLabel(mContext.getResources()));  // Type.
+                viewHolder.text.setText(phoneNumber.getNumber());  // Number.
                 viewHolder.leftIcon.setImageResource(R.drawable.ic_phone);
                 viewHolder.leftIcon.setColorFilter(mIconTint);
                 viewHolder.card.setOnClickListener(v -> {
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse(TELEPHONE_URI_PREFIX + data.second));
+                    callIntent.setData(Uri.parse(TELEPHONE_URI_PREFIX + phoneNumber.getNumber()));
                     mContext.startActivity(callIntent);
                 });
                 break;
@@ -141,19 +132,5 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
         }
         ListItemBackgroundResolver.setBackground(viewHolder.card,
                 viewHolder.getAdapterPosition(), getItemCount());
-    }
-
-    @Deprecated
-    String getReadablePhoneType(int phoneType) {
-        switch (phoneType) {
-            case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                return mContext.getString(R.string.type_home);
-            case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-                return mContext.getString(R.string.type_work);
-            case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                return mContext.getString(R.string.type_mobile);
-            default:
-                return mContext.getString(R.string.type_other);
-        }
     }
 }

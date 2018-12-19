@@ -189,16 +189,11 @@ public class Contact implements Parcelable, Comparable<Contact> {
 
     @Nullable
     public Uri getAvatarUri() {
-        return mAvatarUri;
+        return mAvatarThumbnailUri != null ? mAvatarThumbnailUri : mAvatarUri;
     }
 
     public String getLookupKey() {
         return mLookupKey;
-    }
-
-    @Nullable
-    public Uri getAvatarThumbnailUri() {
-        return mAvatarThumbnailUri;
     }
 
     /**

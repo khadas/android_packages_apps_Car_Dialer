@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.car.dialer.ui.calllog;
 
 import android.view.View;
@@ -48,8 +49,11 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onBind(UiCallLog uiCallLog) {
-        TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView,
-                uiCallLog.getTitle(), uiCallLog.getNumber());
+        TelecomUtils.setContactBitmapAsync(
+                mAvatarView.getContext(),
+                mAvatarView,
+                uiCallLog.getAvatarUri(),
+                uiCallLog.getTitle());
         mTitleView.setText(uiCallLog.getTitle());
         mTextView.setText(uiCallLog.getText());
         for (PhoneCallLog.Record record : uiCallLog.getCallRecords()) {
