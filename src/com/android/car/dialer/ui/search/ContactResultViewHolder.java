@@ -32,7 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.TelecomIntents;
-import com.android.car.dialer.ui.CircleBitmapDrawable;
+import com.android.car.dialer.ui.view.CircleBitmapDrawable;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

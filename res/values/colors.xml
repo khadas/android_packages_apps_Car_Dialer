@@ -48,9 +48,7 @@
     <color name="search_back_tint">@*android:color/car_grey_50</color>
 
     <!-- The color of the icons in the contact details page. -->
-    <color name="contact_details_icon_tint">@color/search_container_controls_tint</color>
-    <color name="contact_detail_fragment_background_color">@color/phone_theme_secondary</color>
-    <color name="contact_detail_card_background_color">@color/phone_theme</color>
+    <color name="contact_details_icon_tint">@color/primary_icon_color</color>
 
     <!-- TextAppearances -->
     <color name="car_caption_light">@*android:color/car_grey_400</color>
@@ -73,9 +71,7 @@
     <color name="divider_color">@color/divider_color_light</color>
     <color name="divider_color_dark">#1EFFFFFF</color>
     <color name="divider_color_light">#38FFFFFF</color>
-
     <color name="primary_icon_color">@*android:color/car_tint</color>
-
     <color name="secondary_icon_color">@color/secondary_icon_color_light</color>
     <color name="secondary_icon_color_dark">#8ADADCE0</color>
     <color name="secondary_icon_color_light">#99FFFFFF</color>

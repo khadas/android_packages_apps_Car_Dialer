@@ -31,7 +31,6 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     TextView title;
     TextView text;
     ImageView avatar;
-    View divider;
 
     ContactDetailsViewHolder(View v) {
         super(v);
@@ -40,6 +39,5 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         title = v.findViewById(R.id.title);
         text = v.findViewById(R.id.text);
         avatar = v.findViewById(R.id.avatar);
-        divider = v.findViewById(R.id.divider);
     }
 }
