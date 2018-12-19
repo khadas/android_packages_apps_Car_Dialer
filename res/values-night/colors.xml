@@ -23,4 +23,8 @@
     <color name="car_caption">@color/car_caption_light</color>
     <color name="car_key1">@color/car_key1_light</color>
     <color name="car_key2">@color/car_key2_light</color>
+
+    <!-- Components -->
+    <color name="divider_color">@color/divider_color_dark</color>
+    <color name="secondary_icon_color">@color/secondary_icon_color_dark</color>
 </resources>
