@@ -63,6 +63,7 @@ limitations under the License.
         android:id="@+id/voice_channel_button"
         android:layout_width="@dimen/in_call_button_size"
         android:layout_height="@dimen/in_call_button_size"
+        android:background="@drawable/dialer_ripple_background"
         android:scaleType="center"
         android:src="@drawable/ic_bluetooth"
         android:tint="@color/primary_icon_color"

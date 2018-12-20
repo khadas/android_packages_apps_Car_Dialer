@@ -16,6 +16,7 @@ limitations under the License.
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:foreground="@drawable/dialer_ripple_background"
     android:layout_width="match_parent"
     android:layout_height="@dimen/audio_route_height"
     android:elevation="@dimen/dialer_card_elevation">
