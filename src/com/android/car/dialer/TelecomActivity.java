@@ -17,6 +17,7 @@ package com.android.car.dialer;
 
 import static com.android.car.dialer.ui.CallHistoryFragment.CALL_TYPE_KEY;
 
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -66,6 +67,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
 
     private UiCallManager mUiCallManager;
     private UiBluetoothMonitor mUiBluetoothMonitor;
+    private boolean mShowInFrontOfKeyguard;
 
     /**
      * Whether or not it is safe to make transactions on the
@@ -85,6 +87,9 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         if (vdebug()) {
             Log.d(TAG, "onCreate");
         }
+
+        KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+        showInFrontOfKeyguard(keyguardManager.isKeyguardLocked());
 
         setMainContent(R.layout.telecom_activity);
         getWindow().getDecorView().setBackgroundColor(getColor(R.color.phone_theme));
@@ -206,6 +211,15 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
         setIntent(null);
     }
 
+    private void showInFrontOfKeyguard(boolean show) {
+        if (mShowInFrontOfKeyguard == show) {
+            return;
+        }
+        mShowInFrontOfKeyguard = show;
+        setShowWhenLocked(show);
+        setTurnScreenOn(show);
+    }
+
     /**
      * Updates the content fragment of this Activity based on the state of the application.
      */
@@ -267,6 +281,8 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
             getDrawerController().closeDrawer();
             return;
         }
+
+        showInFrontOfKeyguard(true);
         Fragment fragment = InCallFragment.newInstance();
         setContentFragmentWithFadeAnimation(fragment);
         getDrawerController().closeDrawer();
@@ -426,6 +442,7 @@ public class TelecomActivity extends CarDrawerActivity implements CallListener {
             Log.d(TAG, "onCallRemoved");
         }
         updateCurrentFragment();
+        showInFrontOfKeyguard(false);
 
         fragmentsToPropagateCallback().forEach(fragment -> ((CallListener) fragment)
                 .onCallRemoved(call));
