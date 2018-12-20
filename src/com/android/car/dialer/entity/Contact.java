@@ -16,15 +16,12 @@
 
 package com.android.car.dialer.entity;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.icu.text.Collator;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 
@@ -62,6 +59,13 @@ public class Contact implements Parcelable, Comparable<Contact> {
      * Such as empty display name or the display name starts with "_"
      */
     private static final int TYPE_OTHER = 3;
+
+
+    /**
+     * A reference to the {@link ContactsContract.Contacts#_ID} that this data belongs to. See
+     * {@link ContactsContract.Contacts.Entity#CONTACT_ID}
+     */
+    private int mId;
 
     /**
      * Whether this contact entry is starred by user.
@@ -113,29 +117,36 @@ public class Contact implements Parcelable, Comparable<Contact> {
      * Parses a Contact entry for a Cursor loaded from the Contact Database.
      */
     public static Contact fromCursor(Context context, Cursor cursor) {
-        int idColumn = cursor.getColumnIndex(BaseColumns._ID);
-        int starredColumn = cursor.getColumnIndex(ContactsContract.Contacts.STARRED);
-        int pinnedColumn = cursor.getColumnIndex(ContactsContract.Contacts.PINNED);
-        int displayNameColumn = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-        int avatarUriColumn = cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI);
+        int contactIdColumn = cursor.getColumnIndex(
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
+        int starredColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.STARRED);
+        int pinnedColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PINNED);
+        int displayNameColumn = cursor.getColumnIndex(
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+        int avatarUriColumn = cursor.getColumnIndex(
+                ContactsContract.CommonDataKinds.Phone.PHOTO_URI);
         int avatarThumbnailColumn = cursor.getColumnIndex(
-                ContactsContract.Contacts.PHOTO_THUMBNAIL_URI);
-        int lookupKeyColumn = cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
+                ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI);
+        int lookupKeyColumn = cursor.getColumnIndex(
+                ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY);
+        int isPrimaryColumn = cursor.getColumnIndex(
+                ContactsContract.CommonDataKinds.Phone.IS_PRIMARY);
         int typeColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
         int labelColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL);
         int numberColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-        int dataVersionColumn = cursor.getColumnIndex(ContactsContract.Data.DATA_VERSION);
-        int isPrimaryColumn = cursor.getColumnIndex(
-                ContactsContract.CommonDataKinds.Phone.IS_PRIMARY);
+        int rawDataIdColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID);
+        int dataVersionColumn = cursor.getColumnIndex(
+                ContactsContract.CommonDataKinds.Phone.DATA_VERSION);
 
         Contact contact = new Contact();
+        contact.mId = cursor.getInt(contactIdColumn);
         contact.mDisplayName = cursor.getString(displayNameColumn);
 
         PhoneNumber number = PhoneNumber.newInstance(context,
                 cursor.getString(numberColumn),
                 cursor.getInt(typeColumn),
                 cursor.getString(labelColumn),
-                cursor.getInt(idColumn),
+                cursor.getInt(rawDataIdColumn),
                 cursor.getInt(dataVersionColumn));
         contact.mPhoneNumbers.add(number);
 
@@ -194,6 +205,10 @@ public class Contact implements Parcelable, Comparable<Contact> {
 
     public String getLookupKey() {
         return mLookupKey;
+    }
+
+    public Uri getLookupUri() {
+        return ContactsContract.Contacts.getLookupUri(mId, mLookupKey);
     }
 
     /**
@@ -263,6 +278,7 @@ public class Contact implements Parcelable, Comparable<Contact> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
         dest.writeBoolean(mIsStarred);
         dest.writeInt(mPinnedPosition);
         dest.writeInt(mPhoneNumbers.size());
@@ -292,6 +308,7 @@ public class Contact implements Parcelable, Comparable<Contact> {
     /** Create {@link Contact} object from saved parcelable. */
     private static Contact fromParcel(Parcel source) {
         Contact contact = new Contact();
+        contact.mId = source.readInt();
         contact.mIsStarred = source.readBoolean();
         contact.mPinnedPosition = source.readInt();
         int phoneNumberListLength = source.readInt();

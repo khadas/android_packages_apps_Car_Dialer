@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +36,7 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.view.ListItemOutlineResolver;
 
-abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder>
+class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder>
         implements PagedListView.ItemCap {
 
     private static final String TAG = "CD.ContactDetailsAdapter";
@@ -49,14 +50,16 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
 
     private Contact mContact;
 
-    public ContactDetailsAdapter(@NonNull Context context) {
+    public ContactDetailsAdapter(@NonNull Context context, @Nullable Contact contact) {
         super();
         mContext = context;
         mRoundedCornerRadius = mContext.getResources().getDimension(
                 R.dimen.contact_detail_card_corner_radius);
+        mContact = contact;
     }
 
-    public void setContact(Contact contact) {
+    void setContact(Contact contact) {
+        L.d(TAG, "setContact %s", contact);
         mContact = contact;
         notifyDataSetChanged();
     }
@@ -73,7 +76,7 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
 
     @Override
     public int getItemCount() {
-        return mContact == null ? 0 : mContact.getNumbers().size() + 1;  // +1 for the header row.
+        return mContact == null ? 1 : mContact.getNumbers().size() + 1;  // +1 for the header row.
     }
 
     @Override
@@ -102,7 +105,9 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
                 getItemCount());
         switch (viewHolder.getItemViewType()) {
             case ID_HEADER:
-                viewHolder.title.setText(mContact == null ? null : mContact.getDisplayName());
+                viewHolder.title.setText(
+                        mContact == null ? mContext.getString(R.string.error_contact_deleted)
+                                : mContact.getDisplayName());
                 TelecomUtils.setContactBitmapAsync(mContext, viewHolder.avatar, mContact, null);
                 // Just in case a viewholder object gets recycled.
                 viewHolder.card.setOnClickListener(null);
