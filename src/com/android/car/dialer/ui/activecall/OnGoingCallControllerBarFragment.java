@@ -48,12 +48,24 @@ import java.util.List;
  */
 public class OnGoingCallControllerBarFragment extends Fragment {
     private static String TAG = "CDialer.OngoingCallCtlFrg";
+    private static final String CALL_STATE = "CALL_STATE";
+
     private AlertDialog mAudioRouteSelectionDialog;
     private ImageView mAudioRouteButton;
     private Call mActiveCall;
+    private int mCallState;
 
     public static OnGoingCallControllerBarFragment newInstance() {
         return new OnGoingCallControllerBarFragment();
+    }
+
+    public static OnGoingCallControllerBarFragment newInstance(int callState) {
+        OnGoingCallControllerBarFragment onGoingCallControllerBarFragment =
+                new OnGoingCallControllerBarFragment();
+        Bundle args = new Bundle();
+        args.putInt(CALL_STATE, callState);
+        onGoingCallControllerBarFragment.setArguments(args);
+        return onGoingCallControllerBarFragment;
     }
 
     /**
@@ -110,6 +122,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.on_going_call_controller_bar_fragment,
                 container, false);
+        mCallState = getArguments().getInt(CALL_STATE);
         fragmentView.findViewById(R.id.mute_button).setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
@@ -166,15 +179,15 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 return;
             }
 
-            // If the view is active, it means the call is on hold right now.
-            if (v.isActivated()) {
-                v.setActivated(false);
+            if (mCallState == Call.STATE_ACTIVE) {
+                onHoldCall();
+            } else if (mCallState == Call.STATE_HOLDING) {
                 onUnholdCall();
             } else {
-                v.setActivated(true);
-                onHoldCall();
+                L.i(TAG, "Pause button is clicked while call in %s state", mCallState);
             }
         });
+
         return fragmentView;
     }
 
@@ -183,6 +196,20 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         super.onPause();
         if (mAudioRouteSelectionDialog.isShowing()) {
             mAudioRouteSelectionDialog.dismiss();
+        }
+    }
+
+    /**
+     * Set the call state and change the view for the pause button accordingly
+     */
+    public void setCallState(int callState) {
+        L.d(TAG, "Call State: %s", callState);
+        mCallState = callState;
+        ImageView pauseButton = getView().findViewById(R.id.pause_button);
+        if (callState == Call.STATE_HOLDING) {
+            pauseButton.setActivated(true);
+        } else {
+            pauseButton.setActivated(false);
         }
     }
 
