@@ -14,11 +14,22 @@
      limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="KeypadNumber" parent="@android:TextAppearance.DeviceDefault.Large">
+    <style name="DialNumber">
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:textSize">@dimen/car_key1_size</item>
     </style>
 
-    <style name="KeypadLetter" parent="@android:TextAppearance.DeviceDefault.Small">
+    <style name="EmergencyDialNumber" parent="DialNumber">
+        <item name="android:textColor">@color/emergency_text_color</item>
+    </style>
+
+    <style name="KeypadNumber">
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textSize">@dimen/car_key1_size</item>
+    </style>
+
+    <style name="KeypadLetter">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textSize">@dimen/car_key2_size</item>
     </style>
 
@@ -27,9 +38,9 @@
         <item name="android:clickable">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minWidth">@dimen/car_touch_target_size</item>
-        <item name="android:minHeight">@dimen/car_touch_target_size</item>
-        <item name="android:background">@drawable/keypad_button_background</item>
+        <item name="android:minWidth">@dimen/touch_target_size</item>
+        <item name="android:minHeight">@dimen/touch_target_size</item>
+        <item name="android:background">@drawable/dialer_ripple_background</item>
         <item name="android:focusable">true</item>
     </style>
 
@@ -43,12 +54,13 @@
     <style name="DialpadSecondaryButton">
         <item name="android:layout_width">@dimen/bksp_button_width</item>
         <item name="android:layout_height">@dimen/bksp_button_width</item>
-        <item name="android:background">@drawable/dialpad_secondary_button_background</item>
+        <item name="android:background">@drawable/dialer_ripple_background</item>
         <item name="android:scaleType">centerInside</item>
         <item name="android:tint">@color/primary_icon_color</item>
     </style>
 
-    <style name="NoHfpText" parent="@android:TextAppearance.DeviceDefault.Medium">
+    <style name="NoHfpText">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">3</item>
     </style>

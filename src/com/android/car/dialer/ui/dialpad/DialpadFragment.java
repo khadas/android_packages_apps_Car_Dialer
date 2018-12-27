@@ -94,19 +94,18 @@ public class DialpadFragment extends DialerBaseFragment implements
      */
     private static final int MODE_IN_CALL = 1;
 
-    /**
-     * Shows dialpad for dialing.
-     */
+    /** Shows dialpad for dialing. */
     private static final int MODE_DIAL = 2;
+
+    private static final int MODE_EMERGENCY = 3;
 
     private TextView mTitleView;
     private int mMode;
     private StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
     private ToneGenerator mToneGenerator;
     private boolean mDTMFToneEnabled;
-    /**
-     * An active call which this DialpadFragment is serving for.
-     */
+
+    /** An active call which this DialpadFragment is serving for. */
     @Nullable
     private Call mActiveCall;
 
@@ -116,11 +115,7 @@ public class DialpadFragment extends DialerBaseFragment implements
      * @param dialNumber The given number as the one to dial.
      */
     public static DialpadFragment newPlaceCallDialpad(@Nullable String dialNumber) {
-        DialpadFragment fragment = new DialpadFragment();
-
-        Bundle args = new Bundle();
-        args.putInt(DIALPAD_MODE_KEY, MODE_DIAL);
-        fragment.setArguments(args);
+        DialpadFragment fragment = newDialpad(MODE_DIAL);
         // We don't want the dial number to retain across fragment destroy and creation.
         if (!TextUtils.isEmpty(dialNumber)) {
             fragment.mNumber.append(dialNumber);
@@ -128,15 +123,24 @@ public class DialpadFragment extends DialerBaseFragment implements
         return fragment;
     }
 
+    /** Creates a new instance used for emergency dialing. */
+    public static DialpadFragment newEmergencyDialpad() {
+        return newDialpad(MODE_EMERGENCY);
+    }
+
     /**
      * Returns a new instance of the {@link DialpadFragment} which runs in an active call for
      * dialing extension number, etc.
      */
     public static DialpadFragment newInCallDialpad() {
+        return newDialpad(MODE_IN_CALL);
+    }
+
+    private static DialpadFragment newDialpad(int mode) {
         DialpadFragment fragment = new DialpadFragment();
 
         Bundle args = new Bundle();
-        args.putInt(DIALPAD_MODE_KEY, MODE_IN_CALL);
+        args.putInt(DIALPAD_MODE_KEY, mode);
         fragment.setArguments(args);
         return fragment;
     }
@@ -158,6 +162,8 @@ public class DialpadFragment extends DialerBaseFragment implements
 
         View rootView = inflater.inflate(R.layout.dialpad_fragment, container, false);
         mTitleView = rootView.findViewById(R.id.title);
+        mTitleView.setTextAppearance(
+                mMode == MODE_EMERGENCY ? R.style.EmergencyDialNumber : R.style.DialNumber);
         ImageButton callButton = rootView.findViewById(R.id.call_button);
         ImageButton deleteButton = rootView.findViewById(R.id.delete_button);
 
@@ -289,6 +295,11 @@ public class DialpadFragment extends DialerBaseFragment implements
     private void presentDialedNumber() {
         if (mNumber.length() == 0 && mMode == MODE_DIAL) {
             mTitleView.setText(R.string.dial_a_number);
+            return;
+        }
+
+        if (mNumber.length() == 0 && mMode == MODE_EMERGENCY) {
+            mTitleView.setText(R.string.emergency_call_description);
             return;
         }
 

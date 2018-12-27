@@ -30,6 +30,10 @@
     <string name="error_airplane_mode">Phone is in airplane mode.</string>
     <!-- Toast text when a call failed because bluetooth hfp is not available [CHAR LIMIT=40] -->
     <string name="error_no_hfp">Bluetooth is not connected.</string>
+    <!-- Button text for making emergency call [CHAR LIMIT=40] -->
+    <string name="emergency_button_text">Emergency</string>
+    <!-- Text indicating emergency call [CHAR LIMIT=40] -->
+    <string name="emergency_call_description">Emergency call</string>
     <!-- Message informing user that the contact has already been deleted [CHAR LIMIT=120] -->
     <string name="error_contact_deleted">This contact might have been deleted.</string>
     <!-- Call status shown while a call is ongoing [CHAR LIMIT=40] -->

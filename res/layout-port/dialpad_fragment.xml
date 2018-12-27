@@ -31,14 +31,12 @@
 
     <TextView
         android:id="@+id/title"
-        android:textAppearance="@style/KeypadNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dialpad_info_title_padding_size"
         android:gravity="center"
         android:focusable="true"
         android:maxLines="1"
-        android:text="@string/dial_a_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
