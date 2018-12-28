@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.car.dialer.ui;
+
+package com.android.car.dialer.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -71,7 +72,7 @@ public class VerticalListDividerDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (parent.getLayoutManager() == null || mDivider == null) {
             return;
         }
@@ -104,15 +105,5 @@ public class VerticalListDividerDecoration extends RecyclerView.ItemDecoration {
             mDivider.draw(canvas);
         }
         canvas.restore();
-    }
-
-    @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-            RecyclerView.State state) {
-        if (mDivider == null) {
-            outRect.setEmpty();
-            return;
-        }
-        outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
     }
 }

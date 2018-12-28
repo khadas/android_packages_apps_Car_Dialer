@@ -13,28 +13,57 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<!-- This FrameLayout is used to center the inner layout. -->
-<FrameLayout
+<androidx.car.widget.ColumnCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true">
-
-    <androidx.car.widget.ColumnCardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/contact_detail_item_height"
+        android:foreground="@drawable/dialer_ripple_background">
 
-        <include layout="@layout/contact_detail_card_content"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline_begin"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/contact_detail_guideline"/>
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/contact_detail_number_divider_height"
-            android:layout_marginStart="@dimen/contact_detail_divider_margin"
-            android:layout_marginEnd="@dimen/contact_detail_divider_margin"
-            android:background="@color/divider_color"
-            android:layout_gravity="bottom"/>
-    </androidx.car.widget.ColumnCardView>
-</FrameLayout>
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="@dimen/contact_detail_image_size"
+            android:layout_height="@dimen/contact_detail_image_size"
+            android:layout_marginStart="@dimen/contact_detail_margin"
+            android:scaleType="centerCrop"
+            android:tint="@color/contact_details_icon_tint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/title"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginEnd="@dimen/contact_detail_margin"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/guideline_begin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/text"/>
+
+        <TextView
+            android:id="@id/text"
+            style="?android:attr/textAppearanceSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/guideline_begin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.car.widget.ColumnCardView>

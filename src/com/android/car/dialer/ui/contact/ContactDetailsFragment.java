@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.R;
 import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 import java.util.ArrayList;
@@ -104,7 +106,7 @@ public class ContactDetailsFragment extends DialerBaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.contact_details, container, false);
+        return inflater.inflate(R.layout.contact_details_fragment, container, false);
     }
 
     @Override
@@ -112,6 +114,11 @@ public class ContactDetailsFragment extends DialerBaseFragment
         mListView = view.findViewById(R.id.list_view);
 
         RecyclerView recyclerView = mListView.getRecyclerView();
+        PagedListView.LayoutParams layoutParams =
+                (PagedListView.LayoutParams) recyclerView.getLayoutParams();
+        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+        layoutParams.width = PagedListView.LayoutParams.WRAP_CONTENT;
+        recyclerView.addItemDecoration(new VerticalListDividerDecoration(getContext(), true));
         for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
             recyclerView.addOnScrollListener(listener);
         }

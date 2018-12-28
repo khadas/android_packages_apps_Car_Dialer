@@ -24,9 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.car.util.ListItemBackgroundResolver;
 import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +33,7 @@ import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.TelecomUtils;
+import com.android.car.dialer.ui.view.ListItemOutlineResolver;
 
 abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder>
         implements PagedListView.ItemCap {
@@ -46,18 +45,18 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
     private static final int ID_CONTENT = 2;
 
     private final Context mContext;
-    @ColorInt
-    private final int mIconTint;
+    private final float mRoundedCornerRadius;
 
     private Contact mContact;
 
     public ContactDetailsAdapter(@NonNull Context context) {
         super();
         mContext = context;
-        mIconTint = mContext.getColor(R.color.contact_details_icon_tint);
+        mRoundedCornerRadius = mContext.getResources().getDimension(
+                R.dimen.contact_detail_card_corner_radius);
     }
 
-    void setContact(Contact contact) {
+    public void setContact(Contact contact) {
         mContact = contact;
         notifyDataSetChanged();
     }
@@ -99,6 +98,8 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
 
     @Override
     public void onBindViewHolder(ContactDetailsViewHolder viewHolder, int position) {
+        ListItemOutlineResolver.setOutline(viewHolder.itemView, mRoundedCornerRadius, position,
+                getItemCount());
         switch (viewHolder.getItemViewType()) {
             case ID_HEADER:
                 viewHolder.title.setText(mContact == null ? null : mContact.getDisplayName());
@@ -112,7 +113,6 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
                         phoneNumber.getReadableLabel(mContext.getResources()));  // Type.
                 viewHolder.text.setText(phoneNumber.getNumber());  // Number.
                 viewHolder.leftIcon.setImageResource(R.drawable.ic_phone);
-                viewHolder.leftIcon.setColorFilter(mIconTint);
                 viewHolder.card.setOnClickListener(v -> {
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse(TELEPHONE_URI_PREFIX + phoneNumber.getNumber()));
@@ -123,14 +123,5 @@ abstract class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetails
                 Log.e(TAG, "Unknown view type " + viewHolder.getItemViewType());
                 return;
         }
-
-        if (position == (getItemCount() - 1)) {
-            // hide divider for last item.
-            viewHolder.divider.setVisibility(View.GONE);
-        } else {
-            viewHolder.divider.setVisibility(View.VISIBLE);
-        }
-        ListItemBackgroundResolver.setBackground(viewHolder.card,
-                viewHolder.getAdapterPosition(), getItemCount());
     }
 }
