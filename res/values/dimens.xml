@@ -135,6 +135,7 @@
     <dimen name="dialpad_info_title_padding_size">@*android:dimen/car_padding_4</dimen>
     <dimen name="dialpad_info_number_view_padding">32dp</dimen>
     <dimen name="dialpad_info_delete_button_margin">@dimen/car_padding_6</dimen>
+    <dimen name="dialpad_fragment_margin">@*android:dimen/car_margin</dimen>
 
     <!-- Favorites dimensions -->
     <dimen name="favorites_icon_margin">@dimen/list_item_padding</dimen>

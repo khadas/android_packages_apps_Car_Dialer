@@ -46,11 +46,11 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageButton
-        android:id="@+id/delete_button"
+        android:id="@id/delete_button"
         style="@style/DialpadSecondaryButton"
         android:layout_marginStart="@dimen/dialpad_info_delete_button_margin"
         android:src="@drawable/ic_backspace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/call_button"/>
+        app:layout_constraintStart_toEndOf="@id/call_button"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
