@@ -118,7 +118,7 @@
     <string name="select_number_dialog_title">Choose a phone number</string>
     <string name="select_number_dialog_just_once_button">Just once</string>
     <string name="select_number_dialog_always_button">Always</string>
-    <string name="set_defaults_dialog_title">Set defaults</string>
+    <string name="set_defaults">Set defaults</string>
     <string name="primary_number_description">
         <xliff:g id="label" example="Mobile">%1$s</xliff:g>
         " - Default"

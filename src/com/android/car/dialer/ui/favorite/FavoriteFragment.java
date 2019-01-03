@@ -16,7 +16,6 @@
 
 package com.android.car.dialer.ui.favorite;
 
-import android.annotation.Nullable;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Rect;
@@ -24,8 +23,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.car.widget.PagedListView;
@@ -35,11 +32,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.common.PhoneNumberListAdapter;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.TelecomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,31 +164,6 @@ public class FavoriteFragment extends DialerBaseFragment {
             }
 
             outRect.set(leftPadding, carPadding1, rightPadding, carPadding1);
-        }
-    }
-
-    private static class PhoneNumberListAdapter extends ArrayAdapter<PhoneNumber> {
-        private final Context mContext;
-
-        public PhoneNumberListAdapter(Context context, List<PhoneNumber> phoneNumbers) {
-            super(context, R.layout.phone_number_list_item, R.id.phone_number, phoneNumbers);
-            mContext = context;
-        }
-
-        @Override
-        public View getView(int position, @Nullable View convertView,
-                @android.annotation.NonNull ViewGroup parent) {
-            View view = super.getView(position, convertView, parent);
-            PhoneNumber phoneNumber = getItem(position);
-            if (phoneNumber == null) {
-                return view;
-            }
-            TextView phoneNumberView = view.findViewById(R.id.phone_number);
-            phoneNumberView.setText(phoneNumber.getNumber());
-            TextView phoneNumberDescriptionView = view.findViewById(R.id.phone_number_description);
-            phoneNumberDescriptionView.setText(
-                    phoneNumber.getReadableLabel(mContext.getResources()));
-            return view;
         }
     }
 

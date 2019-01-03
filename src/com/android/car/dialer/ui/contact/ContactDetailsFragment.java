@@ -20,6 +20,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,43 +47,69 @@ import java.util.List;
  * uri of a contact should work too.
  */
 public class ContactDetailsFragment extends DialerBaseFragment {
-    private static final String TAG = "CD.ContactDetailsFrag";
+    private static final String TAG = "CD.ContactDetailsFragment";
 
-    // Key to load the contact details by passing in the Contact entity.
+    // Key to load and save the contact entity instance.
     private static final String KEY_CONTACT_ENTITY = "ContactEntity";
 
     // Key to load the contact details by passing in the content provider query uri.
     private static final String KEY_CONTACT_QUERY_URI = "ContactQueryUri";
 
     private PagedListView mListView;
-    private List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
+    private final List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
+
+    private Contact mContact;
+    private Uri mContactLookupUri;
+    private LiveData<Contact> mContactDetailsLiveData;
 
     public static ContactDetailsFragment newInstance(
             Uri uri, @Nullable RecyclerView.OnScrollListener listener) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
-        if (listener != null) {
-            fragment.addOnScrollListener(listener);
-        }
-
+        fragment.addOnScrollListener(listener);
         Bundle args = new Bundle();
         args.putParcelable(KEY_CONTACT_QUERY_URI, uri);
         fragment.setArguments(args);
-
         return fragment;
     }
 
     public static ContactDetailsFragment newInstance(
             Contact contact, @Nullable RecyclerView.OnScrollListener listener) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
-        if (listener != null) {
-            fragment.addOnScrollListener(listener);
-        }
-
+        fragment.addOnScrollListener(listener);
         Bundle args = new Bundle();
         args.putParcelable(KEY_CONTACT_ENTITY, contact);
         fragment.setArguments(args);
-
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+        mContact = getArguments().getParcelable(KEY_CONTACT_ENTITY);
+        mContactLookupUri = getArguments().getParcelable(KEY_CONTACT_QUERY_URI);
+        if (mContact == null) {
+            mContact = savedInstanceState.getParcelable(KEY_CONTACT_ENTITY);
+        }
+        if (mContact != null) {
+            mContactLookupUri = mContact.getLookupUri();
+        }
+        ContactDetailsViewModel contactDetailsViewModel = ViewModelProviders.of(this).get(
+                ContactDetailsViewModel.class);
+        mContactDetailsLiveData = contactDetailsViewModel.getContactDetailsLiveData(
+                mContactLookupUri);
+        mContactDetailsLiveData.observe(this, contact -> getArguments().clear());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.contact_edit, menu);
+        MenuItem defaultNumberMenuItem = menu.findItem(R.id.menu_contact_default_number);
+        ContactDefaultNumberActionProvider contactDefaultNumberActionProvider =
+                (ContactDefaultNumberActionProvider) defaultNumberMenuItem.getActionProvider();
+        contactDefaultNumberActionProvider.setContact(mContact);
+        mContactDetailsLiveData.observe(this, contactDefaultNumberActionProvider::setContact);
     }
 
     @Override
@@ -99,28 +128,16 @@ public class ContactDetailsFragment extends DialerBaseFragment {
         layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
         layoutParams.width = PagedListView.LayoutParams.WRAP_CONTENT;
         recyclerView.addItemDecoration(new VerticalListDividerDecoration(getContext(), true));
+
         for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
             recyclerView.addOnScrollListener(listener);
         }
-
         mOnScrollListeners.clear();
 
-        Contact contact = getArguments().getParcelable(KEY_CONTACT_ENTITY);
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
-                contact);
+                mContact);
         mListView.setAdapter(contactDetailsAdapter);
-
-        Uri contactLookupUri;
-        if (contact != null) {
-            contactLookupUri = contact.getLookupUri();
-        } else {
-            contactLookupUri = getArguments().getParcelable(KEY_CONTACT_QUERY_URI);
-        }
-        ContactDetailsViewModel contactDetailsViewModel = ViewModelProviders.of(this).get(
-                ContactDetailsViewModel.class);
-        LiveData<Contact> contactDetailsLiveData =
-                contactDetailsViewModel.getContactDetailsLiveData(contactLookupUri);
-        contactDetailsLiveData.observe(this, contactDetailsAdapter::setContact);
+        mContactDetailsLiveData.observe(this, contactDetailsAdapter::setContact);
     }
 
     /**
@@ -129,7 +146,10 @@ public class ContactDetailsFragment extends DialerBaseFragment {
      *
      * @see RecyclerView#addOnScrollListener(RecyclerView.OnScrollListener)
      */
-    public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
+    public void addOnScrollListener(@Nullable RecyclerView.OnScrollListener onScrollListener) {
+        if (onScrollListener == null) {
+            return;
+        }
         // If the view has not been created yet, then queue the setting of the scroll listener.
         if (mListView == null) {
             mOnScrollListeners.add(onScrollListener);
@@ -140,10 +160,16 @@ public class ContactDetailsFragment extends DialerBaseFragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(KEY_CONTACT_ENTITY, mContactDetailsLiveData.getValue());
+    }
+
+    @Override
+    public void onDestroyView() {
         // Clear all scroll listeners.
         mListView.getRecyclerView().removeOnScrollListener(null);
-        super.onDestroy();
+        super.onDestroyView();
     }
 
     @StringRes
