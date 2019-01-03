@@ -172,6 +172,6 @@
     <dimen name="vertical_divider_inset">@*android:dimen/car_padding_3</dimen>
     <dimen name="vertical_divider_width">1dp</dimen>
     <dimen name="primary_icon_size">@dimen/car_primary_icon_size</dimen>
-    <dimen name="avatar_icon_size">@dimen/car_avatar_size</dimen>
+    <dimen name="avatar_icon_size">@dimen/car_avatar_icon_size</dimen>
     <dimen name="large_avatar_icon_size">@dimen/car_large_avatar_size</dimen>
 </resources>
