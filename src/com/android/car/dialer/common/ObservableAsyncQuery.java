@@ -81,10 +81,11 @@ public class ObservableAsyncQuery {
      * @param queryParam Query arguments for the current query.
      * @param listener   Listener which will be called when data is available.
      */
-    public ObservableAsyncQuery(@NonNull QueryParam queryParam,
+    public ObservableAsyncQuery(
+            @NonNull QueryParam queryParam,
             @NonNull ContentResolver cr,
             @NonNull OnQueryFinishedListener listener) {
-        mAsyncQueryHandler = new AsynQueryHandlerImpl(this, cr);
+        mAsyncQueryHandler = new AsyncQueryHandlerImpl(this, cr);
         mContentObserver = new ContentObserver(mAsyncQueryHandler) {
             @Override
             public void onChange(boolean selfChange) {
@@ -141,10 +142,10 @@ public class ObservableAsyncQuery {
         }
     }
 
-    private static class AsynQueryHandlerImpl extends AsyncQueryHandler {
+    private static class AsyncQueryHandlerImpl extends AsyncQueryHandler {
         private ObservableAsyncQuery mQuery;
 
-        AsynQueryHandlerImpl(ObservableAsyncQuery query, ContentResolver cr) {
+        AsyncQueryHandlerImpl(ObservableAsyncQuery query, ContentResolver cr) {
             super(cr);
             mQuery = query;
         }
