@@ -44,6 +44,8 @@ import com.android.car.dialer.ui.dialpad.DialpadFragment;
 public class InCallFragment extends Fragment implements
         OnGoingCallControllerBarFragment.OnGoingCallControllerBarCallback {
     private static final String TAG = "CD.InCallFragment";
+    private static final String TAG_CALL_RINGING = "CallStateRinging";
+    private static final String TAG_CALL_OTHER = "CallStateOther";
 
     private Fragment mDialpadFragment;
     private View mUserProfileContainerView;
@@ -112,16 +114,25 @@ public class InCallFragment extends Fragment implements
             return;
         }
 
-        Fragment controllerBarFragment;
         if (callState == Call.STATE_RINGING) {
-            controllerBarFragment = RingingCallControllerBarFragment.newInstance();
-        } else {
-            controllerBarFragment = OnGoingCallControllerBarFragment.newInstance();
+            Fragment controllerBarFragment = RingingCallControllerBarFragment.newInstance();
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.controller_bar_container, controllerBarFragment, TAG_CALL_RINGING)
+                    .commit();
+            return;
         }
-
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.controller_bar_container, controllerBarFragment)
-                .commit();
+        Fragment controllerBarFragment = getChildFragmentManager().findFragmentByTag(
+                TAG_CALL_OTHER);
+        if (controllerBarFragment == null) {
+            controllerBarFragment = OnGoingCallControllerBarFragment.newInstance(
+                    callState.intValue());
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.controller_bar_container, controllerBarFragment, TAG_CALL_OTHER)
+                    .commit();
+        } else {
+            ((OnGoingCallControllerBarFragment) controllerBarFragment).setCallState(
+                    callState.intValue());
+        }
     }
 
     private void updateBody(String text) {
