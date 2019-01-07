@@ -43,7 +43,8 @@ public class ObservableAsyncQuery {
         final String[] mSelectionArgs;
         final String mOrderBy;
 
-        public QueryParam(@NonNull Uri uri,
+        public QueryParam(
+                @NonNull Uri uri,
                 @Nullable String[] projection,
                 @Nullable String selection,
                 @Nullable String[] selectionArgs,
@@ -89,7 +90,6 @@ public class ObservableAsyncQuery {
         mContentObserver = new ContentObserver(mAsyncQueryHandler) {
             @Override
             public void onChange(boolean selfChange) {
-                super.onChange(selfChange);
                 startQuery();
             }
         };
@@ -116,11 +116,7 @@ public class ObservableAsyncQuery {
      */
     public void stopQuery() {
         mIsActive = false;
-        if (mCurrentCursor != null) {
-            mCurrentCursor.unregisterContentObserver(mContentObserver);
-        }
         closeCurrentCursorIfNecessary();
-        mCurrentCursor = null;
         mAsyncQueryHandler.cancelOperation(QUERY_TOKEN);
     }
 
@@ -128,9 +124,11 @@ public class ObservableAsyncQuery {
         if (!mIsActive) {
             return;
         }
-        cursor.registerContentObserver(mContentObserver);
         closeCurrentCursorIfNecessary();
-        mCurrentCursor = cursor;
+        if (cursor != null) {
+            cursor.registerContentObserver(mContentObserver);
+            mCurrentCursor = cursor;
+        }
         if (mOnQueryFinishedListener != null) {
             mOnQueryFinishedListener.onQueryFinished(cursor);
         }
@@ -140,6 +138,7 @@ public class ObservableAsyncQuery {
         if (mCurrentCursor != null && !mCurrentCursor.isClosed()) {
             mCurrentCursor.close();
         }
+        mCurrentCursor = null;
     }
 
     private static class AsyncQueryHandlerImpl extends AsyncQueryHandler {
