@@ -22,7 +22,7 @@ import android.telecom.InCallService;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.android.car.dialer.entity.CallDetail;
+import com.android.car.telephony.common.CallDetail;
 
 import java.util.List;
 

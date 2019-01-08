@@ -19,15 +19,13 @@ package com.android.car.dialer.ui.contact;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.car.dialer.R;
-import com.android.car.dialer.entity.Contact;
-import com.android.car.dialer.entity.PhoneNumber;
-import com.android.car.dialer.telecom.TelecomUtils;
+import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.PhoneNumber;
 
 import java.util.List;
 

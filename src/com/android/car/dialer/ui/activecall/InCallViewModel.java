@@ -27,12 +27,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.android.car.dialer.entity.CallDetail;
+import com.android.car.telephony.common.CallDetail;
 import com.android.car.dialer.livedata.ActiveCallListLiveData;
 import com.android.car.dialer.livedata.CallDetailLiveData;
 import com.android.car.dialer.livedata.CallStateLiveData;
 import com.android.car.dialer.livedata.HeartBeatLiveData;
-import com.android.car.dialer.telecom.TelecomUtils;
+import com.android.car.telephony.common.TelecomUtils;
 
 import java.util.List;
 
