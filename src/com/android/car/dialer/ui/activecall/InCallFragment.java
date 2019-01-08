@@ -24,19 +24,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.android.car.dialer.R;
-import com.android.car.dialer.entity.CallDetail;
-import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.InMemoryPhoneBook;
-import com.android.car.dialer.telecom.TelecomUtils;
+import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
+import com.android.car.telephony.common.CallDetail;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 
 /**
  * A fragment that displays information about an on-going call with options to hang up.

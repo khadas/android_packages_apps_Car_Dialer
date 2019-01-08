@@ -17,12 +17,10 @@
 package com.android.car.dialer.ui.favorite;
 
 import android.app.Application;
-
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-
-import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.livedata.FavoriteContactLiveData;
+import com.android.car.telephony.common.Contact;
 
 import java.util.List;
 

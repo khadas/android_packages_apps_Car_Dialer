@@ -33,45 +33,16 @@
     <!-- Message informing user that the contact has already been deleted [CHAR LIMIT=120] -->
     <string name="error_contact_deleted">This contact might have been deleted.</string>
     <!-- Call status shown while a call is ongoing [CHAR LIMIT=40] -->
-    <string name="phone_label_with_info">
-        <xliff:g id="label" example="Mobile">%1$s</xliff:g>
-        " \u00B7 "
-        <xliff:g id="duration" example="1:20">%2$s</xliff:g>
-    </string>
     <!-- Text displayed when the call log is empty. [CHAR LIMIT=40] -->
     <string name="recent_calls_empty">Your call log is empty.</string>
     <!-- Text displayed when the speed dial is empty. [CHAR LIMIT=100] -->
     <string name="speed_dial_empty">Speed Dial provides one-touch dialing for favorites and numbers you call often</string>
-
-    <!-- Status label for phone state [CHAR LIMIT=20] -->
-    <string name="call_state_connecting">Connecting</string>
-    <!-- Status label for phone state [CHAR LIMIT=20] -->
-    <string name="call_state_dialing">Dialing...</string>
-    <!-- Status label for phone state [CHAR LIMIT=20] -->
-    <string name="call_state_hold">On Hold</string>
-    <!-- Status label for phone state [CHAR LIMIT=20] -->
-    <string name="call_state_call_ended">Call Ended</string>
-    <!-- Status label for phone state [CHAR LIMIT=20] -->
-    <string name="call_state_call_active">Connected</string>
-    <!-- Status label for phone state [CHAR LIMIT=20] -->
-    <string name="call_state_call_ringing">Ringing</string>
-    <!-- Status label for phone state [CHAR LIMIT=20] -->
-    <string name="call_state_call_ending">Disconnecting</string>
 
     <!-- Decline an in coming call [CHAR LIMIT=20] -->
     <string name="decline_call">Decline</string>
     <!-- Answer an in coming call [CHAR LIMIT=20] -->
     <string name="answer_call">Answer</string>
 
-    <!-- Label for voicemail [CHAR LIMIT=30] -->
-    <string name="voicemail">Voicemail</string>
-    <!-- Label for current phone call [CHAR LIMIT=30] -->
-    <!-- Label for incoming call [CHAR LIMIT=30] -->
-    <!-- Label for a recent call card [CHAR LIMIT=30] -->
-    <!-- Label for button to answer a phone call [CHAR LIMIT=30] -->
-    <!-- Label for button to reject a phone call [CHAR LIMIT=30] -->
-    <!-- Label for when a call is coming from an unknown caller [CHAR LIMIT=30] -->
-    <string name="unknown">Unknown</string>
     <!-- Label for when a call is a conference call [CHAR LIMIT=30] -->
     <string name="conference_call">Conference call</string>
 

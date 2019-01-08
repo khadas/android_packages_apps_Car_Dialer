@@ -34,6 +34,7 @@ import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.InCallServiceImpl;
 import com.android.car.dialer.ui.activecall.InCallFragment;
+
 import com.android.car.telephony.common.TelecomUtils;
 
 import org.junit.Before;
