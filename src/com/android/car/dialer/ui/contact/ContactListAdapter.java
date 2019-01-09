@@ -52,7 +52,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
 
     public void setContactList(List<Contact> contactList) {
         mContactList.clear();
-        mContactList.addAll(contactList);
+        if (contactList != null) {
+            mContactList.addAll(contactList);
+        }
         notifyDataSetChanged();
     }
 

@@ -26,8 +26,8 @@ import android.provider.CallLog;
 import androidx.annotation.IntDef;
 
 import com.android.car.telephony.common.AsyncQueryLiveData;
-import com.android.car.telephony.common.ObservableAsyncQuery;
 import com.android.car.telephony.common.PhoneCallLog;
+import com.android.car.telephony.common.QueryParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +86,7 @@ public class CallHistoryLiveData extends AsyncQueryLiveData<List<PhoneCallLog>> 
                 .appendQueryParameter(CallLog.Calls.LIMIT_PARAM_KEY,
                         Integer.toString(limit))
                 .build();
-        ObservableAsyncQuery.QueryParam queryParam = new ObservableAsyncQuery.QueryParam(
+        QueryParam queryParam = new QueryParam(
                 uri,
                 null,
                 selection,
@@ -95,8 +95,8 @@ public class CallHistoryLiveData extends AsyncQueryLiveData<List<PhoneCallLog>> 
         return new CallHistoryLiveData(context, queryParam);
     }
 
-    private CallHistoryLiveData(Context context, ObservableAsyncQuery.QueryParam queryParam) {
-        super(context, queryParam);
+    private CallHistoryLiveData(Context context, QueryParam queryParam) {
+        super(context, QueryParam.of(queryParam));
     }
 
     @Override

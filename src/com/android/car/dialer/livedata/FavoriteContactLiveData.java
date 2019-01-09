@@ -21,8 +21,8 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 
 import com.android.car.telephony.common.AsyncQueryLiveData;
-import com.android.car.telephony.common.ObservableAsyncQuery;
 import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.QueryParam;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -47,8 +47,8 @@ public class FavoriteContactLiveData extends AsyncQueryLiveData<List<Contact>> {
         selectionArgs[0] = ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE;
         selectionArgs[1] = String.valueOf(IS_STARRED);
 
-        ObservableAsyncQuery.QueryParam starredContactsQueryParam =
-                new ObservableAsyncQuery.QueryParam(
+        QueryParam starredContactsQueryParam =
+                new QueryParam(
                         ContactsContract.Data.CONTENT_URI,
                         null,
                         selection,
@@ -57,8 +57,8 @@ public class FavoriteContactLiveData extends AsyncQueryLiveData<List<Contact>> {
         return new FavoriteContactLiveData(context, starredContactsQueryParam);
     }
 
-    private FavoriteContactLiveData(Context context, ObservableAsyncQuery.QueryParam queryParam) {
-        super(context, queryParam);
+    private FavoriteContactLiveData(Context context, QueryParam queryParam) {
+        super(context, QueryParam.of(queryParam));
         mContext = context;
     }
 

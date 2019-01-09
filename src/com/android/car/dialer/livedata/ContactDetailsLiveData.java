@@ -23,26 +23,23 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.car.telephony.common.AsyncQueryLiveData;
 import com.android.car.telephony.common.Contact;
-import com.android.car.telephony.common.ObservableAsyncQuery;
+import com.android.car.telephony.common.QueryParam;
 
 /** {@link androidx.lifecycle.LiveData} for contact details that observes the contact change. */
 public class ContactDetailsLiveData extends AsyncQueryLiveData<Contact> {
     private final Context mContext;
 
     public ContactDetailsLiveData(Context context, @NonNull Uri contactLookupUri) {
-        super(context, getQueryParam(contactLookupUri));
+        super(context, new ContactDetailsQueryParamProvider(contactLookupUri, context));
         mContext = context;
     }
 
     @Override
     protected Contact convertToEntity(Cursor cursor) {
-        if (cursor == null) {
-            return null;
-        }
-
         // Contact is not deleted.
         if (cursor.moveToFirst()) {
             Contact contact = Contact.fromCursor(mContext, cursor);
@@ -54,14 +51,48 @@ public class ContactDetailsLiveData extends AsyncQueryLiveData<Contact> {
         return null;
     }
 
-    /** Caller is responsible for passing the up to date and non null contact lookup uri. */
-    private static ObservableAsyncQuery.QueryParam getQueryParam(@NonNull Uri contactLookupUri) {
-        long contactId = ContentUris.parseId(contactLookupUri);
-        return new ObservableAsyncQuery.QueryParam(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                /* projection= */null,
-                /* selection= */ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                new String[]{String.valueOf(contactId)},
-                /* orderBy= */null);
+    /**
+     * Contact id varies on contact change. When we start a new query, this {@link
+     * QueryParam.Provider} refreshes the contact lookup uri to get the most up to date contact id
+     * and creates a new {@link QueryParam}.
+     */
+    private static class ContactDetailsQueryParamProvider implements QueryParam.Provider {
+
+        private final Context mContext;
+        private final Uri mContactLookupUri;
+
+        public ContactDetailsQueryParamProvider(Uri contactLookupUri, Context context) {
+            mContactLookupUri = contactLookupUri;
+            mContext = context;
+        }
+
+        @Nullable
+        @Override
+        public QueryParam getQueryParam() {
+            Uri refreshedContactLookupUri = ContactsContract.Contacts.getLookupUri(
+                    mContext.getContentResolver(), mContactLookupUri);
+            return convertToQueryParam(refreshedContactLookupUri);
+        }
+
+        /**
+         * Build the query param from the given contact lookup uri. Caller is responsible for
+         * passing in the most up to date uri.
+         *
+         * @param contactLookupUri Up to date uri describing the requested {@link Contact} entry.
+         *                         When contact is deleted, the uri will be null.
+         */
+        @Nullable
+        private static QueryParam convertToQueryParam(@Nullable Uri contactLookupUri) {
+            if (contactLookupUri == null) {
+                return null;
+            }
+            long contactId = ContentUris.parseId(contactLookupUri);
+            return new QueryParam(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    /* projection= */null,
+                    /* selection= */ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                    new String[]{String.valueOf(contactId)},
+                    /* orderBy= */null);
+        }
     }
 }

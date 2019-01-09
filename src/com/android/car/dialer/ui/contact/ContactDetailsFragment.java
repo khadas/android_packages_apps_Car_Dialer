@@ -97,8 +97,7 @@ public class ContactDetailsFragment extends DialerBaseFragment {
         }
         ContactDetailsViewModel contactDetailsViewModel = ViewModelProviders.of(this).get(
                 ContactDetailsViewModel.class);
-        mContactDetailsLiveData = contactDetailsViewModel.getContactDetailsLiveData(
-                mContactLookupUri);
+        mContactDetailsLiveData = contactDetailsViewModel.getContactDetails(mContactLookupUri);
         mContactDetailsLiveData.observe(this, contact -> getArguments().clear());
     }
 
