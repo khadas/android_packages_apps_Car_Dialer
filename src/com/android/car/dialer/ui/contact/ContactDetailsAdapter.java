@@ -30,11 +30,12 @@ import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.entity.Contact;
-import com.android.car.dialer.entity.PhoneNumber;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.TelecomUtils;
 import com.android.car.dialer.ui.view.ListItemOutlineResolver;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.TelecomUtils;
+
 
 class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder>
         implements PagedListView.ItemCap {

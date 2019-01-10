@@ -22,8 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.android.car.dialer.entity.Contact;
-import com.android.car.dialer.telecom.InMemoryPhoneBook;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 
 import java.util.List;
 

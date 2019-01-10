@@ -20,8 +20,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
-import com.android.car.dialer.common.ObservableAsyncQuery;
-import com.android.car.dialer.entity.Contact;
+import com.android.car.telephony.common.ObservableAsyncQuery;
+import com.android.car.telephony.common.Contact;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

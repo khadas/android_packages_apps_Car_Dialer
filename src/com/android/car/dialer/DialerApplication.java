@@ -17,10 +17,9 @@
 package com.android.car.dialer;
 
 import android.app.Application;
-
-import com.android.car.dialer.telecom.InMemoryPhoneBook;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 
 public class DialerApplication extends Application {
 

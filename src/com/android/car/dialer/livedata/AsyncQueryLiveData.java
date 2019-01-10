@@ -23,7 +23,7 @@ import android.database.Cursor;
 import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 
-import com.android.car.dialer.common.ObservableAsyncQuery;
+import com.android.car.telephony.common.ObservableAsyncQuery;
 
 /**
  * Asynchronously queries a {@link ContentResolver} for a given query and observes the loaded data

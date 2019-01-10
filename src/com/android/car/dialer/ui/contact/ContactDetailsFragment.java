@@ -31,9 +31,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.entity.Contact;
-import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
+import com.android.car.telephony.common.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

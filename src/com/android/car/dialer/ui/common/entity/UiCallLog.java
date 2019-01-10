@@ -17,7 +17,7 @@
 package com.android.car.dialer.ui.common.entity;
 
 import android.net.Uri;
-import com.android.car.dialer.entity.PhoneCallLog;
+import com.android.car.telephony.common.PhoneCallLog;
 
 import java.util.ArrayList;
 import java.util.Collections;

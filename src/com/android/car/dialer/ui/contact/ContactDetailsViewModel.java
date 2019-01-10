@@ -25,8 +25,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.car.dialer.entity.Contact;
 import com.android.car.dialer.livedata.ContactDetailsLiveData;
+import com.android.car.telephony.common.Contact;
 
 /** View model for the contact details page. */
 public class ContactDetailsViewModel extends AndroidViewModel {

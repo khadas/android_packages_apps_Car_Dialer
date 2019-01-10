@@ -19,16 +19,14 @@ package com.android.car.dialer.ui.calllog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.car.dialer.R;
-import com.android.car.dialer.entity.PhoneCallLog;
-import com.android.car.dialer.telecom.TelecomUtils;
+import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.dialer.widget.CallTypeIconsView;
+import com.android.car.telephony.common.PhoneCallLog;
 
 /**
  * {@link RecyclerView.ViewHolder} for call history list item, responsible for presenting and

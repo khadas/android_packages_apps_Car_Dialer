@@ -23,8 +23,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
 
-import com.android.car.dialer.common.ObservableAsyncQuery;
-import com.android.car.dialer.entity.PhoneCallLog;
+import com.android.car.telephony.common.ObservableAsyncQuery;
+import com.android.car.telephony.common.PhoneCallLog;
 
 import java.util.ArrayList;
 import java.util.List;
