@@ -15,6 +15,7 @@
  */
 package com.android.car.dialer.livedata;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -26,8 +27,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
 
-
-import com.android.car.dialer.ObserverVerifier;
+import com.android.car.dialer.LiveDataObserver;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,13 +53,13 @@ public class HeartBeatLiveDataTest {
 
     @Test
     public void active_onLifecycleStart() {
-        ObserverVerifier verifier = mock(ObserverVerifier.class);
-        mHeartBeatLiveData.observe(mLifecycleOwner, (value) -> verifier.isCalled());
-        verify(verifier, never()).isCalled();
+        LiveDataObserver<HeartBeatLiveData> mockObserver = mock(LiveDataObserver.class);
+        mHeartBeatLiveData.observe(mLifecycleOwner, (value) -> mockObserver.onChanged(value));
+        verify(mockObserver, never()).onChanged(any());
 
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
         ShadowLooper.runUiThreadTasks();
 
-        verify(verifier).isCalled();
+        verify(mockObserver).onChanged(any());
     }
 }
