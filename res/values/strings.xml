@@ -103,6 +103,7 @@
     <string name="zero_letters">+</string>
 
     <!-- Using spaces here so that the positioning of the number is consistent. -->
+    <string name="one_letters"> </string>
     <string name="star_letters"> </string>
     <string name="pound_letters"> </string>
 
