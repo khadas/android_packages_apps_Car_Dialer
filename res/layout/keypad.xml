@@ -22,10 +22,11 @@ limitations under the License.
     android:columnCount="5">
 
     <!-- Row 1 -->
+    <!-- Put back when voicemail is supported: app:image="@drawable/ic_voicemail" -->
     <com.android.car.dialer.ui.dialpad.KeypadButton
         android:id="@+id/one"
         app:numberText="@string/one"
-        app:image="@drawable/ic_voicemail"
+        app:letterText="@string/one_letters"
         style="@style/KeypadButtonStyle"/>
     <Space
         android:layout_width="@dimen/keypad_horizontal_spacing"
