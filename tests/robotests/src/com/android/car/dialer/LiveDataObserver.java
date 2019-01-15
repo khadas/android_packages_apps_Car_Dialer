@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,13 @@
 
 package com.android.car.dialer;
 
-/** Instrumental test verifier for live data behavior. */
-public interface ObserverVerifier {
-    void isCalled();
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+
+/** Instrumental test observer for live data behavior. */
+public class LiveDataObserver<T> implements Observer {
+    @Override
+    public void onChanged(@Nullable Object value) {
+        // no ops
+    }
 }
