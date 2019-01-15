@@ -63,6 +63,8 @@
     <color name="car_key2_dark">@*android:color/car_grey_700</color>
     <color name="car_key2">@color/car_key2_dark</color>
 
+    <color name="emergency_text_color">@*android:color/car_red_500a</color>
+
     <color name="dialer_tint">@color/car_key2_dark</color>
 
     <color name="dialer_card_background">@color/car_card</color>

@@ -89,7 +89,7 @@
     <dimen name="in_call_controller_secondary_icon_size">@dimen/car_secondary_icon_size</dimen>
 
     <!-- Ringing call dimensions -->
-    <dimen name="ringing_call_button_touch_target_size">@*android:dimen/car_touch_target_size</dimen>
+    <dimen name="ringing_call_button_touch_target_size">@dimen/touch_target_size</dimen>
     <dimen name="ringing_call_text_margin">@*android:dimen/car_padding_4</dimen>
 
     <!-- This should be -1 * in_call_card_right_margin -->
@@ -146,11 +146,11 @@
 
     <dimen name="dialer_fab_size">80dp</dimen>
     <dimen name="call_fab_elevation">8dp</dimen>
-    <dimen name="bksp_button_width">@*android:dimen/car_touch_target_size</dimen>
+    <dimen name="bksp_button_width">@dimen/touch_target_size</dimen>
     <!-- Fab button size is touch target (76dp) + stroke width (8dp) * 2-->
     <dimen name="fab_button_size">92dp</dimen>
 
-    <dimen name="in_call_button_size">@*android:dimen/car_touch_target_size</dimen>
+    <dimen name="in_call_button_size">@dimen/touch_target_size</dimen>
 
     <dimen name="user_profile_title_padding_top">@*android:dimen/car_padding_3</dimen>
     <dimen name="user_profile_body_padding_top">@*android:dimen/car_padding_3</dimen>
@@ -158,7 +158,10 @@
     <dimen name="car_key1_size">40sp</dimen>
     <dimen name="car_key2_size">18sp</dimen>
 
+    <!-- NoHfp error message page -->
     <dimen name="no_hfp_icon_size">@dimen/primary_icon_size</dimen>
+    <dimen name="emergency_button_min_height">@dimen/touch_target_size</dimen>
+    <dimen name="emergency_button_bottom_margin">@*android:dimen/car_padding_4</dimen>
 
     <dimen name="telecom_activity_padding">@*android:dimen/car_app_bar_height</dimen>
 

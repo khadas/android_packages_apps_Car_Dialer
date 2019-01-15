@@ -199,6 +199,10 @@ public class TelecomActivity extends DrawerActivity implements
                 showInCallOverlay();
                 break;
 
+            case TelecomActivityViewModel.DialerAppState.EMERGENCY_DAILPAD:
+                setOverlayFragment(DialpadFragment.newEmergencyDialpad());
+                break;
+
             case TelecomActivityViewModel.DialerAppState.DEFAULT:
             default:
                 clearOverlayFragment();

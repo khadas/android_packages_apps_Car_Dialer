@@ -24,8 +24,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.TelecomActivityViewModel;
 
 /**
  * A fragment that informs the user that there is no bluetooth device attached that can make
@@ -83,6 +86,13 @@ public class NoHfpFragment extends Fragment {
         if (!TextUtils.isEmpty(mErrorMessage)) {
             mErrorMessageView.setText(mErrorMessage);
         }
+
+        TelecomActivityViewModel viewModel = ViewModelProviders.of(getActivity()).get(
+                TelecomActivityViewModel.class);
+        MutableLiveData<Integer> dialerAppStateLiveData = viewModel.getDialerAppState();
+        View emergencyButton = v.findViewById(R.id.emergency_call_button);
+        emergencyButton.setOnClickListener(view -> dialerAppStateLiveData.setValue(
+                TelecomActivityViewModel.DialerAppState.EMERGENCY_DAILPAD));
 
         return v;
     }
