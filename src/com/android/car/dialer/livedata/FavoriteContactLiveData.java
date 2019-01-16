@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.android.car.telephony.common.AsyncQueryLiveData;
 import com.android.car.telephony.common.ObservableAsyncQuery;
 import com.android.car.telephony.common.Contact;
 

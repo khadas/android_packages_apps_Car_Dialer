@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
 
+import com.android.car.telephony.common.AsyncQueryLiveData;
 import com.android.car.telephony.common.ObservableAsyncQuery;
 import com.android.car.telephony.common.PhoneCallLog;
 
