@@ -23,11 +23,14 @@ import android.widget.TextView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.UiBluetoothMonitor;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class NoHfpFragmentTest {
@@ -39,6 +42,7 @@ public class NoHfpFragmentTest {
 
     @Before
     public void setup() {
+        UiBluetoothMonitor.init(RuntimeEnvironment.application);
         mNoHfpFragment = NoHfpFragment.newInstance(ERROR_MSG);
         mFragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().start().resume().get();
@@ -64,5 +68,10 @@ public class NoHfpFragmentTest {
         View rootView = mNoHfpFragment.getView();
         TextView errorMsgView = rootView.findViewById(R.id.error_string);
         assertThat(errorMsgView.getText()).isEqualTo(UPDATED_ERROR_MSG);
+    }
+
+    @After
+    public void tearDown() {
+        UiBluetoothMonitor.get().tearDown();
     }
 }
