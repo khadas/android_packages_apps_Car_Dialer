@@ -24,6 +24,7 @@ import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 
+import com.android.car.telephony.common.AsyncQueryLiveData;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.ObservableAsyncQuery;
 
