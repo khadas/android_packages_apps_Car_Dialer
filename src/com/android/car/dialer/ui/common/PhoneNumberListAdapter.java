@@ -51,7 +51,7 @@ public class PhoneNumberListAdapter extends ArrayAdapter<PhoneNumber> {
             return view;
         }
         TextView phoneNumberView = view.findViewById(R.id.phone_number);
-        phoneNumberView.setText(phoneNumber.getNumber());
+        phoneNumberView.setText(phoneNumber.getRawNumber());
         TextView phoneNumberDescriptionView = view.findViewById(R.id.phone_number_description);
         CharSequence readableLabel = phoneNumber.getReadableLabel(mContext.getResources());
         if (phoneNumber.isPrimary()) {

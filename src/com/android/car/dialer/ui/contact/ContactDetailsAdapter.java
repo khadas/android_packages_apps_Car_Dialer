@@ -115,7 +115,7 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
                 break;
             case ID_CONTENT:
                 PhoneNumber phoneNumber = mContact.getNumbers().get(position - 1);
-                viewHolder.title.setText(phoneNumber.getNumber());  // Number
+                viewHolder.title.setText(phoneNumber.getRawNumber());  // Number
                 // Present the phone number type.
                 CharSequence readableLabel = phoneNumber.getReadableLabel(mContext.getResources());
                 if (phoneNumber.isPrimary()) {
@@ -127,7 +127,7 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
                 viewHolder.leftIcon.setImageResource(R.drawable.ic_phone);
                 viewHolder.card.setOnClickListener(v -> {
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse(TELEPHONE_URI_PREFIX + phoneNumber.getNumber()));
+                    callIntent.setData(Uri.parse(TELEPHONE_URI_PREFIX + phoneNumber.getRawNumber()));
                     mContext.startActivity(callIntent);
                 });
                 break;
