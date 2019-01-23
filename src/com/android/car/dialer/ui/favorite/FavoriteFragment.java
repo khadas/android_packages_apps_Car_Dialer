@@ -126,7 +126,7 @@ public class FavoriteFragment extends DialerBaseFragment {
     }
 
     private void placeCall(PhoneNumber number, boolean setAsPrimary) {
-        UiCallManager.get().placeCall(number.getNumber());
+        UiCallManager.get().placeCall(number.getRawNumber());
         if (setAsPrimary) {
             TelecomUtils.setAsPrimaryPhoneNumber(getContext(), number);
         }

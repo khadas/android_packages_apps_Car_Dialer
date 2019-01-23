@@ -56,7 +56,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
                 view -> mOnShowContactDetailListener.onShowContactDetail(contact));
         super.itemView.setOnClickListener(view -> {
             if (phoneNumbers.size() == 1) {
-                UiCallManager.get().placeCall(phoneNumbers.get(0).getNumber());
+                UiCallManager.get().placeCall(phoneNumbers.get(0).getRawNumber());
             } else {
                 mOnShowContactDetailListener.onShowContactDetail(contact);
             }
