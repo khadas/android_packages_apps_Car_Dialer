@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.TelecomUtils;
+import com.android.internal.annotations.VisibleForTesting;
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
@@ -88,6 +89,14 @@ public class UiCallManager {
                     "Call UiCallManager.init(Context) before calling this function");
         }
         return sUiCallManager;
+    }
+
+    /**
+     * This is used only for testing
+     */
+    @VisibleForTesting
+    public static void set(UiCallManager uiCallManager) {
+        sUiCallManager = uiCallManager;
     }
 
     private UiCallManager(Context context) {

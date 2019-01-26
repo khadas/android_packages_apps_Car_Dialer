@@ -122,17 +122,19 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.on_going_call_controller_bar_fragment,
                 container, false);
-        mCallState = getArguments().getInt(CALL_STATE);
+        if (getArguments() != null) {
+            mCallState = getArguments().getInt(CALL_STATE);
+        }
         fragmentView.findViewById(R.id.mute_button).setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
             }
             if (v.isActivated()) {
                 v.setActivated(false);
-                onMuteMic();
+                onUnmuteMic();
             } else {
                 v.setActivated(true);
-                onUnmuteMic();
+                onMuteMic();
             }
         });
 
@@ -162,7 +164,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             }
             onEndCall();
         });
-
 
         List<Integer> audioRoutes = UiCallManager.get().getSupportedAudioRoute();
         mAudioRouteButton = fragmentView.findViewById(R.id.voice_channel_button);
