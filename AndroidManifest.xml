@@ -38,7 +38,7 @@
         android:label="@string/phone_app_name"
         android:icon="@drawable/ic_app_icon">
 
-        <activity android:name=".TelecomActivity"
+        <activity android:name=".ui.TelecomActivity"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.Dialer"
             android:label="@string/phone_app_name"
@@ -81,6 +81,11 @@
                 <action android:name="com.android.car.dialer.SHOW_CONTACT_DETAILS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activecall.InCallActivity"
+                  android:theme="@style/Theme.Dialer"
+                  android:label="@string/phone_app_name">
         </activity>
 
         <service android:name="com.android.car.dialer.telecom.InCallServiceImpl"

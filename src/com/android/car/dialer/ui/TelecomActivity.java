@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer;
+package com.android.car.dialer.ui;
 
 import android.app.ActionBar;
 import android.content.Intent;
@@ -26,6 +26,7 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -37,11 +38,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.android.car.apps.common.DrawerActivity;
+import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.TelecomActivityViewModel;
-import com.android.car.dialer.ui.activecall.InCallFragment;
 import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
@@ -52,7 +53,7 @@ import com.android.car.dialer.ui.warning.NoHfpFragment;
 /**
  * Main activity for the Dialer app. It contains two layers:
  * <ul>
- * <li>Overlay layer for {@link NoHfpFragment} and {@link InCallFragment}
+ * <li>Overlay layer for {@link NoHfpFragment}
  * <li>Content layer for {@link FavoriteFragment} {@link CallHistoryFragment} {@link
  * ContactListFragment} and {@link DialpadFragment}
  *
@@ -195,10 +196,6 @@ public class TelecomActivity extends DrawerActivity implements
                 showNoHfpOverlay(mBluetoothErrorMsgLiveData.getValue());
                 break;
 
-            case TelecomActivityViewModel.DialerAppState.HAS_ONGOING_CALL:
-                showInCallOverlay();
-                break;
-
             case TelecomActivityViewModel.DialerAppState.EMERGENCY_DAILPAD:
                 setOverlayFragment(DialpadFragment.newEmergencyDialpad());
                 break;
@@ -221,15 +218,6 @@ public class TelecomActivity extends DrawerActivity implements
         } else {
             setOverlayFragment(NoHfpFragment.newInstance(errorMsg));
         }
-    }
-
-    private void showInCallOverlay() {
-        Fragment overlayFragment = getCurrentOverlayFragment();
-        if (overlayFragment instanceof InCallFragment) {
-            return;
-        }
-
-        setOverlayFragment(InCallFragment.newInstance());
     }
 
     private void setOverlayFragment(@NonNull Fragment overlayFragment) {
