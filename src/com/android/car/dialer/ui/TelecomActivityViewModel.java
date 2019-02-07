@@ -15,6 +15,7 @@ import androidx.lifecycle.Transformations;
 
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.R;
+import com.android.car.dialer.TelecomActivity;
 import com.android.car.dialer.livedata.ActiveCallListLiveData;
 import com.android.car.dialer.livedata.BluetoothHfpStateLiveData;
 import com.android.car.dialer.livedata.BluetoothPairListLiveData;
@@ -43,12 +44,13 @@ public class TelecomActivityViewModel extends AndroidViewModel {
      * the content fragments.
      */
     @IntDef({DialerAppState.DEFAULT, DialerAppState.BLUETOOTH_ERROR,
-            DialerAppState.EMERGENCY_DAILPAD})
+            DialerAppState.HAS_ONGOING_CALL, DialerAppState.EMERGENCY_DAILPAD})
     @Retention(RetentionPolicy.SOURCE)
     public @interface DialerAppState {
         int DEFAULT = 0;
         int BLUETOOTH_ERROR = 1;
-        int EMERGENCY_DAILPAD = 2;
+        int HAS_ONGOING_CALL = 2;
+        int EMERGENCY_DAILPAD = 3;
     }
 
     public TelecomActivityViewModel(Application application) {
@@ -109,6 +111,7 @@ public class TelecomActivityViewModel extends AndroidViewModel {
             // If bluetooth is not connected, user can make an emergency call. So show the in
             // call fragment no matter if bluetooth is connected or not.
             if (mHasOngoingCallLiveData.getValue() == Boolean.TRUE) {
+                setValue(DialerAppState.HAS_ONGOING_CALL);
                 return;
             }
 
