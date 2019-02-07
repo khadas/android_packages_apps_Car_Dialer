@@ -26,7 +26,6 @@ import android.telecom.CallAudioState;
 import android.telecom.InCallService;
 import android.telecom.TelecomManager;
 
-import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.dialer.log.L;
 
 import java.util.ArrayList;
@@ -79,7 +78,8 @@ public class InCallServiceImpl extends InCallService {
         L.d(TAG, "onCallAdded: %s", telecomCall);
 
         // Launch the dialer app whenever there is a new incoming/outgoing call.
-        Intent launchIntent = new Intent(getApplicationContext(), InCallActivity.class);
+        Intent launchIntent = getPackageManager()
+                .getLaunchIntentForPackage(mTelecomManager.getDefaultDialerPackage());
         startActivity(launchIntent);
 
         telecomCall.registerCallback(mCallListener);
