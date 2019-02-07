@@ -32,9 +32,13 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.TelecomUtils;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -241,11 +245,23 @@ public class UiCallManager {
         return mInCallService != null ? mInCallService.getCallAudioState() : null;
     }
 
-    /** Places call through TelecomManager */
-    public void placeCall(String number) {
+    /**
+     * Places call through TelecomManager
+     * @return {@code true} if a call is successfully placed, false if number is invalid.
+     */
+    public boolean placeCall(String number) {
+      Phonenumber.PhoneNumber phoneNumber = TelecomUtils.createI18nPhoneNumber(mContext,
+           number);
+      if (phoneNumber != null && PhoneNumberUtil.getInstance().isValidNumber(phoneNumber)) {
         Uri uri = Uri.fromParts("tel", number, null);
         L.d(TAG, "android.telecom.TelecomManager#placeCall: %s", number);
         mTelecomManager.placeCall(uri, null);
+        return true;
+      } else {
+        L.d(TAG, "invalid number dialed", number);
+        Toast.makeText(mContext, R.string.error_invalid_phone_number, Toast.LENGTH_SHORT).show();
+        return false;
+      }
     }
 
     public void callVoicemail() {
