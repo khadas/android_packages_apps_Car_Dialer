@@ -11,15 +11,12 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
-import com.android.car.dialer.log.L;
 import com.android.car.dialer.R;
-import com.android.car.dialer.TelecomActivity;
-import com.android.car.dialer.livedata.ActiveCallListLiveData;
 import com.android.car.dialer.livedata.BluetoothHfpStateLiveData;
 import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
+import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
 
 import java.lang.annotation.Retention;
@@ -36,21 +33,18 @@ public class TelecomActivityViewModel extends AndroidViewModel {
 
     private final Context mApplicationContext;
     private final LiveData<String> mErrorStringLiveData;
-    private final LiveData<Boolean> mHasOngoingCallLiveData;
     private final MutableLiveData<Integer> mDialerAppStateLiveData;
 
     /**
-     * App state indicates if bluetooth is connected, there is ongoing call or it should just show
-     * the content fragments.
+     * App state indicates if bluetooth is connected or it should just show the content fragments.
      */
     @IntDef({DialerAppState.DEFAULT, DialerAppState.BLUETOOTH_ERROR,
-            DialerAppState.HAS_ONGOING_CALL, DialerAppState.EMERGENCY_DAILPAD})
+            DialerAppState.EMERGENCY_DAILPAD})
     @Retention(RetentionPolicy.SOURCE)
     public @interface DialerAppState {
         int DEFAULT = 0;
         int BLUETOOTH_ERROR = 1;
-        int HAS_ONGOING_CALL = 2;
-        int EMERGENCY_DAILPAD = 3;
+        int EMERGENCY_DAILPAD = 2;
     }
 
     public TelecomActivityViewModel(Application application) {
@@ -71,11 +65,7 @@ public class TelecomActivityViewModel extends AndroidViewModel {
                     uiBluetoothMonitor.getBluetoothStateLiveData());
         }
 
-        mHasOngoingCallLiveData = Transformations.map(new ActiveCallListLiveData(application),
-                (calls) -> !calls.isEmpty());
-
-        mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData,
-                mHasOngoingCallLiveData);
+        mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData);
     }
 
     public MutableLiveData<Integer> getDialerAppState() {
@@ -92,29 +82,19 @@ public class TelecomActivityViewModel extends AndroidViewModel {
 
     private static class DialerAppStateLiveData extends MediatorLiveData<Integer> {
         private final LiveData<String> mErrorStringLiveData;
-        private final LiveData<Boolean> mHasOngoingCallLiveData;
 
-        private DialerAppStateLiveData(LiveData<String> errorStringLiveData,
-                LiveData<Boolean> hasOngoingCallLiveData) {
+        private DialerAppStateLiveData(LiveData<String> errorStringLiveData) {
             this.mErrorStringLiveData = errorStringLiveData;
-            this.mHasOngoingCallLiveData = hasOngoingCallLiveData;
             setValue(DialerAppState.DEFAULT);
 
             addSource(mErrorStringLiveData, errorMsg -> updateDialerAppState());
-            addSource(mHasOngoingCallLiveData, hasOngoingCall -> updateDialerAppState());
         }
 
         private void updateDialerAppState() {
-            L.d(TAG, "updateDialerAppState, error: %s, hasOngoingCall: %s",
-                    mErrorStringLiveData.getValue(), mHasOngoingCallLiveData.getValue());
+            L.d(TAG, "updateDialerAppState, error: ", mErrorStringLiveData.getValue());
 
             // If bluetooth is not connected, user can make an emergency call. So show the in
             // call fragment no matter if bluetooth is connected or not.
-            if (mHasOngoingCallLiveData.getValue() == Boolean.TRUE) {
-                setValue(DialerAppState.HAS_ONGOING_CALL);
-                return;
-            }
-
             // Bluetooth error
             if (!NO_BT_ERROR.equals(mErrorStringLiveData.getValue())) {
                 // Currently bluetooth is not connected, stay on the emergency dial pad page.
@@ -125,7 +105,7 @@ public class TelecomActivityViewModel extends AndroidViewModel {
                 return;
             }
 
-            // Bluetooth connected and there is no ongoing call.
+            // Bluetooth connected.
             setValue(DialerAppState.DEFAULT);
         }
 
