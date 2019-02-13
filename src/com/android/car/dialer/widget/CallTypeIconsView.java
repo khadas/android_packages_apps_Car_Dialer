@@ -23,7 +23,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.telecom.PhoneLoader;
+import com.android.car.dialer.livedata.CallHistoryLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,13 +100,13 @@ public class CallTypeIconsView extends TextView {
 
     private Drawable getCallTypeDrawable(int callType) {
         switch (callType) {
-            case PhoneLoader.INCOMING_TYPE:
+            case CallHistoryLiveData.CallType.INCOMING_TYPE:
                 return mIconResources.incoming;
-            case PhoneLoader.OUTGOING_TYPE:
+            case CallHistoryLiveData.CallType.OUTGOING_TYPE:
                 return mIconResources.outgoing;
-            case PhoneLoader.MISSED_TYPE:
+            case CallHistoryLiveData.CallType.MISSED_TYPE:
                 return mIconResources.missed;
-            case PhoneLoader.VOICEMAIL_TYPE:
+            case CallHistoryLiveData.CallType.VOICEMAIL_TYPE:
                 return mIconResources.voicemail;
             default:
                 // It is possible for users to end up with calls with unknown call types in their
