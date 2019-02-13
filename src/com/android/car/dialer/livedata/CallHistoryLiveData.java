@@ -16,12 +16,14 @@
 
 package com.android.car.dialer.livedata;
 
-import static com.android.car.dialer.telecom.PhoneLoader.CallType.CALL_TYPE_ALL;
+import static com.android.car.dialer.livedata.CallHistoryLiveData.CallType.CALL_TYPE_ALL;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
+
+import androidx.annotation.IntDef;
 
 import com.android.car.telephony.common.AsyncQueryLiveData;
 import com.android.car.telephony.common.ObservableAsyncQuery;
@@ -38,6 +40,20 @@ public class CallHistoryLiveData extends AsyncQueryLiveData<List<PhoneCallLog>> 
     /** The default limit of loading call logs */
     private final static int DEFAULT_CALL_LOG_LIMIT = 100;
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
+
+    @IntDef({
+            CALL_TYPE_ALL,
+            CallType.INCOMING_TYPE,
+            CallType.OUTGOING_TYPE,
+            CallType.MISSED_TYPE,
+    })
+    public @interface CallType {
+        int CALL_TYPE_ALL = -1;
+        int INCOMING_TYPE = CallLog.Calls.INCOMING_TYPE;
+        int OUTGOING_TYPE = CallLog.Calls.OUTGOING_TYPE;
+        int MISSED_TYPE = CallLog.Calls.MISSED_TYPE;
+        int VOICEMAIL_TYPE = CallLog.Calls.VOICEMAIL_TYPE;
+    }
 
     /**
      * Creates a new instance of call history live data which loads all types of call history
