@@ -37,7 +37,10 @@ import android.widget.Toast;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.TelecomUtils;
+
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
+import com.google.i18n.phonenumbers.PhoneNumberUtil.ValidationResult;
 import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.ArrayList;
@@ -247,21 +250,42 @@ public class UiCallManager {
 
     /**
      * Places call through TelecomManager
+     *
      * @return {@code true} if a call is successfully placed, false if number is invalid.
      */
     public boolean placeCall(String number) {
-      Phonenumber.PhoneNumber phoneNumber = TelecomUtils.createI18nPhoneNumber(mContext,
-           number);
-      if (phoneNumber != null && PhoneNumberUtil.getInstance().isValidNumber(phoneNumber)) {
-        Uri uri = Uri.fromParts("tel", number, null);
-        L.d(TAG, "android.telecom.TelecomManager#placeCall: %s", number);
-        mTelecomManager.placeCall(uri, null);
-        return true;
-      } else {
-        L.d(TAG, "invalid number dialed", number);
-        Toast.makeText(mContext, R.string.error_invalid_phone_number, Toast.LENGTH_SHORT).show();
+        if (isValidNumber(number)) {
+            Uri uri = Uri.fromParts("tel", number, null);
+            L.d(TAG, "android.telecom.TelecomManager#placeCall: %s", number);
+            mTelecomManager.placeCall(uri, null);
+            return true;
+        } else {
+            L.d(TAG, "invalid number dialed", number);
+            Toast.makeText(mContext, R.string.error_invalid_phone_number,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    /**
+     * Runs basic validation check of a phone number, to verify it is the correct length
+     * in an internationalized way. Further validation on whether the number actually exists
+     * is left for the phone carrier.
+     */
+    private boolean isValidNumber(String number) {
+        Phonenumber.PhoneNumber phoneNumber = TelecomUtils.createI18nPhoneNumber(mContext,
+                number);
+        if (phoneNumber != null) {
+            for (PhoneNumberType type : PhoneNumberType.values()) {
+                ValidationResult result =
+                        PhoneNumberUtil.getInstance().isPossibleNumberForTypeWithReason(phoneNumber,
+                                type);
+                if (result != ValidationResult.TOO_SHORT && result != ValidationResult.TOO_LONG) {
+                    return true;
+                }
+            }
+        }
         return false;
-      }
     }
 
     public void callVoicemail() {
