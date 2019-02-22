@@ -167,6 +167,7 @@
 
     <dimen name="user_profile_text_padding">@*android:dimen/car_padding_3</dimen>
 
+    <dimen name="content_top_padding">@*android:dimen/car_padding_1</dimen>
     <!-- Components -->
     <dimen name="list_item_guideline">@*android:dimen/car_keyline_3</dimen>
     <dimen name="list_item_padding">@*android:dimen/car_keyline_1</dimen>
