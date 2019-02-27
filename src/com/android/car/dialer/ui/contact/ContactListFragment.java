@@ -37,7 +37,6 @@ import com.android.car.telephony.common.Contact;
  */
 public class ContactListFragment extends DialerBaseFragment implements
         ContactListAdapter.OnShowContactDetailListener {
-    private static final String CONTACT_DETAIL_FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
     private ContactListAdapter mContactListAdapter;
 
     public static ContactListFragment newInstance() {
@@ -64,6 +63,6 @@ public class ContactListFragment extends DialerBaseFragment implements
     @Override
     public void onShowContactDetail(Contact contact) {
         Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact, null);
-        pushContentFragment(contactDetailsFragment, CONTACT_DETAIL_FRAGMENT_TAG);
+        pushContentFragment(contactDetailsFragment, ContactDetailsFragment.FRAGMENT_TAG);
     }
 }

@@ -17,25 +17,15 @@
 package com.android.car.dialer.ui.search;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
-import com.android.car.dialer.TelecomIntents;
-import com.android.car.dialer.ui.view.CircleBitmapDrawable;
 import com.android.car.dialer.ui.view.ListItemOutlineResolver;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import com.android.car.telephony.common.TelecomUtils;
 
 /**
  * A {@link androidx.recyclerview.widget.RecyclerView.ViewHolder} that will parse relevant
@@ -46,13 +36,16 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
     private final View mContactCard;
     private final TextView mContactName;
     private final ImageView mContactPicture;
+    private final ContactResultsAdapter.OnShowContactDetailListener mOnShowContactDetailListener;
 
-    public ContactResultViewHolder(View view) {
+    public ContactResultViewHolder(View view,
+            ContactResultsAdapter.OnShowContactDetailListener onShowContactDetailListener) {
         super(view);
         mContext = view.getContext();
         mContactCard = view.findViewById(R.id.contact_result_card);
         mContactName = view.findViewById(R.id.contact_name);
         mContactPicture = view.findViewById(R.id.contact_picture);
+        mOnShowContactDetailListener = onShowContactDetailListener;
     }
 
     /**
@@ -65,66 +58,11 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
         ListItemOutlineResolver.setOutline(mContactCard, radius, getAdapterPosition(), itemCount);
 
         mContactCard.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.setAction(TelecomIntents.ACTION_SHOW_CONTACT_DETAILS);
-            intent.putExtra(TelecomIntents.CONTACT_LOOKUP_URI_EXTRA, details.lookupUri.toString());
-            mContext.startActivity(intent);
+            mOnShowContactDetailListener.onShowContactDetail(details.lookupUri);
         });
 
         mContactName.setText(details.displayName);
-
-        if (details.photoUri == null) {
-            setLetterDrawableForContact(details);
-            return;
-        }
-
-        Bitmap bitmap = getContactBitmapFromUri(mContext, details.photoUri);
-        if (bitmap == null) {
-            setLetterDrawableForContact(details);
-        } else {
-            mContactPicture.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            mContactPicture.setImageDrawable(
-                    new CircleBitmapDrawable(mContext.getResources(), bitmap));
-        }
-    }
-
-    /**
-     * Sets the contact picture to be a rounded, colored circle that has the first letter of the
-     * contact's name in it.
-     */
-    private void setLetterDrawableForContact(ContactDetails details) {
-        mContactPicture.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        LetterTileDrawable letterTileDrawable = new LetterTileDrawable(mContext.getResources());
-        letterTileDrawable.setContactDetails(details.displayName, details.displayName);
-        letterTileDrawable.setIsCircular(true);
-        mContactPicture.setImageDrawable(letterTileDrawable);
-    }
-
-    /**
-     * Retrieves the picture that is specified by the given {@link Uri}.
-     */
-    @Nullable
-    private static Bitmap getContactBitmapFromUri(Context context, Uri uri) {
-        try {
-            InputStream input = context.getContentResolver().openInputStream(uri);
-            return input == null ? null : BitmapFactory.decodeStream(input);
-        } catch (FileNotFoundException e) {
-            return null;
-        }
-    }
-
-    /**
-     * A struct that holds the details for a contact row.
-     */
-    public static class ContactDetails {
-        public final String displayName;
-        public final Uri photoUri;
-        public final Uri lookupUri;
-
-        public ContactDetails(String displayName, String photoUri, Uri lookupUri) {
-            this.displayName = displayName;
-            this.photoUri = photoUri == null ? null : Uri.parse(photoUri);
-            this.lookupUri = lookupUri;
-        }
+        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, details.photoUri,
+                details.displayName);
     }
 }

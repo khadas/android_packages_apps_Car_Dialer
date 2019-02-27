@@ -22,7 +22,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import com.android.car.apps.common.util.Themes;
@@ -67,7 +66,7 @@ public abstract class DialerBaseFragment extends Fragment {
         Activity parentActivity = getActivity();
         ActionBar actionBar = parentActivity.getActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(getActionBarTitleRes());
+            actionBar.setTitle(getActionBarTitle());
         }
     }
 
@@ -88,10 +87,9 @@ public abstract class DialerBaseFragment extends Fragment {
     }
 
     /**
-     * Return the string resources id for the action bar title.
+     * Return the action bar title.
      */
-    @StringRes
-    protected int getActionBarTitleRes() {
-        return R.string.default_toolbar_title;
+    protected CharSequence getActionBarTitle() {
+        return getString(R.string.default_toolbar_title);
     }
 }
