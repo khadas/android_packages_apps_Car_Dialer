@@ -32,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +53,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
     private AlertDialog mAudioRouteSelectionDialog;
     private ImageView mAudioRouteButton;
-    private Call mActiveCall;
+    private LiveData<Call> mCallLiveData;
     private int mCallState;
 
     public static OnGoingCallControllerBarFragment newInstance() {
@@ -113,7 +114,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(getParentFragment()).get(
                 InCallViewModel.class);
-        mActiveCall = inCallViewModel.getPrimaryCall().getValue();
+        mCallLiveData = inCallViewModel.getPrimaryCall();
     }
 
     @Nullable
@@ -223,14 +224,14 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     }
 
     private void onHoldCall() {
-        if (mActiveCall != null) {
-            mActiveCall.hold();
+        if (mCallLiveData.getValue() != null) {
+            mCallLiveData.getValue().hold();
         }
     }
 
     private void onUnholdCall() {
-        if (mActiveCall != null) {
-            mActiveCall.unhold();
+        if (mCallLiveData.getValue() != null) {
+            mCallLiveData.getValue().unhold();
         }
     }
 
@@ -241,8 +242,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     }
 
     private void onEndCall() {
-        if (mActiveCall != null) {
-            mActiveCall.disconnect();
+        if (mCallLiveData.getValue() != null) {
+            mCallLiveData.getValue().disconnect();
         }
     }
 
