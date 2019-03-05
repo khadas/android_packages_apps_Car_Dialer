@@ -19,6 +19,8 @@ package com.android.car.dialer.testutils;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothProfile;
 
+import androidx.annotation.Nullable;
+
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.ShadowApplication;
@@ -34,14 +36,19 @@ import java.util.Map;
  */
 
 // TODO: Remove this and use the default ShadowBluetoothAdapter once Robolectric is updated
-@Implements(value = BluetoothAdapter.class)
+@Implements(value = BluetoothAdapter.class, inheritImplementationMethods = true)
 public class ShadowBluetoothAdapterForDialer extends
         org.robolectric.shadows.ShadowBluetoothAdapter {
 
+    private static boolean bluetoothAvailable = true;
     private Map<Integer, Integer> profileConnectionStateData = new HashMap<>();
 
+    @Nullable
     @Implementation
     public static synchronized BluetoothAdapter getDefaultAdapter() {
+        if (!bluetoothAvailable) {
+            return null;
+        }
         return (BluetoothAdapter) ShadowApplication.getInstance().getBluetoothAdapter();
     }
 
@@ -58,6 +65,13 @@ public class ShadowBluetoothAdapterForDialer extends
             return BluetoothProfile.STATE_DISCONNECTED;
         }
         return state;
+    }
+
+    /**
+     * Sets if the default Bluetooth Adapter is null
+     */
+    public static void setBluetoothAvailable(boolean available) {
+        bluetoothAvailable = available;
     }
 
     /**

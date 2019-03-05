@@ -206,7 +206,7 @@ public class TelecomActivity extends FragmentActivity implements
                 showNoHfpOverlay(mBluetoothErrorMsgLiveData.getValue());
                 break;
 
-            case TelecomActivityViewModel.DialerAppState.EMERGENCY_DAILPAD:
+            case TelecomActivityViewModel.DialerAppState.EMERGENCY_DIALPAD:
                 setOverlayFragment(DialpadFragment.newEmergencyDialpad());
                 break;
 
