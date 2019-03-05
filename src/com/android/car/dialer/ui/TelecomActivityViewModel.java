@@ -39,12 +39,12 @@ public class TelecomActivityViewModel extends AndroidViewModel {
      * App state indicates if bluetooth is connected or it should just show the content fragments.
      */
     @IntDef({DialerAppState.DEFAULT, DialerAppState.BLUETOOTH_ERROR,
-            DialerAppState.EMERGENCY_DAILPAD})
+            DialerAppState.EMERGENCY_DIALPAD})
     @Retention(RetentionPolicy.SOURCE)
     public @interface DialerAppState {
         int DEFAULT = 0;
         int BLUETOOTH_ERROR = 1;
-        int EMERGENCY_DAILPAD = 2;
+        int EMERGENCY_DIALPAD = 2;
     }
 
     public TelecomActivityViewModel(Application application) {
@@ -98,7 +98,7 @@ public class TelecomActivityViewModel extends AndroidViewModel {
             // Bluetooth error
             if (!NO_BT_ERROR.equals(mErrorStringLiveData.getValue())) {
                 // Currently bluetooth is not connected, stay on the emergency dial pad page.
-                if (getValue() == DialerAppState.EMERGENCY_DAILPAD) {
+                if (getValue() == DialerAppState.EMERGENCY_DIALPAD) {
                     return;
                 }
                 setValue(DialerAppState.BLUETOOTH_ERROR);
