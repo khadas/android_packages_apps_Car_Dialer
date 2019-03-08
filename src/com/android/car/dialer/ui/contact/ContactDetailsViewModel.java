@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -30,6 +31,7 @@ import com.android.car.telephony.common.Contact;
 
 /** View model for the contact details page. */
 public class ContactDetailsViewModel extends AndroidViewModel {
+
     public ContactDetailsViewModel(@NonNull Application application) {
         super(application);
     }
@@ -38,17 +40,17 @@ public class ContactDetailsViewModel extends AndroidViewModel {
      * Builds the {@link LiveData} for the contact entity described by the given look up uri.
      *
      * @param contactLookupUri An {@link ContactsContract.Contacts#CONTENT_LOOKUP_URI} describing
-     *                         the contact entry. It might have been out of date and should attempt
-     *                         to refresh first.
+     *                         the contact entry. It might have been out of date and whoever use it
+     *                         should attempt to refresh first. A null contactLookupUri means the
+     *                         contact entry has been deleted.
      */
-    public LiveData<Contact> getContactDetailsLiveData(Uri contactLookupUri) {
-        Uri refreshedContactLookupUri = ContactsContract.Contacts.getLookupUri(
-                getApplication().getContentResolver(), contactLookupUri);
-        if (refreshedContactLookupUri == null) {
+    public LiveData<Contact> getContactDetails(@Nullable Uri contactLookupUri) {
+        if (contactLookupUri == null) {
             MutableLiveData<Contact> deletedContactDetailsLiveData = new MutableLiveData<>();
             deletedContactDetailsLiveData.setValue(null);
             return deletedContactDetailsLiveData;
         }
-        return new ContactDetailsLiveData(getApplication(), refreshedContactLookupUri);
+
+        return new ContactDetailsLiveData(getApplication(), contactLookupUri);
     }
 }
