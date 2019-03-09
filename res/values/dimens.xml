@@ -25,11 +25,11 @@
 
     <!-- Audio route dimentions -->
     <dimen name="audio_route_height">@dimen/control_bar_height</dimen>
-    <dimen name="audio_route_content_padding">@*android:dimen/car_keyline_1</dimen>
+    <dimen name="audio_route_content_padding">@dimen/list_item_padding</dimen>
     <dimen name="audio_route_corner_radius">@*android:dimen/car_radius_3</dimen>
     <dimen name="audio_route_card_elevation">@dimen/control_bar_elevation</dimen>
-    <dimen name="audio_route_icon_size">@dimen/car_app_icon_size</dimen>
-    <dimen name="audio_route_constraint_guide_begin">124dp</dimen>
+    <dimen name="audio_route_icon_size">@dimen/primary_icon_size</dimen>
+    <dimen name="audio_route_constraint_guide_begin">@dimen/list_item_guideline</dimen>
 
     <!-- Call list dimentions -->
     <dimen name="call_history_item_height">@dimen/control_bar_height</dimen>
@@ -168,6 +168,7 @@
     <dimen name="user_profile_text_padding">@*android:dimen/car_padding_3</dimen>
 
     <!-- Components -->
+    <dimen name="list_margin">@*android:dimen/car_margin</dimen>
     <dimen name="list_item_guideline">@*android:dimen/car_keyline_3</dimen>
     <dimen name="list_item_padding">@*android:dimen/car_keyline_1</dimen>
     <dimen name="list_divider_inset">@*android:dimen/car_keyline_1</dimen>

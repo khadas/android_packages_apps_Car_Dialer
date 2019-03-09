@@ -27,11 +27,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
@@ -57,7 +57,7 @@ public class ContactResultsFragment extends Fragment implements
     };
 
     private final ContactResultsAdapter mAdapter = new ContactResultsAdapter();
-    private PagedListView mContactResultList;
+    private RecyclerView mContactResultList;
     private String mSearchQuery;
 
     private List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
@@ -81,11 +81,11 @@ public class ContactResultsFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mContactResultList = view.findViewById(R.id.contact_result_list);
+        mContactResultList.setLayoutManager(new LinearLayoutManager(getContext()));
         mContactResultList.setAdapter(mAdapter);
 
-        RecyclerView recyclerView = mContactResultList.getRecyclerView();
         for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
-            recyclerView.addOnScrollListener(listener);
+            mContactResultList.addOnScrollListener(listener);
         }
 
         mOnScrollListeners.clear();
@@ -104,7 +104,7 @@ public class ContactResultsFragment extends Fragment implements
             return;
         }
 
-        mContactResultList.getRecyclerView().addOnScrollListener(onScrollListener);
+        mContactResultList.addOnScrollListener(onScrollListener);
     }
 
     /**
@@ -167,7 +167,7 @@ public class ContactResultsFragment extends Fragment implements
     @Override
     public void onDestroy() {
         // Clear all scroll listeners.
-        mContactResultList.getRecyclerView().removeOnScrollListener(null);
+        mContactResultList.removeOnScrollListener(null);
         super.onDestroy();
     }
 

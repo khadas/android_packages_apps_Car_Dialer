@@ -18,7 +18,6 @@ package com.android.car.dialer.ui.contact;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,9 +27,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.car.widget.PagedListView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
@@ -55,7 +54,7 @@ public class ContactDetailsFragment extends DialerBaseFragment {
     // Key to load the contact details by passing in the content provider query uri.
     private static final String KEY_CONTACT_QUERY_URI = "ContactQueryUri";
 
-    private PagedListView mListView;
+    private RecyclerView mListView;
     private final List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
 
     private Contact mContact;
@@ -120,16 +119,12 @@ public class ContactDetailsFragment extends DialerBaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mListView = view.findViewById(R.id.list_view);
+        mListView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        RecyclerView recyclerView = mListView.getRecyclerView();
-        PagedListView.LayoutParams layoutParams =
-                (PagedListView.LayoutParams) recyclerView.getLayoutParams();
-        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
-        layoutParams.width = PagedListView.LayoutParams.WRAP_CONTENT;
-        recyclerView.addItemDecoration(new VerticalListDividerDecoration(getContext(), true));
+        mListView.addItemDecoration(new VerticalListDividerDecoration(getContext(), true));
 
         for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
-            recyclerView.addOnScrollListener(listener);
+            mListView.addOnScrollListener(listener);
         }
         mOnScrollListeners.clear();
 
@@ -155,7 +150,7 @@ public class ContactDetailsFragment extends DialerBaseFragment {
             return;
         }
 
-        mListView.getRecyclerView().addOnScrollListener(onScrollListener);
+        mListView.addOnScrollListener(onScrollListener);
     }
 
     @Override
@@ -167,7 +162,7 @@ public class ContactDetailsFragment extends DialerBaseFragment {
     @Override
     public void onDestroyView() {
         // Clear all scroll listeners.
-        mListView.getRecyclerView().removeOnScrollListener(null);
+        mListView.removeOnScrollListener(null);
         super.onDestroyView();
     }
 

@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
@@ -32,11 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Adapter for call history list. */
-public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder>
-        implements PagedListView.ItemCap {
+public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder> {
 
     private static final String TAG = "CD.CallLogAdapter";
-    private int mMaxItems = PagedListView.ItemCap.UNLIMITED;
     private List<UiCallLog> mUiCallLogs = new ArrayList<>();
     private Context mContext;
 
@@ -44,16 +41,11 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder>
         mContext = context;
     }
 
-    public void setUiCallLogs(List<UiCallLog> uiCallLogs) {
+    public void setUiCallLogs(@NonNull List<UiCallLog> uiCallLogs) {
+        L.d(TAG, "setUiCallLogs: ", uiCallLogs.size());
         mUiCallLogs.clear();
         mUiCallLogs.addAll(uiCallLogs);
         notifyDataSetChanged();
-    }
-
-    @Override
-    public void setMaxItems(int maxItems) {
-        L.d(TAG, "setMaxItems %s", maxItems);
-        mMaxItems = maxItems;
     }
 
     @NonNull
@@ -76,9 +68,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder>
 
     @Override
     public int getItemCount() {
-        return mMaxItems == PagedListView.ItemCap.UNLIMITED
-                ? mUiCallLogs.size()
-                : Math.min(mMaxItems, mUiCallLogs.size());
+        return  mUiCallLogs.size();
     }
 }
 

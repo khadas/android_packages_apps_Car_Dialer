@@ -261,8 +261,8 @@ public class ContactSearchActivity extends FragmentActivity {
     public class ContactScrollListener extends RecyclerView.OnScrollListener {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            // The default LayoutManager for PagedListView is a LinearLayoutManager. Dialer does
-            // not change this.
+            // The LayoutManager for RecyclerView is a LinearLayoutManager. See
+            // ContactResultsFragment.
             LinearLayoutManager layoutManager =
                     (LinearLayoutManager) recyclerView.getLayoutManager();
 

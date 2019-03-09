@@ -13,41 +13,33 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<!-- This FrameLayout is used to center the CardView since the CardView's container will be larger
-     than its width. -->
-<FrameLayout
+
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contact_result_card"
+    android:foreground="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true">
+    android:layout_height="@dimen/contact_result_card_height">
 
-    <androidx.car.widget.ColumnCardView
-        android:id="@+id/contact_result_card"
-        android:foreground="@drawable/dialer_ripple_background"
-        android:layout_gravity="center"
+    <FrameLayout
+        android:layout_width="@dimen/contact_result_image_size"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/contact_picture"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/avatar_icon_size"
+            android:layout_height="@dimen/avatar_icon_size"
+            android:scaleType="centerCrop"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/contact_name"
+        android:layout_marginStart="@dimen/contact_result_name_margin"
+        android:layout_gravity="center_vertical|start"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/contact_result_card_height" >
-
-        <FrameLayout
-            android:layout_width="@dimen/contact_result_image_size"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/contact_picture"
-                android:layout_gravity="center"
-                android:layout_width="@dimen/avatar_icon_size"
-                android:layout_height="@dimen/avatar_icon_size"
-                android:scaleType="centerCrop" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/contact_name"
-            android:layout_marginStart="@dimen/contact_result_name_margin"
-            android:layout_gravity="center_vertical|start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            style="?android:attr/textAppearanceLarge" />
-    </androidx.car.widget.ColumnCardView>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+</androidx.cardview.widget.CardView>

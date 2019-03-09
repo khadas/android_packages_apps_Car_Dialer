@@ -13,19 +13,10 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<FrameLayout
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contact_result_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.car.widget.PagedListView
-        android:id="@+id/contact_result_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:theme="@style/Theme.Car.Light.List"
-        app:showPagedListViewDivider="true"
-        app:dividerStartMargin="@dimen/contact_result_list_margin"
-        app:alignDividerEndTo="@id/contact_result_card"
-        app:alignDividerStartTo="@id/contact_result_card" />
-</FrameLayout>
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/contact_card_margin_x"
+    android:paddingEnd="@dimen/contact_card_margin_x"/>

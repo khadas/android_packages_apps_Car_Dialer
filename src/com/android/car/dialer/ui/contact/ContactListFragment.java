@@ -16,8 +16,6 @@
 
 package com.android.car.dialer.ui.contact;
 
-import static androidx.car.widget.PagedListView.UNLIMITED_PAGES;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +24,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.car.widget.PagedListView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
@@ -54,11 +53,11 @@ public class ContactListFragment extends DialerBaseFragment implements
 
         mContactListAdapter = new ContactListAdapter(
                 getContext(), /* onShowContactDetailListener= */this);
-        PagedListView pagedListView = fragmentView.findViewById(R.id.list_view);
-        pagedListView.setAdapter(mContactListAdapter);
-        pagedListView.getRecyclerView().addItemDecoration(
+        RecyclerView recyclerView = fragmentView.findViewById(R.id.list_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mContactListAdapter);
+        recyclerView.addItemDecoration(
                 new VerticalListDividerDecoration(getContext(), /* hideLastDivider= */true));
-        pagedListView.setMaxPages(UNLIMITED_PAGES);
 
         ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
                 ContactListViewModel.class);

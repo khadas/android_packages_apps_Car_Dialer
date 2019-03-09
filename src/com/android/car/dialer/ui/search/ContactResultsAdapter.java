@@ -23,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
@@ -35,8 +34,7 @@ import java.util.List;
  *  An adapter that will parse a list of contacts given by a {@link Cursor} that display the
  *  results as a list.
  */
-public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultViewHolder>
-        implements PagedListView.ItemCap {
+public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultViewHolder> {
     private final List<ContactResultViewHolder.ContactDetails> mContacts = new ArrayList<>();
 
     /**
@@ -93,11 +91,5 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
     @Override
     public int getItemCount() {
         return mContacts.size();
-    }
-
-    @Override
-    public void setMaxItems(int max) {
-        // No-op. A PagedListView needs the ItemCap interface to be implemented. However, the
-        // list of contacts not be limited.
     }
 }

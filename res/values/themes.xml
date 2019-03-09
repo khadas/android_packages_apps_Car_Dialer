@@ -18,5 +18,4 @@ limitations under the License.
     <style name="Theme.Dialer" parent="Theme.NoActionBar.Drawer">
         <item name="android:listDivider">@drawable/list_divider</item>
     </style>
-    <style name="PagedListViewTheme" parent="Theme.CarSupportWrapper.NoActionBar"></style>
 </resources>
