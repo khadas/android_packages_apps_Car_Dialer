@@ -177,4 +177,9 @@
     <dimen name="primary_icon_size">@dimen/car_primary_icon_size</dimen>
     <dimen name="avatar_icon_size">@dimen/car_avatar_icon_size</dimen>
     <dimen name="large_avatar_icon_size">@dimen/car_large_avatar_size</dimen>
+
+    <!-- Card view margins-->
+    <dimen name="contact_card_margin_x">@dimen/dialer_card_margin_x</dimen>
+    <dimen name="search_card_margin_x">@dimen/dialer_card_margin_x</dimen>
+    <dimen name="dialer_card_margin_x">72dp</dimen>
 </resources>
