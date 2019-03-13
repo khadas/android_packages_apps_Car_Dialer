@@ -24,8 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
-import com.android.car.dialer.R;
-import com.android.car.theme.Themes;
+import com.android.car.apps.common.util.Themes;
 
 /**
  * The base class for top level Dialer Fragments.
@@ -80,7 +79,7 @@ public abstract class DialerBaseFragment extends Fragment {
      * change the background.
      */
     protected Drawable getFullScreenBackgroundColor() {
-        return new ColorDrawable(Themes.getAttrColor(getContext(), R.attr.background));
+        return new ColorDrawable(Themes.getAttrColor(getContext(), android.R.attr.background));
     }
 
     /** Push a fragment to the back stack. Update action bar accordingly. */

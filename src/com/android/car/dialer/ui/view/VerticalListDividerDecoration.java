@@ -26,8 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.util.Themes;
 import com.android.car.dialer.log.L;
-import com.android.car.theme.Themes;
 
 /**
  * Branched from {@link androidx.recyclerview.widget.DividerItemDecoration} but can hide the last

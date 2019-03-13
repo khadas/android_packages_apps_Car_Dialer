@@ -59,13 +59,13 @@
 
     <ImageView
         android:id="@+id/action_button"
-        android:layout_width="@dimen/primary_icon_size"
-        android:layout_height="@dimen/primary_icon_size"
-        android:layout_marginEnd="@dimen/contact_list_item_padding"
+        android:layout_width="@dimen/contact_list_action_button_size"
+        android:layout_height="@dimen/contact_list_action_button_size"
         android:src="@drawable/ic_contact"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         android:tint="@color/secondary_icon_color"
         android:background="@drawable/dialer_ripple_background"
+        app:layout_constraintStart_toEndOf="@id/contact_list_guideline_end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -77,5 +77,5 @@
         android:layout_marginTop="@dimen/vertical_divider_inset"
         android:layout_marginBottom="@dimen/vertical_divider_inset"
         android:layout_marginEnd="@dimen/contact_list_item_padding"
-        app:layout_constraintEnd_toStartOf="@id/action_button"/>
+        app:layout_constraintStart_toStartOf="@id/contact_list_guideline_end"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
