@@ -15,13 +15,7 @@
 -->
 <resources>
     <!-- Dialer -->
-    <dimen name="dial_container_vertical_margin">48dp</dimen>
-
     <dimen name="dialer_card_elevation">2dp</dimen>
-    <dimen name="dialer_dialpad_top_margin">-16dp</dimen>
-    <dimen name="dialer_back_button_top_margin">-4dp</dimen>
-    <dimen name="dialer_dialed_number_bottom_padding">16dp</dimen>
-    <dimen name="dialer_menu_icon_container_width">64dp</dimen>
 
     <!-- Audio route dimentions -->
     <dimen name="audio_route_height">@dimen/control_bar_height</dimen>
@@ -49,12 +43,14 @@
     <dimen name="contact_detail_guideline">@dimen/list_item_guideline</dimen>
 
     <!-- Contact list dimensions -->
+    <dimen name="contact_list_action_button_size">@dimen/touch_target_size</dimen>
     <dimen name="contact_list_item_height">@dimen/control_bar_height</dimen>
     <dimen name="contact_list_item_padding">@dimen/list_item_padding</dimen>
     <dimen name="contact_list_guideline">@dimen/list_item_guideline</dimen>
 
     <!-- Contact result dimensions -->
     <dimen name="contact_result_card_height">128dp</dimen>
+    <dimen name="contact_result_card_corner_radius">@*android:dimen/car_radius_3</dimen>
     <dimen name="contact_result_image_size">@*android:dimen/car_keyline_2</dimen>
     <dimen name="contact_result_name_margin">@*android:dimen/car_keyline_2</dimen>
     <dimen name="contact_result_list_margin">@*android:dimen/car_keyline_2</dimen>
@@ -86,7 +82,7 @@
     <dimen name="in_call_controller_bar_margin_bottom">@*android:dimen/car_padding_1</dimen>
     <dimen name="in_call_controller_bar_corner_radius">@*android:dimen/car_radius_3</dimen>
     <dimen name="in_call_controller_bar_elevation">@dimen/control_bar_elevation</dimen>
-    <dimen name="in_call_controller_secondary_icon_size">@dimen/car_secondary_icon_size</dimen>
+    <dimen name="in_call_controller_secondary_icon_size">@*android:dimen/car_secondary_icon_size</dimen>
 
     <!-- Ringing call dimensions -->
     <dimen name="ringing_call_button_touch_target_size">@dimen/touch_target_size</dimen>
@@ -97,9 +93,6 @@
     <dimen name="in_call_card_dialpad_corner_radius">16dp</dimen>
     <dimen name="keypad_horizontal_spacing">@*android:dimen/car_padding_5</dimen>
     <dimen name="keypad_vertical_spacing">@*android:dimen/car_padding_4</dimen>
-
-    <dimen name="in_call_button_spacing">32dp</dimen>
-    <dimen name="in_call_card_corner_radius">@dimen/car_card_view_corner_radius</dimen>
 
     <dimen name="small_contact_photo_margin_start">48dp</dimen>
     <dimen name="small_contact_photo_margin_end">0dp</dimen>
@@ -113,7 +106,6 @@
 
     <dimen name="call_log_icon_margin">4dp</dimen>
 
-    <dimen name="car_card_view_corner_radius">2dp</dimen>
     <dimen name="favorite_item_height">@*android:dimen/car_single_line_list_item_height</dimen>
     <dimen name="favorite_card_corner_radius">@*android:dimen/car_radius_5</dimen>
     <dimen name="favorite_card_space">@*android:dimen/car_padding_1</dimen>
@@ -134,7 +126,7 @@
     <dimen name="dialpad_fragment_info_padding_size">@*android:dimen/car_keyline_1</dimen>
     <dimen name="dialpad_info_title_padding_size">@*android:dimen/car_padding_4</dimen>
     <dimen name="dialpad_info_number_view_padding">32dp</dimen>
-    <dimen name="dialpad_info_delete_button_margin">@dimen/car_padding_6</dimen>
+    <dimen name="dialpad_info_delete_button_margin">96dp</dimen>
     <dimen name="dialpad_fragment_margin">@*android:dimen/car_margin</dimen>
 
     <!-- Favorites dimensions -->
@@ -176,9 +168,10 @@
     <dimen name="list_divider_height">@*android:dimen/car_list_divider_height</dimen>
     <dimen name="vertical_divider_inset">@*android:dimen/car_padding_3</dimen>
     <dimen name="vertical_divider_width">1dp</dimen>
-    <dimen name="primary_icon_size">@dimen/car_primary_icon_size</dimen>
-    <dimen name="avatar_icon_size">@dimen/car_avatar_icon_size</dimen>
-    <dimen name="large_avatar_icon_size">@dimen/car_large_avatar_size</dimen>
+    <dimen name="primary_icon_size">@*android:dimen/car_primary_icon_size</dimen>
+    <dimen name="avatar_icon_size">56dp</dimen>
+    <dimen name="large_avatar_icon_size">96dp</dimen>
+    <dimen name="inline_icon_size">24dp</dimen>
 
     <!-- Card view margins-->
     <dimen name="contact_card_margin_x">@dimen/dialer_card_margin_x</dimen>

@@ -16,58 +16,48 @@
 <resources>
     <!-- rail -->
     <color name="phone_theme">@color/phone_theme_light</color>
-    <color name="phone_theme_secondary">@color/phone_theme_secondary_light</color>
-
     <color name="phone_theme_light">@*android:color/car_grey_50</color>
     <color name="phone_theme_dark">@*android:color/car_dark_blue_grey_700</color>
+
+    <color name="phone_theme_secondary">@color/phone_theme_secondary_light</color>
     <color name="phone_theme_secondary_light">@*android:color/car_grey_200</color>
     <color name="phone_theme_secondary_dark">@*android:color/car_dark_blue_grey_800</color>
 
-    <color name="phone_status_bar_theme">@*android:color/transparent</color>
+    <!-- InCall page -->
     <color name="phone_call">@*android:color/car_green_700</color>
     <color name="phone_end_call">@*android:color/car_red_500a</color>
-    <color name="phone_secondary_call_scrim">#990288d1</color>
-
-    <color name="dialer_fragment_background_color">@color/phone_theme</color>
-    <color name="telecom_activity_background_color">@color/phone_theme</color>
-
-    <!-- phone -->
-    <color name="secondary_call_scrim">#990288d1</color>
-    <color name="dialpad_fragment_background_color">@*android:color/car_list_divider</color>
 
     <!-- A scrim that covers the background of activities and darkens them for night mode. -->
-    <color name="telecom_display_scrim">@*android:color/transparent</color>
+    <color name="telecom_display_scrim">@color/telecom_display_scrim_light</color>
+    <color name="telecom_display_scrim_light">@*android:color/transparent</color>
+    <color name="telecom_display_scrim_dark">#52000000</color>
 
-    <!-- The color of the icons in the search field. -->
-    <color name="search_container_controls_tint">@*android:color/car_grey_800</color>
-
-    <!-- The color of the hint text in the search field. -->
-    <color name="search_container_text_hint">@*android:color/car_grey_400</color>
-
-    <!-- The tint of the back button on seach activity -->
-    <color name="search_back_tint">@*android:color/car_grey_50</color>
-
-    <!-- The color of the icons in the contact details page. -->
+    <!-- Search components. -->
+    <color name="search_container_controls_tint">@color/search_container_controls_tint_light</color>
+    <color name="search_container_controls_tint_light">@*android:color/car_grey_800</color>
+    <color name="search_container_controls_tint_dark">@*android:color/car_grey_100</color>
+    <color name="search_container_text_hint">@color/search_container_text_hint_light</color>
+    <color name="search_container_text_hint_light">@*android:color/car_grey_400</color>
+    <color name="search_container_text_hint_dark">@*android:color/car_grey_700</color>
+    <color name="search_back_tint">@color/primary_icon_color</color>
+    
+    <!--Contact details-->
     <color name="contact_details_icon_tint">@color/primary_icon_color</color>
 
     <!-- TextAppearances -->
+    <color name="car_caption">@color/car_caption_dark</color>
     <color name="car_caption_light">@*android:color/car_grey_400</color>
     <color name="car_caption_dark">@*android:color/car_grey_700</color>
-    <color name="car_caption">@color/car_caption_dark</color>
 
+    <color name="car_key1">@color/car_key1_dark</color>
     <color name="car_key1_light">@*android:color/car_grey_100</color>
     <color name="car_key1_dark">@*android:color/car_light_blue_700</color>
-    <color name="car_key1">@color/car_key1_dark</color>
 
+    <color name="car_key2">@color/car_key2_dark</color>
     <color name="car_key2_light">@*android:color/car_grey_400</color>
     <color name="car_key2_dark">@*android:color/car_grey_700</color>
-    <color name="car_key2">@color/car_key2_dark</color>
 
     <color name="emergency_text_color">@*android:color/car_red_500a</color>
-
-    <color name="dialer_tint">@color/car_key2_dark</color>
-
-    <color name="dialer_card_background">@color/car_card</color>
 
     <!-- Components -->
     <color name="divider_color">@color/divider_color_light</color>

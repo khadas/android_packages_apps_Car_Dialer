@@ -62,7 +62,6 @@
             android:layout_marginStart="@dimen/search_card_margin_x"
             android:layout_marginEnd="@dimen/search_card_margin_x"
             android:elevation="0dp"
-            app:cardBackgroundColor="@color/dialer_card_background"
             app:cardCornerRadius="@dimen/search_container_radius">
 
             <ImageView
