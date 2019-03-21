@@ -35,11 +35,14 @@ import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
 
+import com.google.common.annotations.VisibleForTesting;
+
 
 class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder> {
 
     private static final String TAG = "CD.ContactDetailsAdapter";
-    private static final String TELEPHONE_URI_PREFIX = "tel:";
+    @VisibleForTesting
+    static final String TELEPHONE_URI_PREFIX = "tel:";
 
     private static final int ID_HEADER = 1;
     private static final int ID_CONTENT = 2;
