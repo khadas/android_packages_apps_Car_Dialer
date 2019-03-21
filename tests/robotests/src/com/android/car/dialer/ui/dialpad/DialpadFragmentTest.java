@@ -64,8 +64,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testOnCreateView_modeDialWithNormalDialNumber() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad(DIAL_NUMBER);
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(DIAL_NUMBER);
 
         verifyButtonVisibility(View.VISIBLE);
         verifyTitleText(DIAL_NUMBER);
@@ -73,8 +74,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testOnCreateView_modeDialWithLongDialNumber() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad(DIAL_NUMBER_LONG);
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(DIAL_NUMBER_LONG);
 
         verifyButtonVisibility(View.VISIBLE);
         verifyTitleText(DIAL_NUMBER_LONG);
@@ -82,8 +84,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testOnCreateView_modeDialWithNullDialNumber() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad(null);
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(null);
 
         verifyButtonVisibility(View.VISIBLE);
         verifyTitleText(mDialpadFragment.getContext().getString(R.string.dial_a_number));
@@ -91,8 +94,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testOnCreateView_modeDialWithEmptyDialNumber() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad("");
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber("");
 
         verifyButtonVisibility(View.VISIBLE);
         verifyTitleText(mDialpadFragment.getContext().getString(R.string.dial_a_number));
@@ -100,8 +104,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testOnCreateView_modeDialWithSpecialChar() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad(SPEC_CHAR);
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(SPEC_CHAR);
 
         verifyButtonVisibility(View.VISIBLE);
         verifyTitleText(SPEC_CHAR);
@@ -117,8 +122,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testDeleteButton_normalString() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad(DIAL_NUMBER);
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(DIAL_NUMBER);
 
         ImageButton deleteButton = mDialpadFragment.getView().findViewById(R.id.delete_button);
         deleteButton.performClick();
@@ -128,8 +134,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testDeleteButton_oneDigit() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad(SINGLE_DIGIT);
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(SINGLE_DIGIT);
 
         ImageButton deleteButton = mDialpadFragment.getView().findViewById(R.id.delete_button);
         deleteButton.performClick();
@@ -138,8 +145,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testDeleteButton_emptyString() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad("");
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber("");
 
         ImageButton deleteButton = mDialpadFragment.getView().findViewById(R.id.delete_button);
         deleteButton.performClick();
@@ -148,8 +156,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testLongPressDeleteButton() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad(DIAL_NUMBER);
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(DIAL_NUMBER);
 
         ImageButton deleteButton = mDialpadFragment.getView().findViewById(R.id.delete_button);
 
@@ -159,8 +168,9 @@ public class DialpadFragmentTest {
 
     @Test
     public void testOnKeyLongPressed_KeyCode0() {
-        mDialpadFragment = DialpadFragment.newPlaceCallDialpad(DIAL_NUMBER);
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
         startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(DIAL_NUMBER);
 
         mDialpadFragment.onKeyLongPressed(KeyEvent.KEYCODE_0);
         verifyTitleText(DIAL_NUMBER.substring(0, DIAL_NUMBER.length() - 1) + "+");

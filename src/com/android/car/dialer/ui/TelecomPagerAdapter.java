@@ -79,7 +79,7 @@ public class TelecomPagerAdapter extends FragmentPagerAdapter {
             case PAGE.CONTACTS:
                 return ContactListFragment.newInstance();
             case PAGE.DIAL_PAD:
-                return DialpadFragment.newPlaceCallDialpad(null);
+                return DialpadFragment.newPlaceCallDialpad();
         }
         return null;
     }
