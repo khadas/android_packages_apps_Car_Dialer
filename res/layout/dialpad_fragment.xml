@@ -31,7 +31,7 @@
 
     <View
         android:id="@id/divider"
-        android:background="@color/dialpad_fragment_background_color"
+        android:background="@color/divider_color"
         android:layout_gravity="end|top"
         android:layout_height="0dp"
         android:layout_width="@dimen/dialpad_line_divider_height"

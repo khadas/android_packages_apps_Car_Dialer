@@ -13,7 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<vector android:height="44dp" android:viewportHeight="48.0"
-    android:viewportWidth="48.0" android:width="44dp" xmlns:android="http://schemas.android.com/apk/res/android">
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="@dimen/primary_icon_size"
+        android:height="@dimen/primary_icon_size"
+        android:viewportHeight="48.0"
+        android:viewportWidth="48.0">
     <path android:fillColor="#000000" android:pathData="M16,10v28l22,-14z"/>
 </vector>

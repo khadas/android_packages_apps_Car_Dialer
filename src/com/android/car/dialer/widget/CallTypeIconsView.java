@@ -38,8 +38,9 @@ public class CallTypeIconsView extends TextView {
     private static final int MAX_CALL_TYPE_ICONS = 3;
     private static final String CALL_COUNT_FORMAT = "(%d)";
 
-    private List<Integer> mCallTypes = new ArrayList<>();
-    private IconResources mIconResources;
+    private final List<Integer> mCallTypes = new ArrayList<>();
+    private final IconResources mIconResources;
+    private final int mSingleIconSize;
     private int mIconWidth;
     private int mIconHeight;
 
@@ -59,8 +60,9 @@ public class CallTypeIconsView extends TextView {
             int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         mIconResources = new IconResources(context);
-        mIconResources.voicemail.setColorFilter(context.getColor(R.color.dialer_tint),
+        mIconResources.voicemail.setColorFilter(context.getColor(R.color.primary_icon_color),
                 PorterDuff.Mode.SRC_IN);
+        mSingleIconSize = getResources().getDimensionPixelSize(R.dimen.inline_icon_size);
     }
 
     public void clear() {
@@ -83,10 +85,8 @@ public class CallTypeIconsView extends TextView {
         }
 
         setText(null);
-        final Drawable drawable = getCallTypeDrawable(callType);
-        mIconWidth += drawable.getIntrinsicWidth() + mIconResources.iconMargin;
-        mIconHeight = Math.max(mIconHeight,
-                drawable.getIntrinsicHeight() + mIconResources.iconMargin);
+        mIconWidth += mSingleIconSize + mIconResources.iconMargin;
+        mIconHeight = Math.max(mIconHeight, mSingleIconSize + mIconResources.iconMargin);
         requestLayout();
     }
 
@@ -136,9 +136,9 @@ public class CallTypeIconsView extends TextView {
         int iconCount = Math.min(MAX_CALL_TYPE_ICONS, mCallTypes.size());
         for (int i = 0; i < iconCount; i++) {
             final Drawable drawable = getCallTypeDrawable(mCallTypes.get(i));
-            final int right = left + drawable.getIntrinsicWidth();
+            final int right = left + mSingleIconSize;
             drawable.setBounds(left, mIconResources.iconMargin, right,
-                    drawable.getIntrinsicHeight() + mIconResources.iconMargin);
+                    mSingleIconSize + mIconResources.iconMargin);
             drawable.draw(canvas);
             left = right + mIconResources.iconMargin;
         }

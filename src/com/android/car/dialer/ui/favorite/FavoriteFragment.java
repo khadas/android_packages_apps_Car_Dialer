@@ -135,7 +135,7 @@ public class FavoriteFragment extends DialerBaseFragment {
             super.getItemOffsets(outRect, view, parent, state);
             int carPadding1 =
                     FavoriteFragment.this.getContext().getResources().getDimensionPixelOffset(
-                            R.dimen.car_padding_1);
+                            R.dimen.favorite_card_space);
 
             int leftPadding = 0;
             int rightPadding = 0;
