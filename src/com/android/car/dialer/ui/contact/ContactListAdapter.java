@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
@@ -31,8 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Adapter for contact list. */
-public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHolder>
-        implements PagedListView.ItemCap {
+public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHolder> {
     private static final String TAG = "CD.ContactListAdapter";
 
     public interface OnShowContactDetailListener {
@@ -42,7 +40,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
     private final Context mContext;
     private final List<Contact> mContactList = new ArrayList<>();
     private final OnShowContactDetailListener mOnShowContactDetailListener;
-    private int mMaxItems = PagedListView.ItemCap.UNLIMITED;
 
     public ContactListAdapter(Context context,
             OnShowContactDetailListener onShowContactDetailListener) {
@@ -74,14 +71,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
 
     @Override
     public int getItemCount() {
-        return mMaxItems == PagedListView.ItemCap.UNLIMITED
-                ? mContactList.size()
-                : Math.min(mMaxItems, mContactList.size());
-    }
-
-    @Override
-    public void setMaxItems(int maxItems) {
-        L.d(TAG, "setMaxItems %s", maxItems);
-        mMaxItems = maxItems;
+        return  mContactList.size();
     }
 }

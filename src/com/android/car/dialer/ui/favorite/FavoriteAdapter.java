@@ -20,7 +20,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
@@ -33,12 +32,10 @@ import java.util.List;
 /**
  * Adapter class for binding favorite contacts.
  */
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHolder>
-        implements PagedListView.ItemCap {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHolder> {
     private static final String TAG = "CD.FavoriteAdapter";
 
     private List<Contact> mFavoriteContacts = Collections.emptyList();
-    private int mMaxItems = PagedListView.ItemCap.UNLIMITED;
     private OnItemClickedListener<Contact> mListener;
 
     /** Sets the favorite contact list. */
@@ -49,16 +46,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
     }
 
     @Override
-    public void setMaxItems(int maxItems) {
-        L.d(TAG, "setMaxItems %s", maxItems);
-        mMaxItems = maxItems;
-    }
-
-    @Override
     public int getItemCount() {
-        return mMaxItems == PagedListView.ItemCap.UNLIMITED
-                ? mFavoriteContacts.size()
-                : Math.min(mMaxItems, mFavoriteContacts.size());
+        return mFavoriteContacts.size();
     }
 
     @Override
