@@ -16,9 +16,9 @@ limitations under the License.
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:foreground="@drawable/dialer_ripple_background"
     android:layout_width="match_parent"
     android:layout_height="@dimen/audio_route_height"
+    android:background="?android:attr/selectableItemBackground"
     android:elevation="@dimen/dialer_card_elevation">
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/text_start"
@@ -31,6 +31,7 @@ limitations under the License.
         android:layout_width="@dimen/audio_route_icon_size"
         android:layout_height="@dimen/audio_route_icon_size"
         android:scaleType="fitCenter"
+        android:layout_marginStart="@dimen/audio_route_content_padding"
         android:tint="@color/primary_icon_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +40,7 @@ limitations under the License.
         android:id="@+id/body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/text_start"
         app:layout_constraintEnd_toEndOf="parent"

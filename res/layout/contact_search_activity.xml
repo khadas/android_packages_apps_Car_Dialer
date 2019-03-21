@@ -55,10 +55,12 @@
                 android:tint="@color/search_back_tint" />
         </FrameLayout>
 
-        <androidx.car.widget.ColumnCardView
+        <androidx.cardview.widget.CardView
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="@dimen/search_container_height"
+            android:layout_marginStart="@dimen/search_card_margin_x"
+            android:layout_marginEnd="@dimen/search_card_margin_x"
             android:elevation="0dp"
             app:cardBackgroundColor="@color/dialer_card_background"
             app:cardCornerRadius="@dimen/search_container_radius">
@@ -92,7 +94,7 @@
                 android:src="@drawable/ic_cancel"
                 android:scaleType="center"
                 android:tint="@color/search_container_controls_tint"/>
-        </androidx.car.widget.ColumnCardView>
+        </androidx.cardview.widget.CardView>
     </FrameLayout>
 
     <FrameLayout

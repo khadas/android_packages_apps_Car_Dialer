@@ -22,12 +22,9 @@
     app:cardCornerRadius="@dimen/audio_route_corner_radius"
     app:cardElevation="@dimen/audio_route_card_elevation">
 
-    <androidx.car.widget.PagedListView
-        android:theme="@style/PagedListViewTheme"
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false"
-        app:scrollBarEnabled="false"
-        app:gutter="none"/>
+        android:clipChildren="false"/>
 </androidx.cardview.widget.CardView>

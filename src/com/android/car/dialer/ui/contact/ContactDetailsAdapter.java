@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.car.widget.PagedListView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
@@ -37,8 +36,7 @@ import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
 
 
-class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder>
-        implements PagedListView.ItemCap {
+class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder> {
 
     private static final String TAG = "CD.ContactDetailsAdapter";
     private static final String TELEPHONE_URI_PREFIX = "tel:";
@@ -68,11 +66,6 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
     @Override
     public int getItemViewType(int position) {
         return position == 0 ? ID_HEADER : ID_CONTENT;
-    }
-
-    @Override
-    public void setMaxItems(int maxItems) {
-        // Ignore.
     }
 
     @Override
