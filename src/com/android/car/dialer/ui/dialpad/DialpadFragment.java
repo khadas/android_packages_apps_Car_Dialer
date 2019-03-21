@@ -275,6 +275,13 @@ public class DialpadFragment extends DialerBaseFragment implements
         return R.string.dialpad_title;
     }
 
+    /** Set the dialed number to the given number. Must be called after the fragment is added. */
+    public void setDialedNumber(String number) {
+        mNumber.setLength(0);
+        mNumber.append(number);
+        presentDialedNumber();
+    }
+
     private void clearDialedNumber() {
         mNumber.setLength(0);
         presentDialedNumber();
