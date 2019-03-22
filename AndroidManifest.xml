@@ -88,6 +88,7 @@
                   android:launchMode="singleTask"
                   android:theme="@style/Theme.Dialer"
                   android:label="@string/phone_app_name">
+            <meta-data android:name="distractionOptimized" android:value="true"/>
         </activity>
 
         <service android:name="com.android.car.dialer.telecom.InCallServiceImpl"
