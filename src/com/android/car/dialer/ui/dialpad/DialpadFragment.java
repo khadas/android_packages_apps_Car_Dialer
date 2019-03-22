@@ -114,12 +114,8 @@ public class DialpadFragment extends DialerBaseFragment implements
      *
      * @param dialNumber The given number as the one to dial.
      */
-    public static DialpadFragment newPlaceCallDialpad(@Nullable String dialNumber) {
+    public static DialpadFragment newPlaceCallDialpad() {
         DialpadFragment fragment = newDialpad(MODE_DIAL);
-        // We don't want the dial number to retain across fragment destroy and creation.
-        if (!TextUtils.isEmpty(dialNumber)) {
-            fragment.mNumber.append(dialNumber);
-        }
         return fragment;
     }
 
@@ -278,7 +274,9 @@ public class DialpadFragment extends DialerBaseFragment implements
     /** Set the dialed number to the given number. Must be called after the fragment is added. */
     public void setDialedNumber(String number) {
         mNumber.setLength(0);
-        mNumber.append(number);
+        if (!TextUtils.isEmpty(number)) {
+            mNumber.append(number);
+        }
         presentDialedNumber();
     }
 
