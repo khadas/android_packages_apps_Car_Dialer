@@ -92,7 +92,7 @@ public class NoHfpFragment extends Fragment {
         MutableLiveData<Integer> dialerAppStateLiveData = viewModel.getDialerAppState();
         View emergencyButton = v.findViewById(R.id.emergency_call_button);
         emergencyButton.setOnClickListener(view -> dialerAppStateLiveData.setValue(
-                TelecomActivityViewModel.DialerAppState.EMERGENCY_DAILPAD));
+                TelecomActivityViewModel.DialerAppState.EMERGENCY_DIALPAD));
 
         return v;
     }

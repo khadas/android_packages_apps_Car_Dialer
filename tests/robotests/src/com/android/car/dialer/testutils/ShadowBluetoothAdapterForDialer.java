@@ -19,6 +19,8 @@ package com.android.car.dialer.testutils;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothProfile;
 
+import androidx.annotation.Nullable;
+
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.ShadowApplication;
@@ -32,38 +34,26 @@ import java.util.Map;
  * Needed for Bluetooth related tests because the default ShadowBluetooth Adapter does not include
  * an implementation of setProfileConnectionState.
  */
-
-// TODO: Remove this and use the default ShadowBluetoothAdapter once Robolectric is updated
 @Implements(value = BluetoothAdapter.class)
 public class ShadowBluetoothAdapterForDialer extends
         org.robolectric.shadows.ShadowBluetoothAdapter {
 
+    private static boolean bluetoothAvailable = true;
     private Map<Integer, Integer> profileConnectionStateData = new HashMap<>();
 
+    @Nullable
     @Implementation
     public static synchronized BluetoothAdapter getDefaultAdapter() {
+        if (!bluetoothAvailable) {
+            return null;
+        }
         return (BluetoothAdapter) ShadowApplication.getInstance().getBluetoothAdapter();
     }
 
     /**
-     * Returns the connection state for the given Bluetooth {@code profile}, defaulting to {@link
-     * BluetoothProfile.STATE_DISCONNECTED} if the profile's connection state was never set.
-     *
-     * Set a Bluetooth profile's connection state via {@link #setProfileConnectionState(int, int)}.
+     * Sets if the default Bluetooth Adapter is null
      */
-    @Implementation
-    public int getProfileConnectionState(int profile) {
-        Integer state = profileConnectionStateData.get(profile);
-        if (state == null) {
-            return BluetoothProfile.STATE_DISCONNECTED;
-        }
-        return state;
-    }
-
-    /**
-     * Sets the connection state {@code state} for the given BLuetoothProfile {@code profile}
-     */
-    public void setProfileConnectionState(int profile, int state) {
-        profileConnectionStateData.put(profile, state);
+    public static void setBluetoothAvailable(boolean available) {
+        bluetoothAvailable = available;
     }
 }
