@@ -38,18 +38,22 @@ import com.android.car.apps.common.widget.CarTabLayout;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 import com.android.car.dialer.ui.favorite.FavoriteFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
+
 /**
  * Main activity for the Dialer app. It contains two layers:
  * <ul>
  * <li>Overlay layer for {@link NoHfpFragment}
  * <li>Content layer for {@link FavoriteFragment} {@link CallHistoryFragment} {@link
  * ContactListFragment} and {@link DialpadFragment}
+ *
+ * <p>Start {@link InCallActivity} if there are ongoing calls
  *
  * <p>Based on call and connectivity status, it will choose the right page to display.
  */
@@ -101,8 +105,14 @@ public class TelecomActivity extends FragmentActivity implements
                 TelecomActivityViewModel.class);
         mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
         mDialerAppStateLiveData = viewModel.getDialerAppState();
+        LiveData<Boolean> hasOngoingCallLiveData = viewModel.getHasOngoingCallLiveData();
         mDialerAppStateLiveData.observe(this,
                 dialerAppState -> updateCurrentFragment(dialerAppState));
+        hasOngoingCallLiveData.observe(this, hasOngoingCall -> {
+            if (hasOngoingCall) {
+                startInCallActivity();
+            }
+        });
 
         handleIntent();
     }
@@ -297,5 +307,11 @@ public class TelecomActivity extends FragmentActivity implements
             return true;
         }
         return super.onNavigateUp();
+    }
+
+    private void startInCallActivity() {
+        L.d(TAG, "Start InCallActivity");
+        Intent launchIntent = new Intent(getApplicationContext(), InCallActivity.class);
+        startActivity(launchIntent);
     }
 }
