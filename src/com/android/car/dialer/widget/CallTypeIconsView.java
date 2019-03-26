@@ -45,15 +45,15 @@ public class CallTypeIconsView extends TextView {
     private int mIconHeight;
 
     public CallTypeIconsView(Context context) {
-        this(context, null, -1, -1);
+        this(context, null);
     }
 
     public CallTypeIconsView(Context context, AttributeSet attrs) {
-        this(context, attrs, -1, -1);
+        this(context, attrs, 0);
     }
 
     public CallTypeIconsView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, -1);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     public CallTypeIconsView(Context context, AttributeSet attrs, int defStyleAttr,
