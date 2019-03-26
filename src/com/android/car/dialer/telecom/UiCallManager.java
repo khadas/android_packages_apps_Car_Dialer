@@ -26,12 +26,12 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.IBinder;
+import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.CallAudioState.CallAudioRoute;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.car.dialer.R;
@@ -45,13 +45,14 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil.ValidationResult;
 import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * The entry point for all interactions between UI and telecom.
  */
 public class UiCallManager {
-    private static String TAG = "Em.TelecomMgr";
+    private static String TAG = "CD.TelecomMgr";
 
     private static final String HFP_CLIENT_CONNECTION_SERVICE_CLASS_NAME
             = "com.android.bluetooth.hfpclient.connserv.HfpClientConnectionService";
@@ -155,9 +156,7 @@ public class UiCallManager {
     }
 
     public boolean getMuted() {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "getMuted");
-        }
+        L.d(TAG, "getMuted");
         if (mInCallService == null) {
             return false;
         }
@@ -166,9 +165,7 @@ public class UiCallManager {
     }
 
     public void setMuted(boolean muted) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "setMuted: " + muted);
-        }
+        L.d(TAG, "setMuted: " + muted);
         if (mInCallService == null) {
             return;
         }
@@ -176,9 +173,7 @@ public class UiCallManager {
     }
 
     public int getSupportedAudioRouteMask() {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "getSupportedAudioRouteMask");
-        }
+        L.d(TAG, "getSupportedAudioRouteMask");
 
         CallAudioState audioState = getCallAudioStateOrNull();
         return audioState != null ? audioState.getSupportedRouteMask() : 0;
@@ -227,9 +222,7 @@ public class UiCallManager {
     public int getAudioRoute() {
         CallAudioState audioState = getCallAudioStateOrNull();
         int audioRoute = audioState != null ? audioState.getRoute() : 0;
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "getAudioRoute " + audioRoute);
-        }
+        L.d(TAG, "getAudioRoute " + audioRoute);
         return audioRoute;
     }
 
@@ -298,15 +291,38 @@ public class UiCallManager {
     }
 
     public void callVoicemail() {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "callVoicemail");
-        }
+        L.d(TAG, "callVoicemail");
 
         String voicemailNumber = TelecomUtils.getVoicemailNumber(mContext);
         if (TextUtils.isEmpty(voicemailNumber)) {
-            Log.w(TAG, "Unable to get voicemail number.");
+            L.w(TAG, "Unable to get voicemail number.");
             return;
         }
         placeCall(voicemailNumber);
+    }
+
+    /** Return the current active call list from delegated {@link InCallServiceImpl} */
+    public List<Call> getCallList() {
+        return mInCallService == null ? Collections.emptyList() : mInCallService.getCalls();
+    }
+
+    /** Register the given callback to the delegated {@link InCallServiceImpl} */
+    public void registerActiveCallListChangedCallback(
+            InCallServiceImpl.ActiveCallListChangedCallback callback) {
+        if (mInCallService != null) {
+            mInCallService.addActiveCallListChangedCallback(callback);
+        } else {
+            L.w(TAG, "InCallService is not available");
+        }
+    }
+
+    /** Unregister the given callback from delegated {@link InCallServiceImpl} */
+    public void unregisterActiveCallListChangedCallback(
+            InCallServiceImpl.ActiveCallListChangedCallback callback) {
+        if (mInCallService != null) {
+            mInCallService.removeActiveCallListChangedCallback(callback);
+        } else {
+            L.w(TAG, "InCallService is not available");
+        }
     }
 }

@@ -84,7 +84,7 @@ public class TelecomActivityViewModel extends AndroidViewModel {
                     uiBluetoothMonitor.getBluetoothStateLiveData());
         }
 
-        mHasOngoingCallLiveData = Transformations.map(new ActiveCallListLiveData(application),
+        mHasOngoingCallLiveData = Transformations.map(new ActiveCallListLiveData(),
                 (calls) -> !calls.isEmpty());
         mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData);
     }

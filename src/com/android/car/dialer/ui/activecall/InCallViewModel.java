@@ -40,6 +40,7 @@ import java.util.List;
  * View model for {@link InCallFragment}.
  */
 public class InCallViewModel extends AndroidViewModel {
+    private LiveData<List<Call>> mActiveCallLiveData;
     private LiveData<CallDetail> mCallDetailLiveData;
     private LiveData<Integer> mCallStateLiveData;
     private LiveData<String> mCallStateDescriptionLiveData;
@@ -49,9 +50,8 @@ public class InCallViewModel extends AndroidViewModel {
     public InCallViewModel(@NonNull Application application) {
         super(application);
         mContext = application.getApplicationContext();
-        LiveData<List<Call>> activeCallListLiveData = new ActiveCallListLiveData(
-                application.getApplicationContext());
-        mPrimaryCallLiveData = Transformations.map(activeCallListLiveData,
+        mActiveCallLiveData = new ActiveCallListLiveData();
+        mPrimaryCallLiveData = Transformations.map(mActiveCallLiveData,
                 input -> (input != null && !input.isEmpty()) ? input.get(0) : null);
         mCallDetailLiveData = Transformations.switchMap(mPrimaryCallLiveData,
                 input -> input != null ? new CallDetailLiveData(input) : null);
@@ -60,6 +60,11 @@ public class InCallViewModel extends AndroidViewModel {
         mCallStateDescriptionLiveData = new SelfRefreshDescriptionLiveData(mContext,
                 new HeartBeatLiveData(DateUtils.SECOND_IN_MILLIS), mCallDetailLiveData,
                 mCallStateLiveData);
+    }
+
+    /** Returns the live data which monitors the current active call list. */
+    public LiveData<List<Call>> getCallList() {
+        return mActiveCallLiveData;
     }
 
     /**
