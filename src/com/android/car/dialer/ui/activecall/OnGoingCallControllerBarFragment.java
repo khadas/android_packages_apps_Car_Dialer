@@ -99,6 +99,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         list.addItemDecoration(new VerticalListDividerDecoration(getContext(), true));
 
         List<Integer> availableRoutes = UiCallManager.get().getSupportedAudioRoute();
+
         mAudioRouteSelectionDialog = new AlertDialog.Builder(getContext())
                 .setView(dialogView)
                 .create();
@@ -170,7 +171,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             fragmentView.findViewById(R.id.voice_channel_chevron).setVisibility(View.GONE);
         }
 
-        fragmentView.findViewById(R.id.pause_button).setOnClickListener((v) -> {
+        ImageView pauseButton = fragmentView.findViewById(R.id.pause_button);
+        pauseButton.setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
             }
@@ -183,6 +185,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 L.i(TAG, "Pause button is clicked while call in %s state", mCallState);
             }
         });
+        setButtonEnabled(pauseButton);
 
         return fragmentView;
     }
@@ -202,11 +205,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         L.d(TAG, "Call State: %s", callState);
         mCallState = callState;
         ImageView pauseButton = getView().findViewById(R.id.pause_button);
-        if (callState == Call.STATE_HOLDING) {
-            pauseButton.setActivated(true);
-        } else {
-            pauseButton.setActivated(false);
-        }
+        setButtonEnabled(pauseButton);
     }
 
     private void onMuteMic() {
@@ -315,6 +314,18 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             super(itemView);
             mIcon = itemView.findViewById(R.id.icon);
             mBody = itemView.findViewById(R.id.body);
+        }
+    }
+
+    private void setButtonEnabled(View button) {
+        if (mCallState == Call.STATE_HOLDING) {
+            button.setEnabled(true);
+            button.setActivated(true);
+        } else if (mCallState == Call.STATE_ACTIVE) {
+            button.setEnabled(true);
+            button.setActivated(false);
+        } else {
+            button.setEnabled(false);
         }
     }
 }
