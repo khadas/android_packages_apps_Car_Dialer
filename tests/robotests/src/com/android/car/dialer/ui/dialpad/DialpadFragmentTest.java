@@ -68,7 +68,7 @@ public class DialpadFragmentTest {
         startPlaceCallActivity();
         mDialpadFragment.setDialedNumber(DIAL_NUMBER);
 
-        verifyButtonVisibility(View.VISIBLE);
+        verifyButtonVisibility(View.VISIBLE, View.VISIBLE);
         verifyTitleText(DIAL_NUMBER);
     }
 
@@ -78,7 +78,7 @@ public class DialpadFragmentTest {
         startPlaceCallActivity();
         mDialpadFragment.setDialedNumber(DIAL_NUMBER_LONG);
 
-        verifyButtonVisibility(View.VISIBLE);
+        verifyButtonVisibility(View.VISIBLE, View.GONE);
         verifyTitleText(DIAL_NUMBER_LONG);
     }
 
@@ -88,7 +88,7 @@ public class DialpadFragmentTest {
         startPlaceCallActivity();
         mDialpadFragment.setDialedNumber(null);
 
-        verifyButtonVisibility(View.VISIBLE);
+        verifyButtonVisibility(View.VISIBLE, View.GONE);
         verifyTitleText(mDialpadFragment.getContext().getString(R.string.dial_a_number));
     }
 
@@ -98,7 +98,7 @@ public class DialpadFragmentTest {
         startPlaceCallActivity();
         mDialpadFragment.setDialedNumber("");
 
-        verifyButtonVisibility(View.VISIBLE);
+        verifyButtonVisibility(View.VISIBLE, View.GONE);
         verifyTitleText(mDialpadFragment.getContext().getString(R.string.dial_a_number));
     }
 
@@ -108,7 +108,7 @@ public class DialpadFragmentTest {
         startPlaceCallActivity();
         mDialpadFragment.setDialedNumber(SPEC_CHAR);
 
-        verifyButtonVisibility(View.VISIBLE);
+        verifyButtonVisibility(View.VISIBLE, View.VISIBLE);
         verifyTitleText(SPEC_CHAR);
     }
 
@@ -116,7 +116,7 @@ public class DialpadFragmentTest {
     public void testOnCreateView_modeInCall() {
         startInCallActivity();
 
-        verifyButtonVisibility(View.GONE);
+        verifyButtonVisibility(View.GONE, View.GONE);
         verifyTitleText("");
     }
 
@@ -206,12 +206,12 @@ public class DialpadFragmentTest {
                 mDialpadFragment).commit();
     }
 
-    private void verifyButtonVisibility(int expectedVisibility) {
+    private void verifyButtonVisibility(int callButtonVisibility, int deleteButtonVisibility) {
         ImageButton callButton = mDialpadFragment.getView().findViewById(R.id.call_button);
         ImageButton deleteButton = mDialpadFragment.getView().findViewById(R.id.delete_button);
 
-        assertThat(callButton.getVisibility()).isEqualTo(expectedVisibility);
-        assertThat(deleteButton.getVisibility()).isEqualTo(expectedVisibility);
+        assertThat(callButton.getVisibility()).isEqualTo(callButtonVisibility);
+        assertThat(deleteButton.getVisibility()).isEqualTo(deleteButtonVisibility);
     }
 
     private void verifyTitleText(String expectedText) {
