@@ -16,37 +16,25 @@
 
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.android.car.apps.common.ClickThroughToolbar
-            android:id="@+id/car_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            app:clickThrough="true">
-            <com.android.car.apps.common.widget.CarTabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-        </com.android.car.apps.common.ClickThroughToolbar>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/top_bar_with_tabs"/>
         <!-- The main content view. Fragments will be added here. -->
         <FrameLayout
             android:id="@+id/content_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/content_top_padding"
-            app:layout_constraintTop_toBottomOf="@id/car_toolbar"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/content_top_padding">
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/overlay_fragment_container"
