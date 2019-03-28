@@ -169,6 +169,6 @@ public class ContactDetailsFragment extends DialerBaseFragment {
     @StringRes
     @Override
     protected int getActionBarTitleRes() {
-        return R.string.contacts_title;
+        return R.string.toolbar_title_contact_details;
     }
 }

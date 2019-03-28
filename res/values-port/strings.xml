@@ -16,6 +16,7 @@
   -->
 
 <resources>
-    <!-- Card view margins-->
-    <dimen name="dialer_card_margin_x">132dp</dimen>
+    <!-- Titles -->
+    <!-- Toolbar title for tabbed pages -->
+    <string name="default_toolbar_title">@string/phone_app_name</string>
 </resources>

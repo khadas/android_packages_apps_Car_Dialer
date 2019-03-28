@@ -67,13 +67,15 @@
 
     <!--TODO: fix it system wide instead of creating override-->
     <style name="Widget.Dialer.Toolbar" parent="*android:Widget.DeviceDefault.Toolbar">
-        <item name="android:contentInsetEnd">@*android:dimen/car_margin</item>
         <item name="android:contentInsetStart">@*android:dimen/car_margin</item>
-        <item name="android:navigationIcon">@drawable/ic_arrow_back</item>
-        <item name="android:titleTextAppearance">@style/TextAppearance.Dialer.Widget.Toolbar.Title</item>
+        <item name="android:contentInsetEnd">@*android:dimen/car_margin</item>
+        <item name="android:navigationIcon">@drawable/navigation_icon</item>
+        <item name="android:titleTextAppearance">@style/TextAppearance.Dialer.Widget.Toolbar.Title
+        </item>
     </style>
 
-    <style name="TextAppearance.Dialer.Widget.Toolbar.Title" parent="*android:TextAppearance.DeviceDefault.Widget.Toolbar.Title">
+    <style name="TextAppearance.Dialer.Widget.Toolbar.Title"
+           parent="*android:TextAppearance.DeviceDefault.Widget.Toolbar.Title">
         <item name="android:textSize">@*android:dimen/car_body1_size</item>
     </style>
 

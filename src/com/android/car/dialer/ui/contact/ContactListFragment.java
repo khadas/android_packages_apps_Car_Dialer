@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,12 +68,5 @@ public class ContactListFragment extends DialerBaseFragment implements
     public void onShowContactDetail(Contact contact) {
         Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact, null);
         pushContentFragment(contactDetailsFragment, CONTACT_DETAIL_FRAGMENT_TAG);
-    }
-
-
-    @StringRes
-    @Override
-    protected int getActionBarTitleRes() {
-        return R.string.contacts_title;
     }
 }

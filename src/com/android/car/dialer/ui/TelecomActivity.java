@@ -19,6 +19,7 @@ package com.android.car.dialer.ui;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.view.View;
@@ -68,6 +69,7 @@ public class TelecomActivity extends FragmentActivity implements
     // View objects for this activity.
     private CarTabLayout mTabLayout;
     private ViewPager mViewPager;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +77,9 @@ public class TelecomActivity extends FragmentActivity implements
         L.d(TAG, "onCreate");
         setContentView(R.layout.telecom_activity);
 
-        Toolbar toolbar = findViewById(R.id.car_toolbar);
-        setActionBar(toolbar);
+        mToolbar = findViewById(R.id.car_toolbar);
+        setActionBar(mToolbar);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mTabLayout = findViewById(R.id.tab_layout);
         TelecomPagerAdapter telecomPagerAdapter = new TelecomPagerAdapter(this,
@@ -144,23 +147,6 @@ public class TelecomActivity extends FragmentActivity implements
         findViewById(android.R.id.content).setBackground(background);
     }
 
-    @Override
-    public void setActionBarVisibility(boolean isVisible) {
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            if (isVisible) {
-                actionBar.show();
-            } else {
-                actionBar.hide();
-            }
-        }
-    }
-
-    @Override
-    public void setActionBarTitle(@StringRes int titleRes) {
-        setTitle(titleRes);
-    }
-
     private void handleIntent() {
         Intent intent = getIntent();
         String action = intent != null ? intent.getAction() : null;
@@ -205,11 +191,10 @@ public class TelecomActivity extends FragmentActivity implements
 
         boolean isOverlayFragmentVisible =
                 TelecomActivityViewModel.DialerAppState.DEFAULT != dialerAppState;
-        findViewById(R.id.content_fragment_container)
+        findViewById(R.id.content_container)
                 .setVisibility(isOverlayFragmentVisible ? View.GONE : View.VISIBLE);
-        findViewById(R.id.overlay_fragment_container)
+        findViewById(R.id.overlay_container)
                 .setVisibility(isOverlayFragmentVisible ? View.VISIBLE : View.GONE);
-        setActionBarVisibility(!isOverlayFragmentVisible);
 
         switch (dialerAppState) {
             case TelecomActivityViewModel.DialerAppState.BLUETOOTH_ERROR:
@@ -241,7 +226,7 @@ public class TelecomActivity extends FragmentActivity implements
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.overlay_fragment_container, overlayFragment)
+                .replace(R.id.overlay_container, overlayFragment)
                 .commitNow();
     }
 
@@ -262,7 +247,7 @@ public class TelecomActivity extends FragmentActivity implements
     /** Returns the fragment that is currently being displayed as the overlay view on top. */
     @Nullable
     private Fragment getCurrentOverlayFragment() {
-        return getSupportFragmentManager().findFragmentById(R.id.overlay_fragment_container);
+        return getSupportFragmentManager().findFragmentById(R.id.overlay_container);
     }
 
     /** Switch to {@link DialpadFragment} and set the given number as dialed number. */
@@ -296,8 +281,11 @@ public class TelecomActivity extends FragmentActivity implements
         int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
         mTabLayout.setVisibility(backStackCount > 0 ? View.GONE : View.VISIBLE);
         mViewPager.setVisibility(backStackCount > 0 ? View.GONE : View.VISIBLE);
-        getActionBar().setDisplayHomeAsUpEnabled(backStackCount > 0);
-        getActionBar().setDisplayShowTitleEnabled(backStackCount > 0);
+        mToolbar.getNavigationView().setEnabled(backStackCount > 0);
+
+        if (backStackCount == 0) {
+            getActionBar().setTitle(R.string.default_toolbar_title);
+        }
     }
 
     @Override

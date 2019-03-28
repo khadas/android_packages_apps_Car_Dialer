@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.common;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -25,6 +26,7 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import com.android.car.apps.common.util.Themes;
+import com.android.car.dialer.R;
 
 /**
  * The base class for top level Dialer Fragments.
@@ -38,12 +40,6 @@ public abstract class DialerBaseFragment extends Fragment {
 
         /** Sets the background drawable. */
         void setBackground(Drawable background);
-
-        /** Sets the visibility of action bar. */
-        void setActionBarVisibility(boolean isVisible);
-
-        /** Sets the title of the action bar. */
-        void setActionBarTitle(@StringRes int titleRes);
 
         /** Push a fragment to the back stack. Update action bar accordingly. */
         void pushContentFragment(Fragment fragment, String fragmentTag);
@@ -69,8 +65,9 @@ public abstract class DialerBaseFragment extends Fragment {
     /** Sets the title of the action bar. */
     protected void setActionBarTitle() {
         Activity parentActivity = getActivity();
-        if (parentActivity instanceof DialerFragmentParent) {
-            ((DialerFragmentParent) parentActivity).setActionBarTitle(getActionBarTitleRes());
+        ActionBar actionBar = parentActivity.getActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getActionBarTitleRes());
         }
     }
 
@@ -94,5 +91,7 @@ public abstract class DialerBaseFragment extends Fragment {
      * Return the string resources id for the action bar title.
      */
     @StringRes
-    protected abstract int getActionBarTitleRes();
+    protected int getActionBarTitleRes() {
+        return R.string.default_toolbar_title;
+    }
 }
