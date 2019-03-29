@@ -16,44 +16,22 @@
 
 package com.android.car.dialer.ui.activecall;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.telecom.Call;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.InCallServiceImpl;
+
+import java.util.List;
 
 /**
  * Activity for ongoing call
  */
-public class InCallActivity extends FragmentActivity implements
-        InCallServiceImpl.ActiveCallListChangedCallback {
+public class InCallActivity extends FragmentActivity {
     private static final String TAG = "CD.InCallActivity";
-
-    private Intent mServiceIntent;
-    private InCallServiceImpl mInCallService;
-
-    private ServiceConnection mInCallServiceConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder binder) {
-            L.i(TAG, "onServiceConnected %s", name);
-            mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
-            mInCallService.addActiveCallListChangedCallback(InCallActivity.this);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mInCallService.removeActiveCallListChangedCallback(InCallActivity.this);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,34 +39,14 @@ public class InCallActivity extends FragmentActivity implements
         L.d(TAG, "onCreate");
 
         setContentView(R.layout.in_call_activity);
-        mServiceIntent = new Intent(this, InCallServiceImpl.class);
-        mServiceIntent.setAction(InCallServiceImpl.ACTION_LOCAL_BIND);
-        bindService(mServiceIntent, mInCallServiceConnection, Context.BIND_AUTO_CREATE);
+
+        InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
+        inCallViewModel.getCallList().observe(this, this::updateOnGoingCall);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (mInCallService != null) {
-            mInCallService.removeActiveCallListChangedCallback(this);
-        }
-        unbindService(mInCallServiceConnection);
-    }
-
-    @Override
-    public void onTelecomCallAdded(Call telecomCall) {
-        // Do nothing.
-    }
-
-    @Override
-    public void onTelecomCallRemoved(Call telecomCall) {
-        updateOnGoingCall();
-    }
-
-    private void updateOnGoingCall() {
-        L.d(TAG, "On Going Call Number: " + mInCallService.getCalls().size());
-        if (mInCallService.getCalls().size() == 0) {
+    private void updateOnGoingCall(List<Call> calls) {
+        if (calls == null || calls.isEmpty()) {
+            L.d(TAG, "Finish InCallActivity");
             finish();
         }
     }

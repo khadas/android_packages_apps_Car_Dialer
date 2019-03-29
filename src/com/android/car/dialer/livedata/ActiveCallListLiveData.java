@@ -16,22 +16,17 @@
 
 package com.android.car.dialer.livedata;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.telecom.Call;
 
 import androidx.lifecycle.LiveData;
 
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.InCallServiceImpl;
+import com.android.car.dialer.telecom.UiCallManager;
 
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -57,45 +52,22 @@ public class ActiveCallListLiveData extends LiveData<List<Call>> implements
             Call.STATE_DIALING,
             Call.STATE_RINGING);
 
-    private Context mContext;
-    private Intent mServiceIntent;
-    private InCallServiceImpl mInCallService;
-    private List<Call> mCalls = new ArrayList<>();
+    private final UiCallManager mUiCallManager;
+    private final List<Call> mCalls = new ArrayList<>();
 
-    private ServiceConnection mInCallServiceConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder binder) {
-            L.i(TAG, "onServiceConnected %s", name);
-            mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
-            mInCallService.addActiveCallListChangedCallback(ActiveCallListLiveData.this);
-            updateActiveCallList();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mInCallService.removeActiveCallListChangedCallback(ActiveCallListLiveData.this);
-        }
-    };
-
-    public ActiveCallListLiveData(Context context) {
-        mContext = context;
-        setValue(Collections.emptyList());
-        mServiceIntent = new Intent(mContext, InCallServiceImpl.class);
-        mServiceIntent.setAction(InCallServiceImpl.ACTION_LOCAL_BIND);
+    public ActiveCallListLiveData() {
+        mUiCallManager = UiCallManager.get();
     }
 
     @Override
     protected void onActive() {
-        mContext.bindService(mServiceIntent, mInCallServiceConnection, Context.BIND_AUTO_CREATE);
+        updateActiveCallList();
+        mUiCallManager.registerActiveCallListChangedCallback(this);
     }
 
     @Override
     protected void onInactive() {
-        if (mInCallService != null) {
-            mInCallService.removeActiveCallListChangedCallback(this);
-        }
-        mContext.unbindService(mInCallServiceConnection);
+        mUiCallManager.unregisterActiveCallListChangedCallback(this);
     }
 
     @Override
@@ -112,7 +84,7 @@ public class ActiveCallListLiveData extends LiveData<List<Call>> implements
 
     private void updateActiveCallList() {
         mCalls.clear();
-        mCalls.addAll(mInCallService.getCalls());
+        mCalls.addAll(mUiCallManager.getCallList());
         mCalls.sort(mCallComparator);
         setValue(mCalls);
     }

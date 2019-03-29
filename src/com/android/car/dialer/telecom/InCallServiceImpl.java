@@ -26,8 +26,8 @@ import android.telecom.CallAudioState;
 import android.telecom.InCallService;
 import android.telecom.TelecomManager;
 
-import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.ui.activecall.InCallActivity;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
