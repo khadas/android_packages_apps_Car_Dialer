@@ -49,7 +49,6 @@ public class CarDialerRobolectricTestRunner extends RobolectricTestRunner {
 
     static {
         AAR_VERSIONS = new HashMap<>();
-        AAR_VERSIONS.put("car", "1.0.0-alpha6");
         AAR_VERSIONS.put("appcompat", "1.1.0-alpha01");
         AAR_VERSIONS.put("constraintlayout", "1.1.2");
         AAR_VERSIONS.put("cardview", "1.0.0-rc01");
@@ -112,7 +111,6 @@ public class CarDialerRobolectricTestRunner extends RobolectricTestRunner {
                     // Support library resources. These need to point to the prebuilts of support
                     // library and not the source.
                     paths.add(createResourcePath(createSupportResourcePathFromJar("appcompat")));
-                    paths.add(createResourcePath(createSupportResourcePathFromJar("car")));
                     paths.add(createResourcePath(
                             createSupportResourcePathFromJar("constraintlayout")));
                     paths.add(
