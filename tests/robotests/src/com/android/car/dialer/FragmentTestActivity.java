@@ -15,16 +15,21 @@
  */
 package com.android.car.dialer;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.android.car.dialer.ui.common.DialerBaseFragment;
+
 /**
  * An activity that is used for testing fragments. A unit test starts this activity, adds a fragment
  * and then tests the fragment.
  */
-public class FragmentTestActivity extends FragmentActivity {
+public class FragmentTestActivity extends FragmentActivity implements
+        DialerBaseFragment.DialerFragmentParent {
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_activity);
@@ -33,5 +38,29 @@ public class FragmentTestActivity extends FragmentActivity {
     public void setFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.test_fragment_container,
                 fragment).commitNow();
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        // Do nothing
+    }
+
+    @Override
+    public void setActionBarVisibility(boolean isVisible) {
+        // Do nothing
+    }
+
+    @Override
+    public void setActionBarTitle(int titleRes) {
+        // Do nothing
+    }
+
+    @Override
+    public void pushContentFragment(Fragment fragment, String fragmentTag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(fragment, fragmentTag)
+                .addToBackStack(fragmentTag)
+                .commit();
     }
 }
