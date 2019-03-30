@@ -293,6 +293,10 @@ public class DialpadFragment extends DialerBaseFragment implements
     }
 
     private void presentDialedNumber() {
+        if (getActivity() == null) {
+            return;
+        }
+
         if (mNumber.length() == 0 && mMode == MODE_DIAL) {
             mTitleView.setText(R.string.dial_a_number);
             mTitleView.setGravity(Gravity.CENTER);
