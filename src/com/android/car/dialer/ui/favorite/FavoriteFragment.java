@@ -23,12 +23,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -147,11 +148,5 @@ public class FavoriteFragment extends DialerBaseFragment {
 
             outRect.set(leftPadding, carPadding1, rightPadding, carPadding1);
         }
-    }
-
-    @StringRes
-    @Override
-    protected int getActionBarTitleRes() {
-        return R.string.favorites_title;
     }
 }

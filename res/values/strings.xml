@@ -60,17 +60,8 @@
     <!-- Label for routing phone audio to the phone earpiece. [CHAR LIMIT=30] -->
     <string name="audio_route_handset">Handset</string>
 
-    <!-- Menu label for the call history [CHAR LIMIT=30] -->
-    <string name="calllog_all">Call History</string>
-    <!-- Menu label for the favorites [CHAR LIMIT=30] -->
-    <string name="calllog_favorites">Favorites</string>
-    <!-- Menu label for dial a number [CHAR LIMIT=30] -->
-    <string name="calllog_dial_number">Dialpad</string>
     <!-- Button label to dial a manually entered phone number -->
     <string name="dial_a_number">Dial a number</string>
-
-    <!-- Menu label for the call history [CHAR LIMIT=30] -->
-    <string name="contact_menu_label">Contact</string>
 
     <!-- Titles -->
     <!-- Title for the favorites [CHAR LIMIT=30] -->
@@ -81,8 +72,10 @@
     <string name="contacts_title">Contacts</string>
     <!-- Title for the dialpad [CHAR LIMIT=30] -->
     <string name="dialpad_title">Dialpad</string>
-    <!-- Title for the in call [CHAR LIMIT=30] -->
-    <string name="in_call_title">In Call</string>
+    <!-- Toolbar title for tabbed pages -->
+    <string name="default_toolbar_title"></string>
+    <!-- Toolbar title for contact details page [CHAR LIMIT=30] -->
+    <string name="toolbar_title_contact_details">Contact details</string>
 
     <!-- TODO: we do not need to localize this, figure out how to build ignoring it -->
     <string name="one">1</string>

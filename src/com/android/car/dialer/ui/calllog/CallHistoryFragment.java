@@ -22,14 +22,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
 
 public class CallHistoryFragment extends DialerBaseFragment {
     public static CallHistoryFragment newInstance() {
@@ -55,11 +54,5 @@ public class CallHistoryFragment extends DialerBaseFragment {
         viewModel.getCallHistory().observe(this, callLogAdapter::setUiCallLogs);
 
         return fragmentView;
-    }
-
-    @StringRes
-    @Override
-    protected int getActionBarTitleRes() {
-        return R.string.call_history_title;
     }
 }

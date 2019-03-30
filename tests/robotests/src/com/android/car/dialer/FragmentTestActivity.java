@@ -46,16 +46,6 @@ public class FragmentTestActivity extends FragmentActivity implements
     }
 
     @Override
-    public void setActionBarVisibility(boolean isVisible) {
-        // Do nothing
-    }
-
-    @Override
-    public void setActionBarTitle(int titleRes) {
-        // Do nothing
-    }
-
-    @Override
     public void pushContentFragment(Fragment fragment, String fragmentTag) {
         getSupportFragmentManager()
                 .beginTransaction()
