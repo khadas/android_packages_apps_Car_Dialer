@@ -16,7 +16,14 @@
 
 package com.android.car.dialer;
 
+import static org.robolectric.Shadows.shadowOf;
+import static org.mockito.Mockito.mock;
+
 import android.app.Application;
+import android.content.ComponentName;
+
+import com.android.car.dialer.telecom.InCallServiceImpl;
+import com.android.car.dialer.telecom.UiCallManager;
 
 /** Robolectric runtime application for Dialer. Must be Test + application class name. */
 public class TestDialerApplication extends Application {
@@ -25,4 +32,12 @@ public class TestDialerApplication extends Application {
     public void onCreate() {
         super.onCreate();
     }
+
+    public void initUiCallManager() {
+        shadowOf(this).setComponentNameAndServiceForBindService(
+                new ComponentName(this, InCallServiceImpl.class),
+                mock(InCallServiceImpl.LocalBinder.class));
+        UiCallManager.init(this);
+    }
+
 }

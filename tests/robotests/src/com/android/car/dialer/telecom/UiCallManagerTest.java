@@ -24,16 +24,15 @@ import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.robolectric.Shadows.shadowOf;
 
 import android.app.Application;
-import android.content.ComponentName;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.TestDialerApplication;
 
 import org.junit.After;
 import org.junit.Before;
@@ -56,8 +55,6 @@ public class UiCallManagerTest {
     private Context mContext;
     @Mock
     private TelecomManager mMockTelecomManager;
-    @Mock
-    private InCallServiceImpl.LocalBinder mMockBinder;
 
     private UiCallManager mUiCallManager;
 
@@ -66,12 +63,12 @@ public class UiCallManagerTest {
         MockitoAnnotations.initMocks(this);
 
         mContext = RuntimeEnvironment.application;
-        shadowOf((Application) mContext).setComponentNameAndServiceForBindService(
-                new ComponentName(mContext, InCallServiceImpl.class), mMockBinder);
+
         ShadowContextImpl shadowContext = Shadow.extract(((Application) mContext).getBaseContext());
         shadowContext.setSystemService(Context.TELECOM_SERVICE, mMockTelecomManager);
+        ((TestDialerApplication) RuntimeEnvironment.application).initUiCallManager();
 
-        mUiCallManager = UiCallManager.init(mContext);
+        mUiCallManager = UiCallManager.get();
     }
 
     @Test
