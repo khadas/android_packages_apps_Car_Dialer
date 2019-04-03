@@ -28,6 +28,7 @@ import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.TestDialerApplication;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.testutils.ShadowCallLogCalls;
 import com.android.car.dialer.ui.activecall.InCallFragment;
 
 import com.android.car.telephony.common.TelecomUtils;
@@ -37,10 +38,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.robolectric.annotation.Config;
 import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
+@Config(shadows = {ShadowCallLogCalls.class})
 public class DialpadFragmentTest {
     private static final String DIAL_NUMBER = "6505551234";
     private static final String DIAL_NUMBER_LONG = "650555123465055512346505551234";
@@ -162,6 +165,19 @@ public class DialpadFragmentTest {
 
         deleteButton.performLongClick();
         verifyTitleText(mDialpadFragment.getContext().getString(R.string.dial_a_number));
+    }
+
+    @Test
+    public void testCallButton_emptyString() {
+        ShadowCallLogCalls.setLastOutgoingCall(DIAL_NUMBER);
+
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
+        startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber("");
+
+        ImageButton callButton = mDialpadFragment.getView().findViewById(R.id.call_button);
+        callButton.performClick();
+        verifyTitleText(DIAL_NUMBER);
     }
 
     @Test

@@ -20,6 +20,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.provider.CallLog;
 import android.provider.Settings;
 import android.telecom.Call;
 import android.text.TextUtils;
@@ -179,6 +180,8 @@ public class DialpadFragment extends DialerBaseFragment implements
                     UiCallManager.get().placeCall(mNumber.toString());
                     // Update dialed number UI later in onResume() when in call intent is handled.
                     mNumber.setLength(0);
+                } else {
+                    setDialedNumber(CallLog.Calls.getLastOutgoingCall(context));
                 }
             });
             deleteButton.setOnClickListener(v -> removeLastDigit());
