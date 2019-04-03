@@ -16,10 +16,8 @@
 
 package com.android.car.dialer.ui;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.view.View;
@@ -27,7 +25,6 @@ import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -108,14 +105,8 @@ public class TelecomActivity extends FragmentActivity implements
                 TelecomActivityViewModel.class);
         mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
         mDialerAppStateLiveData = viewModel.getDialerAppState();
-        LiveData<Boolean> hasOngoingCallLiveData = viewModel.getHasOngoingCallLiveData();
         mDialerAppStateLiveData.observe(this,
                 dialerAppState -> updateCurrentFragment(dialerAppState));
-        hasOngoingCallLiveData.observe(this, hasOngoingCall -> {
-            if (hasOngoingCall) {
-                startInCallActivity();
-            }
-        });
 
         handleIntent();
     }
@@ -126,6 +117,8 @@ public class TelecomActivity extends FragmentActivity implements
         onBackStackChanged();
         super.onStart();
         L.d(TAG, "onStart");
+
+        maybeStartInCallActivity();
     }
 
     @Override
@@ -297,7 +290,11 @@ public class TelecomActivity extends FragmentActivity implements
         return super.onNavigateUp();
     }
 
-    private void startInCallActivity() {
+    private void maybeStartInCallActivity() {
+        if (UiCallManager.get().getCallList().isEmpty()) {
+            return;
+        }
+
         L.d(TAG, "Start InCallActivity");
         Intent launchIntent = new Intent(getApplicationContext(), InCallActivity.class);
         startActivity(launchIntent);
