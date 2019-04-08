@@ -16,25 +16,27 @@
 
 package com.android.car.dialer.ui.activecall;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.telecom.Call;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 import com.android.car.telephony.common.CallDetail;
-import com.android.car.telephony.common.Contact;
-import com.android.car.telephony.common.InMemoryPhoneBook;
+import com.android.car.telephony.common.TelecomUtils;
 
 /**
  * A fragment that displays information about an on-going call with options to hang up.
@@ -96,14 +98,15 @@ public class InCallFragment extends Fragment implements
         }
 
         String number = callDetail.getNumber();
-        String displayName = TelecomUtils.getDisplayName(getContext(), number);
+        Pair<String, Uri> displayNameAndAvatarUri = TelecomUtils.getDisplayNameAndAvatarUri(
+                getContext(), number);
 
         TextView nameView = mUserProfileContainerView.findViewById(R.id.title);
-        nameView.setText(displayName);
+        nameView.setText(displayNameAndAvatarUri.first);
 
         ImageView avatar = mUserProfileContainerView.findViewById(R.id.avatar);
-        Contact contact = InMemoryPhoneBook.get().lookupContactEntry(number);
-        TelecomUtils.setContactBitmapAsync(getContext(), avatar, contact, displayName);
+        TelecomUtils.setContactBitmapAsync(getContext(), avatar, displayNameAndAvatarUri.second,
+                displayNameAndAvatarUri.first);
     }
 
     private void updateControllerBarFragment(@Nullable Integer callState) {
