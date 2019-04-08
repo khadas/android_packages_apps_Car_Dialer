@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.ui.common.DialerBaseFragment;
 
 public class RingingCallControllerBarFragment extends Fragment {
 

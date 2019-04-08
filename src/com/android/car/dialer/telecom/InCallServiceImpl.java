@@ -24,9 +24,9 @@ import android.os.Process;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.InCallService;
-import android.telecom.TelecomManager;
 
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.notification.InCallNotificationController;
 import com.android.car.dialer.ui.activecall.InCallActivity;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class InCallServiceImpl extends InCallService {
     private ArrayList<ActiveCallListChangedCallback> mActiveCallListChangedCallbacks =
             new ArrayList<>();
 
-    private TelecomManager mTelecomManager;
+    private InCallNotificationController mInCallNotificationController;
 
     private Handler mMainHanlder = new Handler(Looper.getMainLooper());
 
@@ -70,17 +70,13 @@ public class InCallServiceImpl extends InCallService {
     @Override
     public void onCreate() {
         super.onCreate();
-        mTelecomManager = getApplicationContext().getSystemService(TelecomManager.class);
+        mInCallNotificationController = InCallNotificationController.get();
     }
 
     @Override
     public void onCallAdded(Call telecomCall) {
         super.onCallAdded(telecomCall);
         L.d(TAG, "onCallAdded: %s", telecomCall);
-
-        // Launch the dialer app whenever there is a new incoming/outgoing call.
-        Intent launchIntent = new Intent(getApplicationContext(), InCallActivity.class);
-        startActivity(launchIntent);
 
         telecomCall.registerCallback(mCallListener);
         mCallListener.onStateChanged(telecomCall, telecomCall.getState());
@@ -122,9 +118,17 @@ public class InCallServiceImpl extends InCallService {
         @Override
         public void onStateChanged(Call call, int state) {
             L.d(TAG, "onStateChanged call: %s, state: %s", call, state);
-            // TODO(b/25190782): here we should show heads-up notification for incoming call,
-            // however system notifications are disabled by System UI and we haven't implemented
-            // a way to show heads-up notifications in embedded mode.
+
+            if (state == Call.STATE_RINGING) {
+                mInCallNotificationController.showInCallNotification(call);
+            } else {
+              if (state != Call.STATE_DISCONNECTED) {
+                // Launch the InCallActivity for on going phone calls.
+                Intent launchIntent = new Intent(getApplicationContext(), InCallActivity.class);
+                startActivity(launchIntent);
+              }
+              mInCallNotificationController.cancelInCallNotification(call);
+            }
         }
     };
 
