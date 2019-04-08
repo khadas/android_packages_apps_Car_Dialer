@@ -137,6 +137,7 @@ public class UiCallManager {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             L.d(TAG, "onServiceDisconnected: %s", name);
+            mInCallService = null;
         }
     };
 
