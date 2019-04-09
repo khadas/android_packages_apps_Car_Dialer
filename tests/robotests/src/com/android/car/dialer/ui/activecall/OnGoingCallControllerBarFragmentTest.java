@@ -162,8 +162,6 @@ public class OnGoingCallControllerBarFragmentTest {
         View fragmentView = mOnGoingCallControllerBarFragment.getView();
         assertThat(fragmentView.findViewById(
                 R.id.voice_channel_button).hasOnClickListeners()).isFalse();
-        assertThat(fragmentView.findViewById(R.id.voice_channel_chevron).getVisibility()).isEqualTo(
-                View.GONE);
     }
 
     @Test
@@ -175,8 +173,6 @@ public class OnGoingCallControllerBarFragmentTest {
         View fragmentView = mOnGoingCallControllerBarFragment.getView();
         ImageView audioRouteButton = fragmentView.findViewById(R.id.voice_channel_button);
         assertThat(audioRouteButton.hasOnClickListeners()).isTrue();
-        assertThat(fragmentView.findViewById(R.id.voice_channel_chevron).getVisibility()).isEqualTo(
-                View.VISIBLE);
     }
 
     @Test

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2019 The Android Open Source Project
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/user_profile_avatar"
+        android:layout_width="@dimen/in_call_avatar_icon_size"
+        android:layout_height="@dimen/in_call_avatar_icon_size"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter" />
+    <TextView
+        android:id="@+id/user_profile_title"
+        android:textAppearance="@style/in_call_user_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/in_call_margin_between_avatar_and_text"
+        android:gravity="center"
+        android:singleLine="true"/>
+    <TextView
+        android:id="@+id/user_profile_phone_number"
+        android:textAppearance="@style/in_call_user_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/in_call_phone_number_margin_top"
+        android:gravity="center"
+        android:singleLine="true"/>
+    <TextView
+        android:id="@+id/user_profile_body"
+        android:textAppearance="@style/in_call_user_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/in_call_description_margin_top"
+        android:gravity="center"
+        android:singleLine="true"/>
+</LinearLayout>

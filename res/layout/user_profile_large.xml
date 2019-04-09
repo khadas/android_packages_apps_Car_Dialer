@@ -14,29 +14,40 @@ limitations under the License.
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="start|center_vertical"
+    android:orientation="horizontal"
+    android:layout_marginStart="@dimen/in_call_user_profile_margin"
+    android:layout_marginEnd="@dimen/in_call_user_profile_margin">
     <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="@dimen/large_avatar_icon_size"
-        android:layout_height="@dimen/large_avatar_icon_size"
-        android:layout_gravity="center"
+        android:id="@+id/user_profile_avatar"
+        android:layout_width="@dimen/in_call_avatar_icon_size"
+        android:layout_height="@dimen/in_call_avatar_icon_size"
         android:scaleType="fitCenter" />
-    <TextView
-        android:id="@+id/title"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
+
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/user_profile_title_padding_top"
-        android:focusable="true"
-        android:maxLines="1"
-        android:gravity="center"/>
-    <TextView
-        android:id="@+id/body"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/user_profile_body_padding_top"
-        android:gravity="center"
-        android:maxLines="1"/>
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/in_call_margin_between_avatar_and_text">
+        <TextView
+            android:id="@+id/user_profile_title"
+            android:textAppearance="@style/in_call_user_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
+        <TextView
+            android:id="@+id/user_profile_phone_number"
+            android:textAppearance="@style/in_call_user_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/in_call_phone_number_margin_top"
+            android:singleLine="true"/>
+        <TextView
+            android:id="@+id/user_profile_body"
+            android:textAppearance="@style/in_call_user_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/in_call_description_margin_top"
+            android:singleLine="true"/>
+    </LinearLayout>
 </LinearLayout>
