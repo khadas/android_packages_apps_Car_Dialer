@@ -36,11 +36,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.car.apps.common.FabDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
 
 import java.util.List;
 
@@ -96,7 +94,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 R.layout.audio_route_switch_dialog, null, false);
         RecyclerView list = dialogView.findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        list.addItemDecoration(new VerticalListDividerDecoration(getContext(), true));
 
         List<Integer> availableRoutes = UiCallManager.get().getSupportedAudioRoute();
 
@@ -151,9 +148,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         mOnGoingCallControllerBarCallback.onCloseDialpad();
 
         ImageView endCallButton = fragmentView.findViewById(R.id.end_call_button);
-        FabDrawable answerCallDrawable = new FabDrawable(getContext());
-        answerCallDrawable.setFabAndStrokeColor(getContext().getColor(R.color.phone_end_call));
-        endCallButton.setBackground(answerCallDrawable);
         endCallButton.setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
@@ -164,12 +158,14 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         List<Integer> audioRoutes = UiCallManager.get().getSupportedAudioRoute();
         mAudioRouteButton = fragmentView.findViewById(R.id.voice_channel_button);
         if (audioRoutes.size() > 1) {
-            fragmentView.findViewById(R.id.voice_channel_chevron).setVisibility(View.VISIBLE);
-            mAudioRouteButton.setOnClickListener(
-                    (v) -> mAudioRouteSelectionDialog.show());
-        } else {
-            fragmentView.findViewById(R.id.voice_channel_chevron).setVisibility(View.GONE);
+            mAudioRouteButton.setOnClickListener((v) -> {
+                mAudioRouteButton.setActivated(true);
+                mAudioRouteSelectionDialog.show();
+            });
         }
+
+        mAudioRouteSelectionDialog.setOnDismissListener(
+                (dialog) -> mAudioRouteButton.setActivated(false));
 
         ImageView pauseButton = fragmentView.findViewById(R.id.pause_button);
         pauseButton.setOnClickListener((v) -> {
@@ -244,11 +240,11 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         switch (audioRoute) {
             case CallAudioState.ROUTE_WIRED_HEADSET:
             case CallAudioState.ROUTE_EARPIECE:
-                return R.drawable.ic_smartphone;
+                return R.drawable.ic_smartphone_activatable;
             case CallAudioState.ROUTE_BLUETOOTH:
-                return R.drawable.ic_bluetooth;
+                return R.drawable.ic_bluetooth_activatable;
             case CallAudioState.ROUTE_SPEAKER:
-                return R.drawable.ic_speaker_phone;
+                return R.drawable.ic_speaker_phone_activatable;
             default:
                 L.w(TAG, "Unknown audio route: %s", audioRoute);
                 return -1;

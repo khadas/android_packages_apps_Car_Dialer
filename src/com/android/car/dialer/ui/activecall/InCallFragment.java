@@ -16,11 +16,13 @@
 
 package com.android.car.dialer.ui.activecall;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telecom.Call;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +34,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.apps.common.BackgroundImageView;
+import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 import com.android.car.telephony.common.CallDetail;
 import com.android.car.telephony.common.TelecomUtils;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 /**
  * A fragment that displays information about an on-going call with options to hang up.
@@ -62,7 +71,7 @@ public class InCallFragment extends Fragment implements
         View fragmentView = inflater.inflate(R.layout.in_call_fragment, container, false);
         mUserProfileContainerView = fragmentView.findViewById(R.id.user_profile_container);
         mDialerFragmentContainer = fragmentView.findViewById(R.id.dialpad_container);
-        mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.body);
+        mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.user_profile_body);
         mDialpadFragment = DialpadFragment.newInCallDialpad();
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
@@ -102,12 +111,40 @@ public class InCallFragment extends Fragment implements
         Pair<String, Uri> displayNameAndAvatarUri = TelecomUtils.getDisplayNameAndAvatarUri(
                 getContext(), number);
 
-        TextView nameView = mUserProfileContainerView.findViewById(R.id.title);
+        TextView nameView = mUserProfileContainerView.findViewById(R.id.user_profile_title);
         nameView.setText(displayNameAndAvatarUri.first);
 
-        ImageView avatar = mUserProfileContainerView.findViewById(R.id.avatar);
-        TelecomUtils.setContactBitmapAsync(getContext(), avatar, displayNameAndAvatarUri.second,
+        TextView phoneNumberView
+                = mUserProfileContainerView.findViewById(R.id.user_profile_phone_number);
+        phoneNumberView.setText(TelecomUtils.getFormattedNumber(getContext(), number));
+
+        ImageView avatar = mUserProfileContainerView.findViewById(R.id.user_profile_avatar);
+        BackgroundImageView backgroundImage = getView().findViewById(R.id.background_image);
+
+        LetterTileDrawable letterTile = TelecomUtils.createLetterTile(
+                getContext(),
                 displayNameAndAvatarUri.first);
+
+        Glide.with(getContext())
+                .asBitmap()
+                .load(displayNameAndAvatarUri.second)
+                .apply(new RequestOptions().circleCrop().error(letterTile))
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource,
+                            Transition<? super Bitmap> glideAnimation) {
+                        // set showAnimation to false mostly because bindUserProfileView will be
+                        // called several times, and we don't want the image to flicker
+                        backgroundImage.setBackgroundImage(resource, false);
+                        avatar.setImageBitmap(resource);
+                    }
+
+                    @Override
+                    public void onLoadFailed(Drawable errorDrawable) {
+                        backgroundImage.setBackgroundColor(letterTile.getColor());
+                        avatar.setImageDrawable(letterTile);
+                    }
+                });
     }
 
     private void updateControllerBarFragment(@Nullable Integer callState) {
