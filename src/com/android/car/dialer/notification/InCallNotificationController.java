@@ -96,7 +96,8 @@ public class InCallNotificationController {
                 NotificationManager.IMPORTANCE_HIGH);
         notificationChannel.setDescription(description);
 
-        mNotificationManager = mContext.getSystemService(NotificationManager.class);
+        mNotificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.createNotificationChannel(notificationChannel);
     }
 
@@ -141,7 +142,9 @@ public class InCallNotificationController {
 
     /** Cancel the incoming call notification for the given call. */
     public void cancelInCallNotification(Call call) {
-        mNotificationManager.cancel(call.getDetails().getTelecomCallId(), NOTIFICATION_ID);
+        if (call.getDetails() != null) {
+            mNotificationManager.cancel(call.getDetails().getTelecomCallId(), NOTIFICATION_ID);
+        }
     }
 
     private Notification.Action getAction(Call call, @StringRes int actionText,

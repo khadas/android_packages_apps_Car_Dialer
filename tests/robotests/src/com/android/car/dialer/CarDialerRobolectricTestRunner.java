@@ -119,6 +119,9 @@ public class CarDialerRobolectricTestRunner extends RobolectricTestRunner {
                             createResourcePath("file:packages/apps/Car/libs/car-apps-common/res"));
                     paths.add(
                             createResourcePath("file:packages/apps/Car/libs/car-theme-lib/res"));
+                    paths.add(
+                            createResourcePath(
+                                    "file:packages/apps/Car/libs/car-telephony-common/res"));
                     paths.add(createResourcePath(createSupportResourcePathFromJar("cardview")));
                     return paths;
                 }
