@@ -20,8 +20,11 @@ import static org.robolectric.Shadows.shadowOf;
 import static org.mockito.Mockito.mock;
 
 import android.app.Application;
+import android.app.NotificationManager;
 import android.content.ComponentName;
+import android.content.Context;
 
+import com.android.car.dialer.notification.InCallNotificationController;
 import com.android.car.dialer.telecom.InCallServiceImpl;
 import com.android.car.dialer.telecom.UiCallManager;
 
@@ -31,6 +34,9 @@ public class TestDialerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        shadowOf(this).setSystemService(
+                Context.NOTIFICATION_SERVICE, mock(NotificationManager.class));
+        InCallNotificationController.init(this);
     }
 
     public void initUiCallManager() {
@@ -38,6 +44,12 @@ public class TestDialerApplication extends Application {
                 new ComponentName(this, InCallServiceImpl.class),
                 mock(InCallServiceImpl.LocalBinder.class));
         UiCallManager.init(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        InCallNotificationController.tearDown();
     }
 
 }
