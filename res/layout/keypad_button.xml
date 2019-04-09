@@ -25,7 +25,6 @@ limitations under the License.
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-8dp"
         android:visibility="gone"
         style="@style/KeypadNumber" />
 
