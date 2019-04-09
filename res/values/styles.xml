@@ -38,6 +38,10 @@
         <item name="android:clickable">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@*android:dimen/car_padding_4</item>
+        <item name="android:layout_marginEnd">@*android:dimen/car_padding_4</item>
+        <item name="android:layout_marginTop">@*android:dimen/car_padding_2</item>
+        <item name="android:layout_marginBottom">@*android:dimen/car_padding_2</item>
         <item name="android:minWidth">@dimen/touch_target_size</item>
         <item name="android:minHeight">@dimen/touch_target_size</item>
         <item name="android:background">@drawable/dialer_ripple_background</item>

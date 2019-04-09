@@ -119,15 +119,20 @@
     <!-- The elevation of the container when the contact list scrolls underneath it. -->
     <dimen name="search_container_elevation">8dp</dimen>
 
-
     <!-- Dialpad dimensions -->
     <dimen name="dialpad_line_divider_height">@dimen/vertical_divider_width</dimen>
     <dimen name="dialpad_info_padding_size">@*android:dimen/car_keyline_1</dimen>
     <dimen name="dialpad_fragment_info_padding_size">@*android:dimen/car_keyline_1</dimen>
     <dimen name="dialpad_info_title_padding_size">@*android:dimen/car_padding_4</dimen>
+    <dimen name="dialpad_info_edge_padding_size">@*android:dimen/car_padding_2</dimen>
     <dimen name="dialpad_info_number_view_padding">32dp</dimen>
     <dimen name="dialpad_info_delete_button_margin">96dp</dimen>
     <dimen name="dialpad_fragment_margin">@*android:dimen/car_margin</dimen>
+    <dimen name="dialpad_info_title_container_size">@dimen/touch_target_size</dimen>
+    <dimen name="dialpad_info_title_text_size_max">36sp</dimen>
+    <dimen name="dialpad_info_title_text_size_min">24sp</dimen>
+    <dimen name="dialpad_display_name_size">24sp</dimen>
+    <dimen name="keypad_margin">84dp</dimen>
 
     <!-- Favorites dimensions -->
     <dimen name="favorites_icon_margin">@dimen/list_item_padding</dimen>
@@ -139,15 +144,17 @@
     <dimen name="dialer_fab_size">80dp</dimen>
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/touch_target_size</dimen>
-    <!-- Fab button size is touch target (76dp) + stroke width (8dp) * 2-->
-    <dimen name="fab_button_size">92dp</dimen>
+
+    <dimen name="fab_button_size">@dimen/fab_outline_size</dimen>
+    <dimen name="fab_outline_size">104dp</dimen>
+    <dimen name="fab_outline_thickness">4dp</dimen>
 
     <dimen name="in_call_button_size">@dimen/touch_target_size</dimen>
 
     <dimen name="user_profile_title_padding_top">@*android:dimen/car_padding_3</dimen>
     <dimen name="user_profile_body_padding_top">@*android:dimen/car_padding_3</dimen>
 
-    <dimen name="car_key1_size">40sp</dimen>
+    <dimen name="car_key1_size">32sp</dimen>
     <dimen name="car_key2_size">18sp</dimen>
 
     <!-- NoHfp error message page -->
