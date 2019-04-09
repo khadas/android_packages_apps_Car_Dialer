@@ -21,34 +21,47 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dialpad_info_title_padding_size"
-        android:paddingRight="@dimen/dialpad_info_title_padding_size"
-        android:paddingBottom="@dimen/dialpad_info_number_view_padding"
-        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dialpad_info_title_container_size"
+        android:textColor="@color/dialpad_title_color"
         android:focusable="true"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="@dimen/dialpad_info_title_text_size_min"
+        android:autoSizeMaxTextSize="@dimen/dialpad_info_title_text_size_max"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/delete_button"/>
+
+    <ImageButton
+        android:id="@+id/delete_button"
+        style="@style/DialpadSecondaryButton"
+        android:src="@drawable/ic_backspace"
+        android:layout_marginStart="@dimen/dialpad_info_title_padding_size"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintStart_toEndOf="@id/title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dialpad_info_title_container_size"
+        android:textColor="@color/dialpad_title_color"
+        android:focusable="true"
+        android:singleLine="true"
+        android:layout_marginTop="-2dp"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageButton
         android:id="@+id/call_button"
         style="@style/DialpadPrimaryButton"
-        android:src="@drawable/ic_phone"
-        android:backgroundTint="@color/phone_call"
+        android:src="@drawable/icon_call_button"
+        android:background="@drawable/dialer_ripple_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/delete_button"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageButton
-        android:id="@id/delete_button"
-        style="@style/DialpadSecondaryButton"
-        android:layout_marginStart="@dimen/dialpad_info_delete_button_margin"
-        android:src="@drawable/ic_backspace"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/call_button"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
