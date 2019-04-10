@@ -18,6 +18,9 @@ package com.android.car.dialer.ui.dialpad;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.Mockito.when;
+
+import android.content.Context;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -29,37 +32,49 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.TestDialerApplication;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowCallLogCalls;
+import com.android.car.dialer.testutils.ShadowInMemoryPhoneBook;
 import com.android.car.dialer.ui.activecall.InCallFragment;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.TelecomUtils;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.annotation.Config;
 import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.shadow.api.Shadow;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
-@Config(shadows = {ShadowCallLogCalls.class})
+@Config(shadows = {ShadowCallLogCalls.class, ShadowInMemoryPhoneBook.class})
 public class DialpadFragmentTest {
     private static final String DIAL_NUMBER = "6505551234";
     private static final String DIAL_NUMBER_LONG = "650555123465055512346505551234";
     private static final String SINGLE_DIGIT = "0";
     private static final String SPEC_CHAR = "123=_=%^&";
+    private static final String DISPALY_NAME = "Display Name";
 
     private DialpadFragment mDialpadFragment;
+    @Mock
+    private Contact mMockContact;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ((TestDialerApplication) RuntimeEnvironment.application).initUiCallManager();
+
+        Context context = RuntimeEnvironment.application;
+        ((TestDialerApplication) context).initUiCallManager();
+        InMemoryPhoneBook.init(context);
     }
 
     @After
     public void tearDown() {
         UiCallManager.get().tearDown();
+        InMemoryPhoneBook.tearDown();
     }
 
     @Test
@@ -187,6 +202,20 @@ public class DialpadFragmentTest {
 
         mDialpadFragment.onKeyLongPressed(KeyEvent.KEYCODE_0);
         verifyTitleText(DIAL_NUMBER.substring(0, DIAL_NUMBER.length() - 1) + "+");
+    }
+
+    @Test
+    public void testDisplayName() {
+        ShadowInMemoryPhoneBook phoneBook = Shadow.extract(InMemoryPhoneBook.get());
+        when(mMockContact.getDisplayName()).thenReturn(DISPALY_NAME);
+        phoneBook.add(DIAL_NUMBER, mMockContact);
+
+        mDialpadFragment = DialpadFragment.newPlaceCallDialpad();
+        startPlaceCallActivity();
+        mDialpadFragment.setDialedNumber(DIAL_NUMBER);
+
+        TextView displayName = mDialpadFragment.getView().findViewById(R.id.display_name);
+        assertThat(displayName.getText()).isEqualTo(DISPALY_NAME);
     }
 
     private void startPlaceCallActivity() {
