@@ -29,12 +29,7 @@
             android:id="@+id/content_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/content_top_padding">
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </FrameLayout>
+            android:layout_marginTop="@dimen/content_top_padding"/>
     </LinearLayout>
 
     <FrameLayout

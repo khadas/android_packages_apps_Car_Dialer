@@ -107,7 +107,7 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         private void updateDialerAppState() {
-            L.d(TAG, "updateDialerAppState, error: ", mErrorStringLiveData.getValue());
+            L.d(TAG, "updateDialerAppState, error: %s", mErrorStringLiveData.getValue());
 
             // If bluetooth is not connected, user can make an emergency call. So show the in
             // call fragment no matter if bluetooth is connected or not.
