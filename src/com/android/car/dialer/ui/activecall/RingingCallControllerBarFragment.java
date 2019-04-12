@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.notification.InCallNotificationController;
 
 public class RingingCallControllerBarFragment extends Fragment {
 
@@ -33,9 +34,12 @@ public class RingingCallControllerBarFragment extends Fragment {
         fragmentView.findViewById(R.id.end_call_button).setOnClickListener((v) -> declineCall());
         fragmentView.findViewById(R.id.end_call_text).setOnClickListener((v) -> declineCall());
 
-        InCallViewModel inCallViewModel = ViewModelProviders.of(getParentFragment()).get(
+        InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
                 InCallViewModel.class);
         mActiveCall = inCallViewModel.getPrimaryCall().getValue();
+
+        // Cancel the HUN if the in call page was brought up when user switch to dialer.
+        InCallNotificationController.get().cancelInCallNotification(mActiveCall);
         return fragmentView;
     }
 

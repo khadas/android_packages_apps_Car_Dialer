@@ -65,7 +65,8 @@ public class InCallFragment extends Fragment implements
         mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.body);
         mDialpadFragment = DialpadFragment.newInCallDialpad();
 
-        InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
+        InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
+                InCallViewModel.class);
 
         inCallViewModel.getPrimaryCallDetail().observe(this, this::bindUserProfileView);
         inCallViewModel.getPrimaryCallState().observe(this, this::updateControllerBarFragment);

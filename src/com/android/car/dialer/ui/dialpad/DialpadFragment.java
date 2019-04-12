@@ -168,7 +168,7 @@ public class DialpadFragment extends DialerBaseFragment implements
         if (mMode == MODE_IN_CALL) {
             mDeleteButton.setVisibility(View.GONE);
             callButton.setVisibility(View.GONE);
-            mActiveCall = ViewModelProviders.of(getParentFragment()).get(
+            mActiveCall = ViewModelProviders.of(getActivity()).get(
                     InCallViewModel.class).getPrimaryCall().getValue();
         } else {
             callButton.setVisibility(View.VISIBLE);
