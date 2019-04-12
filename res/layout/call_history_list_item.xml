@@ -25,7 +25,14 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:id="@+id/guideline_begin"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/call_history_guideline"/>
+        app:layout_constraintGuide_begin="@dimen/call_history_guideline_begin"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline_end"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/call_history_guideline_end"/>
 
     <ImageView
         android:id="@+id/icon"
@@ -33,23 +40,22 @@ limitations under the License.
         android:layout_height="@dimen/avatar_icon_size"
         android:layout_marginStart="@dimen/call_history_item_padding"
         android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/title"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:layout_marginEnd="@dimen/call_history_item_padding"
+        android:singleLine="true"
+        android:layout_marginEnd="@dimen/call_history_item_padding_end"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/guideline_begin"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/text"/>
+        app:layout_constraintBottom_toTopOf="@+id/text"
+        app:layout_constraintStart_toStartOf="@id/guideline_begin"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"/>
 
     <com.android.car.dialer.widget.CallTypeIconsView
         android:id="@+id/call_type_icons"
@@ -64,8 +70,32 @@ limitations under the License.
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/call_type_icons"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/call_history_item_padding_end"
         app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/call_type_icons"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="@dimen/vertical_divider_width"
+        android:layout_height="match_parent"
+        android:background="@color/divider_color"
+        android:layout_marginTop="@dimen/vertical_divider_inset"
+        android:layout_marginBottom="@dimen/vertical_divider_inset"
+        android:layout_marginEnd="@dimen/contact_list_item_padding"
+        app:layout_constraintStart_toStartOf="@id/guideline_end"/>
+
+    <ImageView
+        android:id="@+id/calllog_action_button"
+        android:layout_width="@dimen/call_history_action_button_size"
+        android:layout_height="@dimen/call_history_action_button_size"
+        android:src="@drawable/ic_arrow_right"
+        android:scaleType="center"
+        android:tint="@color/secondary_icon_color"
+        android:background="@drawable/dialer_ripple_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_end"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

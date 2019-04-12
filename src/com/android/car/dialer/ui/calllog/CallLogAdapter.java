@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
+import com.android.car.telephony.common.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +35,19 @@ import java.util.List;
 public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder> {
 
     private static final String TAG = "CD.CallLogAdapter";
+
+    public interface OnShowContactDetailListener {
+        void onShowContactDetail(Contact contact);
+    }
+
     private List<UiCallLog> mUiCallLogs = new ArrayList<>();
     private Context mContext;
+    private CallLogAdapter.OnShowContactDetailListener mOnShowContactDetailListener;
 
-    public CallLogAdapter(Context context) {
+    public CallLogAdapter(Context context,
+            CallLogAdapter.OnShowContactDetailListener onShowContactDetailListener) {
         mContext = context;
+        mOnShowContactDetailListener = onShowContactDetailListener;
     }
 
     public void setUiCallLogs(@NonNull List<UiCallLog> uiCallLogs) {
@@ -53,7 +62,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder> {
     public CallLogViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(mContext)
                 .inflate(R.layout.call_history_list_item, parent, false);
-        return new CallLogViewHolder(rootView);
+        return new CallLogViewHolder(rootView, mOnShowContactDetailListener);
     }
 
     @Override
@@ -68,7 +77,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder> {
 
     @Override
     public int getItemCount() {
-        return  mUiCallLogs.size();
+        return mUiCallLogs.size();
     }
 }
 

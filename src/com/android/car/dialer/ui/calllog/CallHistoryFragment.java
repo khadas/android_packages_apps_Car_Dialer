@@ -22,15 +22,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
-import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
+import com.android.car.dialer.ui.contact.ContactDetailsFragment;
+import com.android.car.telephony.common.Contact;
 
-public class CallHistoryFragment extends DialerBaseFragment {
+public class CallHistoryFragment extends DialerBaseFragment implements
+        CallLogAdapter.OnShowContactDetailListener {
+    private static final String CONTACT_DETAIL_FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
+
     public static CallHistoryFragment newInstance() {
         return new CallHistoryFragment();
     }
@@ -43,10 +48,9 @@ public class CallHistoryFragment extends DialerBaseFragment {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.list_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        CallLogAdapter callLogAdapter = new CallLogAdapter(getContext());
+        CallLogAdapter callLogAdapter = new CallLogAdapter(
+                getContext(), /* onShowContactDetailListener= */this);
         recyclerView.setAdapter(callLogAdapter);
-        recyclerView.addItemDecoration(
-                new VerticalListDividerDecoration(getContext(), true));
 
         CallHistoryViewModel viewModel = ViewModelProviders.of(this).get(
                 CallHistoryViewModel.class);
@@ -54,5 +58,11 @@ public class CallHistoryFragment extends DialerBaseFragment {
         viewModel.getCallHistory().observe(this, callLogAdapter::setUiCallLogs);
 
         return fragmentView;
+    }
+
+    @Override
+    public void onShowContactDetail(Contact contact) {
+        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact, null);
+        pushContentFragment(contactDetailsFragment, CONTACT_DETAIL_FRAGMENT_TAG);
     }
 }
