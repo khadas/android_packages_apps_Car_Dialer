@@ -19,9 +19,17 @@ package com.android.car.dialer.telecom;
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.robolectric.Shadows.shadowOf;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
 import android.telecom.Call;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
@@ -33,17 +41,25 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ServiceController;
+import org.robolectric.shadows.ShadowContextWrapper;
+import org.robolectric.shadows.ShadowLooper;
 
 /**
  * Tests for {@link InCallServiceImpl}.
  */
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class InCallServiceImplTest {
+    private static final String TELECOM_CALL_ID = "TC@1234";
 
     private InCallServiceImpl mInCallServiceImpl;
+    private Context mContext;
+
     @Mock
     private Call mMockTelecomCall;
+    @Mock
+    private Call.Details mMockCallDetails;
     @Mock
     private InCallServiceImpl.Callback mCallback;
     @Mock
@@ -52,6 +68,9 @@ public class InCallServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+
+        mContext = RuntimeEnvironment.application;
+
         ServiceController<InCallServiceImpl> inCallServiceController = Robolectric.buildService(
                 InCallServiceImpl.class);
         inCallServiceController.create().bind();
@@ -59,15 +78,16 @@ public class InCallServiceImplTest {
 
         mInCallServiceImpl.registerCallback(mCallback);
         mInCallServiceImpl.addActiveCallListChangedCallback(mActiveCallListChangedCallback);
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
+
+        when(mMockTelecomCall.getDetails()).thenReturn(mMockCallDetails);
+        when(mMockCallDetails.getTelecomCallId()).thenReturn(TELECOM_CALL_ID);
     }
 
     @Test
-    public void testOnCallAdded() {
+    public void onActiveCallAdded_startInCallActivity() {
+        when(mMockTelecomCall.getState()).thenReturn(Call.STATE_ACTIVE);
         mInCallServiceImpl.onCallAdded(mMockTelecomCall);
-
-        ArgumentCaptor<Call.Callback> callbackListCaptor = ArgumentCaptor.forClass(
-                Call.Callback.class);
-        verify(mMockTelecomCall).registerCallback(callbackListCaptor.capture());
 
         ArgumentCaptor<Call> callCaptor = ArgumentCaptor.forClass(Call.class);
         verify(mCallback).onTelecomCallAdded(callCaptor.capture());
@@ -75,10 +95,15 @@ public class InCallServiceImplTest {
 
         verify(mActiveCallListChangedCallback).onTelecomCallAdded(callCaptor.capture());
         assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
+
+        ShadowContextWrapper shadowContextWrapper = shadowOf(RuntimeEnvironment.application);
+        Intent intent = shadowContextWrapper.getNextStartedActivity();
+        assertThat(intent).isNotNull();
     }
 
     @Test
-    public void testOnCallRemoved() {
+    public void onCallRemoved() {
+        when(mMockTelecomCall.getState()).thenReturn(Call.STATE_ACTIVE);
         mInCallServiceImpl.onCallRemoved(mMockTelecomCall);
 
         ArgumentCaptor<Call> callCaptor = ArgumentCaptor.forClass(Call.class);
@@ -87,10 +112,27 @@ public class InCallServiceImplTest {
 
         verify(mActiveCallListChangedCallback).onTelecomCallRemoved(callCaptor.capture());
         assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
+    }
+
+    @Test
+    public void onRingingCallAdded_showNotification() {
+        when(mMockTelecomCall.getState()).thenReturn(Call.STATE_RINGING);
+        mInCallServiceImpl.onCallAdded(mMockTelecomCall);
+
+        ArgumentCaptor<Call> callCaptor = ArgumentCaptor.forClass(Call.class);
+        verify(mCallback).onTelecomCallAdded(callCaptor.capture());
+        assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
+
+        verify(mActiveCallListChangedCallback).onTelecomCallAdded(callCaptor.capture());
+        assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
 
         ArgumentCaptor<Call.Callback> callbackListCaptor = ArgumentCaptor.forClass(
                 Call.Callback.class);
-        verify(mMockTelecomCall).unregisterCallback(callbackListCaptor.capture());
+        verify(mMockTelecomCall).registerCallback(callbackListCaptor.capture());
+
+        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        verify(notificationManager).notify(eq(TELECOM_CALL_ID), anyInt(), any(Notification.class));
     }
 
     @Test

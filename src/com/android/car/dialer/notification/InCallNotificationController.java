@@ -37,6 +37,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
+import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.telephony.common.CallDetail;
 import com.android.car.telephony.common.TelecomUtils;
@@ -46,6 +47,7 @@ import java.io.InputStream;
 
 /** Controller that manages the heads up notification for incoming calls. */
 public class InCallNotificationController {
+    private static final String TAG = "CD.InCallNotificationController";
     // Channel id that uses the package name.
     private static final String CHANNEL_ID = "com.android.car.dialer";
     // A random number that is used for notification id.
@@ -105,6 +107,7 @@ public class InCallNotificationController {
     /** Show a new incoming call notification or update the existing incoming call notification. */
     @TargetApi(26)
     public void showInCallNotification(Call call) {
+        L.d(TAG, "showInCallNotification");
         CallDetail callDetail = CallDetail.fromTelecomCallDetail(call.getDetails());
         String number = callDetail.getNumber();
         Pair<String, Uri> displayNameAndAvatarUri = TelecomUtils.getDisplayNameAndAvatarUri(mContext,
@@ -142,6 +145,7 @@ public class InCallNotificationController {
 
     /** Cancel the incoming call notification for the given call. */
     public void cancelInCallNotification(Call call) {
+        L.d(TAG, "cancelInCallNotification");
         if (call.getDetails() != null) {
             mNotificationManager.cancel(call.getDetails().getTelecomCallId(), NOTIFICATION_ID);
         }
