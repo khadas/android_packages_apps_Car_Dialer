@@ -107,7 +107,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 android.R.color.transpare‌​nt);
         list.setAdapter(new AudioRouteListAdapter(getContext(), availableRoutes));
 
-        InCallViewModel inCallViewModel = ViewModelProviders.of(getParentFragment()).get(
+        InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
                 InCallViewModel.class);
         mCallLiveData = inCallViewModel.getPrimaryCall();
     }
