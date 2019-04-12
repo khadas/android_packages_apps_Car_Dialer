@@ -267,6 +267,7 @@ public class TelecomActivity extends FragmentActivity implements
     private void setContentFragment(Fragment fragment, String fragmentTag) {
         L.d(TAG, "setContentFragment: %s", fragment);
 
+        getSupportFragmentManager().executePendingTransactions();
         while (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStackImmediate();
         }
