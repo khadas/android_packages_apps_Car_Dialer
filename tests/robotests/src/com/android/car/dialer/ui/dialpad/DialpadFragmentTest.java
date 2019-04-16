@@ -93,8 +93,9 @@ public class DialpadFragmentTest {
         startPlaceCallActivity();
         mDialpadFragment.setDialedNumber(DIAL_NUMBER_LONG);
 
-        verifyButtonVisibility(View.VISIBLE, View.GONE);
-        verifyTitleText(DIAL_NUMBER_LONG);
+        verifyButtonVisibility(View.VISIBLE, View.VISIBLE);
+        verifyTitleText(DIAL_NUMBER_LONG.substring(
+                DIAL_NUMBER_LONG.length() - DialpadFragment.MAX_DIAL_NUMBER));
     }
 
     @Test

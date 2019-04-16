@@ -128,7 +128,6 @@
     <dimen name="dialpad_info_title_text_size_max">36sp</dimen>
     <dimen name="dialpad_info_title_text_size_min">24sp</dimen>
     <dimen name="dialpad_display_name_size">24sp</dimen>
-    <dimen name="keypad_margin">84dp</dimen>
 
     <!-- Favorites dimensions -->
     <dimen name="favorites_icon_margin">@dimen/list_item_padding</dimen>
