@@ -200,8 +200,14 @@ public class InCallViewModel extends AndroidViewModel implements
             CallDetail callDetail = mCallDetailLiveData.getValue();
             Integer callState = mCallStateLiveData.getValue();
             if (callDetail != null && callState != null) {
-                String newDescription = TelecomUtils.getCallInfoText(mContext,
-                        callDetail, callState, callDetail.getNumber());
+                String newDescription;
+                if (callState == Call.STATE_ACTIVE) {
+                    long duration = callDetail.getConnectTimeMillis() > 0 ? System.currentTimeMillis()
+                            - callDetail.getConnectTimeMillis() : 0;
+                    newDescription = DateUtils.formatElapsedTime(duration / 1000);
+                } else {
+                    newDescription = TelecomUtils.callStateToUiString(mContext, callState);
+                }
                 String oldDescription = getValue();
                 if (!newDescription.equals(oldDescription)) {
                     setValue(newDescription);
