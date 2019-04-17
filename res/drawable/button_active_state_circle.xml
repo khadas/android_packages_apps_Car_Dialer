@@ -13,10 +13,12 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:drawable="@drawable/button_active_state_ring"/>
-    <item
-        android:drawable="@drawable/ic_mute_call_normal"/>
-</layer-list>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_activated="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/primary_icon_color"/>
+        </shape>
+    </item>
+    <item android:state_activated="false"
+          android:drawable="@android:color/transparent"/>
+</selector>
