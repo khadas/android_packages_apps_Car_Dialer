@@ -20,33 +20,54 @@ limitations under the License.
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/dialpad_container"
+    <com.android.car.apps.common.BackgroundImageView
+        android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!-- This ConstraintLayout is to make a full-screen transparent background -->
+    <!-- so that the ripple effects in the controller bar buttons work.        -->
+    <!-- If you put the transparent background on the root element of          -->
+    <!-- in_call_fragment, the BackgroundImageView will cover up the ripples.  -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/telecom_activity_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:color/transparent">
+        <FrameLayout
+            android:id="@+id/dialpad_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/telecom_activity_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-    <FrameLayout
-        android:id="@+id/user_profile_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/controller_bar_container"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-        <include layout="@layout/user_profile_large"/>
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/user_profile_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/controller_bar_container"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <include layout="@layout/user_profile_large"/>
+        </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/controller_bar_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/in_call_controller_bar_height"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <FrameLayout
+            android:id="@+id/controller_bar_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/in_call_controller_bar_height"
+            android:layout_marginStart="@dimen/in_call_controller_bar_margin"
+            android:layout_marginEnd="@dimen/in_call_controller_bar_margin"
+            android:layout_marginBottom="@dimen/in_call_controller_bar_margin_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

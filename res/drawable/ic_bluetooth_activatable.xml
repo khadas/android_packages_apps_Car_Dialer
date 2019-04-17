@@ -13,10 +13,13 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:drawable="@drawable/button_active_state_ring"/>
-    <item
-        android:drawable="@drawable/ic_dialpad_normal"/>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:width="@dimen/primary_icon_enclosing_circle_size"
+          android:height="@dimen/primary_icon_enclosing_circle_size"
+          android:drawable="@drawable/button_active_state_circle"/>
+
+    <item android:width="@dimen/primary_icon_size"
+          android:height="@dimen/primary_icon_size"
+          android:gravity="center"
+          android:drawable="@drawable/ic_bluetooth"/>
 </layer-list>
