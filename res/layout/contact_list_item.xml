@@ -21,54 +21,66 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/contact_list_item_height">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="@dimen/avatar_icon_size"
-        android:layout_height="@dimen/avatar_icon_size"
-        android:layout_marginStart="@dimen/contact_list_item_padding"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/contact_list_guideline_begin"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/contact_list_guideline"/>
+        app:layout_constraintGuide_begin="@dimen/contact_list_guideline_begin"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/contact_list_guideline_end"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/contact_list_guideline"/>
+        app:layout_constraintGuide_end="@dimen/contact_list_guideline_end"/>
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/avatar_icon_size"
+        android:layout_height="@dimen/avatar_icon_size"
+        android:layout_marginStart="@dimen/contact_list_item_padding"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/title"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_marginEnd="@dimen/call_history_item_padding_end"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text"
+        app:layout_constraintStart_toStartOf="@id/contact_list_guideline_begin"
+        app:layout_constraintEnd_toEndOf="@id/contact_list_guideline_end"/>
+
+    <TextView
+        android:id="@id/text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/call_history_item_padding_end"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/contact_list_guideline_begin"
-        app:layout_constraintEnd_toEndOf="@id/contact_list_guideline_end"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="@id/contact_list_guideline_end"/>
 
     <ImageView
         android:id="@+id/action_button"
         android:layout_width="@dimen/contact_list_action_button_size"
         android:layout_height="@dimen/contact_list_action_button_size"
-        android:src="@drawable/ic_contact"
+        android:src="@drawable/ic_arrow_right"
         android:scaleType="center"
         android:tint="@color/secondary_icon_color"
         android:background="@drawable/dialer_ripple_background"
-        app:layout_constraintStart_toEndOf="@id/contact_list_guideline_end"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/contact_list_guideline_end"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <View
         android:layout_width="@dimen/vertical_divider_width"

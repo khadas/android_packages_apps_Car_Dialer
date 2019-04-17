@@ -19,8 +19,10 @@ package com.android.car.dialer.ui.contact;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.dialer.R;
 import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -37,6 +39,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
     private final ContactListAdapter.OnShowContactDetailListener mOnShowContactDetailListener;
     private final ImageView mAvatarView;
     private final TextView mTitleView;
+    private final TextView mTextView;
     private final View mActionButton;
 
     public ContactListViewHolder(@NonNull View itemView,
@@ -45,6 +48,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
         mOnShowContactDetailListener = onShowContactDetailListener;
         mAvatarView = itemView.findViewById(R.id.icon);
         mTitleView = itemView.findViewById(R.id.title);
+        mTextView = itemView.findViewById(R.id.text);
         mActionButton = itemView.findViewById(R.id.action_button);
     }
 
@@ -52,6 +56,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
         List<PhoneNumber> phoneNumbers = contact.getNumbers();
         TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact, null);
         mTitleView.setText(contact.getDisplayName());
+        setLabelText(contact);
         mActionButton.setOnClickListener(
                 view -> mOnShowContactDetailListener.onShowContactDetail(contact));
         super.itemView.setOnClickListener(view -> {
@@ -61,5 +66,24 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
                 mOnShowContactDetailListener.onShowContactDetail(contact);
             }
         });
+    }
+
+    private void setLabelText(Contact contact) {
+        if (mTextView == null) {
+            return;
+        }
+
+        String label = "";
+        List<PhoneNumber> numberList = contact.getNumbers();
+
+        if (numberList.size() == 1) {
+            CharSequence readableLabel = numberList.get(0).getReadableLabel(
+                    super.itemView.getContext().getResources());
+            label = readableLabel != null ? readableLabel.toString() : "";
+        } else if (numberList.size() > 1) {
+            label = super.itemView.getContext().getString(R.string.type_multiple);
+        }
+
+        mTextView.setText(label);
     }
 }

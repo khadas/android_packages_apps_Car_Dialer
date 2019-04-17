@@ -19,9 +19,14 @@ package com.android.car.dialer.ui.calllog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.dialer.R;
+import com.android.car.dialer.log.L;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
@@ -33,17 +38,24 @@ import com.android.car.telephony.common.PhoneCallLog;
  * resetting the UI on recycle.
  */
 public class CallLogViewHolder extends RecyclerView.ViewHolder {
+    private CallLogAdapter.OnShowContactDetailListener mOnShowContactDetailListener;
     private ImageView mAvatarView;
     private TextView mTitleView;
     private TextView mTextView;
     private CallTypeIconsView mCallTypeIconsView;
+    private View mActionButton;
+    private View mDivider;
 
-    public CallLogViewHolder(@NonNull View itemView) {
+    public CallLogViewHolder(@NonNull View itemView,
+            CallLogAdapter.OnShowContactDetailListener onShowContactDetailListener) {
         super(itemView);
+        mOnShowContactDetailListener = onShowContactDetailListener;
         mAvatarView = itemView.findViewById(R.id.icon);
         mTitleView = itemView.findViewById(R.id.title);
         mTextView = itemView.findViewById(R.id.text);
         mCallTypeIconsView = itemView.findViewById(R.id.call_type_icons);
+        mActionButton = itemView.findViewById(R.id.calllog_action_button);
+        mDivider = itemView.findViewById(R.id.divider);
     }
 
     public void onBind(UiCallLog uiCallLog) {
@@ -60,9 +72,29 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
 
         super.itemView.setOnClickListener(
                 view -> UiCallManager.get().placeCall(uiCallLog.getNumber()));
+
+        setUpActionButton(uiCallLog);
     }
 
     public void onRecycle() {
         mCallTypeIconsView.clear();
+    }
+
+    private void setUpActionButton(UiCallLog uiCallLog) {
+        if (mActionButton == null) {
+            return;
+        }
+
+        Contact contact = InMemoryPhoneBook.get().lookupContactEntry(uiCallLog.getNumber());
+
+        if (contact == null) {
+            mActionButton.setVisibility(View.GONE);
+            mDivider.setVisibility(View.GONE);
+            return;
+        }
+        mDivider.setVisibility(View.VISIBLE);
+        mActionButton.setVisibility(View.VISIBLE);
+        mActionButton.setOnClickListener(
+                view -> mOnShowContactDetailListener.onShowContactDetail(contact));
     }
 }
