@@ -16,10 +16,14 @@
 
 package com.android.car.dialer.ui;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toolbar;
 
@@ -41,6 +45,7 @@ import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 import com.android.car.dialer.ui.favorite.FavoriteFragment;
+import com.android.car.dialer.ui.search.ContactResultsFragment;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
 
 /**
@@ -137,6 +142,11 @@ public class TelecomActivity extends FragmentActivity implements
             case Intent.ACTION_CALL:
                 number = PhoneNumberUtils.getNumberFromIntent(intent, this);
                 UiCallManager.get().placeCall(number);
+                break;
+
+            case Intent.ACTION_SEARCH:
+                String searchQuery = intent.getStringExtra(SearchManager.QUERY);
+                navigateToContactResultsFragment(searchQuery);
                 break;
 
             default:
@@ -304,6 +314,36 @@ public class TelecomActivity extends FragmentActivity implements
             return true;
         }
         return super.onNavigateUp();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.menu_contacts_search) {
+            navigateToContactResultsFragment(null);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void navigateToContactResultsFragment(String query) {
+        Fragment topFragment = getSupportFragmentManager().findFragmentById(
+                R.id.content_fragment_container);
+
+        // Top fragment is ContactResultsFragment, update search query
+        if (topFragment instanceof ContactResultsFragment) {
+            ((ContactResultsFragment) topFragment).setSearchQuery(query);
+            return;
+        }
+
+        ContactResultsFragment fragment = ContactResultsFragment.newInstance(query);
+        pushContentFragment(fragment, ContactResultsFragment.FRAGMENT_TAG);
     }
 
     private void maybeStartInCallActivity() {

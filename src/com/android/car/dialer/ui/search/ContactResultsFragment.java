@@ -16,59 +16,82 @@
 
 package com.android.car.dialer.ui.search;
 
-import android.database.Cursor;
+import android.app.SearchManager;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract.Contacts;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.android.car.dialer.log.L;
+import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.contact.ContactDetailsFragment;
+import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
 
 /**
  * A fragment that will take a search query, look up contacts that match and display those
  * results as a list.
  */
-public class ContactResultsFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String TAG = "ContactResultsFragment";
+public class ContactResultsFragment extends DialerBaseFragment implements
+        ContactResultsAdapter.OnShowContactDetailListener {
 
-    private static final String KEY_INITIAL_SEARCH_QUERY = "initial_search_query";
+    /**
+     * Creates a new instance of the {@link ContactResultsFragment}.
+     *
+     * @param initialSearchQuery An optional search query that will be inputted when the fragment
+     *                           starts up.
+     */
+    public static ContactResultsFragment newInstance(@Nullable String initialSearchQuery) {
+        ContactResultsFragment fragment = new ContactResultsFragment();
+        Bundle args = new Bundle();
+        args.putString(SEARCH_QUERY, initialSearchQuery);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-    private static final String[] CONTACT_DETAILS_PROJECTION = {
-            Contacts._ID,
-            Contacts.LOOKUP_KEY,
-            Contacts.DISPLAY_NAME,
-            Contacts.PHOTO_URI
-    };
+    public static final String FRAGMENT_TAG = "ContactResultsFragment";
 
-    private final ContactResultsAdapter mAdapter = new ContactResultsAdapter();
+    private static final String TAG = "CD.ContactResultsFragment";
+    private static final String SEARCH_QUERY = "SearchQuery";
+
+    private ContactResultsViewModel mContactResultsViewModel;
+    private final ContactResultsAdapter mAdapter = new ContactResultsAdapter(this);
+
     private RecyclerView mContactResultList;
-    private String mSearchQuery;
-
-    private List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
+    private RecyclerView.OnScrollListener mOnScrollChangeListener;
+    private SearchView mSearchView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
-        Bundle args = getArguments();
-        if (args != null) {
-            setSearchQuery(args.getString(KEY_INITIAL_SEARCH_QUERY));
+        mContactResultsViewModel = ViewModelProviders.of(this).get(
+                ContactResultsViewModel.class);
+        mContactResultsViewModel.getContactSearchResults().observe(this,
+                contactResults -> mAdapter.setData(contactResults));
+
+        // Restore the search query from saved state - day/night mode change
+        String initialQuery = null;
+        if (getArguments() != null) {
+            initialQuery = getArguments().getString(SEARCH_QUERY);
+            if (!TextUtils.isEmpty(initialQuery)) {
+                setSearchQuery(initialQuery);
+            }
+            getArguments().clear();
         }
     }
 
@@ -82,115 +105,105 @@ public class ContactResultsFragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mContactResultList = view.findViewById(R.id.contact_result_list);
         mContactResultList.setLayoutManager(new LinearLayoutManager(getContext()));
+        mContactResultList.addItemDecoration(new VerticalListDividerDecoration(getContext(), true));
         mContactResultList.setAdapter(mAdapter);
 
-        for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
-            mContactResultList.addOnScrollListener(listener);
-        }
+        mOnScrollChangeListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            }
 
-        mOnScrollListeners.clear();
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy != 0) {
+                    mSearchView.clearFocus();
+                }
+            }
+        };
+        mContactResultList.addOnScrollListener(mOnScrollChangeListener);
     }
 
-    /**
-     * Adds a {@link androidx.recyclerview.widget.RecyclerView.OnScrollListener} to be notified when
-     * the contact list is scrolled.
-     *
-     * @see RecyclerView#addOnScrollListener(RecyclerView.OnScrollListener)
-     */
-    public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
-        // If the view has not been created yet, then queue the setting of the scroll listener.
-        if (mContactResultList == null) {
-            mOnScrollListeners.add(onScrollListener);
-            return;
-        }
-
-        mContactResultList.addOnScrollListener(onScrollListener);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mContactResultList.removeOnScrollListener(mOnScrollChangeListener);
     }
 
-    /**
-     * Clears any results from a previous query and displays an empty list.
-     */
-    public void clearResults() {
-        mSearchQuery = null;
-        mAdapter.clear();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.contacts_search_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = menu.findItem(
+                R.id.menu_contacts_search_view).getActionView().findViewById(R.id.search_view);
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        // Expand the menu item by default.
+        searchView.setIconified(false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                L.d(TAG, "onQueryTextSubmit: %s", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                L.d(TAG, "onQueryTextChange: %s", newText);
+                onNewQuery(newText);
+                return false;
+            }
+        });
+
+        // Don't collapse the search view by clicking the clear button on an empty input
+        searchView.setOnCloseListener(() -> true);
+
+        mSearchView = searchView;
+        setSearchQuery(mContactResultsViewModel.getSearchQuery());
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        // Hide the main search menu
+        menu.findItem(R.id.menu_contacts_search).setVisible(false);
+    }
+
+    @Override
+    public void onDestroyOptionsMenu() {
+        mSearchView.clearFocus();
     }
 
     /**
      * Sets the search query that should be used to filter contacts.
      */
     public void setSearchQuery(String query) {
-        mSearchQuery = query;
-
-        if (!TextUtils.isEmpty(mSearchQuery)) {
-            // Calling restartLoader so that the loader is always re-created with the new
-            // search query.
-            LoaderManager.getInstance(this).restartLoader(0, null /* args */, this /* callback */);
+        if (mSearchView != null) {
+            // This will update the search field and trigger the onNewQuery.
+            // "submit" flag is false so it won't send search intent and ending in infinite loop.
+            mSearchView.setQuery(query, /* submit= */false);
+        } else {
+            onNewQuery(query);
         }
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "onLoadFinished(); count: " + data.getCount());
-        }
-
-        mAdapter.setData(data);
-        data.close();
-    }
-
-    /**
-     * Finds the contacts with any field that matches the search query. Typically, the search
-     * criteria appears to be matching the beginning of the value in that data field (name, phone
-     * number, etc.)
-     */
-    @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "onCreateLoader(); loaderId: " + loaderId + " with query: " + mSearchQuery);
-        }
-
-        /* To lookup against all fields, just append the search query to the content filter uri
-         * and perform a lookup without any selection
-         */
-        Uri lookupUri = Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI,
-                Uri.encode(mSearchQuery));
-
-        return new CursorLoader(getContext(), lookupUri,
-                CONTACT_DETAILS_PROJECTION, null /* selection */,
-                null /* selectionArgs */, null /* sortOrder */);
+    /** Triggered by search view text change. */
+    private void onNewQuery(String newQuery) {
+        mContactResultsViewModel.setSearchQuery(newQuery);
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    protected CharSequence getActionBarTitle() {
+        return null;
     }
 
     @Override
-    public void onDestroy() {
-        // Clear all scroll listeners.
-        mContactResultList.removeOnScrollListener(null);
-        super.onDestroy();
-    }
-
-    /**
-     * Creates a new instance of the {@link ContactResultsFragment}.
-     *
-     * @param listener           A scroll listener that will be notified when the list of search
-     *                           results has
-     *                           been scrolled.
-     * @param initialSearchQuery An optional search query that will be inputted when the fragment
-     *                           starts up.
-     */
-    public static ContactResultsFragment newInstance(RecyclerView.OnScrollListener listener,
-            @Nullable String initialSearchQuery) {
-        ContactResultsFragment fragment = new ContactResultsFragment();
-        fragment.addOnScrollListener(listener);
-
-        if (!TextUtils.isEmpty(initialSearchQuery)) {
-            Bundle args = new Bundle();
-            args.putString(KEY_INITIAL_SEARCH_QUERY, initialSearchQuery);
-            fragment.setArguments(args);
-        }
-
-        return fragment;
+    public void onShowContactDetail(Uri contactLookupUri) {
+        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contactLookupUri,
+                null);
+        pushContentFragment(contactDetailsFragment, ContactDetailsFragment.FRAGMENT_TAG);
     }
 }

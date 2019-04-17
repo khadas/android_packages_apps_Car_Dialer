@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,6 +46,7 @@ import java.util.List;
  */
 public class ContactDetailsFragment extends DialerBaseFragment {
     private static final String TAG = "CD.ContactDetailsFragment";
+    public static final String FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
 
     // Key to load and save the contact entity instance.
     private static final String KEY_CONTACT_ENTITY = "ContactEntity";
@@ -88,7 +88,7 @@ public class ContactDetailsFragment extends DialerBaseFragment {
 
         mContact = getArguments().getParcelable(KEY_CONTACT_ENTITY);
         mContactLookupUri = getArguments().getParcelable(KEY_CONTACT_QUERY_URI);
-        if (mContact == null) {
+        if (mContact == null && savedInstanceState != null) {
             mContact = savedInstanceState.getParcelable(KEY_CONTACT_ENTITY);
         }
         if (mContact != null) {
@@ -166,9 +166,8 @@ public class ContactDetailsFragment extends DialerBaseFragment {
         super.onDestroyView();
     }
 
-    @StringRes
     @Override
-    protected int getActionBarTitleRes() {
-        return R.string.toolbar_title_contact_details;
+    protected CharSequence getActionBarTitle() {
+        return getString(R.string.toolbar_title_contact_details);
     }
 }

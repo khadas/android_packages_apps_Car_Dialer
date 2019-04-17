@@ -33,7 +33,7 @@ import java.util.List;
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHolder> {
     private static final String TAG = "CD.ContactListAdapter";
 
-    public interface OnShowContactDetailListener {
+    interface OnShowContactDetailListener {
         void onShowContactDetail(Contact contact);
     }
 
