@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
-import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
 import com.android.car.telephony.common.Contact;
 
 /**
@@ -55,8 +54,6 @@ public class ContactListFragment extends DialerBaseFragment implements
         RecyclerView recyclerView = fragmentView.findViewById(R.id.list_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mContactListAdapter);
-        recyclerView.addItemDecoration(
-                new VerticalListDividerDecoration(getContext(), /* hideLastDivider= */true));
 
         ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
                 ContactListViewModel.class);

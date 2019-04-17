@@ -35,8 +35,10 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowViewModelProvider;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.dialer.widget.CallTypeIconsView;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneCallLog;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +46,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
@@ -70,6 +73,7 @@ public class CallHistoryFragmentTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
+        InMemoryPhoneBook.init(RuntimeEnvironment.application);
         UiCallManager.set(mMockUiCallManager);
 
         PhoneCallLog.Record record1 = new PhoneCallLog.Record(TIME_STAMP_1,
@@ -93,6 +97,11 @@ public class CallHistoryFragmentTest {
         // set up layout for recyclerView
         recyclerView.layout(0, 0, 100, 1000);
         mViewHolder = (CallLogViewHolder) recyclerView.findViewHolderForLayoutPosition(0);
+    }
+
+    @After
+    public void tearDown() {
+        InMemoryPhoneBook.tearDown();
     }
 
     @Test
