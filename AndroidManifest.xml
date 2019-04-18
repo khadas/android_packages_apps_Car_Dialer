@@ -45,6 +45,7 @@
                   android:exported="true"
                   android:resizeableActivity="true">
             <meta-data android:name="distractionOptimized" android:value="true"/>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
             <intent-filter>
                 <action android:name="android.intent.action.DIAL"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -64,22 +65,9 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
 
-        <activity android:name=".ui.search.ContactSearchActivity"
-                  android:label="@string/phone_app_name"
-                  android:theme="@style/Theme.Dialer"
-                  android:exported="true"
-                  android:launchMode="singleTop"
-                  android:resizeableActivity="true">
-            <meta-data android:name="distractionOptimized" android:value="true"/>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-            <intent-filter>
-                <action android:name="com.android.car.dialer.SHOW_CONTACT_DETAILS"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

@@ -18,7 +18,6 @@ package com.android.car.dialer.ui.search;
 
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.ContactsContract.Contacts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +30,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  An adapter that will parse a list of contacts given by a {@link Cursor} that display the
- *  results as a list.
+ * An adapter that will parse a list of contacts given by a {@link Cursor} that display the
+ * results as a list.
  */
 public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultViewHolder> {
-    private final List<ContactResultViewHolder.ContactDetails> mContacts = new ArrayList<>();
+
+    interface OnShowContactDetailListener {
+        void onShowContactDetail(Uri contactLookupUri);
+    }
+
+    private final List<ContactDetails> mContacts = new ArrayList<>();
+    private final OnShowContactDetailListener mOnShowContactDetailListener;
+
+    public ContactResultsAdapter(OnShowContactDetailListener onShowContactDetailListener) {
+        mOnShowContactDetailListener = onShowContactDetailListener;
+    }
 
     /**
      * Clears all contact results from this adapter.
@@ -49,24 +58,9 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
      * Sets the list of contacts that should be displayed. The given {@link Cursor} can be safely
      * closed after this call.
      */
-    public void setData(Cursor data) {
+    public void setData(List<ContactDetails> data) {
         mContacts.clear();
-
-        while (data.moveToNext()) {
-            int idColIdx = data.getColumnIndex(Contacts._ID);
-            int lookupColIdx = data.getColumnIndex(Contacts.LOOKUP_KEY);
-            int nameColIdx = data.getColumnIndex(Contacts.DISPLAY_NAME);
-            int photoUriColIdx = data.getColumnIndex(Contacts.PHOTO_URI);
-
-            Uri lookupUri = Contacts.getLookupUri(
-                    data.getLong(idColIdx), data.getString(lookupColIdx));
-
-            mContacts.add(new ContactResultViewHolder.ContactDetails(
-                    data.getString(nameColIdx),
-                    data.getString(photoUriColIdx),
-                    lookupUri));
-        }
-
+        mContacts.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -74,7 +68,7 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
     public ContactResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.contact_result, parent, false);
-        return new ContactResultViewHolder(view);
+        return new ContactResultViewHolder(view, mOnShowContactDetailListener);
     }
 
     @Override
