@@ -89,15 +89,16 @@ public class ContactListFragmentTest {
     }
 
     @Test
-    public void testClickContact_ContactHasOneNumber_placeCall() {
+    public void testClickCallActionButton_ContactHasOneNumber_placeCall() {
         UiCallManager.set(mMockUiCallManager);
         when(mMockContact1.getNumbers()).thenReturn(Arrays.asList(mMockPhoneNumber));
         when(mMockPhoneNumber.getRawNumber()).thenReturn(RAW_NUMBNER);
         setUpFragment();
 
-        assertThat(mViewHolder.itemView.hasOnClickListeners()).isTrue();
+        View callActionView = mViewHolder.itemView.findViewById(R.id.call_action_id);
+        assertThat(callActionView.hasOnClickListeners()).isTrue();
 
-        mViewHolder.itemView.performClick();
+        callActionView.performClick();
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(mMockUiCallManager).placeCall(captor.capture());
@@ -105,26 +106,28 @@ public class ContactListFragmentTest {
     }
 
     @Test
-    public void testClickContact_ContactHasMultipleNumbers_showContactDetail() {
+    public void testClickCallActionButton_ContactHasMultipleNumbers_showContactDetail() {
         PhoneNumber otherMockPhoneNumber = mock(PhoneNumber.class);
         when(mMockContact1.getNumbers()).thenReturn(
                 Arrays.asList(mMockPhoneNumber, otherMockPhoneNumber));
         setUpFragment();
 
-        mViewHolder.itemView.performClick();
+        View callActionView = mViewHolder.itemView.findViewById(R.id.call_action_id);
+        callActionView.performClick();
 
         // verify contact detail is shown.
         verifyShowContactDetail();
     }
 
     @Test
-    public void testClickActionButton_showContactDetail() {
+    public void testClickShowContactDetailView_showContactDetail() {
         setUpFragment();
 
-        View actionButton = mViewHolder.itemView.findViewById(R.id.action_button);
-        assertThat(actionButton.hasOnClickListeners()).isTrue();
+        View showContactDetailActionView = mViewHolder.itemView.findViewById(
+                R.id.show_contact_detail_id);
+        assertThat(showContactDetailActionView.hasOnClickListeners()).isTrue();
 
-        actionButton.performClick();
+        showContactDetailActionView.performClick();
 
         // verify contact detail is shown.
         verifyShowContactDetail();

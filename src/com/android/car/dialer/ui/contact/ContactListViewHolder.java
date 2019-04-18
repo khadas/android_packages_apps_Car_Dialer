@@ -40,7 +40,8 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
     private final ImageView mAvatarView;
     private final TextView mTitleView;
     private final TextView mTextView;
-    private final View mActionButton;
+    private final View mShowContactDetailView;
+    private final View mCallActionView;
 
     public ContactListViewHolder(@NonNull View itemView,
             ContactListAdapter.OnShowContactDetailListener onShowContactDetailListener) {
@@ -49,7 +50,8 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
         mAvatarView = itemView.findViewById(R.id.icon);
         mTitleView = itemView.findViewById(R.id.title);
         mTextView = itemView.findViewById(R.id.text);
-        mActionButton = itemView.findViewById(R.id.action_button);
+        mShowContactDetailView = itemView.findViewById(R.id.show_contact_detail_id);
+        mCallActionView = itemView.findViewById(R.id.call_action_id);
     }
 
     public void onBind(Contact contact) {
@@ -57,9 +59,9 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
         TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact, null);
         mTitleView.setText(contact.getDisplayName());
         setLabelText(contact);
-        mActionButton.setOnClickListener(
+        mShowContactDetailView.setOnClickListener(
                 view -> mOnShowContactDetailListener.onShowContactDetail(contact));
-        super.itemView.setOnClickListener(view -> {
+        mCallActionView.setOnClickListener(view -> {
             if (phoneNumbers.size() == 1) {
                 UiCallManager.get().placeCall(phoneNumbers.get(0).getRawNumber());
             } else {
