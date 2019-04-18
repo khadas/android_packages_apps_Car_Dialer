@@ -125,9 +125,7 @@
 
     <!-- Heads Up Notification -->
     <!-- Name of notification channel in app info [CHAR LIMIT=40] -->
-    <string name="in_call_notification_channel_name">In call notification</string>
-    <!-- Description of notification channel in app info [CHAR LIMIT=50] -->
-    <string name="in_call_notification_channel_description">Notifications for incoming call</string>
+    <string name="in_call_notification_channel_name">Incoming call notification</string>
     <!-- Text for incoming call notification [CHAR LIMIT=30]-->
     <string name="notification_incoming_call">Incoming call</string>
 </resources>
