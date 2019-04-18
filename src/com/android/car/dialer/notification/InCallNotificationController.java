@@ -93,10 +93,8 @@ public class InCallNotificationController {
         mContext = context;
 
         CharSequence name = mContext.getString(R.string.in_call_notification_channel_name);
-        String description = mContext.getString(R.string.in_call_notification_channel_description);
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name,
                 NotificationManager.IMPORTANCE_HIGH);
-        notificationChannel.setDescription(description);
 
         mNotificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
