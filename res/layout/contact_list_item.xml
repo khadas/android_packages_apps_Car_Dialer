@@ -17,6 +17,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/call_action_id"
     android:background="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="@dimen/contact_list_item_height">
@@ -70,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="@id/contact_list_guideline_end"/>
 
     <ImageView
-        android:id="@+id/action_button"
+        android:id="@+id/show_contact_detail_id"
         android:layout_width="@dimen/contact_list_action_button_size"
         android:layout_height="@dimen/contact_list_action_button_size"
         android:src="@drawable/ic_arrow_right"
