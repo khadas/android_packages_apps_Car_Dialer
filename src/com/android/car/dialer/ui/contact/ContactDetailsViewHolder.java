@@ -26,16 +26,14 @@ import com.android.car.dialer.R;
 
 /** ViewHolder for {@link ContactDetailsFragment}. */
 class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
-    View card;
-    ImageView leftIcon;
+    View sendTextTouchTarget;
     TextView title;
     TextView text;
     ImageView avatar;
 
     ContactDetailsViewHolder(View v) {
         super(v);
-        card = v.findViewById(R.id.card);
-        leftIcon = v.findViewById(R.id.icon);
+        sendTextTouchTarget = v.findViewById(R.id.contact_details_text_button_touchtarget);
         title = v.findViewById(R.id.title);
         text = v.findViewById(R.id.text);
         avatar = v.findViewById(R.id.avatar);
