@@ -85,7 +85,11 @@
 
     <!-- In-call styling for everything except short landscape screens -->
     <style name="in_call_user_title" parent="@style/TextAppearance.Display2"></style>
-    <style name="in_call_user_phone_number" parent="@style/TextAppearance.Body1"></style>
-    <style name="in_call_user_description" parent="@style/TextAppearance.Body1"></style>
+    <style name="in_call_user_phone_number" parent="@style/TextAppearance.Body1">
+        <item name="android:textColor">#B8FFFFFF</item>
+    </style>
+    <style name="in_call_user_description" parent="@style/TextAppearance.Body1">
+        <item name="android:textColor">#B8FFFFFF</item>
+    </style>
 
 </resources>
