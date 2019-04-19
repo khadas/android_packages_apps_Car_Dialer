@@ -42,6 +42,8 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.activecall.InCallViewModel;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.TelecomUtils;
 
 /**
@@ -100,6 +102,7 @@ public class DialpadFragment extends DialerBaseFragment implements
     private static final int MODE_EMERGENCY = 3;
 
     private TextView mTitleView;
+    private TextView mDisplayName;
     private ImageButton mDeleteButton;
     private int mMode;
     private StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
@@ -162,6 +165,7 @@ public class DialpadFragment extends DialerBaseFragment implements
         mTitleView.setTextAppearance(
                 mMode == MODE_EMERGENCY ? R.style.EmergencyDialNumber : R.style.DialNumber);
         mTitleView.setGravity(Gravity.CENTER);
+        mDisplayName = rootView.findViewById(R.id.display_name);
         ImageButton callButton = rootView.findViewById(R.id.call_button);
         mDeleteButton = rootView.findViewById(R.id.delete_button);
 
@@ -297,6 +301,10 @@ public class DialpadFragment extends DialerBaseFragment implements
             return;
         }
 
+        if (mMode != MODE_IN_CALL) {
+            presentContactName();
+        }
+
         if (mNumber.length() == 0 && mMode == MODE_DIAL) {
             mTitleView.setText(R.string.dial_a_number);
             mTitleView.setGravity(Gravity.CENTER);
@@ -319,5 +327,21 @@ public class DialpadFragment extends DialerBaseFragment implements
         }
 
         mTitleView.setText(mNumber.toString());
+    }
+
+    private void presentContactName() {
+        if (mDisplayName == null) {
+            // OEM may remove this view from resource file.
+            return;
+        }
+
+        Contact contact = InMemoryPhoneBook.get().lookupContactEntry(mNumber.toString());
+        if (contact == null) {
+            mDisplayName.setText("");
+            mDisplayName.setVisibility(View.GONE);
+            return;
+        }
+        mDisplayName.setVisibility(View.VISIBLE);
+        mDisplayName.setText(contact.getDisplayName());
     }
 }
