@@ -18,6 +18,7 @@ package com.android.car.dialer.ui.activecall;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import android.content.Context;
 import android.view.View;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
@@ -25,6 +26,7 @@ import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.TestDialerApplication;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 
 import org.junit.After;
 import org.junit.Before;
@@ -45,7 +47,9 @@ public class InCallFragmentTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ((TestDialerApplication) RuntimeEnvironment.application).initUiCallManager();
+        Context context = RuntimeEnvironment.application;
+        ((TestDialerApplication) context).initUiCallManager();
+        InMemoryPhoneBook.init(context);
 
         mInCallFragment = InCallFragment.newInstance();
         mFragmentTestActivity = Robolectric.buildActivity(
@@ -59,7 +63,8 @@ public class InCallFragmentTest {
 
     @After
     public void tearDown() {
-      UiCallManager.get().tearDown();
+        UiCallManager.get().tearDown();
+        InMemoryPhoneBook.tearDown();
     }
 
     @Test
