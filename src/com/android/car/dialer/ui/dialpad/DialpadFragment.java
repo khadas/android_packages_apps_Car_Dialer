@@ -46,6 +46,8 @@ import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.TelecomUtils;
 
+import com.google.common.annotations.VisibleForTesting;
+
 /**
  * Fragment that controls the dialpad.
  */
@@ -54,7 +56,8 @@ public class DialpadFragment extends DialerBaseFragment implements
     private static final String TAG = "CD.DialpadFragment";
     private static final String DIAL_NUMBER_KEY = "DIAL_NUMBER_KEY";
     private static final String DIALPAD_MODE_KEY = "DIALPAD_MODE_KEY";
-    private static final int MAX_DIAL_NUMBER = 20;
+    @VisibleForTesting
+    static final int MAX_DIAL_NUMBER = 20;
 
     private static final SparseIntArray sToneMap = new SparseIntArray();
     private static final SparseArray<Character> sDialValueMap = new SparseArray<>();
@@ -305,28 +308,38 @@ public class DialpadFragment extends DialerBaseFragment implements
             presentContactName();
         }
 
-        if (mNumber.length() == 0 && mMode == MODE_DIAL) {
-            mTitleView.setText(R.string.dial_a_number);
+        if (mNumber.length() == 0) {
             mTitleView.setGravity(Gravity.CENTER);
             mDeleteButton.setVisibility(View.GONE);
-            return;
-        }
 
-        if (mNumber.length() == 0 && mMode == MODE_EMERGENCY) {
-            mTitleView.setText(R.string.emergency_call_description);
-            mTitleView.setGravity(Gravity.CENTER);
-            mDeleteButton.setVisibility(View.GONE);
-            return;
-        }
-
-        if (mNumber.length() > 0 && mNumber.length() <= MAX_DIAL_NUMBER && mMode == MODE_DIAL) {
-            mTitleView.setText(TelecomUtils.getFormattedNumber(getContext(), mNumber.toString()));
+            if (mMode == MODE_DIAL) {
+                mTitleView.setText(R.string.dial_a_number);
+            } else if (mMode == MODE_EMERGENCY) {
+                mTitleView.setText(R.string.emergency_call_description);
+            } else {
+                mTitleView.setText("");
+            }
+        } else if (mNumber.length() > 0 && mNumber.length() <= MAX_DIAL_NUMBER) {
             mTitleView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-            mDeleteButton.setVisibility(View.VISIBLE);
-            return;
-        }
 
-        mTitleView.setText(mNumber.toString());
+            if (mMode == MODE_IN_CALL) {
+                mTitleView.setText(mNumber);
+                mDeleteButton.setVisibility(View.GONE);
+            } else {
+                mTitleView.setText(
+                        TelecomUtils.getFormattedNumber(getContext(), mNumber.toString()));
+                mDeleteButton.setVisibility(View.VISIBLE);
+            }
+        } else {
+            mTitleView.setText(mNumber.substring(mNumber.length() - MAX_DIAL_NUMBER));
+            mTitleView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+
+            if (mMode == MODE_IN_CALL) {
+                mDeleteButton.setVisibility(View.GONE);
+            } else {
+                mDeleteButton.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void presentContactName() {
