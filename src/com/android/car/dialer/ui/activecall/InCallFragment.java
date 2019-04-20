@@ -16,13 +16,13 @@
 
 package com.android.car.dialer.ui.activecall;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telecom.Call;
 import android.text.TextUtils;
 import android.util.Pair;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +60,7 @@ public class InCallFragment extends Fragment implements
     private View mUserProfileContainerView;
     private View mDialerFragmentContainer;
     private TextView mUserProfileBodyText;
+    private BackgroundImageView mBackgroundImage;
 
     public static InCallFragment newInstance() {
         return new InCallFragment();
@@ -72,6 +73,7 @@ public class InCallFragment extends Fragment implements
         mUserProfileContainerView = fragmentView.findViewById(R.id.user_profile_container);
         mDialerFragmentContainer = fragmentView.findViewById(R.id.dialpad_container);
         mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.user_profile_body);
+        mBackgroundImage = fragmentView.findViewById(R.id.background_image);
         mDialpadFragment = DialpadFragment.newInCallDialpad();
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
@@ -90,6 +92,7 @@ public class InCallFragment extends Fragment implements
                 .commit();
         mDialerFragmentContainer.setVisibility(View.VISIBLE);
         mUserProfileContainerView.setVisibility(View.GONE);
+        mBackgroundImage.setDimmed(true);
     }
 
     @Override
@@ -99,6 +102,7 @@ public class InCallFragment extends Fragment implements
                 .commit();
         mDialerFragmentContainer.setVisibility(View.GONE);
         mUserProfileContainerView.setVisibility(View.VISIBLE);
+        mBackgroundImage.setDimmed(false);
     }
 
     private void bindUserProfileView(@Nullable CallDetail callDetail) {
@@ -116,10 +120,15 @@ public class InCallFragment extends Fragment implements
 
         TextView phoneNumberView
                 = mUserProfileContainerView.findViewById(R.id.user_profile_phone_number);
-        phoneNumberView.setText(TelecomUtils.getFormattedNumber(getContext(), number));
+
+        String phoneNumberLabel = TelecomUtils.getTypeFromNumber(getContext(), number).toString();
+        if(!phoneNumberLabel.isEmpty()) {
+            phoneNumberLabel += " ";
+        }
+        phoneNumberLabel += TelecomUtils.getFormattedNumber(getContext(), number);
+        phoneNumberView.setText(phoneNumberLabel);
 
         ImageView avatar = mUserProfileContainerView.findViewById(R.id.user_profile_avatar);
-        BackgroundImageView backgroundImage = getView().findViewById(R.id.background_image);
 
         LetterTileDrawable letterTile = TelecomUtils.createLetterTile(
                 getContext(),
@@ -135,13 +144,13 @@ public class InCallFragment extends Fragment implements
                             Transition<? super Bitmap> glideAnimation) {
                         // set showAnimation to false mostly because bindUserProfileView will be
                         // called several times, and we don't want the image to flicker
-                        backgroundImage.setBackgroundImage(resource, false);
+                        mBackgroundImage.setBackgroundImage(resource, false);
                         avatar.setImageBitmap(resource);
                     }
 
                     @Override
                     public void onLoadFailed(Drawable errorDrawable) {
-                        backgroundImage.setBackgroundColor(letterTile.getColor());
+                        mBackgroundImage.setBackgroundColor(letterTile.getColor());
                         avatar.setImageDrawable(letterTile);
                     }
                 });
