@@ -15,4 +15,8 @@
 -->
 <resources>
     <dimen name="in_call_margin_between_avatar_and_text">48dp</dimen>
+    <dimen name="call_button_bottom_margin">@*android:dimen/car_padding_2</dimen>
+    <dimen name="call_button_height">@dimen/control_bar_height</dimen>
+    <dimen name="fab_outline_size">84dp</dimen>
+    <dimen name="keypad_margin">96dp</dimen>
 </resources>
