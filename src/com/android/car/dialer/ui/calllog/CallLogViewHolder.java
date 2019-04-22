@@ -38,6 +38,7 @@ import com.android.car.telephony.common.PhoneCallLog;
  * resetting the UI on recycle.
  */
 public class CallLogViewHolder extends RecyclerView.ViewHolder {
+
     private CallLogAdapter.OnShowContactDetailListener mOnShowContactDetailListener;
     private ImageView mAvatarView;
     private TextView mTitleView;
@@ -65,10 +66,11 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
                 uiCallLog.getAvatarUri(),
                 uiCallLog.getTitle());
         mTitleView.setText(uiCallLog.getTitle());
-        mTextView.setText(uiCallLog.getText());
         for (PhoneCallLog.Record record : uiCallLog.getCallRecords()) {
             mCallTypeIconsView.add(record.getCallType());
         }
+        mTextView.setText(mCallTypeIconsView.getCallCountText());
+        mTextView.append(uiCallLog.getText());
 
         super.itemView.setOnClickListener(
                 view -> UiCallManager.get().placeCall(uiCallLog.getNumber()));

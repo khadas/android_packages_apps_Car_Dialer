@@ -48,11 +48,11 @@
 
     <TextView
         android:id="@+id/title"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/contact_list_text_margin_end"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:singleLine="true"
-        android:layout_marginEnd="@dimen/call_history_item_padding_end"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/text"
@@ -61,10 +61,11 @@
 
     <TextView
         android:id="@id/text"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/call_history_item_padding_end"
+        android:layout_marginEnd="@dimen/contact_list_text_margin_end"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:singleLine="true"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/contact_list_guideline_begin"
@@ -89,6 +90,5 @@
         android:background="@color/divider_color"
         android:layout_marginTop="@dimen/vertical_divider_inset"
         android:layout_marginBottom="@dimen/vertical_divider_inset"
-        android:layout_marginEnd="@dimen/contact_list_item_padding"
         app:layout_constraintStart_toStartOf="@id/contact_list_guideline_end"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
