@@ -46,11 +46,11 @@ limitations under the License.
 
     <TextView
         android:id="@+id/title"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/call_history_text_margin_end"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:singleLine="true"
-        android:layout_marginEnd="@dimen/call_history_item_padding_end"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/text"
@@ -61,16 +61,17 @@ limitations under the License.
         android:id="@+id/call_type_icons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         app:layout_constraintStart_toStartOf="@id/guideline_begin"
         app:layout_constraintTop_toBottomOf="@id/title"/>
 
     <TextView
         android:id="@id/text"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/call_history_item_padding_end"
+        android:layout_marginStart="@dimen/call_history_icons_margin"
+        android:layout_marginEnd="@dimen/call_history_text_margin_end"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:singleLine="true"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/call_type_icons"
@@ -83,7 +84,6 @@ limitations under the License.
         android:background="@color/divider_color"
         android:layout_marginTop="@dimen/vertical_divider_inset"
         android:layout_marginBottom="@dimen/vertical_divider_inset"
-        android:layout_marginEnd="@dimen/contact_list_item_padding"
         app:layout_constraintStart_toStartOf="@id/guideline_end"/>
 
     <ImageView
