@@ -38,8 +38,35 @@
         android:layout_marginTop="@dimen/contact_details_title_margin_top"
         android:layout_marginBottom="@dimen/contact_details_title_margin_bottom"
         android:textAppearance="@style/TextAppearance.ContactDetailsTitle"
+        app:layout_constraintTop_toBottomOf="@id/avatar"
+        app:layout_constraintBottom_toTopOf="@id/quick_actions_barrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/quick_actions_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="call_hero_button,text_hero_button" />
+
+    <TextView
+        android:id="@+id/call_hero_button"
+        android:drawableStart="@drawable/ic_phone"
+        android:layout_marginBottom="@dimen/contact_details_quick_actions_margin_bottom"
+        style="@style/hero_button"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/avatar"/>
+        app:layout_constraintEnd_toStartOf="@id/text_hero_button"/>
+
+    <TextView
+        android:id="@+id/text_hero_button"
+        android:drawableStart="@drawable/ic_message"
+        android:layout_marginStart="@dimen/hero_button_separator"
+        android:layout_marginBottom="@dimen/contact_details_quick_actions_margin_bottom"
+        style="@style/hero_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/call_hero_button"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
