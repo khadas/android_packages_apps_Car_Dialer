@@ -150,6 +150,7 @@
     <dimen name="large_avatar_icon_size">96dp</dimen>
     <dimen name="primary_icon_enclosing_circle_size">64dp</dimen>
     <dimen name="inline_icon_size">24dp</dimen>
+    <dimen name="preference_list_margin">@*android:dimen/car_margin</dimen>
 
     <!-- Card view margins-->
     <dimen name="contact_card_margin_x">@*android:dimen/car_margin</dimen>

@@ -20,4 +20,11 @@
           android:icon="@drawable/ic_search"
           android:title="@string/search_title"
           android:showAsAction="always"/>
+
+    <!-- Dialer setting button -->
+    <item android:id="@+id/menu_dialer_setting"
+          android:icon="@drawable/ic_setting"
+          android:title="@string/setting_title"
+          android:showAsAction="always"
+          android:visible="false"/>
 </menu>

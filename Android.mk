@@ -34,6 +34,7 @@ LOCAL_USE_AAPT2 := true
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.recyclerview_recyclerview \
     androidx.lifecycle_lifecycle-extensions \
+    androidx.preference_preference \
     androidx-constraintlayout_constraintlayout \
     androidx.legacy_legacy-support-v4 \
     androidx.cardview_cardview \
@@ -79,6 +80,7 @@ LOCAL_USE_AAPT2 := true
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.recyclerview_recyclerview \
     androidx.lifecycle_lifecycle-extensions \
+    androidx.preference_preference \
     androidx-constraintlayout_constraintlayout \
     androidx.legacy_legacy-support-v4 \
     androidx.cardview_cardview \
