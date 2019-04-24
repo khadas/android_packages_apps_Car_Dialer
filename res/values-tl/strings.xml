@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2015 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- no translation found for phone_app_name (238824437273544459) -->
+    <skip />
+    <!-- no translation found for no_hfp (7371139867234667691) -->
+    <skip />
+    <!-- no translation found for bluetooth_unavailable (5258854283739591569) -->
+    <skip />
+    <!-- no translation found for bluetooth_disabled (1275246762067907843) -->
+    <skip />
+    <!-- no translation found for bluetooth_unpaired (1600552386483652892) -->
+    <skip />
+    <!-- no translation found for error_network_not_available (9005062158253849135) -->
+    <skip />
+    <!-- no translation found for error_airplane_mode (3381606616960325205) -->
+    <skip />
+    <!-- no translation found for error_no_hfp (5157534181401876925) -->
+    <skip />
+    <!-- no translation found for emergency_button_text (3467659545392931727) -->
+    <skip />
+    <!-- no translation found for emergency_call_description (6700161437750325693) -->
+    <skip />
+    <!-- no translation found for error_contact_deleted (6356539067659368396) -->
+    <skip />
+    <!-- no translation found for error_invalid_phone_number (5349049631580646136) -->
+    <skip />
+    <!-- no translation found for recent_calls_empty (5225393547325054349) -->
+    <skip />
+    <!-- no translation found for speed_dial_empty (4414061977474045646) -->
+    <skip />
+    <!-- no translation found for decline_call (2505987200485272226) -->
+    <skip />
+    <!-- no translation found for answer_call (3272474440561548115) -->
+    <skip />
+    <!-- no translation found for conference_call (9107469685942466746) -->
+    <skip />
+    <!-- no translation found for audio_route_vehicle (6274519162997743620) -->
+    <skip />
+    <!-- no translation found for audio_route_phone_speaker (407520293892557697) -->
+    <skip />
+    <!-- no translation found for audio_route_handset (1100259514278439355) -->
+    <skip />
+    <!-- no translation found for dial_a_number (7432322177412387160) -->
+    <skip />
+    <!-- no translation found for favorites_title (4767723901530488145) -->
+    <skip />
+    <!-- no translation found for call_history_title (1495905524218923242) -->
+    <skip />
+    <!-- no translation found for contacts_title (9201954388634537346) -->
+    <skip />
+    <!-- no translation found for dialpad_title (3746259645005208554) -->
+    <skip />
+    <!-- no translation found for toolbar_title_contact_details (3496576785827686428) -->
+    <skip />
+    <!-- no translation found for one (7035320445520845354) -->
+    <skip />
+    <!-- no translation found for two (5383628674885000581) -->
+    <skip />
+    <!-- no translation found for three (4041802383667139387) -->
+    <skip />
+    <!-- no translation found for four (6884921676739504544) -->
+    <skip />
+    <!-- no translation found for five (1532048408384684582) -->
+    <skip />
+    <!-- no translation found for six (8602964594650854152) -->
+    <skip />
+    <!-- no translation found for seven (3015598205323783016) -->
+    <skip />
+    <!-- no translation found for eight (4986704319242491226) -->
+    <skip />
+    <!-- no translation found for nine (6045235479556078781) -->
+    <skip />
+    <!-- no translation found for zero (3660888959063587370) -->
+    <skip />
+    <!-- no translation found for star (2866530421874915626) -->
+    <skip />
+    <!-- no translation found for pound (4266213657459846736) -->
+    <skip />
+    <!-- no translation found for two_letters (5147405565496798462) -->
+    <skip />
+    <!-- no translation found for three_letters (833949569131504015) -->
+    <skip />
+    <!-- no translation found for four_letters (8362933948345121774) -->
+    <skip />
+    <!-- no translation found for five_letters (3878341262227072611) -->
+    <skip />
+    <!-- no translation found for six_letters (5301352053197741284) -->
+    <skip />
+    <!-- no translation found for seven_letters (5084822952355925819) -->
+    <skip />
+    <!-- no translation found for eight_letters (2482082040458397365) -->
+    <skip />
+    <!-- no translation found for nine_letters (4285225196127507291) -->
+    <skip />
+    <!-- no translation found for zero_letters (8591343695513133664) -->
+    <skip />
+    <string name="one_letters" msgid="834273619582700391"></string>
+    <string name="star_letters" msgid="6911412176497610287"></string>
+    <string name="pound_letters" msgid="2571181003980511783"></string>
+    <!-- no translation found for search_title (5412680850141871664) -->
+    <skip />
+    <!-- no translation found for search_hint (3099066132607042439) -->
+    <skip />
+    <!-- no translation found for type_home (7478344114405222813) -->
+    <skip />
+    <!-- no translation found for type_work (7825922921841029320) -->
+    <skip />
+    <!-- no translation found for type_mobile (3732377479015937527) -->
+    <skip />
+    <!-- no translation found for type_multiple (3402949522797441236) -->
+    <skip />
+    <!-- no translation found for type_other (4960962576153449341) -->
+    <skip />
+    <!-- no translation found for select_number_dialog_title (5770700626013782205) -->
+    <skip />
+    <!-- no translation found for select_number_dialog_just_once_button (1814381354393374660) -->
+    <skip />
+    <!-- no translation found for select_number_dialog_always_button (6862338683635863764) -->
+    <skip />
+    <!-- no translation found for set_defaults (1047488133608639097) -->
+    <skip />
+    <!-- no translation found for primary_number_description (7428950659304219592) -->
+    <skip />
+    <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notification ng papasok na tawag"</string>
+    <!-- no translation found for notification_incoming_call (1722904631804432389) -->
+    <skip />
+</resources>
