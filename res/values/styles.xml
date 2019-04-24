@@ -71,16 +71,39 @@
 
     <!--TODO: fix it system wide instead of creating override-->
     <style name="Widget.Dialer.Toolbar" parent="*android:Widget.DeviceDefault.Toolbar">
+        <!-- No padding for navigation button which is car_margin wide -->
+        <item name="android:paddingStart">0dp</item>
+        <!-- Distance of menu item from toolbar end edge -->
+        <item name="android:paddingEnd">@*android:dimen/car_padding_4</item>
         <item name="android:contentInsetStart">@*android:dimen/car_margin</item>
         <item name="android:contentInsetEnd">@*android:dimen/car_margin</item>
+        <!-- Override the max height of navigation button and menu button -->
+        <item name="android:maxButtonHeight">?android:attr/actionBarSize</item>
         <item name="android:navigationIcon">@drawable/navigation_icon</item>
         <item name="android:titleTextAppearance">@style/TextAppearance.Dialer.Widget.Toolbar.Title
         </item>
+        <!-- Navigation button style -->
+        <item name="*android:navigationButtonStyle">@style/Widget.Dialer.Navigation</item>
     </style>
 
     <style name="TextAppearance.Dialer.Widget.Toolbar.Title"
            parent="*android:TextAppearance.DeviceDefault.Widget.Toolbar.Title">
         <item name="android:textSize">@*android:dimen/car_body1_size</item>
+    </style>
+
+    <style name="Widget.Dialer.Navigation"
+           parent="android:Widget.Material.Toolbar.Button.Navigation">
+        <item name="android:background">?android:attr/actionBarItemBackground</item>
+    </style>
+
+    <style name="Widget.Dialer.ActionButton" parent="android:Widget.DeviceDefault.ActionButton">
+        <item name="android:minWidth">@dimen/touch_target_size</item>
+        <item name="android:minHeight">@dimen/touch_target_size</item>
+    </style>
+
+    <style name="Widget.Dialer.ActionButton.Overflow" parent="android:Widget.DeviceDefault.ActionButton.Overflow">
+        <item name="android:minWidth">@dimen/touch_target_size</item>
+        <item name="android:minHeight">@dimen/touch_target_size</item>
     </style>
 
     <!-- In-call styling for everything except short landscape screens -->
