@@ -25,7 +25,10 @@ Otherwise show the back arrow.-->
         android:height="@dimen/touch_target_size"
         android:drawable="@android:color/transparent">
     </item>
-    <item android:gravity="center">
+    <item
+        android:gravity="center"
+        android:width="@dimen/primary_icon_size"
+        android:height="@dimen/primary_icon_size">
         <selector>
             <item android:state_enabled="false" android:drawable="@drawable/ic_app_icon"/>
             <item android:drawable="@drawable/ic_arrow_back"/>
