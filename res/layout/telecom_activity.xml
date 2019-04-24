@@ -18,19 +18,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <include layout="@layout/top_bar_with_tabs"/>
+        android:layout_height="match_parent">
         <!-- The main content view. Fragments will be added here. -->
         <FrameLayout
             android:id="@+id/content_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/content_top_padding"/>
-    </LinearLayout>
+            android:layout_height="match_parent"/>
+
+        <include layout="@layout/top_bar_with_tabs"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/overlay_container"

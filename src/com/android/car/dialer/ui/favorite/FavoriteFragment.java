@@ -20,11 +20,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,7 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.common.PhoneNumberListAdapter;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
@@ -42,10 +41,8 @@ import com.android.car.telephony.common.TelecomUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Contains a list of favorite contacts.
- */
-public class FavoriteFragment extends DialerBaseFragment {
+/** Contains a list of favorite contacts. */
+public class FavoriteFragment extends DialerListBaseFragment {
     private static final String TAG = "CD.FavoriteFrag";
 
     public static FavoriteFragment newInstance() {
@@ -53,18 +50,9 @@ public class FavoriteFragment extends DialerBaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        L.d(TAG, "onCreateView");
-
-        View view = inflater.inflate(R.layout.favorite_fragment, container, false);
-        RecyclerView listView = view.findViewById(R.id.list_view);
-        int numOfColumn = getContext().getResources().getInteger(
-                R.integer.favorite_fragment_grid_column);
-        listView.setLayoutManager(
-                new GridLayoutManager(getContext(), numOfColumn));
-        listView.addItemDecoration(new ItemSpacingDecoration());
-        listView.setItemAnimator(null);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getRecyclerView().addItemDecoration(new ItemSpacingDecoration());
+        getRecyclerView().setItemAnimator(null);
 
         FavoriteAdapter adapter = new FavoriteAdapter();
 
@@ -74,8 +62,15 @@ public class FavoriteFragment extends DialerBaseFragment {
         adapter.setOnListItemClickedListener(this::onItemClicked);
         favoriteContacts.observe(this, adapter::setFavoriteContacts);
 
-        listView.setAdapter(adapter);
-        return view;
+        getRecyclerView().setAdapter(adapter);
+    }
+
+    @NonNull
+    @Override
+    protected RecyclerView.LayoutManager createLayoutManager() {
+        int numOfColumn = getContext().getResources().getInteger(
+                R.integer.favorite_fragment_grid_column);
+        return new GridLayoutManager(getContext(), numOfColumn);
     }
 
     private void onItemClicked(Contact contact) {
