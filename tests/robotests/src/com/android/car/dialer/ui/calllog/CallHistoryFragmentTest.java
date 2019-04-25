@@ -112,7 +112,7 @@ public class CallHistoryFragmentTest {
                 R.id.call_type_icons);
 
         assertThat(titleView.getText()).isEqualTo(UI_CALLOG_TITLE);
-        assertThat(textView.getText()).isEqualTo(UI_CALLOG_TEXT);
+        assertThat(textView.getText().toString()).isEqualTo(UI_CALLOG_TEXT);
         assertThat(callTypeIconsView.getCallType(0)).isEqualTo(
                 CallHistoryLiveData.CallType.INCOMING_TYPE);
         assertThat(callTypeIconsView.getCallType(1)).isEqualTo(
