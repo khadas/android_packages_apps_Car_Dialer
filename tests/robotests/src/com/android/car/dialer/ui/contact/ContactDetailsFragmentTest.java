@@ -112,7 +112,7 @@ public class ContactDetailsFragmentTest {
         View firstChild = mListView.getChildAt(0);
         assertThat(((TextView) firstChild.findViewById(R.id.title)).getText().toString()).isEqualTo(
                 DISPLAY_NAME);
-        assertThat(firstChild.findViewById(R.id.card).hasOnClickListeners()).isFalse();
+        assertThat(firstChild.hasOnClickListeners()).isFalse();
     }
 
     /**
@@ -123,9 +123,9 @@ public class ContactDetailsFragmentTest {
 
         assertThat(((TextView) child.findViewById(R.id.title)).getText().toString()).isEqualTo(
                 RAW_NUMBERS[position - 1]);
-        assertThat(child.findViewById(R.id.card).hasOnClickListeners()).isTrue();
+        assertThat(child.hasOnClickListeners()).isTrue();
 
-        child.findViewById(R.id.card).performClick();
+        child.performClick();
 
         Intent startedIntent = shadowOf(mFragmentTestActivity).getNextStartedActivity();
         assertThat(startedIntent.getAction()).isEqualTo(Intent.ACTION_CALL);
