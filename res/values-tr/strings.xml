@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2015 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="phone_app_name" msgid="238824437273544459">"Telefon"</string>
+    <string name="no_hfp" msgid="7371139867234667691">"Aramanızı tamamlamak için önce telefonunuzu Bluetooth ile aracınıza bağlayın."</string>
+    <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth kullanılamıyor."</string>
+    <string name="bluetooth_disabled" msgid="1275246762067907843">"Çağrı yapmak veya almak için Bluetooth\'u açın."</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Çağrı yapmak veya almak için telefonunuzu araçla eşleştirin."</string>
+    <string name="error_network_not_available" msgid="9005062158253849135">"Ağa erişilemiyor."</string>
+    <string name="error_airplane_mode" msgid="3381606616960325205">"Telefon uçak modunda."</string>
+    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth bağlı değil."</string>
+    <string name="emergency_button_text" msgid="3467659545392931727">"Acil durum"</string>
+    <string name="emergency_call_description" msgid="6700161437750325693">"Acil durum araması"</string>
+    <string name="error_contact_deleted" msgid="6356539067659368396">"Bu kişi silinmiş olabilir."</string>
+    <string name="error_invalid_phone_number" msgid="5349049631580646136">"Bu numara aranamıyor. Numarayı kontrol edip tekrar deneyin."</string>
+    <string name="recent_calls_empty" msgid="5225393547325054349">"Arama kaydınız boş."</string>
+    <string name="speed_dial_empty" msgid="4414061977474045646">"Hızlı Arama, favorilerinizin ve sıklıkla aradığınız numaraların tek tuşla aranmasını sağlar"</string>
+    <string name="decline_call" msgid="2505987200485272226">"Reddet"</string>
+    <string name="answer_call" msgid="3272474440561548115">"Yanıtla"</string>
+    <string name="conference_call" msgid="9107469685942466746">"Konferans araması"</string>
+    <string name="audio_route_vehicle" msgid="6274519162997743620">"Araç Bluetooth\'u"</string>
+    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Hoparlör"</string>
+    <string name="audio_route_handset" msgid="1100259514278439355">"Ahize"</string>
+    <string name="dial_a_number" msgid="7432322177412387160">"Numara çevir"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"Favoriler"</string>
+    <string name="call_history_title" msgid="1495905524218923242">"Çağrı Geçmişi"</string>
+    <string name="contacts_title" msgid="9201954388634537346">"Kişiler"</string>
+    <string name="dialpad_title" msgid="3746259645005208554">"Tuş takımı"</string>
+    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Kişi bilgileri"</string>
+    <string name="one" msgid="7035320445520845354">"1"</string>
+    <string name="two" msgid="5383628674885000581">"2"</string>
+    <string name="three" msgid="4041802383667139387">"3"</string>
+    <string name="four" msgid="6884921676739504544">"4"</string>
+    <string name="five" msgid="1532048408384684582">"5"</string>
+    <string name="six" msgid="8602964594650854152">"6"</string>
+    <string name="seven" msgid="3015598205323783016">"7"</string>
+    <string name="eight" msgid="4986704319242491226">"8"</string>
+    <string name="nine" msgid="6045235479556078781">"9"</string>
+    <string name="zero" msgid="3660888959063587370">"0"</string>
+    <string name="star" msgid="2866530421874915626">"*"</string>
+    <string name="pound" msgid="4266213657459846736">"#"</string>
+    <string name="two_letters" msgid="5147405565496798462">"ABC"</string>
+    <string name="three_letters" msgid="833949569131504015">"DEF"</string>
+    <string name="four_letters" msgid="8362933948345121774">"GHI"</string>
+    <string name="five_letters" msgid="3878341262227072611">"JKL"</string>
+    <string name="six_letters" msgid="5301352053197741284">"MNO"</string>
+    <string name="seven_letters" msgid="5084822952355925819">"PQRS"</string>
+    <string name="eight_letters" msgid="2482082040458397365">"TUV"</string>
+    <string name="nine_letters" msgid="4285225196127507291">"WXYZ"</string>
+    <string name="zero_letters" msgid="8591343695513133664">"+"</string>
+    <string name="one_letters" msgid="834273619582700391"></string>
+    <string name="star_letters" msgid="6911412176497610287"></string>
+    <string name="pound_letters" msgid="2571181003980511783"></string>
+    <string name="search_title" msgid="5412680850141871664">"Kişilerde arayın"</string>
+    <string name="search_hint" msgid="3099066132607042439">"Kişilerde arayın"</string>
+    <string name="type_home" msgid="7478344114405222813">"Ev"</string>
+    <string name="type_work" msgid="7825922921841029320">"İş"</string>
+    <string name="type_mobile" msgid="3732377479015937527">"Cep"</string>
+    <string name="type_multiple" msgid="3402949522797441236">"Birden fazla"</string>
+    <string name="type_other" msgid="4960962576153449341">"Diğer"</string>
+    <string name="select_number_dialog_title" msgid="5770700626013782205">"Telefon numarası seçin"</string>
+    <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Yalnızca bir defa"</string>
+    <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Her zaman"</string>
+    <string name="set_defaults" msgid="1047488133608639097">"Varsayılanları ayarla"</string>
+    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> - Varsayılan"</string>
+    <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Gelen arama bildirimi"</string>
+    <string name="notification_incoming_call" msgid="1722904631804432389">"Gelen arama"</string>
+</resources>
