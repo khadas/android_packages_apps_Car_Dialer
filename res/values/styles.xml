@@ -115,4 +115,9 @@
         <item name="android:textColor">#B8FFFFFF</item>
     </style>
 
+    <!-- Contact details -->
+    <style name="contact_details_title" parent="@style/TextAppearance.Display2"/>
+    <style name="contact_details_list_item_title_text" parent="@style/TextAppearance.Body1"/>
+    <style name="contact_details_list_item_subtitle_text" parent="@style/TextAppearance.Body3"/>
+
 </resources>

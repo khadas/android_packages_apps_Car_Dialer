@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.ui.view.ListItemOutlineResolver;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
@@ -48,15 +47,12 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
     private static final int ID_CONTENT = 2;
 
     private final Context mContext;
-    private final float mRoundedCornerRadius;
 
     private Contact mContact;
 
     public ContactDetailsAdapter(@NonNull Context context, @Nullable Contact contact) {
         super();
         mContext = context;
-        mRoundedCornerRadius = mContext.getResources().getDimension(
-                R.dimen.contact_detail_card_corner_radius);
         mContact = contact;
     }
 
@@ -98,8 +94,6 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
 
     @Override
     public void onBindViewHolder(ContactDetailsViewHolder viewHolder, int position) {
-        ListItemOutlineResolver.setOutline(viewHolder.itemView, mRoundedCornerRadius, position,
-                getItemCount());
         switch (viewHolder.getItemViewType()) {
             case ID_HEADER:
                 viewHolder.title.setText(
@@ -107,11 +101,13 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
                                 : mContact.getDisplayName());
                 TelecomUtils.setContactBitmapAsync(mContext, viewHolder.avatar, mContact, null);
                 // Just in case a viewholder object gets recycled.
-                viewHolder.card.setOnClickListener(null);
+                viewHolder.itemView.setOnClickListener(null);
                 break;
             case ID_CONTENT:
                 PhoneNumber phoneNumber = mContact.getNumbers().get(position - 1);
-                viewHolder.title.setText(phoneNumber.getRawNumber());  // Number
+
+                viewHolder.title.setText(phoneNumber.getRawNumber());
+
                 // Present the phone number type.
                 CharSequence readableLabel = phoneNumber.getReadableLabel(mContext.getResources());
                 if (phoneNumber.isPrimary()) {
@@ -120,12 +116,21 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
                 } else {
                     viewHolder.text.setText(readableLabel);
                 }
-                viewHolder.leftIcon.setImageResource(R.drawable.ic_phone);
-                viewHolder.card.setOnClickListener(v -> {
+
+                viewHolder.itemView.setOnClickListener(v -> {
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse(TELEPHONE_URI_PREFIX + phoneNumber.getRawNumber()));
                     mContext.startActivity(callIntent);
                 });
+
+                viewHolder.sendTextTouchTarget.setOnClickListener(v -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("smsto:"));
+                    intent.setType("vnd.android-dir/mms-sms");
+                    intent.putExtra("address", phoneNumber.getRawNumber());
+                    mContext.startActivity(intent);
+                });
+
                 break;
             default:
                 Log.e(TAG, "Unknown view type " + viewHolder.getItemViewType());
