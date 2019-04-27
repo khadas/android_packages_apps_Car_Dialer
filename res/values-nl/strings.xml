@@ -16,128 +16,68 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- no translation found for phone_app_name (238824437273544459) -->
-    <skip />
-    <!-- no translation found for no_hfp (7371139867234667691) -->
-    <skip />
-    <!-- no translation found for bluetooth_unavailable (5258854283739591569) -->
-    <skip />
-    <!-- no translation found for bluetooth_disabled (1275246762067907843) -->
-    <skip />
-    <!-- no translation found for bluetooth_unpaired (1600552386483652892) -->
-    <skip />
-    <!-- no translation found for error_network_not_available (9005062158253849135) -->
-    <skip />
-    <!-- no translation found for error_airplane_mode (3381606616960325205) -->
-    <skip />
-    <!-- no translation found for error_no_hfp (5157534181401876925) -->
-    <skip />
-    <!-- no translation found for emergency_button_text (3467659545392931727) -->
-    <skip />
-    <!-- no translation found for emergency_call_description (6700161437750325693) -->
-    <skip />
-    <!-- no translation found for error_contact_deleted (6356539067659368396) -->
-    <skip />
-    <!-- no translation found for error_invalid_phone_number (5349049631580646136) -->
-    <skip />
-    <!-- no translation found for recent_calls_empty (5225393547325054349) -->
-    <skip />
-    <!-- no translation found for speed_dial_empty (4414061977474045646) -->
-    <skip />
-    <!-- no translation found for decline_call (2505987200485272226) -->
-    <skip />
-    <!-- no translation found for answer_call (3272474440561548115) -->
-    <skip />
-    <!-- no translation found for conference_call (9107469685942466746) -->
-    <skip />
-    <!-- no translation found for audio_route_vehicle (6274519162997743620) -->
-    <skip />
-    <!-- no translation found for audio_route_phone_speaker (407520293892557697) -->
-    <skip />
-    <!-- no translation found for audio_route_handset (1100259514278439355) -->
-    <skip />
-    <!-- no translation found for dial_a_number (7432322177412387160) -->
-    <skip />
-    <!-- no translation found for favorites_title (4767723901530488145) -->
-    <skip />
-    <!-- no translation found for call_history_title (1495905524218923242) -->
-    <skip />
-    <!-- no translation found for contacts_title (9201954388634537346) -->
-    <skip />
-    <!-- no translation found for dialpad_title (3746259645005208554) -->
-    <skip />
-    <!-- no translation found for toolbar_title_contact_details (3496576785827686428) -->
-    <skip />
-    <!-- no translation found for one (7035320445520845354) -->
-    <skip />
-    <!-- no translation found for two (5383628674885000581) -->
-    <skip />
-    <!-- no translation found for three (4041802383667139387) -->
-    <skip />
-    <!-- no translation found for four (6884921676739504544) -->
-    <skip />
-    <!-- no translation found for five (1532048408384684582) -->
-    <skip />
-    <!-- no translation found for six (8602964594650854152) -->
-    <skip />
-    <!-- no translation found for seven (3015598205323783016) -->
-    <skip />
-    <!-- no translation found for eight (4986704319242491226) -->
-    <skip />
-    <!-- no translation found for nine (6045235479556078781) -->
-    <skip />
-    <!-- no translation found for zero (3660888959063587370) -->
-    <skip />
-    <!-- no translation found for star (2866530421874915626) -->
-    <skip />
-    <!-- no translation found for pound (4266213657459846736) -->
-    <skip />
-    <!-- no translation found for two_letters (5147405565496798462) -->
-    <skip />
-    <!-- no translation found for three_letters (833949569131504015) -->
-    <skip />
-    <!-- no translation found for four_letters (8362933948345121774) -->
-    <skip />
-    <!-- no translation found for five_letters (3878341262227072611) -->
-    <skip />
-    <!-- no translation found for six_letters (5301352053197741284) -->
-    <skip />
-    <!-- no translation found for seven_letters (5084822952355925819) -->
-    <skip />
-    <!-- no translation found for eight_letters (2482082040458397365) -->
-    <skip />
-    <!-- no translation found for nine_letters (4285225196127507291) -->
-    <skip />
-    <!-- no translation found for zero_letters (8591343695513133664) -->
-    <skip />
+    <string name="phone_app_name" msgid="238824437273544459">"Telefoon"</string>
+    <string name="no_hfp" msgid="7371139867234667691">"Als je wilt bellen, moet je je telefoon eerst via Bluetooth verbinden met de auto."</string>
+    <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth is niet beschikbaar."</string>
+    <string name="bluetooth_disabled" msgid="1275246762067907843">"Schakel Bluetooth in als je gesprekken wilt plaatsen of ontvangen."</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Als je gesprekken wilt plaatsen of ontvangen, koppel je je telefoon met de auto."</string>
+    <string name="error_network_not_available" msgid="9005062158253849135">"Netwerk niet beschikbaar."</string>
+    <string name="error_airplane_mode" msgid="3381606616960325205">"Telefoon is in de vliegtuigmodus."</string>
+    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth is niet verbonden."</string>
+    <string name="emergency_button_text" msgid="3467659545392931727">"Noodgeval"</string>
+    <string name="emergency_call_description" msgid="6700161437750325693">"Noodoproep"</string>
+    <string name="error_contact_deleted" msgid="6356539067659368396">"Dit contact is mogelijk al verwijderd."</string>
+    <string name="error_invalid_phone_number" msgid="5349049631580646136">"Kan dit nummer niet bellen. Controleer het nummer en probeer het opnieuw."</string>
+    <string name="recent_calls_empty" msgid="5225393547325054349">"Je gesprekkenlijst is leeg."</string>
+    <string name="speed_dial_empty" msgid="4414061977474045646">"Met Snelkiezen kun je met één keer tikken favorieten en vaak gebelde nummers bellen"</string>
+    <string name="decline_call" msgid="2505987200485272226">"Weigeren"</string>
+    <string name="answer_call" msgid="3272474440561548115">"Beantwoorden"</string>
+    <string name="conference_call" msgid="9107469685942466746">"Conferencecall"</string>
+    <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth van voertuig"</string>
+    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Luidspreker"</string>
+    <string name="audio_route_handset" msgid="1100259514278439355">"Handset"</string>
+    <string name="dial_a_number" msgid="7432322177412387160">"Een nummer kiezen"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"Favorieten"</string>
+    <string name="call_history_title" msgid="1495905524218923242">"Gespreksgeschiedenis"</string>
+    <string name="contacts_title" msgid="9201954388634537346">"Contacten"</string>
+    <string name="dialpad_title" msgid="3746259645005208554">"Toetsenblok"</string>
+    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Contactgegevens"</string>
+    <string name="one" msgid="7035320445520845354">"1"</string>
+    <string name="two" msgid="5383628674885000581">"2"</string>
+    <string name="three" msgid="4041802383667139387">"3"</string>
+    <string name="four" msgid="6884921676739504544">"4"</string>
+    <string name="five" msgid="1532048408384684582">"5"</string>
+    <string name="six" msgid="8602964594650854152">"6"</string>
+    <string name="seven" msgid="3015598205323783016">"7"</string>
+    <string name="eight" msgid="4986704319242491226">"8"</string>
+    <string name="nine" msgid="6045235479556078781">"9"</string>
+    <string name="zero" msgid="3660888959063587370">"0"</string>
+    <string name="star" msgid="2866530421874915626">"*"</string>
+    <string name="pound" msgid="4266213657459846736">"#"</string>
+    <string name="two_letters" msgid="5147405565496798462">"ABC"</string>
+    <string name="three_letters" msgid="833949569131504015">"DEF"</string>
+    <string name="four_letters" msgid="8362933948345121774">"GHI"</string>
+    <string name="five_letters" msgid="3878341262227072611">"JKL"</string>
+    <string name="six_letters" msgid="5301352053197741284">"MNO"</string>
+    <string name="seven_letters" msgid="5084822952355925819">"PQRS"</string>
+    <string name="eight_letters" msgid="2482082040458397365">"TUV"</string>
+    <string name="nine_letters" msgid="4285225196127507291">"WXYZ"</string>
+    <string name="zero_letters" msgid="8591343695513133664">"+"</string>
     <string name="one_letters" msgid="834273619582700391"></string>
     <string name="star_letters" msgid="6911412176497610287"></string>
     <string name="pound_letters" msgid="2571181003980511783"></string>
-    <!-- no translation found for search_title (5412680850141871664) -->
-    <skip />
-    <!-- no translation found for search_hint (3099066132607042439) -->
-    <skip />
-    <!-- no translation found for type_home (7478344114405222813) -->
-    <skip />
-    <!-- no translation found for type_work (7825922921841029320) -->
-    <skip />
-    <!-- no translation found for type_mobile (3732377479015937527) -->
-    <skip />
-    <!-- no translation found for type_multiple (3402949522797441236) -->
-    <skip />
-    <!-- no translation found for type_other (4960962576153449341) -->
-    <skip />
-    <!-- no translation found for select_number_dialog_title (5770700626013782205) -->
-    <skip />
-    <!-- no translation found for select_number_dialog_just_once_button (1814381354393374660) -->
-    <skip />
-    <!-- no translation found for select_number_dialog_always_button (6862338683635863764) -->
-    <skip />
-    <!-- no translation found for set_defaults (1047488133608639097) -->
-    <skip />
-    <!-- no translation found for primary_number_description (7428950659304219592) -->
-    <skip />
+    <string name="search_title" msgid="5412680850141871664">"Contacten zoeken"</string>
+    <string name="search_hint" msgid="3099066132607042439">"Contacten zoeken"</string>
+    <string name="type_home" msgid="7478344114405222813">"Thuis"</string>
+    <string name="type_work" msgid="7825922921841029320">"Werk"</string>
+    <string name="type_mobile" msgid="3732377479015937527">"Mobiel"</string>
+    <string name="type_multiple" msgid="3402949522797441236">"Meerdere"</string>
+    <string name="type_other" msgid="4960962576153449341">"Overig"</string>
+    <string name="select_number_dialog_title" msgid="5770700626013782205">"Een telefoonnummer kiezen"</string>
+    <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Eén keer"</string>
+    <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Altijd"</string>
+    <string name="set_defaults" msgid="1047488133608639097">"Standaardwaarden instellen"</string>
+    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> - Standaard"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Melding over inkomend gesprek"</string>
-    <!-- no translation found for notification_incoming_call (1722904631804432389) -->
-    <skip />
+    <string name="notification_incoming_call" msgid="1722904631804432389">"Inkomend gesprek"</string>
 </resources>
