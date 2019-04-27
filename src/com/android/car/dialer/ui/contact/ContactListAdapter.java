@@ -20,10 +20,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.dialer.R;
-import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.Contact;
 
 import java.util.ArrayList;
