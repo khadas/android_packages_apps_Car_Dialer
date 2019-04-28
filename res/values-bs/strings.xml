@@ -17,31 +17,31 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="phone_app_name" msgid="238824437273544459">"Telefon"</string>
-    <string name="no_hfp" msgid="7371139867234667691">"Da biste uputili ili prihvatili poziv, najprije povežite telefon s automobilom putem Bluetootha."</string>
+    <string name="no_hfp" msgid="7371139867234667691">"Da uspostavite poziv, najprije povežite telefon s automobilom preko Bluetootha."</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth nije dostupan."</string>
-    <string name="bluetooth_disabled" msgid="1275246762067907843">"Da biste upućivali ili primali pozive, uključite Bluetooth."</string>
-    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Da biste upućivali ili primali pozive, uparite telefon s automobilom."</string>
+    <string name="bluetooth_disabled" msgid="1275246762067907843">"Za upućivanje ili primanje poziva uključite Bluetooth."</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Za upućivanje ili primanje poziva uparite telefon s automobilom."</string>
     <string name="error_network_not_available" msgid="9005062158253849135">"Mreža nije dostupna."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Telefon je u načinu rada u zrakoplovu."</string>
+    <string name="error_airplane_mode" msgid="3381606616960325205">"Telefon je u načinu rada u avionu."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth nije povezan."</string>
-    <string name="emergency_button_text" msgid="3467659545392931727">"Hitno"</string>
+    <string name="emergency_button_text" msgid="3467659545392931727">"Hitan slučaj"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Hitni poziv"</string>
-    <string name="error_contact_deleted" msgid="6356539067659368396">"Taj je kontakt možda izbrisan."</string>
-    <string name="error_invalid_phone_number" msgid="5349049631580646136">"Biranje tog broja nije uspjelo. Provjerite broj i pokušajte ponovo."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Vaš je zapisnik poziva prazan."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Brzo biranje omogućuje vam da jednim dodirom birate favorite i brojeve koje često zovete"</string>
+    <string name="error_contact_deleted" msgid="6356539067659368396">"Moguće je da je ovaj kontakt izbrisan."</string>
+    <string name="error_invalid_phone_number" msgid="5349049631580646136">"Nije moguće birati ovaj broj. Provjerite ga i pokušajte ponovo."</string>
+    <string name="recent_calls_empty" msgid="5225393547325054349">"Popis poziva je prazan."</string>
+    <string name="speed_dial_empty" msgid="4414061977474045646">"Brzo biranje omogućava da jednim dodirom birate omiljene brojeve i brojeve koje često pozivate"</string>
     <string name="decline_call" msgid="2505987200485272226">"Odbij"</string>
     <string name="answer_call" msgid="3272474440561548115">"Odgovori"</string>
     <string name="conference_call" msgid="9107469685942466746">"Konferencijski poziv"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth vozila"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Telefonski zvučnik"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"Slušalica"</string>
+    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Zvučnik"</string>
+    <string name="audio_route_handset" msgid="1100259514278439355">"Slušalice"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Biraj broj"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"Favoriti"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"Povijest poziva"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"Omiljeno"</string>
+    <string name="call_history_title" msgid="1495905524218923242">"Historija poziva"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontakti"</string>
-    <string name="dialpad_title" msgid="3746259645005208554">"Površina za biranje brojeva"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Podaci za kontakt"</string>
+    <string name="dialpad_title" msgid="3746259645005208554">"Telefonska tipkovnica"</string>
+    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Detalji o kontaktu"</string>
     <string name="one" msgid="7035320445520845354">"1"</string>
     <string name="two" msgid="5383628674885000581">"2"</string>
     <string name="three" msgid="4041802383667139387">"3"</string>
@@ -70,13 +70,13 @@
     <string name="search_hint" msgid="3099066132607042439">"Pretražite kontakte"</string>
     <string name="type_home" msgid="7478344114405222813">"Dom"</string>
     <string name="type_work" msgid="7825922921841029320">"Posao"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Mobilni uređaj"</string>
-    <string name="type_multiple" msgid="3402949522797441236">"Više brojeva"</string>
+    <string name="type_mobile" msgid="3732377479015937527">"Mobilni"</string>
+    <string name="type_multiple" msgid="3402949522797441236">"Višestruko"</string>
     <string name="type_other" msgid="4960962576153449341">"Drugo"</string>
-    <string name="select_number_dialog_title" msgid="5770700626013782205">"Odaberite telefonski broj"</string>
-    <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Samo jednom"</string>
+    <string name="select_number_dialog_title" msgid="5770700626013782205">"Odaberite broj telefona"</string>
+    <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Samo ovaj put"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Uvijek"</string>
-    <string name="set_defaults" msgid="1047488133608639097">"Postavljanje zadanih postavki"</string>
+    <string name="set_defaults" msgid="1047488133608639097">"Postavi zadano"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – zadano"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Obavještenja tokom dolaznog poziva"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Dolazni poziv"</string>
