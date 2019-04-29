@@ -18,7 +18,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_contact_default_number"
-        android:title="@string/set_defaults"
+        android:title="@string/set_default_number"
         android:actionProviderClass="com.android.car.dialer.ui.contact.ContactDefaultNumberActionProvider"
         android:showAsAction="never"/>
 </menu>

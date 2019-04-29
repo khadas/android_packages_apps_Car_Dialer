@@ -62,7 +62,7 @@ public class ContactDefaultNumberActionProvider extends ActionProvider {
                 mContact.hasPrimaryPhoneNumber() ? contactPhoneNumbers.indexOf(
                         mContact.getPrimaryPhoneNumber()) : -1;
         AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                .setTitle(R.string.set_defaults)
+                .setTitle(R.string.set_default_number)
                 .setSingleChoiceItems(
                         new PhoneNumberListAdapter(mContext, contactPhoneNumbers),
                         primaryPhoneNumberIndex,
