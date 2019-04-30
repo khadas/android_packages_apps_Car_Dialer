@@ -14,20 +14,11 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
-<LinearLayout
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/app_bar_background_color"
-    android:orientation="vertical">
-    <com.android.car.apps.common.ClickThroughToolbar
-        android:id="@+id/car_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"/>
-
-    <com.android.car.apps.common.widget.CarTabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"/>
-</LinearLayout>
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/list_margin"
+    android:paddingEnd="@dimen/list_margin"
+    android:clipToPadding="false"/>
