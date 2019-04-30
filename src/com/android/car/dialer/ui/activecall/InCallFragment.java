@@ -118,15 +118,20 @@ public class InCallFragment extends Fragment implements
         TextView nameView = mUserProfileContainerView.findViewById(R.id.user_profile_title);
         nameView.setText(displayNameAndAvatarUri.first);
 
-        TextView phoneNumberView
-                = mUserProfileContainerView.findViewById(R.id.user_profile_phone_number);
-
         String phoneNumberLabel = TelecomUtils.getTypeFromNumber(getContext(), number).toString();
         if(!phoneNumberLabel.isEmpty()) {
             phoneNumberLabel += " ";
         }
         phoneNumberLabel += TelecomUtils.getFormattedNumber(getContext(), number);
-        phoneNumberView.setText(phoneNumberLabel);
+
+        TextView phoneNumberView
+                = mUserProfileContainerView.findViewById(R.id.user_profile_phone_number);
+        if(!phoneNumberLabel.equals(displayNameAndAvatarUri.first)) {
+            phoneNumberView.setText(phoneNumberLabel);
+            phoneNumberView.setVisibility(View.VISIBLE);
+        } else {
+            phoneNumberView.setVisibility(View.GONE);
+        }
 
         ImageView avatar = mUserProfileContainerView.findViewById(R.id.user_profile_avatar);
 
