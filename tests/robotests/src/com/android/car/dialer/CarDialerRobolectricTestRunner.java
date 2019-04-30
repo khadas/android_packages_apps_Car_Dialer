@@ -96,7 +96,7 @@ public class CarDialerRobolectricTestRunner extends RobolectricTestRunner {
             // Using the manifest file's relative path, we can figure out the application directory.
             URL appRoot = new URL("file:packages/apps/Car/Dialer/");
             URL manifestPath = new URL(appRoot, "AndroidManifest.xml");
-            URL resDir = new URL(appRoot, "res");
+            URL resDir = new URL(appRoot, "tests/robotests/res");
             URL assetsDir = new URL(appRoot, config.assetDir());
 
             // By adding any resources from libraries we need to the AndroidManifest, we can access
@@ -107,7 +107,7 @@ public class CarDialerRobolectricTestRunner extends RobolectricTestRunner {
                 public List<ResourcePath> getIncludedResourcePaths() {
                     List<ResourcePath> paths = super.getIncludedResourcePaths();
                     paths.add(createResourcePath(
-                            "file:packages/apps/Car/Dialer/tests/robotests/res"));
+                            "file:packages/apps/Car/Dialer/res"));
 
                     // Support library resources. These need to point to the prebuilts of support
                     // library and not the source.

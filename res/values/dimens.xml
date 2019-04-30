@@ -92,7 +92,6 @@
     <dimen name="dialpad_fragment_margin">@*android:dimen/car_margin</dimen>
     <dimen name="dialpad_info_guideline">@dimen/touch_target_size</dimen>
     <dimen name="dialpad_info_guideline_in_call" format="float">0.5</dimen>
-    <dimen name="dialpad_display_name_size">32sp</dimen>
     <dimen name="display_name_padding">@*android:dimen/car_padding_3</dimen>
     <dimen name="call_state_padding">@*android:dimen/car_padding_3</dimen>
 

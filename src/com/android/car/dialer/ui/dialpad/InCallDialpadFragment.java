@@ -79,6 +79,10 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
 
     @Override
     void presentDialedNumber(@NonNull StringBuffer number) {
+        if (getActivity() == null) {
+            return;
+        }
+
         if (number.length() == 0) {
             mTitleView.setText("");
         } else {
