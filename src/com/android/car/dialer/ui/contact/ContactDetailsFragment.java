@@ -18,21 +18,18 @@ package com.android.car.dialer.ui.contact;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.telephony.common.Contact;
 
 import java.util.ArrayList;
@@ -43,7 +40,7 @@ import java.util.List;
  * primarily used to respond to the results of search queries but supplyig it with the content://
  * uri of a contact should work too.
  */
-public class ContactDetailsFragment extends DialerBaseFragment {
+public class ContactDetailsFragment extends DialerListBaseFragment {
     private static final String TAG = "CD.ContactDetailsFragment";
     public static final String FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
 
@@ -53,7 +50,6 @@ public class ContactDetailsFragment extends DialerBaseFragment {
     // Key to load the contact details by passing in the content provider query uri.
     private static final String KEY_CONTACT_QUERY_URI = "ContactQueryUri";
 
-    private RecyclerView mListView;
     private final List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
 
     private Contact mContact;
@@ -110,24 +106,15 @@ public class ContactDetailsFragment extends DialerBaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.contact_details_fragment, container, false);
-    }
-
-    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mListView = view.findViewById(R.id.list_view);
-        mListView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
-            mListView.addOnScrollListener(listener);
+            getRecyclerView().addOnScrollListener(listener);
         }
         mOnScrollListeners.clear();
 
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
                 mContact);
-        mListView.setAdapter(contactDetailsAdapter);
+        getRecyclerView().setAdapter(contactDetailsAdapter);
         mContactDetailsLiveData.observe(this, contactDetailsAdapter::setContact);
     }
 
@@ -142,12 +129,12 @@ public class ContactDetailsFragment extends DialerBaseFragment {
             return;
         }
         // If the view has not been created yet, then queue the setting of the scroll listener.
-        if (mListView == null) {
+        if (getRecyclerView() == null) {
             mOnScrollListeners.add(onScrollListener);
             return;
         }
 
-        mListView.addOnScrollListener(onScrollListener);
+        getRecyclerView().addOnScrollListener(onScrollListener);
     }
 
     @Override
@@ -159,7 +146,7 @@ public class ContactDetailsFragment extends DialerBaseFragment {
     @Override
     public void onDestroyView() {
         // Clear all scroll listeners.
-        mListView.removeOnScrollListener(null);
+        getRecyclerView().removeOnScrollListener(null);
         super.onDestroyView();
     }
 

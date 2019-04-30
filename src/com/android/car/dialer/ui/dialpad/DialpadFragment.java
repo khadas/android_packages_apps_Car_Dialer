@@ -118,8 +118,6 @@ public class DialpadFragment extends DialerBaseFragment implements
 
     /**
      * Creates a new instance of the {@link DialpadFragment} which is used for dialing a number.
-     *
-     * @param dialNumber The given number as the one to dial.
      */
     public static DialpadFragment newPlaceCallDialpad() {
         DialpadFragment fragment = newDialpad(MODE_DIAL);
@@ -164,6 +162,9 @@ public class DialpadFragment extends DialerBaseFragment implements
         L.d(TAG, "onCreateView mode: %s, number: %s", mMode, mNumber);
 
         View rootView = inflater.inflate(R.layout.dialpad_fragment, container, false);
+        // Offset the dialpad to under the tabs in dial mode.
+        rootView.setPadding(0, getTopOffset(), 0, 0);
+
         mTitleView = rootView.findViewById(R.id.title);
         mTitleView.setTextAppearance(
                 mMode == MODE_EMERGENCY ? R.style.EmergencyDialNumber : R.style.DialNumber);
@@ -356,5 +357,12 @@ public class DialpadFragment extends DialerBaseFragment implements
         }
         mDisplayName.setVisibility(View.VISIBLE);
         mDisplayName.setText(contact.getDisplayName());
+    }
+
+    private int getTopOffset() {
+        if (mMode == MODE_DIAL) {
+            return getTopBarHeight();
+        }
+        return 0;
     }
 }

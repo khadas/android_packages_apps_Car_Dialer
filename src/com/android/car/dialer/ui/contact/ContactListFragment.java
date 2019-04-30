@@ -17,25 +17,20 @@
 package com.android.car.dialer.ui.contact;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.car.dialer.R;
-import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.telephony.common.Contact;
 
 /**
  * Contact Fragment.
  */
-public class ContactListFragment extends DialerBaseFragment implements
+public class ContactListFragment extends DialerListBaseFragment implements
         ContactListAdapter.OnShowContactDetailListener {
     private ContactListAdapter mContactListAdapter;
 
@@ -44,20 +39,14 @@ public class ContactListFragment extends DialerBaseFragment implements
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.contact_list_fragment, container, false);
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mContactListAdapter = new ContactListAdapter(
                 getContext(), /* onShowContactDetailListener= */this);
-        RecyclerView recyclerView = fragmentView.findViewById(R.id.list_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(mContactListAdapter);
+        getRecyclerView().setAdapter(mContactListAdapter);
 
         ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
                 ContactListViewModel.class);
         contactListViewModel.getAllContacts().observe(this, mContactListAdapter::setContactList);
-        return fragmentView;
     }
 
     @Override
