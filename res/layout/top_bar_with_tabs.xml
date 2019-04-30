@@ -17,11 +17,10 @@
 
 <com.android.car.apps.common.ClickThroughToolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/car_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
-    app:clickThrough="true">
+    android:background="@color/app_bar_background_color">
     <com.android.car.apps.common.widget.CarTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="wrap_content"

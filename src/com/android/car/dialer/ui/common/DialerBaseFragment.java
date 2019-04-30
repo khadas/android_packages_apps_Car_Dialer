@@ -20,6 +20,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,9 +28,7 @@ import androidx.fragment.app.Fragment;
 import com.android.car.apps.common.util.Themes;
 import com.android.car.dialer.R;
 
-/**
- * The base class for top level Dialer Fragments.
- */
+/** The base class for top level dialer content {@link Fragment}s. */
 public abstract class DialerBaseFragment extends Fragment {
 
     /**
@@ -86,10 +85,22 @@ public abstract class DialerBaseFragment extends Fragment {
         }
     }
 
-    /**
-     * Return the action bar title.
-     */
+    /** Return the action bar title. */
     protected CharSequence getActionBarTitle() {
         return getString(R.string.default_toolbar_title);
+    }
+
+    protected int getTopBarHeight() {
+        View toolbar = getActivity().findViewById(R.id.car_toolbar);
+
+        int backStackEntryCount =
+                getActivity().getSupportFragmentManager().getBackStackEntryCount();
+        int topBarHeight = Themes.getAttrDimensionPixelSize(getContext(),
+                android.R.attr.actionBarSize);
+        // Tabs are not child of the toolbar and tabs are visible.
+        if (toolbar.findViewById(R.id.tab_layout) == null && backStackEntryCount == 1) {
+            topBarHeight += topBarHeight;
+        }
+        return topBarHeight;
     }
 }

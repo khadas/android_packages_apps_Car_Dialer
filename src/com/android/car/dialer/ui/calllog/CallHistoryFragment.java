@@ -16,23 +16,19 @@
 package com.android.car.dialer.ui.calllog;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.car.dialer.R;
-import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsFragment;
 import com.android.car.telephony.common.Contact;
 
-public class CallHistoryFragment extends DialerBaseFragment implements
+/** Fragment for call history page. */
+public class CallHistoryFragment extends DialerListBaseFragment implements
         CallLogAdapter.OnShowContactDetailListener {
     private static final String CONTACT_DETAIL_FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
 
@@ -40,24 +36,16 @@ public class CallHistoryFragment extends DialerBaseFragment implements
         return new CallHistoryFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.call_list_fragment, container, false);
-        RecyclerView recyclerView = fragmentView.findViewById(R.id.list_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         CallLogAdapter callLogAdapter = new CallLogAdapter(
                 getContext(), /* onShowContactDetailListener= */this);
-        recyclerView.setAdapter(callLogAdapter);
+        getRecyclerView().setAdapter(callLogAdapter);
 
         CallHistoryViewModel viewModel = ViewModelProviders.of(this).get(
                 CallHistoryViewModel.class);
 
         viewModel.getCallHistory().observe(this, callLogAdapter::setUiCallLogs);
-
-        return fragmentView;
     }
 
     @Override

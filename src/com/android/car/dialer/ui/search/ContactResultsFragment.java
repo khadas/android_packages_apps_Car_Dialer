@@ -21,31 +21,27 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.ui.common.DialerBaseFragment;
+import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsFragment;
-import com.android.car.dialer.ui.view.VerticalListDividerDecoration;
 
 /**
  * A fragment that will take a search query, look up contacts that match and display those
  * results as a list.
  */
-public class ContactResultsFragment extends DialerBaseFragment implements
+public class ContactResultsFragment extends DialerListBaseFragment implements
         ContactResultsAdapter.OnShowContactDetailListener {
 
     /**
@@ -70,7 +66,6 @@ public class ContactResultsFragment extends DialerBaseFragment implements
     private ContactResultsViewModel mContactResultsViewModel;
     private final ContactResultsAdapter mAdapter = new ContactResultsAdapter(this);
 
-    private RecyclerView mContactResultList;
     private RecyclerView.OnScrollListener mOnScrollChangeListener;
     private SearchView mSearchView;
 
@@ -96,17 +91,8 @@ public class ContactResultsFragment extends DialerBaseFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.contact_result_fragment, container, false);
-    }
-
-    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mContactResultList = view.findViewById(R.id.contact_result_list);
-        mContactResultList.setLayoutManager(new LinearLayoutManager(getContext()));
-        mContactResultList.addItemDecoration(new VerticalListDividerDecoration(getContext(), true));
-        mContactResultList.setAdapter(mAdapter);
+        getRecyclerView().setAdapter(mAdapter);
 
         mOnScrollChangeListener = new RecyclerView.OnScrollListener() {
             @Override
@@ -120,13 +106,13 @@ public class ContactResultsFragment extends DialerBaseFragment implements
                 }
             }
         };
-        mContactResultList.addOnScrollListener(mOnScrollChangeListener);
+        getRecyclerView().addOnScrollListener(mOnScrollChangeListener);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mContactResultList.removeOnScrollListener(mOnScrollChangeListener);
+        getRecyclerView().removeOnScrollListener(mOnScrollChangeListener);
     }
 
     @Override
