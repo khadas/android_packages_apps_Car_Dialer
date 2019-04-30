@@ -59,7 +59,7 @@ public class InCallFragment extends Fragment implements
     private Fragment mDialpadFragment;
     private View mUserProfileContainerView;
     private View mDialerFragmentContainer;
-    private TextView mUserProfileBodyText;
+    private TextView mUserProfileCallStateText;
     private BackgroundImageView mBackgroundImage;
 
     public static InCallFragment newInstance() {
@@ -72,7 +72,8 @@ public class InCallFragment extends Fragment implements
         View fragmentView = inflater.inflate(R.layout.in_call_fragment, container, false);
         mUserProfileContainerView = fragmentView.findViewById(R.id.user_profile_container);
         mDialerFragmentContainer = fragmentView.findViewById(R.id.dialpad_container);
-        mUserProfileBodyText = mUserProfileContainerView.findViewById(R.id.user_profile_body);
+        mUserProfileCallStateText
+                = mUserProfileContainerView.findViewById(R.id.user_profile_call_state);
         mBackgroundImage = fragmentView.findViewById(R.id.background_image);
         mDialpadFragment = DialpadFragment.newInCallDialpad();
 
@@ -81,7 +82,7 @@ public class InCallFragment extends Fragment implements
 
         inCallViewModel.getPrimaryCallDetail().observe(this, this::bindUserProfileView);
         inCallViewModel.getPrimaryCallState().observe(this, this::updateControllerBarFragment);
-        inCallViewModel.getCallStateDescription().observe(this, this::updateBody);
+        inCallViewModel.getCallStateDescription().observe(this, this::updateState);
         return fragmentView;
     }
 
@@ -188,9 +189,9 @@ public class InCallFragment extends Fragment implements
         }
     }
 
-    private void updateBody(String text) {
-        L.i(TAG, "updateBody: %s", text);
-        mUserProfileBodyText.setText(text);
-        mUserProfileBodyText.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
+    private void updateState(String text) {
+        L.i(TAG, "updateState: %s", text);
+        mUserProfileCallStateText.setText(text);
+        mUserProfileCallStateText.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
     }
 }
