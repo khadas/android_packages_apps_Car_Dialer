@@ -18,4 +18,8 @@
 <resources>
     <!-- Card view margins-->
     <dimen name="dialer_card_margin_x">422dp</dimen>
+
+    <!-- Toolbar -->
+    <!-- Half of the difference between car_margin and touch_target_size-->
+    <dimen name="menu_item_margin_x">48dp</dimen>
 </resources>
