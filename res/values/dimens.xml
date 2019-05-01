@@ -98,6 +98,10 @@
     <dimen name="dialpad_info_title_text_size_min">24sp</dimen>
     <dimen name="dialpad_display_name_size">24sp</dimen>
 
+    <!-- Keypad dimensions -->
+    <dimen name="keypad_margin_x">@*android:dimen/car_padding_2</dimen>
+    <dimen name="keypad_margin_y">0dp</dimen>
+
     <!-- Favorites dimensions -->
     <dimen name="favorite_item_height">@dimen/list_item_height</dimen>
     <dimen name="favorite_card_corner_radius">@*android:dimen/car_radius_5</dimen>
@@ -112,7 +116,7 @@
     <dimen name="bksp_button_width">@dimen/touch_target_size</dimen>
 
     <dimen name="fab_button_size">@dimen/fab_outline_size</dimen>
-    <dimen name="fab_outline_size">104dp</dimen>
+    <dimen name="fab_outline_size">84dp</dimen>
     <dimen name="fab_outline_thickness">4dp</dimen>
 
     <dimen name="in_call_button_size">@dimen/touch_target_size</dimen>
