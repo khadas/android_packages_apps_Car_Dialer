@@ -107,17 +107,19 @@
     </style>
 
     <!-- In-call styling for everything except short landscape screens -->
-    <style name="in_call_user_title" parent="@style/TextAppearance.Display2"></style>
-    <style name="in_call_user_phone_number" parent="@style/TextAppearance.Body1">
+    <style name="TextAppearance.InCallUserTitle" parent="@style/TextAppearance.Display2"/>
+    <style name="TextAppearance.InCallUserPhoneNumber" parent="@style/TextAppearance.Body1">
         <item name="android:textColor">#B8FFFFFF</item>
     </style>
-    <style name="in_call_user_description" parent="@style/TextAppearance.Body1">
+    <style name="InCallState">
+        <item name="android:textAppearance">@style/TextAppearance.Body1</item>
         <item name="android:textColor">#B8FFFFFF</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <!-- Contact details -->
-    <style name="contact_details_title" parent="@style/TextAppearance.Display2"/>
-    <style name="contact_details_list_item_title_text" parent="@style/TextAppearance.Body1"/>
-    <style name="contact_details_list_item_subtitle_text" parent="@style/TextAppearance.Body3"/>
+    <style name="TextAppearance.ContactDetailsTitle" parent="@style/TextAppearance.Display2"/>
 
 </resources>
