@@ -126,14 +126,15 @@ public class ContactDetailsFragmentTest {
      */
     private void verifyPhoneNumber(int position) {
         View child = mListView.getChildAt(position);
+        View callButton = child.findViewById(R.id.call_action_id);
 
         assertThat(((TextView) child.findViewById(R.id.title)).getText().toString()).isEqualTo(
                 RAW_NUMBERS[position - 1]);
-        assertThat(child.hasOnClickListeners()).isTrue();
+        assertThat(callButton.hasOnClickListeners()).isTrue();
 
         int invocations = Mockito.mockingDetails(mMockUiCallManager).getInvocations().size();
 
-        child.performClick();
+        callButton.performClick();
 
         verify(mMockUiCallManager, times(invocations + 1)).placeCall(Mockito.any());
     }
