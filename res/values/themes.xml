@@ -24,4 +24,13 @@ limitations under the License.
         <item name="android:listDivider">@drawable/list_divider</item>
         <item name="android:toolbarStyle">@style/Widget.Dialer.Toolbar</item>
     </style>
+
+    <style name="Theme.Dialer.Setting" parent="Theme.Dialer">
+        <item name="preferenceTheme">@style/PreferenceTheme</item>
+    </style>
+
+    <style name="PreferenceTheme">
+        <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList.Settings</item>
+    </style>
+
 </resources>
