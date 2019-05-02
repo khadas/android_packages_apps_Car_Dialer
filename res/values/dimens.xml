@@ -100,6 +100,7 @@
     <dimen name="dialpad_display_name_size">24sp</dimen>
 
     <!-- Keypad dimensions -->
+    <dimen name="keypad_minimum_size">@dimen/touch_target_size</dimen>
     <dimen name="keypad_margin_x">@*android:dimen/car_padding_2</dimen>
     <dimen name="keypad_margin_y">0dp</dimen>
 

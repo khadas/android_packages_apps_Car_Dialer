@@ -38,10 +38,10 @@
         <item name="android:clickable">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/keypad_margin_x</item>
-        <item name="android:layout_marginEnd">@dimen/keypad_margin_x</item>
-        <item name="android:layout_marginTop">@dimen/keypad_margin_y</item>
-        <item name="android:layout_marginBottom">@dimen/keypad_margin_y</item>
+        <item name="android:paddingStart">@dimen/keypad_margin_x</item>
+        <item name="android:paddingEnd">@dimen/keypad_margin_x</item>
+        <item name="android:paddingTop">@dimen/keypad_margin_y</item>
+        <item name="android:paddingBottom">@dimen/keypad_margin_y</item>
         <item name="android:minWidth">@dimen/touch_target_size</item>
         <item name="android:minHeight">@dimen/touch_target_size</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
