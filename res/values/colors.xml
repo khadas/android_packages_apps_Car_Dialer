@@ -71,5 +71,6 @@
     <color name="secondary_icon_color">@color/secondary_icon_color_light</color>
     <color name="secondary_icon_color_dark">#8ADADCE0</color>
     <color name="secondary_icon_color_light">#99FFFFFF</color>
+    <color name="hero_button_background_color">@*android:color/car_grey_868</color>
 
 </resources>

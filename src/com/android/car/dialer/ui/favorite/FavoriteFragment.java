@@ -16,8 +16,6 @@
 
 package com.android.car.dialer.ui.favorite;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -30,15 +28,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
-import com.android.car.dialer.ui.common.PhoneNumberListAdapter;
+import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.telephony.common.Contact;
-import com.android.car.telephony.common.PhoneNumber;
-import com.android.car.telephony.common.TelecomUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /** Contains a list of favorite contacts. */
@@ -74,53 +68,8 @@ public class FavoriteFragment extends DialerListBaseFragment {
     }
 
     private void onItemClicked(Contact contact) {
-        Context context = getContext();
-
-        if (contact.hasPrimaryPhoneNumber()) {
-            placeCall(contact.getPrimaryPhoneNumber(), false);
-            return;
-        }
-
-        List<PhoneNumber> contactPhoneNumbers = contact.getNumbers();
-        if (contactPhoneNumbers.isEmpty()) {
-            L.w(TAG, "contact %s doesn't have any phone number", contact.getDisplayName());
-            return;
-        }
-
-        if (contactPhoneNumbers.size() == 1) {
-            placeCall(contactPhoneNumbers.get(0), false);
-        } else if (contactPhoneNumbers.size() > 1) {
-            final List<PhoneNumber> selectedPhoneNumber = new ArrayList<>();
-            new AlertDialog.Builder(context)
-                    .setTitle(R.string.select_number_dialog_title)
-                    .setSingleChoiceItems(
-                            new PhoneNumberListAdapter(context, contactPhoneNumbers),
-                            -1,
-                            ((dialog, which) -> {
-                                selectedPhoneNumber.clear();
-                                selectedPhoneNumber.add(contactPhoneNumbers.get(which));
-                            }))
-                    .setNeutralButton(R.string.select_number_dialog_just_once_button,
-                            (dialog, which) -> {
-                                if (!selectedPhoneNumber.isEmpty()) {
-                                    placeCall(selectedPhoneNumber.get(0), false);
-                                }
-                            })
-                    .setPositiveButton(R.string.select_number_dialog_always_button,
-                            (dialog, which) -> {
-                                if (!selectedPhoneNumber.isEmpty()) {
-                                    placeCall(selectedPhoneNumber.get(0), true);
-                                }
-                            })
-                    .show();
-        }
-    }
-
-    private void placeCall(PhoneNumber number, boolean setAsPrimary) {
-        UiCallManager.get().placeCall(number.getRawNumber());
-        if (setAsPrimary) {
-            TelecomUtils.setAsPrimaryPhoneNumber(getContext(), number);
-        }
+        DialerUtils.promptForPrimaryNumber(getContext(), contact, (phoneNumber, always) ->
+                UiCallManager.get().placeCall(phoneNumber.getRawNumber()));
     }
 
     private class ItemSpacingDecoration extends RecyclerView.ItemDecoration {

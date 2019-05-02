@@ -122,4 +122,19 @@
     <!-- Contact details -->
     <style name="TextAppearance.ContactDetailsTitle" parent="@style/TextAppearance.Display2"/>
 
+    <style name="hero_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/touch_target_size</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">@*android:dimen/car_padding_3</item>
+        <item name="android:drawableTint">@color/primary_icon_color</item>
+        <item name="android:minWidth">156dp</item>
+        <item name="android:maxWidth">268dp</item>
+        <item name="android:background">@drawable/hero_button_background</item>
+        <item name="android:paddingStart">@*android:dimen/car_padding_3</item>
+        <item name="android:paddingEnd">@*android:dimen/car_padding_4</item>
+        <item name="android:textAppearance">@style/TextAppearance.Body3</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
 </resources>
