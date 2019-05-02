@@ -27,7 +27,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.TelecomActivityViewModel;
 
 /**
@@ -91,6 +93,7 @@ public class NoHfpFragment extends Fragment {
                 TelecomActivityViewModel.class);
         MutableLiveData<Integer> dialerAppStateLiveData = viewModel.getDialerAppState();
         View emergencyButton = v.findViewById(R.id.emergency_call_button);
+        ViewUtils.setVisible(emergencyButton, UiCallManager.get().isEmergencyCallSupported());
         emergencyButton.setOnClickListener(view -> dialerAppStateLiveData.setValue(
                 TelecomActivityViewModel.DialerAppState.EMERGENCY_DIALPAD));
 
