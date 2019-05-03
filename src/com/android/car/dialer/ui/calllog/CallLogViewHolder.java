@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
+import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.dialer.widget.CallTypeIconsView;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
@@ -51,6 +52,7 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         mOnShowContactDetailListener = onShowContactDetailListener;
         mAvatarView = itemView.findViewById(R.id.icon);
+        mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         mTitleView = itemView.findViewById(R.id.title);
         mTextView = itemView.findViewById(R.id.text);
         mCallTypeIconsView = itemView.findViewById(R.id.call_type_icons);

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.dialer.ui.view.ListItemOutlineResolver;
 import com.android.car.telephony.common.TelecomUtils;
 
@@ -45,6 +46,7 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
         mContactCard = view.findViewById(R.id.contact_result_card);
         mContactName = view.findViewById(R.id.contact_name);
         mContactPicture = view.findViewById(R.id.contact_picture);
+        mContactPicture.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         mOnShowContactDetailListener = onShowContactDetailListener;
     }
 
