@@ -18,10 +18,10 @@ package com.android.car.dialer.ui.contact;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.robolectric.Shadows.shadowOf;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowViewModelProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
@@ -40,6 +41,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
@@ -65,6 +67,8 @@ public class ContactDetailsFragmentTest {
     private PhoneNumber mMockPhoneNumber1;
     @Mock
     private PhoneNumber mMockPhoneNumber2;
+    @Mock
+    private UiCallManager mMockUiCallManager;
 
     @Before
     public void setUp() {
@@ -75,6 +79,8 @@ public class ContactDetailsFragmentTest {
         when(mMockPhoneNumber2.getRawNumber()).thenReturn(RAW_NUMBERS[1]);
         when(mMockContact.getNumbers()).thenReturn(
                 Arrays.asList(mMockPhoneNumber1, mMockPhoneNumber2));
+
+        UiCallManager.set(mMockUiCallManager);
 
         MutableLiveData<Contact> contactDetails = new MutableLiveData<>();
         contactDetails.setValue(mMockContact);
@@ -125,11 +131,10 @@ public class ContactDetailsFragmentTest {
                 RAW_NUMBERS[position - 1]);
         assertThat(child.hasOnClickListeners()).isTrue();
 
+        int invocations = Mockito.mockingDetails(mMockUiCallManager).getInvocations().size();
+
         child.performClick();
 
-        Intent startedIntent = shadowOf(mFragmentTestActivity).getNextStartedActivity();
-        assertThat(startedIntent.getAction()).isEqualTo(Intent.ACTION_CALL);
-        assertThat(startedIntent.getData()).isEqualTo(
-                Uri.parse(ContactDetailsAdapter.TELEPHONE_URI_PREFIX + RAW_NUMBERS[position - 1]));
+        verify(mMockUiCallManager, times(invocations + 1)).placeCall(Mockito.any());
     }
 }

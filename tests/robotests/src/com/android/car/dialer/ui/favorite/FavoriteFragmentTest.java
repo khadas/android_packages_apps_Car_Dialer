@@ -88,6 +88,7 @@ public class FavoriteFragmentTest {
 
     @Test
     public void testOnItemClick_contactHasPrimaryNumber_placeCall() {
+        when(mMockContact.getNumbers()).thenReturn(Arrays.asList(mMockPhoneNumber));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(mMockPhoneNumber);
 

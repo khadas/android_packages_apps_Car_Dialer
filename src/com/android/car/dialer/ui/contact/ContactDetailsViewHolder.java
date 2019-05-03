@@ -16,26 +16,130 @@
 
 package com.android.car.dialer.ui.contact;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.common.DialerUtils;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.TelecomUtils;
 
 /** ViewHolder for {@link ContactDetailsFragment}. */
 class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
-    View sendTextTouchTarget;
-    TextView title;
-    TextView text;
-    ImageView avatar;
+    // Applies to all
+    @NonNull
+    private final TextView mTitle;
+
+    // Applies to header
+    @Nullable
+    private final ImageView mAvatar;
+    @Nullable
+    private final TextView mCallHeroButton;
+    @Nullable
+    private final TextView mTextHeroButton;
+
+    // Applies to phone number items
+    @Nullable
+    private final TextView mText;
+    @Nullable
+    private final View mSendTextTouchTarget;
 
     ContactDetailsViewHolder(View v) {
         super(v);
-        sendTextTouchTarget = v.findViewById(R.id.contact_details_text_button_touchtarget);
-        title = v.findViewById(R.id.title);
-        text = v.findViewById(R.id.text);
-        avatar = v.findViewById(R.id.avatar);
+        mCallHeroButton = v.findViewById(R.id.call_hero_button);
+        mTextHeroButton = v.findViewById(R.id.text_hero_button);
+        mSendTextTouchTarget = v.findViewById(R.id.contact_details_text_button_touchtarget);
+        mTitle = v.findViewById(R.id.title);
+        mText = v.findViewById(R.id.text);
+        mAvatar = v.findViewById(R.id.avatar);
+    }
+
+    public void bind(Context context, Contact contact) {
+        mTitle.setText(
+                contact == null ? context.getString(R.string.error_contact_deleted)
+                        : contact.getDisplayName());
+        TelecomUtils.setContactBitmapAsync(context, mAvatar, contact, null);
+
+        final PhoneNumber primaryNumber = contact.getNumbers().size() == 1
+                ? contact.getNumbers().get(0)
+                : contact.getPrimaryPhoneNumber();
+
+        if (primaryNumber != null) {
+            CharSequence label = primaryNumber.getReadableLabel(context.getResources());
+
+            String callButtonText = context.getString(
+                    R.string.contact_details_call_number_button_with_label, label);
+            String textButtonText = context.getString(
+                    R.string.contact_details_text_number_button_with_label, label);
+
+            mCallHeroButton.setText(callButtonText);
+            mTextHeroButton.setText(textButtonText);
+
+            mCallHeroButton.setOnClickListener(v -> placeCall(primaryNumber));
+            mTextHeroButton.setOnClickListener(v -> sendText(context, primaryNumber));
+
+        } else {
+            mCallHeroButton.setText(
+                    R.string.contact_details_call_number_button);
+            mTextHeroButton.setText(
+                    R.string.contact_details_text_number_button);
+
+            mCallHeroButton.setOnClickListener(v ->
+                    DialerUtils.promptForPrimaryNumber(context, contact,
+                            (phoneNumber, always) -> placeCall(phoneNumber)));
+
+            mTextHeroButton.setOnClickListener(v ->
+                    DialerUtils.promptForPrimaryNumber(context, contact,
+                            (phoneNumber, always) -> sendText(context, phoneNumber)));
+        }
+
+        // Just in case a viewholder object gets recycled.
+        itemView.setOnClickListener(null);
+    }
+
+    public void bind(Context context, PhoneNumber phoneNumber) {
+
+        mTitle.setText(phoneNumber.getRawNumber());
+
+        // Present the phone number type.
+        CharSequence readableLabel = phoneNumber.getReadableLabel(context.getResources());
+        if (phoneNumber.isPrimary()) {
+            mText.setText(context.getString(R.string.primary_number_description, readableLabel));
+        } else {
+            mText.setText(readableLabel);
+        }
+
+        itemView.setOnClickListener(v -> placeCall(phoneNumber));
+        mSendTextTouchTarget.setOnClickListener(v -> sendText(context, phoneNumber));
+    }
+
+    private void placeCall(PhoneNumber number) {
+        UiCallManager.get().placeCall(number.getRawNumber());
+    }
+
+    private void sendText(Context context, PhoneNumber number) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("smsto:"));
+        intent.setType("vnd.android-dir/mms-sms");
+        intent.putExtra("address", number.getRawNumber());
+
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+        } else {
+            Toast.makeText(context,
+                    R.string.error_no_text_intent_handler,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }
