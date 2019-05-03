@@ -32,6 +32,8 @@
     <string name="error_no_hfp">Bluetooth is not connected.</string>
     <!-- Toast text when sending a text failed because there is no app to compose texts [CHAR LIMIT=80] -->
     <string name="error_no_text_intent_handler">To send texts, you will need to install a messaging app.</string>
+    <!-- Button text for connecting to Bluetooth [CHAR LIMIT=40] -->
+    <string name="connect_bluetooth_button_text">Connect to Bluetooth</string>
     <!-- Button text for making emergency call [CHAR LIMIT=40] -->
     <string name="emergency_button_text">Emergency</string>
     <!-- Text indicating emergency call [CHAR LIMIT=40] -->
