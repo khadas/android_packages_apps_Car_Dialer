@@ -24,6 +24,8 @@
     <string name="error_network_not_available" msgid="9005062158253849135">"Желі қолжетімді емес."</string>
     <string name="error_airplane_mode" msgid="3381606616960325205">"Телефон ұшақ режимінде."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth жалғанбаған."</string>
+    <!-- no translation found for error_no_text_intent_handler (497080068122415049) -->
+    <skip />
     <string name="emergency_button_text" msgid="3467659545392931727">"Төтенше жағдай"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Құтқару қызметіне қоңырау шалу"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Бұл контакт жойылған."</string>
@@ -35,13 +37,21 @@
     <string name="conference_call" msgid="9107469685942466746">"Мәжіліс қоңырауы"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Көліктегі Bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Спикерфон"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"Телефон динамигі"</string>
+    <string name="audio_route_handset" msgid="1100259514278439355">"Телефон"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Нөмір теру"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Таңдаулылар"</string>
     <string name="call_history_title" msgid="1495905524218923242">"Қоңыраулар тарихы"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Контактілер"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Нөмір теру тақтасы"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Байланыс мәліметтері"</string>
+    <!-- no translation found for contact_details_call_number_button_with_label (9125344275090383689) -->
+    <skip />
+    <!-- no translation found for contact_details_text_number_button_with_label (524184780080621124) -->
+    <skip />
+    <!-- no translation found for contact_details_call_number_button (7994882954807784349) -->
+    <skip />
+    <!-- no translation found for contact_details_text_number_button (5478874044589167239) -->
+    <skip />
     <string name="one" msgid="7035320445520845354">"1"</string>
     <string name="two" msgid="5383628674885000581">"2"</string>
     <string name="three" msgid="4041802383667139387">"3"</string>
@@ -80,4 +90,7 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Әдепкі"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Келген қоңырау туралы хабарландыру"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Кіріс қоңырау"</string>
+    <string name="setting_title" msgid="1296639422364732365">"Параметрлер"</string>
+    <string name="pref_start_page_title" msgid="8243884415248971745">"Бастау бетін орнату"</string>
+    <string name="pref_start_page_key" msgid="5465549020624066035">"set_start_page"</string>
 </resources>

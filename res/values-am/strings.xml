@@ -24,6 +24,8 @@
     <string name="error_network_not_available" msgid="9005062158253849135">"አውታረ መረብ አይገኝም።"</string>
     <string name="error_airplane_mode" msgid="3381606616960325205">"ስልክ በአውሮፕላን ሁነታ ላይ ነው።"</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"ብሉቱዝ አልተገናኘም።"</string>
+    <!-- no translation found for error_no_text_intent_handler (497080068122415049) -->
+    <skip />
     <string name="emergency_button_text" msgid="3467659545392931727">"ድንገተኛ አደጋ"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"የአደጋ ጊዜ ጥሪ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"እነኚህ እውቂያ ተሰርዘው ሊሆኑ ይችላሉ።"</string>
@@ -42,6 +44,14 @@
     <string name="contacts_title" msgid="9201954388634537346">"ዕውቂያዎች"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"የመደወያ ሰሌዳ"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"የእውቂያ ዝርዝሮች"</string>
+    <!-- no translation found for contact_details_call_number_button_with_label (9125344275090383689) -->
+    <skip />
+    <!-- no translation found for contact_details_text_number_button_with_label (524184780080621124) -->
+    <skip />
+    <!-- no translation found for contact_details_call_number_button (7994882954807784349) -->
+    <skip />
+    <!-- no translation found for contact_details_text_number_button (5478874044589167239) -->
+    <skip />
     <string name="one" msgid="7035320445520845354">"1"</string>
     <string name="two" msgid="5383628674885000581">"2"</string>
     <string name="three" msgid="4041802383667139387">"3"</string>
@@ -80,4 +90,7 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ነባሪ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"የገቢ ጥሪ ማሳወቂያ"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ገቢ ጥሪ"</string>
+    <string name="setting_title" msgid="1296639422364732365">"ቅንብሮች"</string>
+    <string name="pref_start_page_title" msgid="8243884415248971745">"የመጀመሪያ ገጽ ያቀናብሩ"</string>
+    <string name="pref_start_page_key" msgid="5465549020624066035">"set_start_page"</string>
 </resources>
