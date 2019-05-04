@@ -24,10 +24,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
-import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.TelecomUtils;
 
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         mOnShowContactDetailListener = onShowContactDetailListener;
         mAvatarView = itemView.findViewById(R.id.icon);
+        mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         mTitleView = itemView.findViewById(R.id.title);
         mTextView = itemView.findViewById(R.id.text);
         mShowContactDetailView = itemView.findViewById(R.id.show_contact_detail_id);

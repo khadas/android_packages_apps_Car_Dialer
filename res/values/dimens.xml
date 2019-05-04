@@ -158,6 +158,7 @@
     <dimen name="preference_list_margin">@*android:dimen/car_margin</dimen>
     <dimen name="hero_button_corner_radius">38dp</dimen>
     <dimen name="hero_button_separator">@*android:dimen/car_padding_4</dimen>
+    <dimen name="contact_avatar_corner_radius_percent" format="float">0.5</dimen>
 
     <!-- Card view margins-->
     <dimen name="contact_card_margin_x">@*android:dimen/car_margin</dimen>
