@@ -39,6 +39,7 @@ import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
+import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.CallDetail;
 import com.android.car.telephony.common.TelecomUtils;
 
@@ -135,6 +136,7 @@ public class InCallFragment extends Fragment implements
         }
 
         ImageView avatar = mUserProfileContainerView.findViewById(R.id.user_profile_avatar);
+        avatar.setOutlineProvider(ContactAvatarOutputlineProvider.get());
 
         LetterTileDrawable letterTile = TelecomUtils.createLetterTile(
                 getContext(),
@@ -143,7 +145,7 @@ public class InCallFragment extends Fragment implements
         Glide.with(getContext())
                 .asBitmap()
                 .load(displayNameAndAvatarUri.second)
-                .apply(new RequestOptions().circleCrop().error(letterTile))
+                .apply(new RequestOptions().centerCrop().error(letterTile))
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource,
