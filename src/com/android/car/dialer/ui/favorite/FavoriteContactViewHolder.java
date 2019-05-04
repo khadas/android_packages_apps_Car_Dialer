@@ -20,15 +20,19 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.telephony.common.TelecomUtils;
+import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.TelecomUtils;
+
+import java.util.List;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 /**
  * A {@link RecyclerView.ViewHolder ViewHolder} that will hold layouts for favorite contacts list
@@ -44,6 +48,7 @@ class FavoriteContactViewHolder extends RecyclerView.ViewHolder {
     FavoriteContactViewHolder(View v) {
         super(v);
         mIcon = v.findViewById(R.id.icon);
+        mIcon.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         mTitle = v.findViewById(R.id.title);
         mText = v.findViewById(R.id.text);
     }

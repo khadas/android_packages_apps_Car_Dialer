@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerUtils;
+import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
@@ -63,6 +64,9 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         mTitle = v.findViewById(R.id.title);
         mText = v.findViewById(R.id.text);
         mAvatar = v.findViewById(R.id.avatar);
+        if (mAvatar != null) {
+            mAvatar.setOutlineProvider(ContactAvatarOutputlineProvider.get());
+        }
     }
 
     public void bind(Context context, Contact contact) {
