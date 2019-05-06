@@ -70,43 +70,53 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Context context, Contact contact) {
-        mTitle.setText(
-                contact == null ? context.getString(R.string.error_contact_deleted)
-                        : contact.getDisplayName());
+
         TelecomUtils.setContactBitmapAsync(context, mAvatar, contact, null);
 
-        final PhoneNumber primaryNumber = contact.getNumbers().size() == 1
-                ? contact.getNumbers().get(0)
-                : contact.getPrimaryPhoneNumber();
-
-        if (primaryNumber != null) {
-            CharSequence label = primaryNumber.getReadableLabel(context.getResources());
-
-            String callButtonText = context.getString(
-                    R.string.contact_details_call_number_button_with_label, label);
-            String textButtonText = context.getString(
-                    R.string.contact_details_text_number_button_with_label, label);
-
-            mCallHeroButton.setText(callButtonText);
-            mTextHeroButton.setText(textButtonText);
-
-            mCallHeroButton.setOnClickListener(v -> placeCall(primaryNumber));
-            mTextHeroButton.setOnClickListener(v -> sendText(context, primaryNumber));
-
+        if (contact == null) {
+            mTitle.setText(R.string.error_contact_deleted);
+            mCallHeroButton.setVisibility(View.GONE);
+            mTextHeroButton.setVisibility(View.GONE);
         } else {
-            mCallHeroButton.setText(
-                    R.string.contact_details_call_number_button);
-            mTextHeroButton.setText(
-                    R.string.contact_details_text_number_button);
+            mTitle.setText(contact.getDisplayName());
 
-            mCallHeroButton.setOnClickListener(v ->
-                    DialerUtils.promptForPrimaryNumber(context, contact,
-                            (phoneNumber, always) -> placeCall(phoneNumber)));
+            final PhoneNumber primaryNumber = contact.getNumbers().size() == 1
+                    ? contact.getNumbers().get(0)
+                    : contact.getPrimaryPhoneNumber();
 
-            mTextHeroButton.setOnClickListener(v ->
-                    DialerUtils.promptForPrimaryNumber(context, contact,
-                            (phoneNumber, always) -> sendText(context, phoneNumber)));
+            if (primaryNumber != null) {
+                CharSequence label = primaryNumber.getReadableLabel(context.getResources());
+
+                String callButtonText = context.getString(
+                        R.string.contact_details_call_number_button_with_label, label);
+                String textButtonText = context.getString(
+                        R.string.contact_details_text_number_button_with_label, label);
+
+                mCallHeroButton.setText(callButtonText);
+                mTextHeroButton.setText(textButtonText);
+
+                mCallHeroButton.setOnClickListener(v -> placeCall(primaryNumber));
+                mTextHeroButton.setOnClickListener(v -> sendText(context, primaryNumber));
+
+            } else {
+                mCallHeroButton.setText(
+                        R.string.contact_details_call_number_button);
+                mTextHeroButton.setText(
+                        R.string.contact_details_text_number_button);
+
+                mCallHeroButton.setOnClickListener(v ->
+                        DialerUtils.promptForPrimaryNumber(context, contact,
+                                (phoneNumber, always) -> placeCall(phoneNumber)));
+
+                mTextHeroButton.setOnClickListener(v ->
+                        DialerUtils.promptForPrimaryNumber(context, contact,
+                                (phoneNumber, always) -> sendText(context, phoneNumber)));
+            }
+
+            mCallHeroButton.setVisibility(View.VISIBLE);
+            mTextHeroButton.setVisibility(View.VISIBLE);
         }
+
 
         // Just in case a viewholder object gets recycled.
         itemView.setOnClickListener(null);
