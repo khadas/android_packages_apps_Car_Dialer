@@ -15,11 +15,9 @@
   limitations under the License.
   -->
 
-<resources>
-    <!-- Card view margins-->
-    <dimen name="dialer_card_margin_x">326dp</dimen>
-
-    <!-- Toolbar -->
-    <!-- Half of the difference between car_margin and touch_target_size-->
-    <dimen name="menu_item_margin_x">36dp</dimen>
-</resources>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:width="@dimen/touch_target_size"
+          android:height="@dimen/touch_target_size"
+          android:drawable="?android:attr/actionBarItemBackground"/>
+    <item android:gravity="center" android:drawable="@drawable/ic_overflow_vd"/>
+</layer-list>

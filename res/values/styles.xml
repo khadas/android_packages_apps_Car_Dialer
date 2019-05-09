@@ -73,8 +73,8 @@
     <style name="Widget.Dialer.Toolbar" parent="*android:Widget.DeviceDefault.Toolbar">
         <!-- No padding for navigation button which is car_margin wide -->
         <item name="android:paddingStart">0dp</item>
-        <!-- Distance of menu item from toolbar end edge -->
-        <item name="android:paddingEnd">@*android:dimen/car_padding_4</item>
+        <!-- Menu item has padding/margin to define the end distance from toolbar edge -->
+        <item name="android:paddingEnd">0dp</item>
         <item name="android:contentInsetStart">@*android:dimen/car_margin</item>
         <item name="android:contentInsetEnd">@*android:dimen/car_margin</item>
         <!-- Override the max height of navigation button and menu button -->
@@ -102,8 +102,12 @@
     </style>
 
     <style name="Widget.Dialer.ActionButton.Overflow" parent="android:Widget.DeviceDefault.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_overflow</item>
         <item name="android:minWidth">@dimen/touch_target_size</item>
         <item name="android:minHeight">@dimen/touch_target_size</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">@dimen/menu_item_margin_x</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <!-- In-call styling for everything except short landscape screens -->

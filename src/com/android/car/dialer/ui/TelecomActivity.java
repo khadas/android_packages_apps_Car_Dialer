@@ -328,22 +328,16 @@ public class TelecomActivity extends FragmentActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem searchMenu = menu.findItem(R.id.menu_contacts_search);
+        Intent searchIntent = new Intent(getApplicationContext(), TelecomActivity.class);
+        searchIntent.setAction(Intent.ACTION_SEARCH);
+        searchMenu.setIntent(searchIntent);
+
+        MenuItem settingsMenu = menu.findItem(R.id.menu_dialer_setting);
+        Intent settingsIntent = new Intent(getApplicationContext(), DialerSettingsActivity.class);
+        settingsMenu.setIntent(settingsIntent);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == R.id.menu_contacts_search) {
-            navigateToContactResultsFragment(null);
-            return true;
-        }
-
-        if (menuItem.getItemId() == R.id.menu_dialer_setting) {
-            startDialerSettingsActivity();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(menuItem);
     }
 
     private void navigateToContactResultsFragment(String query) {
@@ -373,11 +367,5 @@ public class TelecomActivity extends FragmentActivity implements
     /** If the back button on action bar is available to navigate up. */
     private boolean isBackNavigationAvailable() {
         return getSupportFragmentManager().getBackStackEntryCount() > 1;
-    }
-
-    private void startDialerSettingsActivity() {
-        L.d(TAG, "Start DialerSettingsActivity");
-        Intent launchIntent = new Intent(getApplicationContext(), DialerSettingsActivity.class);
-        startActivity(launchIntent);
     }
 }
