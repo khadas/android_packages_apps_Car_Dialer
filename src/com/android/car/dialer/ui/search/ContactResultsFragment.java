@@ -117,13 +117,12 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.contacts_search_menu, menu);
-
+        menu.findItem(R.id.menu_contacts_search).setActionView(R.layout.search_view);
         // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = menu.findItem(
-                R.id.menu_contacts_search_view).getActionView().findViewById(R.id.search_view);
+                R.id.menu_contacts_search).getActionView().findViewById(R.id.search_view);
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
@@ -150,12 +149,6 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
         mSearchView = searchView;
         setSearchQuery(mContactResultsViewModel.getSearchQuery());
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        // Hide the main search menu
-        menu.findItem(R.id.menu_contacts_search).setVisible(false);
     }
 
     @Override

@@ -166,4 +166,8 @@
     <dimen name="search_card_margin_x">@dimen/dialer_card_margin_x</dimen>
     <dimen name="dialer_card_margin_x">72dp</dimen>
 
+    <!-- Toolbar -->
+    <!-- Half of the difference between car_margin and touch_target_size-->
+    <dimen name="menu_item_margin_x">18dp</dimen>
+
 </resources>
