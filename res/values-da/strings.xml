@@ -24,6 +24,7 @@
     <string name="error_network_not_available" msgid="9005062158253849135">"Netværket er ikke tilgængeligt."</string>
     <string name="error_airplane_mode" msgid="3381606616960325205">"Telefonen er i flytilstand."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth er ikke aktiveret."</string>
+    <string name="error_no_text_intent_handler" msgid="497080068122415049">"Installer beskedapp for at sende sms\'er."</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Nødopkald"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Nødopkald"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Kontakten er muligvis slettet."</string>
@@ -42,30 +43,10 @@
     <string name="contacts_title" msgid="9201954388634537346">"Kontakter"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Numerisk tastatur"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Kontaktoplysninger"</string>
-    <string name="one" msgid="7035320445520845354">"1"</string>
-    <string name="two" msgid="5383628674885000581">"2"</string>
-    <string name="three" msgid="4041802383667139387">"3"</string>
-    <string name="four" msgid="6884921676739504544">"4"</string>
-    <string name="five" msgid="1532048408384684582">"5"</string>
-    <string name="six" msgid="8602964594650854152">"6"</string>
-    <string name="seven" msgid="3015598205323783016">"7"</string>
-    <string name="eight" msgid="4986704319242491226">"8"</string>
-    <string name="nine" msgid="6045235479556078781">"9"</string>
-    <string name="zero" msgid="3660888959063587370">"0"</string>
-    <string name="star" msgid="2866530421874915626">"*"</string>
-    <string name="pound" msgid="4266213657459846736">"#"</string>
-    <string name="two_letters" msgid="5147405565496798462">"ABC"</string>
-    <string name="three_letters" msgid="833949569131504015">"DEF"</string>
-    <string name="four_letters" msgid="8362933948345121774">"GHI"</string>
-    <string name="five_letters" msgid="3878341262227072611">"JKL"</string>
-    <string name="six_letters" msgid="5301352053197741284">"MNO"</string>
-    <string name="seven_letters" msgid="5084822952355925819">"PQRS"</string>
-    <string name="eight_letters" msgid="2482082040458397365">"TUV"</string>
-    <string name="nine_letters" msgid="4285225196127507291">"WXYZ"</string>
-    <string name="zero_letters" msgid="8591343695513133664">"+"</string>
-    <string name="one_letters" msgid="834273619582700391"></string>
-    <string name="star_letters" msgid="6911412176497610287"></string>
-    <string name="pound_letters" msgid="2571181003980511783"></string>
+    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"Ring %1$s"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"Send sms til %1$s"</string>
+    <string name="contact_details_call_number_button" msgid="7994882954807784349">"Ring"</string>
+    <string name="contact_details_text_number_button" msgid="5478874044589167239">"Send sms"</string>
     <string name="search_title" msgid="5412680850141871664">"Søg i kontakter"</string>
     <string name="search_hint" msgid="3099066132607042439">"Søg i kontakter"</string>
     <string name="type_home" msgid="7478344114405222813">"Start"</string>
@@ -76,8 +57,11 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Vælg et telefonnummer"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Kun én gang"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Altid"</string>
-    <string name="set_defaults" msgid="1047488133608639097">"Angiv standarder"</string>
+    <!-- no translation found for set_default_number (5083696228341022224) -->
+    <skip />
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  – standard"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notifikation om indgående opkald"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Indgående opkald"</string>
+    <string name="setting_title" msgid="1296639422364732365">"Indstillinger"</string>
+    <string name="pref_start_page_title" msgid="8243884415248971745">"Angiv startside"</string>
 </resources>
