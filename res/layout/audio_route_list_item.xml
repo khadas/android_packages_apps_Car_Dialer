@@ -32,7 +32,7 @@ limitations under the License.
         android:layout_height="@dimen/audio_route_icon_size"
         android:scaleType="fitCenter"
         android:layout_marginStart="@dimen/audio_route_content_padding"
-        android:tint="@color/primary_icon_color"
+        android:tint="@color/icon_accent_activatable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -41,6 +41,7 @@ limitations under the License.
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/text_accent_activatable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/text_start"
         app:layout_constraintEnd_toEndOf="parent"

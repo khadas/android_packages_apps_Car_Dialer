@@ -221,11 +221,29 @@ public class UiCallManager {
         }
     }
 
+    /**
+     * Returns the current audio route.
+     * The available routes are defined in {@link CallAudioState}.
+     */
     public int getAudioRoute() {
-        CallAudioState audioState = getCallAudioStateOrNull();
-        int audioRoute = audioState != null ? audioState.getRoute() : 0;
-        L.d(TAG, "getAudioRoute " + audioRoute);
-        return audioRoute;
+        if (isBluetoothCall()
+                && mBluetoothHeadsetClient != null
+                && !mBluetoothHeadsetClient.getConnectedDevices().isEmpty()) {
+            // TODO: Make this handle multiple devices
+            BluetoothDevice device = mBluetoothHeadsetClient.getConnectedDevices().get(0);
+            int audioState = mBluetoothHeadsetClient.getAudioState(device);
+
+            if (audioState == BluetoothHeadsetClient.STATE_AUDIO_CONNECTED) {
+                return CallAudioState.ROUTE_BLUETOOTH;
+            } else {
+                return CallAudioState.ROUTE_EARPIECE;
+            }
+        } else {
+            CallAudioState audioState = getCallAudioStateOrNull();
+            int audioRoute = audioState != null ? audioState.getRoute() : 0;
+            L.d(TAG, "getAudioRoute " + audioRoute);
+            return audioRoute;
+        }
     }
 
     /**
