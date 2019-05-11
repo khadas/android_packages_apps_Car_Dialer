@@ -25,6 +25,8 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"फोन हवाइजहाज मोडमा छ।"</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"ब्लुटुथमा जोडिएको छैन।"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"पाठ सन्देशहरू पठाउन तपाईंले सन्देश प्रवाह गर्ने एप स्थापना गर्नु पर्ने हुन्छ"</string>
+    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
+    <skip />
     <string name="emergency_button_text" msgid="3467659545392931727">"आपतकालीन"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"आपतकालीन कल"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"यो सम्पर्क ठेगाना मेटाइसकिएको हुन सक्छ।"</string>
@@ -43,8 +45,10 @@
     <string name="contacts_title" msgid="9201954388634537346">"सम्पर्क ठेगानाहरू"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"डायलप्याड"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"सम्पर्क सूचीमा भएको व्यक्तिसम्बन्धी विवरणहरू"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"%1$s मा कल गर्नुहोस्"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"%1$s मा पाठ सन्देशका रूपमा पठाउनु"</string>
+    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
+    <skip />
+    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
+    <skip />
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"कल गर्नुहोस्"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"पाठ सन्देश पठाउनुहोस्"</string>
     <string name="search_title" msgid="5412680850141871664">"सम्पर्क ठेगानाहरू खोज्नुहोस्"</string>
