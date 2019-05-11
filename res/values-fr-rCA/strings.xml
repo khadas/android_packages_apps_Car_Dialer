@@ -57,8 +57,7 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Choisir un numéro de téléphone"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Une seule fois"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Toujours"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"Définir le numéro de téléphone par défaut"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – Par défaut"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notification d\'appel entrant"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Appel entrant"</string>

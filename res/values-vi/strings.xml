@@ -57,8 +57,7 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Chọn một số điện thoại"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Chỉ một lần"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Luôn bật"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"Đặt số điện thoại mặc định"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Mặc định"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Thông báo khi có cuộc gọi đến"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Cuộc gọi đến"</string>
