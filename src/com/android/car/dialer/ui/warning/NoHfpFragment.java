@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.warning;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -38,6 +39,8 @@ import com.android.car.dialer.ui.TelecomActivityViewModel;
  */
 public class NoHfpFragment extends Fragment {
     private static final String ERROR_MESSAGE_KEY = "ERROR_MESSAGE_KEY";
+    private static final String Bluetooth_Setting_ACTION = "android.settings.BLUETOOTH_SETTINGS";
+    private static final String Bluetooth_Setting_CATEGORY = "android.intent.category.DEFAULT";
 
     private TextView mErrorMessageView;
     private String mErrorMessage;
@@ -81,8 +84,8 @@ public class NoHfpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.no_hfp, container, false);
-        mErrorMessageView = v.findViewById(R.id.error_string);
+        View view = inflater.inflate(R.layout.no_hfp, container, false);
+        mErrorMessageView = view.findViewById(R.id.error_string);
 
         // If no error message is set, the default string from the layout will be used.
         if (!TextUtils.isEmpty(mErrorMessage)) {
@@ -92,11 +95,18 @@ public class NoHfpFragment extends Fragment {
         TelecomActivityViewModel viewModel = ViewModelProviders.of(getActivity()).get(
                 TelecomActivityViewModel.class);
         MutableLiveData<Integer> dialerAppStateLiveData = viewModel.getDialerAppState();
-        View emergencyButton = v.findViewById(R.id.emergency_call_button);
+        View emergencyButton = view.findViewById(R.id.emergency_call_button);
         ViewUtils.setVisible(emergencyButton, UiCallManager.get().isEmergencyCallSupported());
-        emergencyButton.setOnClickListener(view -> dialerAppStateLiveData.setValue(
+        emergencyButton.setOnClickListener(v -> dialerAppStateLiveData.setValue(
                 TelecomActivityViewModel.DialerAppState.EMERGENCY_DIALPAD));
 
-        return v;
+        view.findViewById(R.id.connect_bluetooth_button).setOnClickListener(v -> {
+            Intent launchIntent = new Intent();
+            launchIntent.setAction(Bluetooth_Setting_ACTION);
+            launchIntent.addCategory(Bluetooth_Setting_CATEGORY);
+            startActivity(launchIntent);
+        });
+
+        return view;
     }
 }
