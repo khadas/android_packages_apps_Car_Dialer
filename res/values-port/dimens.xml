@@ -18,5 +18,5 @@
     <dimen name="call_button_bottom_margin">@*android:dimen/car_padding_2</dimen>
     <dimen name="call_button_height">@dimen/control_bar_height</dimen>
     <dimen name="fab_outline_size">84dp</dimen>
-    <dimen name="keypad_margin">96dp</dimen>
+    <dimen name="keypad_margin">@*android:dimen/car_padding_4</dimen>
 </resources>
