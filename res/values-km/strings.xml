@@ -57,8 +57,7 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ជ្រើសរើស​លេខទូរសព្ទ"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"តែ​ម្ដង"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ជានិច្ច"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"កំណត់​លេខទូរសព្ទ​លំនាំដើម"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - លំនាំដើម"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ការជូនដំណឹង​អំពីការហៅចូល"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ការ​ហៅ​ចូល"</string>
