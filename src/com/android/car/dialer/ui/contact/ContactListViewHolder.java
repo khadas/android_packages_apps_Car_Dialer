@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
@@ -57,18 +58,15 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onBind(Contact contact) {
-        List<PhoneNumber> phoneNumbers = contact.getNumbers();
         TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact, null);
         mTitleView.setText(contact.getDisplayName());
         setLabelText(contact);
         mShowContactDetailView.setOnClickListener(
                 view -> mOnShowContactDetailListener.onShowContactDetail(contact));
         mCallActionView.setOnClickListener(view -> {
-            if (phoneNumbers.size() == 1) {
-                UiCallManager.get().placeCall(phoneNumbers.get(0).getRawNumber());
-            } else {
-                mOnShowContactDetailListener.onShowContactDetail(contact);
-            }
+            DialerUtils.promptForPrimaryNumber(itemView.getContext(), contact,
+                    (phoneNumber, always) -> UiCallManager.get().placeCall(
+                            phoneNumber.getRawNumber()));
         });
     }
 
