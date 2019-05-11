@@ -25,6 +25,8 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"휴대전화가 비행기 모드입니다."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"블루투스가 연결되어 있지 않습니다."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"문자 메시지를 보내려면 메시지 앱을 설치해야 합니다."</string>
+    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
+    <skip />
     <string name="emergency_button_text" msgid="3467659545392931727">"긴급 전화"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"긴급 전화"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"삭제된 연락처일 수도 있습니다."</string>
@@ -43,8 +45,10 @@
     <string name="contacts_title" msgid="9201954388634537346">"연락처"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"다이얼패드"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"연락처 세부정보"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"통화 %1$s건"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"문자 메시지 %1$s건"</string>
+    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
+    <skip />
+    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
+    <skip />
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"통화"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"문자 메시지"</string>
     <string name="search_title" msgid="5412680850141871664">"연락처 검색"</string>
@@ -57,8 +61,7 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"전화번호 선택"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"한 번만"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"항상"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"기본 전화번호 설정"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - 기본값"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"수신 전화 알림"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"수신 전화"</string>
