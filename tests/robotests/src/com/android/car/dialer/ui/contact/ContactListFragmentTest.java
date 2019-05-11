@@ -20,6 +20,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,6 +47,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowAlertDialog;
 
 import java.util.Arrays;
 import java.util.List;
@@ -106,17 +108,19 @@ public class ContactListFragmentTest {
     }
 
     @Test
-    public void testClickCallActionButton_ContactHasMultipleNumbers_showContactDetail() {
+    public void testClickCallActionButton_ContactHasMultipleNumbers_notPlaceCall() {
         PhoneNumber otherMockPhoneNumber = mock(PhoneNumber.class);
         when(mMockContact1.getNumbers()).thenReturn(
                 Arrays.asList(mMockPhoneNumber, otherMockPhoneNumber));
         setUpFragment();
 
+        assertThat(ShadowAlertDialog.getLatestAlertDialog()).isNull();
         View callActionView = mViewHolder.itemView.findViewById(R.id.call_action_id);
         callActionView.performClick();
 
-        // verify contact detail is shown.
-        verifyShowContactDetail();
+        verify(mMockUiCallManager, never()).placeCall(any());
+        assertThat(ShadowAlertDialog.getLatestAlertDialog()).isNotNull();
+
     }
 
     @Test
