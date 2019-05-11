@@ -13,12 +13,16 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:state_activated="true">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true"
+          android:state_activated="true">
         <shape android:shape="oval">
             <solid android:color="@color/primary_icon_color"/>
         </shape>
     </item>
-    <item android:state_activated="false"
+    <item android:state_enabled="true"
+          android:state_activated="false"
+          android:drawable="@android:color/transparent"/>
+    <item android:state_enabled="false"
           android:drawable="@android:color/transparent"/>
 </selector>
