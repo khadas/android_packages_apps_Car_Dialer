@@ -42,6 +42,7 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
     private CallLogAdapter.OnShowContactDetailListener mOnShowContactDetailListener;
     private ImageView mAvatarView;
     private TextView mTitleView;
+    private TextView mCallCountTextView;
     private TextView mTextView;
     private CallTypeIconsView mCallTypeIconsView;
     private View mActionButton;
@@ -54,6 +55,7 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
         mAvatarView = itemView.findViewById(R.id.icon);
         mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         mTitleView = itemView.findViewById(R.id.title);
+        mCallCountTextView = itemView.findViewById(R.id.call_count_text);
         mTextView = itemView.findViewById(R.id.text);
         mCallTypeIconsView = itemView.findViewById(R.id.call_type_icons);
         mActionButton = itemView.findViewById(R.id.calllog_action_button);
@@ -70,8 +72,11 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
         for (PhoneCallLog.Record record : uiCallLog.getCallRecords()) {
             mCallTypeIconsView.add(record.getCallType());
         }
-        mTextView.setText(mCallTypeIconsView.getCallCountText());
-        mTextView.append(uiCallLog.getText());
+
+        mCallCountTextView.setText(mCallTypeIconsView.getCallCountText());
+        mCallCountTextView.setVisibility(
+                mCallTypeIconsView.getCallCountText() == null ? View.GONE : View.VISIBLE);
+        mTextView.setText(uiCallLog.getText());
 
         super.itemView.setOnClickListener(
                 view -> UiCallManager.get().placeCall(uiCallLog.getNumber()));
