@@ -47,7 +47,6 @@ limitations under the License.
         android:id="@+id/end_call_button"
         style="@style/DialpadPrimaryButton"
         android:src="@drawable/ic_call_end_button"
-        android:background="@drawable/dialer_ripple_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/toggle_dialpad_button"
         app:layout_constraintEnd_toStartOf="@+id/voice_channel_button"

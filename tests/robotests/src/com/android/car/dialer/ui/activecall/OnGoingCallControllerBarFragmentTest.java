@@ -147,7 +147,7 @@ public class OnGoingCallControllerBarFragmentTest {
     public void testEndCallButton() {
         addFragment(Call.STATE_ACTIVE);
 
-        ImageView endCallButton = mOnGoingCallControllerBarFragment.getView().findViewById(
+        View endCallButton = mOnGoingCallControllerBarFragment.getView().findViewById(
                 R.id.end_call_button);
         assertThat(endCallButton.hasOnClickListeners()).isTrue();
         // onEndCall
