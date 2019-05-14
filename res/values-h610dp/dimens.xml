@@ -22,4 +22,5 @@
     <dimen name="keypad_margin">@*android:dimen/car_padding_5</dimen>
 
     <dimen name="fab_outline_size">104dp</dimen>
+    <dimen name="fab_ripple_radius">52dp</dimen>
 </resources>

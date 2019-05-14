@@ -121,6 +121,7 @@
     <dimen name="fab_button_size">@dimen/fab_outline_size</dimen>
     <dimen name="fab_outline_size">84dp</dimen>
     <dimen name="fab_outline_thickness">4dp</dimen>
+    <dimen name="fab_ripple_radius">42dp</dimen>
 
     <dimen name="in_call_button_size">@dimen/touch_target_size</dimen>
 
