@@ -54,13 +54,16 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     @Nullable
     private final TextView mText;
     @Nullable
-    private final View mSendTextTouchTarget;
+    private final View mCallActionView;
+    @Nullable
+    private final View mSendTextActionView;
 
     ContactDetailsViewHolder(View v) {
         super(v);
+        mCallActionView = v.findViewById(R.id.call_action_id);
         mCallHeroButton = v.findViewById(R.id.call_hero_button);
         mTextHeroButton = v.findViewById(R.id.text_hero_button);
-        mSendTextTouchTarget = v.findViewById(R.id.contact_details_text_button_touchtarget);
+        mSendTextActionView = v.findViewById(R.id.contact_details_text_button_icon);
         mTitle = v.findViewById(R.id.title);
         mText = v.findViewById(R.id.text);
         mAvatar = v.findViewById(R.id.avatar);
@@ -134,8 +137,8 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
             mText.setText(readableLabel);
         }
 
-        itemView.setOnClickListener(v -> placeCall(phoneNumber));
-        mSendTextTouchTarget.setOnClickListener(v -> sendText(context, phoneNumber));
+        mCallActionView.setOnClickListener(v -> placeCall(phoneNumber));
+        mSendTextActionView.setOnClickListener(v -> sendText(context, phoneNumber));
     }
 
     private void placeCall(PhoneNumber number) {

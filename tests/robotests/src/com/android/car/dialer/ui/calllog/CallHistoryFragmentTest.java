@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.net.Uri;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.lifecycle.MutableLiveData;
@@ -121,9 +122,10 @@ public class CallHistoryFragmentTest {
 
     @Test
     public void testClick_placeCall() {
-        assertThat(mViewHolder.itemView.hasOnClickListeners()).isTrue();
+        View callButton = mViewHolder.itemView.findViewById(R.id.call_action_id);
+        assertThat(callButton.hasOnClickListeners()).isTrue();
 
-        mViewHolder.itemView.performClick();
+        callButton.performClick();
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(mMockUiCallManager).placeCall(captor.capture());
