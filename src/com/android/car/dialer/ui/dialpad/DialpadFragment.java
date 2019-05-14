@@ -170,7 +170,7 @@ public class DialpadFragment extends DialerBaseFragment implements
                 mMode == MODE_EMERGENCY ? R.style.EmergencyDialNumber : R.style.DialNumber);
         mTitleView.setGravity(Gravity.CENTER);
         mDisplayName = rootView.findViewById(R.id.display_name);
-        ImageButton callButton = rootView.findViewById(R.id.call_button);
+        View callButton = rootView.findViewById(R.id.call_button);
         mDeleteButton = rootView.findViewById(R.id.delete_button);
 
         if (mMode == MODE_IN_CALL) {

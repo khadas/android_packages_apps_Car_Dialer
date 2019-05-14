@@ -64,11 +64,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/call_button"
         style="@style/DialpadPrimaryButton"
         android:src="@drawable/icon_call_button"
-        android:background="@drawable/dialer_ripple_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

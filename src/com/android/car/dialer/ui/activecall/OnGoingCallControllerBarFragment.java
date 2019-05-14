@@ -174,7 +174,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         dialPadButton.setActivated(false);
         mOnGoingCallControllerBarCallback.onCloseDialpad();
 
-        ImageView endCallButton = fragmentView.findViewById(R.id.end_call_button);
+        View endCallButton = fragmentView.findViewById(R.id.end_call_button);
         endCallButton.setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;

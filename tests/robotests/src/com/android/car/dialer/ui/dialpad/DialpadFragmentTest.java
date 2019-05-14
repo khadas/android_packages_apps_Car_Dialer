@@ -190,7 +190,7 @@ public class DialpadFragmentTest {
         startPlaceCallActivity();
         mDialpadFragment.setDialedNumber("");
 
-        ImageButton callButton = mDialpadFragment.getView().findViewById(R.id.call_button);
+        View callButton = mDialpadFragment.getView().findViewById(R.id.call_button);
         callButton.performClick();
         verifyTitleText(DIAL_NUMBER);
     }
@@ -237,7 +237,7 @@ public class DialpadFragmentTest {
     }
 
     private void verifyButtonVisibility(int callButtonVisibility, int deleteButtonVisibility) {
-        ImageButton callButton = mDialpadFragment.getView().findViewById(R.id.call_button);
+        View callButton = mDialpadFragment.getView().findViewById(R.id.call_button);
         ImageButton deleteButton = mDialpadFragment.getView().findViewById(R.id.delete_button);
 
         assertThat(callButton.getVisibility()).isEqualTo(callButtonVisibility);
