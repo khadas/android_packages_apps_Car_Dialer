@@ -31,20 +31,23 @@ limitations under the License.
         android:paddingStart="@dimen/in_call_margin_between_avatar_and_text">
         <TextView
             android:id="@+id/user_profile_title"
-            android:textAppearance="@style/TextAppearance.InCallUserTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.InCallUserTitle"
             android:singleLine="true"/>
         <TextView
             android:id="@+id/user_profile_phone_number"
-            android:textAppearance="@style/TextAppearance.InCallUserPhoneNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/in_call_phone_number_margin_top"
-            android:singleLine="true"/>
+            android:textAppearance="@style/TextAppearance.InCallUserPhoneNumber"
+            android:singleLine="true"
+            android:paddingTop="@dimen/in_call_phone_number_margin_top"/>
         <TextView
             android:id="@+id/user_profile_call_state"
-            android:paddingTop="@dimen/in_call_state_margin_top"
-            style="@style/InCallState"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.InCallState"
+            android:singleLine="true"
+            android:paddingTop="@dimen/in_call_state_margin_top"/>
     </LinearLayout>
 </LinearLayout>
