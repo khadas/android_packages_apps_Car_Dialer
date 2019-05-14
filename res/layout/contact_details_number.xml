@@ -17,69 +17,58 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/contact_details_item_height"
-    android:background="?android:attr/selectableItemBackground"
-    android:paddingStart="@dimen/contact_details_padding_x">
+    android:layout_height="@dimen/contact_details_item_height">
 
-    <TextView
-        android:id="@+id/title"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+    <LinearLayout
+        android:id="@+id/call_action_id"
+        android:background="?android:attr/selectableItemBackground"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:layout_marginEnd="@dimen/contact_details_number_padding_end"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/contact_details_text_button_guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/text"/>
-
-    <TextView
-        android:id="@id/text"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:layout_marginEnd="@dimen/contact_details_number_padding_end"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/contact_details_text_button_guideline"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <!-- Guideline separating the text and the text icon -->
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/contact_details_text_button_guideline"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/contact_details_number_padding_start"
+        android:paddingEnd="@dimen/contact_details_number_padding_end"
+        android:gravity="center_vertical"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/contact_details_text_button_guideline"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/divider"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <TextView
+            android:id="@+id/title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@id/text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+
+    <!-- Divider line separating the text and the text icon -->
     <View
+        android:id="@+id/divider"
         android:layout_width="@dimen/vertical_divider_width"
         android:layout_height="match_parent"
         android:background="@color/divider_color"
         android:layout_marginTop="@dimen/vertical_divider_inset"
         android:layout_marginBottom="@dimen/vertical_divider_inset"
-        app:layout_constraintStart_toStartOf="@id/contact_details_text_button_guideline"/>
-
-    <View
-        android:id="@+id/contact_details_text_button_touchtarget"
-        android:layout_width="@dimen/contact_details_text_button_touchtarget"
-        android:layout_height="@dimen/contact_details_text_button_touchtarget"
-        android:background="@drawable/dialer_ripple_background"
-        app:layout_constraintStart_toStartOf="@id/contact_details_text_button_icon"
-        app:layout_constraintEnd_toEndOf="@id/contact_details_text_button_icon"
-        app:layout_constraintTop_toTopOf="@id/contact_details_text_button_icon"
-        app:layout_constraintBottom_toBottomOf="@id/contact_details_text_button_icon"/>
+        android:layout_marginEnd="@dimen/contact_details_text_button_guideline"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
         android:id="@+id/contact_details_text_button_icon"
-        android:layout_width="@dimen/contact_details_text_button_image_size"
-        android:layout_height="@dimen/contact_details_text_button_image_size"
-        android:scaleType="centerCrop"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:scaleType="center"
         android:src="@drawable/ic_message"
         android:tint="@color/contact_details_icon_tint"
-        android:layout_marginEnd="@dimen/contact_details_padding_x"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="@id/divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
