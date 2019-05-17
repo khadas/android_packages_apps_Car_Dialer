@@ -15,13 +15,16 @@
     limitations under the License.
 -->
 
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/setting_title">
+<resources>
+    <string-array name="entries" translatable="false">
+        <item>Choose me!</item>
+        <item>No, me!</item>
+        <item>What about me?!</item>
+    </string-array>
 
-    <ListPreference
-        android:key="@string/pref_start_page_key"
-        android:title="@string/pref_start_page_title"
-        android:entries="@array/tabs_title"
-        android:entryValues="@array/tabs_config"/>
-</PreferenceScreen>
+    <string-array name="entry_values" translatable="false">
+        <item>alpha</item>
+        <item>beta</item>
+        <item>charlie</item>
+    </string-array>
+</resources>
