@@ -53,6 +53,7 @@ public class CarDialerRobolectricTestRunner extends RobolectricTestRunner {
         AAR_VERSIONS.put("appcompat", "1.1.0-alpha01");
         AAR_VERSIONS.put("constraintlayout", "1.1.2");
         AAR_VERSIONS.put("cardview", "1.0.0-rc01");
+        AAR_VERSIONS.put("preference", "1.1.0-alpha02");
     }
 
     /**
@@ -115,6 +116,8 @@ public class CarDialerRobolectricTestRunner extends RobolectricTestRunner {
                     paths.add(createResourcePath(createSupportResourcePathFromJar("car")));
                     paths.add(createResourcePath(
                             createSupportResourcePathFromJar("constraintlayout")));
+                    paths.add(createResourcePath(createSupportResourcePathFromJar("preference")));
+
                     paths.add(
                             createResourcePath("file:packages/apps/Car/libs/car-apps-common/res"));
                     paths.add(
