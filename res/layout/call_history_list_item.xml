@@ -74,6 +74,17 @@ limitations under the License.
         app:layout_constraintTop_toBottomOf="@id/title"/>
 
     <TextView
+        android:id="@+id/call_count_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/call_history_icons_margin"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toEndOf="@id/call_type_icons"
+        app:layout_constraintEnd_toStartOf="@+id/text"/>
+
+    <TextView
         android:id="@id/text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -83,7 +94,7 @@ limitations under the License.
         android:singleLine="true"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/call_type_icons"
+        app:layout_constraintStart_toEndOf="@id/call_count_text"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"/>
 
     <View
