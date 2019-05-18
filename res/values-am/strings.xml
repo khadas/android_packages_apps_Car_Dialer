@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"ስልክ በአውሮፕላን ሁነታ ላይ ነው።"</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"ብሉቱዝ አልተገናኘም።"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"ጽሑፎችን ለመላክ፣ የመልዕክት መላላኪያ መተግበሪያን መጫን ያስፈልግዎታል።"</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ከብሉቱዝ ጋር ተገናኝ"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"ድንገተኛ አደጋ"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"የአደጋ ጊዜ ጥሪ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"እነኚህ እውቂያ ተሰርዘው ሊሆኑ ይችላሉ።"</string>
@@ -45,10 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"ዕውቂያዎች"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"የመደወያ ሰሌዳ"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"የእውቂያ ዝርዝሮች"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"ለ<xliff:g id="LABEL">%1$s</xliff:g> ደውል"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"ጽሑፍ <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"ይደውሉ"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ጽሑፍ"</string>
     <string name="search_title" msgid="5412680850141871664">"እውቂያዎችን ይፈልጉ"</string>
