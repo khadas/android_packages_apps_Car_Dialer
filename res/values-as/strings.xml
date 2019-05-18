@@ -25,6 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"ফ’নটো এয়াৰপ্লেইন ম’ডত আছে।"</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"ব্লুটুথ সংযোগ কৰা হোৱা নাই।"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"বাৰ্তাৰ বাবে বাৰ্তাৰ এপ্‌ ইনষ্টল কৰিব লাগিব।"</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ব্লুটুথৰ সৈতে সংযোগ কৰক"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"জৰুৰীকালীন"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"জৰুৰীকালীন কল"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"এই সম্পৰ্কটো হয়তো মচা হৈছে।"</string>
@@ -43,8 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"সম্পর্কবোৰ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ডায়েলপেড"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"সম্পৰ্কৰ সবিশেষ"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"%1$sলৈ কল কৰক"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"%1$sলৈ পাঠ বাৰ্তা পঠিয়াওক"</string>
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g>লৈ কল কৰক"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g>লৈ পাঠ বাৰ্তা পঠিয়াওক"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"কল কৰক"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"পাঠ বাৰ্তা পঠিয়াওক"</string>
     <string name="search_title" msgid="5412680850141871664">"সম্পর্কসমূহ সন্ধান কৰক"</string>
@@ -57,8 +58,7 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"এটা ফ’ন নম্বৰ বাছনি কৰক"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"মাত্ৰ এবাৰ"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"সদায়"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"ডিফ’ল্ট ফ’ন নম্বৰ ছেট কৰক"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ডিফ’ল্ট"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"অন্তৰ্গামী কলৰ জাননী"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"অন্তৰ্গামী কল"</string>

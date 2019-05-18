@@ -25,6 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"ទូរសព្ទស្ថិតក្នុងមុខងារពេល​ជិះ​យន្តហោះ។"</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"មិនមាន​ការភ្ជាប់​ប៊្លូធូស​ទេ។"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"អ្នកនឹងត្រូវដំឡើង​កម្មវិធីផ្ញើសារ ដើម្បីផ្ញើសារជាអក្សរ។"</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ភ្ជាប់​ប៊្លូធូស"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"អាសន្ន"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"ការហៅទៅលេខសង្គ្រោះបន្ទាន់"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ទំនាក់ទំនងនេះ​ប្រហែលជា​ត្រូវបាន​លុបចេញ​ហើយ។"</string>
@@ -43,8 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"ទំនាក់ទំនង"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"បន្ទះ​លេខ"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"ព័ត៌មាន​ទំនាក់ទំនង​លម្អិត"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"ហៅទូរសព្ទទៅ %1$s"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"ផ្ញើសារ​ជាអក្សរទៅ %1$s"</string>
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"ហៅទូរសព្ទ​ទៅលេខ <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"ផ្ញើ​សារ​ជា​អក្សរ​ទៅលេខ <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"ហៅទូរសព្ទ"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ផ្ញើសារ​ជាអក្សរ"</string>
     <string name="search_title" msgid="5412680850141871664">"ស្វែងរកទំនាក់ទំនង"</string>

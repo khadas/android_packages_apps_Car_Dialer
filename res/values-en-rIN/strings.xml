@@ -25,6 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"Phone is in aeroplane mode."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth is not connected."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"To send texts, you will need to install a messaging app."</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Connect to Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Emergency"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Emergency call"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"This contact might have been deleted."</string>
@@ -43,8 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"Contacts"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Dial Pad"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Contact details"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"Call %1$s"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"Text %1$s"</string>
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Call <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Text <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Call"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Text"</string>
     <string name="search_title" msgid="5412680850141871664">"Search contacts"</string>

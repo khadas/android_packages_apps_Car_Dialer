@@ -25,6 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"Điện thoại đang ở chế độ trên máy bay."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"Chưa kết nối Bluetooth."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Để gửi tin nhắn, bạn cần cài đặt ứng dụng nhắn tin."</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Kết nối với Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Khẩn cấp"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Cuộc gọi khẩn cấp"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Người liên hệ này có thể đã bị xóa."</string>
@@ -43,8 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"Danh bạ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Bàn phím số"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Thông tin liên hệ"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"Gọi cho %1$s"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"Nhắn tin cho %1$s"</string>
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Gọi điện cho <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Nhắn tin cho <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Gọi"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Nhắn tin"</string>
     <string name="search_title" msgid="5412680850141871664">"Tìm kiếm trong danh bạ"</string>

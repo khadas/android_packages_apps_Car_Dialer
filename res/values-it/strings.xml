@@ -25,6 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"Il telefono è in modalità aereo."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"Il Bluetooth non è collegato."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Per inviare SMS devi installare un\'app di messaggistica."</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Connettiti a Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Emergenza"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Chiamata di emergenza"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Questo contatto potrebbe essere stato eliminato."</string>
@@ -43,8 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"Contatti"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Tastierino"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Informazioni di contatto"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"Chiama %1$s"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"Invia tramite SMS %1$s"</string>
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Chiama <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Invia SMS a <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Chiama"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Invia SMS"</string>
     <string name="search_title" msgid="5412680850141871664">"Cerca nei contatti"</string>
