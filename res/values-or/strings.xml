@@ -25,6 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"ଫୋନ୍ ଏୟାର୍‌ପ୍ଲେନ୍ ମୋଡ୍‌ରେ ଅଛି।"</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"ବ୍ଲୁଟୁଥ୍ ସଂଯୋଗ ହୋଇନାହିଁ।"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"ଟେକ୍ସଟ୍ ପଠାଇବାକୁ, ଏକ ମେସେଜିଂ ଆପ୍ ଇନ୍‌ଷ୍ଟଲ୍ କରିବା ଆବଶ୍ୟକ।"</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ବ୍ଲୁଟୁଥ୍‍କୁ ସଂଯୋଗ କରନ୍ତୁ"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"ଜରୁରୀକାଳୀନ"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"ଜରୁରୀକାଳୀନ କଲ୍"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ବୋଧହୁଏ ଏହି ଯୋଗାଯୋଗଟି ଡିଲିଟ୍ ହୋଇଯାଇଛି।"</string>
@@ -43,8 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"ଯୋଗାଯୋଗଗୁଡ଼ିକ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ଡାଏଲପ୍ୟାଡ୍"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"ଯୋଗାଯୋଗର ବିବରଣୀ"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"%1$sରେ କଲ୍ କରନ୍ତୁ"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"%1$sକୁ ଟେକ୍ସଟ୍ କରନ୍ତୁ"</string>
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g>କୁ କଲ୍ କରନ୍ତୁ"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g>କୁ ଟେକ୍ସଟ୍ କରନ୍ତୁ"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"କଲ୍ କରନ୍ତୁ"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ଟେକ୍ସଟ୍"</string>
     <string name="search_title" msgid="5412680850141871664">"ଯୋଗାଯୋଗଗୁଡ଼ିକୁ ଖୋଜନ୍ତୁ"</string>
@@ -57,8 +58,7 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ଏକ ଫୋନ୍ ନମ୍ବର ବାଛନ୍ତୁ"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"ଥରେ ମାତ୍ର"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ସର୍ବଦା"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"ଡିଫଲ୍ଟ ଫୋନ୍ ନମ୍ବର୍ ସେଟ୍ କରନ୍ତୁ"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ଡିଫଲ୍ଟ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ଇନ୍‌କମିଙ୍ଗ୍ କଲ୍ ବିଜ୍ଞପ୍ତି"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ଇନ୍‌କମିଂ କଲ୍"</string>

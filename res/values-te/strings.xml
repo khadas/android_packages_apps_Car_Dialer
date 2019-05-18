@@ -25,6 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"ఫోన్ విమానం మోడ్‌లో ఉంది."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"బ్లూటూత్ కనెక్ట్ కాలేదు."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"వచనాలను పంపడానికి, సందేశం యాప్‌ను ఇన్‌స్టాల్ చేయండి."</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"బ్లూటూత్‌కు కనెక్ట్ చేయండి"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"అత్యవసరం"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"అత్యవసర కాల్"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ఈ పరిచయం తొలగించబడి ఉండవచ్చు."</string>
@@ -43,8 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"పరిచయాలు"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"డయల్‌ప్యాడ్"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"పరిచయ వివరాలు"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"కాల్‌లు %1$s"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"వచనాలు %1$s"</string>
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g>కు కాల్ చేయి"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g>కు వచనం పంపు"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"కాల్"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"వచనం"</string>
     <string name="search_title" msgid="5412680850141871664">"పరిచయాలను వెతకండి"</string>
@@ -57,8 +58,7 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ఒక ఫోన్ నంబర్‌ను ఎంచుకోండి"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"కేవలం ఒకసారి"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ఎల్లప్పుడూ"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"డిఫాల్ట్ ఫోన్ నంబర్‌ను సెటప్ చేయండి"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - డిఫాల్ట్"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ఇన్‌కమింగ్ కాల్ నోటిఫికేషన్"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ఇన్‌కమింగ్ కాల్"</string>

@@ -25,6 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"El telèfon està en mode d\'avió."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"El Bluetooth no està connectat."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Per enviar SMS, cal instal·lar una aplicació de missatgeria."</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Connecta el Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Emergència"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Trucada d\'emergència"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"És possible que aquest contacte s\'hagi suprimit."</string>
@@ -43,8 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"Contactes"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Teclat"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Dades de contacte"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="9125344275090383689">"Truca al número %1$s"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="524184780080621124">"Envia un SMS a %1$s"</string>
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Truca al <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Envia un SMS a <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Truca"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Text"</string>
     <string name="search_title" msgid="5412680850141871664">"Cerca contactes"</string>
