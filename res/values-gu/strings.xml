@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"ફોન એરપ્લેન મોડમાં છે."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"બ્લૂટૂથ કનેક્ટ કરેલું નથી."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"ટેક્સ્ટ મોકલવા મેસેજિંગ ઍપ ઇન્સ્ટૉલ કરો."</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"બ્લૂટૂથ સાથે કનેક્ટ કરો"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"ઇમર્જન્સી"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"ઇમર્જન્સી કૉલ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"એવું બની શકે છે કે આ સંપર્કને ડિલીટ કરવામાં આવ્યો હોય."</string>
@@ -45,10 +44,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"સંપર્કો"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ડાયલપૅડ"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"સંપર્કની વિગતો"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> પર કૉલ કરો"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> પર ટેક્સ્ટ કરો"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"કૉલ કરો"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ટેક્સ્ટ કરો"</string>
     <string name="search_title" msgid="5412680850141871664">"સંપર્કોમાં શોધો"</string>
@@ -61,8 +58,7 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"કોઈ ફોન નંબર પસંદ કરો"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"માત્ર એક વાર"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"હંમેશાં"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"ડિફૉલ્ટ ફોન નંબર સેટ કરો"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ડિફૉલ્ટ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ઇનકમિંગ કૉલના નોટિફિકેશન"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ઇનકમિંગ કૉલ"</string>
