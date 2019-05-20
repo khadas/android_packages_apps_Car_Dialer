@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerUtils;
@@ -73,56 +74,60 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Context context, Contact contact) {
-
         TelecomUtils.setContactBitmapAsync(context, mAvatar, contact, null);
 
         if (contact == null) {
             mTitle.setText(R.string.error_contact_deleted);
-            mCallHeroButton.setVisibility(View.GONE);
-            mTextHeroButton.setVisibility(View.GONE);
-        } else {
-            mTitle.setText(contact.getDisplayName());
 
-            final PhoneNumber primaryNumber = contact.getNumbers().size() == 1
-                    ? contact.getNumbers().get(0)
-                    : contact.getPrimaryPhoneNumber();
-
-            if (primaryNumber != null) {
-                CharSequence label = primaryNumber.getReadableLabel(context.getResources());
-
-                String callButtonText = context.getString(
-                        R.string.contact_details_call_number_button_with_label, label);
-                String textButtonText = context.getString(
-                        R.string.contact_details_text_number_button_with_label, label);
-
-                mCallHeroButton.setText(callButtonText);
-                mTextHeroButton.setText(textButtonText);
-
-                mCallHeroButton.setOnClickListener(v -> placeCall(primaryNumber));
-                mTextHeroButton.setOnClickListener(v -> sendText(context, primaryNumber));
-
-            } else {
-                mCallHeroButton.setText(
-                        R.string.contact_details_call_number_button);
-                mTextHeroButton.setText(
-                        R.string.contact_details_text_number_button);
-
-                mCallHeroButton.setOnClickListener(v ->
-                        DialerUtils.promptForPrimaryNumber(context, contact,
-                                (phoneNumber, always) -> placeCall(phoneNumber)));
-
-                mTextHeroButton.setOnClickListener(v ->
-                        DialerUtils.promptForPrimaryNumber(context, contact,
-                                (phoneNumber, always) -> sendText(context, phoneNumber)));
-            }
-
-            mCallHeroButton.setVisibility(View.VISIBLE);
-            mTextHeroButton.setVisibility(View.VISIBLE);
+            ViewUtils.setVisible(mCallHeroButton, false);
+            ViewUtils.setVisible(mTextHeroButton, false);
+            return;
         }
 
+        mTitle.setText(contact.getDisplayName());
 
-        // Just in case a viewholder object gets recycled.
-        itemView.setOnClickListener(null);
+        final PhoneNumber primaryNumber = contact.getNumbers().size() == 1
+                ? contact.getNumbers().get(0)
+                : contact.getPrimaryPhoneNumber();
+
+        if (primaryNumber != null) {
+            CharSequence label = primaryNumber.getReadableLabel(context.getResources());
+
+            String callButtonText = context.getString(
+                    R.string.contact_details_call_number_button_with_label, label);
+            String textButtonText = context.getString(
+                    R.string.contact_details_text_number_button_with_label, label);
+
+            setTextAndClickListener(mCallHeroButton, callButtonText,
+                    v -> placeCall(primaryNumber));
+            setTextAndClickListener(mTextHeroButton, textButtonText,
+                    v -> sendText(context, primaryNumber));
+
+        } else {
+            setTextAndClickListener(mCallHeroButton, R.string.contact_details_call_number_button,
+                    v -> DialerUtils.promptForPrimaryNumber(context, contact,
+                            (phoneNumber, always) -> placeCall(phoneNumber)));
+
+            setTextAndClickListener(mTextHeroButton, R.string.contact_details_text_number_button,
+                    v -> DialerUtils.promptForPrimaryNumber(context, contact,
+                            (phoneNumber, always) -> sendText(context, phoneNumber)));
+        }
+
+        ViewUtils.setVisible(mCallHeroButton, true);
+        ViewUtils.setVisible(mTextHeroButton, true);
+    }
+
+    private void setTextAndClickListener(TextView view, String str, View.OnClickListener listener) {
+        if (view != null) {
+            view.setText(str);
+            view.setOnClickListener(listener);
+        }
+    }
+
+    private void setTextAndClickListener(TextView view, int strId, View.OnClickListener listener) {
+        if (view != null) {
+            setTextAndClickListener(view, view.getContext().getString(strId), listener);
+        }
     }
 
     public void bind(Context context, PhoneNumber phoneNumber) {

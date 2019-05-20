@@ -72,6 +72,7 @@ public class TelecomActivity extends FragmentActivity implements
     // View objects for this activity.
     private CarTabLayout<TelecomPageTab> mTabLayout;
     private Toolbar mToolbar;
+    private View mToolbarContainer;
     private TelecomPageTab.Factory mTabFactory;
 
     @Override
@@ -83,6 +84,8 @@ public class TelecomActivity extends FragmentActivity implements
         mToolbar = findViewById(R.id.car_toolbar);
         setActionBar(mToolbar);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mToolbarContainer = findViewById(R.id.car_toolbar_container);
 
         setupTabLayout();
 
@@ -378,5 +381,14 @@ public class TelecomActivity extends FragmentActivity implements
         String defaultValue = getResources().getStringArray(R.array.tabs_config)[0];
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         return mTabFactory.getTabIndex(sharedPreferences.getString(key, defaultValue));
+    }
+
+    /** Sets the background of the Activity's action bar to a {@link Drawable} */
+    public void setActionBarBackground(@Nullable Drawable drawable) {
+        if (mToolbarContainer != null) {
+            mToolbarContainer.setBackground(drawable);
+        } else {
+            mToolbar.setBackground(drawable);
+        }
     }
 }

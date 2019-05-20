@@ -68,7 +68,8 @@ public class DialerListBaseFragment extends DialerBaseFragment {
         return mListView;
     }
 
-    private int getTopOffset() {
+    /** Gets the top padding for the list. By default it includes the action bar's height */
+    protected int getTopOffset() {
         int listTopPadding = getContext().getResources().getDimensionPixelSize(
                 R.dimen.list_top_padding);
         return getTopBarHeight() + listTopPadding;
