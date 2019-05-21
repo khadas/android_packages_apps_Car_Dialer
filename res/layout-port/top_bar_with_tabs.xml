@@ -19,6 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/car_toolbar_container"
     android:background="@color/app_bar_background_color"
     android:orientation="vertical">
     <com.android.car.apps.common.ClickThroughToolbar

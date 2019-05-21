@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.dialpad;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -212,9 +213,12 @@ public class DialpadFragment extends DialerBaseFragment implements
     }
 
     @Override
-    protected void setActionBarTitle() {
+    protected void setupActionBar(ActionBar actionBar) {
+        // Only setup the actionbar if we're in dial mode.
+        // In all the other modes, there will be another fragment in the activity
+        // at the same time, and we don't want to mess up it's action bar.
         if (mMode == MODE_DIAL) {
-            super.setActionBarTitle();
+            super.setupActionBar(actionBar);
         }
     }
 

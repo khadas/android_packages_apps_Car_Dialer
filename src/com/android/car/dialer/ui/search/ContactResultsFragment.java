@@ -181,8 +181,7 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
     @Override
     public void onShowContactDetail(Uri contactLookupUri) {
-        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contactLookupUri,
-                null);
+        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contactLookupUri);
         pushContentFragment(contactDetailsFragment, ContactDetailsFragment.FRAGMENT_TAG);
     }
 }
