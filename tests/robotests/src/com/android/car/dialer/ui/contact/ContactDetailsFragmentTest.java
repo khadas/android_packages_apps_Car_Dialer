@@ -33,7 +33,7 @@ import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.testutils.ShadowViewModelProvider;
+import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
@@ -48,7 +48,7 @@ import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 
-@Config(shadows = {ShadowViewModelProvider.class}, qualifiers = "h610dp")
+@Config(shadows = {ShadowAndroidViewModelFactory.class}, qualifiers = "h610dp")
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class ContactDetailsFragmentTest {
     private static final String DISPLAY_NAME = "NAME";
@@ -84,7 +84,8 @@ public class ContactDetailsFragmentTest {
 
         MutableLiveData<Contact> contactDetails = new MutableLiveData<>();
         contactDetails.setValue(mMockContact);
-        ShadowViewModelProvider.add(ContactDetailsViewModel.class, mMockContactDetailsViewModel);
+        ShadowAndroidViewModelFactory.add(ContactDetailsViewModel.class,
+                mMockContactDetailsViewModel);
         when(mMockContactDetailsViewModel.getContactDetails(mMockContactLookupUri)).thenReturn(
                 contactDetails);
     }
