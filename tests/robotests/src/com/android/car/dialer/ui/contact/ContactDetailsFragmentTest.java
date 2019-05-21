@@ -48,7 +48,7 @@ import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 
-@Config(shadows = {ShadowViewModelProvider.class})
+@Config(shadows = {ShadowViewModelProvider.class}, qualifiers = "h610dp")
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class ContactDetailsFragmentTest {
     private static final String DISPLAY_NAME = "NAME";
@@ -92,7 +92,7 @@ public class ContactDetailsFragmentTest {
     @Test
     public void testCreateWithContact() {
         when(mMockContact.getLookupUri()).thenReturn(mMockContactLookupUri);
-        mContactDetailsFragment = ContactDetailsFragment.newInstance(mMockContact, null);
+        mContactDetailsFragment = ContactDetailsFragment.newInstance(mMockContact);
 
         setUpFragment();
 

@@ -15,13 +15,7 @@
   limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- This menu is not bound to an expandable menu presenter
-    1. We expand the search view in onCreateOptionsMenu
-    2. Clicking on back button does not collapse the search view-->
-    <item
-        android:id="@+id/menu_contacts_search_view"
-        android:title="@string/search_title"
-        android:showAsAction="always"
-        android:actionLayout="@layout/search_view"/>
-</menu>
+<resources>
+    <bool name="screen_size_short">false</bool>
+    <bool name="screen_size_standard_height">true</bool>
+</resources>

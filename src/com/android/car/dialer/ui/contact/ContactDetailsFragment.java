@@ -16,24 +16,26 @@
 
 package com.android.car.dialer.ui.contact;
 
+import android.app.ActionBar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
+import com.android.car.dialer.ui.common.DialerUtils;
+import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.android.car.telephony.common.TelecomUtils;
 
 /**
  * A fragment that shows the name of the contact, the photo and all listed phone numbers. It is
@@ -50,26 +52,24 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
     // Key to load the contact details by passing in the content provider query uri.
     private static final String KEY_CONTACT_QUERY_URI = "ContactQueryUri";
 
-    private final List<RecyclerView.OnScrollListener> mOnScrollListeners = new ArrayList<>();
-
     private Contact mContact;
     private Uri mContactLookupUri;
     private LiveData<Contact> mContactDetailsLiveData;
+    private ImageView mAvatarView;
+    private TextView mNameView;
 
-    public static ContactDetailsFragment newInstance(
-            Uri uri, @Nullable RecyclerView.OnScrollListener listener) {
+    /** Creates a new ContactDetailsFragment using a URI to lookup a {@link Contact} at. */
+    public static ContactDetailsFragment newInstance(Uri uri) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
-        fragment.addOnScrollListener(listener);
         Bundle args = new Bundle();
         args.putParcelable(KEY_CONTACT_QUERY_URI, uri);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static ContactDetailsFragment newInstance(
-            Contact contact, @Nullable RecyclerView.OnScrollListener listener) {
+    /** Creates a new ContactDetailsFragment using a {@link Contact}. */
+    public static ContactDetailsFragment newInstance(Contact contact) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
-        fragment.addOnScrollListener(listener);
         Bundle args = new Bundle();
         args.putParcelable(KEY_CONTACT_ENTITY, contact);
         fragment.setArguments(args);
@@ -92,7 +92,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
         ContactDetailsViewModel contactDetailsViewModel = ViewModelProviders.of(this).get(
                 ContactDetailsViewModel.class);
         mContactDetailsLiveData = contactDetailsViewModel.getContactDetails(mContactLookupUri);
-        mContactDetailsLiveData.observe(this, contact -> getArguments().clear());
+        mContactDetailsLiveData.observe(this, this::onContactChanged);
     }
 
     @Override
@@ -106,52 +106,66 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        for (RecyclerView.OnScrollListener listener : mOnScrollListeners) {
-            getRecyclerView().addOnScrollListener(listener);
-        }
-        mOnScrollListeners.clear();
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_contacts_search).setVisible(false);
+        menu.findItem(R.id.menu_dialer_setting).setVisible(false);
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
                 mContact);
         getRecyclerView().setAdapter(contactDetailsAdapter);
         mContactDetailsLiveData.observe(this, contactDetailsAdapter::setContact);
     }
 
-    /**
-     * Adds a {@link androidx.recyclerview.widget.RecyclerView.OnScrollListener} to be notified when
-     * the contact details are scrolled.
-     *
-     * @see RecyclerView#addOnScrollListener(RecyclerView.OnScrollListener)
-     */
-    public void addOnScrollListener(@Nullable RecyclerView.OnScrollListener onScrollListener) {
-        if (onScrollListener == null) {
-            return;
-        }
-        // If the view has not been created yet, then queue the setting of the scroll listener.
-        if (getRecyclerView() == null) {
-            mOnScrollListeners.add(onScrollListener);
-            return;
+    private void onContactChanged(Contact contact) {
+        getArguments().clear();
+
+        if (mAvatarView != null) {
+            mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
+            TelecomUtils.setContactBitmapAsync(getContext(), mAvatarView, contact, null);
         }
 
-        getRecyclerView().addOnScrollListener(onScrollListener);
+        if (mNameView != null) {
+            if (contact != null) {
+                mNameView.setText(contact.getDisplayName());
+            } else {
+                mNameView.setText(R.string.error_contact_deleted);
+            }
+        }
+    }
+
+    @Override
+    protected void setupActionBar(@NonNull ActionBar actionBar) {
+        actionBar.setCustomView(R.layout.contact_details_action_bar);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setTitle(null);
+
+        // Will set these to null on screen sizes that don't have them in the action bar
+        View customView = actionBar.getCustomView();
+        mAvatarView = customView.findViewById(R.id.contact_details_action_bar_avatar);
+        mNameView = customView.findViewById(R.id.contact_details_action_bar_name);
+
+        // Remove the action bar background on non-short screens
+        // On short screens the avatar and name is in the action bar so we keep it
+        if (mAvatarView == null) {
+            setActionBarBackground(null);
+        }
+    }
+
+    @Override
+    protected int getTopOffset() {
+        if (DialerUtils.isShortScreen(getContext())) {
+            return super.getTopOffset();
+        } else {
+            return 0;
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_CONTACT_ENTITY, mContactDetailsLiveData.getValue());
-    }
-
-    @Override
-    public void onDestroyView() {
-        // Clear all scroll listeners.
-        getRecyclerView().removeOnScrollListener(null);
-        super.onDestroyView();
-    }
-
-    @Override
-    protected CharSequence getActionBarTitle() {
-        return getString(R.string.toolbar_title_contact_details);
     }
 }
