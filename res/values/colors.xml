@@ -66,9 +66,8 @@
 
     <!-- Components -->
     <color name="divider_color">@color/divider_color_light</color>
-    <!-- Both day and night mode dividers are currently spec'd to this grey, but we leave both to allow OEM customizations -->
-    <color name="divider_color_dark">@*android:color/car_grey_846</color>
-    <color name="divider_color_light">@*android:color/car_grey_846</color>
+    <color name="divider_color_dark">#1EFFFFFF</color>
+    <color name="divider_color_light">#38FFFFFF</color>
     <color name="primary_icon_color">@*android:color/car_tint</color>
     <color name="secondary_icon_color">@color/secondary_icon_color_light</color>
     <color name="secondary_icon_color_dark">#8ADADCE0</color>
