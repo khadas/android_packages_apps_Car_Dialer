@@ -16,13 +16,6 @@
   -->
 
 <resources>
-    <!-- Keypad dimensions -->
-    <dimen name="keypad_margin_x">@*android:dimen/car_padding_4</dimen>
-    <dimen name="keypad_margin_y">@*android:dimen/car_padding_2</dimen>
-    <dimen name="keypad_margin">@*android:dimen/car_padding_5</dimen>
-
-    <dimen name="fab_outline_size">104dp</dimen>
-    <dimen name="fab_ripple_radius">52dp</dimen>
-
-    <dimen name="contact_details_avatar_size">126dp</dimen>
+    <bool name="screen_size_standard_height">false</bool>
+    <bool name="screen_size_tall">true</bool>
 </resources>
