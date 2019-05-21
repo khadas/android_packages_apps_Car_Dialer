@@ -16,8 +16,8 @@
 
 package com.android.car.dialer;
 
-import static org.robolectric.Shadows.shadowOf;
 import static org.mockito.Mockito.mock;
+import static org.robolectric.Shadows.shadowOf;
 
 import android.app.Application;
 import android.app.NotificationManager;

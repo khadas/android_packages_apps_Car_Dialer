@@ -34,6 +34,7 @@ public class FragmentTestActivity extends FragmentActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Dialer);
         setContentView(R.layout.test_activity);
     }
 

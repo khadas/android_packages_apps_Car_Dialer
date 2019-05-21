@@ -31,7 +31,7 @@ import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.testutils.ShadowViewModelProvider;
+import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
@@ -47,7 +47,7 @@ import org.robolectric.annotation.Config;
 import java.util.Arrays;
 import java.util.List;
 
-@Config(shadows = {ShadowViewModelProvider.class})
+@Config(shadows = {ShadowAndroidViewModelFactory.class})
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class FavoriteFragmentTest {
     private static final String RAW_NUMBER = "6502530000";
@@ -72,7 +72,7 @@ public class FavoriteFragmentTest {
         when(mMockPhoneNumber.getRawNumber()).thenReturn(RAW_NUMBER);
         MutableLiveData<List<Contact>> favoriteContacts = new MutableLiveData<>();
         favoriteContacts.setValue(Arrays.asList(mMockContact));
-        ShadowViewModelProvider.add(FavoriteViewModel.class, mMockFavoriteViewModel);
+        ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
         when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(favoriteContacts);
 
         mFavoriteFragment = FavoriteFragment.newInstance();
