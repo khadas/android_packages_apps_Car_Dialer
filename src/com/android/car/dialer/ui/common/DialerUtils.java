@@ -18,6 +18,7 @@ package com.android.car.dialer.ui.common;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
@@ -105,5 +106,17 @@ public class DialerUtils {
         } else {
             L.w(TAG, "contact %s doesn't have any phone number", contact.getDisplayName());
         }
+    }
+
+    /** Returns true if this a short height screen */
+    public static boolean isShortScreen(Context context) {
+        Resources resources = context.getResources();
+        return resources.getBoolean(R.bool.screen_size_short);
+    }
+
+    /** Returns true if this a tall height screen */
+    public static boolean isTallScreen(Context context) {
+        Resources resources = context.getResources();
+        return resources.getBoolean(R.bool.screen_size_tall);
     }
 }

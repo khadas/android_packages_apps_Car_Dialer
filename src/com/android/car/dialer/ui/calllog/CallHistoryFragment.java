@@ -50,7 +50,7 @@ public class CallHistoryFragment extends DialerListBaseFragment implements
 
     @Override
     public void onShowContactDetail(Contact contact) {
-        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact, null);
+        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact);
         pushContentFragment(contactDetailsFragment, CONTACT_DETAIL_FRAGMENT_TAG);
     }
 }
