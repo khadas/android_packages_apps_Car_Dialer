@@ -20,13 +20,16 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.car.apps.common.util.Themes;
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.TelecomActivity;
 
 /** The base class for top level dialer content {@link Fragment}s. */
 public abstract class DialerBaseFragment extends Fragment {
@@ -44,9 +47,21 @@ public abstract class DialerBaseFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onResume() {
         setFullScreenBackground();
-        setActionBarTitle();
+
+        Activity parentActivity = getActivity();
+        ActionBar actionBar = parentActivity.getActionBar();
+        if (actionBar != null) {
+            setupActionBar(actionBar);
+        }
+
         super.onResume();
     }
 
@@ -60,13 +75,11 @@ public abstract class DialerBaseFragment extends Fragment {
         }
     }
 
-    /** Sets the title of the action bar. */
-    protected void setActionBarTitle() {
-        Activity parentActivity = getActivity();
-        ActionBar actionBar = parentActivity.getActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(getActionBarTitle());
-        }
+    /** Customizes the action bar. Can be overridden in subclasses. */
+    protected void setupActionBar(@NonNull ActionBar actionBar) {
+        actionBar.setTitle(getActionBarTitle());
+        actionBar.setDisplayShowCustomEnabled(false);
+        setActionBarBackground(getContext().getDrawable(R.color.app_bar_background_color));
     }
 
     /**
@@ -102,5 +115,12 @@ public abstract class DialerBaseFragment extends Fragment {
             topBarHeight += topBarHeight;
         }
         return topBarHeight;
+    }
+
+    protected final void setActionBarBackground(@Nullable Drawable drawable) {
+        Activity activity = getActivity();
+        if (activity instanceof TelecomActivity) {
+            ((TelecomActivity) activity).setActionBarBackground(drawable);
+        }
     }
 }
