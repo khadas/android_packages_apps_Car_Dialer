@@ -123,8 +123,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         mAudioRouteSelectionDialog = new AlertDialog.Builder(getContext())
                 .setView(dialogView)
                 .create();
-        mAudioRouteSelectionDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent);
 
         List<Integer> availableRoutes = UiCallManager.get().getSupportedAudioRoute();
         int activeRoute = UiCallManager.get().getAudioRoute();
