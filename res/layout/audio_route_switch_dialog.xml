@@ -13,18 +13,9 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<androidx.cardview.widget.CardView
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:contentPadding="@dimen/audio_route_content_padding"
-    app:cardCornerRadius="@dimen/audio_route_corner_radius"
-    app:cardElevation="@dimen/audio_route_card_elevation">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"/>
-</androidx.cardview.widget.CardView>
+    android:clipChildren="false"/>
