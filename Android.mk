@@ -45,6 +45,12 @@ LOCAL_STATIC_ANDROID_LIBRARIES += \
     car-telephony-common \
     car-theme-lib \
 
+# Including the resources for the static android libraries allows to pick up their static overlays.
+LOCAL_RESOURCE_DIR += \
+    $(LOCAL_PATH)/../libs/car-apps-common/res \
+    $(LOCAL_PATH)/../libs/car-telephony-common/res \
+    $(LOCAL_PATH)/../libs/car-theme-lib/res
+
 LOCAL_STATIC_JAVA_LIBRARIES := \
     androidx-constraintlayout_constraintlayout-solver \
     guava \
