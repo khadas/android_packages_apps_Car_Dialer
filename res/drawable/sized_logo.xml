@@ -15,23 +15,15 @@
   limitations under the License.
   -->
 
-<!--Create a selector to switch between app icon and back arrow.
-When user is on the tabbed page, disable the navigation view to show the app icon.
-Otherwise show the back arrow.-->
-<layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:width="@*android:dimen/car_margin"
-        android:height="@dimen/touch_target_size"
-        android:drawable="@android:color/transparent">
-    </item>
+        android:drawable="@android:color/transparent"/>
+
     <item
         android:gravity="center"
         android:width="@dimen/primary_icon_size"
-        android:height="@dimen/primary_icon_size">
-        <selector>
-            <item android:state_enabled="false" android:drawable="@drawable/ic_app_icon"/>
-            <item android:drawable="@drawable/ic_arrow_back"/>
-        </selector>
+        android:height="@dimen/primary_icon_size"
+        android:drawable="@drawable/ic_app_icon">
     </item>
 </layer-list>
