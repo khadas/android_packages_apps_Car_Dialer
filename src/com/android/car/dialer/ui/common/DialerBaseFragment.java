@@ -78,7 +78,7 @@ public abstract class DialerBaseFragment extends Fragment {
     /** Customizes the action bar. Can be overridden in subclasses. */
     protected void setupActionBar(@NonNull ActionBar actionBar) {
         actionBar.setTitle(getActionBarTitle());
-        actionBar.setDisplayShowCustomEnabled(false);
+        actionBar.setCustomView(null);
         setActionBarBackground(getContext().getDrawable(R.color.app_bar_background_color));
     }
 

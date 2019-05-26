@@ -37,6 +37,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 
+import com.android.car.apps.common.util.Themes;
 import com.android.car.apps.common.widget.CarTabLayout;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
@@ -71,9 +72,9 @@ public class TelecomActivity extends FragmentActivity implements
 
     // View objects for this activity.
     private CarTabLayout<TelecomPageTab> mTabLayout;
+    private TelecomPageTab.Factory mTabFactory;
     private Toolbar mToolbar;
     private View mToolbarContainer;
-    private TelecomPageTab.Factory mTabFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class TelecomActivity extends FragmentActivity implements
 
         mToolbar = findViewById(R.id.car_toolbar);
         setActionBar(mToolbar);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setLogo(R.drawable.sized_logo);
 
         mToolbarContainer = findViewById(R.id.car_toolbar_container);
 
@@ -319,7 +320,12 @@ public class TelecomActivity extends FragmentActivity implements
     public void onBackStackChanged() {
         boolean isBackNavigationAvailable = isBackNavigationAvailable();
         mTabLayout.setVisibility(isBackNavigationAvailable ? View.GONE : View.VISIBLE);
-        mToolbar.getNavigationView().setEnabled(isBackNavigationAvailable);
+        int displayOptions = Themes.getAttrInteger(
+                this,
+                isBackNavigationAvailable ? R.style.HomeAsUpDisplayOptions
+                        : R.style.RootToolbarDisplayOptions,
+                android.R.attr.displayOptions);
+        getActionBar().setDisplayOptions(displayOptions);
     }
 
     @Override
