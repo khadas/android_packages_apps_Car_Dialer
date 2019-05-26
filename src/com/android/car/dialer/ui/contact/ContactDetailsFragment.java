@@ -139,7 +139,6 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
     @Override
     protected void setupActionBar(@NonNull ActionBar actionBar) {
         actionBar.setCustomView(R.layout.contact_details_action_bar);
-        actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setTitle(null);
 
         // Will set these to null on screen sizes that don't have them in the action bar
