@@ -35,7 +35,7 @@ import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.testutils.ShadowViewModelProvider;
+import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
@@ -52,7 +52,7 @@ import org.robolectric.shadows.ShadowAlertDialog;
 import java.util.Arrays;
 import java.util.List;
 
-@Config(shadows = {ShadowViewModelProvider.class})
+@Config(shadows = {ShadowAndroidViewModelFactory.class})
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class ContactListFragmentTest {
     private static final String RAW_NUMBNER = "6502530000";
@@ -81,12 +81,13 @@ public class ContactListFragmentTest {
 
         MutableLiveData<List<Contact>> contactList = new MutableLiveData<>();
         contactList.setValue(Arrays.asList(mMockContact1, mMockContact2, mMockContact3));
-        ShadowViewModelProvider.add(ContactListViewModel.class, mMockContactListViewModel);
+        ShadowAndroidViewModelFactory.add(ContactListViewModel.class, mMockContactListViewModel);
         when(mMockContactListViewModel.getAllContacts()).thenReturn(contactList);
 
         MutableLiveData<Contact> contactDetail = new MutableLiveData<>();
         contactDetail.setValue(mMockContact1);
-        ShadowViewModelProvider.add(ContactDetailsViewModel.class, mMockContactDetailsViewModel);
+        ShadowAndroidViewModelFactory.add(ContactDetailsViewModel.class,
+                mMockContactDetailsViewModel);
         when(mMockContactDetailsViewModel.getContactDetails(any())).thenReturn(contactDetail);
     }
 
