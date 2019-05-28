@@ -109,7 +109,7 @@ public class ContactListFragmentTest {
     }
 
     @Test
-    public void testClickCallActionButton_ContactHasMultipleNumbers_notPlaceCall() {
+    public void testClickCallActionButton_ContactHasMultipleNumbers_showAlertDialog() {
         PhoneNumber otherMockPhoneNumber = mock(PhoneNumber.class);
         when(mMockContact1.getNumbers()).thenReturn(
                 Arrays.asList(mMockPhoneNumber, otherMockPhoneNumber));
@@ -121,7 +121,6 @@ public class ContactListFragmentTest {
 
         verify(mMockUiCallManager, never()).placeCall(any());
         assertThat(ShadowAlertDialog.getLatestAlertDialog()).isNotNull();
-
     }
 
     @Test
