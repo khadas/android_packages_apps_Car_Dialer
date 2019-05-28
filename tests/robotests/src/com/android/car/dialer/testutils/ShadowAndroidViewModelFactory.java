@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.testutils;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -28,23 +29,23 @@ import java.util.Map;
 /**
  * Shadow class for {@link ViewModelProvider}.
  */
-@Implements(ViewModelProvider.class)
-public class ShadowViewModelProvider {
+@Implements(ViewModelProvider.AndroidViewModelFactory.class)
+public class ShadowAndroidViewModelFactory {
 
-    private static Map<Class, ViewModel> viewModelMap = new HashMap<>();
+    private static final Map<Class, ViewModel> VIEW_MODEL_MAP = new HashMap<>();
 
     /**
      * Adds class and view model pairs to the map.
      */
     public static <T extends ViewModel> void add(Class<T> modelClass, T viewModel) {
-        viewModelMap.put(modelClass, viewModel);
+        VIEW_MODEL_MAP.put(modelClass, viewModel);
     }
 
     /**
      * Returns a ViewModel from the map.
      */
     @Implementation
-    public <T extends ViewModel> T get(Class<T> modelClass) {
-        return (T) viewModelMap.get(modelClass);
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+        return (T) VIEW_MODEL_MAP.get(modelClass);
     }
 }

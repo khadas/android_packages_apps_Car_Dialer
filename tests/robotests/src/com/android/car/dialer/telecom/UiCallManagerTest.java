@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 
+import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.R;
 import com.android.car.dialer.TestDialerApplication;
 
@@ -41,13 +42,12 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.ShadowContextImpl;
 import org.robolectric.shadows.ShadowToast;
 
-@RunWith(RobolectricTestRunner.class)
+@RunWith(CarDialerRobolectricTestRunner.class)
 public class UiCallManagerTest {
 
     private static final String TEL_SCHEME = "tel";
