@@ -40,7 +40,7 @@ import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.InCallServiceImpl;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.testutils.ShadowViewModelProvider;
+import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +57,7 @@ import org.robolectric.shadows.ShadowLooper;
 import java.util.ArrayList;
 import java.util.List;
 
-@Config(shadows = {ShadowViewModelProvider.class})
+@Config(shadows = {ShadowAndroidViewModelFactory.class})
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class OnGoingCallControllerBarFragmentTest {
     private static final String CALL_STATE = "CALL_STATE";
@@ -214,7 +214,7 @@ public class OnGoingCallControllerBarFragmentTest {
         when(mMockInCallViewModel.getPrimaryCallDetail()).thenReturn(mock(LiveData.class));
         when(mMockInCallViewModel.getCallStateDescription()).thenReturn(mock(LiveData.class));
         when(mMockInCallViewModel.getPrimaryCallState()).thenReturn(mock(LiveData.class));
-        ShadowViewModelProvider.add(InCallViewModel.class, mMockInCallViewModel);
+        ShadowAndroidViewModelFactory.add(InCallViewModel.class, mMockInCallViewModel);
 
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().start().resume().get();
