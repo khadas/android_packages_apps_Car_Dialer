@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,6 +46,7 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.NotificationService;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.activecall.InCallActivity;
+import com.android.car.dialer.ui.activecall.InCallViewModel;
 import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
@@ -53,6 +55,8 @@ import com.android.car.dialer.ui.favorite.FavoriteFragment;
 import com.android.car.dialer.ui.search.ContactResultsFragment;
 import com.android.car.dialer.ui.settings.DialerSettingsActivity;
 import com.android.car.dialer.ui.warning.NoHfpFragment;
+
+import java.util.List;
 
 /**
  * Main activity for the Dialer app. It contains two layers:
@@ -71,6 +75,7 @@ public class TelecomActivity extends FragmentActivity implements
 
     private LiveData<String> mBluetoothErrorMsgLiveData;
     private LiveData<Integer> mDialerAppStateLiveData;
+    private LiveData<List<Call>> mOngoingCallListLiveData;
 
     // View objects for this activity.
     private CarTabLayout<TelecomPageTab> mTabLayout;
@@ -99,6 +104,11 @@ public class TelecomActivity extends FragmentActivity implements
         mDialerAppStateLiveData.observe(this,
                 dialerAppState -> updateCurrentFragment(dialerAppState));
 
+        InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
+        mOngoingCallListLiveData = inCallViewModel.getOngoingCallList();
+        // The mOngoingCallListLiveData needs to be active to get calculated.
+        mOngoingCallListLiveData.observe(this, this::maybeStartInCallActivity);
+
         handleIntent();
     }
 
@@ -108,8 +118,6 @@ public class TelecomActivity extends FragmentActivity implements
         onBackStackChanged();
         super.onStart();
         L.d(TAG, "onStart");
-
-        maybeStartInCallActivity();
     }
 
     @Override
@@ -174,6 +182,9 @@ public class TelecomActivity extends FragmentActivity implements
         }
 
         setIntent(null);
+
+        // This is to start the incall activity when user taps on the dialer launch icon rapidly
+        maybeStartInCallActivity(mOngoingCallListLiveData.getValue());
     }
 
     /**
@@ -392,8 +403,8 @@ public class TelecomActivity extends FragmentActivity implements
         pushContentFragment(fragment, ContactResultsFragment.FRAGMENT_TAG);
     }
 
-    private void maybeStartInCallActivity() {
-        if (UiCallManager.get().getCallList().isEmpty()) {
+    private void maybeStartInCallActivity(List<Call> callList) {
+        if (callList == null || callList.isEmpty()) {
             return;
         }
 

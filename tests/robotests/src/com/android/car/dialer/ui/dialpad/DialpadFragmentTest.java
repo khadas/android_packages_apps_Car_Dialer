@@ -66,6 +66,7 @@ public class DialpadFragmentTest {
         MockitoAnnotations.initMocks(this);
 
         Context context = RuntimeEnvironment.application;
+        ((TestDialerApplication) context).setupInCallServiceImpl();
         ((TestDialerApplication) context).initUiCallManager();
         InMemoryPhoneBook.init(context);
     }
