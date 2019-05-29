@@ -143,7 +143,10 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         if (getArguments() != null) {
             mCallState = getArguments().getInt(CALL_STATE);
         }
-        fragmentView.findViewById(R.id.mute_button).setOnClickListener((v) -> {
+
+        View muteButton = fragmentView.findViewById(R.id.mute_button);
+        muteButton.setActivated(UiCallManager.get().getMuted());
+        muteButton.setOnClickListener((v) -> {
             if (mOnGoingCallControllerBarCallback == null) {
                 return;
             }
