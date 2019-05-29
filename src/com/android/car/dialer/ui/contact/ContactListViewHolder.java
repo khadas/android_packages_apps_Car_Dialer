@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.contact;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,17 +76,19 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
             return;
         }
 
-        String label = "";
+        Context context = itemView.getContext();
+        CharSequence readableLabel = "";
         List<PhoneNumber> numberList = contact.getNumbers();
 
         if (numberList.size() == 1) {
-            CharSequence readableLabel = numberList.get(0).getReadableLabel(
-                    super.itemView.getContext().getResources());
-            label = readableLabel != null ? readableLabel.toString() : "";
+            readableLabel = numberList.get(0).getReadableLabel(context.getResources());
         } else if (numberList.size() > 1) {
-            label = super.itemView.getContext().getString(R.string.type_multiple);
+            readableLabel = contact.hasPrimaryPhoneNumber()
+                    ? context.getString(R.string.primary_number_description,
+                    contact.getPrimaryPhoneNumber().getReadableLabel(context.getResources()))
+                    : context.getString(R.string.type_multiple);
         }
 
-        mTextView.setText(label);
+        mTextView.setText(readableLabel);
     }
 }
