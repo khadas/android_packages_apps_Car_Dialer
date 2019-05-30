@@ -63,6 +63,14 @@ public class InCallServiceImpl extends InCallService {
     public void onCreate() {
         super.onCreate();
         mInCallRouter = new InCallRouter(getApplicationContext());
+        mInCallRouter.start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mInCallRouter.stop();
+        mInCallRouter = null;
     }
 
     @Override
