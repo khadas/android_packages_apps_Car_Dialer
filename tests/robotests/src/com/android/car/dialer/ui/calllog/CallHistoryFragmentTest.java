@@ -26,8 +26,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.widget.PagedRecyclerView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -94,9 +94,9 @@ public class CallHistoryFragmentTest {
                 FragmentTestActivity.class).create().resume().get();
         mFragmentTestActivity.setFragment(callHistoryFragment);
 
-        RecyclerView recyclerView = callHistoryFragment.getView().findViewById(R.id.list_view);
+        PagedRecyclerView recyclerView = callHistoryFragment.getView().findViewById(R.id.list_view);
         // set up layout for recyclerView
-        recyclerView.layout(0, 0, 100, 1000);
+        recyclerView.layoutBothForTesting(0, 0, 100, 1000);
         mViewHolder = (CallLogViewHolder) recyclerView.findViewHolderForLayoutPosition(0);
     }
 
