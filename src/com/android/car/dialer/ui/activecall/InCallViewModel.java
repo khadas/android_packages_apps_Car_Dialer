@@ -28,6 +28,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.android.car.dialer.livedata.AudioRouteLiveData;
 import com.android.car.dialer.livedata.CallDetailLiveData;
 import com.android.car.dialer.livedata.CallStateLiveData;
 import com.android.car.dialer.livedata.HeartBeatLiveData;
@@ -58,6 +59,7 @@ public class InCallViewModel extends AndroidViewModel implements
     private LiveData<Integer> mCallStateLiveData;
     private LiveData<String> mCallStateDescriptionLiveData;
     private LiveData<Call> mPrimaryCallLiveData;
+    private LiveData<Integer> mAudioRouteLiveData;
     private Context mContext;
 
     public InCallViewModel(@NonNull Application application) {
@@ -75,6 +77,7 @@ public class InCallViewModel extends AndroidViewModel implements
         mCallStateDescriptionLiveData = new SelfRefreshDescriptionLiveData(mContext,
                 new HeartBeatLiveData(DateUtils.SECOND_IN_MILLIS), mCallDetailLiveData,
                 mCallStateLiveData);
+        mAudioRouteLiveData = new AudioRouteLiveData(mContext);
 
         updateActiveCallList();
         UiCallManager.get().registerActiveCallListChangedCallback(this);
@@ -117,6 +120,13 @@ public class InCallViewModel extends AndroidViewModel implements
      */
     public LiveData<String> getCallStateDescription() {
         return mCallStateDescriptionLiveData;
+    }
+
+    /**
+     * Returns current audio route.
+     */
+    public LiveData<Integer> getAudioRoute() {
+        return mAudioRouteLiveData;
     }
 
     @Override
