@@ -31,6 +31,9 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_USE_AAPT2 := true
 
+LOCAL_JAVA_LIBRARIES += \
+    android.car
+
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.recyclerview_recyclerview \
     androidx.lifecycle_lifecycle-extensions \
@@ -82,6 +85,9 @@ LOCAL_PRIVATE_PLATFORM_APIS := true
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_USE_AAPT2 := true
+
+LOCAL_JAVA_LIBRARIES += \
+    android.car
 
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx.recyclerview_recyclerview \
