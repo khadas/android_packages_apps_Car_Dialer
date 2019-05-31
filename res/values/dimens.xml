@@ -146,7 +146,6 @@
     <dimen name="list_top_padding">@*android:dimen/car_padding_2</dimen>
     <!-- Components -->
     <dimen name="list_item_height">@*android:dimen/car_single_line_list_item_height</dimen>
-    <dimen name="list_margin">@*android:dimen/car_margin</dimen>
     <dimen name="list_item_guideline">@*android:dimen/car_keyline_3</dimen>
     <dimen name="list_item_guideline_begin">@*android:dimen/car_keyline_4</dimen>
     <dimen name="list_item_guideline_end">@*android:dimen/car_keyline_3</dimen>

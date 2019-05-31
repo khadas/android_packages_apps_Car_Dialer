@@ -29,8 +29,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.widget.PagedRecyclerView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -59,7 +59,7 @@ public class ContactResultsFragmentTest {
 
     private ContactResultsFragment mContactResultsFragment;
     private FragmentTestActivity mFragmentTestActivity;
-    private RecyclerView mListView;
+    private PagedRecyclerView mListView;
     private MutableLiveData<List<ContactDetails>> mContactSearchResultsLiveData;
     @Mock
     private ContactResultsViewModel mMockContactResultsViewModel;
@@ -84,7 +84,7 @@ public class ContactResultsFragmentTest {
         mContactResultsFragment = ContactResultsFragment.newInstance(INITIAL_SEARCH_QUERY);
         setUpFragment();
 
-        assertThat(mListView.getChildAt(0)).isNull();
+        assertThat(mListView.findViewHolderForLayoutPosition(0)).isNull();
     }
 
     @Test
@@ -121,7 +121,8 @@ public class ContactResultsFragmentTest {
         mContactResultsFragment = ContactResultsFragment.newInstance(INITIAL_SEARCH_QUERY);
         setUpFragment();
 
-        mListView.getChildAt(1).findViewById(R.id.contact_result_card).performClick();
+        mListView.findViewHolderForLayoutPosition(1).itemView.findViewById(R.id.contact_result_card)
+                .performClick();
 
         // verify contact detail is shown.
         verifyShowContactDetail();
@@ -134,11 +135,11 @@ public class ContactResultsFragmentTest {
 
         mListView = mContactResultsFragment.getView().findViewById(R.id.list_view);
         // Set up layout for recyclerView
-        mListView.layout(0, 0, 100, 1000);
+        mListView.layoutBothForTesting(0, 0, 100, 1000);
     }
 
     private void verifyChildAt(int position) {
-        View childView = mListView.getChildAt(position);
+        View childView = mListView.findViewHolderForLayoutPosition(position).itemView;
 
         assertThat(childView).isNotNull();
         assertThat(childView.findViewById(R.id.contact_result_card).hasOnClickListeners()).isTrue();
