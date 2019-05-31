@@ -95,8 +95,7 @@
     <dimen name="dialpad_info_delete_button_margin">96dp</dimen>
     <dimen name="dialpad_fragment_margin">@*android:dimen/car_margin</dimen>
     <dimen name="dialpad_info_guideline">@dimen/touch_target_size</dimen>
-    <dimen name="dialpad_info_title_text_size_max">36sp</dimen>
-    <dimen name="dialpad_info_title_text_size_min">24sp</dimen>
+    <dimen name="dialpad_info_guideline_in_call" format="float">0.5</dimen>
     <dimen name="dialpad_display_name_size">32sp</dimen>
     <dimen name="display_name_padding">@*android:dimen/car_padding_3</dimen>
 
