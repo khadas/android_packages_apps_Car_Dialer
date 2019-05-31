@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
@@ -214,6 +215,11 @@ public class OnGoingCallControllerBarFragmentTest {
         when(mMockInCallViewModel.getPrimaryCallDetail()).thenReturn(mock(LiveData.class));
         when(mMockInCallViewModel.getCallStateDescription()).thenReturn(mock(LiveData.class));
         when(mMockInCallViewModel.getPrimaryCallState()).thenReturn(mock(LiveData.class));
+
+        MutableLiveData<Integer> audioRouteLiveData = new MutableLiveData<>();
+        audioRouteLiveData.setValue(CallAudioState.ROUTE_BLUETOOTH);
+        when(mMockInCallViewModel.getAudioRoute()).thenReturn(audioRouteLiveData);
+
         ShadowAndroidViewModelFactory.add(InCallViewModel.class, mMockInCallViewModel);
 
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
