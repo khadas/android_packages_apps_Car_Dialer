@@ -25,8 +25,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.widget.PagedRecyclerView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -80,9 +80,9 @@ public class FavoriteFragmentTest {
                 FragmentTestActivity.class).create().resume().get();
         fragmentTestActivity.setFragment(mFavoriteFragment);
 
-        RecyclerView recyclerView = mFavoriteFragment.getView().findViewById(R.id.list_view);
+        PagedRecyclerView recyclerView = mFavoriteFragment.getView().findViewById(R.id.list_view);
         // set up layout for recyclerView
-        recyclerView.layout(0, 0, 100, 1000);
+        recyclerView.layoutBothForTesting(0, 0, 100, 1000);
         mViewHolder = (FavoriteContactViewHolder) recyclerView.findViewHolderForLayoutPosition(0);
     }
 
