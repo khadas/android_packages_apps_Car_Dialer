@@ -27,8 +27,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.widget.PagedRecyclerView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -56,7 +56,7 @@ public class ContactDetailsFragmentTest {
 
     private ContactDetailsFragment mContactDetailsFragment;
     private FragmentTestActivity mFragmentTestActivity;
-    private RecyclerView mListView;
+    private PagedRecyclerView mListView;
     @Mock
     private ContactDetailsViewModel mMockContactDetailsViewModel;
     @Mock
@@ -109,14 +109,14 @@ public class ContactDetailsFragmentTest {
 
         mListView = mContactDetailsFragment.getView().findViewById(R.id.list_view);
         // Set up layout for recyclerView
-        mListView.layout(0, 0, 100, 1000);
+        mListView.layoutBothForTesting(0, 0, 100, 1000);
     }
 
     /**
      * Verify the title of the Contact
      */
     private void verifyHeader() {
-        View firstChild = mListView.getChildAt(0);
+        View firstChild = mListView.findViewHolderForLayoutPosition(0).itemView;
         assertThat(((TextView) firstChild.findViewById(R.id.title)).getText().toString()).isEqualTo(
                 DISPLAY_NAME);
         assertThat(firstChild.hasOnClickListeners()).isFalse();
@@ -126,7 +126,7 @@ public class ContactDetailsFragmentTest {
      * Verify the phone numbers for the Contact
      */
     private void verifyPhoneNumber(int position) {
-        View child = mListView.getChildAt(position);
+        View child = mListView.findViewHolderForLayoutPosition(position).itemView;
         View callButton = child.findViewById(R.id.call_action_id);
 
         assertThat(((TextView) child.findViewById(R.id.title)).getText().toString()).isEqualTo(
