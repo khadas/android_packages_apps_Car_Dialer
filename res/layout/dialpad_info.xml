@@ -27,17 +27,27 @@
         app:layout_constraintGuide_begin="@dimen/dialpad_info_guideline"/>
 
     <TextView
+        android:id="@+id/call_state"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.InCallState"
+        android:singleLine="true"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/title"/>
+
+    <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/dialpad_title_color"
         android:focusable="true"
-        android:maxLines="1"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="@dimen/dialpad_info_title_text_size_min"
-        android:autoSizeMaxTextSize="@dimen/dialpad_info_title_text_size_max"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/dialpad_info_guideline"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.Display3"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@id/dialpad_info_guideline"
+        app:layout_constraintBottom_toBottomOf="@id/dialpad_info_guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/delete_button"/>
 
