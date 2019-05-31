@@ -116,12 +116,8 @@
     <style name="TextAppearance.InCallUserPhoneNumber" parent="@style/TextAppearance.Body1">
         <item name="android:textColor">#B8FFFFFF</item>
     </style>
-    <style name="InCallState">
-        <item name="android:textAppearance">@style/TextAppearance.Body1</item>
+    <style name="TextAppearance.InCallState" parent="@style/TextAppearance.Body1">
         <item name="android:textColor">#B8FFFFFF</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:singleLine">true</item>
     </style>
 
     <!-- Contact details -->
