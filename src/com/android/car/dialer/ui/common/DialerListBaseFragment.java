@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.widget.PagedRecyclerView;
 import com.android.car.dialer.R;
 
 /**
@@ -34,7 +35,7 @@ import com.android.car.dialer.R;
  */
 public class DialerListBaseFragment extends DialerBaseFragment {
 
-    private RecyclerView mListView;
+    private PagedRecyclerView mListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +65,7 @@ public class DialerListBaseFragment extends DialerBaseFragment {
 
     /** Returns the {@link RecyclerView} instance. */
     @NonNull
-    protected RecyclerView getRecyclerView() {
+    protected PagedRecyclerView getRecyclerView() {
         return mListView;
     }
 
