@@ -23,39 +23,25 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.drawable.Icon;
-import android.net.Uri;
 import android.telecom.Call;
 import android.util.Pair;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
-import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.telephony.common.CallDetail;
-import com.android.car.telephony.common.TelecomUtils;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 /** Controller that manages the heads up notification for incoming calls. */
-public class InCallNotificationController {
+public final class InCallNotificationController {
     private static final String TAG = "CD.InCallNotificationController";
-    // Channel id that uses the package name.
-    private static final String CHANNEL_ID = "com.android.car.dialer";
+    private static final String CHANNEL_ID = "com.android.car.dialer.incoming";
     // A random number that is used for notification id.
     private static final int NOTIFICATION_ID = 20181105;
 
     private static InCallNotificationController sInCallNotificationController;
-    private final Context mContext;
-    private final NotificationManager mNotificationManager;
 
     /**
      * Initialized a globally accessible {@link InCallNotificationController} which can be retrieved
@@ -88,16 +74,18 @@ public class InCallNotificationController {
         sInCallNotificationController = null;
     }
 
+    private final Context mContext;
+    private final NotificationManager mNotificationManager;
+
     @TargetApi(26)
     private InCallNotificationController(Context context) {
         mContext = context;
+        mNotificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         CharSequence name = mContext.getString(R.string.in_call_notification_channel_name);
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name,
                 NotificationManager.IMPORTANCE_HIGH);
-
-        mNotificationManager =
-                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.createNotificationChannel(notificationChannel);
     }
 
@@ -108,30 +96,25 @@ public class InCallNotificationController {
         L.d(TAG, "showInCallNotification");
         CallDetail callDetail = CallDetail.fromTelecomCallDetail(call.getDetails());
         String number = callDetail.getNumber();
-        Pair<String, Uri> displayNameAndAvatarUri = TelecomUtils.getDisplayNameAndAvatarUri(mContext,
-                number);
-
-        int avatarSize = mContext.getResources().getDimensionPixelSize(R.dimen.avatar_icon_size);
-        Icon largeIcon = loadRoundedContactAvatar(displayNameAndAvatarUri.second, avatarSize);
-        if (largeIcon == null) {
-            largeIcon = createLetterTile(displayNameAndAvatarUri.first, avatarSize);
-        }
+        Pair<String, Icon> displayNameAndRoundedAvatar =
+                NotificationUtils.getDisplayNameAndRoundedAvatar(mContext, number);
 
         Intent intent = new Intent(mContext, InCallActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent fullscreenIntent = PendingIntent.getActivity(mContext, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Builder builder = new Notification.Builder(mContext, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_phone)
-                .setLargeIcon(largeIcon)
-                .setContentTitle(displayNameAndAvatarUri.first)
+                .setLargeIcon(displayNameAndRoundedAvatar.second)
+                .setContentTitle(displayNameAndRoundedAvatar.first)
                 .setContentText(mContext.getString(R.string.notification_incoming_call))
                 .setFullScreenIntent(fullscreenIntent, /* highPriority= */true)
                 .setCategory(Notification.CATEGORY_CALL)
                 .addAction(getAction(call, R.string.answer_call,
-                        NotificationReceiver.ACTION_ANSWER_CALL))
+                        NotificationService.ACTION_ANSWER_CALL))
                 .addAction(getAction(call, R.string.decline_call,
-                        NotificationReceiver.ACTION_DECLINE_CALL))
+                        NotificationService.ACTION_DECLINE_CALL))
                 .setOngoing(true)
                 .setAutoCancel(false);
 
@@ -152,48 +135,17 @@ public class InCallNotificationController {
     private Notification.Action getAction(Call call, @StringRes int actionText,
             String intentAction) {
         CharSequence text = mContext.getString(actionText);
-        PendingIntent intent = PendingIntent.getBroadcast(mContext, 0,
-                getIntent(mContext, intentAction, call),
+        PendingIntent intent = PendingIntent.getBroadcast(
+                mContext,
+                0,
+                getIntent(intentAction, call),
                 PendingIntent.FLAG_UPDATE_CURRENT);
         return new Notification.Action.Builder(null, text, intent).build();
     }
 
-    private Intent getIntent(Context context, String action, Call call) {
-        Intent intent = new Intent(action, null, context, NotificationReceiver.class);
-        intent.putExtra(NotificationReceiver.EXTRA_CALL_ID, call.getDetails().getTelecomCallId());
+    private Intent getIntent(String action, Call call) {
+        Intent intent = new Intent(action, null, mContext, NotificationReceiver.class);
+        intent.putExtra(NotificationService.EXTRA_CALL_ID, call.getDetails().getTelecomCallId());
         return intent;
-    }
-
-    private Icon loadRoundedContactAvatar(@Nullable Uri avatarUri, int avatarSize) {
-        if (avatarUri == null) {
-            return null;
-        }
-
-        try {
-            InputStream input = mContext.getContentResolver().openInputStream(avatarUri);
-            if (input == null) {
-                return null;
-            }
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(
-                    mContext.getResources(), input);
-            roundedBitmapDrawable.setCircular(true);
-
-            final Bitmap result = Bitmap.createBitmap(avatarSize, avatarSize,
-                    Bitmap.Config.ARGB_8888);
-            final Canvas canvas = new Canvas(result);
-            roundedBitmapDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-            roundedBitmapDrawable.draw(canvas);
-            roundedBitmapDrawable.getBitmap().recycle();
-            return Icon.createWithBitmap(result);
-        } catch (FileNotFoundException e) {
-            // No-op
-        }
-        return null;
-    }
-
-    private Icon createLetterTile(String displayName, int avatarSize) {
-        LetterTileDrawable letterTileDrawable = TelecomUtils.createLetterTile(mContext,
-                displayName);
-        return Icon.createWithBitmap(letterTileDrawable.toBitmap(avatarSize));
     }
 }
