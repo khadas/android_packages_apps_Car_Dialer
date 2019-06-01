@@ -150,6 +150,9 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
         // On short screens the avatar and name is in the action bar so we keep it
         if (mAvatarView == null) {
             setActionBarBackground(null);
+            getRecyclerView().setScrollBarPadding(actionBar.getHeight(), 0);
+        } else {
+            getRecyclerView().setScrollBarPadding(0, 0);
         }
     }
 

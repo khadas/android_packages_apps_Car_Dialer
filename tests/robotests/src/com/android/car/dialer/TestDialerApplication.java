@@ -25,6 +25,7 @@ import android.content.ComponentName;
 import android.content.Context;
 
 import com.android.car.dialer.notification.InCallNotificationController;
+import com.android.car.dialer.notification.MissedCallNotificationController;
 import com.android.car.dialer.telecom.InCallServiceImpl;
 import com.android.car.dialer.telecom.UiCallManager;
 
@@ -37,19 +38,24 @@ public class TestDialerApplication extends Application {
         shadowOf(this).setSystemService(
                 Context.NOTIFICATION_SERVICE, mock(NotificationManager.class));
         InCallNotificationController.init(this);
+        MissedCallNotificationController.init(this);
+    }
+
+    public void initUiCallManager(InCallServiceImpl.LocalBinder localBinder) {
+        shadowOf(this).setComponentNameAndServiceForBindService(
+                new ComponentName(this, InCallServiceImpl.class), localBinder);
+        UiCallManager.init(this);
     }
 
     public void initUiCallManager() {
-        shadowOf(this).setComponentNameAndServiceForBindService(
-                new ComponentName(this, InCallServiceImpl.class),
-                mock(InCallServiceImpl.LocalBinder.class));
-        UiCallManager.init(this);
+        initUiCallManager(mock(InCallServiceImpl.LocalBinder.class));
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
         InCallNotificationController.tearDown();
+        MissedCallNotificationController.get().tearDown();
     }
 
 }

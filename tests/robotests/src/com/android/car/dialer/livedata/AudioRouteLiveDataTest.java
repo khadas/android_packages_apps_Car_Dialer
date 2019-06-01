@@ -24,11 +24,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.robolectric.Shadows.shadowOf;
 
-import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothHeadsetClient;
 import android.content.Context;
 import android.content.Intent;
+import android.telecom.CallAudioState;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -36,8 +36,10 @@ import androidx.lifecycle.LifecycleRegistry;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.LiveDataObserver;
+import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.BroadcastReceiverVerifier;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,35 +47,42 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.shadows.ShadowBluetoothAdapter;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
-public class BluetoothStateLiveDataTest {
-    private static final String INTENT_ACTION = BluetoothAdapter.ACTION_STATE_CHANGED;
+public class AudioRouteLiveDataTest {
+    private static final String INTENT_ACTION = BluetoothHeadsetClient.ACTION_AUDIO_STATE_CHANGED;
 
-    private BluetoothStateLiveData mBluetoothStateLiveData;
+    private AudioRouteLiveData mAudioRouteLiveData;
     private LifecycleRegistry mLifecycleRegistry;
     private BroadcastReceiverVerifier mReceiverVerifier;
     @Mock
     private LifecycleOwner mMockLifecycleOwner;
     @Mock
     private LiveDataObserver<Integer> mMockObserver;
+    @Mock
+    private UiCallManager mMockUiCallManager;
 
     @Before
-    public void setup() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mBluetoothStateLiveData = new BluetoothStateLiveData(RuntimeEnvironment.application);
+        mAudioRouteLiveData = new AudioRouteLiveData(RuntimeEnvironment.application);
         mLifecycleRegistry = new LifecycleRegistry(mMockLifecycleOwner);
         when(mMockLifecycleOwner.getLifecycle()).thenReturn(mLifecycleRegistry);
 
+        when(mMockUiCallManager.getAudioRoute()).thenReturn(CallAudioState.ROUTE_EARPIECE);
+        UiCallManager.set(mMockUiCallManager);
         mReceiverVerifier = new BroadcastReceiverVerifier(RuntimeEnvironment.application);
+    }
+
+    @After
+    public void tearDown() {
+        UiCallManager.set(null);
     }
 
     @Test
     public void testOnActive() {
-        mBluetoothStateLiveData.observe(mMockLifecycleOwner,
-                (value) -> mMockObserver.onChanged(value));
+        mAudioRouteLiveData.observe(mMockLifecycleOwner, (value) -> mMockObserver.onChanged(value));
         verify(mMockObserver, never()).onChanged(any());
 
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
@@ -82,32 +91,25 @@ public class BluetoothStateLiveDataTest {
     }
 
     @Test
-    public void testOnBluetoothAdapterStateChange() {
+    public void testOnBluetoothHfpStateChange() {
         ArgumentCaptor<Integer> valueCaptor = ArgumentCaptor.forClass(Integer.class);
         doNothing().when(mMockObserver).onChanged(valueCaptor.capture());
 
-        ShadowBluetoothAdapter shadowBluetoothAdapter = shadowOf(
-                BluetoothAdapter.getDefaultAdapter());
-        shadowBluetoothAdapter.setEnabled(false);
-
-        mBluetoothStateLiveData.observe(mMockLifecycleOwner,
-                (value) -> mMockObserver.onChanged(value));
+        mAudioRouteLiveData.observe(mMockLifecycleOwner, (value) -> mMockObserver.onChanged(value));
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
-        assertThat(valueCaptor.getValue()).isEqualTo(
-                BluetoothStateLiveData.BluetoothState.DISABLED);
+        assertThat(mAudioRouteLiveData.getValue()).isEqualTo(CallAudioState.ROUTE_EARPIECE);
+        assertThat(valueCaptor.getValue()).isEqualTo(CallAudioState.ROUTE_EARPIECE);
 
-        shadowBluetoothAdapter.setEnabled(true);
+        when(mMockUiCallManager.getAudioRoute()).thenReturn(CallAudioState.ROUTE_BLUETOOTH);
         mReceiverVerifier.getBroadcastReceiverFor(INTENT_ACTION)
                 .onReceive(mock(Context.class), mock(Intent.class));
-        assertThat(mBluetoothStateLiveData.getValue()).isEqualTo(
-                BluetoothStateLiveData.BluetoothState.ENABLED);
-        assertThat(valueCaptor.getValue()).isEqualTo(BluetoothStateLiveData.BluetoothState.ENABLED);
+        assertThat(mAudioRouteLiveData.getValue()).isEqualTo(CallAudioState.ROUTE_BLUETOOTH);
+        assertThat(valueCaptor.getValue()).isEqualTo(CallAudioState.ROUTE_BLUETOOTH);
     }
 
     @Test
     public void testOnInactiveUnregister() {
-        mBluetoothStateLiveData.observe(mMockLifecycleOwner,
-                (value) -> mMockObserver.onChanged(value));
+        mAudioRouteLiveData.observe(mMockLifecycleOwner, (value) -> mMockObserver.onChanged(value));
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
         int preNumber = mReceiverVerifier.getReceiverNumber();
 

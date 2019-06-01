@@ -29,8 +29,8 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.widget.PagedRecyclerView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -143,9 +143,10 @@ public class ContactListFragmentTest {
                 FragmentTestActivity.class).create().resume().get();
         mFragmentTestActivity.setFragment(mContactListFragment);
 
-        RecyclerView recyclerView = mContactListFragment.getView().findViewById(R.id.list_view);
+        PagedRecyclerView recyclerView = mContactListFragment.getView()
+                .findViewById(R.id.list_view);
         //Force RecyclerView to layout to ensure findViewHolderForLayoutPosition works.
-        recyclerView.layout(0, 0, 100, 1000);
+        recyclerView.layoutBothForTesting(0, 0, 100, 1000);
         mViewHolder = (ContactListViewHolder) recyclerView.findViewHolderForLayoutPosition(0);
     }
 
