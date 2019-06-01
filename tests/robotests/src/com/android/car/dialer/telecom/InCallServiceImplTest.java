@@ -83,8 +83,8 @@ public class InCallServiceImplTest {
         when(mCar.getCarManager(Car.PROJECTION_SERVICE)).thenReturn(mCarProjectionManager);
         ShadowCar.setCar(mCar);
 
-        ServiceController<InCallServiceImpl> inCallServiceController = Robolectric.buildService(
-                InCallServiceImpl.class);
+        ServiceController<InCallServiceImpl> inCallServiceController =
+                Robolectric.buildService(InCallServiceImpl.class);
         inCallServiceController.create().bind();
         mInCallServiceImpl = inCallServiceController.get();
 
