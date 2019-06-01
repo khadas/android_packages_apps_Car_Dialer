@@ -51,6 +51,10 @@
     <string name="decline_call">Decline</string>
     <!-- Answer an in coming call [CHAR LIMIT=20] -->
     <string name="answer_call">Answer</string>
+    <!-- Call back a missed call [CHAR LIMIT=20] -->
+    <string name="call_back">Call back</string>
+    <!-- Send a message to a missed call [CHAR LIMIT=20] -->
+    <string name="message">Message</string>
 
     <!-- Label for when a call is a conference call [CHAR LIMIT=30] -->
     <string name="conference_call">Conference call</string>
@@ -142,10 +146,14 @@
     </string>
 
     <!-- Heads Up Notification -->
-    <!-- Name of notification channel in app info [CHAR LIMIT=50] -->
+    <!-- Name of incoming call notification channel in app info [CHAR LIMIT=50] -->
     <string name="in_call_notification_channel_name">Incoming call notification</string>
     <!-- Text for incoming call notification [CHAR LIMIT=40]-->
     <string name="notification_incoming_call">Incoming call</string>
+    <!-- Name of missed call notification channel in app info [CHAR LIMIT=50] -->
+    <string name="missed_call_notification_channel_name">Missed call notification</string>
+    <!-- Title for missed call notification [CHAR LIMIT=40]-->
+    <string name="notification_missed_call">Missed call</string>
 
     <!-- Dialer Setting -->
     <!-- Title of the settings page [CHAR LIMIT=30]-->
