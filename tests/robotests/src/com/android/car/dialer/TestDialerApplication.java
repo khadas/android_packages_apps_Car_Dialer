@@ -39,11 +39,14 @@ public class TestDialerApplication extends Application {
         InCallNotificationController.init(this);
     }
 
-    public void initUiCallManager() {
+    public void initUiCallManager(InCallServiceImpl.LocalBinder localBinder) {
         shadowOf(this).setComponentNameAndServiceForBindService(
-                new ComponentName(this, InCallServiceImpl.class),
-                mock(InCallServiceImpl.LocalBinder.class));
+                new ComponentName(this, InCallServiceImpl.class), localBinder);
         UiCallManager.init(this);
+    }
+
+    public void initUiCallManager() {
+        initUiCallManager(mock(InCallServiceImpl.LocalBinder.class));
     }
 
     @Override
