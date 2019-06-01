@@ -22,16 +22,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
 import android.bluetooth.BluetoothAdapter;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -39,12 +36,12 @@ import androidx.lifecycle.LifecycleRegistry;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.LiveDataObserver;
+import com.android.car.dialer.testutils.BroadcastReceiverVerifier;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
@@ -52,25 +49,25 @@ import org.robolectric.shadows.ShadowBluetoothAdapter;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class BluetoothStateLiveDataTest {
+    private static final String INTENT_ACTION = BluetoothAdapter.ACTION_STATE_CHANGED;
 
     private BluetoothStateLiveData mBluetoothStateLiveData;
-    private Context mSpyContext;
-    private LifecycleOwner mMockLifecycleOwner;
     private LifecycleRegistry mLifecycleRegistry;
+    private BroadcastReceiverVerifier mReceiverVerifier;
+    @Mock
+    private LifecycleOwner mMockLifecycleOwner;
     @Mock
     private LiveDataObserver<Integer> mMockObserver;
-    @Captor
-    private ArgumentCaptor<BroadcastReceiver> mReceiverArgumentCaptor;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        mSpyContext = spy(RuntimeEnvironment.application);
-        mBluetoothStateLiveData = new BluetoothStateLiveData(mSpyContext);
-        mMockLifecycleOwner = mock(LifecycleOwner.class);
+        mBluetoothStateLiveData = new BluetoothStateLiveData(RuntimeEnvironment.application);
         mLifecycleRegistry = new LifecycleRegistry(mMockLifecycleOwner);
         when(mMockLifecycleOwner.getLifecycle()).thenReturn(mLifecycleRegistry);
+
+        mReceiverVerifier = new BroadcastReceiverVerifier(RuntimeEnvironment.application);
     }
 
     @Test
@@ -80,11 +77,7 @@ public class BluetoothStateLiveDataTest {
         verify(mMockObserver, never()).onChanged(any());
 
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
-        ArgumentCaptor<IntentFilter> intentFilterArgumentCaptor = ArgumentCaptor.forClass(
-                IntentFilter.class);
-        verify(mSpyContext).registerReceiver(any(), intentFilterArgumentCaptor.capture());
-        assertThat(intentFilterArgumentCaptor.getValue().hasAction(
-                BluetoothAdapter.ACTION_STATE_CHANGED)).isTrue();
+        mReceiverVerifier.verifyReceiverRegistered(INTENT_ACTION);
         verify(mMockObserver).onChanged(any());
     }
 
@@ -100,12 +93,12 @@ public class BluetoothStateLiveDataTest {
         mBluetoothStateLiveData.observe(mMockLifecycleOwner,
                 (value) -> mMockObserver.onChanged(value));
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
-        verify(mSpyContext).registerReceiver(mReceiverArgumentCaptor.capture(), any());
         assertThat(valueCaptor.getValue()).isEqualTo(
                 BluetoothStateLiveData.BluetoothState.DISABLED);
 
         shadowBluetoothAdapter.setEnabled(true);
-        mReceiverArgumentCaptor.getValue().onReceive(mock(Context.class), mock(Intent.class));
+        mReceiverVerifier.getBroadcastReceiverFor(INTENT_ACTION)
+                .onReceive(mock(Context.class), mock(Intent.class));
         assertThat(mBluetoothStateLiveData.getValue()).isEqualTo(
                 BluetoothStateLiveData.BluetoothState.ENABLED);
         assertThat(valueCaptor.getValue()).isEqualTo(BluetoothStateLiveData.BluetoothState.ENABLED);
@@ -116,9 +109,9 @@ public class BluetoothStateLiveDataTest {
         mBluetoothStateLiveData.observe(mMockLifecycleOwner,
                 (value) -> mMockObserver.onChanged(value));
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
-        verify(mSpyContext).registerReceiver(mReceiverArgumentCaptor.capture(), any());
+        int preNumber = mReceiverVerifier.getReceiverNumber();
 
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
-        verify(mSpyContext).unregisterReceiver(mReceiverArgumentCaptor.getValue());
+        mReceiverVerifier.verifyReceiverUnregistered(INTENT_ACTION, preNumber);
     }
 }
