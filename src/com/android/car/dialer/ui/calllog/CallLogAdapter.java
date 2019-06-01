@@ -51,7 +51,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogViewHolder> {
     }
 
     public void setUiCallLogs(@NonNull List<UiCallLog> uiCallLogs) {
-        L.d(TAG, "setUiCallLogs: ", uiCallLogs.size());
+        L.d(TAG, "setUiCallLogs: %d", uiCallLogs.size());
         mUiCallLogs.clear();
         mUiCallLogs.addAll(uiCallLogs);
         notifyDataSetChanged();
