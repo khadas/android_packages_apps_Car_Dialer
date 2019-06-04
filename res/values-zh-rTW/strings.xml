@@ -34,6 +34,10 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"有了快速撥號功能，只要輕觸一下即可撥打電話給常用聯絡人和最常撥打的號碼"</string>
     <string name="decline_call" msgid="2505987200485272226">"拒接"</string>
     <string name="answer_call" msgid="3272474440561548115">"接聽"</string>
+    <!-- no translation found for call_back (5745638356098600872) -->
+    <skip />
+    <!-- no translation found for message (106616332778369322) -->
+    <skip />
     <string name="conference_call" msgid="9107469685942466746">"電話會議"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"車輛藍牙"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"擴音模式"</string>
@@ -62,6 +66,10 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> - 預設"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"來電通知"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"來電"</string>
+    <!-- no translation found for missed_call_notification_channel_name (1135686963409691772) -->
+    <skip />
+    <!-- no translation found for notification_missed_call (7127823385811396529) -->
+    <skip />
     <string name="setting_title" msgid="1296639422364732365">"設定"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"設定起始網頁"</string>
 </resources>

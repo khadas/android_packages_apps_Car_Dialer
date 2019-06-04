@@ -34,6 +34,10 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"Speed Dial provides one-touch dialling for favourites and numbers that you call often"</string>
     <string name="decline_call" msgid="2505987200485272226">"Decline"</string>
     <string name="answer_call" msgid="3272474440561548115">"Answer"</string>
+    <!-- no translation found for call_back (5745638356098600872) -->
+    <skip />
+    <!-- no translation found for message (106616332778369322) -->
+    <skip />
     <string name="conference_call" msgid="9107469685942466746">"Conference call"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Vehicle Bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Speaker phone"</string>
@@ -62,6 +66,10 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – Default"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Incoming call notification"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Incoming call"</string>
+    <!-- no translation found for missed_call_notification_channel_name (1135686963409691772) -->
+    <skip />
+    <!-- no translation found for notification_missed_call (7127823385811396529) -->
+    <skip />
     <string name="setting_title" msgid="1296639422364732365">"Settings"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Set start page"</string>
 </resources>

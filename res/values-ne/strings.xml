@@ -34,6 +34,10 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"द्रुत डायल गर्ने सुविधाले मन पर्ने सम्पर्क र आफूले प्रायः कल गर्ने नम्बरमा एक पटक छोएकै भरमा डायल गर्न दिन्छ"</string>
     <string name="decline_call" msgid="2505987200485272226">"अस्वीकार गर्नुहोस्"</string>
     <string name="answer_call" msgid="3272474440561548115">"उठाउनुहोस्"</string>
+    <!-- no translation found for call_back (5745638356098600872) -->
+    <skip />
+    <!-- no translation found for message (106616332778369322) -->
+    <skip />
     <string name="conference_call" msgid="9107469685942466746">"कन्फ्रेन्स कल"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"सवारी साधनको ब्लुटुथ"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"स्पिकर फोन"</string>
@@ -62,6 +66,10 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - पूर्वनिर्धारित"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"आगमन कलसम्बन्धी सूचना"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"आगमन कल"</string>
+    <!-- no translation found for missed_call_notification_channel_name (1135686963409691772) -->
+    <skip />
+    <!-- no translation found for notification_missed_call (7127823385811396529) -->
+    <skip />
     <string name="setting_title" msgid="1296639422364732365">"सेटिङ"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"सुरुको पृष्ठ सेट गर्नुहोस्"</string>
 </resources>

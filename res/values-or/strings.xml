@@ -34,6 +34,10 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"ଆପଣଙ୍କ ପସନ୍ଦିତା ଏବଂ ବାରମ୍ବାର କରୁଥିବା କଲ୍‍ଗୁଡ଼ିକ ପାଇଁ ସ୍ପିଡ୍ ଡାଏଲ୍ ୱାନ୍ ଟଚ୍ ଡାଏଲିଂ ପ୍ରଦାନ କରୁଛି"</string>
     <string name="decline_call" msgid="2505987200485272226">"ଅସ୍ୱୀକାର କରନ୍ତୁ"</string>
     <string name="answer_call" msgid="3272474440561548115">"ଉତ୍ତର ଦିଅନ୍ତୁ"</string>
+    <!-- no translation found for call_back (5745638356098600872) -->
+    <skip />
+    <!-- no translation found for message (106616332778369322) -->
+    <skip />
     <string name="conference_call" msgid="9107469685942466746">"କନ୍‌ଫରେନ୍ସ କଲ୍"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"ଯାନବାହନ ବ୍ଲୁଟୁଥ୍"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"ସ୍ପିକର୍ ଫୋନ୍"</string>
@@ -62,6 +66,10 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ଡିଫଲ୍ଟ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ଇନ୍‌କମିଙ୍ଗ୍ କଲ୍ ବିଜ୍ଞପ୍ତି"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ଇନ୍‌କମିଂ କଲ୍"</string>
+    <!-- no translation found for missed_call_notification_channel_name (1135686963409691772) -->
+    <skip />
+    <!-- no translation found for notification_missed_call (7127823385811396529) -->
+    <skip />
     <string name="setting_title" msgid="1296639422364732365">"ସେଟିଂସ୍"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ଆରମ୍ଭ ପୃଷ୍ଠାକୁ ସେଟ୍ କରନ୍ତୁ"</string>
 </resources>
