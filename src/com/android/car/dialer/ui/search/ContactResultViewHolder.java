@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
-import com.android.car.dialer.ui.view.ListItemOutlineResolver;
 import com.android.car.telephony.common.TelecomUtils;
 
 /**
@@ -43,7 +42,7 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
             ContactResultsAdapter.OnShowContactDetailListener onShowContactDetailListener) {
         super(view);
         mContext = view.getContext();
-        mContactCard = view.findViewById(R.id.contact_result_card);
+        mContactCard = view.findViewById(R.id.contact_result);
         mContactName = view.findViewById(R.id.contact_name);
         mContactPicture = view.findViewById(R.id.contact_picture);
         mContactPicture.setOutlineProvider(ContactAvatarOutputlineProvider.get());
@@ -54,11 +53,7 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
      * Populates the view that is represented by this ViewHolder with the information in the
      * provided {@link ContactDetails}.
      */
-    public void bind(ContactDetails details, int itemCount) {
-        float radius = mContext.getResources().getDimension(
-                R.dimen.contact_result_card_corner_radius);
-        ListItemOutlineResolver.setOutline(mContactCard, radius, getAdapterPosition(), itemCount);
-
+    public void bind(ContactDetails details) {
         mContactCard.setOnClickListener(v -> {
             mOnShowContactDetailListener.onShowContactDetail(details.lookupUri);
         });

@@ -121,7 +121,7 @@ public class ContactResultsFragmentTest {
         mContactResultsFragment = ContactResultsFragment.newInstance(INITIAL_SEARCH_QUERY);
         setUpFragment();
 
-        mListView.findViewHolderForLayoutPosition(1).itemView.findViewById(R.id.contact_result_card)
+        mListView.findViewHolderForLayoutPosition(1).itemView.findViewById(R.id.contact_result)
                 .performClick();
 
         // verify contact detail is shown.
@@ -142,7 +142,7 @@ public class ContactResultsFragmentTest {
         View childView = mListView.findViewHolderForLayoutPosition(position).itemView;
 
         assertThat(childView).isNotNull();
-        assertThat(childView.findViewById(R.id.contact_result_card).hasOnClickListeners()).isTrue();
+        assertThat(childView.findViewById(R.id.contact_result).hasOnClickListeners()).isTrue();
         assertThat(((TextView) childView.findViewById(R.id.contact_name)).getText())
                 .isEqualTo(DISPLAY_NAMES[position]);
     }
