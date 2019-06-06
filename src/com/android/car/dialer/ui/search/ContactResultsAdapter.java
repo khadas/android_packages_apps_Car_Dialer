@@ -73,7 +73,7 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
 
     @Override
     public void onBindViewHolder(ContactResultViewHolder holder, int position) {
-        holder.bind(mContacts.get(position), getItemCount());
+        holder.bind(mContacts.get(position));
     }
 
     @Override
