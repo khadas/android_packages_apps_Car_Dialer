@@ -58,11 +58,9 @@
     <dimen name="contact_list_text_margin_end">@dimen/list_item_text_margin_end</dimen>
 
     <!-- Contact result dimensions -->
-    <dimen name="contact_result_card_height">@dimen/list_item_height</dimen>
-    <dimen name="contact_result_card_corner_radius">@*android:dimen/car_radius_3</dimen>
-    <dimen name="contact_result_image_size">@*android:dimen/car_keyline_2</dimen>
-    <dimen name="contact_result_name_margin">@*android:dimen/car_keyline_2</dimen>
-    <dimen name="contact_result_list_margin">@*android:dimen/car_keyline_2</dimen>
+    <dimen name="contact_result_height">@dimen/list_item_height</dimen>
+    <dimen name="contact_result_avatar_margin">@dimen/list_item_padding</dimen>
+    <dimen name="contact_result_name_margin">@dimen/list_item_guideline_begin</dimen>
 
     <!-- In-call dimensions -->
     <dimen name="in_call_controller_bar_height">@dimen/control_bar_height</dimen>
