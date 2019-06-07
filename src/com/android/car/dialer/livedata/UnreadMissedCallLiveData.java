@@ -28,6 +28,7 @@ import com.android.car.telephony.common.PhoneCallLog;
 import com.android.car.telephony.common.QueryParam;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** {@link LiveData} for missed calls that haven't been read by user. */
@@ -58,6 +59,7 @@ public class UnreadMissedCallLiveData extends AsyncQueryLiveData<List<PhoneCallL
 
     private UnreadMissedCallLiveData(Context context, QueryParam queryParam) {
         super(context, QueryParam.of(queryParam));
+        setValue(Collections.EMPTY_LIST);
         mContext = context;
     }
 
