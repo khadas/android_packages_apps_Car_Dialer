@@ -20,17 +20,18 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.telecom.Call;
-import android.text.TextUtils;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -60,7 +61,7 @@ public class InCallFragment extends Fragment implements
     private DialpadFragment mDialpadFragment;
     private View mUserProfileContainerView;
     private View mDialerFragmentContainer;
-    private TextView mUserProfileCallStateText;
+    private Chronometer mUserProfileCallStateText;
     private BackgroundImageView mBackgroundImage;
 
     public static InCallFragment newInstance() {
@@ -87,7 +88,7 @@ public class InCallFragment extends Fragment implements
 
         inCallViewModel.getPrimaryCallDetail().observe(this, this::bindUserProfileView);
         inCallViewModel.getPrimaryCallState().observe(this, this::updateControllerBarFragment);
-        inCallViewModel.getCallStateDescription().observe(this, this::updateState);
+        inCallViewModel.getCallStateAndConnectTime().observe(this, this::updateCallDescription);
         return fragmentView;
     }
 
@@ -195,9 +196,20 @@ public class InCallFragment extends Fragment implements
         }
     }
 
-    private void updateState(String text) {
-        L.i(TAG, "updateState: %s", text);
-        mUserProfileCallStateText.setText(text);
-        mUserProfileCallStateText.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
+    private void updateCallDescription(@Nullable Pair<Integer, Long> callStateAndConnectTime) {
+        if (callStateAndConnectTime == null || callStateAndConnectTime.first == null) {
+            mUserProfileCallStateText.stop();
+            mUserProfileCallStateText.setText("");
+            return;
+        }
+        if (callStateAndConnectTime.first == Call.STATE_ACTIVE) {
+            mUserProfileCallStateText.setBase(callStateAndConnectTime.second
+                    - System.currentTimeMillis() + SystemClock.elapsedRealtime());
+            mUserProfileCallStateText.start();
+        } else {
+            mUserProfileCallStateText.stop();
+            mUserProfileCallStateText.setText(
+                    TelecomUtils.callStateToUiString(getContext(), callStateAndConnectTime.first));
+        }
     }
 }

@@ -26,7 +26,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="@dimen/dialpad_info_guideline"/>
 
-    <TextView
+    <Chronometer
         android:id="@+id/call_state"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

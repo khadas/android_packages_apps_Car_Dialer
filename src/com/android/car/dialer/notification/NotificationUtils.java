@@ -21,11 +21,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
-import android.util.Pair;
 
 import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+import androidx.core.util.Pair;
 
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
