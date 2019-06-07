@@ -61,7 +61,6 @@ public class RingingCallControllerBarFragmentTest {
         callLiveData.setValue(mMockCall);
         when(mMockInCallViewModel.getPrimaryCall()).thenReturn(callLiveData);
         when(mMockInCallViewModel.getPrimaryCallDetail()).thenReturn(mock(LiveData.class));
-        when(mMockInCallViewModel.getCallStateDescription()).thenReturn(mock(LiveData.class));
         when(mMockInCallViewModel.getPrimaryCallState()).thenReturn(mock(LiveData.class));
         ShadowAndroidViewModelFactory.add(InCallViewModel.class, mMockInCallViewModel);
 
