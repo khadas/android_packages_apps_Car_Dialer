@@ -34,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"Брзо бирање је бирање једним додиром за омиљене контакте и бројеве које често зовете"</string>
     <string name="decline_call" msgid="2505987200485272226">"Одбиј"</string>
     <string name="answer_call" msgid="3272474440561548115">"Одговори"</string>
+    <string name="call_back" msgid="5745638356098600872">"Узврати позив"</string>
+    <string name="message" msgid="106616332778369322">"Пошаљи SMS"</string>
     <string name="conference_call" msgid="9107469685942466746">"Конференцијски позив"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth возила"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Спикерфон"</string>
@@ -62,6 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – подразумевано"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Обавештење о долазном позиву"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Долазни позив"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Обавештење о пропуштеном позиву"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"Пропуштен позив"</string>
     <string name="setting_title" msgid="1296639422364732365">"Подешавања"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Подесите почетну страницу"</string>
 </resources>
