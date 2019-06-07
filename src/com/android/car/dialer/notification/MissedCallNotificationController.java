@@ -25,10 +25,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.text.TextUtils;
-import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.core.util.Pair;
 import androidx.lifecycle.Observer;
 
 import com.android.car.dialer.Constants;
