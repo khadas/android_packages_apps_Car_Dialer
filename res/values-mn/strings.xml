@@ -34,10 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"Түргэн залгалт нь таныг дуртай болон байнга залгадаг дугаар руу нэг товшилтоор залгах боломж олгодог."</string>
     <string name="decline_call" msgid="2505987200485272226">"Татгалзах"</string>
     <string name="answer_call" msgid="3272474440561548115">"Хариулах"</string>
-    <!-- no translation found for call_back (5745638356098600872) -->
-    <skip />
-    <!-- no translation found for message (106616332778369322) -->
-    <skip />
+    <string name="call_back" msgid="5745638356098600872">"Буцааж залгах"</string>
+    <string name="message" msgid="106616332778369322">"Зурвас"</string>
     <string name="conference_call" msgid="9107469685942466746">"Хурлын дуудлага"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Тээврийн хэрэгслийн bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Чанга яригчтай утас"</string>
@@ -66,10 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Өгөгдмөл"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Ирсэн дуудлагын мэдэгдэл"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Ирсэн дуудлага"</string>
-    <!-- no translation found for missed_call_notification_channel_name (1135686963409691772) -->
-    <skip />
-    <!-- no translation found for notification_missed_call (7127823385811396529) -->
-    <skip />
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Аваагүй дуудлагын мэдэгдэл"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"Аваагүй дуудлага"</string>
     <string name="setting_title" msgid="1296639422364732365">"Тохиргоо"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Эхлэх хуудсыг тохируулах"</string>
 </resources>

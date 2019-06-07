@@ -34,10 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"स्पीड डायल हे तुमच्या आवडत्या आणि नेहमी कॉल करता त्या नंबरवर एकदा स्पर्श करून कॉल करून डायल करू देते"</string>
     <string name="decline_call" msgid="2505987200485272226">"नकार द्या"</string>
     <string name="answer_call" msgid="3272474440561548115">"उत्तर"</string>
-    <!-- no translation found for call_back (5745638356098600872) -->
-    <skip />
-    <!-- no translation found for message (106616332778369322) -->
-    <skip />
+    <string name="call_back" msgid="5745638356098600872">"पुन्हा कॉल करा"</string>
+    <string name="message" msgid="106616332778369322">"मेसेज"</string>
     <string name="conference_call" msgid="9107469685942466746">"कॉंफरन्स कॉल"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"वाहनामधील ब्लूटूथ"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"स्पीकर फोन"</string>
@@ -66,10 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - डीफॉल्ट"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"येणाऱ्या कॉलची सूचना"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"येणारा कॉल"</string>
-    <!-- no translation found for missed_call_notification_channel_name (1135686963409691772) -->
-    <skip />
-    <!-- no translation found for notification_missed_call (7127823385811396529) -->
-    <skip />
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"मिस्ड कॉलची सूचना"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"मिस्ड कॉल"</string>
     <string name="setting_title" msgid="1296639422364732365">"सेटिंग्ज"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"सुरुवातीचे पेज सेट करा"</string>
 </resources>
