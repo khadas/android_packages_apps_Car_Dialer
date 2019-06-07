@@ -35,7 +35,7 @@ limitations under the License.
         android:textAppearance="@style/TextAppearance.InCallUserPhoneNumber"
         android:singleLine="true"
         android:paddingTop="@dimen/in_call_phone_number_margin_top"/>
-    <TextView
+    <Chronometer
         android:id="@+id/user_profile_call_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
