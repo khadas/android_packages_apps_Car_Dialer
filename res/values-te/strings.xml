@@ -34,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"స్పీడ్ డయల్ ద్వారా మీరు తరచూ కాల్ చేసే ఇష్టమైన వ్యక్తులు, నంబర్‌లకు ఒకసారి తాకి డయల్ చేయవచ్చు"</string>
     <string name="decline_call" msgid="2505987200485272226">"తిరస్కరించండి"</string>
     <string name="answer_call" msgid="3272474440561548115">"సమాధానమివ్వండి"</string>
+    <string name="call_back" msgid="5745638356098600872">"కాల్ చేయి"</string>
+    <string name="message" msgid="106616332778369322">"సందేశం"</string>
     <string name="conference_call" msgid="9107469685942466746">"కాన్ఫరెన్స్ కాల్"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"వాహన బ్లూటూత్"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"స్పీకర్ ఫోన్"</string>
@@ -62,6 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - డిఫాల్ట్"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ఇన్‌కమింగ్ కాల్ నోటిఫికేషన్"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ఇన్‌కమింగ్ కాల్"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"సమాధానమివ్వని కాల్ నోటిఫికేషన్"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"సమాధానమివ్వని కాల్"</string>
     <string name="setting_title" msgid="1296639422364732365">"సెట్టింగ్‌లు"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ప్రారంభ పేజీని సెట్ చేయి"</string>
 </resources>
