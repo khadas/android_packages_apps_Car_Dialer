@@ -37,6 +37,7 @@ public class CallStateLiveData extends LiveData<Integer> {
     @Override
     protected void onActive() {
         super.onActive();
+
         setValue(mTelecomCall.getState());
         mTelecomCall.registerCallback(mCallback);
     }
