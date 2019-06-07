@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"फ़ोन हवाई जहाज़ मोड में है."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"ब्लूटूथ कनेक्ट नहीं है."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"मैसेज भेजने के लिए, आपको मैसेजिंग ऐप्लिकेशन इंस्टॉल करना होगा."</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ब्लूटूथ से कनेक्ट करें"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"आपातकालीन कॉल"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"आपातकालीन कॉल"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"यह संपर्क शायद मिटा दिया गया है."</string>
@@ -35,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"स्पीड डायल आपको पसंदीदा और अक्सर कॉल किए जाने वाले नंबर पर, एक बार छूकर डायल करने की सुविधा देता है"</string>
     <string name="decline_call" msgid="2505987200485272226">"अस्वीकार करें"</string>
     <string name="answer_call" msgid="3272474440561548115">"जवाब दें"</string>
+    <string name="call_back" msgid="5745638356098600872">"वापस कॉल करें"</string>
+    <string name="message" msgid="106616332778369322">"मैसेज"</string>
     <string name="conference_call" msgid="9107469685942466746">"कॉन्फ़्रेंस कॉल"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"गाड़ी का ब्लूटूथ"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"स्पीकर फ़ोन"</string>
@@ -45,10 +46,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"संपर्क"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"डायलपैड"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"संपर्क की जानकारी"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> पर कॉल करें"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> पर मैसेज भेजें"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"कॉल करें"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"मैसेज भेजें"</string>
     <string name="search_title" msgid="5412680850141871664">"संपर्क खोजें"</string>
@@ -65,6 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - डिफ़ॉल्ट"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"आने वाले कॉल (इनकमिंग) की सूचना"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"आने वाला कॉल (इनकमिंग)"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"मिस्ड कॉल (छूटी हुई कॉल) की सूचना"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"मिस्ड कॉल (छूटी हुई कॉल)"</string>
     <string name="setting_title" msgid="1296639422364732365">"सेटिंग"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"शुरुआती पेज सेट करें"</string>
 </resources>

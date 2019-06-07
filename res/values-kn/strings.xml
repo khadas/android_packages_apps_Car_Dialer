@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"ಫೋನ್ ಏರ್‌ಪ್ಲೇನ್ ಮೋಡ್‌ನಲ್ಲಿದೆ."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"ಬ್ಲೂಟೂತ್ ಸಂಪರ್ಕಗೊಂಡಿಲ್ಲ."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"ಪಠ್ಯಗಳನ್ನು ಕಳುಹಿಸಲು, ನೀವು ಸಂದೇಶ ಕಳುಹಿಸುವಿಕೆ ಆ್ಯಪ್ ಅನ್ನು ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಬೇಕು."</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ಬ್ಲೂಟೂತ್‌ಗೆ ಸಂಪರ್ಕಿಸಿ"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"ತುರ್ತು"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"ತುರ್ತು ಕರೆ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ಈ ಸಂಪರ್ಕವನ್ನು ಅಳಿಸಿರಬಹುದು."</string>
@@ -35,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"ಸ್ಪೀಡ್ ಡಯಲ್ ಮೂಲಕ ನೀವು ಆಗಾಗ ಕರೆಮಾಡುವ ಮೆಚ್ಚಿನ ಸಂಪರ್ಕ ಹಾಗೂ ಸಂಖ್ಯೆಗಳಿಗೆ ಒಂದೇ ಸ್ಪರ್ಶದಿಂದ ಡಯಲ್ ಮಾಡಬಹುದು"</string>
     <string name="decline_call" msgid="2505987200485272226">"ನಿರಾಕರಿಸಿ"</string>
     <string name="answer_call" msgid="3272474440561548115">"ಉತ್ತರ"</string>
+    <string name="call_back" msgid="5745638356098600872">"ಪುನಃ ಕರೆ ಮಾಡಿ"</string>
+    <string name="message" msgid="106616332778369322">"ಸಂದೇಶ"</string>
     <string name="conference_call" msgid="9107469685942466746">"ಕಾನ್ಫರೆನ್ಸ್ ಕರೆ"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"ವಾಹನದ ಬ್ಲೂಟೂತ್"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"ಸ್ಪೀಕರ್ ಫೋನ್"</string>
@@ -45,10 +46,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"ಸಂಪರ್ಕಗಳು"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ಡಯಲ್‌ಪ್ಯಾಡ್‌"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"ಸಂಪರ್ಕ ವಿವರಗಳು"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> ಗೆ ಕರೆ ಮಾಡಿ"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> ಗೆ ಸಂದೇಶ ಕಳುಹಿಸಿ"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"ಕರೆ ಮಾಡಿ"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ಪಠ್ಯ"</string>
     <string name="search_title" msgid="5412680850141871664">"ಸಂಪರ್ಕಗಳನ್ನು ಹುಡುಕಿ"</string>
@@ -61,11 +60,12 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ಫೋನ್ ಸಂಖ್ಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"ಒಮ್ಮೆ ಮಾತ್ರ"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ಯಾವಾಗಲೂ"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"ಡೀಫಾಲ್ಟ್ ಫೋನ್ ಸಂಖ್ಯೆ ಹೊಂದಿಸಿ"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ಡೀಫಾಲ್ಟ್"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ಒಳಬರುವ ಕರೆ ಅಧಿಸೂಚನೆ"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ಒಳಬರುವ ಕರೆ"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"ಮಿಸ್ಡ್ ಕಾಲ್ ಅಧಿಸೂಚನೆ"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"ಮಿಸ್ಡ್‌ ಕಾಲ್‌"</string>
     <string name="setting_title" msgid="1296639422364732365">"ಸೆಟ್ಟಿಂಗ್‌ಗಳು"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ಪ್ರಾರಂಭದ ಪುಟವನ್ನು ಹೊಂದಿಸಿ"</string>
 </resources>
