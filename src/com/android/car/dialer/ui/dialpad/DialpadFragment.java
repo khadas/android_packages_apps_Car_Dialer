@@ -21,6 +21,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.CallLog;
 import android.provider.Settings;
 import android.telecom.Call;
@@ -32,6 +33,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -109,7 +111,7 @@ public class DialpadFragment extends DialerBaseFragment implements
 
     private TextView mTitleView;
     private TextView mDisplayName;
-    private TextView mCallStateView;
+    private Chronometer mCallStateView;
     private ImageButton mDeleteButton;
     private int mMode;
     private StringBuffer mNumber = new StringBuffer(MAX_DIAL_NUMBER);
@@ -196,8 +198,22 @@ public class DialpadFragment extends DialerBaseFragment implements
             InCallViewModel viewModel = ViewModelProviders.of(getActivity()).get(
                     InCallViewModel.class);
             mActiveCall = viewModel.getPrimaryCall().getValue();
-            viewModel.getCallStateDescription().observe(this,
-                    (state) -> mCallStateView.setText(state));
+            viewModel.getCallStateAndConnectTime().observe(this, (pair) -> {
+                if (pair == null) {
+                    mCallStateView.stop();
+                    mCallStateView.setText("");
+                    return;
+                }
+                if (pair.first == Call.STATE_ACTIVE) {
+                    mCallStateView.setBase(pair.second
+                            - System.currentTimeMillis() + SystemClock.elapsedRealtime());
+                    mCallStateView.start();
+                } else {
+                    mCallStateView.stop();
+                    mCallStateView.setText(TelecomUtils.callStateToUiString(
+                            getContext(), pair.first));
+                }
+            });
         } else {
             callButton.setVisibility(View.VISIBLE);
             mDeleteButton.setVisibility(View.GONE);
