@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"Il telefono è in modalità aereo."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"Il Bluetooth non è collegato."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Per inviare SMS devi installare un\'app di messaggistica."</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Connettiti a Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Emergenza"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Chiamata di emergenza"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Questo contatto potrebbe essere stato eliminato."</string>
@@ -35,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"La composizione rapida consente di comporre con un tocco i numeri preferiti e chiamati spesso"</string>
     <string name="decline_call" msgid="2505987200485272226">"Rifiuta"</string>
     <string name="answer_call" msgid="3272474440561548115">"Rispondi"</string>
+    <string name="call_back" msgid="5745638356098600872">"Richiama"</string>
+    <string name="message" msgid="106616332778369322">"Invia SMS"</string>
     <string name="conference_call" msgid="9107469685942466746">"Audioconferenza"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth del veicolo"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Vivavoce"</string>
@@ -45,10 +46,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"Contatti"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Tastierino"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Informazioni di contatto"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Chiama <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Invia SMS a <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Chiama"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Invia SMS"</string>
     <string name="search_title" msgid="5412680850141871664">"Cerca nei contatti"</string>
@@ -65,6 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>: predefinito"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notifica di chiamata in arrivo"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Chiamata in arrivo"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Notifica di chiamata senza risposta"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"Chiamata senza risposta"</string>
     <string name="setting_title" msgid="1296639422364732365">"Impostazioni"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Imposta pagina iniziale"</string>
 </resources>

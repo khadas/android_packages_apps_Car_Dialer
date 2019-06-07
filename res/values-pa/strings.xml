@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"ਫ਼ੋਨ ਹਵਾਈ-ਜਹਾਜ਼ ਮੋਡ ਵਿੱਚ ਹੈ।"</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"ਬਲੂਟੁੱਥ ਕਨੈਕਟ ਨਹੀਂ ਹੈ।"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"ਲਿਖਤ ਸੁਨੇਹੇ ਭੇਜਣ ਲਈ ਸੁਨੇਹਾ ਐਪ ਸਥਾਪਤ ਕਰੋ।"</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ਬਲੂਟੁੱਥ ਨਾਲ ਕਨੈਕਟ ਕਰੋ"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"ਸੰਕਟਕਾਲ"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"ਸੰਕਟਕਾਲੀਨ ਕਾਲ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ਸ਼ਾਇਦ ਇਹ ਸੰਪਰਕ ਮਿਟਾ ਦਿੱਤਾ ਗਿਆ ਹੋਵੇ।"</string>
@@ -35,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"ਸਪੀਡ ਡਾਇਲ ਉਹਨਾਂ ਮਨਪਸੰਦਾਂ ਅਤੇ ਨੰਬਰਾਂ ਲਈ ਇੱਕ ਸਪਰਸ਼ ਵਾਲੀ ਡਾਇਲਿੰਗ ਹੈ ਜਿਨ੍ਹਾਂ ਨੂੰ ਤੁਸੀਂ ਅਕਸਰ ਕਾਲ ਕਰਦੇ ਹੋ"</string>
     <string name="decline_call" msgid="2505987200485272226">"ਅਸਵੀਕਾਰ ਕਰੋ"</string>
     <string name="answer_call" msgid="3272474440561548115">"ਜਵਾਬ ਦਿਓ"</string>
+    <string name="call_back" msgid="5745638356098600872">"ਵਾਪਸ ਕਾਲ ਕਰੋ"</string>
+    <string name="message" msgid="106616332778369322">"ਸੁਨੇਹਾ"</string>
     <string name="conference_call" msgid="9107469685942466746">"ਕਾਨਫ਼ਰੰਸ ਕਾਲ"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"ਵਾਹਨ ਬਲੂਟੁੱਥ"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"ਸਪੀਕਰਫ਼ੋਨ"</string>
@@ -45,10 +46,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"ਸੰਪਰਕ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ਡਾਇਲਪੈਡ"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"ਸੰਪਰਕ ਵੇਰਵੇ"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> ਨੂੰ ਕਾਲ ਕਰੋ"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> ਨੂੰ ਲਿਖਤ ਸੁਨੇਹਾ ਭੇਜੋ"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"ਕਾਲ ਕਰੋ"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ਲਿਖਤ ਸੁਨੇਹਾ ਭੇਜੋ"</string>
     <string name="search_title" msgid="5412680850141871664">"ਸੰਪਰਕ ਖੋਜੋ"</string>
@@ -65,6 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ਪੂਰਵ-ਨਿਰਧਾਰਤ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ਇਨਕਮਿੰਗ ਕਾਲ ਦੀ ਸੂਚਨਾ"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ਇਨਕਮਿੰਗ ਕਾਲ"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"ਮਿਸ ਕਾਲ ਦੀ ਸੂਚਨਾ"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"ਮਿਸ ਕਾਲ"</string>
     <string name="setting_title" msgid="1296639422364732365">"ਸੈਟਿੰਗਾਂ"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ਸ਼ੁਰੂਆਤੀ ਪੰਨਾ ਸੈੱਟ ਕਰੋ"</string>
 </resources>
