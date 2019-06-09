@@ -35,7 +35,7 @@
     <string name="decline_call" msgid="2505987200485272226">"Қабылдамау"</string>
     <string name="answer_call" msgid="3272474440561548115">"Жауап беру"</string>
     <string name="call_back" msgid="5745638356098600872">"Қоңырау шалу"</string>
-    <string name="message" msgid="106616332778369322">"Хабар"</string>
+    <string name="message" msgid="106616332778369322">"Хабар жіберу"</string>
     <string name="conference_call" msgid="9107469685942466746">"Мәжіліс қоңырауы"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Көліктегі Bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Спикерфон"</string>
