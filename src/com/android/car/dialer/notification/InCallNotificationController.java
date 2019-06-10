@@ -25,9 +25,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.telecom.Call;
-import android.util.Pair;
 
 import androidx.annotation.StringRes;
+import androidx.core.util.Pair;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;

@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"الهاتف في إعداد \"وضع الطائرة\"."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"البلوتوث غير متصل."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"لإرسال رسائل نصية، ثبّت تطبيق مراسلة."</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"الاتصال ببلوتوث"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"طوارئ"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"مكالمة طوارئ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ربما تم حذف جهة الاتصال هذه."</string>
@@ -35,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"الطلب السريع هو اتصال بلمسة واحدة للأرقام المفضلة لديك والتي تتصل بها بكثرة."</string>
     <string name="decline_call" msgid="2505987200485272226">"رفض"</string>
     <string name="answer_call" msgid="3272474440561548115">"ردّ"</string>
+    <string name="call_back" msgid="5745638356098600872">"معاودة الاتصال"</string>
+    <string name="message" msgid="106616332778369322">"رسالة"</string>
     <string name="conference_call" msgid="9107469685942466746">"مكالمة جماعية"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"بلوتوث المركَبة"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"مكبّر الصوت"</string>
@@ -45,10 +46,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"جهات الاتصال"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"لوحة الاتصال"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"تفاصيل الاتصال"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"الاتصال بالرقم <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"إرسال رسالة نصية إلى <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"اتصال"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"رسالة نصية"</string>
     <string name="search_title" msgid="5412680850141871664">"البحث في جهات الاتصال"</string>
@@ -65,6 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - تلقائي"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"إشعار مكالمة واردة"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"مكالمة واردة"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"إشعار المكالمة الفائتة"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"مكالمة فائتة"</string>
     <string name="setting_title" msgid="1296639422364732365">"الإعدادات"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ضبط الصفحة الرئيسية"</string>
 </resources>

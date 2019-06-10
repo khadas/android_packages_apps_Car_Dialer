@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"Утас нислэгийн горимд байна."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth-г холбоогүй байна."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Та текст илгээхийн тулд мессеж бичих апп суулгах шаардлагатай болно."</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Bluetooth-тэй холбогдох"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Яаралтай тусламж"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Яаралтай дуудлага"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Энэ харилцагчийг устгасан байж болзошгүй."</string>
@@ -35,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"Түргэн залгалт нь таныг дуртай болон байнга залгадаг дугаар руу нэг товшилтоор залгах боломж олгодог."</string>
     <string name="decline_call" msgid="2505987200485272226">"Татгалзах"</string>
     <string name="answer_call" msgid="3272474440561548115">"Хариулах"</string>
+    <string name="call_back" msgid="5745638356098600872">"Буцааж залгах"</string>
+    <string name="message" msgid="106616332778369322">"Зурвас"</string>
     <string name="conference_call" msgid="9107469685942466746">"Хурлын дуудлага"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Тээврийн хэрэгслийн bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Чанга яригчтай утас"</string>
@@ -45,10 +46,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"Харилцагч"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Дугаар цуглуулах самбар"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Харилцагчийн мэдээлэл"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> руу залгах"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> руу мессеж бичих"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Дуудлага"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Текст"</string>
     <string name="search_title" msgid="5412680850141871664">"Харилцагч хайх"</string>
@@ -65,6 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Өгөгдмөл"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Ирсэн дуудлагын мэдэгдэл"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Ирсэн дуудлага"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Аваагүй дуудлагын мэдэгдэл"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"Аваагүй дуудлага"</string>
     <string name="setting_title" msgid="1296639422364732365">"Тохиргоо"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Эхлэх хуудсыг тохируулах"</string>
 </resources>

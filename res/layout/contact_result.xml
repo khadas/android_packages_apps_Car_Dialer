@@ -14,32 +14,33 @@
      limitations under the License.
 -->
 
-<androidx.cardview.widget.CardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/contact_result_card"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contact_result"
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/contact_result_card_height">
+    android:layout_height="@dimen/contact_result_height">
 
-    <FrameLayout
-        android:layout_width="@dimen/contact_result_image_size"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/contact_picture"
-            android:layout_gravity="center"
-            android:layout_width="@dimen/avatar_icon_size"
-            android:layout_height="@dimen/avatar_icon_size"
-            android:scaleType="centerCrop"/>
-    </FrameLayout>
+    <ImageView
+        android:id="@+id/contact_picture"
+        android:layout_width="@dimen/avatar_icon_size"
+        android:layout_height="@dimen/avatar_icon_size"
+        android:layout_marginStart="@dimen/contact_result_avatar_margin"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/contact_name"
         android:layout_marginStart="@dimen/contact_result_name_margin"
-        android:layout_gravity="center_vertical|start"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
-</androidx.cardview.widget.CardView>
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.ContactResultTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
