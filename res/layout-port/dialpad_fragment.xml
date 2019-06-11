@@ -22,22 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginTop="@dimen/keypad_margin"
-        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintBottom_toTopOf="@+id/call_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <Chronometer
-        android:id="@+id/call_state"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.InCallState"
-        android:singleLine="true"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="@id/dialpad_fragment"
-        app:layout_constraintEnd_toEndOf="@+id/dialpad_fragment"
-        app:layout_constraintBottom_toTopOf="@id/title"/>
 
     <TextView
         android:id="@+id/title"
@@ -48,10 +36,12 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.Display3"
         android:layout_marginStart="@dimen/dialpad_info_edge_padding_size"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/dialpad_fragment"
         app:layout_constraintStart_toStartOf="@id/dialpad_fragment"
-        app:layout_constraintEnd_toStartOf="@+id/delete_button"/>
+        app:layout_constraintEnd_toStartOf="@+id/delete_button"
+        app:layout_goneMarginEnd="@dimen/dialpad_info_edge_padding_size"/>
 
     <ImageButton
         android:id="@+id/delete_button"
@@ -71,8 +61,8 @@
         android:textColor="@color/dialpad_title_color"
         android:focusable="true"
         android:singleLine="true"
-        android:layout_marginTop="@dimen/display_name_padding"
         app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/dialpad_fragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
