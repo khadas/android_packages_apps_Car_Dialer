@@ -34,6 +34,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.core.util.Pair;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -128,21 +130,24 @@ public class OnGoingCallControllerBarFragmentTest {
 
         View dialpadButton = mOnGoingCallControllerBarFragment.getView().findViewById(
                 R.id.toggle_dialpad_button);
-        View dialerFragmentContainer =
-                mOnGoingCallControllerBarFragment.getParentFragment().getView().findViewById(
-                        R.id.dialpad_container);
+        FragmentManager fragmentManager =
+                mOnGoingCallControllerBarFragment.getParentFragment().getChildFragmentManager();
+        Fragment dialpadFragment = fragmentManager.findFragmentById(R.id.incall_dialpad_fragment);
+
         // Test initial state
         assertThat(dialpadButton.hasOnClickListeners()).isTrue();
         assertThat(dialpadButton.isActivated()).isFalse();
-        assertThat(dialerFragmentContainer.getVisibility()).isEqualTo(View.GONE);
+        assertThat(dialpadFragment.isHidden()).isTrue();
         // On open dialpad
         dialpadButton.performClick();
         assertThat(dialpadButton.isActivated()).isTrue();
-        assertThat(dialerFragmentContainer.getVisibility()).isEqualTo(View.VISIBLE);
+        fragmentManager.executePendingTransactions();
+        assertThat(dialpadFragment.isHidden()).isFalse();
         // On close dialpad
         dialpadButton.performClick();
         assertThat(dialpadButton.isActivated()).isFalse();
-        assertThat(dialerFragmentContainer.getVisibility()).isEqualTo(View.GONE);
+        fragmentManager.executePendingTransactions();
+        assertThat(dialpadFragment.isHidden()).isTrue();
     }
 
     @Test
@@ -225,6 +230,9 @@ public class OnGoingCallControllerBarFragmentTest {
                 .thenReturn(stateAndConnectTimeLiveData);
 
         ShadowAndroidViewModelFactory.add(InCallViewModel.class, mMockInCallViewModel);
+        ShadowAndroidViewModelFactory.add(
+                OngoingCallStateViewModel.class,
+                new OngoingCallStateViewModel(RuntimeEnvironment.application));
 
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().start().resume().get();
