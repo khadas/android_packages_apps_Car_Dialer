@@ -39,7 +39,7 @@ import com.android.car.apps.common.BackgroundImageView;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.ui.dialpad.DialpadFragment;
+import com.android.car.dialer.ui.dialpad.InCallDialpadFragment;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.CallDetail;
 import com.android.car.telephony.common.TelecomUtils;
@@ -58,7 +58,7 @@ public class InCallFragment extends Fragment implements
     private static final String TAG_CALL_RINGING = "CallStateRinging";
     private static final String TAG_CALL_OTHER = "CallStateOther";
 
-    private DialpadFragment mDialpadFragment;
+    private Fragment mDialpadFragment;
     private View mUserProfileContainerView;
     private View mDialerFragmentContainer;
     private Chronometer mUserProfileCallStateText;
@@ -77,7 +77,7 @@ public class InCallFragment extends Fragment implements
         mUserProfileCallStateText
                 = mUserProfileContainerView.findViewById(R.id.user_profile_call_state);
         mBackgroundImage = fragmentView.findViewById(R.id.background_image);
-        mDialpadFragment = DialpadFragment.newInCallDialpad();
+        mDialpadFragment = new InCallDialpadFragment();
 
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.dialpad_container, mDialpadFragment)
