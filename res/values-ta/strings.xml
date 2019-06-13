@@ -34,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"\'விரைவு டயல்\' மூலம் பிடித்தவர்களுக்கும் அடிக்கடி அழைக்கும் எண்களுக்கும் ஒரே தொடுதலில் டயல் செய்யலாம்"</string>
     <string name="decline_call" msgid="2505987200485272226">"நிராகரி"</string>
     <string name="answer_call" msgid="3272474440561548115">"பதிலளி"</string>
+    <string name="call_back" msgid="5745638356098600872">"அழை"</string>
+    <string name="message" msgid="106616332778369322">"மெசேஜ்"</string>
     <string name="conference_call" msgid="9107469685942466746">"குழு அழைப்பு"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"வாகன புளூடூத்"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"ஸ்பீக்கர் ஃபோன்"</string>
@@ -62,6 +64,8 @@
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - இயல்பு"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"உள்வரும் அழைப்புக்கான அறிவிப்பு"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"உள்வரும் அழைப்பு"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"தவறிய அழைப்புக்கான அறிவிப்பு"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"தவறிய அழைப்பு"</string>
     <string name="setting_title" msgid="1296639422364732365">"அமைப்புகள்"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"தொடக்கப் பக்கத்தை அமை"</string>
 </resources>
