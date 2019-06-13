@@ -25,8 +25,7 @@
     <string name="error_airplane_mode" msgid="3381606616960325205">"மொபைல் \'விமானப் பயன்முறையில்\' உள்ளது."</string>
     <string name="error_no_hfp" msgid="5157534181401876925">"புளூடூத் இணைக்கப்படவில்லை."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"உரையை அனுப்ப மெசேஜிங் ஆப்ஸை நிறுவவும்."</string>
-    <!-- no translation found for connect_bluetooth_button_text (293188695227298042) -->
-    <skip />
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"புளூடூத் உடன் இணை"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"அவசர அழைப்பு"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"அவசர அழைப்பு"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"இந்தத் தொடர்பு நீக்கப்பட்டிருக்கக்கூடும்."</string>
@@ -35,6 +34,8 @@
     <string name="speed_dial_empty" msgid="4414061977474045646">"\'விரைவு டயல்\' மூலம் பிடித்தவர்களுக்கும் அடிக்கடி அழைக்கும் எண்களுக்கும் ஒரே தொடுதலில் டயல் செய்யலாம்"</string>
     <string name="decline_call" msgid="2505987200485272226">"நிராகரி"</string>
     <string name="answer_call" msgid="3272474440561548115">"பதிலளி"</string>
+    <string name="call_back" msgid="5745638356098600872">"அழை"</string>
+    <string name="message" msgid="106616332778369322">"மெசேஜ்"</string>
     <string name="conference_call" msgid="9107469685942466746">"குழு அழைப்பு"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"வாகன புளூடூத்"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"ஸ்பீக்கர் ஃபோன்"</string>
@@ -45,10 +46,8 @@
     <string name="contacts_title" msgid="9201954388634537346">"தொடர்புகள்"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"டயல்பேட்"</string>
     <string name="toolbar_title_contact_details" msgid="3496576785827686428">"தொடர்பு விவரங்கள்"</string>
-    <!-- no translation found for contact_details_call_number_button_with_label (4195920045865214993) -->
-    <skip />
-    <!-- no translation found for contact_details_text_number_button_with_label (5798337405717176409) -->
-    <skip />
+    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g>க்கு அழை"</string>
+    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g>க்கு மெசேஜ் அனுப்பு"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"அழை"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"உரை"</string>
     <string name="search_title" msgid="5412680850141871664">"தொடர்புகளில் தேடுக"</string>
@@ -61,11 +60,12 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"மொபைல் எண்ணைத் தேர்ந்தெடுக்கவும்"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"இப்போது மட்டும்"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"எப்போதும்"</string>
-    <!-- no translation found for set_default_number (5083696228341022224) -->
-    <skip />
+    <string name="set_default_number" msgid="5083696228341022224">"இயல்புநிலை மொபைல் எண்ணை அமைத்தல்"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - இயல்பு"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"உள்வரும் அழைப்புக்கான அறிவிப்பு"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"உள்வரும் அழைப்பு"</string>
+    <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"தவறிய அழைப்புக்கான அறிவிப்பு"</string>
+    <string name="notification_missed_call" msgid="7127823385811396529">"தவறிய அழைப்பு"</string>
     <string name="setting_title" msgid="1296639422364732365">"அமைப்புகள்"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"தொடக்கப் பக்கத்தை அமை"</string>
 </resources>
