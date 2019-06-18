@@ -27,6 +27,7 @@ import android.graphics.drawable.Icon;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.util.Pair;
 import androidx.lifecycle.Observer;
@@ -40,6 +41,7 @@ import com.android.car.dialer.ui.TelecomPageTab;
 import com.android.car.telephony.common.PhoneCallLog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** Controller that manages the missed call notifications. */
@@ -109,8 +111,14 @@ public final class MissedCallNotificationController {
         mUnreadMissedCallLiveData.observeForever(mUnreadMissedCallObserver);
     }
 
-    private void updateNotifications(@NonNull List<PhoneCallLog> phoneCallLogs) {
-        for (PhoneCallLog phoneCallLog : phoneCallLogs) {
+    /**
+     * The phone call log list might be null when switching users if permission gets denied and
+     * throws exception.
+     */
+    private void updateNotifications(@Nullable List<PhoneCallLog> phoneCallLogs) {
+        List<PhoneCallLog> updatedPhoneCallLogs =
+                phoneCallLogs == null ? Collections.emptyList() : phoneCallLogs;
+        for (PhoneCallLog phoneCallLog : updatedPhoneCallLogs) {
             showMissedCallNotification(phoneCallLog);
             if (mCurrentPhoneCallLogList.contains(phoneCallLog)) {
                 mCurrentPhoneCallLogList.remove(phoneCallLog);
@@ -121,7 +129,7 @@ public final class MissedCallNotificationController {
             cancelMissedCallNotification(phoneCallLog);
         }
         mCurrentPhoneCallLogList.clear();
-        mCurrentPhoneCallLogList.addAll(phoneCallLogs);
+        mCurrentPhoneCallLogList.addAll(updatedPhoneCallLogs);
     }
 
     private void showMissedCallNotification(PhoneCallLog phoneCallLog) {
