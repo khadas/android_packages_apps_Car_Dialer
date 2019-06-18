@@ -118,6 +118,12 @@
         <item name="android:textColor">#B8FFFFFF</item>
     </style>
 
+    <!-- Call history -->
+    <style name="TextAppearance.CallLogTitleDefault" parent="@style/TextAppearance.Body1"/>
+
+    <!-- Customized text color for missed calls can be added here -->
+    <style name="TextAppearance.CallLogTitleMissedCall" parent="@style/TextAppearance.Body1"/>
+
     <!-- Contact details -->
     <style name="TextAppearance.ContactDetailsTitle" parent="@style/TextAppearance.Display2"/>
 

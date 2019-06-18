@@ -17,6 +17,8 @@
 package com.android.car.dialer.ui.common.entity;
 
 import android.net.Uri;
+
+import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.telephony.common.PhoneCallLog;
 
 import java.util.ArrayList;
@@ -106,5 +108,13 @@ public class UiCallLog {
     public long getMostRecentCallEndTimestamp() {
         return mCallRecords.isEmpty() ? 0
                 : mCallRecords.get(0).getCallEndTimestamp();
+    }
+
+    /**
+     * Returns the most recent call's call type.
+     */
+    public int getMostRecentCallType() {
+        return mCallRecords.isEmpty() ? CallHistoryLiveData.CallType.CALL_TYPE_ALL
+                : mCallRecords.get(0).getCallType();
     }
 }
