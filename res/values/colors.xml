@@ -28,7 +28,6 @@
     <color name="phone_end_call">@*android:color/car_red_500a</color>
 
     <!-- Dialpad page -->
-    <color name="dialpad_title_color">@color/primary_text_color</color>
     <color name="call_button_outline">@*android:color/car_green_500</color>
 
     <!-- A scrim that covers the background of activities and darkens them for night mode. -->
