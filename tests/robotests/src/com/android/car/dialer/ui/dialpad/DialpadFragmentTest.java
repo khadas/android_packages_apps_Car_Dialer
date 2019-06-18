@@ -229,6 +229,6 @@ public class DialpadFragmentTest {
         expectedText = TelecomUtils.getFormattedNumber(mDialpadFragment.getContext(), expectedText);
         TextView mTitleView = mDialpadFragment.getView().findViewById(R.id.title);
         TelecomUtils.getFormattedNumber(mDialpadFragment.getContext(), null);
-        assertThat(mTitleView.getText()).isEqualTo(expectedText);
+        assertThat(mTitleView.getText().toString()).isEqualTo(expectedText);
     }
 }

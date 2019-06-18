@@ -121,7 +121,8 @@ public class DialpadFragment extends AbstractDialpadFragment implements
 
         mTitleView = rootView.findViewById(R.id.title);
         mTitleView.setTextAppearance(
-                mMode == MODE_EMERGENCY ? R.style.EmergencyDialNumber : R.style.DialNumber);
+                mMode == MODE_EMERGENCY ? R.style.TextAppearance_EmergencyDialNumber
+                        : R.style.TextAppearance_DialNumber);
         mDisplayName = rootView.findViewById(R.id.display_name);
 
         View callButton = rootView.findViewById(R.id.call_button);
@@ -199,7 +200,7 @@ public class DialpadFragment extends AbstractDialpadFragment implements
                             : R.string.emergency_call_description);
             ViewUtils.setVisible(mDeleteButton, false);
         } else {
-            mTitleView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+            mTitleView.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
             if (number.length() <= MAX_DIAL_NUMBER) {
                 mTitleView.setText(
                         TelecomUtils.getFormattedNumber(getContext(), number.toString()));
