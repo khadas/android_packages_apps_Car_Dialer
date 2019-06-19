@@ -27,6 +27,7 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
@@ -42,7 +43,7 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     private Chronometer mCallStateView;
 
     /** An active call which this fragment is serving for. */
-    private Call mActiveCall;
+    private LiveData<Call> mActiveCall;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +73,7 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
                         getContext(), pair.first));
             }
         });
-        mActiveCall = viewModel.getPrimaryCall().getValue();
+        mActiveCall = viewModel.getPrimaryCall();
 
         return rootView;
     }
@@ -93,16 +94,16 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     @Override
     void playTone(int keycode) {
         L.d(TAG, "start DTMF tone for %s", keycode);
-        if (mActiveCall != null) {
-            mActiveCall.playDtmfTone(sDialValueMap.get(keycode));
+        if (mActiveCall.getValue() != null) {
+            mActiveCall.getValue().playDtmfTone(sDialValueMap.get(keycode));
         }
     }
 
     @Override
     void stopTone() {
-        if (mActiveCall != null) {
+        if (mActiveCall.getValue() != null) {
             L.d(TAG, "stop DTMF tone");
-            mActiveCall.stopDtmfTone();
+            mActiveCall.getValue().stopDtmfTone();
         }
     }
 
