@@ -16,8 +16,8 @@ limitations under the License.
     android:layout_height="match_parent"
     android:gravity="start|center_vertical"
     android:orientation="horizontal"
-    android:layout_marginStart="@dimen/in_call_user_profile_margin"
-    android:layout_marginEnd="@dimen/in_call_user_profile_margin">
+    android:paddingStart="@dimen/in_call_user_profile_margin"
+    android:paddingEnd="@dimen/in_call_user_profile_margin">
     <ImageView
         android:id="@+id/user_profile_avatar"
         android:layout_width="@dimen/in_call_avatar_icon_size"
@@ -41,13 +41,13 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.InCallUserPhoneNumber"
             android:singleLine="true"
-            android:paddingTop="@dimen/in_call_phone_number_margin_top"/>
+            android:layout_marginTop="@dimen/in_call_phone_number_margin_top"/>
         <Chronometer
             android:id="@+id/user_profile_call_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.InCallState"
             android:singleLine="true"
-            android:paddingTop="@dimen/in_call_state_margin_top"/>
+            android:layout_marginTop="@dimen/in_call_state_margin_top"/>
     </LinearLayout>
 </LinearLayout>
