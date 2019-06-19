@@ -21,6 +21,8 @@ import static com.google.common.truth.Truth.assertThat;
 import android.content.Context;
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -42,7 +44,7 @@ public class InCallFragmentTest {
     private InCallFragment mInCallFragment;
     private FragmentTestActivity mFragmentTestActivity;
     private View mUserProfileContainerView;
-    private View mDialerFragmentContainer;
+    private Fragment mInCallDialpadFragment;
 
     @Before
     public void setup() {
@@ -58,7 +60,8 @@ public class InCallFragmentTest {
 
         mUserProfileContainerView = mInCallFragment.getView().findViewById(
                 R.id.user_profile_container);
-        mDialerFragmentContainer = mInCallFragment.getView().findViewById(R.id.dialpad_container);
+        mInCallDialpadFragment = mInCallFragment.getChildFragmentManager().findFragmentById(
+                R.id.incall_dialpad_fragment);
     }
 
     @After
@@ -69,7 +72,7 @@ public class InCallFragmentTest {
 
     @Test
     public void testOnCreateView() {
-        assertThat(mDialerFragmentContainer.getVisibility()).isEqualTo(View.GONE);
+        assertThat(mInCallDialpadFragment.isHidden()).isTrue();
         assertThat(mUserProfileContainerView.getVisibility()).isEqualTo(View.VISIBLE);
     }
 
@@ -77,7 +80,7 @@ public class InCallFragmentTest {
     public void testOnOpenDialpad() {
         mInCallFragment.onOpenDialpad();
 
-        assertThat(mDialerFragmentContainer.getVisibility()).isEqualTo(View.VISIBLE);
+        assertThat(mInCallDialpadFragment.isHidden()).isFalse();
         assertThat(mUserProfileContainerView.getVisibility()).isEqualTo(View.GONE);
     }
 
@@ -85,7 +88,7 @@ public class InCallFragmentTest {
     public void testOnCloseDialpad() {
         mInCallFragment.onCloseDialpad();
 
-        assertThat(mDialerFragmentContainer.getVisibility()).isEqualTo(View.GONE);
+        assertThat(mInCallDialpadFragment.isHidden()).isTrue();
         assertThat(mUserProfileContainerView.getVisibility()).isEqualTo(View.VISIBLE);
     }
 }
