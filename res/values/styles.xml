@@ -14,14 +14,12 @@
      limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="DialNumber">
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-        <item name="android:textSize">@dimen/car_key1_size</item>
-    </style>
-
-    <style name="EmergencyDialNumber" parent="DialNumber">
+    <!-- Dialpad -->
+    <style name="TextAppearance.DialNumber" parent="@style/TextAppearance.Display3"/>
+    <style name="TextAppearance.EmergencyDialNumber" parent="@style/TextAppearance.DialNumber">
         <item name="android:textColor">@color/emergency_text_color</item>
     </style>
+    <style name="TextAppearance.DialpadDisplayName" parent="@style/TextAppearance.Body1"/>
 
     <style name="KeypadNumber">
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
