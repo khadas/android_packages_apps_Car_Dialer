@@ -42,7 +42,7 @@ public class FragmentTestActivity extends FragmentActivity implements
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.test_fragment_container, fragment)
-                .commitNow();
+                .commit();
     }
 
     @Override

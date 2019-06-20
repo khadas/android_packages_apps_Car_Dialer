@@ -18,14 +18,10 @@ package com.android.car.dialer.ui.activecall;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.robolectric.Shadows.shadowOf;
 
-import android.app.Application;
-import android.content.ComponentName;
 import android.content.Context;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
@@ -34,17 +30,16 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.core.util.Pair;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
+import com.android.car.dialer.TestDialerApplication;
 import com.android.car.dialer.telecom.InCallServiceImpl;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
+import com.android.car.telephony.common.CallDetail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,24 +51,22 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.ShadowContextImpl;
-import org.robolectric.shadows.ShadowLooper;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Config(shadows = {ShadowAndroidViewModelFactory.class})
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class OnGoingCallControllerBarFragmentTest {
-    private static final String CALL_STATE = "CALL_STATE";
-
     private OnGoingCallControllerBarFragment mOnGoingCallControllerBarFragment;
     private List<Integer> mAudioRouteList = new ArrayList<>();
+    private OngoingCallStateViewModel mOngoingCallStateViewModel;
+    private MutableLiveData<Call> mCallLiveData;
+    private MutableLiveData<Integer> mCallStateLiveData;
+    private MutableLiveData<CallDetail> mCallDetailLiveData;
     @Mock
     private Call mMockCall;
-    @Mock
-    private InCallServiceImpl.LocalBinder mMockBinder;
-    @Mock
-    private InCallServiceImpl mMockInCallService;
     @Mock
     private TelecomManager mMockTelecomManager;
     @Mock
@@ -82,27 +75,25 @@ public class OnGoingCallControllerBarFragmentTest {
     private UiCallManager mMockUiCallManager;
     @Mock
     private InCallViewModel mMockInCallViewModel;
+    @Mock
+    private InCallServiceImpl mMockInCallService;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        Context context = RuntimeEnvironment.application;
+        mCallLiveData = new MutableLiveData<>();
+        mCallLiveData.setValue(mMockCall);
+        mCallStateLiveData = new MutableLiveData<>();
+        mCallDetailLiveData = new MutableLiveData<>();
 
-        when(mMockBinder.getService()).thenReturn(mMockInCallService);
+        ((TestDialerApplication) RuntimeEnvironment.application).setupInCallServiceImpl(
+                mMockInCallService);
         when(mMockInCallService.getCallAudioState()).thenReturn(mMockAudioState);
-        shadowOf((Application) context).setComponentNameAndServiceForBindService(
-                new ComponentName(context, InCallServiceImpl.class), mMockBinder);
-        ShadowContextImpl shadowContext = Shadow.extract(((Application) context).getBaseContext());
+        ShadowContextImpl shadowContext = Shadow.extract(
+                RuntimeEnvironment.application.getBaseContext());
         shadowContext.setSystemService(Context.TELECOM_SERVICE, mMockTelecomManager);
-    }
 
-    @Test
-    public void testNewInstance_withCallState() {
-        mOnGoingCallControllerBarFragment = OnGoingCallControllerBarFragment.newInstance(
-                Call.STATE_DIALING);
-        assertThat(mOnGoingCallControllerBarFragment).isNotNull();
-        assertThat(mOnGoingCallControllerBarFragment.getArguments().getInt(CALL_STATE)).isEqualTo(
-                Call.STATE_DIALING);
+        mOngoingCallStateViewModel = new OngoingCallStateViewModel(RuntimeEnvironment.application);
     }
 
     @Test
@@ -127,27 +118,23 @@ public class OnGoingCallControllerBarFragmentTest {
     @Test
     public void testDialpadButton() {
         addFragment(Call.STATE_ACTIVE);
+        mOngoingCallStateViewModel.getDialpadState().setValue(false);
 
         View dialpadButton = mOnGoingCallControllerBarFragment.getView().findViewById(
                 R.id.toggle_dialpad_button);
-        FragmentManager fragmentManager =
-                mOnGoingCallControllerBarFragment.getParentFragment().getChildFragmentManager();
-        Fragment dialpadFragment = fragmentManager.findFragmentById(R.id.incall_dialpad_fragment);
 
         // Test initial state
         assertThat(dialpadButton.hasOnClickListeners()).isTrue();
         assertThat(dialpadButton.isActivated()).isFalse();
-        assertThat(dialpadFragment.isHidden()).isTrue();
+        assertThat(mOngoingCallStateViewModel.getDialpadState().getValue()).isFalse();
         // On open dialpad
         dialpadButton.performClick();
         assertThat(dialpadButton.isActivated()).isTrue();
-        fragmentManager.executePendingTransactions();
-        assertThat(dialpadFragment.isHidden()).isFalse();
+        assertThat(mOngoingCallStateViewModel.getDialpadState().getValue()).isTrue();
         // On close dialpad
         dialpadButton.performClick();
         assertThat(dialpadButton.isActivated()).isFalse();
-        fragmentManager.executePendingTransactions();
-        assertThat(dialpadFragment.isHidden()).isTrue();
+        assertThat(mOngoingCallStateViewModel.getDialpadState().getValue()).isFalse();
     }
 
     @Test
@@ -195,7 +182,7 @@ public class OnGoingCallControllerBarFragmentTest {
         pauseButton.performClick();
         verify(mMockCall).hold();
         // onUnHoldCall
-        mOnGoingCallControllerBarFragment.setCallState(Call.STATE_HOLDING);
+        mCallStateLiveData.setValue(Call.STATE_HOLDING);
         pauseButton.performClick();
         verify(mMockCall).unhold();
     }
@@ -210,39 +197,31 @@ public class OnGoingCallControllerBarFragmentTest {
         verify(mMockCall, never()).unhold();
     }
 
-    private void addFragment(int CallState) {
+    private void addFragment(int callState) {
         mAudioRouteList.add(CallAudioState.ROUTE_SPEAKER);
         when(mMockUiCallManager.getSupportedAudioRoute()).thenReturn(mAudioRouteList);
         UiCallManager.set(mMockUiCallManager);
 
-        LiveData<Call> callLiveData = mock(LiveData.class);
-        when(callLiveData.getValue()).thenReturn(mMockCall);
-        when(mMockInCallViewModel.getPrimaryCall()).thenReturn(callLiveData);
-        when(mMockInCallViewModel.getPrimaryCallDetail()).thenReturn(mock(LiveData.class));
-        when(mMockInCallViewModel.getPrimaryCallState()).thenReturn(mock(LiveData.class));
+        mCallStateLiveData.setValue(callState);
+        when(mMockInCallViewModel.getPrimaryCall()).thenReturn(mCallLiveData);
+        when(mMockInCallViewModel.getPrimaryCallDetail()).thenReturn(mCallDetailLiveData);
+        when(mMockInCallViewModel.getPrimaryCallState()).thenReturn(mCallStateLiveData);
 
         MutableLiveData<Integer> audioRouteLiveData = new MutableLiveData<>();
         audioRouteLiveData.setValue(CallAudioState.ROUTE_BLUETOOTH);
         when(mMockInCallViewModel.getAudioRoute()).thenReturn(audioRouteLiveData);
 
-        LiveData<Pair<Integer, Long>> stateAndConnectTimeLiveData = mock(LiveData.class);
+        MutableLiveData<Pair<Integer, Long>> stateAndConnectTimeLiveData = new MutableLiveData<>();
         when(mMockInCallViewModel.getCallStateAndConnectTime())
                 .thenReturn(stateAndConnectTimeLiveData);
 
         ShadowAndroidViewModelFactory.add(InCallViewModel.class, mMockInCallViewModel);
-        ShadowAndroidViewModelFactory.add(
-                OngoingCallStateViewModel.class,
-                new OngoingCallStateViewModel(RuntimeEnvironment.application));
+        ShadowAndroidViewModelFactory.add(OngoingCallStateViewModel.class,
+                mOngoingCallStateViewModel);
 
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().start().resume().get();
-        InCallFragment inCallFragment = InCallFragment.newInstance();
-        fragmentTestActivity.setFragment(inCallFragment);
-
-        mOnGoingCallControllerBarFragment = OnGoingCallControllerBarFragment.newInstance(CallState);
-        ShadowLooper.pauseMainLooper();
-        inCallFragment.getChildFragmentManager().beginTransaction().replace(
-                R.id.controller_bar_container, mOnGoingCallControllerBarFragment).commitNow();
-        assertThat(inCallFragment).isEqualTo(mOnGoingCallControllerBarFragment.getParentFragment());
+        mOnGoingCallControllerBarFragment = new OnGoingCallControllerBarFragment();
+        fragmentTestActivity.setFragment(mOnGoingCallControllerBarFragment);
     }
 }
