@@ -26,7 +26,7 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.TestDialerApplication;
 import com.android.car.dialer.testutils.ShadowCallLogCalls;
 import com.android.car.dialer.testutils.ShadowInMemoryPhoneBook;
-import com.android.car.dialer.ui.activecall.InCallFragment;
+import com.android.car.dialer.ui.activecall.OngoingCallFragment;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,6 +43,7 @@ public class InCallDialpadFragmentTest {
 
     @Before
     public void setup() {
+        ((TestDialerApplication) RuntimeEnvironment.application).setupInCallServiceImpl();
         ((TestDialerApplication) RuntimeEnvironment.application).initUiCallManager();
     }
 
@@ -55,12 +56,13 @@ public class InCallDialpadFragmentTest {
     }
 
     private void startInCallActivity() {
-        InCallFragment inCallFragment = InCallFragment.newInstance();
+        OngoingCallFragment ongoingCallFragment = new OngoingCallFragment();
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().start().resume().get();
-        fragmentTestActivity.setFragment(inCallFragment);
-        mInCallDialpadFragment = (InCallDialpadFragment) inCallFragment.getChildFragmentManager()
-                .findFragmentById(R.id.incall_dialpad_fragment);
+        fragmentTestActivity.setFragment(ongoingCallFragment);
+        mInCallDialpadFragment =
+                (InCallDialpadFragment) ongoingCallFragment.getChildFragmentManager()
+                        .findFragmentById(R.id.incall_dialpad_fragment);
     }
 
 }
