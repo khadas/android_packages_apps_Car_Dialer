@@ -43,23 +43,23 @@ limitations under the License.
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/controller_bar_container"/>
+            app:layout_constraintBottom_toTopOf="@+id/ongoing_call_control_bar"/>
 
         <include
             layout="@layout/user_profile_large"
             android:id="@+id/user_profile_container"
             android:layout_width="match_parent"
-            android:gravity="center"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/controller_bar_container"
+            app:layout_constraintBottom_toTopOf="@+id/ongoing_call_control_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <FrameLayout
-            android:id="@+id/controller_bar_container"
+        <fragment
+            android:id="@+id/ongoing_call_control_bar"
+            android:name="com.android.car.dialer.ui.activecall.OnGoingCallControllerBarFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/in_call_controller_bar_height"
             android:layout_marginStart="@dimen/in_call_controller_bar_margin"
             android:layout_marginEnd="@dimen/in_call_controller_bar_margin"
             android:layout_marginBottom="@dimen/in_call_controller_bar_margin_bottom"
