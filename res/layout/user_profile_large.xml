@@ -22,7 +22,7 @@ limitations under the License.
         android:id="@+id/user_profile_avatar"
         android:layout_width="@dimen/in_call_avatar_icon_size"
         android:layout_height="@dimen/in_call_avatar_icon_size"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"/>
 
     <LinearLayout
         android:layout_height="wrap_content"

@@ -29,6 +29,8 @@ public class OngoingCallStateViewModel extends AndroidViewModel {
     public OngoingCallStateViewModel(@NonNull Application application) {
         super(application);
         mDialpadState = new MutableLiveData<>();
+        // Set initial value to avoid NPE
+        mDialpadState.setValue(false);
     }
 
     /** Return the {@link MutableLiveData} for dialpad state. */
