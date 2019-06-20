@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth მიუწვდომელია."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"ზარების განსახორციელებლად და მისაღებად ჩართეთ Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"ზარების განსახორციელებლად და მისაღებად დააწყვილეთ ტელეფონი მანქანასთან."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"ქსელი მიუწვდომელია."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"ტელეფონი თვითმფრინავის რეჟიმშია."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth არ არის დაკავშირებული."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"SMS გასაგზავნად დააყენეთ შეტყობინ. აპი."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Bluetooth-თან დაკავშირება"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"გადაუდებელი"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"გადაუდებელი ზარი"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ეს კონტაქტი შესაძლოა წაიშალა."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"ამ ნომრის აკრეფა ვერ ხერხდება. შეამოწმეთ და ცადეთ ხელახლა."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"თქვენი ზარების ჟურნალი ცარიელია."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"სწრაფი აკრეფა საშუალებას გაძლევთ, ერთი შეხებით აკრიფოთ რჩეული და ხშირად დარეკილი ნომრები"</string>
     <string name="decline_call" msgid="2505987200485272226">"უარყოფა"</string>
     <string name="answer_call" msgid="3272474440561548115">"პასუხი"</string>
     <string name="call_back" msgid="5745638356098600872">"გადარეკვა"</string>
-    <string name="message" msgid="106616332778369322">"შეტყობინება"</string>
-    <string name="conference_call" msgid="9107469685942466746">"საკონფერენციო ზარი"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"ავტომობილის bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"სპიკერფონი"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"ყურსაცვამი"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"საუბრის ისტორია"</string>
     <string name="contacts_title" msgid="9201954388634537346">"კონტაქტები"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ციფერბლატი"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"საკონტაქტო მონაცემები"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"დარეკვა <xliff:g id="LABEL">%1$s</xliff:g>-ზე"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"შეტყობინების გაგზავნა <xliff:g id="LABEL">%1$s</xliff:g>-ზე"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"დარეკვა"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"გაგზავნა"</string>
     <string name="search_title" msgid="5412680850141871664">"კონტაქტებში ძიება"</string>
     <string name="search_hint" msgid="3099066132607042439">"კონტაქტებში ძიება"</string>
-    <string name="type_home" msgid="7478344114405222813">"მთავარი"</string>
-    <string name="type_work" msgid="7825922921841029320">"სამსახური"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"მობილური"</string>
     <string name="type_multiple" msgid="3402949522797441236">"მრავალი"</string>
-    <string name="type_other" msgid="4960962576153449341">"სხვა"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"აირჩიეთ ტელეფონის ნომერი"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"მხოლოდ ერთხელ"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ყოველთვის"</string>

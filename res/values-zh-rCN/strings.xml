@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"蓝牙不可用。"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"要拨打或接听电话，请开启蓝牙。"</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"要拨打或接听电话，请将您的手机与汽车配对。"</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"网络不可用。"</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"手机目前处于飞行模式。"</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"未连接蓝牙。"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"要发送短信，您需要先安装一个短信应用。"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"连接到蓝牙"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"紧急"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"紧急呼叫"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"该联系人可能已被删除。"</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"无法拨打此号码。请检查号码，然后重试。"</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"您没有任何通话记录。"</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"借助“快速拨号”功能，只需轻轻一点即可拨打已收藏联系人的电话号码和常拨打的电话号码"</string>
     <string name="decline_call" msgid="2505987200485272226">"拒接"</string>
     <string name="answer_call" msgid="3272474440561548115">"接听"</string>
     <string name="call_back" msgid="5745638356098600872">"回电"</string>
-    <string name="message" msgid="106616332778369322">"短信"</string>
-    <string name="conference_call" msgid="9107469685942466746">"电话会议"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"车载蓝牙"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"扬声器模式"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"手机听筒"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"通话记录"</string>
     <string name="contacts_title" msgid="9201954388634537346">"通讯录"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"拨号键盘"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"联系人详细信息"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"致电<xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"发短信给<xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"拨号"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"发送短信"</string>
     <string name="search_title" msgid="5412680850141871664">"搜索联系人"</string>
     <string name="search_hint" msgid="3099066132607042439">"搜索联系人"</string>
-    <string name="type_home" msgid="7478344114405222813">"家"</string>
-    <string name="type_work" msgid="7825922921841029320">"单位"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"手机"</string>
     <string name="type_multiple" msgid="3402949522797441236">"多个"</string>
-    <string name="type_other" msgid="4960962576153449341">"其他"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"选择电话号码"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"仅此一次"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"一律允许"</string>

@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth no está disponible."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Para realizar y recibir llamadas, activa el Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Para realizar y recibir llamadas, sincroniza el teléfono con el auto."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"La red no está disponible."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"El teléfono está en modo de avión."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"El Bluetooth no está conectado."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Para enviar SMS, instala app de mensajes"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Conectarse a Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Emergencia"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Llamada de emergencia"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Es posible que se haya borrado este contacto."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"No se puede marcar ese número. Revísalo y vuelve a intentarlo."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Tu registro de llamadas está vacío."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Marcado rápido permite llamar a contactos favoritos y números frecuentes con solo tocar una tecla"</string>
     <string name="decline_call" msgid="2505987200485272226">"Rechazar"</string>
     <string name="answer_call" msgid="3272474440561548115">"Responder"</string>
     <string name="call_back" msgid="5745638356098600872">"Devolver llamada"</string>
-    <string name="message" msgid="106616332778369322">"Enviar mensaje"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Conferencia"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth del vehículo"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Altavoz"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Auricular"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Historial de llamadas"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Contactos"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Teclado"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Detalles de contacto"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Llamar a <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Enviar SMS a <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Llamar"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Texto"</string>
     <string name="search_title" msgid="5412680850141871664">"Buscar contactos"</string>
     <string name="search_hint" msgid="3099066132607042439">"Buscar contactos"</string>
-    <string name="type_home" msgid="7478344114405222813">"Casa"</string>
-    <string name="type_work" msgid="7825922921841029320">"Trabajo"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Móvil"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Varias"</string>
-    <string name="type_other" msgid="4960962576153449341">"Otro"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Elige un número de teléfono"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Solo una vez"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Siempre"</string>
