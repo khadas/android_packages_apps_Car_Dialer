@@ -63,33 +63,26 @@ public class KeypadFragment extends Fragment {
     @interface DialKeyCode {
     }
 
-    /**
-     * Callback for keypad to interact with its host.
-     */
+    /** Callback for keypad to interact with its host. */
     public interface KeypadCallback {
 
-        /**
-         * Called when a key is long pressed.
-         */
-        void onKeyLongPressed(@DialKeyCode int keycode);
+        /** Called when a key is long pressed. */
+        void onKeypadKeyLongPressed(@DialKeyCode int keycode);
 
-        /**
-         * Called when a key is pressed down.
-         */
-        void onKeyDown(@DialKeyCode int keycode);
+        /** Called when a key is pressed down. */
+        void onKeypadKeyDown(@DialKeyCode int keycode);
 
-        /**
-         * Called when a key is released.
-         */
-        void onKeyUp(@DialKeyCode int keycode);
+        /** Called when a key is released. */
+        void onKeypadKeyUp(@DialKeyCode int keycode);
     }
+
 
     private KeypadCallback mKeypadCallback;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        if (getParentFragment() != null && getParentFragment() instanceof KeypadCallback) {
+        if (getParentFragment() instanceof KeypadCallback) {
             mKeypadCallback = (KeypadCallback) getParentFragment();
         } else if (getHost() instanceof KeypadCallback) {
             mKeypadCallback = (KeypadCallback) getHost();
@@ -105,8 +98,9 @@ public class KeypadFragment extends Fragment {
      * well as long-press for certain keys.  Mimics the behavior of the phone dialer app.
      */
     private class KeypadClickListener implements View.OnTouchListener,
-            View.OnLongClickListener {
+            View.OnLongClickListener, View.OnKeyListener, View.OnFocusChangeListener {
         private final int mKeycode;
+        private boolean mIsKeyDown = false;
 
         KeypadClickListener(@DialKeyCode int keyCode) {
             mKeycode = keyCode;
@@ -114,7 +108,7 @@ public class KeypadFragment extends Fragment {
 
         @Override
         public boolean onLongClick(View v) {
-            mKeypadCallback.onKeyLongPressed(mKeycode);
+            mKeypadCallback.onKeypadKeyLongPressed(mKeycode);
             return true;
         }
 
@@ -122,14 +116,38 @@ public class KeypadFragment extends Fragment {
         public boolean onTouch(View v, MotionEvent event) {
             if (mKeypadCallback != null) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    mKeypadCallback.onKeyDown(mKeycode);
+                    mKeypadCallback.onKeypadKeyDown(mKeycode);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    mKeypadCallback.onKeyUp(mKeycode);
+                    mKeypadCallback.onKeypadKeyUp(mKeycode);
                 }
             }
 
-            // Continue propagating the touch event
+            // Continue propagating the event
             return false;
+        }
+
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (mKeypadCallback != null && KeyEvent.isConfirmKey(keyCode)) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && !mIsKeyDown) {
+                    mIsKeyDown = true;
+                    mKeypadCallback.onKeypadKeyDown(mKeycode);
+                } else if (event.getAction() == KeyEvent.ACTION_UP && mIsKeyDown) {
+                    mIsKeyDown = false;
+                    mKeypadCallback.onKeypadKeyUp(mKeycode);
+                }
+            }
+
+            // Continue propagating the event
+            return false;
+        }
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (!hasFocus && mIsKeyDown) {
+                mIsKeyDown = false;
+                mKeypadCallback.onKeypadKeyUp(mKeycode);
+            }
         }
     }
 
@@ -140,6 +158,8 @@ public class KeypadFragment extends Fragment {
             View v = parent.findViewById(sRIdMap.get(key));
             v.setOnTouchListener(clickListener);
             v.setOnLongClickListener(clickListener);
+            v.setOnKeyListener(clickListener);
+            v.setOnFocusChangeListener(clickListener);
         }
     }
 }
