@@ -16,14 +16,13 @@
 
 package com.android.car.dialer.ui.search;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.app.ActionBar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -62,12 +61,15 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
     private static final String TAG = "CD.ContactResultsFragment";
     private static final String SEARCH_QUERY = "SearchQuery";
+    private static final String KEY_KEYBOARD_SHOWN = "KeyboardShown";
 
     private ContactResultsViewModel mContactResultsViewModel;
     private final ContactResultsAdapter mAdapter = new ContactResultsAdapter(this);
 
     private RecyclerView.OnScrollListener mOnScrollChangeListener;
     private SearchView mSearchView;
+
+    private boolean mKeyboardShown = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,15 +81,23 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
         mContactResultsViewModel.getContactSearchResults().observe(this,
                 contactResults -> mAdapter.setData(contactResults));
 
-        // Restore the search query from saved state - day/night mode change
-        String initialQuery = null;
+        // Set the initial search query, if one was provided from a Intent.ACTION_SEARCH
         if (getArguments() != null) {
-            initialQuery = getArguments().getString(SEARCH_QUERY);
+            String initialQuery = getArguments().getString(SEARCH_QUERY);
             if (!TextUtils.isEmpty(initialQuery)) {
                 setSearchQuery(initialQuery);
             }
             getArguments().clear();
         }
+
+        if (savedInstanceState != null) {
+            mKeyboardShown = savedInstanceState.getBoolean(KEY_KEYBOARD_SHOWN, false);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean(KEY_KEYBOARD_SHOWN, mKeyboardShown);
     }
 
     @Override
@@ -116,18 +126,33 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.findItem(R.id.menu_contacts_search).setActionView(R.layout.search_view);
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = menu.findItem(
-                R.id.menu_contacts_search).getActionView().findViewById(R.id.search_view);
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        // Expand the menu item by default.
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_contacts_search).setVisible(false);
+    }
+
+    @Override
+    protected void setupActionBar(@NonNull ActionBar actionBar) {
+        super.setupActionBar(actionBar);
+
+        // We have to use the setCustomView that accepts a LayoutParams to get the SearchView
+        // to take up the full height and width of the action bar
+        View v = getLayoutInflater().inflate(R.layout.search_view, null);
+        actionBar.setCustomView(v, new ActionBar.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+
+        SearchView searchView = actionBar.getCustomView().findViewById(R.id.search_view);
+
+        // We need to call setIconified(false) so the SearchView is a text box instead of just
+        // an icon, but doing so also focuses on it and shows the keyboard. The first time we
+        // enter the fragment that's fine, but every time after we have to clearFocus() so the
+        // keyboard isn't shown.
         searchView.setIconified(false);
+        if (mKeyboardShown) {
+            searchView.clearFocus();
+        } else {
+            mKeyboardShown = true;
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -152,7 +177,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    public void onDestroyOptionsMenu() {
+    public void onPause() {
+        super.onPause();
         mSearchView.clearFocus();
     }
 
