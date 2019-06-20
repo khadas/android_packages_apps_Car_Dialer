@@ -100,7 +100,7 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    void stopTone() {
+    void stopAllTones() {
         if (mActiveCall.getValue() != null) {
             L.d(TAG, "stop DTMF tone");
             mActiveCall.getValue().stopDtmfTone();
@@ -113,7 +113,7 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    public void onKeyLongPressed(int keycode) {
+    public void onKeypadKeyLongPressed(int keycode) {
         // No-op
     }
 }
