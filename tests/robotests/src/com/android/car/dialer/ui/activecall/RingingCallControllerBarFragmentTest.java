@@ -18,15 +18,12 @@ package com.android.car.dialer.ui.activecall;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.telecom.Call;
 import android.view.View;
 
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
@@ -59,19 +56,13 @@ public class RingingCallControllerBarFragmentTest {
 
         MutableLiveData<Call> callLiveData = new MutableLiveData<>();
         callLiveData.setValue(mMockCall);
-        when(mMockInCallViewModel.getPrimaryCall()).thenReturn(callLiveData);
-        when(mMockInCallViewModel.getPrimaryCallDetail()).thenReturn(mock(LiveData.class));
-        when(mMockInCallViewModel.getPrimaryCallState()).thenReturn(mock(LiveData.class));
+        when(mMockInCallViewModel.getIncomingCall()).thenReturn(callLiveData);
         ShadowAndroidViewModelFactory.add(InCallViewModel.class, mMockInCallViewModel);
 
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().start().resume().get();
-        Fragment fragment = new Fragment();
-        fragmentTestActivity.setFragment(fragment);
-
-        mRingingCallControllerBarFragment = RingingCallControllerBarFragment.newInstance();
-        fragment.getChildFragmentManager().beginTransaction().add(mRingingCallControllerBarFragment,
-                null).commitNow();
+        mRingingCallControllerBarFragment = new RingingCallControllerBarFragment();
+        fragmentTestActivity.setFragment(mRingingCallControllerBarFragment);
     }
 
     @Test

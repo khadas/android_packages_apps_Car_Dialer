@@ -64,8 +64,6 @@ public class UiCallManagerTest {
     @Mock
     private TelecomManager mMockTelecomManager;
     @Mock
-    private InCallServiceImpl.LocalBinder mMockBinder;
-    @Mock
     private InCallServiceImpl mMockInCallService;
 
     @Before
@@ -79,15 +77,15 @@ public class UiCallManagerTest {
     }
 
     private void initUiCallManager() {
-        when(mMockBinder.getService()).thenReturn(mMockInCallService);
-        ((TestDialerApplication) mContext).initUiCallManager(mMockBinder);
+        ((TestDialerApplication) mContext).setupInCallServiceImpl(mMockInCallService);
+        ((TestDialerApplication) mContext).initUiCallManager();
 
         mUiCallManager = UiCallManager.get();
     }
 
     private void initUiCallManager_InCallServiceIsNull() {
-        when(mMockBinder.getService()).thenReturn(null);
-        ((TestDialerApplication) mContext).initUiCallManager(mMockBinder);
+        ((TestDialerApplication) mContext).setupInCallServiceImpl(null);
+        ((TestDialerApplication) mContext).initUiCallManager();
 
         mUiCallManager = UiCallManager.get();
     }
