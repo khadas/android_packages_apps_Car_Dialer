@@ -17,7 +17,11 @@
 package com.android.car.dialer.ui.activecall;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.telecom.Call;
 
 import androidx.annotation.NonNull;
@@ -33,42 +37,93 @@ import com.android.car.dialer.livedata.CallDetailLiveData;
 import com.android.car.dialer.livedata.CallStateLiveData;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.InCallServiceImpl;
-import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.telephony.common.CallDetail;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * View model for {@link InCallActivity} and {@link InCallFragment}. UI that doesn't belong to in
- * call page should use a different ViewModel.
+ * View model for {@link InCallActivity} and {@link OngoingCallFragment}. UI that doesn't belong to
+ * in call page should use a different ViewModel.
  */
 public class InCallViewModel extends AndroidViewModel implements
         InCallServiceImpl.ActiveCallListChangedCallback {
     private static final String TAG = "CD.InCallViewModel";
 
-    private final ActiveCallComparator mActiveCallComparator;
-    private MutableLiveData<List<Call>> mActiveCallLiveData;
+    private final MutableLiveData<List<Call>> mCallListLiveData;
+    private final LiveData<List<Call>> mOngoingCallListLiveData;
+    private final Comparator<Call> mCallComparator;
 
-    private LiveData<CallDetail> mCallDetailLiveData;
-    private LiveData<Integer> mCallStateLiveData;
-    private LiveData<Call> mPrimaryCallLiveData;
-    private LiveData<Integer> mAudioRouteLiveData;
+    private final LiveData<Call> mIncomingCallLiveData;
+
+    private final LiveData<CallDetail> mCallDetailLiveData;
+    private final LiveData<Integer> mCallStateLiveData;
+    private final LiveData<Call> mPrimaryCallLiveData;
+    private final LiveData<Integer> mAudioRouteLiveData;
     private LiveData<Long> mCallConnectTimeLiveData;
     private LiveData<Pair<Integer, Long>> mCallStateAndConnectTimeLiveData;
-    private Context mContext;
+    private final Context mContext;
+
+    private InCallServiceImpl mInCallService;
+    private final ServiceConnection mInCallServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            L.d(TAG, "onServiceConnected: %s, service: %s", name, binder);
+            mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
+            updateCallList();
+            mInCallService.addActiveCallListChangedCallback(InCallViewModel.this);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            L.d(TAG, "onServiceDisconnected: %s", name);
+            mInCallService = null;
+        }
+    };
+
+    // Reuse the same instance so the callback won't be registered more than once.
+    private final Call.Callback mIncomingCallStateChangedCallback = new Call.Callback() {
+        @Override
+        public void onStateChanged(Call call, int state) {
+            // Sets value to trigger the live data for incoming call and active call list to update.
+            mCallListLiveData.setValue(mCallListLiveData.getValue());
+            call.unregisterCallback(this);
+        }
+    };
 
     public InCallViewModel(@NonNull Application application) {
         super(application);
         mContext = application.getApplicationContext();
-        mActiveCallComparator = new ActiveCallComparator();
-        mActiveCallLiveData = new MutableLiveData<>();
 
-        mPrimaryCallLiveData = Transformations.map(mActiveCallLiveData,
-                input -> (input != null && !input.isEmpty()) ? input.get(0) : null);
+        mCallListLiveData = new MutableLiveData<>();
+        mCallComparator = new CallComparator();
+
+        mIncomingCallLiveData = Transformations.map(mCallListLiveData,
+                callList -> {
+                    Call incomingCall = firstMatch(callList,
+                            call -> call != null && call.getState() == Call.STATE_RINGING);
+                    if (incomingCall != null) {
+                        incomingCall.registerCallback(mIncomingCallStateChangedCallback);
+                    }
+                    return incomingCall;
+                });
+
+        mOngoingCallListLiveData = Transformations.map(mCallListLiveData,
+                callList -> {
+                    List<Call> activeCallList = filter(callList,
+                            call -> call != null && call.getState() != Call.STATE_RINGING);
+                    activeCallList.sort(mCallComparator);
+                    return activeCallList;
+                });
+
+        mPrimaryCallLiveData = Transformations.map(mOngoingCallListLiveData,
+                input -> input.isEmpty() ? null : input.get(0));
         mCallDetailLiveData = Transformations.switchMap(mPrimaryCallLiveData,
                 input -> input != null ? new CallDetailLiveData(input) : null);
         mCallStateLiveData = Transformations.switchMap(mPrimaryCallLiveData,
@@ -84,13 +139,19 @@ public class InCallViewModel extends AndroidViewModel implements
 
         mAudioRouteLiveData = new AudioRouteLiveData(mContext);
 
-        updateActiveCallList();
-        UiCallManager.get().registerActiveCallListChangedCallback(this);
+        Intent intent = new Intent(mContext, InCallServiceImpl.class);
+        intent.setAction(InCallServiceImpl.ACTION_LOCAL_BIND);
+        mContext.bindService(intent, mInCallServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
-    /** Returns the live data which monitors the current active call list. */
-    public LiveData<List<Call>> getCallList() {
-        return mActiveCallLiveData;
+    /** Returns the live data which monitors the current incoming call. */
+    public LiveData<Call> getIncomingCall() {
+        return mIncomingCallLiveData;
+    }
+
+    /** Returns {@link LiveData} for the ongoing call list which excludes the ringing call. */
+    public LiveData<List<Call>> getOngoingCallList() {
+        return mOngoingCallListLiveData;
     }
 
     /**
@@ -131,35 +192,39 @@ public class InCallViewModel extends AndroidViewModel implements
     @Override
     public boolean onTelecomCallAdded(Call telecomCall) {
         L.i(TAG, "onTelecomCallAdded %s %s", telecomCall, this);
-        updateActiveCallList();
-        return mActiveCallLiveData.hasActiveObservers();
+        updateCallList();
+        return false;
     }
 
     @Override
     public boolean onTelecomCallRemoved(Call telecomCall) {
         L.i(TAG, "onTelecomCallRemoved %s %s", telecomCall, this);
-        updateActiveCallList();
-        return mActiveCallLiveData.hasActiveObservers();
+        updateCallList();
+        return false;
     }
 
-    private void updateActiveCallList() {
+    private void updateCallList() {
         List<Call> callList = new ArrayList<>();
-        callList.addAll(UiCallManager.get().getCallList());
-        callList.sort(mActiveCallComparator);
-        mActiveCallLiveData.setValue(callList);
+        callList.addAll(mInCallService.getCalls());
+        mCallListLiveData.setValue(callList);
     }
 
     @Override
     protected void onCleared() {
-        UiCallManager.get().unregisterActiveCallListChangedCallback(this);
+        mContext.unbindService(mInCallServiceConnection);
+        if (mInCallService != null) {
+            mInCallService.removeActiveCallListChangedCallback(this);
+        }
+        mInCallService = null;
     }
 
-    private static class ActiveCallComparator implements Comparator<Call> {
+    private static class CallComparator implements Comparator<Call> {
         /**
          * The rank of call state. Used for sorting active calls. Rank is listed from lowest to
          * highest.
          */
         private static final List<Integer> CALL_STATE_RANK = Lists.newArrayList(
+                Call.STATE_RINGING,
                 Call.STATE_DISCONNECTED,
                 Call.STATE_DISCONNECTING,
                 Call.STATE_NEW,
@@ -167,8 +232,7 @@ public class InCallViewModel extends AndroidViewModel implements
                 Call.STATE_SELECT_PHONE_ACCOUNT,
                 Call.STATE_HOLDING,
                 Call.STATE_ACTIVE,
-                Call.STATE_DIALING,
-                Call.STATE_RINGING);
+                Call.STATE_DIALING);
 
         @Override
         public int compare(Call call, Call otherCall) {
@@ -185,5 +249,24 @@ public class InCallViewModel extends AndroidViewModel implements
 
             return otherCarCallRank - carCallRank;
         }
+    }
+
+    private static Call firstMatch(List<Call> callList, Predicate<Call> predicate) {
+        List<Call> filteredResults = filter(callList, predicate);
+        return filteredResults.isEmpty() ? null : filteredResults.get(0);
+    }
+
+    private static List<Call> filter(List<Call> callList, Predicate<Call> predicate) {
+        if (callList == null || predicate == null) {
+            return Collections.emptyList();
+        }
+
+        List<Call> filteredResults = new ArrayList<>();
+        for (Call call : callList) {
+            if (predicate.apply(call)) {
+                filteredResults.add(call);
+            }
+        }
+        return filteredResults;
     }
 }

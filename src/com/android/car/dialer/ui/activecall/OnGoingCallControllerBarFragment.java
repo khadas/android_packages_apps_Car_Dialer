@@ -50,7 +50,6 @@ import java.util.List;
 /** A Fragment of the bar which controls on going call. */
 public class OnGoingCallControllerBarFragment extends Fragment {
     private static String TAG = "CDialer.OngoingCallCtlFrg";
-    private static final String CALL_STATE = "CALL_STATE";
 
     private static final ImmutableMap<Integer, AudioRouteInfo> AUDIO_ROUTES =
             ImmutableMap.<Integer, AudioRouteInfo>builder()
@@ -81,19 +80,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     private MutableLiveData<Boolean> mDialpadState;
     private int mCallState;
 
-    public static OnGoingCallControllerBarFragment newInstance() {
-        return new OnGoingCallControllerBarFragment();
-    }
-
-    public static OnGoingCallControllerBarFragment newInstance(int callState) {
-        OnGoingCallControllerBarFragment onGoingCallControllerBarFragment =
-                new OnGoingCallControllerBarFragment();
-        Bundle args = new Bundle();
-        args.putInt(CALL_STATE, callState);
-        onGoingCallControllerBarFragment.setArguments(args);
-        return onGoingCallControllerBarFragment;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +100,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
                 InCallViewModel.class);
+
+        inCallViewModel.getPrimaryCallState().observe(this, this::setCallState);
         mCallLiveData = inCallViewModel.getPrimaryCall();
         inCallViewModel.getAudioRoute().observe(this, this::updateViewBasedOnAudioRoute);
 
@@ -128,9 +116,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.on_going_call_controller_bar_fragment,
                 container, false);
-        if (getArguments() != null) {
-            mCallState = getArguments().getInt(CALL_STATE);
-        }
 
         mMuteButton = fragmentView.findViewById(R.id.mute_button);
         mMuteButton.setOnClickListener((v) -> {
@@ -144,15 +129,11 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         });
 
         View dialPadButton = fragmentView.findViewById(R.id.toggle_dialpad_button);
-        dialPadButton.setOnClickListener((v) -> {
-            mDialpadState.setValue(!mDialpadState.getValue());
-        });
+        dialPadButton.setOnClickListener(v -> mDialpadState.setValue(!mDialpadState.getValue()));
         mDialpadState.observe(this, activated -> dialPadButton.setActivated(activated));
 
         View endCallButton = fragmentView.findViewById(R.id.end_call_button);
-        endCallButton.setOnClickListener((v) -> {
-            onEndCall();
-        });
+        endCallButton.setOnClickListener(v -> onEndCall());
 
         List<Integer> audioRoutes = UiCallManager.get().getSupportedAudioRoute();
         mAudioRouteButton = fragmentView.findViewById(R.id.voice_channel_button);
@@ -191,10 +172,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         }
     }
 
-    /**
-     * Set the call state and change the view for the pause button accordingly
-     */
-    public void setCallState(int callState) {
+    /** Set the call state and change the view for the pause button accordingly */
+    private void setCallState(int callState) {
         L.d(TAG, "Call State: %s", callState);
         mCallState = callState;
         updatePauseButtonEnabledState();

@@ -9,18 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.notification.InCallNotificationController;
 
 public class RingingCallControllerBarFragment extends Fragment {
 
-    private Call mActiveCall;
-
-    public static RingingCallControllerBarFragment newInstance() {
-        return new RingingCallControllerBarFragment();
-    }
+    private LiveData<Call> mIncomingCall;
 
     @Nullable
     @Override
@@ -34,24 +30,26 @@ public class RingingCallControllerBarFragment extends Fragment {
         fragmentView.findViewById(R.id.end_call_button).setOnClickListener((v) -> declineCall());
         fragmentView.findViewById(R.id.end_call_text).setOnClickListener((v) -> declineCall());
 
-        InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
-                InCallViewModel.class);
-        mActiveCall = inCallViewModel.getPrimaryCall().getValue();
-
-        // Cancel the HUN if the in call page was brought up when user switch to dialer.
-        InCallNotificationController.get().cancelInCallNotification(mActiveCall);
         return fragmentView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
+                InCallViewModel.class);
+        mIncomingCall = inCallViewModel.getIncomingCall();
+    }
+
     private void answerCall() {
-        if (mActiveCall != null) {
-            mActiveCall.answer(/* videoState= */0);
+        if (mIncomingCall.getValue() != null) {
+            mIncomingCall.getValue().answer(/* videoState= */0);
         }
     }
 
     private void declineCall() {
-        if (mActiveCall != null) {
-            mActiveCall.reject(/* rejectWithMessage= */false, /* textMessage= */null);
+        if (mIncomingCall.getValue() != null) {
+            mIncomingCall.getValue().reject(/* rejectWithMessage= */false, /* textMessage= */null);
         }
     }
 }

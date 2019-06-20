@@ -342,24 +342,4 @@ public class UiCallManager {
     public List<Call> getCallList() {
         return mInCallService == null ? Collections.emptyList() : mInCallService.getCalls();
     }
-
-    /** Register the given callback to the delegated {@link InCallServiceImpl} */
-    public void registerActiveCallListChangedCallback(
-            InCallServiceImpl.ActiveCallListChangedCallback callback) {
-        if (mInCallService != null) {
-            mInCallService.addActiveCallListChangedCallback(callback);
-        } else {
-            L.w(TAG, "InCallService is not available");
-        }
-    }
-
-    /** Unregister the given callback from delegated {@link InCallServiceImpl} */
-    public void unregisterActiveCallListChangedCallback(
-            InCallServiceImpl.ActiveCallListChangedCallback callback) {
-        if (mInCallService != null) {
-            mInCallService.removeActiveCallListChangedCallback(callback);
-        } else {
-            L.w(TAG, "InCallService is not available");
-        }
-    }
 }
