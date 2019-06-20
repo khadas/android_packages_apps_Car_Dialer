@@ -82,4 +82,13 @@ class FavoriteContactViewHolder extends RecyclerView.ViewHolder {
 
         TelecomUtils.setContactBitmapAsync(context, mIcon, contact, null);
     }
+
+    /**
+     * Binds view as the "Add a favorite" button
+     */
+    public void onBindAddFavorite(Context context) {
+        mTitle.setText(R.string.add_favorite_button);
+        mText.setText(null);
+        mIcon.setImageDrawable(context.getDrawable(R.drawable.ic_add_favorite));
+    }
 }

@@ -94,6 +94,9 @@
     <!-- Button to quickly text a number, when the user must first select a number. [CHAR LIMIT=30] -->
     <string name="contact_details_text_number_button">Text</string>
 
+    <!-- Button to add start choosing a contact to add as a new favorite [CHAR_LIMIT=50] -->
+    <string name="add_favorite_button">Add a favorite</string>
+
     <!-- Keypad strings-->
     <string name="one" translatable="false">1</string>
     <string name="two" translatable="false">2</string>
