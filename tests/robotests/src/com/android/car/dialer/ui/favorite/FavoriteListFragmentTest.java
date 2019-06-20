@@ -49,10 +49,10 @@ import java.util.List;
 
 @Config(shadows = {ShadowAndroidViewModelFactory.class})
 @RunWith(CarDialerRobolectricTestRunner.class)
-public class FavoriteFragmentTest {
+public class FavoriteListFragmentTest {
     private static final String RAW_NUMBER = "6502530000";
 
-    private FavoriteFragment mFavoriteFragment;
+    private FavoriteListFragment mFavoriteFragment;
     private FavoriteContactViewHolder mViewHolder;
     @Mock
     private UiCallManager mMockUiCallManager;
@@ -75,7 +75,7 @@ public class FavoriteFragmentTest {
         ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
         when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(favoriteContacts);
 
-        mFavoriteFragment = FavoriteFragment.newInstance();
+        mFavoriteFragment = FavoriteListFragment.newInstance();
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().resume().get();
         fragmentTestActivity.setFragment(mFavoriteFragment);
