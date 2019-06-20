@@ -37,15 +37,16 @@ limitations under the License.
         app:layout_constraintStart_toStartOf="parent"
         android:background="@android:color/transparent">
 
-        <FrameLayout
-            android:id="@+id/dialpad_container"
+        <fragment
+            android:name="com.android.car.dialer.ui.dialpad.InCallDialpadFragment"
+            android:id="@+id/incall_dialpad_fragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/controller_bar_container"/>
 
-        <FrameLayout
+        <include
+            layout="@layout/user_profile_large"
             android:id="@+id/user_profile_container"
             android:layout_width="match_parent"
             android:gravity="center"
@@ -53,9 +54,7 @@ limitations under the License.
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/controller_bar_container"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-            <include layout="@layout/user_profile_large"/>
-        </FrameLayout>
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <FrameLayout
             android:id="@+id/controller_bar_container"

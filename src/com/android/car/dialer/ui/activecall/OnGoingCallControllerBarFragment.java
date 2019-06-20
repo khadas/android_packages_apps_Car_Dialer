@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,10 +47,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.List;
 
-/**
- * A Fragment of the bar which controls on going call. Its host or parent Fragment is expected to
- * implement {@link OnGoingCallControllerBarCallback}.
- */
+/** A Fragment of the bar which controls on going call. */
 public class OnGoingCallControllerBarFragment extends Fragment {
     private static String TAG = "CDialer.OngoingCallCtlFrg";
     private static final String CALL_STATE = "CALL_STATE";
@@ -80,6 +78,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     private ImageView mAudioRouteButton;
     private ImageView mPauseButton;
     private LiveData<Call> mCallLiveData;
+    private MutableLiveData<Boolean> mDialpadState;
     private int mCallState;
 
     public static OnGoingCallControllerBarFragment newInstance() {
@@ -95,27 +94,9 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         return onGoingCallControllerBarFragment;
     }
 
-    /**
-     * Callback for control bar buttons.
-     */
-    public interface OnGoingCallControllerBarCallback {
-        void onOpenDialpad();
-
-        void onCloseDialpad();
-    }
-
-    private OnGoingCallControllerBarCallback mOnGoingCallControllerBarCallback;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getParentFragment() != null
-                && getParentFragment() instanceof OnGoingCallControllerBarCallback) {
-            mOnGoingCallControllerBarCallback =
-                    (OnGoingCallControllerBarCallback) getParentFragment();
-        } else if (getHost() instanceof OnGoingCallControllerBarCallback) {
-            mOnGoingCallControllerBarCallback = (OnGoingCallControllerBarCallback) getHost();
-        }
 
         View dialogView = LayoutInflater.from(getContext()).inflate(
                 R.layout.audio_route_switch_dialog, null, false);
@@ -135,6 +116,10 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 InCallViewModel.class);
         mCallLiveData = inCallViewModel.getPrimaryCall();
         inCallViewModel.getAudioRoute().observe(this, this::updateViewBasedOnAudioRoute);
+
+        OngoingCallStateViewModel ongoingCallStateViewModel = ViewModelProviders.of(
+                getActivity()).get(OngoingCallStateViewModel.class);
+        mDialpadState = ongoingCallStateViewModel.getDialpadState();
     }
 
     @Nullable
@@ -149,9 +134,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
         mMuteButton = fragmentView.findViewById(R.id.mute_button);
         mMuteButton.setOnClickListener((v) -> {
-            if (mOnGoingCallControllerBarCallback == null) {
-                return;
-            }
             if (v.isActivated()) {
                 v.setActivated(false);
                 onUnmuteMic();
@@ -163,25 +145,12 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
         View dialPadButton = fragmentView.findViewById(R.id.toggle_dialpad_button);
         dialPadButton.setOnClickListener((v) -> {
-            if (mOnGoingCallControllerBarCallback == null) {
-                return;
-            }
-            if (v.isActivated()) {
-                v.setActivated(false);
-                mOnGoingCallControllerBarCallback.onCloseDialpad();
-            } else {
-                v.setActivated(true);
-                mOnGoingCallControllerBarCallback.onOpenDialpad();
-            }
+            mDialpadState.setValue(!mDialpadState.getValue());
         });
-        dialPadButton.setActivated(false);
-        mOnGoingCallControllerBarCallback.onCloseDialpad();
+        mDialpadState.observe(this, activated -> dialPadButton.setActivated(activated));
 
         View endCallButton = fragmentView.findViewById(R.id.end_call_button);
         endCallButton.setOnClickListener((v) -> {
-            if (mOnGoingCallControllerBarCallback == null) {
-                return;
-            }
             onEndCall();
         });
 
@@ -200,10 +169,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
         mPauseButton = fragmentView.findViewById(R.id.pause_button);
         mPauseButton.setOnClickListener((v) -> {
-            if (mOnGoingCallControllerBarCallback == null) {
-                return;
-            }
-
             if (mCallState == Call.STATE_ACTIVE) {
                 onHoldCall();
             } else if (mCallState == Call.STATE_HOLDING) {

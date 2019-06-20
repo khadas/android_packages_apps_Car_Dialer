@@ -55,13 +55,12 @@ public class InCallDialpadFragmentTest {
     }
 
     private void startInCallActivity() {
-        mInCallDialpadFragment = new InCallDialpadFragment();
         InCallFragment inCallFragment = InCallFragment.newInstance();
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().start().resume().get();
         fragmentTestActivity.setFragment(inCallFragment);
-        inCallFragment.getChildFragmentManager().beginTransaction().replace(R.id.dialpad_container,
-                mInCallDialpadFragment).commit();
+        mInCallDialpadFragment = (InCallDialpadFragment) inCallFragment.getChildFragmentManager()
+                .findFragmentById(R.id.incall_dialpad_fragment);
     }
 
 }
