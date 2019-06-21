@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.favorite;
 
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -78,19 +79,21 @@ public class FavoriteFragment extends DialerListBaseFragment {
         public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
                 @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
-            int carPadding1 =
-                    FavoriteFragment.this.getContext().getResources().getDimensionPixelOffset(
-                            R.dimen.favorite_card_space);
+            Resources resources = FavoriteFragment.this.getContext().getResources();
+            int numColumns = resources.getInteger(R.integer.favorite_fragment_grid_column);
+            int leftPadding =
+                    resources.getDimensionPixelOffset(R.dimen.favorite_card_space_horizontal);
+            int topPadding =
+                    resources.getDimensionPixelOffset(R.dimen.favorite_card_space_vertical);
 
-            int leftPadding = 0;
-            int rightPadding = 0;
-            if (parent.getChildAdapterPosition(view) % 2 == 0) {
-                rightPadding = carPadding1;
-            } else {
-                leftPadding = carPadding1;
+            if (parent.getChildAdapterPosition(view) % numColumns == 0) {
+                leftPadding = 0;
+            }
+            if (parent.getChildAdapterPosition(view) < numColumns) {
+                topPadding = 0;
             }
 
-            outRect.set(leftPadding, carPadding1, rightPadding, carPadding1);
+            outRect.set(leftPadding, topPadding, 0, 0);
         }
     }
 }
