@@ -20,7 +20,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.common.OnItemClickedListener;
@@ -47,22 +50,30 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
 
     @Override
     public int getItemCount() {
-        return mFavoriteContacts.size();
+        return mFavoriteContacts.size() + 1; // +1 for the "Add a favorite" button
     }
 
     @Override
     public FavoriteContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.favorite_contact_list_item, parent, false);
+
         return new FavoriteContactViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(FavoriteContactViewHolder viewHolder, int position) {
         Context context = viewHolder.itemView.getContext();
-        Contact contact = mFavoriteContacts.get(position);
-        viewHolder.onBind(context, contact);
-        viewHolder.itemView.setOnClickListener((v) -> onItemViewClicked(contact));
+
+        if (position >= mFavoriteContacts.size()) {
+            viewHolder.onBindAddFavorite(context);
+            viewHolder.itemView.setOnClickListener((v) ->
+                    Toast.makeText(context, "Not yet implemented", Toast.LENGTH_LONG).show());
+        } else {
+            Contact contact = mFavoriteContacts.get(position);
+            viewHolder.onBind(context, contact);
+            viewHolder.itemView.setOnClickListener((v) -> onItemViewClicked(contact));
+        }
     }
 
     private void onItemViewClicked(Contact contact) {
