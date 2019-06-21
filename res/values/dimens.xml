@@ -20,8 +20,6 @@
     <!-- Audio route dimentions -->
     <dimen name="audio_route_height">@dimen/control_bar_height</dimen>
     <dimen name="audio_route_content_padding">@dimen/list_item_padding</dimen>
-    <dimen name="audio_route_corner_radius">@*android:dimen/car_radius_3</dimen>
-    <dimen name="audio_route_card_elevation">@dimen/control_bar_elevation</dimen>
     <dimen name="audio_route_icon_size">@dimen/primary_icon_size</dimen>
     <dimen name="audio_route_constraint_guide_begin">@dimen/list_item_guideline</dimen>
 
@@ -30,8 +28,6 @@
     <dimen name="call_history_item_padding">@dimen/list_item_padding</dimen>
     <dimen name="call_history_guideline_begin">@dimen/list_item_guideline_begin</dimen>
     <dimen name="call_history_guideline_end">@dimen/list_item_guideline_end</dimen>
-    <dimen name="call_history_avatar_size">@dimen/avatar_icon_size</dimen>
-    <dimen name="call_history_action_button_size">@dimen/touch_target_size</dimen>
     <dimen name="call_history_text_margin_end">@dimen/list_item_text_margin_end</dimen>
     <dimen name="call_history_icons_margin">@*android:dimen/car_padding_1</dimen>
     <dimen name="call_log_icon_margin">4dp</dimen>
@@ -46,8 +42,6 @@
     <dimen name="contact_details_number_padding_start">@*android:dimen/car_keyline_1</dimen>
     <dimen name="contact_details_number_padding_end">@*android:dimen/car_padding_2</dimen>
     <dimen name="contact_details_text_button_guideline">@*android:dimen/car_keyline_3</dimen>
-    <dimen name="contact_details_text_button_image_size">@dimen/primary_icon_size</dimen>
-    <dimen name="contact_details_text_button_touchtarget">@*android:dimen/car_touch_target_size</dimen>
     <dimen name="contact_details_action_bar_name_margin">@*android:dimen/car_padding_2</dimen>
 
     <!-- Contact list dimensions -->
@@ -64,10 +58,8 @@
 
     <!-- In-call dimensions -->
     <dimen name="in_call_controller_bar_height">@dimen/control_bar_height</dimen>
-    <dimen name="in_call_card_elevation">12dp</dimen>
     <dimen name="in_call_controller_bar_margin">@*android:dimen/car_padding_5</dimen>
     <dimen name="in_call_controller_bar_margin_bottom">@*android:dimen/car_padding_2</dimen>
-    <dimen name="in_call_controller_secondary_icon_size">@*android:dimen/car_secondary_icon_size</dimen>
     <dimen name="in_call_avatar_icon_size">196dp</dimen>
     <dimen name="in_call_phone_number_margin_top">@*android:dimen/car_padding_2</dimen>
     <dimen name="in_call_state_margin_top">@*android:dimen/car_padding_2</dimen>
@@ -78,20 +70,11 @@
     <dimen name="ringing_call_button_touch_target_size">@dimen/touch_target_size</dimen>
     <dimen name="ringing_call_text_margin">@*android:dimen/car_padding_4</dimen>
 
-    <!-- Touch Keyboard -->
-    <dimen name="keyboard_key_letter_height">26dp</dimen>
-
-    <dimen name="apps_max_content_width">748dp</dimen>
-
     <!-- Dialpad dimensions -->
     <dimen name="dialpad_line_divider_height">@dimen/vertical_divider_width</dimen>
-    <dimen name="dialpad_info_padding_size">@*android:dimen/car_keyline_1</dimen>
-    <dimen name="dialpad_fragment_info_padding_size">@*android:dimen/car_keyline_1</dimen>
     <dimen name="dialpad_info_title_padding_size">@*android:dimen/car_padding_4</dimen>
     <dimen name="dialpad_info_edge_padding_size">@*android:dimen/car_padding_2</dimen>
-    <dimen name="dialpad_fragment_margin">@*android:dimen/car_margin</dimen>
     <dimen name="dialpad_info_guideline">@dimen/touch_target_size</dimen>
-    <dimen name="dialpad_info_guideline_in_call" format="float">0.5</dimen>
     <dimen name="display_name_padding">@*android:dimen/car_padding_3</dimen>
     <dimen name="call_state_padding">@*android:dimen/car_padding_3</dimen>
 
@@ -115,9 +98,6 @@
 
     <dimen name="in_call_button_size">@dimen/touch_target_size</dimen>
 
-    <dimen name="user_profile_title_padding_top">@*android:dimen/car_padding_3</dimen>
-    <dimen name="user_profile_body_padding_top">@*android:dimen/car_padding_3</dimen>
-
     <dimen name="car_key1_size">32sp</dimen>
     <dimen name="car_key2_size">18sp</dimen>
 
@@ -128,10 +108,6 @@
     <dimen name="connect_bluetooth_button_min_height">@dimen/touch_target_size</dimen>
     <dimen name="connect_bluetooth_button_min_width">@dimen/touch_target_width</dimen>
     <dimen name="emergency_button_bottom_margin">@*android:dimen/car_padding_4</dimen>
-
-    <dimen name="telecom_activity_padding">@*android:dimen/car_app_bar_height</dimen>
-
-    <dimen name="user_profile_text_padding">@*android:dimen/car_padding_3</dimen>
 
     <dimen name="list_top_padding">@*android:dimen/car_padding_2</dimen>
     <!-- Components -->
@@ -155,11 +131,6 @@
     <dimen name="hero_button_separator">@*android:dimen/car_padding_4</dimen>
     <dimen name="contact_avatar_corner_radius_percent" format="float">0.5</dimen>
     <dimen name="touch_target_width">156dp</dimen>
-
-    <!-- Card view margins-->
-    <dimen name="contact_card_margin_x">@*android:dimen/car_margin</dimen>
-    <dimen name="search_card_margin_x">@dimen/dialer_card_margin_x</dimen>
-    <dimen name="dialer_card_margin_x">72dp</dimen>
 
     <!-- Toolbar -->
     <!-- Half of the difference between car_margin and touch_target_size-->

@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth konexioa ez dago erabilgarri."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Deiak jaso edo egiteko, aktibatu Bluetooth konexioa."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Deiak jaso edo egiteko, parekatu telefonoa autoarekin."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Sarea ez dago erabilgarri."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Hegaldi moduan dago telefonoa."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth-a ez dago konektatuta."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Mezuak bidaltzeko, instalatu mezularitza-aplikazio bat."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Konektatu Bluetooth-era"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Larrialdi-deia"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Larrialdi-deia"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Baliteke kontaktua ezabatu izatea."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Ezin da deitu zenbaki honetara. Egiaztatu zenbakia eta saiatu berriro."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Deien erregistroa hutsik dago."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Maiz erabilitako zenbakietara eta gogokoetara behin sakatuta deitzeko balio du markatze bizkorrak"</string>
     <string name="decline_call" msgid="2505987200485272226">"Baztertu"</string>
     <string name="answer_call" msgid="3272474440561548115">"Erantzun"</string>
     <string name="call_back" msgid="5745638356098600872">"Deitu atzera"</string>
-    <string name="message" msgid="106616332778369322">"Bidali mezu bat"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Konferentzia-deia"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Ibilgailuaren Bluetooth-a"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Bozgorailua"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Telefonoa"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Deien historia"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontaktuak"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Markagailua"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Kontaktuen xehetasunak"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Deitu <xliff:g id="LABEL">%1$s</xliff:g> zenbakira"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Bidali testu-mezua <xliff:g id="LABEL">%1$s</xliff:g> zenbakira"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Deitu"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Bidali mezu bat"</string>
     <string name="search_title" msgid="5412680850141871664">"Bilatu kontaktuetan"</string>
     <string name="search_hint" msgid="3099066132607042439">"Bilatu kontaktuetan"</string>
-    <string name="type_home" msgid="7478344114405222813">"Etxea"</string>
-    <string name="type_work" msgid="7825922921841029320">"Lantokia"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Mugikorra"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Hainbat"</string>
-    <string name="type_other" msgid="4960962576153449341">"Beste bat"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Aukeratu telefono-zenbaki bat"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Behin soilik"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Beti"</string>

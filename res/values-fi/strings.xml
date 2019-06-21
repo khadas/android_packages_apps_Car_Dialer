@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth ei käytettävissä"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Ota Bluetooth käyttöön, niin voit soittaa puheluja ja vastata niihin."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Yhdistä auto ja puhelin laitepariksi, jotta voit soittaa puheluja ja vastata niihin."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Verkko ei käytettävissä"</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Puhelin on lentokonetilassa."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Ei Bluetooth-yhteyttä"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Sinun on asennettava viestisovellus, jotta voit lähettää tekstiviestejä."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Muodosta Bluetooth-yhteys"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Hätätilanne"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Hätäpuhelu"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Tämä yhteystieto on mahdollisesti poistettu."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Tähän numeroon ei voi soittaa. Tarkista se ja yritä uudelleen."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Puheluloki on tyhjä."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Pikavalinnoista voit soittaa useimmin käyttämiisi numeroihin yhdellä napautuksella."</string>
     <string name="decline_call" msgid="2505987200485272226">"Hylkää"</string>
     <string name="answer_call" msgid="3272474440561548115">"Vastaa"</string>
     <string name="call_back" msgid="5745638356098600872">"Soita takaisin"</string>
-    <string name="message" msgid="106616332778369322">"Lähetä viesti"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Puhelinneuvottelu"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Auton Bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Kaiutinpuhelin"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Matkapuhelin"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Soittohistoria"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Yhteystiedot"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Näppäimistö"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Yhteystiedot"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Soita: <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Lähetä tekstiviesti: <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Soita"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Lähetä tekstiviesti"</string>
     <string name="search_title" msgid="5412680850141871664">"Hae yhteystietoja"</string>
     <string name="search_hint" msgid="3099066132607042439">"Hae yhteystietoja"</string>
-    <string name="type_home" msgid="7478344114405222813">"Koti"</string>
-    <string name="type_work" msgid="7825922921841029320">"Työ"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Mobiili"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Useita"</string>
-    <string name="type_other" msgid="4960962576153449341">"Muu"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Valitse puhelinnumero"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Vain kerran"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Aina"</string>
