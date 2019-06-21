@@ -31,7 +31,7 @@
         <!-- This array is mapped to tabs_config. -->
         <!-- And it should be consistent with the mapping in the TelecomPageTab.Factory -->
         <!--Add favorite tab back when we have favorite functionality-->
-        <!--item>@string/favorites_title</item>-->
+        <!--<item>@string/favorites_title</item>-->
         <item>@string/call_history_title</item>
         <item>@string/contacts_title</item>
         <item>@string/dialpad_title</item>
