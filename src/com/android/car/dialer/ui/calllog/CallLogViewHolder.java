@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
@@ -71,6 +72,12 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
                 uiCallLog.getAvatarUri(),
                 uiCallLog.getTitle());
         mTitleView.setText(uiCallLog.getTitle());
+        if (uiCallLog.getMostRecentCallType() == CallHistoryLiveData.CallType.MISSED_TYPE) {
+            mTitleView.setTextAppearance(R.style.TextAppearance_CallLogTitleMissedCall);
+        } else {
+            mTitleView.setTextAppearance(R.style.TextAppearance_CallLogTitleDefault);
+        }
+
         for (PhoneCallLog.Record record : uiCallLog.getCallRecords()) {
             mCallTypeIconsView.add(record.getCallType());
         }
