@@ -33,6 +33,8 @@ import android.telecom.GatewayInfo;
 import androidx.core.util.Pair;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
+import com.android.car.dialer.TestDialerApplication;
+import com.android.car.dialer.telecom.InCallServiceImpl;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.telephony.common.CallDetail;
 
@@ -57,6 +59,10 @@ public class InCallViewModelTest {
 
     private InCallViewModel mInCallViewModel;
     private List<Call> mListForMockCalls;
+
+    @Mock
+    private InCallServiceImpl mInCallService;
+
     @Mock
     private UiCallManager mMockUiCallManager;
     @Mock
@@ -66,6 +72,8 @@ public class InCallViewModelTest {
     @Mock
     private Call mMockHoldingCall;
     @Mock
+    private Call mMockRingingCall;
+    @Mock
     private Call.Details mMockDetails;
 
     @Before
@@ -73,9 +81,12 @@ public class InCallViewModelTest {
         MockitoAnnotations.initMocks(this);
         Context context = RuntimeEnvironment.application;
 
+        ((TestDialerApplication) context).setupInCallServiceImpl(mInCallService);
+
         when(mMockActiveCall.getState()).thenReturn(Call.STATE_ACTIVE);
         when(mMockDialingCall.getState()).thenReturn(Call.STATE_DIALING);
         when(mMockHoldingCall.getState()).thenReturn(Call.STATE_HOLDING);
+        when(mMockRingingCall.getState()).thenReturn(Call.STATE_RINGING);
 
         // Set up call details
         GatewayInfo gatewayInfo = new GatewayInfo("", GATEWAY_ADDRESS, GATEWAY_ADDRESS);
@@ -91,12 +102,14 @@ public class InCallViewModelTest {
         mListForMockCalls.add(mMockActiveCall);
         mListForMockCalls.add(mMockDialingCall);
         mListForMockCalls.add(mMockHoldingCall);
+        mListForMockCalls.add(mMockRingingCall);
+        when(mInCallService.getCalls()).thenReturn(mListForMockCalls);
         UiCallManager.set(mMockUiCallManager);
-        when(mMockUiCallManager.getCallList()).thenReturn(mListForMockCalls);
         when(mMockUiCallManager.getAudioRoute()).thenReturn(CallAudioState.ROUTE_BLUETOOTH);
 
         mInCallViewModel = new InCallViewModel((Application) context);
-        mInCallViewModel.getCallList().observeForever(s -> { });
+        mInCallViewModel.getIncomingCall().observeForever(s -> { });
+        mInCallViewModel.getOngoingCallList().observeForever(s -> { });
         mInCallViewModel.getPrimaryCall().observeForever(s -> { });
         mInCallViewModel.getPrimaryCallState().observeForever(s -> { });
         mInCallViewModel.getPrimaryCallDetail().observeForever(s -> { });
@@ -113,8 +126,14 @@ public class InCallViewModelTest {
     public void testGetCallList() {
         List<Call> callListInOrder =
                 Arrays.asList(mMockDialingCall, mMockActiveCall, mMockHoldingCall);
-        List<Call> viewModelCallList = mInCallViewModel.getCallList().getValue();
+        List<Call> viewModelCallList = mInCallViewModel.getOngoingCallList().getValue();
         assertArrayEquals(callListInOrder.toArray(), viewModelCallList.toArray());
+    }
+
+    @Test
+    public void testGetIncomingCall() {
+        Call incomingCall = mInCallViewModel.getIncomingCall().getValue();
+        assertThat(incomingCall).isEqualTo(mMockRingingCall);
     }
 
     @Test
@@ -151,18 +170,19 @@ public class InCallViewModelTest {
 
     @Test
     public void testOnTelecomCallAdded_updateCallList() {
-        Call mockRingingCall = mock(Call.class);
-        when(mockRingingCall.getState()).thenReturn(Call.STATE_RINGING);
-        mListForMockCalls.add(mockRingingCall);
+        Call mockDialingCall = mock(Call.class);
+        when(mockDialingCall.getState()).thenReturn(Call.STATE_DIALING);
+        mListForMockCalls.clear();
+        mListForMockCalls.addAll(Arrays.asList(mMockActiveCall, mMockHoldingCall, mockDialingCall));
 
-        mInCallViewModel.onTelecomCallAdded(mock(Call.class));
+        mInCallViewModel.onTelecomCallAdded(mockDialingCall);
 
         List<Call> callListInOrder =
-                Arrays.asList(mockRingingCall, mMockDialingCall, mMockActiveCall, mMockHoldingCall);
-        List<Call> viewModelCallList = mInCallViewModel.getCallList().getValue();
+                Arrays.asList(mockDialingCall, mMockActiveCall, mMockHoldingCall);
+        List<Call> viewModelCallList = mInCallViewModel.getOngoingCallList().getValue();
         assertArrayEquals(callListInOrder.toArray(), viewModelCallList.toArray());
-
-        assertThat(mInCallViewModel.getPrimaryCall().getValue()).isEqualTo(mockRingingCall);
+        assertThat(mInCallViewModel.getIncomingCall().getValue()).isEqualTo(null);
+        assertThat(mInCallViewModel.getPrimaryCall().getValue()).isEqualTo(mockDialingCall);
     }
 
     @Test
@@ -172,7 +192,7 @@ public class InCallViewModelTest {
         mInCallViewModel.onTelecomCallRemoved(mock(Call.class));
 
         List<Call> callListInOrder = Arrays.asList(mMockActiveCall, mMockHoldingCall);
-        List<Call> viewModelCallList = mInCallViewModel.getCallList().getValue();
+        List<Call> viewModelCallList = mInCallViewModel.getOngoingCallList().getValue();
         assertArrayEquals(callListInOrder.toArray(), viewModelCallList.toArray());
 
         assertThat(mInCallViewModel.getPrimaryCall().getValue()).isEqualTo(mMockActiveCall);
