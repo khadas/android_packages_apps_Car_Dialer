@@ -101,14 +101,9 @@
     <dimen name="keypad_margin_y">0dp</dimen>
 
     <!-- Favorites dimensions -->
-    <dimen name="favorite_item_height">@dimen/list_item_height</dimen>
-    <dimen name="favorite_card_corner_radius">@*android:dimen/car_radius_5</dimen>
-    <dimen name="favorite_card_space">@*android:dimen/car_padding_1</dimen>
-    <dimen name="favorites_icon_margin">@dimen/list_item_padding</dimen>
-    <dimen name="favorites_guideline">@dimen/list_item_guideline</dimen>
-    <dimen name="favorites_text_margin_bottom">@*android:dimen/car_padding_1</dimen>
-    <dimen name="favorites_text_margin_end">@dimen/list_item_padding</dimen>
-    <dimen name="favorites_card_elevation">@dimen/control_bar_elevation</dimen>
+    <dimen name="favorite_card_space_horizontal">@*android:dimen/car_padding_3</dimen>
+    <dimen name="favorite_card_space_vertical">@*android:dimen/car_padding_4</dimen>
+    <dimen name="favorites_avatar_margin_bottom">@*android:dimen/car_padding_3</dimen>
 
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/touch_target_size</dimen>
