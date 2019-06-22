@@ -16,6 +16,5 @@
   -->
 
 <resources>
-    <bool name="screen_size_standard_height">false</bool>
     <bool name="screen_size_tall">true</bool>
 </resources>

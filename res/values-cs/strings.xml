@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth není k dispozici."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Chcete-li přijímat a uskutečňovat hovory, zapněte Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Chcete-li uskutečňovat a přijímat hovory, spárujte telefon s autem."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Síť není k dispozici."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Telefon je v režimu Letadlo."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth není připojeno."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"K posílání SMS potřebujete aplikaci."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Připojit k Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Stav nouze"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Tísňové volání"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Tento kontakt byl zřejmě smazán."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Toto číslo nelze vytočit. Zkontrolujte ho a zkuste to znovu."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Seznam hovorů je prázdný."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Rychlá volba představuje vytáčení oblíbených kontaktů a často volaných čísel jedním klepnutím"</string>
     <string name="decline_call" msgid="2505987200485272226">"Odmítnout"</string>
     <string name="answer_call" msgid="3272474440561548115">"Přijmout"</string>
     <string name="call_back" msgid="5745638356098600872">"Zavolat zpět"</string>
-    <string name="message" msgid="106616332778369322">"Poslat zprávu"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Konferenční hovor"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth ve vozidle"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Telefon pro hlasitý poslech"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Sluchátko"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Historie hovorů"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontakty"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Číselník"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Kontaktní údaje"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Zavolat na číslo <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Poslat SMS na číslo <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Volat"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"SMS"</string>
     <string name="search_title" msgid="5412680850141871664">"Prohledat kontakty"</string>
     <string name="search_hint" msgid="3099066132607042439">"Prohledat kontakty"</string>
-    <string name="type_home" msgid="7478344114405222813">"Domů"</string>
-    <string name="type_work" msgid="7825922921841029320">"Práce"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Mobil"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Více čísel"</string>
-    <string name="type_other" msgid="4960962576153449341">"Jiné"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Vyberte telefonní číslo"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Pouze jednou"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Vždy"</string>
