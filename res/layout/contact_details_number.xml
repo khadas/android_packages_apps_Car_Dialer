@@ -61,11 +61,11 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
-        android:id="@+id/contact_details_text_button_icon"
+        android:id="@+id/contact_details_favorite_button"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:scaleType="center"
-        android:src="@drawable/ic_message"
+        android:src="@drawable/ic_favorite_activatable"
         android:tint="@color/contact_details_icon_tint"
         android:background="?android:attr/selectableItemBackground"
         app:layout_constraintStart_toStartOf="@id/divider"

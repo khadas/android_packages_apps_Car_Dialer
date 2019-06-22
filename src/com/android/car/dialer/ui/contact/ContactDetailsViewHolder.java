@@ -17,8 +17,6 @@
 package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,10 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
@@ -46,10 +42,6 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     // Applies to header
     @Nullable
     private final ImageView mAvatar;
-    @Nullable
-    private final TextView mCallHeroButton;
-    @Nullable
-    private final TextView mTextHeroButton;
 
     // Applies to phone number items
     @Nullable
@@ -57,14 +49,12 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     @Nullable
     private final View mCallActionView;
     @Nullable
-    private final View mSendTextActionView;
+    private final View mFavoriteActionView;
 
     ContactDetailsViewHolder(View v) {
         super(v);
         mCallActionView = v.findViewById(R.id.call_action_id);
-        mCallHeroButton = v.findViewById(R.id.call_hero_button);
-        mTextHeroButton = v.findViewById(R.id.text_hero_button);
-        mSendTextActionView = v.findViewById(R.id.contact_details_text_button_icon);
+        mFavoriteActionView = v.findViewById(R.id.contact_details_favorite_button);
         mTitle = v.findViewById(R.id.title);
         mText = v.findViewById(R.id.text);
         mAvatar = v.findViewById(R.id.avatar);
@@ -78,56 +68,10 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
 
         if (contact == null) {
             mTitle.setText(R.string.error_contact_deleted);
-
-            ViewUtils.setVisible(mCallHeroButton, false);
-            ViewUtils.setVisible(mTextHeroButton, false);
             return;
         }
 
         mTitle.setText(contact.getDisplayName());
-
-        final PhoneNumber primaryNumber = contact.getNumbers().size() == 1
-                ? contact.getNumbers().get(0)
-                : contact.getPrimaryPhoneNumber();
-
-        if (primaryNumber != null) {
-            CharSequence label = primaryNumber.getReadableLabel(context.getResources());
-
-            String callButtonText = context.getString(
-                    R.string.contact_details_call_number_button_with_label, label);
-            String textButtonText = context.getString(
-                    R.string.contact_details_text_number_button_with_label, label);
-
-            setTextAndClickListener(mCallHeroButton, callButtonText,
-                    v -> placeCall(primaryNumber));
-            setTextAndClickListener(mTextHeroButton, textButtonText,
-                    v -> sendText(context, primaryNumber));
-
-        } else {
-            setTextAndClickListener(mCallHeroButton, R.string.contact_details_call_number_button,
-                    v -> DialerUtils.promptForPrimaryNumber(context, contact,
-                            (phoneNumber, always) -> placeCall(phoneNumber)));
-
-            setTextAndClickListener(mTextHeroButton, R.string.contact_details_text_number_button,
-                    v -> DialerUtils.promptForPrimaryNumber(context, contact,
-                            (phoneNumber, always) -> sendText(context, phoneNumber)));
-        }
-
-        ViewUtils.setVisible(mCallHeroButton, true);
-        ViewUtils.setVisible(mTextHeroButton, true);
-    }
-
-    private void setTextAndClickListener(TextView view, String str, View.OnClickListener listener) {
-        if (view != null) {
-            view.setText(str);
-            view.setOnClickListener(listener);
-        }
-    }
-
-    private void setTextAndClickListener(TextView view, int strId, View.OnClickListener listener) {
-        if (view != null) {
-            setTextAndClickListener(view, view.getContext().getString(strId), listener);
-        }
     }
 
     public void bind(Context context, PhoneNumber phoneNumber) {
@@ -143,25 +87,13 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         }
 
         mCallActionView.setOnClickListener(v -> placeCall(phoneNumber));
-        mSendTextActionView.setOnClickListener(v -> sendText(context, phoneNumber));
+        mFavoriteActionView.setOnClickListener(v -> {
+            Toast.makeText(context, "Not yet implemented", Toast.LENGTH_LONG).show();
+            mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());
+        });
     }
 
     private void placeCall(PhoneNumber number) {
         UiCallManager.get().placeCall(number.getRawNumber());
-    }
-
-    private void sendText(Context context, PhoneNumber number) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("smsto:"));
-        intent.setType("vnd.android-dir/mms-sms");
-        intent.putExtra("address", number.getRawNumber());
-
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
-        } else {
-            Toast.makeText(context,
-                    R.string.error_no_text_intent_handler,
-                    Toast.LENGTH_LONG).show();
-        }
     }
 }
