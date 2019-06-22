@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth-ը հասանելի չէ։"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Զանգեր կատարելու և ստանալու համար միացրեք Bluetooth-ը։"</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Զանգեր կատարելու և ստանալու համար հեռախոսը միացրեք ավտոմեքենային։"</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Ցանցն անհասանելի է։"</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Հեռախոսն ավիառեժիմում է։"</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth-ը միացված չէ"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Տեղադրեք հաղորդագրման հավելված:"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Միանալ Bluetooth-ին"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Շտապ կանչ"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Շտապ կանչ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Հնարավոր է՝ այս կոնտակտը ջնջվել է։"</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Չի հաջողվում հավաքել այս համարը։ Ստուգեք՝ արդյոք այն ճիշտ է, և նորից փորձեք։"</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Զանգերի մատյանը դատարկ է։"</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Արագ համարհավաքումը մեկ հպումով համարի հավաքման եղանակ է՝ նախընտրած համարներին զանգելու համար"</string>
     <string name="decline_call" msgid="2505987200485272226">"Մերժել"</string>
     <string name="answer_call" msgid="3272474440561548115">"Պատասխանել"</string>
     <string name="call_back" msgid="5745638356098600872">"Հետ զանգել"</string>
-    <string name="message" msgid="106616332778369322">"SMS"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Կոնֆերանս զանգ"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Մեքենայի Bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Բարձրախոս"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Լսափող"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Զանգերի պատմություն"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Կոնտակտներ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Թվաշար"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Կոնտակտային տվյալներ"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Զանգել <xliff:g id="LABEL">%1$s</xliff:g> համարին"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"SMS ուղարկել <xliff:g id="LABEL">%1$s</xliff:g>-ին"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Զանգել"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Ուղարկել SMS"</string>
     <string name="search_title" msgid="5412680850141871664">"Որոնեք կոնտակտներ"</string>
     <string name="search_hint" msgid="3099066132607042439">"Որոնեք կոնտակտներ"</string>
-    <string name="type_home" msgid="7478344114405222813">"Տուն"</string>
-    <string name="type_work" msgid="7825922921841029320">"Աշխատանքային"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Բջջային"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Մի քանի"</string>
-    <string name="type_other" msgid="4960962576153449341">"Այլ"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Ընտրեք հեռախոսահամար"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Միայն մեկ անգամ"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Միշտ"</string>

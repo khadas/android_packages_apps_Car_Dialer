@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Nem áll rendelkezésre a Bluetooth."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Hívás indításához és fogadásához kapcsolja be a Bluetooth-t."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Hívások indításához és fogadásához párosítsa a telefont az autóval."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Nem áll rendelkezésre a hálózat."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"A telefon repülős üzemmódban van."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"A Bluetooth nem kapcsolódik."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"SMS írásához üzenetküldő alkalmazás szükséges."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Csatlakozás Bluetooth-eszközhöz"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Segélyhívás"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Segélyhívás"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Előfordulhat, hogy ezt a névjegyet már törölte."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Nem lehet tárcsázni ezt a számot. Ellenőrizze, majd próbálja meg újra."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"A hívásnapló üres."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"A gyorshívó révén egyetlen érintéssel hívhatja a kedvenc és gyakran hívott számokat"</string>
     <string name="decline_call" msgid="2505987200485272226">"Elutasítás"</string>
     <string name="answer_call" msgid="3272474440561548115">"Hívás fogadása"</string>
     <string name="call_back" msgid="5745638356098600872">"Visszahívás"</string>
-    <string name="message" msgid="106616332778369322">"Üzenetküldés"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Konferenciahívás"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Jármű Bluetooth-kapcsolata"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Kihangosító"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Kézibeszélő"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Híváslista"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Címtár"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Tárcsázó"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Névjegy adatai"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Hívás: <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"SMS: <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Hívás"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"SMS"</string>
     <string name="search_title" msgid="5412680850141871664">"Keresés a névjegyek közt"</string>
     <string name="search_hint" msgid="3099066132607042439">"Keresés a névjegyek közt"</string>
-    <string name="type_home" msgid="7478344114405222813">"Otthoni"</string>
-    <string name="type_work" msgid="7825922921841029320">"Munkahelyi"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Mobil"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Több"</string>
-    <string name="type_other" msgid="4960962576153449341">"Egyéb"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Telefonszám kiválasztása"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Csak egyszer"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Mindig"</string>

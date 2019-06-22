@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth kullanılamıyor."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Çağrı yapmak veya almak için Bluetooth\'u açın."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Çağrı yapmak veya almak için telefonunuzu araçla eşleştirin."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Ağa erişilemiyor."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Telefon uçak modunda."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth bağlı değil."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"SMS gönderme uygulaması yükleyin."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Bluetooth\'a bağlan"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Acil durum"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Acil durum araması"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Bu kişi silinmiş olabilir."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Bu numara aranamıyor. Numarayı kontrol edip tekrar deneyin."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Arama kaydınız boş."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Hızlı Arama, favorilerinizin ve sıklıkla aradığınız numaraların tek tuşla aranmasını sağlar"</string>
     <string name="decline_call" msgid="2505987200485272226">"Reddet"</string>
     <string name="answer_call" msgid="3272474440561548115">"Yanıtla"</string>
     <string name="call_back" msgid="5745638356098600872">"Geri ara"</string>
-    <string name="message" msgid="106616332778369322">"Mesaj gönder"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Konferans araması"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Araç Bluetooth\'u"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Hoparlör"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Ahize"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Çağrı Geçmişi"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kişiler"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Tuş takımı"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Kişi bilgileri"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Ara: <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Mesaj gönder: <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Ara"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"SMS"</string>
     <string name="search_title" msgid="5412680850141871664">"Kişilerde arayın"</string>
     <string name="search_hint" msgid="3099066132607042439">"Kişilerde arayın"</string>
-    <string name="type_home" msgid="7478344114405222813">"Ev"</string>
-    <string name="type_work" msgid="7825922921841029320">"İş"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Cep"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Birden fazla"</string>
-    <string name="type_other" msgid="4960962576153449341">"Diğer"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Telefon numarası seçin"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Yalnızca bir defa"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Her zaman"</string>

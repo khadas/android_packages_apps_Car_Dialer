@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth を使用できません。"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"電話を使うには、Bluetooth をオンにしてください。"</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"電話を使うには、スマートフォンと車をペア設定してください。"</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"ネットワークが利用できません。"</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"スマートフォンが機内モードです。"</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth が接続されていません。"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"SMS を送信するには、メッセージ アプリが必要です。"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Bluetooth に接続する"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"緊急通報"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"緊急通報"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"この連絡先は削除された可能性があります。"</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"この電話番号はダイヤルできません。確認してから、もう一度お試しください。"</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"通話履歴はありません。"</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"クイック アクセスは、よく通話するお気に入りや番号にワンタップでダイヤルする機能です"</string>
     <string name="decline_call" msgid="2505987200485272226">"拒否"</string>
     <string name="answer_call" msgid="3272474440561548115">"応答"</string>
     <string name="call_back" msgid="5745638356098600872">"折り返す"</string>
-    <string name="message" msgid="106616332778369322">"メッセージを送信"</string>
-    <string name="conference_call" msgid="9107469685942466746">"グループ通話"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"車の Bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"スピーカーフォン"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"ハンドセット"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"通話履歴"</string>
     <string name="contacts_title" msgid="9201954388634537346">"連絡先"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ダイヤルパッド"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"連絡先情報"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g>に発信"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g>に SMS を送信"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"通話"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"SMS 送信"</string>
     <string name="search_title" msgid="5412680850141871664">"連絡先を検索"</string>
     <string name="search_hint" msgid="3099066132607042439">"連絡先を検索"</string>
-    <string name="type_home" msgid="7478344114405222813">"自宅"</string>
-    <string name="type_work" msgid="7825922921841029320">"職場"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"モバイル"</string>
     <string name="type_multiple" msgid="3402949522797441236">"複数"</string>
-    <string name="type_other" msgid="4960962576153449341">"その他"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"電話番号の選択"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"1 回のみ"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"常時"</string>

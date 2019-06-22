@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth ist nicht verfügbar."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Aktiviere Bluetooth, um Anrufe tätigen und empfangen zu können."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Kopple dein Smartphone und Auto, um Anrufe tätigen oder empfangen zu können."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Netzwerk nicht verfügbar."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Flugmodus auf dem Smartphone aktiviert."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth ist nicht verbunden."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Zum Senden von SMS musst du eine Messaging-App installieren."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Mit Bluetooth verbinden"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Notruf"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Notruf"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Dieser Kontakt wurde eventuell gelöscht."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Diese Nummer kann nicht gewählt werden. Überprüfe sie und versuch es noch einmal."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Deine Anrufliste ist leer."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Mit der Kurzwahl kannst du mit einer Berührung deine Favoriten und häufig gewählten Nummern anrufen"</string>
     <string name="decline_call" msgid="2505987200485272226">"Ablehnen"</string>
     <string name="answer_call" msgid="3272474440561548115">"Annehmen"</string>
     <string name="call_back" msgid="5745638356098600872">"Zurückrufen"</string>
-    <string name="message" msgid="106616332778369322">"Nachricht senden"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Telefonkonferenz"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth des Fahrzeugs"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Freisprechfunktion"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Mobiltelefon"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Anrufliste"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontakte"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Wähltasten"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Kontaktdaten"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> anrufen"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"SMS an <xliff:g id="LABEL">%1$s</xliff:g> senden"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Anrufen"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"SMS senden"</string>
     <string name="search_title" msgid="5412680850141871664">"Kontakte suchen"</string>
     <string name="search_hint" msgid="3099066132607042439">"Kontakte suchen"</string>
-    <string name="type_home" msgid="7478344114405222813">"Privat"</string>
-    <string name="type_work" msgid="7825922921841029320">"Arbeit"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Mobil"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Mehrere"</string>
-    <string name="type_other" msgid="4960962576153449341">"Andere"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Telefonnummer auswählen"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Nur diesmal"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Immer"</string>
