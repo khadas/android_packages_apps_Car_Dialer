@@ -29,6 +29,7 @@ import android.telecom.Call;
 import androidx.annotation.StringRes;
 import androidx.core.util.Pair;
 
+import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.activecall.InCallActivity;
@@ -101,6 +102,7 @@ public final class InCallNotificationController {
 
         Intent intent = new Intent(mContext, InCallActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Constants.Intents.EXTRA_SHOW_INCOMING_CALL, true);
         PendingIntent fullscreenIntent = PendingIntent.getActivity(mContext, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 

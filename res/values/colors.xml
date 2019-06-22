@@ -14,47 +14,15 @@
      limitations under the License.
 -->
 <resources>
-    <!-- rail -->
-    <color name="phone_theme">@color/phone_theme_light</color>
-    <color name="phone_theme_light">@*android:color/car_grey_50</color>
-    <color name="phone_theme_dark">@*android:color/car_dark_blue_grey_700</color>
-
-    <color name="phone_theme_secondary">@color/phone_theme_secondary_light</color>
-    <color name="phone_theme_secondary_light">@*android:color/car_grey_200</color>
-    <color name="phone_theme_secondary_dark">@*android:color/car_dark_blue_grey_800</color>
-
     <!-- InCall page -->
     <color name="phone_call">@*android:color/car_green_700</color>
     <color name="phone_end_call">@*android:color/car_red_500a</color>
 
     <!-- Dialpad page -->
     <color name="call_button_outline">@*android:color/car_green_500</color>
-
-    <!-- A scrim that covers the background of activities and darkens them for night mode. -->
-    <color name="telecom_display_scrim">@color/telecom_display_scrim_light</color>
-    <color name="telecom_display_scrim_light">@*android:color/transparent</color>
-    <color name="telecom_display_scrim_dark">#52000000</color>
-
-    <!-- Search components. -->
-    <color name="search_container_controls_tint">@color/search_container_controls_tint_light</color>
-    <color name="search_container_controls_tint_light">@*android:color/car_grey_800</color>
-    <color name="search_container_controls_tint_dark">@*android:color/car_grey_100</color>
-    <color name="search_container_text_hint">@color/search_container_text_hint_light</color>
-    <color name="search_container_text_hint_light">@*android:color/car_grey_400</color>
-    <color name="search_container_text_hint_dark">@*android:color/car_grey_700</color>
-    <color name="search_back_tint">@color/primary_icon_color</color>
     
     <!--Contact details-->
     <color name="contact_details_icon_tint">@color/primary_icon_color</color>
-
-    <!-- TextAppearances -->
-    <color name="car_caption">@color/car_caption_dark</color>
-    <color name="car_caption_light">@*android:color/car_grey_400</color>
-    <color name="car_caption_dark">@*android:color/car_grey_700</color>
-
-    <color name="car_key1">@color/car_key1_dark</color>
-    <color name="car_key1_light">@*android:color/car_grey_100</color>
-    <color name="car_key1_dark">@*android:color/car_light_blue_700</color>
 
     <color name="car_key2">@color/car_key2_dark</color>
     <color name="car_key2_light">@*android:color/car_grey_400</color>
@@ -72,5 +40,6 @@
     <color name="secondary_icon_color_dark">#8ADADCE0</color>
     <color name="secondary_icon_color_light">#99FFFFFF</color>
     <color name="hero_button_background_color">@*android:color/car_grey_868</color>
+    <color name="add_favorite_background_color">@*android:color/car_grey_868</color>
 
 </resources>

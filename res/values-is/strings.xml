@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth er ekki í boði."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Kveiktu á Bluetooth til að hringja eða svara símtölum."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Paraðu símann við bílinn til að hringja eða svara símtölum."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Netið er ekki tiltækt."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Síminn er í flugstillingu."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth er ekki tengt."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Settu upp forrit til að senda skilaboð."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Tengjast við Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Neyðartilvik"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Neyðarsímtal"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Þessum tengilið var hugsanlega eytt."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Ekki er hægt að velja þetta númer. Athugaðu númerið og reyndu aftur."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Símtalaskráin er tóm."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Með hraðvali geturðu hringt með einni snertingu í uppáhaldstengiliðina og númer sem þú hringir oft í"</string>
     <string name="decline_call" msgid="2505987200485272226">"Hafna"</string>
     <string name="answer_call" msgid="3272474440561548115">"Svara"</string>
     <string name="call_back" msgid="5745638356098600872">"Hringja til baka"</string>
-    <string name="message" msgid="106616332778369322">"Skilaboð"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Símafundur"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth ökutækis"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Hátalari"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Símtól"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Símtalaferill"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Tengiliðir"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Símatakkaborð"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Tengiliðaupplýsingar"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Hringja í <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Senda SMS-skilaboð til <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Hringja"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Senda SMS-skilaboð"</string>
     <string name="search_title" msgid="5412680850141871664">"Leita að tengiliðum"</string>
     <string name="search_hint" msgid="3099066132607042439">"Leita að tengiliðum"</string>
-    <string name="type_home" msgid="7478344114405222813">"Heim"</string>
-    <string name="type_work" msgid="7825922921841029320">"Vinna"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Farsími"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Mörg"</string>
-    <string name="type_other" msgid="4960962576153449341">"Annað"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Veldu símanúmer"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Bara einu sinni"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Alltaf"</string>

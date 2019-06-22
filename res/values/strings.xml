@@ -24,12 +24,6 @@
     <string name="bluetooth_disabled">To make or receive calls, turn Bluetooth on.</string>
     <!-- Error text shown on the dialer facet for when bluetooth is not paired -->
     <string name="bluetooth_unpaired">To make or receive calls, pair your phone with the car.</string>
-    <!-- Toast text when a call failed because the network isn't available [CHAR LIMIT=40] -->
-    <string name="error_network_not_available">Network not available.</string>
-    <!-- Toast text when a call failed because the phone is in airplane mode [CHAR LIMIT=40] -->
-    <string name="error_airplane_mode">Phone is in airplane mode.</string>
-    <!-- Toast text when a call failed because bluetooth hfp is not available [CHAR LIMIT=40] -->
-    <string name="error_no_hfp">Bluetooth is not connected.</string>
     <!-- Toast text when sending a text failed because there is no app to compose texts [CHAR LIMIT=80] -->
     <string name="error_no_text_intent_handler">To send texts, you will need to install a messaging app.</string>
     <!-- Button text for connecting to Bluetooth [CHAR LIMIT=40] -->
@@ -42,10 +36,6 @@
     <string name="error_contact_deleted">This contact might have been deleted.</string>
     <!-- Toast text when user has inputted an invalid phone number [CHAR LIMIT=NONE] -->
     <string name="error_invalid_phone_number">Can\'t dial this number. Check it and try again.</string>
-    <!-- Text displayed when the call log is empty. [CHAR LIMIT=40] -->
-    <string name="recent_calls_empty">Your call log is empty.</string>
-    <!-- Text displayed when the speed dial is empty. [CHAR LIMIT=100] -->
-    <string name="speed_dial_empty">Speed Dial provides one-touch dialing for favorites and numbers you call often</string>
 
     <!-- Decline an in coming call [CHAR LIMIT=20] -->
     <string name="decline_call">Decline</string>
@@ -53,11 +43,6 @@
     <string name="answer_call">Answer</string>
     <!-- Call back a missed call [CHAR LIMIT=20] -->
     <string name="call_back">Call back</string>
-    <!-- Send a message to a missed call [CHAR LIMIT=20] -->
-    <string name="message">Message</string>
-
-    <!-- Label for when a call is a conference call [CHAR LIMIT=30] -->
-    <string name="conference_call">Conference call</string>
 
     <!-- Audio route -->
     <!-- Label for routing phone audio to the vehicle [CHAR LIMIT=30] -->
@@ -81,8 +66,6 @@
     <string name="dialpad_title">Dialpad</string>
     <!-- Toolbar title for tabbed pages -->
     <string name="default_toolbar_title" translatable="false"></string>
-    <!-- Toolbar title for contact details page [CHAR LIMIT=40] -->
-    <string name="toolbar_title_contact_details">Contact details</string>
 
     <!-- Button to quickly call a number. The string is the label of the phone. [CHAR LIMIT=30] -->
     <string name="contact_details_call_number_button_with_label">Call <xliff:g id="label" example="Mobile">%1$s</xliff:g></string>
@@ -93,6 +76,9 @@
     <string name="contact_details_call_number_button">Call</string>
     <!-- Button to quickly text a number, when the user must first select a number. [CHAR LIMIT=30] -->
     <string name="contact_details_text_number_button">Text</string>
+
+    <!-- Button to add start choosing a contact to add as a new favorite [CHAR_LIMIT=50] -->
+    <string name="add_favorite_button">Add a favorite</string>
 
     <!-- Keypad strings-->
     <string name="one" translatable="false">1</string>
@@ -125,11 +111,7 @@
 
     <string name="search_title">Search contacts</string>
     <string name="search_hint">Search contacts</string>
-    <string name="type_home">Home</string>
-    <string name="type_work">Work</string>
-    <string name="type_mobile">Mobile</string>
     <string name="type_multiple">Multiple</string>
-    <string name="type_other">Other</string>
 
     <!-- Title for choose a phone number dialog to make a call or send sms [CHAR LIMIT=60] -->
     <string name="select_number_dialog_title">Choose a phone number</string>

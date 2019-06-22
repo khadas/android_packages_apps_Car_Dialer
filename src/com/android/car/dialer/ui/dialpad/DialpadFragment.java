@@ -45,8 +45,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMap;
 
 /** Fragment that controls the dialpad. */
-public class DialpadFragment extends AbstractDialpadFragment implements
-        KeypadFragment.KeypadCallback {
+public class DialpadFragment extends AbstractDialpadFragment {
     private static final String TAG = "CD.DialpadFragment";
 
     private static final String DIALPAD_MODE_KEY = "DIALPAD_MODE_KEY";
@@ -136,6 +135,20 @@ public class DialpadFragment extends AbstractDialpadFragment implements
             }
         });
 
+        callButton.addOnUnhandledKeyEventListener((v, event) -> {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_CALL) {
+                // Use onKeyDown/Up instead of performClick() because it animates the ripple
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    callButton.onKeyDown(KeyEvent.KEYCODE_ENTER, event);
+                } else if (event.getAction() == KeyEvent.ACTION_UP) {
+                    callButton.onKeyUp(KeyEvent.KEYCODE_ENTER, event);
+                }
+                return true;
+            } else {
+                return false;
+            }
+        });
+
         mDeleteButton = rootView.findViewById(R.id.delete_button);
         mDeleteButton.setOnClickListener(v -> removeLastDigit());
         mDeleteButton.setOnLongClickListener(v -> {
@@ -157,7 +170,7 @@ public class DialpadFragment extends AbstractDialpadFragment implements
     }
 
     @Override
-    public void onKeyLongPressed(@KeypadFragment.DialKeyCode int keycode) {
+    public void onKeypadKeyLongPressed(@KeypadFragment.DialKeyCode int keycode) {
         switch (keycode) {
             case KeyEvent.KEYCODE_0:
                 removeLastDigit();
@@ -182,7 +195,7 @@ public class DialpadFragment extends AbstractDialpadFragment implements
     }
 
     @Override
-    void stopTone() {
+    void stopAllTones() {
         L.d(TAG, "stop key pressed tone");
         mToneGenerator.stopTone();
     }
@@ -204,7 +217,6 @@ public class DialpadFragment extends AbstractDialpadFragment implements
             if (number.length() <= MAX_DIAL_NUMBER) {
                 mTitleView.setText(
                         TelecomUtils.getFormattedNumber(getContext(), number.toString()));
-
             } else {
                 mTitleView.setText(number.substring(number.length() - MAX_DIAL_NUMBER));
             }

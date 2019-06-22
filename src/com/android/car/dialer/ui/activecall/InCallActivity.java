@@ -16,22 +16,31 @@
 
 package com.android.car.dialer.ui.activecall;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.telecom.Call;
 
+import androidx.core.util.Pair;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.arch.common.LiveDataFunctions;
+import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 
 import java.util.List;
 
-/**
- * Activity for ongoing call
- */
+/** Activity for ongoing call and incoming call. */
 public class InCallActivity extends FragmentActivity {
     private static final String TAG = "CD.InCallActivity";
+    private Fragment mOngoingCallFragment;
+    private Fragment mIncomingCallFragment;
+
+    private MutableLiveData<Boolean> mShowIncomingCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +49,57 @@ public class InCallActivity extends FragmentActivity {
 
         setContentView(R.layout.in_call_activity);
 
+        mOngoingCallFragment = getSupportFragmentManager().findFragmentById(
+                R.id.ongoing_call_fragment);
+        mIncomingCallFragment = getSupportFragmentManager().findFragmentById(
+                R.id.incoming_call_fragment);
+
+        mShowIncomingCall = new MutableLiveData();
         InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
-        inCallViewModel.getCallList().observe(this, this::updateOnGoingCall);
+        LiveData<Call> incomingCallLiveData = LiveDataFunctions.iff(mShowIncomingCall,
+                inCallViewModel.getIncomingCall());
+        incomingCallLiveData.observe(this, this::updateIncomingCallVisibility);
+        LiveDataFunctions.pair(inCallViewModel.getOngoingCallList(), incomingCallLiveData).observe(
+                this, this::maybeFinishActivity);
+
+        handleIntent();
     }
 
-    private void updateOnGoingCall(List<Call> calls) {
-        if (calls == null || calls.isEmpty()) {
-            L.d(TAG, "Finish InCallActivity");
+    @Override
+    protected void onNewIntent(Intent i) {
+        super.onNewIntent(i);
+        L.d(TAG, "onNewIntent");
+        setIntent(i);
+        handleIntent();
+    }
+
+    private void maybeFinishActivity(Pair<List<Call>, Call> callList) {
+        if ((callList.first == null || callList.first.isEmpty()) && callList.second == null) {
+            L.d(TAG, "No call to show. Finish InCallActivity");
             finish();
+        }
+    }
+
+    private void handleIntent() {
+        Intent intent = getIntent();
+
+        if (intent != null && getIntent().getBooleanExtra(
+                Constants.Intents.EXTRA_SHOW_INCOMING_CALL, false)) {
+            mShowIncomingCall.setValue(true);
+        } else {
+            mShowIncomingCall.setValue(false);
+        }
+    }
+
+    private void updateIncomingCallVisibility(Call incomingCall) {
+        if (incomingCall == null) {
+            getSupportFragmentManager().beginTransaction().show(mOngoingCallFragment).hide(
+                    mIncomingCallFragment).commit();
+            mShowIncomingCall.setValue(false);
+            setIntent(null);
+        } else {
+            getSupportFragmentManager().beginTransaction().show(mIncomingCallFragment).hide(
+                    mOngoingCallFragment).commit();
         }
     }
 }

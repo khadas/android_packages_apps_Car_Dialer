@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth is niet beschikbaar."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Schakel Bluetooth in als je gesprekken wilt plaatsen of ontvangen."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Als je gesprekken wilt plaatsen of ontvangen, koppel je je telefoon met de auto."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Netwerk niet beschikbaar."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Telefoon is in de vliegtuigmodus."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth is niet verbonden."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Installeer een berichten-app om te sms\'en."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Verbinding maken met Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Noodgeval"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Noodoproep"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Dit contact is mogelijk al verwijderd."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Kan dit nummer niet bellen. Controleer het nummer en probeer het opnieuw."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Je gesprekslijst is leeg."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Met Snelkiezen kun je met één keer tikken favorieten en vaak gebelde nummers bellen"</string>
     <string name="decline_call" msgid="2505987200485272226">"Weigeren"</string>
     <string name="answer_call" msgid="3272474440561548115">"Beantwoorden"</string>
     <string name="call_back" msgid="5745638356098600872">"Terugbellen"</string>
-    <string name="message" msgid="106616332778369322">"Bericht verzenden"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Conferencecall"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth van voertuig"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Luidspreker"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Handset"</string>
@@ -45,18 +38,13 @@
     <string name="call_history_title" msgid="1495905524218923242">"Gespreksgeschiedenis"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Contacten"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Toetsenblok"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Contactgegevens"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> bellen"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> sms\'en"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Bellen"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Sms\'en"</string>
     <string name="search_title" msgid="5412680850141871664">"Contacten zoeken"</string>
     <string name="search_hint" msgid="3099066132607042439">"Contacten zoeken"</string>
-    <string name="type_home" msgid="7478344114405222813">"Thuis"</string>
-    <string name="type_work" msgid="7825922921841029320">"Werk"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Mobiel"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Meerdere"</string>
-    <string name="type_other" msgid="4960962576153449341">"Overig"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Een telefoonnummer kiezen"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Eén keer"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Altijd"</string>
