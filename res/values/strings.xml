@@ -24,8 +24,6 @@
     <string name="bluetooth_disabled">To make or receive calls, turn Bluetooth on.</string>
     <!-- Error text shown on the dialer facet for when bluetooth is not paired -->
     <string name="bluetooth_unpaired">To make or receive calls, pair your phone with the car.</string>
-    <!-- Toast text when sending a text failed because there is no app to compose texts [CHAR LIMIT=80] -->
-    <string name="error_no_text_intent_handler">To send texts, you will need to install a messaging app.</string>
     <!-- Button text for connecting to Bluetooth [CHAR LIMIT=40] -->
     <string name="connect_bluetooth_button_text">Connect to Bluetooth</string>
     <!-- Button text for making emergency call [CHAR LIMIT=40] -->
@@ -66,16 +64,6 @@
     <string name="dialpad_title">Dialpad</string>
     <!-- Toolbar title for tabbed pages -->
     <string name="default_toolbar_title" translatable="false"></string>
-
-    <!-- Button to quickly call a number. The string is the label of the phone. [CHAR LIMIT=30] -->
-    <string name="contact_details_call_number_button_with_label">Call <xliff:g id="label" example="Mobile">%1$s</xliff:g></string>
-    <!-- Button to quickly text a number. This string is the label of the phone. [CHAR LIMIT=30] -->
-    <string name="contact_details_text_number_button_with_label">Text <xliff:g id="label" example="Mobile">%1$s</xliff:g></string>
-
-    <!-- Button to quickly call a number, when the user must first select a number. [CHAR LIMIT=30] -->
-    <string name="contact_details_call_number_button">Call</string>
-    <!-- Button to quickly text a number, when the user must first select a number. [CHAR LIMIT=30] -->
-    <string name="contact_details_text_number_button">Text</string>
 
     <!-- Button to add start choosing a contact to add as a new favorite [CHAR_LIMIT=50] -->
     <string name="add_favorite_button">Add a favorite</string>
