@@ -42,6 +42,7 @@
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> मा पाठ सन्देश पठाउनुहोस्"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"कल गर्नुहोस्"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"पाठ सन्देश पठाउनुहोस्"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"सम्पर्क सूचीमा भएको कुनै मन पर्ने व्यक्ति थप्नु…"</string>
     <string name="search_title" msgid="5412680850141871664">"सम्पर्क ठेगानाहरू खोज्नुहोस्"</string>
     <string name="search_hint" msgid="3099066132607042439">"सम्पर्क ठेगानाहरू खोज्नुहोस्"</string>
     <string name="type_multiple" msgid="3402949522797441236">"बहु"</string>
