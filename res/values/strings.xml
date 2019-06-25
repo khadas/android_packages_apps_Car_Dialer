@@ -79,6 +79,8 @@
 
     <!-- Button to add start choosing a contact to add as a new favorite [CHAR_LIMIT=50] -->
     <string name="add_favorite_button">Add a favorite</string>
+    <!-- Error message shown when on the favorites page without any favorites added [CHAR_LIMIT=80] -->
+    <string name="favorites_empty">You haven\'t added any favorites yet</string>
 
     <!-- Keypad strings-->
     <string name="one" translatable="false">1</string>
