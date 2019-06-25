@@ -87,6 +87,8 @@
     <dimen name="favorite_card_space_horizontal">@*android:dimen/car_padding_3</dimen>
     <dimen name="favorite_card_space_vertical">@*android:dimen/car_padding_4</dimen>
     <dimen name="favorites_avatar_margin_bottom">@*android:dimen/car_padding_3</dimen>
+    <dimen name="favorite_add_button_and_text_separation">@*android:dimen/car_padding_5</dimen>
+    <dimen name="favorite_add_button_padding">@*android:dimen/car_padding_4</dimen>
 
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/touch_target_size</dimen>
