@@ -42,6 +42,7 @@
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"ផ្ញើ​សារ​ជា​អក្សរ​ទៅលេខ <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"ហៅទូរសព្ទ"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ផ្ញើសារ​ជាអក្សរ"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"បញ្ចូលសំណព្វ"</string>
     <string name="search_title" msgid="5412680850141871664">"ស្វែងរកទំនាក់ទំនង"</string>
     <string name="search_hint" msgid="3099066132607042439">"ស្វែងរកទំនាក់ទំនង"</string>
     <string name="type_multiple" msgid="3402949522797441236">"ច្រើន"</string>

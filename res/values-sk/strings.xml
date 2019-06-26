@@ -42,6 +42,7 @@
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Poslať správu na číslo <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Volať"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"SMS"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"Pridať obľúbený kontakt"</string>
     <string name="search_title" msgid="5412680850141871664">"Hľadať v kontaktoch"</string>
     <string name="search_hint" msgid="3099066132607042439">"Hľadať v kontaktoch"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Viaceré"</string>
