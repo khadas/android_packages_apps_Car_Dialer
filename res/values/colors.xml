@@ -17,10 +17,11 @@
     <!-- InCall page -->
     <color name="phone_call">@*android:color/car_green_700</color>
     <color name="phone_end_call">@*android:color/car_red_500a</color>
+    <color name="onhold_call_background">@*android:color/car_grey_868</color>
 
     <!-- Dialpad page -->
     <color name="call_button_outline">@*android:color/car_green_500</color>
-    
+
     <!--Contact details-->
     <color name="contact_details_icon_tint">@color/primary_icon_color</color>
 

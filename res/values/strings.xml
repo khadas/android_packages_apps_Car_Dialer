@@ -139,6 +139,10 @@
     <!-- Title for missed call notification [CHAR LIMIT=40]-->
     <string name="notification_missed_call">Missed call</string>
 
+    <!-- Onhold User Profile Info -->
+    <!-- Text to show the call is onhold [CHAR LIMIT=40]-->
+    <string name="onhold_call_label">On Hold</string>
+
     <!-- Dialer Setting -->
     <!-- Title of the settings page [CHAR LIMIT=30]-->
     <string name="setting_title">Settings</string>

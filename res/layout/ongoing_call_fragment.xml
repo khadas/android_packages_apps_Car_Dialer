@@ -56,6 +56,18 @@ limitations under the License.
             app:layout_constraintStart_toStartOf="parent"/>
 
         <fragment
+            android:id="@+id/onhold_user_profile"
+            android:name="com.android.car.dialer.ui.activecall.OnHoldCallUserProfileFragment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/onhold_user_info_height"
+            android:layout_marginTop="@dimen/onhold_profile_margin_y"
+            android:layout_marginStart="@dimen/onhold_profile_margin_x"
+            android:layout_marginEnd="@dimen/onhold_profile_margin_x"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <fragment
             android:id="@+id/ongoing_call_control_bar"
             android:name="com.android.car.dialer.ui.activecall.OnGoingCallControllerBarFragment"
             android:layout_width="match_parent"
