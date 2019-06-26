@@ -17,6 +17,7 @@
 package com.android.car.dialer.ui.activecall;
 
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +38,10 @@ import com.google.common.annotations.VisibleForTesting;
  */
 public class OngoingCallFragment extends InCallFragment {
     private Fragment mDialpadFragment;
+    private Fragment mOnholdCallFragment;
     private View mUserProfileContainerView;
     private BackgroundImageView mBackgroundImage;
     private MutableLiveData<Boolean> mDialpadState;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -49,6 +50,7 @@ public class OngoingCallFragment extends InCallFragment {
 
         mUserProfileContainerView = fragmentView.findViewById(R.id.user_profile_container);
         mBackgroundImage = fragmentView.findViewById(R.id.background_image);
+        mOnholdCallFragment = getChildFragmentManager().findFragmentById(R.id.onhold_user_profile);
         mDialpadFragment = getChildFragmentManager().findFragmentById(R.id.incall_dialpad_fragment);
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
@@ -56,6 +58,7 @@ public class OngoingCallFragment extends InCallFragment {
 
         inCallViewModel.getPrimaryCallDetail().observe(this, this::bindUserProfileView);
         inCallViewModel.getCallStateAndConnectTime().observe(this, this::updateCallDescription);
+        inCallViewModel.getSecondaryCall().observe(this, this::maybeShowOnholdCallFragment);
 
         OngoingCallStateViewModel ongoingCallStateViewModel = ViewModelProviders.of(
                 getActivity()).get(OngoingCallStateViewModel.class);
@@ -87,5 +90,13 @@ public class OngoingCallFragment extends InCallFragment {
                 .commit();
         mUserProfileContainerView.setVisibility(View.VISIBLE);
         mBackgroundImage.setDimmed(false);
+    }
+
+    private void maybeShowOnholdCallFragment(@Nullable Call secondaryCall) {
+        if (secondaryCall == null || secondaryCall.getState() != Call.STATE_HOLDING) {
+            getChildFragmentManager().beginTransaction().hide(mOnholdCallFragment).commit();
+        } else {
+            getChildFragmentManager().beginTransaction().show(mOnholdCallFragment).commit();
+        }
     }
 }
