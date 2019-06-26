@@ -64,6 +64,8 @@ public class InCallViewModel extends AndroidViewModel implements
     private final LiveData<CallDetail> mCallDetailLiveData;
     private final LiveData<Integer> mCallStateLiveData;
     private final LiveData<Call> mPrimaryCallLiveData;
+    private final LiveData<Call> mSecondaryCallLiveData;
+    private final LiveData<CallDetail> mSecondaryCallDetailLiveData;
     private final LiveData<Integer> mAudioRouteLiveData;
     private LiveData<Long> mCallConnectTimeLiveData;
     private LiveData<Pair<Integer, Long>> mCallStateAndConnectTimeLiveData;
@@ -88,12 +90,11 @@ public class InCallViewModel extends AndroidViewModel implements
     };
 
     // Reuse the same instance so the callback won't be registered more than once.
-    private final Call.Callback mIncomingCallStateChangedCallback = new Call.Callback() {
+    private final Call.Callback mCallStateChangedCallback = new Call.Callback() {
         @Override
         public void onStateChanged(Call call, int state) {
             // Sets value to trigger the live data for incoming call and active call list to update.
             mCallListLiveData.setValue(mCallListLiveData.getValue());
-            call.unregisterCallback(this);
         }
     };
 
@@ -105,14 +106,8 @@ public class InCallViewModel extends AndroidViewModel implements
         mCallComparator = new CallComparator();
 
         mIncomingCallLiveData = Transformations.map(mCallListLiveData,
-                callList -> {
-                    Call incomingCall = firstMatch(callList,
-                            call -> call != null && call.getState() == Call.STATE_RINGING);
-                    if (incomingCall != null) {
-                        incomingCall.registerCallback(mIncomingCallStateChangedCallback);
-                    }
-                    return incomingCall;
-                });
+                callList -> firstMatch(callList,
+                        call -> call != null && call.getState() == Call.STATE_RINGING));
 
         mOngoingCallListLiveData = Transformations.map(mCallListLiveData,
                 callList -> {
@@ -136,6 +131,12 @@ public class InCallViewModel extends AndroidViewModel implements
         });
         mCallStateAndConnectTimeLiveData =
                 LiveDataFunctions.pair(mCallStateLiveData, mCallConnectTimeLiveData);
+
+        mSecondaryCallLiveData = Transformations.map(mOngoingCallListLiveData,
+                callList -> (callList != null && callList.size() > 1) ? callList.get(1) : null);
+
+        mSecondaryCallDetailLiveData = Transformations.switchMap(mSecondaryCallLiveData,
+                input -> input != null ? new CallDetailLiveData(input) : null);
 
         mAudioRouteLiveData = new AudioRouteLiveData(mContext);
 
@@ -177,9 +178,28 @@ public class InCallViewModel extends AndroidViewModel implements
 
     /**
      * Returns the live data which monitor the primary call.
+     * A primary call in the first call in the ongoing call list,
+     * which is sorted based on {@link CallComparator}.
      */
     public LiveData<Call> getPrimaryCall() {
         return mPrimaryCallLiveData;
+    }
+
+    /**
+     * Returns the live data which monitor the secondary call.
+     * A secondary call in the second call in the ongoing call list,
+     * which is sorted based on {@link CallComparator}.
+     * The value will be null if there is no second call in the call list.
+     */
+    public LiveData<Call> getSecondaryCall() {
+        return mSecondaryCallLiveData;
+    }
+
+    /**
+     * Returns the live data which monitors the secondary call details.
+     */
+    public LiveData<CallDetail> getSecondaryCallDetail() {
+        return mSecondaryCallDetailLiveData;
     }
 
     /**
@@ -192,6 +212,7 @@ public class InCallViewModel extends AndroidViewModel implements
     @Override
     public boolean onTelecomCallAdded(Call telecomCall) {
         L.i(TAG, "onTelecomCallAdded %s %s", telecomCall, this);
+        telecomCall.registerCallback(mCallStateChangedCallback);
         updateCallList();
         return false;
     }
@@ -199,6 +220,7 @@ public class InCallViewModel extends AndroidViewModel implements
     @Override
     public boolean onTelecomCallRemoved(Call telecomCall) {
         L.i(TAG, "onTelecomCallRemoved %s %s", telecomCall, this);
+        telecomCall.unregisterCallback(mCallStateChangedCallback);
         updateCallList();
         return false;
     }
