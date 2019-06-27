@@ -42,6 +42,7 @@
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g>에 문자 보내기"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"통화"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"문자 메시지"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"즐겨찾기 추가"</string>
     <string name="search_title" msgid="5412680850141871664">"연락처 검색"</string>
     <string name="search_hint" msgid="3099066132607042439">"연락처 검색"</string>
     <string name="type_multiple" msgid="3402949522797441236">"여러 전화번호"</string>

@@ -29,7 +29,7 @@
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Ezin da deitu zenbaki honetara. Egiaztatu zenbakia eta saiatu berriro."</string>
     <string name="decline_call" msgid="2505987200485272226">"Baztertu"</string>
     <string name="answer_call" msgid="3272474440561548115">"Erantzun"</string>
-    <string name="call_back" msgid="5745638356098600872">"Deitu atzera"</string>
+    <string name="call_back" msgid="5745638356098600872">"Itzuli deia"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Ibilgailuaren Bluetooth-a"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Bozgorailua"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Telefonoa"</string>
@@ -42,6 +42,7 @@
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Bidali testu-mezua <xliff:g id="LABEL">%1$s</xliff:g> zenbakira"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Deitu"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Bidali mezu bat"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"Gehitu gogoko bat"</string>
     <string name="search_title" msgid="5412680850141871664">"Bilatu kontaktuetan"</string>
     <string name="search_hint" msgid="3099066132607042439">"Bilatu kontaktuetan"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Hainbat"</string>
