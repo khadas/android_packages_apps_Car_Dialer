@@ -50,6 +50,7 @@ public class FavoriteListFragment extends DialerListBaseFragment {
         getRecyclerView().setItemAnimator(null);
 
         FavoriteAdapter adapter = new FavoriteAdapter();
+        adapter.setOnAddFavoriteClickedListener(this::onAddFavoriteClicked);
 
         FavoriteViewModel favoriteViewModel = ViewModelProviders.of(getActivity()).get(
                 FavoriteViewModel.class);
@@ -71,6 +72,10 @@ public class FavoriteListFragment extends DialerListBaseFragment {
     private void onItemClicked(Contact contact) {
         DialerUtils.promptForPrimaryNumber(getContext(), contact, (phoneNumber, always) ->
                 UiCallManager.get().placeCall(phoneNumber.getRawNumber()));
+    }
+
+    private void onAddFavoriteClicked() {
+        pushContentFragment(AddFavoriteFragment.newInstance(), null);
     }
 
     private class ItemSpacingDecoration extends RecyclerView.ItemDecoration {
