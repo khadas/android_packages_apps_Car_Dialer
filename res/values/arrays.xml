@@ -36,4 +36,15 @@
         <item>@string/contacts_title</item>
         <item>@string/dialpad_title</item>
     </string-array>
+
+    <string-array name="contact_order_entry_values">
+        <item>given_name</item>
+        <item>family_name</item>
+    </string-array>
+
+    <string-array name="contact_order_entries">
+        <!-- This array is mapped to contact_order_keys. -->
+        <item>@string/give_name_first_title</item>
+        <item>@string/family_name_first_title</item>
+    </string-array>
 </resources>
