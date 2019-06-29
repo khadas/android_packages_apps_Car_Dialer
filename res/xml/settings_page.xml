@@ -24,4 +24,10 @@
         android:title="@string/pref_start_page_title"
         android:entries="@array/tabs_title"
         android:entryValues="@array/tabs_config"/>
+
+    <ListPreference
+        android:key="@string/sort_order_key"
+        android:title="@string/sort_order_title"
+        android:entries="@array/contact_order_entries"
+        android:entryValues="@array/contact_order_entry_values"/>
 </PreferenceScreen>
