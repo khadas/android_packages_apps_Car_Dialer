@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth är inte tillgängligt."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Aktivera Bluetooth om du vill ringa och ta emot samtal."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Koppla mobilen till bilen om du vill ringa eller ta emot samtal."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"Nätverket är inte tillgängligt."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"Mobilen är i flygplansläge."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"Bluetooth är inte anslutet."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"Installera en sms-app om du vill skicka sms."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Anslut till Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Nödsamtal"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Nödsamtal"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Den här kontakten kan ha raderats."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Det går inte att ringa detta nummer. Kontrollera det och försök igen."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"Samtalsloggen är tom."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"Med snabbval kan du ringa till favoriter och nummer du ringer till ofta med ett enda tryck"</string>
     <string name="decline_call" msgid="2505987200485272226">"Avvisa"</string>
     <string name="answer_call" msgid="3272474440561548115">"Svara"</string>
     <string name="call_back" msgid="5745638356098600872">"Ring tillbaka"</string>
-    <string name="message" msgid="106616332778369322">"Sms:a"</string>
-    <string name="conference_call" msgid="9107469685942466746">"Konferenssamtal"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"Fordonets Bluetooth"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"Högtalartelefon"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"Hörlur"</string>
@@ -45,18 +38,15 @@
     <string name="call_history_title" msgid="1495905524218923242">"Samtalshistorik"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontakter"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Knappsats"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"Kontaktuppgifter"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Ring <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Skicka sms till <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Ring"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Skicka sms"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"Lägg till en favorit"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"Du har inte lagt till några favoriter än"</string>
     <string name="search_title" msgid="5412680850141871664">"Sök efter kontakter"</string>
     <string name="search_hint" msgid="3099066132607042439">"Sök efter kontakter"</string>
-    <string name="type_home" msgid="7478344114405222813">"Hem"</string>
-    <string name="type_work" msgid="7825922921841029320">"Jobb"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"Mobil"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Flera"</string>
-    <string name="type_other" msgid="4960962576153449341">"Övrigt"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Välj ett telefonnummer"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Bara en gång"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Alltid"</string>
@@ -66,6 +56,13 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"Inkommande samtal"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Avisering om missat samtal"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"Missat samtal"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"Parkerat"</string>
     <string name="setting_title" msgid="1296639422364732365">"Inställningar"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Ställ in startsidan"</string>
+    <!-- no translation found for sort_order_title (2713804965189046046) -->
+    <skip />
+    <!-- no translation found for give_name_first_title (9036752103567139094) -->
+    <skip />
+    <!-- no translation found for family_name_first_title (7721976826282427987) -->
+    <skip />
 </resources>

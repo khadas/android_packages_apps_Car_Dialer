@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"블루투스를 사용할 수 없습니다."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"전화를 걸거나 받으려면 블루투스를 켜세요."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"전화를 걸거나 받으려면 휴대전화와 자동차를 페어링하세요."</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"네트워크를 사용할 수 없습니다."</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"휴대전화가 비행기 모드입니다."</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"블루투스가 연결되어 있지 않습니다."</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"문자 메시지를 보내려면 메시지 앱을 설치해야 합니다."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"블루투스에 연결"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"긴급 전화"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"긴급 전화"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"삭제된 연락처일 수도 있습니다."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"이 번호로 전화를 걸 수 없습니다. 확인 후 다시 시도해 보세요."</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"통화 기록이 없습니다."</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"단축 다이얼을 지정하면 터치 한 번으로 즐겨 찾거나 자주 이용하는 전화번호로 전화를 걸 수 있습니다."</string>
     <string name="decline_call" msgid="2505987200485272226">"거부"</string>
     <string name="answer_call" msgid="3272474440561548115">"통화"</string>
     <string name="call_back" msgid="5745638356098600872">"전화 걸기"</string>
-    <string name="message" msgid="106616332778369322">"메시지"</string>
-    <string name="conference_call" msgid="9107469685942466746">"다자간 통화"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"차량 블루투스"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"스피커폰"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"핸드셋"</string>
@@ -45,18 +38,15 @@
     <string name="call_history_title" msgid="1495905524218923242">"통화 기록"</string>
     <string name="contacts_title" msgid="9201954388634537346">"연락처"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"다이얼패드"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"연락처 세부정보"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g>에 전화 걸기"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g>에 문자 보내기"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"통화"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"문자 메시지"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"즐겨찾기 추가"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"아직 즐겨찾기를 추가하지 않았습니다."</string>
     <string name="search_title" msgid="5412680850141871664">"연락처 검색"</string>
     <string name="search_hint" msgid="3099066132607042439">"연락처 검색"</string>
-    <string name="type_home" msgid="7478344114405222813">"홈"</string>
-    <string name="type_work" msgid="7825922921841029320">"직장"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"모바일"</string>
     <string name="type_multiple" msgid="3402949522797441236">"여러 전화번호"</string>
-    <string name="type_other" msgid="4960962576153449341">"기타"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"전화번호 선택"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"한 번만"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"항상"</string>
@@ -66,6 +56,13 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"수신 전화"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"부재중 전화 알림림"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"부재중 전화"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"대기 중"</string>
     <string name="setting_title" msgid="1296639422364732365">"설정"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"시작 페이지 설정"</string>
+    <!-- no translation found for sort_order_title (2713804965189046046) -->
+    <skip />
+    <!-- no translation found for give_name_first_title (9036752103567139094) -->
+    <skip />
+    <!-- no translation found for family_name_first_title (7721976826282427987) -->
+    <skip />
 </resources>

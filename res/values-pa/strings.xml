@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"ਬਲੂਟੁੱਥ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"ਕਾਲਾਂ ਕਰਨ ਜਾਂ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ, ਬਲੂਟੁੱਥ ਚਾਲੂ ਕਰੋ।"</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"ਕਾਲਾਂ ਕਰਨ ਜਾਂ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ, ਆਪਣਾ ਫ਼ੋਨ ਕਾਰ ਨਾਲ ਜੋੜਾਬੱਧ ਕਰੋ।"</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"ਨੈੱਟਵਰਕ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।"</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"ਫ਼ੋਨ ਹਵਾਈ-ਜਹਾਜ਼ ਮੋਡ ਵਿੱਚ ਹੈ।"</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"ਬਲੂਟੁੱਥ ਕਨੈਕਟ ਨਹੀਂ ਹੈ।"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"ਲਿਖਤ ਸੁਨੇਹੇ ਭੇਜਣ ਲਈ ਸੁਨੇਹਾ ਐਪ ਸਥਾਪਤ ਕਰੋ।"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ਬਲੂਟੁੱਥ ਨਾਲ ਕਨੈਕਟ ਕਰੋ"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"ਸੰਕਟਕਾਲ"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"ਸੰਕਟਕਾਲੀਨ ਕਾਲ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ਸ਼ਾਇਦ ਇਹ ਸੰਪਰਕ ਮਿਟਾ ਦਿੱਤਾ ਗਿਆ ਹੋਵੇ।"</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"ਇਹ ਨੰਬਰ ਡਾਇਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ। ਇਸਨੂੰ ਜਾਂਚ ਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"ਤੁਹਾਡਾ ਕਾਲ ਲੌਗ ਖਾਲੀ ਹੈ।"</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"ਸਪੀਡ ਡਾਇਲ ਉਹਨਾਂ ਮਨਪਸੰਦਾਂ ਅਤੇ ਨੰਬਰਾਂ ਲਈ ਇੱਕ ਸਪਰਸ਼ ਵਾਲੀ ਡਾਇਲਿੰਗ ਹੈ ਜਿਨ੍ਹਾਂ ਨੂੰ ਤੁਸੀਂ ਅਕਸਰ ਕਾਲ ਕਰਦੇ ਹੋ"</string>
     <string name="decline_call" msgid="2505987200485272226">"ਅਸਵੀਕਾਰ ਕਰੋ"</string>
     <string name="answer_call" msgid="3272474440561548115">"ਜਵਾਬ ਦਿਓ"</string>
     <string name="call_back" msgid="5745638356098600872">"ਵਾਪਸ ਕਾਲ ਕਰੋ"</string>
-    <string name="message" msgid="106616332778369322">"ਸੁਨੇਹਾ"</string>
-    <string name="conference_call" msgid="9107469685942466746">"ਕਾਨਫ਼ਰੰਸ ਕਾਲ"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"ਵਾਹਨ ਬਲੂਟੁੱਥ"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"ਸਪੀਕਰਫ਼ੋਨ"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"ਹੈਂਡਸੈੱਟ"</string>
@@ -45,18 +38,15 @@
     <string name="call_history_title" msgid="1495905524218923242">"ਕਾਲ ਇਤਿਹਾਸ"</string>
     <string name="contacts_title" msgid="9201954388634537346">"ਸੰਪਰਕ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ਡਾਇਲਪੈਡ"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"ਸੰਪਰਕ ਵੇਰਵੇ"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> ਨੂੰ ਕਾਲ ਕਰੋ"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> ਨੂੰ ਲਿਖਤ ਸੁਨੇਹਾ ਭੇਜੋ"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"ਕਾਲ ਕਰੋ"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ਲਿਖਤ ਸੁਨੇਹਾ ਭੇਜੋ"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"ਕੋਈ ਮਨਪਸੰਦ ਸੰਪਰਕ ਸ਼ਾਮਲ ਕਰੋ"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"ਤੁਸੀਂ ਹਾਲੇ ਤੱਕ ਕੋਈ ਵੀ ਸੰਪਰਕ ਮਨਪਸੰਦ ਵਜੋਂ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤਾ ਹੈ"</string>
     <string name="search_title" msgid="5412680850141871664">"ਸੰਪਰਕ ਖੋਜੋ"</string>
     <string name="search_hint" msgid="3099066132607042439">"ਸੰਪਰਕ ਖੋਜੋ"</string>
-    <string name="type_home" msgid="7478344114405222813">"ਘਰ"</string>
-    <string name="type_work" msgid="7825922921841029320">"ਕਾਰਜ-ਸਥਾਨ"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"ਮੋਬਾਈਲ"</string>
     <string name="type_multiple" msgid="3402949522797441236">"ਇੱਕ ਤੋਂ ਵਧੇਰੇ"</string>
-    <string name="type_other" msgid="4960962576153449341">"ਹੋਰ"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ਇੱਕ ਫ਼ੋਨ ਨੰਬਰ ਚੁਣੋ"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"ਬੱਸ ਇੱਕ ਵਾਰ"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ਹਮੇਸ਼ਾਂ"</string>
@@ -66,6 +56,13 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"ਇਨਕਮਿੰਗ ਕਾਲ"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"ਮਿਸ ਕਾਲ ਦੀ ਸੂਚਨਾ"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"ਮਿਸ ਕਾਲ"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"ਰੋਕ ਕੇ ਰੱਖੀ ਗਈ"</string>
     <string name="setting_title" msgid="1296639422364732365">"ਸੈਟਿੰਗਾਂ"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ਸ਼ੁਰੂਆਤੀ ਪੰਨਾ ਸੈੱਟ ਕਰੋ"</string>
+    <!-- no translation found for sort_order_title (2713804965189046046) -->
+    <skip />
+    <!-- no translation found for give_name_first_title (9036752103567139094) -->
+    <skip />
+    <!-- no translation found for family_name_first_title (7721976826282427987) -->
+    <skip />
 </resources>

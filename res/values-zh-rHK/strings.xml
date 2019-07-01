@@ -21,22 +21,15 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"無法使用藍牙。"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"如要撥打或接聽電話，請開啟藍牙。"</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"如要撥打或接聽電話，請將手機與汽車配對。"</string>
-    <string name="error_network_not_available" msgid="9005062158253849135">"無法使用網絡。"</string>
-    <string name="error_airplane_mode" msgid="3381606616960325205">"手機處於飛行模式。"</string>
-    <string name="error_no_hfp" msgid="5157534181401876925">"未連接藍牙。"</string>
     <string name="error_no_text_intent_handler" msgid="497080068122415049">"如要發短訊，您需要安裝短訊應用程式。"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"連接藍牙"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"緊急"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"緊急電話"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"此聯絡人可能已被刪除。"</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"無法撥打此號碼。請檢查並再試一次。"</string>
-    <string name="recent_calls_empty" msgid="5225393547325054349">"無通話記錄。"</string>
-    <string name="speed_dial_empty" msgid="4414061977474045646">"使用快速撥號讓您只需輕觸一下便可撥打已加入最愛和常用的電話號碼"</string>
     <string name="decline_call" msgid="2505987200485272226">"拒絕"</string>
     <string name="answer_call" msgid="3272474440561548115">"接聽"</string>
     <string name="call_back" msgid="5745638356098600872">"回電"</string>
-    <string name="message" msgid="106616332778369322">"傳送訊息"</string>
-    <string name="conference_call" msgid="9107469685942466746">"電話會議"</string>
     <string name="audio_route_vehicle" msgid="6274519162997743620">"汽車藍牙"</string>
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"擴音器"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"免提聽筒"</string>
@@ -45,18 +38,15 @@
     <string name="call_history_title" msgid="1495905524218923242">"通話記錄"</string>
     <string name="contacts_title" msgid="9201954388634537346">"聯絡人"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"撥號盤"</string>
-    <string name="toolbar_title_contact_details" msgid="3496576785827686428">"聯絡資料"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"致電<xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"發短訊給<xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"撥號"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"發短訊"</string>
+    <string name="add_favorite_button" msgid="7914955940249767808">"新增常用聯絡人"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"您尚未新增任何常用聯絡人"</string>
     <string name="search_title" msgid="5412680850141871664">"搜尋聯絡人"</string>
     <string name="search_hint" msgid="3099066132607042439">"搜尋聯絡人"</string>
-    <string name="type_home" msgid="7478344114405222813">"住宅"</string>
-    <string name="type_work" msgid="7825922921841029320">"公司"</string>
-    <string name="type_mobile" msgid="3732377479015937527">"流動裝置"</string>
     <string name="type_multiple" msgid="3402949522797441236">"多個"</string>
-    <string name="type_other" msgid="4960962576153449341">"其他"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"請選擇電話號碼"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"只此一次"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"一律"</string>
@@ -66,6 +56,13 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"來電"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"未接來電通知"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"未接來電"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"保留通話"</string>
     <string name="setting_title" msgid="1296639422364732365">"設定"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"設定起始頁面"</string>
+    <!-- no translation found for sort_order_title (2713804965189046046) -->
+    <skip />
+    <!-- no translation found for give_name_first_title (9036752103567139094) -->
+    <skip />
+    <!-- no translation found for family_name_first_title (7721976826282427987) -->
+    <skip />
 </resources>
