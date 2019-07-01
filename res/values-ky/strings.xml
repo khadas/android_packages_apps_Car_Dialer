@@ -35,7 +35,7 @@
     <string name="audio_route_handset" msgid="1100259514278439355">"Трубка"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Номер терүү"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Сүйүктүүлөр"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"Чалуу таржымалы"</string>
+    <string name="call_history_title" msgid="1495905524218923242">"Чалуулар таржымалы"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Байланыштар"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Тергич"</string>
     <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> номерине чалуу"</string>
@@ -43,6 +43,7 @@
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Чалуу"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Текст"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Сүйүктүү номер кошуу"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"Азырынча бир да сүйүктүү байланышыңыз жок"</string>
     <string name="search_title" msgid="5412680850141871664">"Байланыштарды издеңиз"</string>
     <string name="search_hint" msgid="3099066132607042439">"Байланыштарды издеңиз"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Бир нече"</string>
@@ -55,6 +56,13 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"Кирүүчү чалуу"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Жооп берилбеген чалуу жөнүндө билдирүү"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"Жооп берилбеген чалуу"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"Күтүү режиминде"</string>
     <string name="setting_title" msgid="1296639422364732365">"Жөндөөлөр"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Баштоо барагын жөндөө"</string>
+    <!-- no translation found for sort_order_title (2713804965189046046) -->
+    <skip />
+    <!-- no translation found for give_name_first_title (9036752103567139094) -->
+    <skip />
+    <!-- no translation found for family_name_first_title (7721976826282427987) -->
+    <skip />
 </resources>

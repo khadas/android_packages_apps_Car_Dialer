@@ -43,6 +43,7 @@
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"कॉल करा"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"एसएमएस पाठवा"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"आवडते जोडा"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"तुम्ही अजून कोणतेही आवडीचे जोडलेले नाहीत"</string>
     <string name="search_title" msgid="5412680850141871664">"संपर्क शोधा"</string>
     <string name="search_hint" msgid="3099066132607042439">"संपर्क शोधा"</string>
     <string name="type_multiple" msgid="3402949522797441236">"एकाहून अधिक"</string>
@@ -55,6 +56,14 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"येणारा कॉल"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"मिस्ड कॉलची सूचना"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"मिस्ड कॉल"</string>
+    <!-- no translation found for onhold_call_label (1937027519810985499) -->
+    <skip />
     <string name="setting_title" msgid="1296639422364732365">"सेटिंग्ज"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"सुरुवातीचे पेज सेट करा"</string>
+    <!-- no translation found for sort_order_title (2713804965189046046) -->
+    <skip />
+    <!-- no translation found for give_name_first_title (9036752103567139094) -->
+    <skip />
+    <!-- no translation found for family_name_first_title (7721976826282427987) -->
+    <skip />
 </resources>
