@@ -34,7 +34,7 @@
     <string name="audio_route_phone_speaker" msgid="407520293892557697">"扬声器模式"</string>
     <string name="audio_route_handset" msgid="1100259514278439355">"手机听筒"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"拨号"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"收藏"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"常用联系人"</string>
     <string name="call_history_title" msgid="1495905524218923242">"通话记录"</string>
     <string name="contacts_title" msgid="9201954388634537346">"通讯录"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"拨号键盘"</string>
@@ -43,6 +43,7 @@
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"拨号"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"发送短信"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"添加常用联系人"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"您尚未添加任何常用联系人"</string>
     <string name="search_title" msgid="5412680850141871664">"搜索联系人"</string>
     <string name="search_hint" msgid="3099066132607042439">"搜索联系人"</string>
     <string name="type_multiple" msgid="3402949522797441236">"多个"</string>
@@ -55,6 +56,13 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"来电"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"未接电话通知"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"未接电话"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"呼叫等待"</string>
     <string name="setting_title" msgid="1296639422364732365">"设置"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"设置初始页"</string>
+    <!-- no translation found for sort_order_title (2713804965189046046) -->
+    <skip />
+    <!-- no translation found for give_name_first_title (9036752103567139094) -->
+    <skip />
+    <!-- no translation found for family_name_first_title (7721976826282427987) -->
+    <skip />
 </resources>

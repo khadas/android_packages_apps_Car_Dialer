@@ -43,6 +43,7 @@
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"কল কৰক"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"পাঠ বাৰ্তা পঠিয়াওক"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"এটা প্ৰিয় সম্পৰ্ক যোগ কৰক"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"আপুনি এতিয়ালৈকে কোনো প্ৰিয় যোগ কৰা নাই"</string>
     <string name="search_title" msgid="5412680850141871664">"সম্পর্কসমূহ সন্ধান কৰক"</string>
     <string name="search_hint" msgid="3099066132607042439">"সম্পর্কসমূহ সন্ধান কৰক"</string>
     <string name="type_multiple" msgid="3402949522797441236">"একাধিক"</string>
@@ -55,6 +56,13 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"অন্তৰ্গামী কল"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"মিছড কলৰ জাননী"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"মিছড কল"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"হ’ল্ডত আছে"</string>
     <string name="setting_title" msgid="1296639422364732365">"ছেটিংসমূহ"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"আৰম্ভণিৰ পৃষ্ঠাটো ছেট কৰক"</string>
+    <!-- no translation found for sort_order_title (2713804965189046046) -->
+    <skip />
+    <!-- no translation found for give_name_first_title (9036752103567139094) -->
+    <skip />
+    <!-- no translation found for family_name_first_title (7721976826282427987) -->
+    <skip />
 </resources>
