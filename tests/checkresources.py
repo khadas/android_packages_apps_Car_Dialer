@@ -7,12 +7,12 @@ process = subprocess.Popen(['lint', '--check', 'UnusedResources', sys.argv[1]],
                           stderr=subprocess.PIPE)
 
 stdout, stderr = process.communicate()
-stdout = stdout.decode('utf-8')
 
+lines = stdout.decode('utf-8').split('\n')
 results = []
-for line in stdout.split('\n'):
-    if '[UnusedResources]' in line:
-        results.append(line)
+for i in range(len(lines)-1):
+    if '[UnusedResources]' in lines[i] and 'msgid=' not in lines[i+1]:
+        results.append(lines[i])
 
 if len(results) > 0:
     print('\n'.join(results))
