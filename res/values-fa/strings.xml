@@ -43,6 +43,7 @@
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"تماس"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"ارسال پیامک"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"افزودن مورد دلخواه"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"هنوز مورد دلخواهی اضافه نکرده‌اید"</string>
     <string name="search_title" msgid="5412680850141871664">"جستجوی مخاطبین"</string>
     <string name="search_hint" msgid="3099066132607042439">"جستجوی مخاطبین"</string>
     <string name="type_multiple" msgid="3402949522797441236">"چندین"</string>
@@ -55,6 +56,10 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"تماس ورودی"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"اعلان تماس بی‌پاسخ"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"تماس بی‌پاسخ"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"در انتظار"</string>
     <string name="setting_title" msgid="1296639422364732365">"تنظیمات"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"تنظیم صفحه شروع"</string>
+    <string name="sort_order_title" msgid="2713804965189046046">"ترتیب مخاطبان"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"نام"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"نام خانوادگی"</string>
 </resources>
