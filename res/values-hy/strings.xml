@@ -43,6 +43,7 @@
     <string name="contact_details_call_number_button" msgid="7994882954807784349">"Զանգել"</string>
     <string name="contact_details_text_number_button" msgid="5478874044589167239">"Ուղարկել SMS"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Ավելացնել ընտրանիում"</string>
+    <string name="favorites_empty" msgid="6712416359691979975">"Ցանկում դեռ նախընտրած կոնտակտներ չեք ավելացրել"</string>
     <string name="search_title" msgid="5412680850141871664">"Որոնեք կոնտակտներ"</string>
     <string name="search_hint" msgid="3099066132607042439">"Որոնեք կոնտակտներ"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Մի քանի"</string>
@@ -55,6 +56,10 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"Մուտքային զանգ"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Ծանուցում բաց թողնված զանգի մասին"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"Բաց թողնված զանգ"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"Զանգը սպասման մեջ է"</string>
     <string name="setting_title" msgid="1296639422364732365">"Կարգավորումներ"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Կարգավորեք մեկնարկի էջը"</string>
+    <string name="sort_order_title" msgid="2713804965189046046">"Կոնտակտների հերթականություն"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"Անուն"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"Ազգանուն"</string>
 </resources>
