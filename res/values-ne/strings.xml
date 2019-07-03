@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"ब्लुटुथ उपलब्ध छैन।"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"फोन गर्न वा फोन उठाउन ब्लुटुथ सक्रिय गर्नुहोस्।"</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"कल गर्न वा उठाउन आफ्नो फोन र कारको जोडा बनाउनुहोस्।"</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"पाठ सन्देशहरू पठाउन तपाईंले सन्देश प्रवाह गर्ने एप स्थापना गर्नु पर्ने हुन्छ"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ब्लुटुथमा जोड्नुहोस्"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"आपतकालीन"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"आपतकालीन कल"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"कलको इतिहास"</string>
     <string name="contacts_title" msgid="9201954388634537346">"सम्पर्क ठेगानाहरू"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"डायलप्याड"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> मा कल गर्नुहोस्"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> मा पाठ सन्देश पठाउनुहोस्"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"कल गर्नुहोस्"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"पाठ सन्देश पठाउनुहोस्"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"सम्पर्क सूचीमा भएको कुनै मन पर्ने व्यक्ति थप्नु…"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"तपाईंले अहिलेसम्म कुनै पनि मन पर्ने सम्पर्क ठेगाना थप्नुभएको छैन"</string>
     <string name="search_title" msgid="5412680850141871664">"सम्पर्क ठेगानाहरू खोज्नुहोस्"</string>

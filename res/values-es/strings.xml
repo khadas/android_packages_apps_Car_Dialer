@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"El Bluetooth no está disponible."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Para hacer o recibir llamadas, activa el Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Para hacer o recibir llamadas, vincula tu teléfono con el coche."</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"Para enviar SMS, debes instalar una app de mensajes."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Conectarse a un dispositivo Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Emergencia"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Llamada de emergencia"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"Historial de llamadas"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Contactos"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Teclado"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Llamar al <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Enviar un SMS al <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"Llamar"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"Enviar SMS"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Añadir un favorito"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Aún no has añadido favoritos"</string>
     <string name="search_title" msgid="5412680850141871664">"Buscar contactos"</string>
@@ -59,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"En espera"</string>
     <string name="setting_title" msgid="1296639422364732365">"Ajustes"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Establecer página de inicio"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"Orden de los contactos"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"Nombre"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"Apellido"</string>
 </resources>

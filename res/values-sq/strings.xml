@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth nuk ofrohet."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Për të bërë ose për të marrë telefonata, aktivizo Bluetooth-in."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Për të bërë ose për të marrë telefonata, çiftoje telefonin me makinën."</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"Për të dërguar mesazhe, duhet të instalosh një aplikacion të mesazheve."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Lidhu me Bluetooth-in"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Urgjenca"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Telefonata e urgjencës"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"Historiku i telefonatave"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontaktet"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Blloku i formimit të numrit"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Telefono <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Dërgo mesazh te <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"Telefono"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"Dërgo mesazh"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Shto një të preferuar"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Nuk ke shtuar ende asnjë të preferuar"</string>
     <string name="search_title" msgid="5412680850141871664">"Kërko për kontakte"</string>
@@ -59,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"Në pritje"</string>
     <string name="setting_title" msgid="1296639422364732365">"Cilësimet"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Cakto faqen fillestare"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"Renditja e kontakteve"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"Emri"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"Mbiemri"</string>
 </resources>
