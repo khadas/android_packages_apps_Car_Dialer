@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth er ikke tilgjengelig."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"For å ringe eller motta anrop, slå på Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Koble sammen telefonen og bilen for å ringe eller motta anrop."</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"Du må installere en meldingsapp for å sende tekstmeldinger"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Koble til Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Nødsituasjon"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Nødanrop"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"Anropslogg"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontakter"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Tastatur"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Ring <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Send tekstmelding til <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"Ring"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"Send tekstmelding"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Legg til en favoritt"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Du har ikke lagt til noen favoritter ennå"</string>
     <string name="search_title" msgid="5412680850141871664">"Søk i kontakter"</string>
@@ -59,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"På vent"</string>
     <string name="setting_title" msgid="1296639422364732365">"Innstillinger"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Angi startside"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"Kontaktrekkefølge"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"Fornavn"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"Etternavn"</string>
 </resources>
