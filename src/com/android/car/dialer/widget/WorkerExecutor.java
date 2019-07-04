@@ -16,21 +16,19 @@
 
 package com.android.car.dialer.widget;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * WorkerExecutor is a singleton tied to the application to provide
- * ThreadPoolExecutor for Dialer.
+ * WorkerExecutor is a singleton tied to the application to provide {@link ExecutorService} for
+ * Dialer to run tasks in background.
  */
 public class WorkerExecutor {
     private static WorkerExecutor sWorkerExecutor;
 
-    private ThreadPoolExecutor mSingleThreadPoolExecutor;
+    private ExecutorService mSingleThreadExecutor;
 
-    /**
-     * Get the singleton WorkerExecutor for the application
-     */
+    /** Returns the singleton WorkerExecutor for the application. */
     public static WorkerExecutor getInstance() {
         if (sWorkerExecutor == null) {
             sWorkerExecutor = new WorkerExecutor();
@@ -39,21 +37,17 @@ public class WorkerExecutor {
     }
 
     private WorkerExecutor() {
-        mSingleThreadPoolExecutor = (ThreadPoolExecutor) Executors.newSingleThreadExecutor();
+        mSingleThreadExecutor = Executors.newSingleThreadExecutor();
     }
 
-    /**
-     * Returns the ThreadPoolExecutor.
-     */
-    public ThreadPoolExecutor getSingleThreadPoolExecutor() {
-        return mSingleThreadPoolExecutor;
+    /** Returns the single thread executor. */
+    public ExecutorService getSingleThreadExecutor() {
+        return mSingleThreadExecutor;
     }
 
-    /**
-     * Tears down the singleton WorkerExecutor for the application
-     */
+    /** Tears down the singleton WorkerExecutor for the application */
     public void tearDown() {
-        mSingleThreadPoolExecutor.shutdown();
+        mSingleThreadExecutor.shutdown();
         sWorkerExecutor = null;
     }
 }
