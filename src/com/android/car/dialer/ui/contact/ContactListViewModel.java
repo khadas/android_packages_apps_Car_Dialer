@@ -33,6 +33,7 @@ import com.android.car.telephony.common.InMemoryPhoneBook;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * View model for {@link ContactListFragment}.
@@ -67,7 +68,7 @@ public class ContactListViewModel extends AndroidViewModel {
         private final SharedPreferencesLiveData mPreferencesLiveData;
         private final Context mContext;
 
-        private Runnable mRunnable;
+        private Future<?> mRunnableFuture;
 
         /**
          * Sort by the default display order of a name. For western names it will be "Given Family".
@@ -123,22 +124,23 @@ public class ContactListViewModel extends AndroidViewModel {
 
             // SingleThreadPoolExecutor is used here to avoid multiple threads sorting the list
             // at the same time.
-            if (mRunnable != null) {
-                WorkerExecutor.getInstance().getSingleThreadPoolExecutor().remove(mRunnable);
+            if (mRunnableFuture != null) {
+                mRunnableFuture.cancel(true);
             }
 
-            mRunnable = () -> {
+            Runnable runnable = () -> {
                 Collections.sort(contactList, comparator);
                 postValue(contactList);
             };
-            WorkerExecutor.getInstance().getSingleThreadPoolExecutor().execute(mRunnable);
+            mRunnableFuture = WorkerExecutor.getInstance().getSingleThreadExecutor().submit(
+                    runnable);
         }
 
         @Override
         protected void onInactive() {
             super.onInactive();
-            if (mRunnable != null) {
-                WorkerExecutor.getInstance().getSingleThreadPoolExecutor().remove(mRunnable);
+            if (mRunnableFuture != null) {
+                mRunnableFuture.cancel(true);
             }
         }
     }
