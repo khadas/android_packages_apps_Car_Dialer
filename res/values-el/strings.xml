@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Το Bluetooth δεν είναι διαθέσιμο."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Για να πραγματοποιήσετε ή να λάβετε κλήσεις, ενεργοποιήστε το Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Για να πραγματοποιήσετε ή να λάβετε κλήσεις, κάντε σύζευξη του τηλεφώνου σας με το αυτοκίνητο."</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"Για αποστολή μηνυμάτων, εγκαταστήστε εφαρμογή ανταλλαγής μηνυμάτων."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Σύνδεση σε Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Έκτακτη ανάγκη"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Κλήση έκτακτης ανάγκης"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"Ιστορικό κλήσεων"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Επαφές"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Πληκτρολόγιο κλήσης"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"Κλήση <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"Αποστολή SMS προς <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"Κλήση"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"Κείμενο"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Προσθήκη αγαπημένης"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Δεν έχετε προσθέσει ακόμα αγαπημένα"</string>
     <string name="search_title" msgid="5412680850141871664">"Αναζήτηση επαφών"</string>
@@ -59,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"Σε αναμονή"</string>
     <string name="setting_title" msgid="1296639422364732365">"Ρυθμίσεις"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"Ορισμός αρχικής σελίδας"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"Παραγγελία επαφής"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"Όνομα"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"Επώνυμο"</string>
 </resources>

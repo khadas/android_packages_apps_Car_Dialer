@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"블루투스를 사용할 수 없습니다."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"전화를 걸거나 받으려면 블루투스를 켜세요."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"전화를 걸거나 받으려면 휴대전화와 자동차를 페어링하세요."</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"문자 메시지를 보내려면 메시지 앱을 설치해야 합니다."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"블루투스에 연결"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"긴급 전화"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"긴급 전화"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"통화 기록"</string>
     <string name="contacts_title" msgid="9201954388634537346">"연락처"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"다이얼패드"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g>에 전화 걸기"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g>에 문자 보내기"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"통화"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"문자 메시지"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"즐겨찾기 추가"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"아직 즐겨찾기를 추가하지 않았습니다."</string>
     <string name="search_title" msgid="5412680850141871664">"연락처 검색"</string>
@@ -59,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"대기 중"</string>
     <string name="setting_title" msgid="1296639422364732365">"설정"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"시작 페이지 설정"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"연락처 순서"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"이름"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"성"</string>
 </resources>

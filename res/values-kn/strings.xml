@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"ಬ್ಲೂಟೂತ್ ಲಭ್ಯವಿಲ್ಲ."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"ಕರೆಗಳನ್ನು ಮಾಡಲು ಅಥವಾ ಸ್ವೀಕರಿಸಲು, ಬ್ಲೂಟೂತ್ ಆನ್ ಮಾಡಿ."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"ಕರೆಗಳನ್ನು ಮಾಡಲು ಅಥವಾ ಸ್ವೀಕರಿಸಲು, ನಿಮ್ಮ ಫೋನ್ ಅನ್ನು ಕಾರ್‌ನ ಸಾಧನಕ್ಕೆ ಸಂಪರ್ಕಿಸಿ."</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"ಪಠ್ಯಗಳನ್ನು ಕಳುಹಿಸಲು, ನೀವು ಸಂದೇಶ ಕಳುಹಿಸುವಿಕೆ ಆ್ಯಪ್ ಅನ್ನು ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಬೇಕು."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ಬ್ಲೂಟೂತ್‌ಗೆ ಸಂಪರ್ಕಿಸಿ"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"ತುರ್ತು"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"ತುರ್ತು ಕರೆ"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"ಕರೆ ಇತಿಹಾಸ"</string>
     <string name="contacts_title" msgid="9201954388634537346">"ಸಂಪರ್ಕಗಳು"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ಡಯಲ್‌ಪ್ಯಾಡ್‌"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> ಗೆ ಕರೆ ಮಾಡಿ"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> ಗೆ ಸಂದೇಶ ಕಳುಹಿಸಿ"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"ಕರೆ ಮಾಡಿ"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"ಪಠ್ಯ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ಮೆಚ್ಚಿನದನ್ನು ಸೇರಿಸಿ"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"ನೀವು ಇದುವರೆಗೂ ಯಾವುದೇ ಮೆಚ್ಚಿನವುಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ"</string>
     <string name="search_title" msgid="5412680850141871664">"ಸಂಪರ್ಕಗಳನ್ನು ಹುಡುಕಿ"</string>
@@ -56,14 +51,10 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"ಒಳಬರುವ ಕರೆ"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"ಮಿಸ್ಡ್ ಕಾಲ್ ಅಧಿಸೂಚನೆ"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"ಮಿಸ್ಡ್‌ ಕಾಲ್‌"</string>
-    <!-- no translation found for onhold_call_label (1937027519810985499) -->
-    <skip />
+    <string name="onhold_call_label" msgid="1937027519810985499">"ತಡೆಹಿಡಿಯಲಾಗಿದೆ"</string>
     <string name="setting_title" msgid="1296639422364732365">"ಸೆಟ್ಟಿಂಗ್‌ಗಳು"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ಪ್ರಾರಂಭದ ಪುಟವನ್ನು ಹೊಂದಿಸಿ"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"ಸಂಪರ್ಕದ ಕ್ರಮ"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"ಮೊದಲ ಹೆಸರು"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"ಕೊನೆಯ ಹೆಸರು"</string>
 </resources>
