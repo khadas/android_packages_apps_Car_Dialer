@@ -54,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"హోల్డ్‌లో ఉంది"</string>
     <string name="setting_title" msgid="1296639422364732365">"సెట్టింగ్‌లు"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ప్రారంభ పేజీని సెట్ చేయి"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"పరిచయ ఆర్డర్"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"మొదటి పేరు"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"చివరి పేరు"</string>
 </resources>
