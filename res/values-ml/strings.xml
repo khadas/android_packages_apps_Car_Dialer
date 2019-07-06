@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth ലഭ്യമല്ല."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"കോളുകൾ ചെയ്യാനോ സ്വീകരിക്കാനോ Bluetooth ഓണാക്കുക."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"കോളുകൾ ചെയ്യാനോ സ്വീകരിക്കാനോ ഫോൺ കാറുമായി ജോടിയാക്കുക."</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"ടെക്‌സ്‌റ്റുകൾ അയയ്‌ക്കാൻ, സന്ദേശമയയ്‌ക്കൽ ആപ്പ് ഇൻസ്‌റ്റാൾ ചെയ്യേണ്ടതുണ്ട്."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Bluetooth-ലേക്ക് കണക്‌റ്റ് ചെയ്യുക"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"അടിയന്തിരാവശ്യം"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"എമർജൻസി കോൾ"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"കോള്‍‌ ചരിത്രം"</string>
     <string name="contacts_title" msgid="9201954388634537346">"കോൺടാക്റ്റുകൾ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ഡയൽപാഡ്"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> എന്നതിൽ വിളിക്കുക"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> എന്നതിൽ ടെക്‌സ്‌റ്റ് ചെയ്യുക"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"വിളിക്കുക"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"ടെക്‌സ്‌റ്റ് ചെയ്യുക"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"പ്രിയപ്പെട്ടത് ചേർക്കുക"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"നിങ്ങൾ ഇതുവരെ പ്രിയപ്പെട്ടവയൊന്നും ചേർത്തിട്ടില്ല"</string>
     <string name="search_title" msgid="5412680850141871664">"കോണ്‍‌ടാക്റ്റുകള്‍ തിരയുക"</string>
@@ -56,14 +51,10 @@
     <string name="notification_incoming_call" msgid="1722904631804432389">"ഇന്‍‌കമിംഗ് കോള്‍"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"മിസ്‌ഡ് കോൾ അറിയിപ്പ്"</string>
     <string name="notification_missed_call" msgid="7127823385811396529">"മിസ്‌ഡ് കോൾ"</string>
-    <!-- no translation found for onhold_call_label (1937027519810985499) -->
-    <skip />
+    <string name="onhold_call_label" msgid="1937027519810985499">"ഹോൾഡിലാണ്"</string>
     <string name="setting_title" msgid="1296639422364732365">"ക്രമീകരണം"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"ആരംഭ പേജ് സജ്ജീകരിക്കുക"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"കോൺടാക്റ്റ് ഓർഡർ"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"ഫസ്റ്റ് നെയിം"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"ലാസ്റ്റ് നെയിം"</string>
 </resources>

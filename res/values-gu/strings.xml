@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"બ્લૂટૂથ ઉપલબ્ધ નથી."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"કૉલ કરવા અથવા મેળવવા માટે, બ્લૂટૂથ ચાલુ કરો."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"કૉલ કરવા અથવા મેળવવા માટે, તમારા ફોનનું કાર સાથે જોડાણ કરો."</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"ટેક્સ્ટ મોકલવા મેસેજિંગ ઍપ ઇન્સ્ટૉલ કરો."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"બ્લૂટૂથ સાથે કનેક્ટ કરો"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"ઇમર્જન્સી"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"ઇમર્જન્સી કૉલ"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"કૉલ ઇતિહાસ"</string>
     <string name="contacts_title" msgid="9201954388634537346">"સંપર્કો"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ડાયલપૅડ"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> પર કૉલ કરો"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> પર ટેક્સ્ટ કરો"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"કૉલ કરો"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"ટેક્સ્ટ કરો"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"મનપસંદ સંપર્ક તરીકે ઉમેરો"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"તમે હજી સુધી કોઈ મનપસંદ ઉમેર્યા નથી"</string>
     <string name="search_title" msgid="5412680850141871664">"સંપર્કોમાં શોધો"</string>
@@ -59,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"હોલ્ડ પર"</string>
     <string name="setting_title" msgid="1296639422364732365">"સેટિંગ"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"શરૂઆતનું પેજ સેટ કરો"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"સંપર્કનો ક્રમ"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"નામ"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"અટક"</string>
 </resources>
