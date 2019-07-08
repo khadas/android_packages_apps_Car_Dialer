@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"ဘလူးတုသ် အသုံးပြု၍မရပါ။"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"ခေါ်ဆိုမှုများ ပြုလုပ်ရန် သို့မဟုတ် လက်ခံရန် \'ဘလူးတုသ်\' ဖွင့်ပါ။"</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"ခေါ်ဆိုမှုများ ပြုလုပ်ရန် သို့မဟုတ် လက်ခံရန် သင့်ဖုန်းကို ကားနှင့် တွဲချိတ်ပါ။"</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"စာတိုပို့ရန် စာပို့အက်ပ် ထည့်သွင်းရမည်။"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"ဘလူးတုသ်သို့ ချိတ်ဆက်ရန်"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"အရေးပေါ်"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"အရေးပေါ်ဖုန်းခေါ်ခြင်း"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"ယခင်ခေါ်ဆိုမှုများ"</string>
     <string name="contacts_title" msgid="9201954388634537346">"အဆက်အသွယ်များ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"နံပါတ်ကွက်"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"<xliff:g id="LABEL">%1$s</xliff:g> ကို ဖုန်းခေါ်ရန်"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"<xliff:g id="LABEL">%1$s</xliff:g> သို့ စာပို့ရန်"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"ဖုန်းဆက်ရန်"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"စာပို့ရန်"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"အကြိုက်ဆုံး ထည့်ရန်"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"သင့်အကြိုက်ဆုံးတစ်ခုမျှ မထည့်ရသေးပါ"</string>
     <string name="search_title" msgid="5412680850141871664">"အဆက်အသွယ်များ ရှာရန်"</string>
@@ -59,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"ဖုန်းကိုင်ထားသည်"</string>
     <string name="setting_title" msgid="1296639422364732365">"ဆက်တင်များ"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"စတင်ခြင်းစာမျက်နှာ သတ်မှတ်ရန်"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"အဆက်အသွယ် အစီအစဉ်"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"ရှေ့အမည်"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"နောက်အမည်"</string>
 </resources>

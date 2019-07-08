@@ -21,7 +21,6 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"無法使用藍牙。"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"如要撥打或接聽電話，請開啟藍牙。"</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"如要撥打或接聽電話，請將手機與汽車配對。"</string>
-    <string name="error_no_text_intent_handler" msgid="497080068122415049">"如要發短訊，您需要安裝短訊應用程式。"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"連接藍牙"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"緊急"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"緊急電話"</string>
@@ -38,10 +37,6 @@
     <string name="call_history_title" msgid="1495905524218923242">"通話記錄"</string>
     <string name="contacts_title" msgid="9201954388634537346">"聯絡人"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"撥號盤"</string>
-    <string name="contact_details_call_number_button_with_label" msgid="4195920045865214993">"致電<xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_text_number_button_with_label" msgid="5798337405717176409">"發短訊給<xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="contact_details_call_number_button" msgid="7994882954807784349">"撥號"</string>
-    <string name="contact_details_text_number_button" msgid="5478874044589167239">"發短訊"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"新增常用聯絡人"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"您尚未新增任何常用聯絡人"</string>
     <string name="search_title" msgid="5412680850141871664">"搜尋聯絡人"</string>
@@ -59,10 +54,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"保留通話"</string>
     <string name="setting_title" msgid="1296639422364732365">"設定"</string>
     <string name="pref_start_page_title" msgid="8243884415248971745">"設定起始頁面"</string>
-    <!-- no translation found for sort_order_title (2713804965189046046) -->
-    <skip />
-    <!-- no translation found for give_name_first_title (9036752103567139094) -->
-    <skip />
-    <!-- no translation found for family_name_first_title (7721976826282427987) -->
-    <skip />
+    <string name="sort_order_title" msgid="2713804965189046046">"聯絡人排序"</string>
+    <string name="give_name_first_title" msgid="9036752103567139094">"名字"</string>
+    <string name="family_name_first_title" msgid="7721976826282427987">"姓氏"</string>
 </resources>
