@@ -32,20 +32,27 @@ public class CallHistoryFragment extends DialerListBaseFragment implements
         CallLogAdapter.OnShowContactDetailListener {
     private static final String CONTACT_DETAIL_FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
 
+    private CallLogAdapter mCallLogAdapter;
+
     public static CallHistoryFragment newInstance() {
         return new CallHistoryFragment();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        CallLogAdapter callLogAdapter = new CallLogAdapter(
-                getContext(), /* onShowContactDetailListener= */this);
-        getRecyclerView().setAdapter(callLogAdapter);
+        // Don't recreate the adapter if we already have one, so that the list items
+        // will display immediately upon the view being recreated. If they're not displayed
+        // immediately, we won't remember our scroll position.
+        if (mCallLogAdapter == null) {
+            mCallLogAdapter = new CallLogAdapter(
+                    getContext(), /* onShowContactDetailListener= */this);
+        }
+        getRecyclerView().setAdapter(mCallLogAdapter);
 
         CallHistoryViewModel viewModel = ViewModelProviders.of(this).get(
                 CallHistoryViewModel.class);
 
-        viewModel.getCallHistory().observe(this, callLogAdapter::setUiCallLogs);
+        viewModel.getCallHistory().observe(this, mCallLogAdapter::setUiCallLogs);
     }
 
     @Override
