@@ -40,8 +40,13 @@ public class ContactListFragment extends DialerListBaseFragment implements
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mContactListAdapter = new ContactListAdapter(
-                getContext(), /* onShowContactDetailListener= */this);
+        // Don't recreate the adapter if we already have one, so that the list items
+        // will display immediately upon the view being recreated. If they're not displayed
+        // immediately, we won't remember our scroll position.
+        if (mContactListAdapter == null) {
+            mContactListAdapter = new ContactListAdapter(
+                    getContext(), /* onShowContactDetailListener= */this);
+        }
         getRecyclerView().setAdapter(mContactListAdapter);
 
         ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
