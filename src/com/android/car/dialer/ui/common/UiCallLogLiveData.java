@@ -19,19 +19,22 @@ package com.android.car.dialer.ui.common;
 import android.content.Context;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+
 import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.livedata.HeartBeatLiveData;
 import com.android.car.dialer.log.L;
-import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneCallLog;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.TelecomUtils;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 
@@ -55,8 +58,15 @@ public class UiCallLogLiveData extends MediatorLiveData<List<UiCallLog>> {
             LiveData<List<Contact>> contactListLiveData) {
         mContext = context;
         addSource(callHistoryLiveData, this::onCallHistoryChanged);
-        addSource(contactListLiveData,
-                (contacts) -> onCallHistoryChanged(callHistoryLiveData.getValue()));
+        addSource(contactListLiveData, (contacts) -> {
+            // Don't call onCallHistoryChanged() before the call history is loaded.
+            // Otherwise, we'll set our value to an empty list instead of just being
+            // uninitialized while loading. This will cause us to lose our scroll position.
+            List<PhoneCallLog> callLogs = callHistoryLiveData.getValue();
+            if (callLogs != null) {
+                onCallHistoryChanged(callLogs);
+            }
+        });
         addSource(heartBeatLiveData, (trigger) -> updateRelativeTime());
     }
 
