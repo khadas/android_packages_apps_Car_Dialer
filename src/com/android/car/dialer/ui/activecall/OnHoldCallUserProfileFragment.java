@@ -16,7 +16,6 @@
 
 package com.android.car.dialer.ui.activecall;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.telecom.Call;
 import android.view.LayoutInflater;
@@ -27,15 +26,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.CallDetail;
 import com.android.car.telephony.common.TelecomUtils;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * A fragment that displays information about onhold call.
@@ -47,6 +48,14 @@ public class OnHoldCallUserProfileFragment extends Fragment {
     private ImageView mSwapCallsButton;
     private LiveData<Call> mPrimaryCallLiveData;
     private LiveData<Call> mSecondaryCallLiveData;
+    private CompletableFuture<Void> mPhoneNumberInfoFuture;
+    private LetterTileDrawable mDefaultAvatar;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mDefaultAvatar = TelecomUtils.createLetterTile(getContext(), null);
+    }
 
     @Nullable
     @Override
@@ -75,13 +84,19 @@ public class OnHoldCallUserProfileFragment extends Fragment {
             return;
         }
 
-        String number = callDetail.getNumber();
-        Pair<String, Uri> displayNameAndAvatarUri = TelecomUtils.getDisplayNameAndAvatarUri(
-                getContext(), number);
+        if (mPhoneNumberInfoFuture != null) {
+            mPhoneNumberInfoFuture.cancel(true);
+        }
 
-        mTitle.setText(displayNameAndAvatarUri.first);
-        TelecomUtils.setContactBitmapAsync(getContext(), mAvatarView,
-                displayNameAndAvatarUri.second, displayNameAndAvatarUri.first);
+        String number = callDetail.getNumber();
+        mTitle.setText(TelecomUtils.getFormattedNumber(getContext(), number));
+        mAvatarView.setImageDrawable(mDefaultAvatar);
+        mPhoneNumberInfoFuture = TelecomUtils.getPhoneNumberInfo(getContext(), number)
+                .thenAcceptAsync((info) -> {
+                    mTitle.setText(info.getDisplayName());
+                    TelecomUtils.setContactBitmapAsync(getContext(), mAvatarView,
+                            info.getAvatarUri(), info.getDisplayName());
+                }, getContext().getMainExecutor());
     }
 
     private void swapCalls() {
@@ -93,6 +108,14 @@ public class OnHoldCallUserProfileFragment extends Fragment {
         // hold primary call
         if (mPrimaryCallLiveData.getValue().getState() != Call.STATE_HOLDING) {
             mPrimaryCallLiveData.getValue().hold();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mPhoneNumberInfoFuture != null) {
+            mPhoneNumberInfoFuture.cancel(true);
         }
     }
 }
