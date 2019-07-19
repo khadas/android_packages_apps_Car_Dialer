@@ -60,7 +60,29 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     car-glide \
     car-glide-disklrucache \
     car-gifdecoder \
-    libphonenumber
+    libphonenumber \
+    androidx.sqlite_sqlite-framework \
+    androidx.sqlite_sqlite \
+    car-androidx-room-common-nodeps \
+    car-androidx-room-runtime-nodeps
+
+LOCAL_ANNOTATION_PROCESSORS := \
+    car-androidx-annotation-nodeps \
+    car-androidx-room-common-nodeps \
+    car-androidx-room-compiler-nodeps \
+    car-androidx-room-migration-nodeps \
+    car-antlr4-nodeps \
+    car-apache-commons-codec-nodeps \
+    car-auto-common-nodeps \
+    car-javapoet-nodeps \
+    car-jetbrains-annotations-nodeps \
+    car-kotlin-metadata-nodeps \
+    car-sqlite-jdbc-nodeps \
+    guava-21.0 \
+    kotlin-stdlib
+
+LOCAL_ANNOTATION_PROCESSOR_CLASSES := \
+    androidx.room.RoomProcessor
 
 LOCAL_PROGUARD_ENABLED := disabled
 
@@ -109,7 +131,29 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     car-glide \
     car-glide-disklrucache \
     car-gifdecoder \
-    libphonenumber
+    libphonenumber \
+    androidx.sqlite_sqlite-framework \
+    androidx.sqlite_sqlite \
+    car-androidx-room-common-nodeps \
+    car-androidx-room-runtime-nodeps
+
+LOCAL_ANNOTATION_PROCESSORS := \
+    car-androidx-annotation-nodeps \
+    car-androidx-room-common-nodeps \
+    car-androidx-room-compiler-nodeps \
+    car-androidx-room-migration-nodeps \
+    car-antlr4-nodeps \
+    car-apache-commons-codec-nodeps \
+    car-auto-common-nodeps \
+    car-javapoet-nodeps \
+    car-jetbrains-annotations-nodeps \
+    car-kotlin-metadata-nodeps \
+    car-sqlite-jdbc-nodeps \
+    guava-21.0 \
+    kotlin-stdlib
+
+LOCAL_ANNOTATION_PROCESSOR_CLASSES := \
+    androidx.room.RoomProcessor
 
 LOCAL_PROGUARD_ENABLED := disabled
 
