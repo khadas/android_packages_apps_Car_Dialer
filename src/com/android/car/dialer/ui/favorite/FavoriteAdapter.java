@@ -20,7 +20,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,8 +37,15 @@ import java.util.List;
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHolder> {
     private static final String TAG = "CD.FavoriteAdapter";
 
+    /** Listener interface for when the add favorite button is clicked */
+    public interface OnAddFavoriteClickedListener {
+        /** Called when the add favorite button is clicked */
+        void onAddFavoriteClicked();
+    }
+
     private List<Contact> mFavoriteContacts = Collections.emptyList();
     private OnItemClickedListener<Contact> mListener;
+    private OnAddFavoriteClickedListener mAddFavoriteListener;
 
     /** Sets the favorite contact list. */
     public void setFavoriteContacts(List<Contact> favoriteContacts) {
@@ -67,18 +73,19 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
 
         if (position >= mFavoriteContacts.size()) {
             viewHolder.onBindAddFavorite(context);
-            viewHolder.itemView.setOnClickListener((v) ->
-                    Toast.makeText(context, "Not yet implemented", Toast.LENGTH_LONG).show());
+            viewHolder.itemView.setOnClickListener((v) -> {
+                if (mAddFavoriteListener != null) {
+                    mAddFavoriteListener.onAddFavoriteClicked();
+                }
+            });
         } else {
             Contact contact = mFavoriteContacts.get(position);
             viewHolder.onBind(context, contact);
-            viewHolder.itemView.setOnClickListener((v) -> onItemViewClicked(contact));
-        }
-    }
-
-    private void onItemViewClicked(Contact contact) {
-        if (mListener != null) {
-            mListener.onItemClicked(contact);
+            viewHolder.itemView.setOnClickListener((v) -> {
+                if (mListener != null) {
+                    mListener.onItemClicked(contact);
+                }
+            });
         }
     }
 
@@ -87,5 +94,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
      */
     public void setOnListItemClickedListener(OnItemClickedListener<Contact> listener) {
         mListener = listener;
+    }
+
+    /**
+     * Sets a {@link OnAddFavoriteClickedListener listener} which will be called when the
+     * "Add favorite" button is clicked.
+     */
+    public void setOnAddFavoriteClickedListener(OnAddFavoriteClickedListener listener) {
+        mAddFavoriteListener = listener;
     }
 }
