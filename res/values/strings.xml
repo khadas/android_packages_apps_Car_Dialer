@@ -69,6 +69,10 @@
     <string name="add_favorite_button">Add a favorite</string>
     <!-- Error message shown when on the favorites page without any favorites added [CHAR_LIMIT=80] -->
     <string name="favorites_empty">You haven\'t added any favorites yet</string>
+    <!-- Button to cancel the dialog where you pick a phone number to add as a favorite [CHAR_LIMIT=30] -->
+    <string name="cancel_add_favorites_dialog">@android:string/cancel</string>
+    <!-- Button to confirm the dialog where you pick a phone number to add as a favorite [CHAR_LIMIT=30] -->
+    <string name="confirm_add_favorites_dialog">@android:string/ok</string>
 
     <!-- Keypad strings-->
     <string name="one" translatable="false">1</string>
