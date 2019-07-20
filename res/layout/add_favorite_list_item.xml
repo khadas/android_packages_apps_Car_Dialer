@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2019 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +13,15 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
-    <dimen name="in_call_margin_between_avatar_and_text">48dp</dimen>
-    <dimen name="call_button_bottom_margin">@*android:dimen/car_padding_2</dimen>
-    <dimen name="call_button_height">@dimen/control_bar_height</dimen>
-    <dimen name="fab_outline_size">84dp</dimen>
-
-    <dimen name="keypad_margin">@*android:dimen/car_padding_4</dimen>
-
-    <dimen name="dialpad_info_title_text_size_max">36sp</dimen>
-</resources>
+<com.android.car.apps.common.UxrButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/add_favorite_button"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:singleLine="true"
+    android:gravity="center"
+    android:background="?android:attr/selectableItemBackground"
+    android:drawableTop="@drawable/ic_add_favorite"
+    android:drawablePadding="@dimen/favorites_avatar_margin_bottom"/>

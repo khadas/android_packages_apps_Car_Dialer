@@ -48,7 +48,9 @@ class FavoriteContactViewHolder extends RecyclerView.ViewHolder {
     FavoriteContactViewHolder(View v) {
         super(v);
         mIcon = v.findViewById(R.id.icon);
-        mIcon.setOutlineProvider(ContactAvatarOutputlineProvider.get());
+        if (mIcon != null) {
+            mIcon.setOutlineProvider(ContactAvatarOutputlineProvider.get());
+        }
         mTitle = v.findViewById(R.id.title);
         mText = v.findViewById(R.id.text);
     }
@@ -56,7 +58,8 @@ class FavoriteContactViewHolder extends RecyclerView.ViewHolder {
     /**
      * Binds view with favorite contact.
      */
-    public void onBind(Context context, @Nonnull Contact contact) {
+    public void onBind(@Nonnull Contact contact) {
+        Context context = itemView.getContext();
         String displayName = contact.getDisplayName();
         mTitle.setText(displayName);
 
@@ -81,14 +84,5 @@ class FavoriteContactViewHolder extends RecyclerView.ViewHolder {
         mText.setText(secondaryText);
 
         TelecomUtils.setContactBitmapAsync(context, mIcon, contact, null);
-    }
-
-    /**
-     * Binds view as the "Add a favorite" button
-     */
-    public void onBindAddFavorite(Context context) {
-        mTitle.setText(R.string.add_favorite_button);
-        mText.setText(null);
-        mIcon.setImageDrawable(context.getDrawable(R.drawable.ic_add_favorite));
     }
 }
