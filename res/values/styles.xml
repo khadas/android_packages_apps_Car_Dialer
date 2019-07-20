@@ -15,6 +15,7 @@
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Dialpad -->
+    <!-- The size won't matter here, as the autosizing will override it -->
     <style name="TextAppearance.DialNumber" parent="@style/TextAppearance.Display3"/>
     <style name="TextAppearance.EmergencyDialNumber" parent="@style/TextAppearance.DialNumber">
         <item name="android:textColor">@color/emergency_text_color</item>

@@ -83,6 +83,9 @@
     <dimen name="dialpad_info_guideline">@dimen/touch_target_size</dimen>
     <dimen name="display_name_padding">@*android:dimen/car_padding_3</dimen>
     <dimen name="call_state_padding">@*android:dimen/car_padding_3</dimen>
+    <dimen name="dialpad_info_title_container_size">@dimen/touch_target_size</dimen>
+    <dimen name="dialpad_info_title_text_size_max">28sp</dimen>
+    <dimen name="dialpad_info_title_text_size_min">24sp</dimen>
 
     <!-- Keypad dimensions -->
     <dimen name="keypad_minimum_size">@dimen/touch_target_size</dimen>
