@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"Teclado de marcación"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Engadir favorito"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Aínda non engadiches ningún favorito"</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:cadea/cancelar"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:cadea/aceptar"</string>
     <string name="search_title" msgid="5412680850141871664">"Buscar contactos"</string>
     <string name="search_hint" msgid="3099066132607042439">"Buscar contactos"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Varios"</string>

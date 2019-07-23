@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"បន្ទះ​លេខ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"បញ្ចូលសំណព្វ"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"អ្នក​មិនទាន់​​បាន​បញ្ចូល​​សំណព្វ​ណា​មួយ​នៅ​ឡើយ​ទេ"</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/បោះបង់"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/យល់ព្រម"</string>
     <string name="search_title" msgid="5412680850141871664">"ស្វែងរកទំនាក់ទំនង"</string>
     <string name="search_hint" msgid="3099066132607042439">"ស្វែងរកទំនាក់ទំនង"</string>
     <string name="type_multiple" msgid="3402949522797441236">"ច្រើន"</string>
