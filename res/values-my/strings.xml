@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"နံပါတ်ကွက်"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"အကြိုက်ဆုံး ထည့်ရန်"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"သင့်အကြိုက်ဆုံးတစ်ခုမျှ မထည့်ရသေးပါ"</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/ပယ်ဖျက်ရန်"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/ok"</string>
     <string name="search_title" msgid="5412680850141871664">"အဆက်အသွယ်များ ရှာရန်"</string>
     <string name="search_hint" msgid="3099066132607042439">"အဆက်အသွယ်များ ရှာရန်"</string>
     <string name="type_multiple" msgid="3402949522797441236">"အများအပြား"</string>
