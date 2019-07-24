@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"다이얼패드"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"즐겨찾기 추가"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"아직 즐겨찾기를 추가하지 않았습니다."</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/cancel"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/ok"</string>
     <string name="search_title" msgid="5412680850141871664">"연락처 검색"</string>
     <string name="search_hint" msgid="3099066132607042439">"연락처 검색"</string>
     <string name="type_multiple" msgid="3402949522797441236">"여러 전화번호"</string>

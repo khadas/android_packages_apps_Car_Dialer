@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"Тергич"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Сүйүктүү номер кошуу"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Азырынча бир да сүйүктүү байланышыңыз жок"</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:сап/жокко чыгаруу"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:сап/макул"</string>
     <string name="search_title" msgid="5412680850141871664">"Байланыштарды издеңиз"</string>
     <string name="search_hint" msgid="3099066132607042439">"Байланыштарды издеңиз"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Бир нече"</string>

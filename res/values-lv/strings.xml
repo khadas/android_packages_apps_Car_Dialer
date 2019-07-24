@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"Numura sastādīšanas tastatūra"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Pievienot izlasei"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Jūs vēl neesat pievienojis nevienu izlases vienumu."</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/cancel"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/ok"</string>
     <string name="search_title" msgid="5412680850141871664">"Meklēt kontaktpersonas"</string>
     <string name="search_hint" msgid="3099066132607042439">"Meklēt kontaktpersonas"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Vairākas"</string>

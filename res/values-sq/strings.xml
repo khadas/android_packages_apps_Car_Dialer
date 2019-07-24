@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"Blloku i formimit të numrit"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Shto një të preferuar"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Nuk ke shtuar ende asnjë të preferuar"</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/cancel"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/ok"</string>
     <string name="search_title" msgid="5412680850141871664">"Kërko për kontakte"</string>
     <string name="search_hint" msgid="3099066132607042439">"Kërko për kontakte"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Disa"</string>

@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"Telefonska tipkovnica"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Dodaj omiljeni"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Još uvijek niste dodali omiljeni sadržaj"</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/otkaži"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/uredu"</string>
     <string name="search_title" msgid="5412680850141871664">"Pretražite kontakte"</string>
     <string name="search_hint" msgid="3099066132607042439">"Pretražite kontakte"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Višestruko"</string>
