@@ -39,6 +39,8 @@
     <string name="dialpad_title" msgid="3746259645005208554">"ଡାଏଲପ୍ୟାଡ୍"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ଏକ ପସନ୍ଦ ଯୋଗ କରନ୍ତୁ"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"ଆପଣ ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପସନ୍ଦ ଯୋଗ କରିନାହାଁନ୍ତି"</string>
+    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/ବାତିଲ୍ କରନ୍ତୁ"</string>
+    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/ଠିକ୍ ଅଛି"</string>
     <string name="search_title" msgid="5412680850141871664">"ଯୋଗାଯୋଗଗୁଡ଼ିକୁ ଖୋଜନ୍ତୁ"</string>
     <string name="search_hint" msgid="3099066132607042439">"ଯୋଗାଯୋଗଗୁଡ଼ିକୁ ଖୋଜନ୍ତୁ"</string>
     <string name="type_multiple" msgid="3402949522797441236">"ଏକାଧିକ"</string>
