@@ -115,5 +115,13 @@
                 <action android:name="android.telecom.action.SHOW_MISSED_CALLS_NOTIFICATION"/>
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:directBootAware="true"
+            android:name="com.android.car.dialer.storage.BluetoothBondedListReceiver">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.BOND_STATE_CHANGED"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

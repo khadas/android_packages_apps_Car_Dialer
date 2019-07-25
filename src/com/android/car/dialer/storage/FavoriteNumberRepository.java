@@ -24,12 +24,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.I18nPhoneNumberWrapper;
 import com.android.car.telephony.common.PhoneNumber;
@@ -138,7 +138,7 @@ public class FavoriteNumberRepository {
 
     /** Remove favorite entries for devices that has been unpaired. */
     public void cleanup(Set<BluetoothDevice> devices) {
-        Log.d(TAG, "remove entries for unpaired devices except: " + devices);
+        L.d(TAG, "remove entries for unpaired devices except %s", devices);
         sSerializedExecutor.execute(() -> {
             List<String> deviceAddresses = new ArrayList<>();
             for (BluetoothDevice device : devices) {
