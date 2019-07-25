@@ -34,6 +34,7 @@ import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
+import com.android.car.dialer.ui.favorite.FavoriteViewModel;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
@@ -59,6 +60,8 @@ public class ContactDetailsFragmentTest {
     private PagedRecyclerView mListView;
     @Mock
     private ContactDetailsViewModel mMockContactDetailsViewModel;
+    @Mock
+    private FavoriteViewModel mMockFavoriteViewModel;
     @Mock
     private Uri mMockContactLookupUri;
     @Mock
@@ -88,6 +91,9 @@ public class ContactDetailsFragmentTest {
                 mMockContactDetailsViewModel);
         when(mMockContactDetailsViewModel.getContactDetails(mMockContactLookupUri)).thenReturn(
                 contactDetails);
+
+        ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
+        when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(new MutableLiveData<>());
     }
 
     @Test
