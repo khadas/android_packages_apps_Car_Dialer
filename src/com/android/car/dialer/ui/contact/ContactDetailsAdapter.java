@@ -17,7 +17,6 @@
 package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,31 +31,39 @@ import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import java.util.ArrayList;
 
 class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolder> {
 
     private static final String TAG = "CD.ContactDetailsAdapter";
-    @VisibleForTesting
-    static final String TELEPHONE_URI_PREFIX = "tel:";
 
     private static final int ID_HEADER = 1;
     private static final int ID_CONTENT = 2;
 
+    interface PhoneNumberPresenter {
+        void onClick(Contact contact, PhoneNumber phoneNumber);
+
+        boolean isFavorite(Contact contact, PhoneNumber phoneNumber);
+    }
+
     private final Context mContext;
+    private final PhoneNumberPresenter mPhoneNumberPresenter;
+    private final ArrayList<Object> mItems = new ArrayList<>();
+    private Contact mContact;
 
-    private final ArrayList<Object> mItems = new ArrayList<Object>();
-
-    public ContactDetailsAdapter(@NonNull Context context, @Nullable Contact contact) {
+    ContactDetailsAdapter(
+            @NonNull Context context,
+            @Nullable Contact contact,
+            @NonNull PhoneNumberPresenter phoneNumberPresenter) {
         super();
         mContext = context;
+        mPhoneNumberPresenter = phoneNumberPresenter;
         setContact(contact);
     }
 
     void setContact(Contact contact) {
         L.d(TAG, "setContact %s", contact);
+        mContact = contact;
         mItems.clear();
         if (shouldShowHeader()) {
             mItems.add(contact);
@@ -103,7 +110,7 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
 
         View view = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent,
                 false);
-        return new ContactDetailsViewHolder(view);
+        return new ContactDetailsViewHolder(view, mPhoneNumberPresenter);
     }
 
     @Override
@@ -113,10 +120,10 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
                 viewHolder.bind(mContext, (Contact) mItems.get(position));
                 break;
             case ID_CONTENT:
-                viewHolder.bind(mContext, (PhoneNumber) mItems.get(position));
+                viewHolder.bind(mContext, mContact, (PhoneNumber) mItems.get(position));
                 break;
             default:
-                Log.e(TAG, "Unknown view type " + viewHolder.getItemViewType());
+                L.e(TAG, "Unknown view type %d ", viewHolder.getItemViewType());
                 return;
         }
     }
