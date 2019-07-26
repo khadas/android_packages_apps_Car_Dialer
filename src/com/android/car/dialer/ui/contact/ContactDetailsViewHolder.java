@@ -20,7 +20,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,7 +50,12 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     @Nullable
     private final View mFavoriteActionView;
 
-    ContactDetailsViewHolder(View v) {
+    @NonNull
+    private final ContactDetailsAdapter.PhoneNumberPresenter mPhoneNumberPresenter;
+
+    ContactDetailsViewHolder(
+            View v,
+            @NonNull ContactDetailsAdapter.PhoneNumberPresenter phoneNumberPresenter) {
         super(v);
         mCallActionView = v.findViewById(R.id.call_action_id);
         mFavoriteActionView = v.findViewById(R.id.contact_details_favorite_button);
@@ -61,6 +65,8 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         if (mAvatar != null) {
             mAvatar.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         }
+
+        mPhoneNumberPresenter = phoneNumberPresenter;
     }
 
     public void bind(Context context, Contact contact) {
@@ -74,7 +80,7 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         mTitle.setText(contact.getDisplayName());
     }
 
-    public void bind(Context context, PhoneNumber phoneNumber) {
+    public void bind(Context context, Contact contact, PhoneNumber phoneNumber) {
 
         mTitle.setText(phoneNumber.getRawNumber());
 
@@ -87,8 +93,9 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         }
 
         mCallActionView.setOnClickListener(v -> placeCall(phoneNumber));
+        mFavoriteActionView.setActivated(mPhoneNumberPresenter.isFavorite(contact, phoneNumber));
         mFavoriteActionView.setOnClickListener(v -> {
-            Toast.makeText(context, "Not yet implemented", Toast.LENGTH_LONG).show();
+            mPhoneNumberPresenter.onClick(contact, phoneNumber);
             mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());
         });
     }

@@ -17,10 +17,18 @@
 package com.android.car.dialer.ui.favorite;
 
 import android.app.Application;
+import android.content.Context;
+
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import com.android.car.dialer.livedata.FavoriteContactLiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.android.car.dialer.storage.FavoriteNumberEntity;
+import com.android.car.dialer.storage.FavoriteNumberRepository;
 import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
+import com.android.car.telephony.common.PhoneNumber;
 
 import java.util.List;
 
@@ -28,15 +36,45 @@ import java.util.List;
  * View model for {@link FavoriteFragment}.
  */
 public class FavoriteViewModel extends AndroidViewModel {
-    private LiveData<List<Contact>> mFavoriteContactsLiveData;
+    private FavoriteNumberRepository mFavoriteNumberRepository;
+    private LiveData<List<FavoriteNumberEntity>> mFavoriteNumbers;
+    private MutableLiveData<List<Contact>> mFavoriteContactsLiveData;
 
     public FavoriteViewModel(Application application) {
         super(application);
-        mFavoriteContactsLiveData = FavoriteContactLiveData.newInstance(application);
+        mFavoriteNumberRepository = new FavoriteNumberRepository(application);
+        mFavoriteNumbers = mFavoriteNumberRepository.getFavoriteNumbers();
+        mFavoriteContactsLiveData = new FavoriteContactLiveData(application);
     }
 
     /** Returns favorite contact list live data. */
     public LiveData<List<Contact>> getFavoriteContacts() {
         return mFavoriteContactsLiveData;
+    }
+
+    /**
+     * Add to favorite or remove from favorite.
+     *
+     * @param contact     The contact the phone number belongs to.
+     * @param phoneNumber The phone number to favorite or unfavorite.
+     * @param isFavorite  When true, add the phone number to favorite. Otherwise remove from
+     *                    favorite.
+     */
+    public void setAsFavorite(Contact contact, PhoneNumber phoneNumber, boolean isFavorite) {
+        if (isFavorite) {
+            mFavoriteNumberRepository.addToFavorite(contact, phoneNumber);
+        } else {
+            mFavoriteNumberRepository.removeFromFavorite(contact, phoneNumber);
+        }
+    }
+
+    private class FavoriteContactLiveData extends MediatorLiveData<List<Contact>> {
+        private FavoriteContactLiveData(Context context) {
+            super();
+            addSource(InMemoryPhoneBook.get().getContactsLiveData(),
+                    contacts -> mFavoriteNumberRepository.convertToContacts(context, this));
+            addSource(mFavoriteNumbers,
+                    favorites -> mFavoriteNumberRepository.convertToContacts(context, this));
+        }
     }
 }
