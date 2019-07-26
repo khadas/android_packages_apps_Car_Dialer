@@ -33,16 +33,21 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.common.DialerUtils;
+import com.android.car.dialer.ui.favorite.FavoriteViewModel;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
+
+import java.util.List;
 
 /**
  * A fragment that shows the name of the contact, the photo and all listed phone numbers. It is
  * primarily used to respond to the results of search queries but supplyig it with the content://
  * uri of a contact should work too.
  */
-public class ContactDetailsFragment extends DialerListBaseFragment {
+public class ContactDetailsFragment extends DialerListBaseFragment implements
+        ContactDetailsAdapter.PhoneNumberPresenter {
     private static final String TAG = "CD.ContactDetailsFragment";
     public static final String FRAGMENT_TAG = "CONTACT_DETAIL_FRAGMENT_TAG";
 
@@ -57,6 +62,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
     private LiveData<Contact> mContactDetailsLiveData;
     private ImageView mAvatarView;
     private TextView mNameView;
+    private FavoriteViewModel mFavoriteViewModel;
 
     /** Creates a new ContactDetailsFragment using a URI to lookup a {@link Contact} at. */
     public static ContactDetailsFragment newInstance(Uri uri) {
@@ -92,7 +98,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
         ContactDetailsViewModel contactDetailsViewModel = ViewModelProviders.of(this).get(
                 ContactDetailsViewModel.class);
         mContactDetailsLiveData = contactDetailsViewModel.getContactDetails(mContactLookupUri);
-        mContactDetailsLiveData.observe(this, this::onContactChanged);
+        mFavoriteViewModel = ViewModelProviders.of(getActivity()).get(FavoriteViewModel.class);
     }
 
     @Override
@@ -114,9 +120,15 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
-                mContact);
+                mContact, this);
         getRecyclerView().setAdapter(contactDetailsAdapter);
-        mContactDetailsLiveData.observe(this, contactDetailsAdapter::setContact);
+        mContactDetailsLiveData.observe(this, contact -> {
+            mContact = contact;
+            onContactChanged(contact);
+            contactDetailsAdapter.setContact(contact);
+        });
+        mFavoriteViewModel.getFavoriteContacts().observe(this, favoriteList ->
+                contactDetailsAdapter.setContact(mContact));
     }
 
     private void onContactChanged(Contact contact) {
@@ -169,5 +181,27 @@ public class ContactDetailsFragment extends DialerListBaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_CONTACT_ENTITY, mContactDetailsLiveData.getValue());
+    }
+
+    @Override
+    public void onClick(Contact contact, PhoneNumber phoneNumber) {
+        boolean isFavorite = isFavorite(contact, phoneNumber);
+        mFavoriteViewModel.setAsFavorite(contact, phoneNumber, !isFavorite);
+    }
+
+    @Override
+    public boolean isFavorite(Contact contact, PhoneNumber phoneNumber) {
+        List<Contact> favoriteContacts = mFavoriteViewModel.getFavoriteContacts().getValue();
+        if (favoriteContacts == null) {
+            return false;
+        }
+        for (Contact favoriteContact : favoriteContacts) {
+            if (favoriteContact.equals(contact)
+                    && !favoriteContact.getNumbers().isEmpty()
+                    && favoriteContact.getNumbers().get(0).equals(phoneNumber)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
