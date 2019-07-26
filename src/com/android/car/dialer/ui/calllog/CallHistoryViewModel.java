@@ -18,13 +18,14 @@ package com.android.car.dialer.ui.calllog;
 
 import android.app.Application;
 import android.text.format.DateUtils;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.livedata.HeartBeatLiveData;
 import com.android.car.dialer.ui.common.UiCallLogLiveData;
-import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class CallHistoryViewModel extends AndroidViewModel {
     /**
      * Returns the live data for call history list.
      */
-    public LiveData<List<UiCallLog>> getCallHistory() {
+    public LiveData<List<Object>> getCallHistory() {
         return mUiCallLogLiveData;
     }
 }
