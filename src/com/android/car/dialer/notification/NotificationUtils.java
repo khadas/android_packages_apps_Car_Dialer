@@ -45,7 +45,7 @@ final class NotificationUtils {
                 context, phoneNumberString);
 
         int avatarSize = context.getResources().getDimensionPixelSize(R.dimen.avatar_icon_size);
-        Icon largeIcon = loadRoundedContactAvatar(context, displayNameAndAvatarUri.second,
+        Icon largeIcon = loadContactAvatar(context, displayNameAndAvatarUri.second,
                 avatarSize);
         if (largeIcon == null) {
             largeIcon = createLetterTile(context, displayNameAndAvatarUri.first, avatarSize);
@@ -53,7 +53,7 @@ final class NotificationUtils {
         return new Pair<>(displayNameAndAvatarUri.first, largeIcon);
     }
 
-    static Icon loadRoundedContactAvatar(Context context, @Nullable Uri avatarUri, int avatarSize) {
+    static Icon loadContactAvatar(Context context, @Nullable Uri avatarUri, int avatarSize) {
         if (avatarUri == null) {
             return null;
         }
@@ -65,15 +65,7 @@ final class NotificationUtils {
             }
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(
                     context.getResources(), input);
-            roundedBitmapDrawable.setCircular(true);
-
-            final Bitmap result = Bitmap.createBitmap(avatarSize, avatarSize,
-                    Bitmap.Config.ARGB_8888);
-            final Canvas canvas = new Canvas(result);
-            roundedBitmapDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-            roundedBitmapDrawable.draw(canvas);
-            roundedBitmapDrawable.getBitmap().recycle();
-            return Icon.createWithBitmap(result);
+            return createFromRoundedBitmapDrawable(context, roundedBitmapDrawable, avatarSize);
         } catch (FileNotFoundException e) {
             // No-op
         }
@@ -82,7 +74,23 @@ final class NotificationUtils {
 
     static Icon createLetterTile(Context context, String displayName, int avatarSize) {
         LetterTileDrawable letterTileDrawable = TelecomUtils.createLetterTile(context, displayName);
-        letterTileDrawable.setIsCircular(true);
-        return Icon.createWithBitmap(letterTileDrawable.toBitmap(avatarSize));
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(
+                context.getResources(), letterTileDrawable.toBitmap(avatarSize));
+        return createFromRoundedBitmapDrawable(context, roundedBitmapDrawable, avatarSize);
+    }
+
+    private static Icon createFromRoundedBitmapDrawable(Context context,
+            RoundedBitmapDrawable roundedBitmapDrawable, int avatarSize) {
+        float radiusPercent = context.getResources()
+                .getFloat(R.dimen.contact_avatar_corner_radius_percent);
+        float radius = avatarSize * radiusPercent;
+        roundedBitmapDrawable.setCornerRadius(radius);
+
+        final Bitmap result = Bitmap.createBitmap(avatarSize, avatarSize,
+                Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(result);
+        roundedBitmapDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        roundedBitmapDrawable.draw(canvas);
+        return Icon.createWithBitmap(result);
     }
 }
