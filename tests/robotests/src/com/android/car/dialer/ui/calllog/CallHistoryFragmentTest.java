@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.apps.common.widget.PagedRecyclerView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
@@ -34,6 +35,7 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
+import com.android.car.dialer.ui.common.entity.HeaderViewHolder;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.dialer.widget.CallTypeIconsView;
 import com.android.car.telephony.common.InMemoryPhoneBook;
@@ -56,13 +58,16 @@ import java.util.List;
 @Config(shadows = {ShadowAndroidViewModelFactory.class})
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class CallHistoryFragmentTest {
+    private static final String HEADER = "TODAY";
     private static final String PHONE_NUMBER = "6502530000";
     private static final String UI_CALLOG_TITLE = "TITLE";
     private static final String UI_CALLOG_TEXT = "TEXT";
-    private static final long TIME_STAMP_1 = 5000;
-    private static final long TIME_STAMP_2 = 10000;
+    private static final long TIME_STAMP_1 = System.currentTimeMillis();
+    private static final long TIME_STAMP_2 = System.currentTimeMillis() - 10000;
 
-    private CallLogViewHolder mViewHolder;
+    private CallHistoryFragment mCallHistoryFragment;
+    private RecyclerView.ViewHolder mCalllogViewHolder;
+    private RecyclerView.ViewHolder mHeaderViewHolder;
     @Mock
     private UiCallManager mMockUiCallManager;
     @Mock
@@ -84,20 +89,22 @@ public class CallHistoryFragmentTest {
         UiCallLog uiCallLog = new UiCallLog(UI_CALLOG_TITLE, UI_CALLOG_TEXT, PHONE_NUMBER, mMockUri,
                 Arrays.asList(record1, record2));
 
-        MutableLiveData<List<UiCallLog>> callLog = new MutableLiveData<>();
-        callLog.setValue(Arrays.asList(uiCallLog));
+        MutableLiveData<List<Object>> callLog = new MutableLiveData<>();
+        callLog.setValue(Arrays.asList(HEADER, uiCallLog));
         ShadowAndroidViewModelFactory.add(CallHistoryViewModel.class, mMockCallHistoryViewModel);
         when(mMockCallHistoryViewModel.getCallHistory()).thenReturn(callLog);
 
-        CallHistoryFragment callHistoryFragment = CallHistoryFragment.newInstance();
+        mCallHistoryFragment = CallHistoryFragment.newInstance();
         FragmentTestActivity mFragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().resume().get();
-        mFragmentTestActivity.setFragment(callHistoryFragment);
+        mFragmentTestActivity.setFragment(mCallHistoryFragment);
 
-        PagedRecyclerView recyclerView = callHistoryFragment.getView().findViewById(R.id.list_view);
+        PagedRecyclerView recyclerView = mCallHistoryFragment.getView()
+                .findViewById(R.id.list_view);
         // set up layout for recyclerView
         recyclerView.layoutBothForTesting(0, 0, 100, 1000);
-        mViewHolder = (CallLogViewHolder) recyclerView.findViewHolderForLayoutPosition(0);
+        mHeaderViewHolder = recyclerView.findViewHolderForLayoutPosition(0);
+        mCalllogViewHolder = recyclerView.findViewHolderForLayoutPosition(1);
     }
 
     @After
@@ -106,10 +113,21 @@ public class CallHistoryFragmentTest {
     }
 
     @Test
-    public void testUI() {
-        TextView titleView = mViewHolder.itemView.findViewById(R.id.title);
-        TextView textView = mViewHolder.itemView.findViewById(R.id.text);
-        CallTypeIconsView callTypeIconsView = mViewHolder.itemView.findViewById(
+    public void testHeaderViewHolder() {
+        assertThat(mHeaderViewHolder instanceof HeaderViewHolder).isTrue();
+
+        TextView title = ((HeaderViewHolder) mHeaderViewHolder).itemView.findViewById(R.id.title);
+        assertThat(title.getText()).isEqualTo(HEADER);
+    }
+
+    @Test
+    public void testCalllogViewHolder() {
+        assertThat(mCalllogViewHolder instanceof CallLogViewHolder).isTrue();
+
+        CallLogViewHolder viewHolder = (CallLogViewHolder) mCalllogViewHolder;
+        TextView titleView = viewHolder.itemView.findViewById(R.id.title);
+        TextView textView = viewHolder.itemView.findViewById(R.id.text);
+        CallTypeIconsView callTypeIconsView = viewHolder.itemView.findViewById(
                 R.id.call_type_icons);
 
         assertThat(titleView.getText()).isEqualTo(UI_CALLOG_TITLE);
@@ -122,7 +140,8 @@ public class CallHistoryFragmentTest {
 
     @Test
     public void testClick_placeCall() {
-        View callButton = mViewHolder.itemView.findViewById(R.id.call_action_id);
+        View callButton = ((CallLogViewHolder) mCalllogViewHolder).itemView
+                .findViewById(R.id.call_action_id);
         assertThat(callButton.hasOnClickListeners()).isTrue();
 
         callButton.performClick();

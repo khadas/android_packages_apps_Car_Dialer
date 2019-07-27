@@ -65,14 +65,24 @@
     <!-- Toolbar title for tabbed pages -->
     <string name="default_toolbar_title" translatable="false"></string>
 
+    <!-- Headers for call history -->
+    <!-- Header in call log to group calls from the current day. [CHAR LIMIT=30] -->
+    <string name="call_log_header_today">Today</string>
+
+    <!-- Header in call log to group calls from the previous day. [CHAR LIMIT=30] -->
+    <string name="call_log_header_yesterday">Yesterday</string>
+
+    <!-- Header in call log to group calls from before yesterday. [CHAR LIMIT=30] -->
+    <string name="call_log_header_older">Older</string>
+
     <!-- Button to add start choosing a contact to add as a new favorite [CHAR_LIMIT=50] -->
     <string name="add_favorite_button">Add a favorite</string>
     <!-- Error message shown when on the favorites page without any favorites added [CHAR_LIMIT=80] -->
     <string name="favorites_empty">You haven\'t added any favorites yet</string>
-    <!-- Button to cancel the dialog where you pick a phone number to add as a favorite [CHAR_LIMIT=30] -->
-    <string name="cancel_add_favorites_dialog">@android:string/cancel</string>
-    <!-- Button to confirm the dialog where you pick a phone number to add as a favorite [CHAR_LIMIT=30] -->
-    <string name="confirm_add_favorites_dialog">@android:string/ok</string>
+    <!-- Button to cancel the dialog where you pick a phone number to add as a favorite -->
+    <string name="cancel_add_favorites_dialog" translatable="false">@android:string/cancel</string>
+    <!-- Button to confirm the dialog where you pick a phone number to add as a favorite -->
+    <string name="confirm_add_favorites_dialog" translatable="false">@android:string/ok</string>
 
     <!-- Keypad strings-->
     <string name="one" translatable="false">1</string>
