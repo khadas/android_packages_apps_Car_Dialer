@@ -79,7 +79,7 @@ public class ContactListViewHolderTest {
     @Test
     public void testDisplayName() {
         when(mMockContact.getDisplayName()).thenReturn(DISPLAY_NAME);
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(((TextView) mItemView.findViewById(R.id.title)).getText()).isEqualTo(
                 DISPLAY_NAME);
@@ -90,7 +90,7 @@ public class ContactListViewHolderTest {
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(LABEL_1);
     }
@@ -100,7 +100,7 @@ public class ContactListViewHolderTest {
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, TYPE, null,
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getResources().getText(
@@ -114,7 +114,7 @@ public class ContactListViewHolderTest {
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         when(phoneNumber.getLabel()).thenReturn(null);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo("");
     }
@@ -127,7 +127,7 @@ public class ContactListViewHolderTest {
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(false);
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getString(R.string.type_multiple));
@@ -142,7 +142,7 @@ public class ContactListViewHolderTest {
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getString(R.string.primary_number_description, LABEL_2));
@@ -157,7 +157,7 @@ public class ContactListViewHolderTest {
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getString(R.string.primary_number_description,
@@ -176,7 +176,7 @@ public class ContactListViewHolderTest {
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getString(R.string.primary_number_description, "null"));
@@ -188,7 +188,7 @@ public class ContactListViewHolderTest {
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         View callActionView = mItemView.findViewById(R.id.call_action_id);
         assertThat(callActionView.hasOnClickListeners()).isTrue();
@@ -209,7 +209,7 @@ public class ContactListViewHolderTest {
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(false);
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         assertThat(ShadowAlertDialog.getLatestAlertDialog()).isNull();
         View callActionView = mItemView.findViewById(R.id.call_action_id);
@@ -229,7 +229,7 @@ public class ContactListViewHolderTest {
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         View callActionView = mItemView.findViewById(R.id.call_action_id);
         assertThat(callActionView.hasOnClickListeners()).isTrue();
@@ -243,7 +243,7 @@ public class ContactListViewHolderTest {
 
     @Test
     public void testClickShowContactDetailView_showContactDetail() {
-        mContactListViewHolder.onBind(mMockContact);
+        mContactListViewHolder.onBind(mMockContact, false, "");
 
         View showContactDetailActionView = mItemView.findViewById(R.id.show_contact_detail_id);
         assertThat(showContactDetailActionView.hasOnClickListeners()).isTrue();
