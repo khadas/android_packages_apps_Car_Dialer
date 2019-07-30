@@ -145,6 +145,10 @@
     <!-- Text to show the call is onhold [CHAR LIMIT=40]-->
     <string name="onhold_call_label">On Hold</string>
 
+    <!-- Contact list headers -->
+    <!-- Contact list label for contact names starting with special characters -->
+    <string name="header_for_type_other" translatable="false">&#8230;</string>
+
     <!-- Dialer Setting -->
     <!-- Title of the settings page [CHAR LIMIT=30]-->
     <string name="setting_title">Settings</string>
