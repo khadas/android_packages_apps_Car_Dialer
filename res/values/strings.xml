@@ -123,8 +123,6 @@
     <string name="select_number_dialog_just_once_button">Just once</string>
     <!-- Button for choose a phone number dialog to set the selected number as default [CHAR LIMIT=30] -->
     <string name="select_number_dialog_always_button">Always</string>
-    <!-- Title for set default phone number dialog [CHAR LIMIT=60]-->
-    <string name="set_default_number">Set default phone number</string>
     <!-- Description for the default phone number of the contact [CHAR LIMIT=30] -->
     <string name="primary_number_description">
         <xliff:g id="label" example="Mobile">%1$s</xliff:g>
