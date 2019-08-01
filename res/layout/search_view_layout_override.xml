@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2019 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<!-- This file is branched out from the search_view.xml in the framework and fixes the style for dialer.-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@*android:id/search_bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <!-- This is actually used for the badge icon *or* the badge label (or neither) -->
+    <TextView
+        android:id="@*android:id/search_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:drawablePadding="0dip"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?android:attr/textColorPrimary"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@*android:id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/actionButtonStyle"
+        android:layout_gravity="center_vertical"
+        android:focusable="true"/>
+
+    <LinearLayout
+        android:id="@*android:id/search_edit_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layoutDirection="locale">
+
+        <ImageView
+            android:id="@*android:id/search_mag_icon"
+            android:layout_width="@*android:dimen/dropdownitem_icon_width"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:layout_marginStart="@*android:dimen/dropdownitem_text_padding_left"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"/>
+
+        <!-- Inner layout contains the app icon, button(s) and EditText -->
+        <LinearLayout
+            android:id="@*android:id/search_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <view class="android.widget.SearchView$SearchAutoComplete"
+                  android:id="@*android:id/search_src_text"
+                  android:layout_height="match_parent"
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:singleLine="true"
+                  android:background="@null"
+                  android:inputType="text|textAutoComplete|textNoSuggestions"
+                  android:imeOptions="actionSearch"
+                  android:drawableStart="@drawable/ic_app_icon"
+                  android:drawablePadding="@*android:dimen/car_padding_2"
+                  android:dropDownHeight="wrap_content"
+                  android:dropDownAnchor="@*android:id/search_edit_frame"
+                  android:dropDownVerticalOffset="0dip"
+                  android:dropDownHorizontalOffset="0dip"/>
+
+            <ImageView
+                android:id="@*android:id/search_close_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/actionButtonStyle"
+                android:focusable="true"
+                android:contentDescription="@*android:string/searchview_description_clear"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@*android:id/submit_area"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@*android:id/search_go_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/actionButtonStyle"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:focusable="true"
+                android:contentDescription="@*android:string/searchview_description_submit"/>
+
+            <ImageView
+                android:id="@*android:id/search_voice_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/actionButtonStyle"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:focusable="true"
+                android:contentDescription="@*android:string/searchview_description_voice"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
