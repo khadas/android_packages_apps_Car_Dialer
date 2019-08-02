@@ -362,6 +362,12 @@ public class TelecomActivity extends FragmentActivity implements
                         : R.style.RootToolbarDisplayOptions,
                 android.R.attr.displayOptions);
         getActionBar().setDisplayOptions(displayOptions);
+
+        Fragment topFragment = getSupportFragmentManager().findFragmentById(
+                R.id.content_fragment_container);
+        if (topFragment instanceof DialerBaseFragment) {
+            ((DialerBaseFragment) topFragment).setupActionBar(getActionBar());
+        }
     }
 
     @Override
