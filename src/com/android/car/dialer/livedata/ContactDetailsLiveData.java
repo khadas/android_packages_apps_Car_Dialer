@@ -90,8 +90,9 @@ public class ContactDetailsLiveData extends AsyncQueryLiveData<Contact> {
             return new QueryParam(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     /* projection= */null,
-                    /* selection= */ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                    new String[]{String.valueOf(contactId)},
+                    /* selection= */ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ? and "
+                    + ContactsContract.RawContacts.ACCOUNT_TYPE + " != ?",
+                    new String[]{String.valueOf(contactId), "com.google"},
                     /* orderBy= */null);
         }
     }
