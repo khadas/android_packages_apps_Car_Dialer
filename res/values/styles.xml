@@ -63,7 +63,7 @@
     </style>
 
     <style name="NoHfpText">
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">3</item>
     </style>
