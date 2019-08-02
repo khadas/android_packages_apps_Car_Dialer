@@ -137,7 +137,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    protected void setupActionBar(@NonNull ActionBar actionBar) {
+    public void setupActionBar(@NonNull ActionBar actionBar) {
         actionBar.setCustomView(R.layout.contact_details_action_bar);
         actionBar.setTitle(null);
 

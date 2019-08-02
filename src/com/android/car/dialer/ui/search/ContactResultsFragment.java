@@ -17,6 +17,8 @@
 package com.android.car.dialer.ui.search;
 
 import android.app.ActionBar;
+import android.app.SearchManager;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -69,8 +71,6 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     private RecyclerView.OnScrollListener mOnScrollChangeListener;
     private SearchView mSearchView;
 
-    private boolean mKeyboardShown = false;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,15 +89,6 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
             }
             getArguments().clear();
         }
-
-        if (savedInstanceState != null) {
-            mKeyboardShown = savedInstanceState.getBoolean(KEY_KEYBOARD_SHOWN, false);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean(KEY_KEYBOARD_SHOWN, mKeyboardShown);
     }
 
     @Override
@@ -131,29 +122,25 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    protected void setupActionBar(@NonNull ActionBar actionBar) {
+    public void setupActionBar(@NonNull ActionBar actionBar) {
         super.setupActionBar(actionBar);
 
         // We have to use the setCustomView that accepts a LayoutParams to get the SearchView
-        // to take up the full height and width of the action bar
+        // to take up the full height and width of the action bar.
         View v = getLayoutInflater().inflate(R.layout.search_view, null);
         actionBar.setCustomView(v, new ActionBar.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
 
         SearchView searchView = actionBar.getCustomView().findViewById(R.id.search_view);
+        SearchManager searchManager =
+                (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getActivity().getComponentName()));
 
         // We need to call setIconified(false) so the SearchView is a text box instead of just
-        // an icon, but doing so also focuses on it and shows the keyboard. The first time we
-        // enter the fragment that's fine, but every time after we have to clearFocus() so the
-        // keyboard isn't shown.
+        // an icon, but doing so also focuses on it and shows the keyboard.
         searchView.setIconified(false);
-        if (mKeyboardShown) {
-            searchView.clearFocus();
-        } else {
-            mKeyboardShown = true;
-        }
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -177,8 +164,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         mSearchView.clearFocus();
     }
 
