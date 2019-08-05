@@ -101,7 +101,8 @@
         <item name="android:minHeight">@dimen/touch_target_size</item>
     </style>
 
-    <style name="Widget.Dialer.ActionButton.Overflow" parent="android:Widget.DeviceDefault.ActionButton.Overflow">
+    <style name="Widget.Dialer.ActionButton.Overflow"
+           parent="android:Widget.DeviceDefault.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_overflow</item>
         <item name="android:minWidth">@dimen/touch_target_size</item>
         <item name="android:minHeight">@dimen/touch_target_size</item>
@@ -137,6 +138,12 @@
 
     <style name="HomeAsUpDisplayOptions">
         <item name="android:displayOptions">showTitle|homeAsUp|showCustom</item>
+    </style>
+
+    <style name="Widget.Dialer.Button" parent="android:Widget.DeviceDefault.Button">
+        <item name="android:ellipsize">none</item>
+        <item name="android:requiresFadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">@*android:dimen/car_textview_fading_edge_length</item>
     </style>
 
 </resources>
