@@ -21,7 +21,9 @@
     android:text="@string/add_favorite_button"
     android:textAppearance="?android:attr/textAppearanceLarge"
     android:singleLine="true"
-    android:gravity="center"
+    android:gravity="top|center_horizontal"
     android:background="?android:attr/selectableItemBackground"
+    android:paddingStart="0dp"
+    android:paddingEnd="0dp"
     android:drawableTop="@drawable/ic_add_favorite"
     android:drawablePadding="@dimen/favorites_avatar_margin_bottom"/>
