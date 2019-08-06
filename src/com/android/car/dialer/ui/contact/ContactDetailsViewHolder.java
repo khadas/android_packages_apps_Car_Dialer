@@ -88,8 +88,10 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         CharSequence readableLabel = phoneNumber.getReadableLabel(context.getResources());
         if (phoneNumber.isPrimary()) {
             mText.setText(context.getString(R.string.primary_number_description, readableLabel));
+            mText.setTextAppearance(R.style.TextAppearance_DefaultNumberLabel);
         } else {
             mText.setText(readableLabel);
+            mText.setTextAppearance(R.style.TextAppearance_ContactDetailsListSubtitle);
         }
 
         mCallActionView.setOnClickListener(v -> placeCall(phoneNumber));
