@@ -30,7 +30,6 @@
     <color name="car_key2_dark">@*android:color/car_grey_700</color>
 
     <color name="emergency_text_color">@*android:color/car_red_500a</color>
-    <color name="connect_bluetooth_text_color">@*android:color/accent_device_default_light</color>
 
     <!-- Components -->
     <color name="divider_color">@color/divider_color_light</color>
