@@ -23,6 +23,7 @@ limitations under the License.
         </item>
         <item name="android:listDivider">@drawable/list_divider</item>
         <item name="android:toolbarStyle">@style/Widget.Dialer.Toolbar</item>
+        <item name="android:buttonStyle">@style/Widget.Dialer.Button</item>
     </style>
 
     <style name="Theme.Dialer.Setting" parent="Theme.Dialer">
