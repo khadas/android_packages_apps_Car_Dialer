@@ -49,7 +49,7 @@ public class MenuActionProvider extends ActionProvider {
     @Override
     public View onCreateActionView(MenuItem forItem) {
         View actionView = LayoutInflater.from(mContext).inflate(R.layout.menu_action_view, null);
-        actionView.setTooltip(forItem.getTitle());
+        actionView.setContentDescription(forItem.getTitle());
         ImageView icon = actionView.findViewById(R.id.menu_icon);
         icon.setImageDrawable(forItem.getIcon());
         if (forItem.getIconTintMode() != null) {

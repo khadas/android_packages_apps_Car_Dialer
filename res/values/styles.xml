@@ -63,7 +63,7 @@
     </style>
 
     <style name="NoHfpText">
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">3</item>
     </style>
@@ -101,7 +101,8 @@
         <item name="android:minHeight">@dimen/touch_target_size</item>
     </style>
 
-    <style name="Widget.Dialer.ActionButton.Overflow" parent="android:Widget.DeviceDefault.ActionButton.Overflow">
+    <style name="Widget.Dialer.ActionButton.Overflow"
+           parent="android:Widget.DeviceDefault.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_overflow</item>
         <item name="android:minWidth">@dimen/touch_target_size</item>
         <item name="android:minHeight">@dimen/touch_target_size</item>
@@ -121,13 +122,18 @@
 
     <!-- Call history -->
     <style name="TextAppearance.CallLogTitleDefault" parent="@style/TextAppearance.Body1"/>
-
     <!-- Customized text color for missed calls can be added here -->
     <style name="TextAppearance.CallLogTitleMissedCall" parent="@style/TextAppearance.Body1"/>
 
     <!-- Contact details -->
     <style name="TextAppearance.ContactDetailsTitle" parent="@style/TextAppearance.Display2"/>
+    <style name="TextAppearance.ContactDetailsListTitle" parent="@style/TextAppearance.Body1"/>
+    <style name="TextAppearance.ContactDetailsListSubtitle" parent="@style/TextAppearance.Body3"/>
+    <style name="TextAppearance.DefaultNumberLabel" parent="@style/TextAppearance.Body3">
+        <item name="android:textColor">@*android:color/accent_device_default_light</item>
+    </style>
 
+    <!-- Contact results -->
     <style name="TextAppearance.ContactResultTitle" parent="@style/TextAppearance.Body1"/>
 
     <!-- Display options defined for ActionBar-->
@@ -137,6 +143,12 @@
 
     <style name="HomeAsUpDisplayOptions">
         <item name="android:displayOptions">showTitle|homeAsUp|showCustom</item>
+    </style>
+
+    <style name="Widget.Dialer.Button" parent="android:Widget.DeviceDefault.Button">
+        <item name="android:ellipsize">none</item>
+        <item name="android:requiresFadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">@*android:dimen/car_textview_fading_edge_length</item>
     </style>
 
 </resources>
