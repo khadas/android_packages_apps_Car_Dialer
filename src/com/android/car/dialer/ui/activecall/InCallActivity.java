@@ -31,6 +31,7 @@ import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.notification.InCallNotificationController;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class InCallActivity extends FragmentActivity {
     private Fragment mIncomingCallFragment;
 
     private MutableLiveData<Boolean> mShowIncomingCall;
+    private LiveData<Call> mIncomingCallLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +58,23 @@ public class InCallActivity extends FragmentActivity {
 
         mShowIncomingCall = new MutableLiveData();
         InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
-        LiveData<Call> incomingCallLiveData = LiveDataFunctions.iff(mShowIncomingCall,
+        mIncomingCallLiveData = LiveDataFunctions.iff(mShowIncomingCall,
                 inCallViewModel.getIncomingCall());
-        incomingCallLiveData.observe(this, this::updateIncomingCallVisibility);
-        LiveDataFunctions.pair(inCallViewModel.getOngoingCallList(), incomingCallLiveData).observe(
+        mIncomingCallLiveData.observe(this, this::updateIncomingCallVisibility);
+        LiveDataFunctions.pair(inCallViewModel.getOngoingCallList(), mIncomingCallLiveData).observe(
                 this, this::maybeFinishActivity);
 
         handleIntent();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        L.d(TAG, "onStop");
+        if (mShowIncomingCall.getValue()) {
+            InCallNotificationController.get()
+                    .showInCallNotification(mIncomingCallLiveData.getValue());
+        }
     }
 
     @Override
