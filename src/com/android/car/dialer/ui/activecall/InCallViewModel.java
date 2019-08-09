@@ -78,6 +78,9 @@ public class InCallViewModel extends AndroidViewModel implements
         public void onServiceConnected(ComponentName name, IBinder binder) {
             L.d(TAG, "onServiceConnected: %s, service: %s", name, binder);
             mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
+            for (Call call : mInCallService.getCalls()) {
+                call.registerCallback(mCallStateChangedCallback);
+            }
             updateCallList();
             mInCallService.addActiveCallListChangedCallback(InCallViewModel.this);
         }
@@ -235,6 +238,9 @@ public class InCallViewModel extends AndroidViewModel implements
     protected void onCleared() {
         mContext.unbindService(mInCallServiceConnection);
         if (mInCallService != null) {
+            for (Call call : mInCallService.getCalls()) {
+                call.unregisterCallback(mCallStateChangedCallback);
+            }
             mInCallService.removeActiveCallListChangedCallback(this);
         }
         mInCallService = null;
