@@ -25,15 +25,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.telecom.Call;
+import android.text.TextUtils;
 
 import androidx.annotation.StringRes;
-import androidx.core.util.Pair;
 
 import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.telephony.common.CallDetail;
+
+import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 /** Controller that manages the heads up notification for incoming calls. */
 public final class InCallNotificationController {
@@ -77,6 +80,8 @@ public final class InCallNotificationController {
 
     private final Context mContext;
     private final NotificationManager mNotificationManager;
+    private final Notification.Builder mNotificationBuilder;
+    private CompletableFuture<Void> mNotificationFuture;
 
     @TargetApi(26)
     private InCallNotificationController(Context context) {
@@ -88,17 +93,6 @@ public final class InCallNotificationController {
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name,
                 NotificationManager.IMPORTANCE_HIGH);
         mNotificationManager.createNotificationChannel(notificationChannel);
-    }
-
-
-    /** Show a new incoming call notification or update the existing incoming call notification. */
-    @TargetApi(26)
-    public void showInCallNotification(Call call) {
-        L.d(TAG, "showInCallNotification");
-        CallDetail callDetail = CallDetail.fromTelecomCallDetail(call.getDetails());
-        String number = callDetail.getNumber();
-        Pair<String, Icon> displayNameAndRoundedAvatar =
-                NotificationUtils.getDisplayNameAndRoundedAvatar(mContext, number);
 
         Intent intent = new Intent(mContext, InCallActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -106,24 +100,56 @@ public final class InCallNotificationController {
         PendingIntent fullscreenIntent = PendingIntent.getActivity(mContext, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification.Builder builder = new Notification.Builder(mContext, CHANNEL_ID)
+        mNotificationBuilder = new Notification.Builder(mContext, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_phone)
-                .setLargeIcon(displayNameAndRoundedAvatar.second)
-                .setContentTitle(displayNameAndRoundedAvatar.first)
                 .setContentText(mContext.getString(R.string.notification_incoming_call))
                 .setFullScreenIntent(fullscreenIntent, /* highPriority= */true)
                 .setCategory(Notification.CATEGORY_CALL)
-                .addAction(getAction(call, R.string.answer_call,
-                        NotificationService.ACTION_ANSWER_CALL))
-                .addAction(getAction(call, R.string.decline_call,
-                        NotificationService.ACTION_DECLINE_CALL))
                 .setOngoing(true)
                 .setAutoCancel(false);
+    }
 
+
+    /** Show a new incoming call notification or update the existing incoming call notification. */
+    @TargetApi(26)
+    public void showInCallNotification(Call call) {
+        L.d(TAG, "showInCallNotification");
+
+        if (mNotificationFuture != null) {
+            mNotificationFuture.cancel(true);
+        }
+
+        CallDetail callDetail = CallDetail.fromTelecomCallDetail(call.getDetails());
+        String number = callDetail.getNumber();
+        String tag = call.getDetails().getTelecomCallId();
+        mNotificationBuilder
+                .setLargeIcon((Icon) null)
+                .setContentTitle(number)
+                .setActions(
+                        getAction(call, R.string.answer_call,
+                                NotificationService.ACTION_ANSWER_CALL),
+                        getAction(call, R.string.decline_call,
+                                NotificationService.ACTION_DECLINE_CALL));
         mNotificationManager.notify(
-                call.getDetails().getTelecomCallId(),
+                tag,
                 NOTIFICATION_ID,
-                builder.build());
+                mNotificationBuilder.build());
+
+        mNotificationFuture = NotificationUtils.getDisplayNameAndRoundedAvatar(mContext, number)
+                .thenAcceptAsync((pair) -> {
+                    // Check that the notification hasn't already been dismissed
+                    if (Arrays.stream(mNotificationManager.getActiveNotifications()).anyMatch((n) ->
+                            n.getId() == NOTIFICATION_ID && TextUtils.equals(n.getTag(), tag))) {
+                        mNotificationBuilder
+                                .setLargeIcon(pair.second)
+                                .setContentTitle(pair.first);
+
+                        mNotificationManager.notify(
+                                tag,
+                                NOTIFICATION_ID,
+                                mNotificationBuilder.build());
+                    }
+                }, mContext.getMainExecutor());
     }
 
     /** Cancel the incoming call notification for the given call. */
