@@ -33,24 +33,26 @@ import com.android.car.telephony.common.TelecomUtils;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.concurrent.CompletableFuture;
 
 /** Util class that shares common functionality for notifications. */
 final class NotificationUtils {
     private NotificationUtils() {
     }
 
-    static Pair<String, Icon> getDisplayNameAndRoundedAvatar(Context context,
-            String phoneNumberString) {
-        Pair<String, Uri> displayNameAndAvatarUri = TelecomUtils.getDisplayNameAndAvatarUri(
-                context, phoneNumberString);
+    static CompletableFuture<Pair<String, Icon>> getDisplayNameAndRoundedAvatar(Context context,
+            String number) {
+        return TelecomUtils.getPhoneNumberInfo(context, number)
+                .thenApplyAsync((info) -> {
+                    int size = context.getResources()
+                            .getDimensionPixelSize(R.dimen.avatar_icon_size);
+                    Icon largeIcon = loadContactAvatar(context, info.getAvatarUri(), size);
+                    if (largeIcon == null) {
+                        largeIcon = createLetterTile(context, info.getDisplayName(), size);
+                    }
 
-        int avatarSize = context.getResources().getDimensionPixelSize(R.dimen.avatar_icon_size);
-        Icon largeIcon = loadContactAvatar(context, displayNameAndAvatarUri.second,
-                avatarSize);
-        if (largeIcon == null) {
-            largeIcon = createLetterTile(context, displayNameAndAvatarUri.first, avatarSize);
-        }
-        return new Pair<>(displayNameAndAvatarUri.first, largeIcon);
+                    return new Pair<>(info.getDisplayName(), largeIcon);
+                });
     }
 
     static Icon loadContactAvatar(Context context, @Nullable Uri avatarUri, int avatarSize) {
@@ -72,7 +74,7 @@ final class NotificationUtils {
         return null;
     }
 
-    static Icon createLetterTile(Context context, String displayName, int avatarSize) {
+    private static Icon createLetterTile(Context context, String displayName, int avatarSize) {
         LetterTileDrawable letterTileDrawable = TelecomUtils.createLetterTile(context, displayName);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(
                 context.getResources(), letterTileDrawable.toBitmap(avatarSize));
