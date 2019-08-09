@@ -105,9 +105,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         mCallLiveData = inCallViewModel.getPrimaryCall();
         inCallViewModel.getAudioRoute().observe(this, this::updateViewBasedOnAudioRoute);
 
-        OngoingCallStateViewModel ongoingCallStateViewModel = ViewModelProviders.of(
-                getActivity()).get(OngoingCallStateViewModel.class);
-        mDialpadState = ongoingCallStateViewModel.getDialpadState();
+        mDialpadState = inCallViewModel.getDialpadOpenState();
     }
 
     @Nullable
