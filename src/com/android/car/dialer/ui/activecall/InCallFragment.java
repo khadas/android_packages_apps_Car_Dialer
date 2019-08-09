@@ -18,7 +18,6 @@ package com.android.car.dialer.ui.activecall;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.telecom.Call;
@@ -46,6 +45,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import java.util.concurrent.CompletableFuture;
+
 /** A fragment that displays information about a call with actions. */
 public abstract class InCallFragment extends Fragment {
     private static final String TAG = "CD.InCallFragment";
@@ -56,6 +57,15 @@ public abstract class InCallFragment extends Fragment {
     private TextView mNameView;
     private ImageView mAvatarView;
     private BackgroundImageView mBackgroundImage;
+    private LetterTileDrawable mDefaultAvatar;
+    private CompletableFuture<Void> mPhoneNumberInfoFuture;
+    private String mCurrentNumber;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mDefaultAvatar = TelecomUtils.createLetterTile(getContext(), null);
+    }
 
     /**
      * Shared UI elements between ongoing call and incoming call page: {@link BackgroundImageView}
@@ -81,47 +91,64 @@ public abstract class InCallFragment extends Fragment {
         }
 
         String number = callDetail.getNumber();
-        Pair<String, Uri> displayNameAndAvatarUri = TelecomUtils.getDisplayNameAndAvatarUri(
-                getContext(), number);
-
-        mNameView.setText(displayNameAndAvatarUri.first);
-
-        String phoneNumberLabel = TelecomUtils.getTypeFromNumber(getContext(), number).toString();
-        if (!phoneNumberLabel.isEmpty()) {
-            phoneNumberLabel += " ";
+        if (mCurrentNumber != null && mCurrentNumber.equals(number)) {
+            return;
         }
-        phoneNumberLabel += TelecomUtils.getFormattedNumber(getContext(), number);
-        if (!TextUtils.isEmpty(phoneNumberLabel) && !phoneNumberLabel.equals(
-                displayNameAndAvatarUri.first)) {
-            mPhoneNumberView.setText(phoneNumberLabel);
-            mPhoneNumberView.setVisibility(View.VISIBLE);
-        } else {
-            mPhoneNumberView.setVisibility(View.GONE);
+        mCurrentNumber = number;
+
+        if (mPhoneNumberInfoFuture != null) {
+            mPhoneNumberInfoFuture.cancel(true);
         }
 
-        LetterTileDrawable letterTile = TelecomUtils.createLetterTile(
-                getContext(), displayNameAndAvatarUri.first);
+        mNameView.setText(TelecomUtils.getFormattedNumber(getContext(), number));
+        mPhoneNumberView.setVisibility(View.GONE);
+        mAvatarView.setImageDrawable(mDefaultAvatar);
 
-        Glide.with(getContext())
-                .asBitmap()
-                .load(displayNameAndAvatarUri.second)
-                .apply(new RequestOptions().centerCrop().error(letterTile))
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource,
-                            Transition<? super Bitmap> glideAnimation) {
-                        // set showAnimation to false mostly because bindUserProfileView will be
-                        // called several times, and we don't want the image to flicker
-                        mBackgroundImage.setBackgroundImage(resource, false);
-                        mAvatarView.setImageBitmap(resource);
-                    }
+        mPhoneNumberInfoFuture = TelecomUtils.getPhoneNumberInfo(getContext(), number)
+            .thenAcceptAsync((info) -> {
+                if (getContext() == null) {
+                    return;
+                }
 
-                    @Override
-                    public void onLoadFailed(Drawable errorDrawable) {
-                        mBackgroundImage.setBackgroundColor(letterTile.getColor());
-                        mAvatarView.setImageDrawable(letterTile);
-                    }
-                });
+                mNameView.setText(info.getDisplayName());
+
+                String phoneNumberLabel = info.getTypeLabel();
+                if (!phoneNumberLabel.isEmpty()) {
+                    phoneNumberLabel += " ";
+                }
+                phoneNumberLabel += TelecomUtils.getFormattedNumber(getContext(), number);
+                if (!TextUtils.isEmpty(phoneNumberLabel)
+                        && !phoneNumberLabel.equals(info.getDisplayName())) {
+                    mPhoneNumberView.setText(phoneNumberLabel);
+                    mPhoneNumberView.setVisibility(View.VISIBLE);
+                } else {
+                    mPhoneNumberView.setVisibility(View.GONE);
+                }
+
+                LetterTileDrawable letterTile = TelecomUtils.createLetterTile(
+                        getContext(), info.getDisplayName());
+
+                Glide.with(getContext())
+                        .asBitmap()
+                        .load(info.getAvatarUri())
+                        .apply(new RequestOptions().centerCrop().error(letterTile))
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource,
+                                    Transition<? super Bitmap> glideAnimation) {
+                                // set showAnimation to false mostly because bindUserProfileView
+                                // called several times, and we don't want the image to flicker
+                                mBackgroundImage.setBackgroundImage(resource, false);
+                                mAvatarView.setImageBitmap(resource);
+                            }
+
+                            @Override
+                            public void onLoadFailed(Drawable errorDrawable) {
+                                mBackgroundImage.setBackgroundColor(letterTile.getColor());
+                                mAvatarView.setImageDrawable(letterTile);
+                            }
+                        });
+            }, getContext().getMainExecutor());
     }
 
     /** Presents the call state and call duration. */
@@ -140,6 +167,14 @@ public abstract class InCallFragment extends Fragment {
             mUserProfileCallStateText.setText(
                     TelecomUtils.callStateToUiString(getContext(),
                             callStateAndConnectTime.first));
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mPhoneNumberInfoFuture != null) {
+            mPhoneNumberInfoFuture.cancel(true);
         }
     }
 }
