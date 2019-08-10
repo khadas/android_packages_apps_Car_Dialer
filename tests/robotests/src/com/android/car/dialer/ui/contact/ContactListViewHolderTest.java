@@ -43,10 +43,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 
 import java.util.Arrays;
 
+@Config(qualifiers = "h610dp")
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class ContactListViewHolderTest {
     private static final String DISPLAY_NAME = "Display Name";
