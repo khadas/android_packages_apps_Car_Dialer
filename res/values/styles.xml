@@ -136,6 +136,13 @@
     <!-- Contact results -->
     <style name="TextAppearance.ContactResultTitle" parent="@style/TextAppearance.Body1"/>
 
+    <!-- Subheader -->
+    <style name="SubheaderText">
+        <item name="android:textAppearance">@style/TextAppearance.Body3</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <!-- Display options defined for ActionBar-->
     <style name="RootToolbarDisplayOptions">
         <item name="android:displayOptions">useLogo|showHome|showTitle|showCustom</item>
