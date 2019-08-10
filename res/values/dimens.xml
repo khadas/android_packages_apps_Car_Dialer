@@ -142,6 +142,7 @@
     <dimen name="hero_button_corner_radius">38dp</dimen>
     <dimen name="contact_avatar_corner_radius_percent" format="float">0.5</dimen>
     <dimen name="touch_target_width">156dp</dimen>
+    <dimen name="subheader_list_height">76dp</dimen>
     <dimen name="phone_number_radio_list_padding">@*android:dimen/car_padding_2</dimen>
     <dimen name="phone_number_favorite_list_item_vertical_padding">@*android:dimen/car_padding_2</dimen>
 
