@@ -54,7 +54,7 @@ import org.robolectric.shadows.ShadowAlertDialog;
 import java.util.Arrays;
 import java.util.List;
 
-@Config(shadows = {ShadowAndroidViewModelFactory.class})
+@Config(shadows = {ShadowAndroidViewModelFactory.class}, qualifiers = "h610dp")
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class ContactListFragmentTest {
     private static final String RAW_NUMBNER = "6502530000";
