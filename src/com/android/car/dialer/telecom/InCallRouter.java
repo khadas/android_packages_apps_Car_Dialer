@@ -21,6 +21,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.telecom.Call;
 
+import androidx.annotation.MainThread;
+
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.InCallNotificationController;
 import com.android.car.dialer.ui.activecall.InCallActivity;
@@ -95,13 +97,15 @@ class InCallRouter {
         }
     }
 
+    @MainThread
     void registerActiveCallListChangedCallback(
             InCallServiceImpl.ActiveCallListChangedCallback callback) {
-        mMainHandler.post(() -> mActiveCallListChangedCallbacks.add(callback));
+        mActiveCallListChangedCallbacks.add(callback);
     }
 
+    @MainThread
     void unregisterActiveCallHandler(InCallServiceImpl.ActiveCallListChangedCallback callback) {
-        mMainHandler.post(() -> mActiveCallListChangedCallbacks.remove(callback));
+        mActiveCallListChangedCallbacks.remove(callback);
     }
 
     /** Dispatches the call to {@link InCallServiceImpl.ActiveCallListChangedCallback}. */
