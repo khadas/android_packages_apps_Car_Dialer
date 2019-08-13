@@ -105,15 +105,14 @@ public class DialpadFragment extends AbstractDialpadFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMode = getArguments().getInt(DIALPAD_MODE_KEY);
+        L.d(TAG, "onCreate mode: %s", mMode);
         mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mMode = getArguments().getInt(DIALPAD_MODE_KEY);
-        L.d(TAG, "onCreateView mode: %s", mMode);
-
         View rootView = inflater.inflate(R.layout.dialpad_fragment, container, false);
         // Offset the dialpad to under the tabs in normal dial mode.
         rootView.setPadding(0, getTopOffset(), 0, 0);
