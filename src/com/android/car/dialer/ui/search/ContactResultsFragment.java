@@ -19,7 +19,6 @@ package com.android.car.dialer.ui.search;
 import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -37,6 +36,7 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsFragment;
+import com.android.car.telephony.common.Contact;
 
 /**
  * A fragment that will take a search query, look up contacts that match and display those
@@ -193,8 +193,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    public void onShowContactDetail(Uri contactLookupUri) {
-        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contactLookupUri);
+    public void onShowContactDetail(Contact contact) {
+        Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact);
         pushContentFragment(contactDetailsFragment, ContactDetailsFragment.FRAGMENT_TAG);
     }
 }

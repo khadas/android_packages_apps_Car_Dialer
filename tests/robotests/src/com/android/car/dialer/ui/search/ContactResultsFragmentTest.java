@@ -19,10 +19,8 @@ package com.android.car.dialer.ui.search;
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,13 +36,16 @@ import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.dialer.ui.contact.ContactDetailsFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsViewModel;
 import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
@@ -60,23 +61,35 @@ public class ContactResultsFragmentTest {
     private ContactResultsFragment mContactResultsFragment;
     private FragmentTestActivity mFragmentTestActivity;
     private PagedRecyclerView mListView;
-    private MutableLiveData<List<ContactDetails>> mContactSearchResultsLiveData;
+    private MutableLiveData<List<Contact>> mContactSearchResultsLiveData;
     @Mock
     private ContactResultsViewModel mMockContactResultsViewModel;
     @Mock
     private ContactDetailsViewModel mMockContactDetailsViewModel;
     @Mock
     private Contact mMockContact;
+    @Mock
+    private Contact mContact1, mContact2, mContact3;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        InMemoryPhoneBook.init(RuntimeEnvironment.application);
         mContactSearchResultsLiveData = new MutableLiveData<>();
         when(mMockContactResultsViewModel.getContactSearchResults())
                 .thenReturn(mContactSearchResultsLiveData);
         ShadowAndroidViewModelFactory.add(
                 ContactResultsViewModel.class, mMockContactResultsViewModel);
+
+        when(mContact1.getDisplayName()).thenReturn(DISPLAY_NAMES[0]);
+        when(mContact2.getDisplayName()).thenReturn(DISPLAY_NAMES[1]);
+        when(mContact3.getDisplayName()).thenReturn(DISPLAY_NAMES[2]);
+    }
+
+    @After
+    public void tearDown() {
+        InMemoryPhoneBook.tearDown();
     }
 
     @Test
@@ -89,11 +102,8 @@ public class ContactResultsFragmentTest {
 
     @Test
     public void testDisplaySearchResults_multipleResults() {
-        ContactDetails contactDetails1 = new ContactDetails(DISPLAY_NAMES[0], "", mock(Uri.class));
-        ContactDetails contactDetails2 = new ContactDetails(DISPLAY_NAMES[1], "", mock(Uri.class));
-        ContactDetails contactDetails3 = new ContactDetails(DISPLAY_NAMES[2], "", mock(Uri.class));
         mContactSearchResultsLiveData.setValue(
-                Arrays.asList(contactDetails1, contactDetails2, contactDetails3));
+                Arrays.asList(mContact1, mContact2, mContact3));
 
         mContactResultsFragment = ContactResultsFragment.newInstance(INITIAL_SEARCH_QUERY);
         setUpFragment();
@@ -105,11 +115,8 @@ public class ContactResultsFragmentTest {
 
     @Test
     public void testClickSearchResult_showContactDetailPage() {
-        ContactDetails contactDetails1 = new ContactDetails(DISPLAY_NAMES[0], "", mock(Uri.class));
-        ContactDetails contactDetails2 = new ContactDetails(DISPLAY_NAMES[1], "", mock(Uri.class));
-        ContactDetails contactDetails3 = new ContactDetails(DISPLAY_NAMES[2], "", mock(Uri.class));
         mContactSearchResultsLiveData.setValue(
-                Arrays.asList(contactDetails1, contactDetails2, contactDetails3));
+                Arrays.asList(mContact1, mContact2, mContact3));
 
         MutableLiveData<Contact> contactDetailLiveData = new MutableLiveData<>();
         contactDetailLiveData.setValue(mMockContact);
