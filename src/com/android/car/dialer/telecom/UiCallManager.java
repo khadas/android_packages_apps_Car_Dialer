@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.IBinder;
+import android.os.ServiceManager;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.CallAudioState.CallAudioRoute;
@@ -39,6 +40,7 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.TelecomUtils;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.telephony.ITelephony;
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
@@ -280,8 +282,22 @@ public class UiCallManager {
         if (isValidNumber(number)) {
             Uri uri = Uri.fromParts("tel", number, null);
             L.d(TAG, "android.telecom.TelecomManager#placeCall: %s", number);
-            mTelecomManager.placeCall(uri, null);
-            return true;
+
+            // Check if ITelephony is present before placing a call to avoid crash. This is a
+            // temporary fix where system performance is the root cause of the availability of
+            // the service.
+            // TODO(b/138866013): revert when the system is stable and is able to bring up the
+            // ITelephony in time.
+            ITelephony telephony = ITelephony.Stub.asInterface(
+                    ServiceManager.getService(Context.TELEPHONY_SERVICE));
+            if (telephony != null) {
+                mTelecomManager.placeCall(uri, null);
+                return true;
+            }
+
+            Toast.makeText(mContext, R.string.error_telephony_not_available,
+                    Toast.LENGTH_SHORT).show();
+            return false;
         } else {
             L.d(TAG, "invalid number dialed", number);
             Toast.makeText(mContext, R.string.error_invalid_phone_number,

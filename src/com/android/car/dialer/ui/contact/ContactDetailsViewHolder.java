@@ -94,15 +94,12 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
             mText.setTextAppearance(R.style.TextAppearance_ContactDetailsListSubtitle);
         }
 
-        mCallActionView.setOnClickListener(v -> placeCall(phoneNumber));
+        mCallActionView.setOnClickListener(
+                v -> UiCallManager.get().placeCall(phoneNumber.getRawNumber()));
         mFavoriteActionView.setActivated(phoneNumber.isFavorite());
         mFavoriteActionView.setOnClickListener(v -> {
             mPhoneNumberPresenter.onClick(contact, phoneNumber);
             mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());
         });
-    }
-
-    private void placeCall(PhoneNumber number) {
-        UiCallManager.get().placeCall(number.getRawNumber());
     }
 }
