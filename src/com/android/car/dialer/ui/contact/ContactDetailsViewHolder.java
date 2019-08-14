@@ -95,7 +95,7 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         }
 
         mCallActionView.setOnClickListener(v -> placeCall(phoneNumber));
-        mFavoriteActionView.setActivated(mPhoneNumberPresenter.isFavorite(contact, phoneNumber));
+        mFavoriteActionView.setActivated(phoneNumber.isFavorite());
         mFavoriteActionView.setOnClickListener(v -> {
             mPhoneNumberPresenter.onClick(contact, phoneNumber);
             mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());

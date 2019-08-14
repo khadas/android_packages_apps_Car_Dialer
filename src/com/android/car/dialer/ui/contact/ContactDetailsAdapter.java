@@ -42,8 +42,6 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
 
     interface PhoneNumberPresenter {
         void onClick(Contact contact, PhoneNumber phoneNumber);
-
-        boolean isFavorite(Contact contact, PhoneNumber phoneNumber);
     }
 
     private final Context mContext;
