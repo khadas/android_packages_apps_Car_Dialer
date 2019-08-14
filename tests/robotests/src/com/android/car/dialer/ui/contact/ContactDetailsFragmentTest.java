@@ -22,7 +22,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,10 +33,11 @@ import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
-import com.android.car.dialer.ui.favorite.FavoriteViewModel;
 import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneNumber;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +45,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
@@ -61,10 +62,6 @@ public class ContactDetailsFragmentTest {
     @Mock
     private ContactDetailsViewModel mMockContactDetailsViewModel;
     @Mock
-    private FavoriteViewModel mMockFavoriteViewModel;
-    @Mock
-    private Uri mMockContactLookupUri;
-    @Mock
     private Contact mMockContact;
     @Mock
     private PhoneNumber mMockPhoneNumber1;
@@ -76,6 +73,8 @@ public class ContactDetailsFragmentTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+
+        InMemoryPhoneBook.init(RuntimeEnvironment.application);
 
         when(mMockContact.getDisplayName()).thenReturn(DISPLAY_NAME);
         when(mMockPhoneNumber1.getRawNumber()).thenReturn(RAW_NUMBERS[0]);
@@ -89,16 +88,17 @@ public class ContactDetailsFragmentTest {
         contactDetails.setValue(mMockContact);
         ShadowAndroidViewModelFactory.add(ContactDetailsViewModel.class,
                 mMockContactDetailsViewModel);
-        when(mMockContactDetailsViewModel.getContactDetails(mMockContactLookupUri)).thenReturn(
+        when(mMockContactDetailsViewModel.getContactDetails(mMockContact)).thenReturn(
                 contactDetails);
+    }
 
-        ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
-        when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(new MutableLiveData<>());
+    @After
+    public void tearDown() {
+        InMemoryPhoneBook.tearDown();
     }
 
     @Test
     public void testCreateWithContact() {
-        when(mMockContact.getLookupUri()).thenReturn(mMockContactLookupUri);
         mContactDetailsFragment = ContactDetailsFragment.newInstance(mMockContact);
 
         setUpFragment();

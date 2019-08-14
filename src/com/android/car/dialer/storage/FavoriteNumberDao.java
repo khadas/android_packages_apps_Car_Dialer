@@ -56,6 +56,6 @@ public interface FavoriteNumberDao {
 
     /** Delete all the favorite numbers whose account name do not match any of the devices. */
     @Query("DELETE FROM favorite_number_entity WHERE mAccountName IS NOT NULL"
-            + " AND mAccountName NOT IN (:deviceAddresses)")
-    void cleanup(List<String> deviceAddresses);
+            + " AND mAccountName NOT IN (:pairedDeviceAddresses)")
+    void cleanup(List<String> pairedDeviceAddresses);
 }

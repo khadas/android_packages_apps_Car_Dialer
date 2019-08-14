@@ -38,12 +38,12 @@ public class BluetoothBondedListReceiver extends BroadcastReceiver {
 
         if (intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE)
                 == BluetoothDevice.BOND_NONE) {
-            FavoriteNumberRepository favoriteNumberRepository = new FavoriteNumberRepository(
-                    context);
+            FavoriteNumberRepository favoriteNumberRepository =
+                    FavoriteNumberRepository.getRepository(context);
             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            Set<BluetoothDevice> devices = bluetoothAdapter == null ? Collections.emptySet()
+            Set<BluetoothDevice> pairedDevices = bluetoothAdapter == null ? Collections.emptySet()
                     : bluetoothAdapter.getBondedDevices();
-            favoriteNumberRepository.cleanup(devices);
+            favoriteNumberRepository.cleanup(pairedDevices);
         }
     }
 }
