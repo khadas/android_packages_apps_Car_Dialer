@@ -13,36 +13,37 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="?android:listPreferredItemPaddingStart"
-    android:paddingEnd="?android:listPreferredItemPaddingEnd"
-    android:paddingTop="@dimen/phone_number_favorite_list_item_vertical_padding"
-    android:paddingBottom="@dimen/phone_number_favorite_list_item_vertical_padding">
+    android:layout_height="@dimen/add_favorite_number_list_height"
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingStart="@dimen/add_favorite_number_list_padding"
+    android:paddingEnd="@dimen/add_favorite_number_list_padding">
 
     <TextView
         android:id="@+id/phone_number"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/phone_number_checkbox"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/phone_number_description"
+        app:layout_constraintBottom_toTopOf="@+id/phone_number_description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintEnd_toStartOf="@+id/phone_number_checkbox"/>
+
     <TextView
         android:id="@+id/phone_number_description"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/phone_number"
-        android:layout_toEndOf="@id/phone_number_checkbox"
         android:textAppearance="?android:attr/textAppearanceSmall"
         app:layout_constraintTop_toBottomOf="@id/phone_number"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/phone_number_checkbox"/>
+
     <ImageView
         android:id="@+id/phone_number_checkbox"
         android:src="@drawable/ic_favorite_activatable"
