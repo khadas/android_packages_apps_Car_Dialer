@@ -99,6 +99,10 @@
     <dimen name="favorite_add_button_and_text_separation">@*android:dimen/car_padding_5</dimen>
     <dimen name="favorite_add_button_padding">@*android:dimen/car_padding_4</dimen>
 
+    <!-- Add faovirte flow dimensions -->
+    <dimen name="add_favorite_number_list_height">@dimen/list_item_height</dimen>
+    <dimen name="add_favorite_number_list_padding">@dimen/list_item_padding</dimen>
+
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/touch_target_size</dimen>
 
@@ -144,7 +148,6 @@
     <dimen name="touch_target_width">156dp</dimen>
     <dimen name="subheader_list_height">76dp</dimen>
     <dimen name="phone_number_radio_list_padding">@*android:dimen/car_padding_2</dimen>
-    <dimen name="phone_number_favorite_list_item_vertical_padding">@*android:dimen/car_padding_2</dimen>
 
     <!-- Toolbar -->
     <!-- Half of the difference between car_margin and touch_target_size-->

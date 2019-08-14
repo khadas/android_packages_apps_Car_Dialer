@@ -19,7 +19,6 @@ package com.android.car.dialer.ui.common;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -43,12 +42,6 @@ public abstract class DialerBaseFragment extends Fragment {
 
         /** Push a fragment to the back stack. Update action bar accordingly. */
         void pushContentFragment(Fragment fragment, String fragmentTag);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     /** Customizes the action bar. Can be overridden in subclasses. */

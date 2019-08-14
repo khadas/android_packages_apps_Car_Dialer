@@ -27,11 +27,13 @@ import android.text.TextUtils;
 
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.I18nPhoneNumberWrapper;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneNumber;
 
 import java.util.ArrayList;
@@ -54,22 +56,44 @@ public class FavoriteNumberRepository {
         sSerializedExecutor = Executors.newSingleThreadExecutor();
     }
 
+    private static volatile FavoriteNumberRepository sFavoriteNumberRepository;
+
+    /** Returns the single instance of the {@link FavoriteNumberRepository}. */
+    public static FavoriteNumberRepository getRepository(final Context context) {
+        if (sFavoriteNumberRepository == null) {
+            synchronized (FavoriteNumberRepository.class) {
+                if (sFavoriteNumberRepository == null) {
+                    sFavoriteNumberRepository = new FavoriteNumberRepository(context);
+                }
+            }
+        }
+        return sFavoriteNumberRepository;
+    }
+
     private final Context mContext;
     private final FavoriteNumberDao mFavoriteNumberDao;
     private final LiveData<List<FavoriteNumberEntity>> mFavoriteNumbers;
+    private final LiveData<List<Contact>> mFavoriteContacts;
     private Future<?> mConvertAllRunnableFuture;
 
-    public FavoriteNumberRepository(Context context) {
+    private FavoriteNumberRepository(Context context) {
         mContext = context.getApplicationContext();
 
         FavoriteNumberDatabase db = FavoriteNumberDatabase.getDatabase(mContext);
         mFavoriteNumberDao = db.favoriteNumberDao();
         mFavoriteNumbers = mFavoriteNumberDao.loadAll();
+
+        mFavoriteContacts = new FavoriteContactLiveData(mContext);
     }
 
     /** Returns the favorite number list. */
     public LiveData<List<FavoriteNumberEntity>> getFavoriteNumbers() {
         return mFavoriteNumbers;
+    }
+
+    /** Returns the favorite contact list. */
+    public LiveData<List<Contact>> getFavoriteContacts() {
+        return mFavoriteContacts;
     }
 
     /** Add a phone number to favorite. */
@@ -97,11 +121,23 @@ public class FavoriteNumberRepository {
         }
     }
 
+    /** Remove favorite entries for devices that has been unpaired. */
+    public void cleanup(Set<BluetoothDevice> pairedDevices) {
+        L.d(TAG, "remove entries for unpaired devices except %s", pairedDevices);
+        sSerializedExecutor.execute(() -> {
+            List<String> pairedDeviceAddresses = new ArrayList<>();
+            for (BluetoothDevice device : pairedDevices) {
+                pairedDeviceAddresses.add(device.getAddress());
+            }
+            mFavoriteNumberDao.cleanup(pairedDeviceAddresses);
+        });
+    }
+
     /**
      * Convert the {@link FavoriteNumberEntity}s to {@link Contact}s and update contact id and
      * contact lookup key for all the entities that are out of date.
      */
-    public void convertToContacts(Context context, final MutableLiveData<List<Contact>> results) {
+    private void convertToContacts(Context context, final MutableLiveData<List<Contact>> results) {
         if (mConvertAllRunnableFuture != null) {
             mConvertAllRunnableFuture.cancel(false);
         }
@@ -136,18 +172,6 @@ public class FavoriteNumberRepository {
         });
     }
 
-    /** Remove favorite entries for devices that has been unpaired. */
-    public void cleanup(Set<BluetoothDevice> devices) {
-        L.d(TAG, "remove entries for unpaired devices except %s", devices);
-        sSerializedExecutor.execute(() -> {
-            List<String> deviceAddresses = new ArrayList<>();
-            for (BluetoothDevice device : devices) {
-                deviceAddresses.add(device.getAddress());
-            }
-            mFavoriteNumberDao.cleanup(deviceAddresses);
-        });
-    }
-
     @WorkerThread
     private Contact lookupContact(ContentResolver cr, FavoriteNumberEntity favoriteNumber) {
         Uri lookupUri = ContactsContract.Contacts.getLookupUri(
@@ -166,12 +190,17 @@ public class FavoriteNumberRepository {
                 new String[]{String.valueOf(contactId)},
                 /* orderBy= */null)) {
             if (cursor != null) {
-                while (cursor.moveToNext()) {
+                if (cursor.moveToFirst()) {
                     Contact contact = Contact.fromCursor(mContext, cursor);
-                    if (contact.getNumbers().isEmpty()) {
-                        continue;
+                    contact.getNumbers().clear();
+                    Contact inMemoryContact = InMemoryPhoneBook.get().lookupContactByKey(
+                            contact.getLookupKey());
+                    for (PhoneNumber inMemoryPhoneNumber : inMemoryContact.getNumbers()) {
+                        if (numberMatches(favoriteNumber, inMemoryPhoneNumber)) {
+                            contact.getNumbers().add(inMemoryPhoneNumber);
+                        }
                     }
-                    if (numberMatches(favoriteNumber, contact.getNumbers().get(0))) {
+                    if (!contact.getNumbers().isEmpty()) {
                         return contact;
                     }
                 }
@@ -203,5 +232,37 @@ public class FavoriteNumberRepository {
         I18nPhoneNumberWrapper i18nPhoneNumberWrapper = I18nPhoneNumberWrapper.Factory.INSTANCE.get(
                 mContext, favoriteNumber.getPhoneNumber().get());
         return i18nPhoneNumberWrapper.equals(phoneNumber.getI18nPhoneNumberWrapper());
+    }
+
+    private class FavoriteContactLiveData extends MediatorLiveData<List<Contact>> {
+        private FavoriteContactLiveData(Context context) {
+            super();
+            addSource(InMemoryPhoneBook.get().getContactsLiveData(),
+                    contacts -> convertToContacts(context, this));
+            addSource(mFavoriteNumbers, favorites -> convertToContacts(context, this));
+            observeForever(favoriteContacts -> L.d(TAG, "%d favorite contacts loaded.",
+                    favoriteContacts.size()));
+        }
+
+        @Override
+        public void setValue(List<Contact> contacts) {
+            // Clean up the old favorite bit and update the new favorite bit.
+            List<Contact> currentList = getValue();
+            if (currentList != null) {
+                for (Contact contact : currentList) {
+                    for (PhoneNumber phoneNumber : contact.getNumbers()) {
+                        phoneNumber.setIsFavorite(false);
+                    }
+                }
+            }
+
+            for (Contact contact : contacts) {
+                for (PhoneNumber phoneNumber : contact.getNumbers()) {
+                    phoneNumber.setIsFavorite(true);
+                }
+            }
+
+            super.setValue(contacts);
+        }
     }
 }
