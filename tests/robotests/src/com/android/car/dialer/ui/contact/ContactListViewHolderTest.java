@@ -88,7 +88,7 @@ public class ContactListViewHolderTest {
     @Test
     public void testLabel_withOnlyOneNumber_showLabel() {
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
-                false, 0, 0);
+                false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
         mContactListViewHolder.onBind(mMockContact);
 
@@ -98,7 +98,7 @@ public class ContactListViewHolderTest {
     @Test
     public void testLabel_withOneNumberAndNumberHasNullLabel_showTypeLabel() {
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, TYPE, null,
-                false, 0, 0);
+                false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
         mContactListViewHolder.onBind(mMockContact);
 
@@ -122,9 +122,9 @@ public class ContactListViewHolderTest {
     @Test
     public void testLabel_withMultipleNumbersAndNoPrimaryNumber_showMultipleLabel() {
         PhoneNumber phoneNumber1 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
-                false, 0, 0);
+                false, 0, null, null, 0);
         PhoneNumber phoneNumber2 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_2, 0, LABEL_2,
-                false, 0, 0);
+                false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(false);
         mContactListViewHolder.onBind(mMockContact);
@@ -136,9 +136,9 @@ public class ContactListViewHolderTest {
     @Test
     public void testLabel_withMultipleNumbersAndHasPrimaryNumber_showPrimaryNumberLabel() {
         PhoneNumber phoneNumber1 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
-                false, 0, 0);
+                false, 0, null, null, 0);
         PhoneNumber phoneNumber2 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_2, 0, LABEL_2,
-                false, 0, 0);
+                false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
@@ -151,9 +151,9 @@ public class ContactListViewHolderTest {
     @Test
     public void testLabel_HasPrimaryNumberAndPrimaryNumberHasNullLabel_showPrimaryNumberLabel() {
         PhoneNumber phoneNumber1 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
-                false, 0, 0);
+                false, 0, null, null, 0);
         PhoneNumber phoneNumber2 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_2, TYPE, null,
-                false, 0, 0);
+                false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
@@ -186,7 +186,7 @@ public class ContactListViewHolderTest {
     public void testClickCallActionButton_ContactHasOneNumber_placeCall() {
         UiCallManager.set(mMockUiCallManager);
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
-                false, 0, 0);
+                false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
         mContactListViewHolder.onBind(mMockContact);
 
@@ -204,9 +204,9 @@ public class ContactListViewHolderTest {
     public void testClickCallActionButton_HasMultipleNumbersAndNoPrimaryNumber_showAlertDialog() {
         UiCallManager.set(mMockUiCallManager);
         PhoneNumber phoneNumber1 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
-                false, 0, 0);
+                false, 0, null, null, 0);
         PhoneNumber phoneNumber2 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_2, 0, LABEL_2,
-                false, 0, 0);
+                false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(false);
         mContactListViewHolder.onBind(mMockContact);
@@ -223,9 +223,9 @@ public class ContactListViewHolderTest {
     public void testClickCallActionButton_HasMultipleNumbersAndPrimaryNumber_callPrimaryNumber() {
         UiCallManager.set(mMockUiCallManager);
         PhoneNumber phoneNumber1 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
-                false, 0, 0);
+                false, 0, null, null, 0);
         PhoneNumber phoneNumber2 = PhoneNumber.newInstance(mContext, PHONE_NUMBER_2, 0, LABEL_2,
-                false, 0, 0);
+                false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
