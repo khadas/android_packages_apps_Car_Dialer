@@ -17,57 +17,113 @@
 package com.android.car.dialer.ui.common;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link ArrayAdapter} that presents the {@link PhoneNumber} and its type as two line list
- * item with stars to indicate selection.
+ * {@link RecyclerView.Adapter} that presents the {@link PhoneNumber} and its type as two line list
+ * item with stars to indicate favorite state or user selection to add to favorite. Currently
+ * favorite phone number is set to disabled so user can not take any action for an existing favorite
+ * phone number.
  */
-public class FavoritePhoneNumberListAdapter extends ArrayAdapter<PhoneNumber> {
+public class FavoritePhoneNumberListAdapter extends
+        RecyclerView.Adapter<FavoritePhoneNumberListAdapter.PhoneNumberViewHolder> {
     private final Context mContext;
+    private final FavoritePhoneNumberPresenter mFavoritePhoneNumberPresenter;
+    private final List<PhoneNumber> mPhoneNumbers;
+    private Contact mContact;
 
-    public FavoritePhoneNumberListAdapter(Context context) {
-        super(context, R.layout.phone_number_favorite_list_item,
-                R.id.phone_number, new ArrayList<>());
+    /**
+     * A presenter that presents the favorite state for phone number and provides the click
+     * listener.
+     */
+    public interface FavoritePhoneNumberPresenter {
+        /** Provides the click listener for the given phone number and its present view. */
+        void onItemClicked(PhoneNumber phoneNumber, View itemView);
+    }
+
+    public FavoritePhoneNumberListAdapter(Context context,
+            FavoritePhoneNumberPresenter favoritePhoneNumberPresenter) {
         mContext = context;
+        mFavoritePhoneNumberPresenter = favoritePhoneNumberPresenter;
+        mPhoneNumbers = new ArrayList<>();
     }
 
     /** Sets the phone numbers to display */
-    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
-        clear();
-        addAll(phoneNumbers);
+    public void setPhoneNumbers(Contact contact, List<PhoneNumber> phoneNumbers) {
+        mPhoneNumbers.clear();
+        mContact = contact;
+        mPhoneNumbers.addAll(phoneNumbers);
+
+        notifyDataSetChanged();
     }
 
     @Override
-    public View getView(int position, @Nullable View convertView,
-            @NonNull ViewGroup parent) {
-        View view = super.getView(position, convertView, parent);
-        PhoneNumber phoneNumber = getItem(position);
-        if (phoneNumber == null) {
-            return view;
+    public PhoneNumberViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(mContext).inflate(
+                R.layout.add_favorite_number_list_item, parent, false);
+        return new PhoneNumberViewHolder(itemView, mFavoritePhoneNumberPresenter);
+    }
+
+    @Override
+    public void onBindViewHolder(PhoneNumberViewHolder holder, int position) {
+        holder.bind(mPhoneNumbers.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return mPhoneNumbers.size();
+    }
+
+    public Contact getContact() {
+        return mContact;
+    }
+
+    static class PhoneNumberViewHolder extends RecyclerView.ViewHolder {
+
+        private final FavoritePhoneNumberPresenter mFavoritePhoneNumberPresenter;
+        private final TextView mPhoneNumberView;
+        private final TextView mPhoneNumberDescriptionView;
+
+        PhoneNumberViewHolder(View itemView,
+                FavoritePhoneNumberPresenter favoritePhoneNumberPresenter) {
+            super(itemView);
+            mFavoritePhoneNumberPresenter = favoritePhoneNumberPresenter;
+            mPhoneNumberView = itemView.findViewById(R.id.phone_number);
+            mPhoneNumberDescriptionView = itemView.findViewById(R.id.phone_number_description);
         }
-        TextView phoneNumberView = view.findViewById(R.id.phone_number);
-        phoneNumberView.setText(phoneNumber.getRawNumber());
-        TextView phoneNumberDescriptionView = view.findViewById(R.id.phone_number_description);
-        CharSequence readableLabel = phoneNumber.getReadableLabel(mContext.getResources());
-        if (phoneNumber.isPrimary()) {
-            phoneNumberDescriptionView.setText(
-                    mContext.getString(R.string.primary_number_description, readableLabel));
-        } else {
-            phoneNumberDescriptionView.setText(readableLabel);
+
+        void bind(PhoneNumber phoneNumber) {
+            mPhoneNumberView.setText(phoneNumber.getRawNumber());
+            CharSequence readableLabel = phoneNumber.getReadableLabel(itemView.getResources());
+            if (phoneNumber.isPrimary()) {
+                mPhoneNumberDescriptionView.setText(
+                        itemView.getResources().getString(R.string.primary_number_description,
+                                readableLabel));
+            } else {
+                mPhoneNumberDescriptionView.setText(readableLabel);
+            }
+
+            if (phoneNumber.isFavorite()) {
+                itemView.setActivated(true);
+                itemView.setEnabled(false);
+            } else {
+                itemView.setActivated(false);
+                itemView.setEnabled(true);
+                itemView.setOnClickListener(
+                        view -> mFavoritePhoneNumberPresenter.onItemClicked(phoneNumber, itemView));
+            }
         }
-        return view;
     }
 }
