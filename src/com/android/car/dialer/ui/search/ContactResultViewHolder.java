@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
+import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.TelecomUtils;
 
 /**
@@ -51,15 +52,14 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * Populates the view that is represented by this ViewHolder with the information in the
-     * provided {@link ContactDetails}.
+     * provided {@link Contact}.
      */
-    public void bind(ContactDetails details) {
-        mContactCard.setOnClickListener(v -> {
-            mOnShowContactDetailListener.onShowContactDetail(details.lookupUri);
-        });
+    public void bind(Contact contact) {
+        mContactCard.setOnClickListener(
+                v -> mOnShowContactDetailListener.onShowContactDetail(contact));
 
-        mContactName.setText(details.displayName);
-        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, details.photoUri,
-                details.displayName);
+        mContactName.setText(contact.getDisplayName());
+        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact.getAvatarUri(),
+                contact.getDisplayName());
     }
 }

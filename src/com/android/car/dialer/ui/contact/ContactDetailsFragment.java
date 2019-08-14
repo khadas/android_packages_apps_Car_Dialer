@@ -17,7 +17,6 @@
 package com.android.car.dialer.ui.contact;
 
 import android.app.ActionBar;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -31,13 +30,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.common.DialerUtils;
-import com.android.car.dialer.ui.favorite.FavoriteViewModel;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
-
-import java.util.List;
 
 /**
  * A fragment that shows the name of the contact, the photo and all listed phone numbers. It is
@@ -52,24 +48,11 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     // Key to load and save the contact entity instance.
     private static final String KEY_CONTACT_ENTITY = "ContactEntity";
 
-    // Key to load the contact details by passing in the content provider query uri.
-    private static final String KEY_CONTACT_QUERY_URI = "ContactQueryUri";
-
     private Contact mContact;
-    private Uri mContactLookupUri;
     private LiveData<Contact> mContactDetailsLiveData;
     private ImageView mAvatarView;
     private TextView mNameView;
-    private FavoriteViewModel mFavoriteViewModel;
-
-    /** Creates a new ContactDetailsFragment using a URI to lookup a {@link Contact} at. */
-    public static ContactDetailsFragment newInstance(Uri uri) {
-        ContactDetailsFragment fragment = new ContactDetailsFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(KEY_CONTACT_QUERY_URI, uri);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private ContactDetailsViewModel mContactDetailsViewModel;
 
     /** Creates a new ContactDetailsFragment using a {@link Contact}. */
     public static ContactDetailsFragment newInstance(Contact contact) {
@@ -86,17 +69,12 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         setHasOptionsMenu(true);
 
         mContact = getArguments().getParcelable(KEY_CONTACT_ENTITY);
-        mContactLookupUri = getArguments().getParcelable(KEY_CONTACT_QUERY_URI);
         if (mContact == null && savedInstanceState != null) {
             mContact = savedInstanceState.getParcelable(KEY_CONTACT_ENTITY);
         }
-        if (mContact != null) {
-            mContactLookupUri = mContact.getLookupUri();
-        }
-        ContactDetailsViewModel contactDetailsViewModel = ViewModelProviders.of(this).get(
+        mContactDetailsViewModel = ViewModelProviders.of(this).get(
                 ContactDetailsViewModel.class);
-        mContactDetailsLiveData = contactDetailsViewModel.getContactDetails(mContactLookupUri);
-        mFavoriteViewModel = ViewModelProviders.of(getActivity()).get(FavoriteViewModel.class);
+        mContactDetailsLiveData = mContactDetailsViewModel.getContactDetails(mContact);
     }
 
     @Override
@@ -115,13 +93,10 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
             onContactChanged(contact);
             contactDetailsAdapter.setContact(contact);
         });
-        mFavoriteViewModel.getFavoriteContacts().observe(this, favoriteList ->
-                contactDetailsAdapter.setContact(mContact));
     }
 
     private void onContactChanged(Contact contact) {
         getArguments().clear();
-
         if (mAvatarView != null) {
             mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
             TelecomUtils.setContactBitmapAsync(getContext(), mAvatarView, contact, null);
@@ -173,23 +148,11 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
     @Override
     public void onClick(Contact contact, PhoneNumber phoneNumber) {
-        boolean isFavorite = isFavorite(contact, phoneNumber);
-        mFavoriteViewModel.setAsFavorite(contact, phoneNumber, !isFavorite);
-    }
-
-    @Override
-    public boolean isFavorite(Contact contact, PhoneNumber phoneNumber) {
-        List<Contact> favoriteContacts = mFavoriteViewModel.getFavoriteContacts().getValue();
-        if (favoriteContacts == null) {
-            return false;
+        boolean isFavorite = phoneNumber.isFavorite();
+        if (isFavorite) {
+            mContactDetailsViewModel.removeFromFavorite(contact, phoneNumber);
+        } else {
+            mContactDetailsViewModel.addToFavorite(contact, phoneNumber);
         }
-        for (Contact favoriteContact : favoriteContacts) {
-            if (favoriteContact.equals(contact)
-                    && !favoriteContact.getNumbers().isEmpty()
-                    && favoriteContact.getNumbers().get(0).equals(phoneNumber)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
