@@ -37,17 +37,17 @@
     <string name="call_history_title" msgid="1495905524218923242">"କଲ୍ ଇତିବୃତି"</string>
     <string name="contacts_title" msgid="9201954388634537346">"ଯୋଗାଯୋଗଗୁଡ଼ିକ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ଡାଏଲପ୍ୟାଡ୍"</string>
+    <string name="call_log_header_today" msgid="2069013936632793214">"ଆଜି"</string>
+    <string name="call_log_header_yesterday" msgid="4613686845163357847">"ଗତକାଲି"</string>
+    <string name="call_log_header_older" msgid="3971634717537073179">"ପୁରୁଣା"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ଏକ ପସନ୍ଦ ଯୋଗ କରନ୍ତୁ"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"ଆପଣ ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପସନ୍ଦ ଯୋଗ କରିନାହାଁନ୍ତି"</string>
-    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/ବାତିଲ୍ କରନ୍ତୁ"</string>
-    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/ଠିକ୍ ଅଛି"</string>
     <string name="search_title" msgid="5412680850141871664">"ଯୋଗାଯୋଗଗୁଡ଼ିକୁ ଖୋଜନ୍ତୁ"</string>
     <string name="search_hint" msgid="3099066132607042439">"ଯୋଗାଯୋଗଗୁଡ଼ିକୁ ଖୋଜନ୍ତୁ"</string>
     <string name="type_multiple" msgid="3402949522797441236">"ଏକାଧିକ"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ଏକ ଫୋନ୍ ନମ୍ବର ବାଛନ୍ତୁ"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"ଥରେ ମାତ୍ର"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ସର୍ବଦା"</string>
-    <string name="set_default_number" msgid="5083696228341022224">"ଡିଫଲ୍ଟ ଫୋନ୍ ନମ୍ବର୍ ସେଟ୍ କରନ୍ତୁ"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ଡିଫଲ୍ଟ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ଇନ୍‌କମିଙ୍ଗ୍ କଲ୍ ବିଜ୍ଞପ୍ତି"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ଇନ୍‌କମିଂ କଲ୍"</string>
@@ -55,8 +55,8 @@
     <string name="notification_missed_call" msgid="7127823385811396529">"ମିସ୍ଡ କଲ୍"</string>
     <string name="onhold_call_label" msgid="1937027519810985499">"ହୋଲ୍ଡରେ ଅଛି"</string>
     <string name="setting_title" msgid="1296639422364732365">"ସେଟିଂସ୍"</string>
-    <string name="pref_start_page_title" msgid="8243884415248971745">"ଆରମ୍ଭ ପୃଷ୍ଠାକୁ ସେଟ୍ କରନ୍ତୁ"</string>
-    <string name="sort_order_title" msgid="2713804965189046046">"ଯୋଗାଯୋଗ କ୍ରମରେ ସଜାନ୍ତୁ"</string>
+    <string name="pref_start_page_title" msgid="1953465507368478503">"ସ୍କ୍ରିନ୍ ଆରମ୍ଭ କରନ୍ତୁ"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"ଯୋଗାଯୋଗ କ୍ରମରେ ସଜାନ୍ତୁ"</string>
     <string name="give_name_first_title" msgid="9036752103567139094">"ପ୍ରଥମ ନାମ"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"ଶେଷ ନାମ"</string>
 </resources>
