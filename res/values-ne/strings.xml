@@ -37,17 +37,17 @@
     <string name="call_history_title" msgid="1495905524218923242">"कलको इतिहास"</string>
     <string name="contacts_title" msgid="9201954388634537346">"सम्पर्क ठेगानाहरू"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"डायलप्याड"</string>
+    <string name="call_log_header_today" msgid="2069013936632793214">"आज"</string>
+    <string name="call_log_header_yesterday" msgid="4613686845163357847">"हिजो"</string>
+    <string name="call_log_header_older" msgid="3971634717537073179">"अझ पुरानो"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"सम्पर्क सूचीमा भएको कुनै मन पर्ने व्यक्ति थप्नु…"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"तपाईंले अहिलेसम्म कुनै पनि मन पर्ने सम्पर्क ठेगाना थप्नुभएको छैन"</string>
-    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/cancel"</string>
-    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/ok"</string>
     <string name="search_title" msgid="5412680850141871664">"सम्पर्क ठेगानाहरू खोज्नुहोस्"</string>
     <string name="search_hint" msgid="3099066132607042439">"सम्पर्क ठेगानाहरू खोज्नुहोस्"</string>
     <string name="type_multiple" msgid="3402949522797441236">"बहु"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"फोन नम्बर छनौट गर्नुहोस्"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"एक पटक मात्र"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"सधैँ"</string>
-    <string name="set_default_number" msgid="5083696228341022224">"पूर्वनिर्धारित फोन नम्बर सेट गर्नुहोस्"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - पूर्वनिर्धारित"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"आगमन कलसम्बन्धी सूचना"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"आगमन कल"</string>
@@ -55,8 +55,8 @@
     <string name="notification_missed_call" msgid="7127823385811396529">"छुटेको कल"</string>
     <string name="onhold_call_label" msgid="1937027519810985499">"होल्डमा छ"</string>
     <string name="setting_title" msgid="1296639422364732365">"सेटिङ"</string>
-    <string name="pref_start_page_title" msgid="8243884415248971745">"सुरुको पृष्ठ सेट गर्नुहोस्"</string>
-    <string name="sort_order_title" msgid="2713804965189046046">"सम्पर्क ठेगानाको क्रम"</string>
+    <string name="pref_start_page_title" msgid="1953465507368478503">"सुरु गर्ने स्क्रिन"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"सम्पर्क ठेगानाको क्रम"</string>
     <string name="give_name_first_title" msgid="9036752103567139094">"नाम"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"थर"</string>
 </resources>
