@@ -49,10 +49,8 @@
 
     <TextView
         android:id="@id/error_string"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/FullScreenErrorMessageStyle"
         android:text="@string/no_hfp"
-        style="@style/NoHfpText"
         app:layout_constraintTop_toBottomOf="@id/error_icon"
         app:layout_constraintBottom_toTopOf="@+id/connect_bluetooth_button"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,14 +58,8 @@
 
     <com.android.car.apps.common.UxrButton
         android:id="@+id/connect_bluetooth_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/FullScreenErrorButtonStyle"
         android:text="@string/connect_bluetooth_button_text"
-        android:minWidth="@dimen/connect_bluetooth_button_min_width"
-        android:minHeight="@dimen/connect_bluetooth_button_min_height"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:background="@drawable/hero_button_background"
-        app:carUxRestrictions="UX_RESTRICTIONS_FULLY_RESTRICTED"
         android:layout_marginTop="@dimen/connect_bluetooth_button_margin_top"
         app:layout_constraintTop_toBottomOf="@+id/error_string"
         app:layout_constraintBottom_toBottomOf="parent"
