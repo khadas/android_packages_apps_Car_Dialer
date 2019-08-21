@@ -15,15 +15,18 @@
 -->
 <com.android.car.apps.common.UxrButton
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/add_favorite_button"
     android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textColor="@color/hero_button_text_color"
     android:singleLine="true"
     android:gravity="top|center_horizontal"
     android:background="?android:attr/selectableItemBackground"
     android:paddingStart="0dp"
     android:paddingEnd="0dp"
     android:drawableTop="@drawable/ic_add_favorite"
-    android:drawablePadding="@dimen/favorites_avatar_margin_bottom"/>
+    android:drawablePadding="@dimen/favorites_avatar_margin_bottom"
+    app:carUxRestrictions="UX_RESTRICTIONS_NO_SETUP"/>
