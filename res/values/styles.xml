@@ -62,12 +62,6 @@
         <item name="android:tint">@color/primary_icon_color</item>
     </style>
 
-    <style name="NoHfpText">
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-        <item name="android:gravity">center</item>
-        <item name="android:maxLines">3</item>
-    </style>
-
     <!--TODO: fix it system wide instead of creating override-->
     <style name="Widget.Dialer.Toolbar" parent="*android:Widget.DeviceDefault.Toolbar">
         <!-- No padding for navigation button which is car_margin wide -->
