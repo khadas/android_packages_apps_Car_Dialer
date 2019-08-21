@@ -51,9 +51,8 @@ public class ContactListViewModel extends AndroidViewModel {
         super(application);
         mContext = application.getApplicationContext();
 
-        String key = mContext.getString(R.string.sort_order_key);
         SharedPreferencesLiveData preferencesLiveData =
-                new SharedPreferencesLiveData(mContext, key);
+                new SharedPreferencesLiveData(mContext, R.string.sort_order_key);
         LiveData<List<Contact>> contactListLiveData = InMemoryPhoneBook.get().getContactsLiveData();
         mSortedContactListLiveData = new SortedContactListLiveData(
                 mContext, contactListLiveData, preferencesLiveData);
@@ -114,15 +113,15 @@ public class ContactListViewModel extends AndroidViewModel {
             }
 
             String key = mPreferencesLiveData.getKey();
-            String defaultValue = mContext.getResources().getStringArray(
-                    R.array.contact_order_entry_values)[0];
+            String firstNameSort = mContext.getResources().getString(
+                    R.string.give_name_first_title);
 
             List<Contact> contactList = mContactListLiveData.getValue();
             Comparator<Contact> comparator;
             Integer sortMethod;
             if (mPreferencesLiveData.getValue() == null
-                    || mPreferencesLiveData.getValue().getString(key, defaultValue)
-                    .equals(defaultValue)) {
+                    || firstNameSort.equals(
+                    mPreferencesLiveData.getValue().getString(key, firstNameSort))) {
                 comparator = mFirstNameComparator;
                 sortMethod = SORT_BY_FIRST_NAME;
             } else {
