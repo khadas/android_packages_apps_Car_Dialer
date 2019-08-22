@@ -34,6 +34,10 @@
     <string name="error_contact_deleted">This contact might have been deleted.</string>
     <!-- Toast text when user has inputted an invalid phone number [CHAR LIMIT=NONE] -->
     <string name="error_invalid_phone_number">Can\'t dial this number. Check it and try again.</string>
+    <!-- Toast text when telephony service is not ready [CHAR LIMIT=NONE] -->
+    <string name="error_telephony_not_available">
+        Phone call is not available. Please try again later.
+    </string>
 
     <!-- Decline an in coming call [CHAR LIMIT=20] -->
     <string name="decline_call">Decline</string>
