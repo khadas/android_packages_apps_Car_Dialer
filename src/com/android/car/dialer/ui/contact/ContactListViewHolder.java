@@ -24,6 +24,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerUtils;
@@ -65,11 +66,9 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
      */
     public void onBind(Contact contact, boolean showHeader, String header) {
         TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact, null);
+        ViewUtils.setVisible(mHeaderView, showHeader);
         if (showHeader) {
-            mHeaderView.setVisibility(View.VISIBLE);
-            mHeaderView.setText(header);
-        } else {
-            mHeaderView.setVisibility(View.GONE);
+            ViewUtils.setText(mHeaderView, header);
         }
         mTitleView.setText(contact.getDisplayName());
         setLabelText(contact);
