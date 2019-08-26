@@ -119,6 +119,7 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.menu_contacts_search).setVisible(false);
+        menu.findItem(R.id.menu_dialer_setting).setVisible(false);
     }
 
     @Override
