@@ -26,6 +26,7 @@
     <string name="emergency_call_description" msgid="6700161437750325693">"Chamada de emergência"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Este contacto pode ter sido eliminado."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Não é possível marcar este número. Verifique e tente novamente."</string>
+    <string name="error_telephony_not_available" msgid="8715829862083386178">"A chamada telefónica não está disponível. Tente novamente mais tarde."</string>
     <string name="decline_call" msgid="2505987200485272226">"Recusar"</string>
     <string name="answer_call" msgid="3272474440561548115">"Atender"</string>
     <string name="call_back" msgid="5745638356098600872">"Ligar de volta"</string>
@@ -37,6 +38,9 @@
     <string name="call_history_title" msgid="1495905524218923242">"Histórico de chamadas"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Contactos"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Teclado"</string>
+    <string name="call_log_header_today" msgid="2069013936632793214">"Hoje"</string>
+    <string name="call_log_header_yesterday" msgid="4613686845163357847">"Ontem"</string>
+    <string name="call_log_header_older" msgid="3971634717537073179">"Mais antigas"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Adicionar um favorito"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Ainda não adicionou nenhum favorito."</string>
     <string name="search_title" msgid="5412680850141871664">"Pesquise contactos"</string>
@@ -45,7 +49,6 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Escolha um número de telefone"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Apenas uma vez"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Sempre"</string>
-    <string name="set_default_number" msgid="5083696228341022224">"Defina o número de telefone predefinido"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – Predefinição"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notificação de chamada recebida"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Chamada recebida"</string>
@@ -53,8 +56,8 @@
     <string name="notification_missed_call" msgid="7127823385811396529">"Chamada não atendida"</string>
     <string name="onhold_call_label" msgid="1937027519810985499">"Em espera"</string>
     <string name="setting_title" msgid="1296639422364732365">"Definições"</string>
-    <string name="pref_start_page_title" msgid="8243884415248971745">"Definir página de início"</string>
-    <string name="sort_order_title" msgid="2713804965189046046">"Ordenação dos contactos"</string>
+    <string name="pref_start_page_title" msgid="1953465507368478503">"Ecrã inicial"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"Ordem dos contactos"</string>
     <string name="give_name_first_title" msgid="9036752103567139094">"Nome próprio"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Apelido"</string>
 </resources>
