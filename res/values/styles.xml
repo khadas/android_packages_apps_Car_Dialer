@@ -122,7 +122,9 @@
     <!-- Contact details -->
     <style name="TextAppearance.ContactDetailsTitle" parent="@style/TextAppearance.Display2"/>
     <style name="TextAppearance.ContactDetailsListTitle" parent="@style/TextAppearance.Body1"/>
-    <style name="TextAppearance.ContactDetailsListSubtitle" parent="@style/TextAppearance.Body3"/>
+    <style name="TextAppearance.ContactDetailsListSubtitle" parent="@style/TextAppearance.Body3">
+        <item name="android:textColor">@color/secondary_text_color</item>
+    </style>
     <style name="TextAppearance.DefaultNumberLabel" parent="@style/TextAppearance.Body3">
         <item name="android:textColor">@*android:color/accent_device_default_light</item>
     </style>
