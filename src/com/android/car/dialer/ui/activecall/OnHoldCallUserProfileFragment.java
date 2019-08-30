@@ -45,7 +45,7 @@ public class OnHoldCallUserProfileFragment extends Fragment {
 
     private TextView mTitle;
     private ImageView mAvatarView;
-    private ImageView mSwapCallsButton;
+    private View mSwapCallsView;
     private LiveData<Call> mPrimaryCallLiveData;
     private LiveData<Call> mSecondaryCallLiveData;
     private CompletableFuture<Void> mPhoneNumberInfoFuture;
@@ -67,8 +67,8 @@ public class OnHoldCallUserProfileFragment extends Fragment {
         mAvatarView = fragmentView.findViewById(R.id.icon);
         mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
 
-        mSwapCallsButton = fragmentView.findViewById(R.id.swap_calls_button);
-        mSwapCallsButton.setOnClickListener(v -> swapCalls());
+        mSwapCallsView = fragmentView.findViewById(R.id.swap_calls_view);
+        mSwapCallsView.setOnClickListener(v -> swapCalls());
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
                 InCallViewModel.class);
