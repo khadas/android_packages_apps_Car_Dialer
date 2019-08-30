@@ -133,6 +133,12 @@
         " - Default"
     </string>
 
+    <!-- Description for the favorite phone number in add to favorite flow [CHAR LIMIT=30] -->
+    <string name="favorite_number_description">
+        <xliff:g id="label" example="Mobile">%1$s</xliff:g>
+        " - Favorite"
+    </string>
+
     <!-- Heads Up Notification -->
     <!-- Name of incoming call notification channel in app info [CHAR LIMIT=50] -->
     <string name="in_call_notification_channel_name">Incoming call notification</string>

@@ -107,18 +107,15 @@ public class FavoritePhoneNumberListAdapter extends
         void bind(PhoneNumber phoneNumber) {
             mPhoneNumberView.setText(phoneNumber.getRawNumber());
             CharSequence readableLabel = phoneNumber.getReadableLabel(itemView.getResources());
-            if (phoneNumber.isPrimary()) {
-                mPhoneNumberDescriptionView.setText(
-                        itemView.getResources().getString(R.string.primary_number_description,
-                                readableLabel));
-            } else {
-                mPhoneNumberDescriptionView.setText(readableLabel);
-            }
 
             if (phoneNumber.isFavorite()) {
+                mPhoneNumberDescriptionView.setText(
+                        itemView.getResources().getString(R.string.favorite_number_description,
+                                readableLabel));
                 itemView.setActivated(true);
                 itemView.setEnabled(false);
             } else {
+                mPhoneNumberDescriptionView.setText(readableLabel);
                 itemView.setActivated(false);
                 itemView.setEnabled(true);
                 itemView.setOnClickListener(

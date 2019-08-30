@@ -132,6 +132,14 @@
     <!-- Contact results -->
     <style name="TextAppearance.ContactResultTitle" parent="@style/TextAppearance.Body1"/>
 
+    <!-- Add to favorite flow dialog -->
+    <style name="TextAppearance.AddFavoriteNumberTitle" parent="@style/TextAppearance.Body1">
+        <item name="android:textColor">@color/primary_text_selector</item>
+    </style>
+    <style name="TextAppearance.AddFavoriteNumberSubtitle" parent="@style/TextAppearance.Body3">
+        <item name="android:textColor">@color/primary_text_selector</item>
+    </style>
+
     <!-- Subheader -->
     <style name="SubheaderText">
         <item name="android:textAppearance">@style/TextAppearance.Body3</item>
