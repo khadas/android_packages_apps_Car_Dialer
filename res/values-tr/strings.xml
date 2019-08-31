@@ -26,6 +26,7 @@
     <string name="emergency_call_description" msgid="6700161437750325693">"Acil durum araması"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Bu kişi silinmiş olabilir."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Bu numara aranamıyor. Numarayı kontrol edip tekrar deneyin."</string>
+    <string name="error_telephony_not_available" msgid="8715829862083386178">"Telefonla arama yapılamıyor. Lütfen daha sonra tekrar deneyin."</string>
     <string name="decline_call" msgid="2505987200485272226">"Reddet"</string>
     <string name="answer_call" msgid="3272474440561548115">"Yanıtla"</string>
     <string name="call_back" msgid="5745638356098600872">"Geri ara"</string>
