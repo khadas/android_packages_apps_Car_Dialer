@@ -26,6 +26,7 @@
     <string name="emergency_call_description" msgid="6700161437750325693">"ការហៅទៅលេខសង្គ្រោះបន្ទាន់"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ទំនាក់ទំនងនេះ​ប្រហែលជា​ត្រូវបាន​លុបចេញ​ហើយ។"</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"មិនអាច​ហៅទៅកាន់​លេខទូរសព្ទនេះ​បានទេ។ សូម​ពិនិត្យមើល​លេខទូរសព្ទ​នេះ រួច​ព្យាយាម​ម្ដងទៀត។"</string>
+    <string name="error_telephony_not_available" msgid="8715829862083386178">"មិន​អាចហៅទូរសព្ទបានទេ។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។"</string>
     <string name="decline_call" msgid="2505987200485272226">"បដិសេធ"</string>
     <string name="answer_call" msgid="3272474440561548115">"ទទួល​ទូរសព្ទ"</string>
     <string name="call_back" msgid="5745638356098600872">"ហៅ​ទៅ​វិញ"</string>
@@ -37,17 +38,17 @@
     <string name="call_history_title" msgid="1495905524218923242">"ប្រវត្តិហៅ​ទូរសព្ទ"</string>
     <string name="contacts_title" msgid="9201954388634537346">"ទំនាក់ទំនង"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"បន្ទះ​លេខ"</string>
+    <string name="call_log_header_today" msgid="2069013936632793214">"ថ្ងៃនេះ"</string>
+    <string name="call_log_header_yesterday" msgid="4613686845163357847">"ម្សិលមិញ"</string>
+    <string name="call_log_header_older" msgid="3971634717537073179">"ចាស់ៗ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"បញ្ចូលសំណព្វ"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"អ្នក​មិនទាន់​​បាន​បញ្ចូល​​សំណព្វ​ណា​មួយ​នៅ​ឡើយ​ទេ"</string>
-    <string name="cancel_add_favorites_dialog" msgid="3587346864930207137">"@android:string/បោះបង់"</string>
-    <string name="confirm_add_favorites_dialog" msgid="2709196337767380552">"@android:string/យល់ព្រម"</string>
     <string name="search_title" msgid="5412680850141871664">"ស្វែងរកទំនាក់ទំនង"</string>
     <string name="search_hint" msgid="3099066132607042439">"ស្វែងរកទំនាក់ទំនង"</string>
     <string name="type_multiple" msgid="3402949522797441236">"ច្រើន"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ជ្រើសរើស​លេខទូរសព្ទ"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"តែ​ម្ដង"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ជានិច្ច"</string>
-    <string name="set_default_number" msgid="5083696228341022224">"កំណត់​លេខទូរសព្ទ​លំនាំដើម"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - លំនាំដើម"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ការជូនដំណឹង​អំពីការហៅចូល"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ការ​ហៅ​ចូល"</string>
@@ -55,8 +56,8 @@
     <string name="notification_missed_call" msgid="7127823385811396529">"ខកខាន​ទទួល"</string>
     <string name="onhold_call_label" msgid="1937027519810985499">"រង់ចាំ"</string>
     <string name="setting_title" msgid="1296639422364732365">"ការកំណត់"</string>
-    <string name="pref_start_page_title" msgid="8243884415248971745">"កំណត់​ទំព័រចាប់ផ្តើម"</string>
-    <string name="sort_order_title" msgid="2713804965189046046">"លំដាប់​ទំនាក់ទំនង"</string>
+    <string name="pref_start_page_title" msgid="1953465507368478503">"​អេក្រង់ចាប់​ផ្ដើម"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"លំដាប់​ទំនាក់ទំនង"</string>
     <string name="give_name_first_title" msgid="9036752103567139094">"នាម​ខ្លួន"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"នាមត្រកូល"</string>
 </resources>
