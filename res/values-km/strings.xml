@@ -26,6 +26,7 @@
     <string name="emergency_call_description" msgid="6700161437750325693">"ការហៅទៅលេខសង្គ្រោះបន្ទាន់"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ទំនាក់ទំនងនេះ​ប្រហែលជា​ត្រូវបាន​លុបចេញ​ហើយ។"</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"មិនអាច​ហៅទៅកាន់​លេខទូរសព្ទនេះ​បានទេ។ សូម​ពិនិត្យមើល​លេខទូរសព្ទ​នេះ រួច​ព្យាយាម​ម្ដងទៀត។"</string>
+    <string name="error_telephony_not_available" msgid="8715829862083386178">"មិន​អាចហៅទូរសព្ទបានទេ។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។"</string>
     <string name="decline_call" msgid="2505987200485272226">"បដិសេធ"</string>
     <string name="answer_call" msgid="3272474440561548115">"ទទួល​ទូរសព្ទ"</string>
     <string name="call_back" msgid="5745638356098600872">"ហៅ​ទៅ​វិញ"</string>

@@ -26,6 +26,7 @@
     <string name="emergency_call_description" msgid="6700161437750325693">"긴급 전화"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"삭제된 연락처일 수도 있습니다."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"이 번호로 전화를 걸 수 없습니다. 확인 후 다시 시도해 보세요."</string>
+    <string name="error_telephony_not_available" msgid="8715829862083386178">"전화 통화 기능은 사용할 수 없습니다. 나중에 다시 시도해 보세요."</string>
     <string name="decline_call" msgid="2505987200485272226">"거부"</string>
     <string name="answer_call" msgid="3272474440561548115">"통화"</string>
     <string name="call_back" msgid="5745638356098600872">"전화 걸기"</string>
