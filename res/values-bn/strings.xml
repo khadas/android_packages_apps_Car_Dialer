@@ -50,6 +50,8 @@
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"শুধু একবার"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"সবসময়"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ডিফল্ট"</string>
+    <!-- no translation found for favorite_number_description (6490014728613395653) -->
+    <skip />
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ইনকামিং কলের বিজ্ঞপ্তি"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ইনকামিং কল"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"মিসড কলের বিজ্ঞপ্তি"</string>
