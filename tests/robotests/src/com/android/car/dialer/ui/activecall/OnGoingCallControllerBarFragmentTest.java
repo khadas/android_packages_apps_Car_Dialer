@@ -163,7 +163,7 @@ public class OnGoingCallControllerBarFragmentTest {
         addFragment(Call.STATE_ACTIVE);
 
         View fragmentView = mOnGoingCallControllerBarFragment.getView();
-        ImageView audioRouteButton = fragmentView.findViewById(R.id.voice_channel_button);
+        View audioRouteButton = fragmentView.findViewById(R.id.voice_channel_view);
         assertThat(audioRouteButton.hasOnClickListeners()).isTrue();
     }
 
