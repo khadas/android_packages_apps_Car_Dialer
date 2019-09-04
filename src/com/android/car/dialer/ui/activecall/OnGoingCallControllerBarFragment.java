@@ -56,20 +56,20 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             ImmutableMap.<Integer, AudioRouteInfo>builder()
                     .put(CallAudioState.ROUTE_WIRED_HEADSET, new AudioRouteInfo(
                             R.string.audio_route_handset,
-                            R.drawable.ic_smartphone,
-                            R.drawable.ic_smartphone_activatable))
+                            R.drawable.ic_audio_route_headset,
+                            R.drawable.ic_audio_route_headset_activatable))
                     .put(CallAudioState.ROUTE_EARPIECE, new AudioRouteInfo(
                             R.string.audio_route_handset,
-                            R.drawable.ic_smartphone,
-                            R.drawable.ic_smartphone_activatable))
+                            R.drawable.ic_audio_route_earpiece,
+                            R.drawable.ic_audio_route_earpiece_activatable))
                     .put(CallAudioState.ROUTE_BLUETOOTH, new AudioRouteInfo(
                             R.string.audio_route_vehicle,
-                            R.drawable.ic_bluetooth,
-                            R.drawable.ic_bluetooth_activatable))
+                            R.drawable.ic_audio_route_vehicle,
+                            R.drawable.ic_audio_route_vehicle_activatable))
                     .put(CallAudioState.ROUTE_SPEAKER, new AudioRouteInfo(
                             R.string.audio_route_phone_speaker,
-                            R.drawable.ic_speaker_phone,
-                            R.drawable.ic_speaker_phone_activatable))
+                            R.drawable.ic_audio_route_speaker,
+                            R.drawable.ic_audio_route_speaker_activatable))
                     .build();
 
     private AlertDialog mAudioRouteSelectionDialog;
