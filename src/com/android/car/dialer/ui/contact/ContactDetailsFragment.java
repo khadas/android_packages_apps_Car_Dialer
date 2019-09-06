@@ -18,6 +18,7 @@ package com.android.car.dialer.ui.contact;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,6 +51,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
     private Contact mContact;
     private LiveData<Contact> mContactDetailsLiveData;
+    private View mActionBarView;
     private ImageView mAvatarView;
     private TextView mNameView;
     private ContactDetailsViewModel mContactDetailsViewModel;
@@ -75,6 +77,11 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         mContactDetailsViewModel = ViewModelProviders.of(this).get(
                 ContactDetailsViewModel.class);
         mContactDetailsLiveData = mContactDetailsViewModel.getContactDetails(mContact);
+
+        mActionBarView = LayoutInflater.from(getContext()).inflate(
+                R.layout.contact_details_action_bar, null);
+        mAvatarView = mActionBarView.findViewById(R.id.contact_details_action_bar_avatar);
+        mNameView = mActionBarView.findViewById(R.id.contact_details_action_bar_name);
     }
 
     @Override
@@ -88,6 +95,9 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
                 mContact, this);
         getRecyclerView().setAdapter(contactDetailsAdapter);
+        if (!DialerUtils.isShortScreen(getContext())) {
+            getRecyclerView().setScrollBarPadding(getTopBarHeight(), 0);
+        }
         mContactDetailsLiveData.observe(this, contact -> {
             mContact = contact;
             onContactChanged(contact);
@@ -113,21 +123,13 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
     @Override
     public void setupActionBar(@NonNull ActionBar actionBar) {
-        actionBar.setCustomView(R.layout.contact_details_action_bar);
+        actionBar.setCustomView(mActionBarView);
         actionBar.setTitle(null);
-
-        // Will set these to null on screen sizes that don't have them in the action bar
-        View customView = actionBar.getCustomView();
-        mAvatarView = customView.findViewById(R.id.contact_details_action_bar_avatar);
-        mNameView = customView.findViewById(R.id.contact_details_action_bar_name);
 
         // Remove the action bar background on non-short screens
         // On short screens the avatar and name is in the action bar so we keep it
         if (mAvatarView == null) {
             setActionBarBackground(null);
-            getRecyclerView().setScrollBarPadding(actionBar.getHeight(), 0);
-        } else {
-            getRecyclerView().setScrollBarPadding(0, 0);
         }
     }
 
