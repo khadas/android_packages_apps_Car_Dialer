@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
@@ -63,17 +62,11 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
         L.d(TAG, "setContact %s", contact);
         mContact = contact;
         mItems.clear();
-        if (shouldShowHeader()) {
-            mItems.add(contact);
-        }
+        mItems.add(contact);
         if (contact != null) {
             mItems.addAll(contact.getNumbers());
         }
         notifyDataSetChanged();
-    }
-
-    private boolean shouldShowHeader() {
-        return !DialerUtils.isShortScreen(mContext);
     }
 
     @Override
