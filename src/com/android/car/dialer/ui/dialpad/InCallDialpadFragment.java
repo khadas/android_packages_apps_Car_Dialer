@@ -108,7 +108,7 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    protected void setupActionBar(ActionBar actionBar) {
+    public void setupActionBar(ActionBar actionBar) {
         // No-op
     }
 

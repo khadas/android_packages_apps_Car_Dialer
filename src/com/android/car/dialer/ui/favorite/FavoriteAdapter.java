@@ -16,11 +16,9 @@
 
 package com.android.car.dialer.ui.favorite;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,9 +35,18 @@ import java.util.List;
  */
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHolder> {
     private static final String TAG = "CD.FavoriteAdapter";
+    private static final int TYPE_CONTACT = 0;
+    private static final int TYPE_ADD_FAVORITE = 1;
+
+    /** Listener interface for when the add favorite button is clicked */
+    public interface OnAddFavoriteClickedListener {
+        /** Called when the add favorite button is clicked */
+        void onAddFavoriteClicked();
+    }
 
     private List<Contact> mFavoriteContacts = Collections.emptyList();
     private OnItemClickedListener<Contact> mListener;
+    private OnAddFavoriteClickedListener mAddFavoriteListener;
 
     /** Sets the favorite contact list. */
     public void setFavoriteContacts(List<Contact> favoriteContacts) {
@@ -54,25 +61,38 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position < mFavoriteContacts.size()
+                ? TYPE_CONTACT
+                : TYPE_ADD_FAVORITE;
+    }
+
+    @Override
     public FavoriteContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.favorite_contact_list_item, parent, false);
+        View view;
+        if (viewType == TYPE_CONTACT) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.favorite_contact_list_item, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.add_favorite_list_item, parent, false);
+        }
 
         return new FavoriteContactViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(FavoriteContactViewHolder viewHolder, int position) {
-        Context context = viewHolder.itemView.getContext();
-
-        if (position >= mFavoriteContacts.size()) {
-            viewHolder.onBindAddFavorite(context);
-            viewHolder.itemView.setOnClickListener((v) ->
-                    Toast.makeText(context, "Not yet implemented", Toast.LENGTH_LONG).show());
-        } else {
+        if (getItemViewType(position) == TYPE_CONTACT) {
             Contact contact = mFavoriteContacts.get(position);
-            viewHolder.onBind(context, contact);
+            viewHolder.onBind(contact);
             viewHolder.itemView.setOnClickListener((v) -> onItemViewClicked(contact));
+        } else {
+            viewHolder.itemView.setOnClickListener((v) -> {
+                if (mAddFavoriteListener != null) {
+                    mAddFavoriteListener.onAddFavoriteClicked();
+                }
+            });
         }
     }
 
@@ -87,5 +107,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
      */
     public void setOnListItemClickedListener(OnItemClickedListener<Contact> listener) {
         mListener = listener;
+    }
+
+    /**
+     * Sets a {@link OnAddFavoriteClickedListener listener} which will be called when the
+     * "Add favorite" button is clicked.
+     */
+    public void setOnAddFavoriteClickedListener(OnAddFavoriteClickedListener listener) {
+        mAddFavoriteListener = listener;
     }
 }

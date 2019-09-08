@@ -105,15 +105,14 @@ public class DialpadFragment extends AbstractDialpadFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMode = getArguments().getInt(DIALPAD_MODE_KEY);
+        L.d(TAG, "onCreate mode: %s", mMode);
         mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mMode = getArguments().getInt(DIALPAD_MODE_KEY);
-        L.d(TAG, "onCreateView mode: %s", mMode);
-
         View rootView = inflater.inflate(R.layout.dialpad_fragment, container, false);
         // Offset the dialpad to under the tabs in normal dial mode.
         rootView.setPadding(0, getTopOffset(), 0, 0);
@@ -160,7 +159,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    protected void setupActionBar(ActionBar actionBar) {
+    public void setupActionBar(ActionBar actionBar) {
         // Only setup the actionbar if we're in dial mode.
         // In all the other modes, there will be another fragment in the activity
         // at the same time, and we don't want to mess up it's action bar.

@@ -24,6 +24,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.util.Pair;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -36,6 +37,7 @@ import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
+import com.android.car.dialer.ui.favorite.FavoriteViewModel;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
@@ -52,7 +54,7 @@ import org.robolectric.shadows.ShadowAlertDialog;
 import java.util.Arrays;
 import java.util.List;
 
-@Config(shadows = {ShadowAndroidViewModelFactory.class})
+@Config(shadows = {ShadowAndroidViewModelFactory.class}, qualifiers = "h610dp")
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class ContactListFragmentTest {
     private static final String RAW_NUMBNER = "6502530000";
@@ -67,6 +69,8 @@ public class ContactListFragmentTest {
     @Mock
     private ContactDetailsViewModel mMockContactDetailsViewModel;
     @Mock
+    private FavoriteViewModel mMockFavoriteViewModel;
+    @Mock
     private Contact mMockContact1;
     @Mock
     private Contact mMockContact2;
@@ -79,16 +83,19 @@ public class ContactListFragmentTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        MutableLiveData<List<Contact>> contactList = new MutableLiveData<>();
-        contactList.setValue(Arrays.asList(mMockContact1, mMockContact2, mMockContact3));
+        MutableLiveData<Pair<Integer, List<Contact>>> contactList = new MutableLiveData<>();
+        contactList.setValue(new Pair<>(ContactListViewModel.SORT_BY_LAST_NAME,
+                Arrays.asList(mMockContact1, mMockContact2, mMockContact3)));
         ShadowAndroidViewModelFactory.add(ContactListViewModel.class, mMockContactListViewModel);
         when(mMockContactListViewModel.getAllContacts()).thenReturn(contactList);
-
         MutableLiveData<Contact> contactDetail = new MutableLiveData<>();
         contactDetail.setValue(mMockContact1);
         ShadowAndroidViewModelFactory.add(ContactDetailsViewModel.class,
                 mMockContactDetailsViewModel);
         when(mMockContactDetailsViewModel.getContactDetails(any())).thenReturn(contactDetail);
+
+        ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
+        when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(new MutableLiveData<>());
     }
 
     @Test

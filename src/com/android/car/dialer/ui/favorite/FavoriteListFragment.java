@@ -50,6 +50,7 @@ public class FavoriteListFragment extends DialerListBaseFragment {
         getRecyclerView().setItemAnimator(null);
 
         FavoriteAdapter adapter = new FavoriteAdapter();
+        adapter.setOnAddFavoriteClickedListener(this::onAddFavoriteClicked);
 
         FavoriteViewModel favoriteViewModel = ViewModelProviders.of(getActivity()).get(
                 FavoriteViewModel.class);
@@ -73,6 +74,10 @@ public class FavoriteListFragment extends DialerListBaseFragment {
                 UiCallManager.get().placeCall(phoneNumber.getRawNumber()));
     }
 
+    private void onAddFavoriteClicked() {
+        pushContentFragment(AddFavoriteFragment.newInstance(), null);
+    }
+
     private class ItemSpacingDecoration extends RecyclerView.ItemDecoration {
 
         @Override
@@ -83,17 +88,14 @@ public class FavoriteListFragment extends DialerListBaseFragment {
             int numColumns = resources.getInteger(R.integer.favorite_fragment_grid_column);
             int leftPadding =
                     resources.getDimensionPixelOffset(R.dimen.favorite_card_space_horizontal);
-            int topPadding =
+            int verticalPadding =
                     resources.getDimensionPixelOffset(R.dimen.favorite_card_space_vertical);
 
             if (parent.getChildAdapterPosition(view) % numColumns == 0) {
                 leftPadding = 0;
             }
-            if (parent.getChildAdapterPosition(view) < numColumns) {
-                topPadding = 0;
-            }
 
-            outRect.set(leftPadding, topPadding, 0, 0);
+            outRect.set(leftPadding, verticalPadding, 0, verticalPadding);
         }
     }
 }

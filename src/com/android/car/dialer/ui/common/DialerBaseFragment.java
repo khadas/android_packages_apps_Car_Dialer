@@ -18,9 +18,7 @@ package com.android.car.dialer.ui.common;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -46,48 +44,11 @@ public abstract class DialerBaseFragment extends Fragment {
         void pushContentFragment(Fragment fragment, String fragmentTag);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onResume() {
-        setFullScreenBackground();
-
-        Activity parentActivity = getActivity();
-        ActionBar actionBar = parentActivity.getActionBar();
-        if (actionBar != null) {
-            setupActionBar(actionBar);
-        }
-
-        super.onResume();
-    }
-
-    /**
-     * Sets a fullscreen background to its parent Activity.
-     */
-    protected void setFullScreenBackground() {
-        Activity parentActivity = getActivity();
-        if (parentActivity instanceof DialerFragmentParent) {
-            ((DialerFragmentParent) parentActivity).setBackground(getFullScreenBackgroundColor());
-        }
-    }
-
     /** Customizes the action bar. Can be overridden in subclasses. */
-    protected void setupActionBar(@NonNull ActionBar actionBar) {
+    public void setupActionBar(@NonNull ActionBar actionBar) {
         actionBar.setTitle(getActionBarTitle());
         actionBar.setCustomView(null);
         setActionBarBackground(getContext().getDrawable(R.color.app_bar_background_color));
-    }
-
-    /**
-     * Returns the full screen background for its parent Activity. Override this function to
-     * change the background.
-     */
-    protected Drawable getFullScreenBackgroundColor() {
-        return new ColorDrawable(Themes.getAttrColor(getContext(), android.R.attr.background));
     }
 
     /** Push a fragment to the back stack. Update action bar accordingly. */

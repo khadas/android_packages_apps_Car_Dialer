@@ -14,21 +14,24 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer.ui.search;
+package com.android.car.dialer.storage;
 
-import android.net.Uri;
+import androidx.annotation.NonNull;
 
 /**
- * A struct that holds the details for a contact search result.
+ * A wrapper which is used by {@link androidx.room.TypeConverter} to encrypt and decrypt. By using
+ * this wrapper, we can use {@link androidx.room.TypeConverter} to do encryption before writing and
+ * do decryption after reading.
  */
-class ContactDetails {
-    final String displayName;
-    final Uri photoUri;
-    final Uri lookupUri;
+class CipherWrapper<T> {
+    private final T mObject;
 
-    ContactDetails(String displayName, String photoUri, Uri lookupUri) {
-        this.displayName = displayName;
-        this.photoUri = photoUri == null ? null : Uri.parse(photoUri);
-        this.lookupUri = lookupUri;
+    CipherWrapper(@NonNull T object) {
+        mObject = object;
+    }
+
+    @NonNull
+    T get() {
+        return mObject;
     }
 }

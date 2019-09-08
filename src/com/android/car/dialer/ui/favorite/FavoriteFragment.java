@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -60,7 +59,7 @@ public class FavoriteFragment extends DialerBaseFragment {
         });
 
         emptyPage.findViewById(R.id.add_favorite_button).setOnClickListener(v ->
-                Toast.makeText(getContext(), "Not yet implemented", Toast.LENGTH_LONG).show());
+                pushContentFragment(AddFavoriteFragment.newInstance(), null));
 
         return view;
     }
