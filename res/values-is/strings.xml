@@ -50,6 +50,7 @@
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Bara einu sinni"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Alltaf"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – sjálfgefinn"</string>
+    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - Eftirlæti"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Tilkynning um móttekið símtal"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Móttekið símtal"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Tilkynning um ósvarað símtal"</string>
