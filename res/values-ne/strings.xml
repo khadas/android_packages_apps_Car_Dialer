@@ -50,6 +50,7 @@
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"एक पटक मात्र"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"सधैँ"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - पूर्वनिर्धारित"</string>
+    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - मन पर्ने कुराको सूचीमा सार्नु…"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"आगमन कलसम्बन्धी सूचना"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"आगमन कल"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"छुटेको कलसम्बन्धी सूचना"</string>
