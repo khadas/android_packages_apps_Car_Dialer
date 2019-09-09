@@ -25,6 +25,7 @@ limitations under the License.
         <item name="android:listDivider">@drawable/list_divider</item>
         <item name="android:toolbarStyle">@style/Widget.Dialer.Toolbar</item>
         <item name="android:buttonStyle">@style/Widget.Dialer.Button</item>
+        <item name="android:searchViewStyle">@style/Widget.Dialer.SearchView</item>
     </style>
 
     <style name="Theme.Dialer.Setting" parent="Theme.Dialer">
