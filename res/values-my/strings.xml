@@ -50,6 +50,7 @@
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"တစ်ကြိမ်သာ"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"အမြဲတမ်း"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - မူရင်း"</string>
+    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - အနှစ်သက်ဆုံး"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"အဝင်ခေါ်ဆိုမှု အကြောင်းကြားချက်"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"အဝင်ခေါ်ဆိုမှု"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"လွတ်သွားသော ခေါ်ဆိုမှု အကြောင်းကြားချက်"</string>
