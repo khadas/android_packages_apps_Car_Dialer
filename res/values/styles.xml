@@ -162,4 +162,9 @@
         <item name="android:fadingEdgeLength">@*android:dimen/car_textview_fading_edge_length</item>
     </style>
 
+    <style name="Widget.Dialer.SearchView" parent="android:Widget.Material.SearchView">
+        <item name="android:closeIcon">@drawable/ic_close</item>
+        <item name="android:layout">@layout/search_view_layout_override</item>
+    </style>
+
 </resources>
