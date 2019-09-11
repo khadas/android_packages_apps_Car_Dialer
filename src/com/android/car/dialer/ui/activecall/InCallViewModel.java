@@ -157,6 +157,11 @@ public class InCallViewModel extends AndroidViewModel implements
         mContext.bindService(intent, mInCallServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
+    /** Returns the live data which monitors all the calls. */
+    public LiveData<List<Call>> getAllCallList() {
+        return mCallListLiveData;
+    }
+
     /** Returns the live data which monitors the current incoming call. */
     public LiveData<Call> getIncomingCall() {
         return mIncomingCallLiveData;
