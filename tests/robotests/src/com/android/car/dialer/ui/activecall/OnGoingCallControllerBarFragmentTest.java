@@ -18,6 +18,7 @@ package com.android.car.dialer.ui.activecall;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -64,6 +65,8 @@ public class OnGoingCallControllerBarFragmentTest {
     private MutableLiveData<Integer> mCallStateLiveData;
     private MutableLiveData<CallDetail> mCallDetailLiveData;
     private MutableLiveData<Boolean> mDialpadStateLiveData;
+    private MutableLiveData<List<Call>> mCallListLiveData;
+    private List<Call> mCallList;
     @Mock
     private Call mMockCall;
     @Mock
@@ -85,6 +88,10 @@ public class OnGoingCallControllerBarFragmentTest {
         mCallStateLiveData = new MutableLiveData<>();
         mCallDetailLiveData = new MutableLiveData<>();
         mDialpadStateLiveData = new MutableLiveData<>();
+        mCallListLiveData = new MutableLiveData<>();
+        mCallList = new ArrayList<>();
+        mCallList.add(mMockCall);
+        mCallListLiveData.setValue(mCallList);
 
         ((TestDialerApplication) RuntimeEnvironment.application).setupInCallServiceImpl(
                 mMockInCallService);
@@ -174,6 +181,7 @@ public class OnGoingCallControllerBarFragmentTest {
         ImageView pauseButton = mOnGoingCallControllerBarFragment.getView().findViewById(
                 R.id.pause_button);
         assertThat(pauseButton.hasOnClickListeners()).isTrue();
+        assertThat(pauseButton.isEnabled()).isTrue();
         assertThat(pauseButton.isActivated()).isFalse();
 
         // onHoldCall
@@ -186,13 +194,37 @@ public class OnGoingCallControllerBarFragmentTest {
     }
 
     @Test
+    public void testClickPauseButton_onholdCall() {
+        addFragment(Call.STATE_HOLDING);
+        ImageView pauseButton = mOnGoingCallControllerBarFragment.getView().findViewById(
+                R.id.pause_button);
+        assertThat(pauseButton.isEnabled()).isTrue();
+        assertThat(pauseButton.isActivated()).isTrue();
+
+        // onHoldCall
+        pauseButton.performClick();
+        verify(mMockCall).unhold();
+    }
+
+    @Test
     public void testClickPauseButton_connectingCall() {
         addFragment(Call.STATE_DIALING);
         ImageView pauseButton = mOnGoingCallControllerBarFragment.getView().findViewById(
                 R.id.pause_button);
+        assertThat(pauseButton.isEnabled()).isFalse();
+
         pauseButton.performClick();
         verify(mMockCall, never()).hold();
         verify(mMockCall, never()).unhold();
+    }
+
+    @Test
+    public void testPauseButton_MultipleCall() {
+        mCallList.add(mock(Call.class));
+        addFragment(Call.STATE_DIALING);
+        ImageView pauseButton = mOnGoingCallControllerBarFragment.getView().findViewById(
+                R.id.pause_button);
+        assertThat(pauseButton.isEnabled()).isFalse();
     }
 
     private void addFragment(int callState) {
@@ -205,6 +237,7 @@ public class OnGoingCallControllerBarFragmentTest {
         when(mMockInCallViewModel.getPrimaryCallDetail()).thenReturn(mCallDetailLiveData);
         when(mMockInCallViewModel.getPrimaryCallState()).thenReturn(mCallStateLiveData);
         when(mMockInCallViewModel.getDialpadOpenState()).thenReturn(mDialpadStateLiveData);
+        when(mMockInCallViewModel.getAllCallList()).thenReturn(mCallListLiveData);
 
         MutableLiveData<Integer> audioRouteLiveData = new MutableLiveData<>();
         audioRouteLiveData.setValue(CallAudioState.ROUTE_BLUETOOTH);
