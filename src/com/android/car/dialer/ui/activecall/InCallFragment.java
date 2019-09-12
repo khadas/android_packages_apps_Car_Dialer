@@ -134,14 +134,16 @@ public abstract class InCallFragment extends Fragment {
                             @Override
                             public void onResourceReady(Drawable resource,
                                     Transition<? super Drawable> glideAnimation) {
-                                // set showAnimation to false mostly because bindUserProfileView
-                                // called several times, and we don't want the image to flicker
+                                mBackgroundImage.setAlpha(getResources().getFloat(
+                                        R.dimen.config_background_image_alpha));
                                 mBackgroundImage.setBackgroundDrawable(resource);
                                 mAvatarView.setImageDrawable(resource);
                             }
 
                             @Override
                             public void onLoadFailed(Drawable errorDrawable) {
+                                mBackgroundImage.setAlpha(getResources().getFloat(
+                                        R.dimen.config_background_image_error_alpha));
                                 mBackgroundImage.setBackgroundColor(letterTile.getColor());
                                 mAvatarView.setImageDrawable(letterTile);
                             }
