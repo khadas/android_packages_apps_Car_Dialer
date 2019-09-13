@@ -89,6 +89,8 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
                 mAvatarView.setImageDrawable(letterTile);
             }
             if (mBackgroundImageView != null) {
+                mBackgroundImageView.setAlpha(context.getResources().getFloat(
+                        R.dimen.config_background_image_error_alpha));
                 mBackgroundImageView.setBackgroundColor(letterTile.getColor());
             }
             return;
@@ -113,6 +115,8 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
                             mAvatarView.setImageDrawable(resource);
                         }
                         if (mBackgroundImageView != null) {
+                            mBackgroundImageView.setAlpha(context.getResources().getFloat(
+                                    R.dimen.config_background_image_alpha));
                             mBackgroundImageView.setBackgroundDrawable(resource);
                         }
                     }
@@ -123,6 +127,8 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
                             mAvatarView.setImageDrawable(letterTile);
                         }
                         if (mBackgroundImageView != null) {
+                            mBackgroundImageView.setAlpha(context.getResources().getFloat(
+                                    R.dimen.config_background_image_error_alpha));
                             mBackgroundImageView.setBackgroundColor(letterTile.getColor());
                         }
                     }
