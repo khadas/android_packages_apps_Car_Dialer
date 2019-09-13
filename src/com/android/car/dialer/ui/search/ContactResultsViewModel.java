@@ -83,6 +83,8 @@ public class ContactResultsViewModel extends AndroidViewModel {
         private final Context mContext;
         private final SearchQueryParamProvider mSearchQueryParamProvider;
         private final ObservableAsyncQuery mObservableAsyncQuery;
+        private final LiveData<String> mSearchQueryLiveData;
+        private final LiveData<List<Contact>> mContactListLiveData;
         private final SharedPreferencesLiveData mSharedPreferencesLiveData;
         private final Comparator<Contact> mFirstNameComparator =
                 (o1, o2) -> o1.compareByDisplayName(o2);
@@ -97,8 +99,10 @@ public class ContactResultsViewModel extends AndroidViewModel {
             mObservableAsyncQuery = new ObservableAsyncQuery(mSearchQueryParamProvider,
                     context.getContentResolver(), this::onQueryFinished);
 
-            addSource(InMemoryPhoneBook.get().getContactsLiveData(), this::onContactsChange);
-            addSource(searchQueryLiveData, this::onSearchQueryChanged);
+            mContactListLiveData = InMemoryPhoneBook.get().getContactsLiveData();
+            addSource(mContactListLiveData, this::onContactsChange);
+            mSearchQueryLiveData = searchQueryLiveData;
+            addSource(mSearchQueryLiveData, this::onSearchQueryChanged);
 
             mSharedPreferencesLiveData = sharedPreferencesLiveData;
             addSource(mSharedPreferencesLiveData, this::onSortOrderChanged);
@@ -109,14 +113,15 @@ public class ContactResultsViewModel extends AndroidViewModel {
                 mObservableAsyncQuery.stopQuery();
                 setValue(Collections.emptyList());
             } else {
-                mObservableAsyncQuery.startQuery();
+                onSearchQueryChanged(mSearchQueryLiveData.getValue());
             }
         }
 
         private void onSearchQueryChanged(String searchQuery) {
             if (TextUtils.isEmpty(searchQuery)) {
                 mObservableAsyncQuery.stopQuery();
-                setValue(Collections.emptyList());
+                List<Contact> contacts = mContactListLiveData.getValue();
+                setValue(contacts == null ? Collections.emptyList() : contacts);
             } else {
                 mObservableAsyncQuery.startQuery();
             }
