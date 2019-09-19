@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.telephony.common.Contact;
 
 import java.util.ArrayList;
@@ -83,12 +84,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
 
     @Override
     public int getItemCount() {
-        return  mContactList.size();
+        return mContactList.size();
     }
 
     private String getHeader(Contact contact) {
         String label;
-        if (mSortMethod.equals(ContactListViewModel.SORT_BY_LAST_NAME)) {
+        if (mSortMethod.equals(ContactSortingInfo.SORT_BY_LAST_NAME)) {
             label = contact.getPhonebookLabelAlt();
         } else {
             label = contact.getPhonebookLabel();
