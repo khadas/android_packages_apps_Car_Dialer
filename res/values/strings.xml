@@ -167,9 +167,14 @@
     <!-- Title of the settings to sort contact order [CHAR LIMIT=40]-->
     <string name="sort_order_title">Contact order</string>
     <string name="sort_order_key" translatable="false">contact_order</string>
-    <!-- Title of the settings for sorting Contacts in different orders -->
+
+    <!-- Keys and titles of the settings for sorting Contacts in different orders -->
+    <!-- Key of given name -->
+    <string name="given_name_first_key" translatable="false">given_name</string>
+    <!-- Key of family name -->
+    <string name="family_name_first_key" translatable="false">family_name</string>
     <!-- Title of given name [CHAR LIMIT=40]-->
-    <string name="give_name_first_title">First name</string>
+    <string name="given_name_first_title">First name</string>
     <!-- Title of family name [CHAR LIMIT=40]-->
     <string name="family_name_first_title">Last name</string>
 </resources>
