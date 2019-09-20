@@ -16,9 +16,11 @@
   -->
 
 <resources>
-    <bool name="config_enable_dial_motion">true</bool>
     <item name="config_dial_motion_scale_start" format="float" type="integer">1.5</item>
     <integer name="config_dial_motion_duration">200</integer>
     <item name="config_background_image_alpha" format="float" type="dimen">1.0</item>
     <item name="config_background_image_error_alpha" format="float" type="dimen">1.0</item>
+
+    <bool name="config_enable_dial_motion">true</bool>
+    <bool name="config_show_detailed_user_profile_on_dialpad">false</bool>
 </resources>
