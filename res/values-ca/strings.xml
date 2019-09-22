@@ -59,6 +59,6 @@
     <string name="setting_title" msgid="1296639422364732365">"Configuració"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Pantalla d\'inici"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Ordre dels contactes"</string>
-    <string name="give_name_first_title" msgid="9036752103567139094">"Nom"</string>
+    <string name="given_name_first_title" msgid="8072187841056104968">"Nom"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Cognoms"</string>
 </resources>
