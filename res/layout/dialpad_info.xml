@@ -51,14 +51,13 @@
         app:layout_constraintStart_toEndOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-        android:id="@+id/display_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.DialpadDisplayName"
-        android:singleLine="true"
-        android:layout_marginTop="@dimen/display_name_padding"
+    <include
+        layout="@layout/dialpad_user_profile"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dialpad_user_profile_padding"
         app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@+id/call_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
