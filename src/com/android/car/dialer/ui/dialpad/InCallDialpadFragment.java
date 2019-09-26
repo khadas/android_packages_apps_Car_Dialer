@@ -27,6 +27,7 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -40,6 +41,7 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     private static final String TAG = "CD.InCallDialpadFragment";
 
     private TextView mTitleView;
+    @Nullable
     private Chronometer mCallStateView;
 
     /** An active call which this fragment is serving for. */
@@ -58,6 +60,10 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
 
         InCallViewModel viewModel = ViewModelProviders.of(getActivity()).get(InCallViewModel.class);
         viewModel.getCallStateAndConnectTime().observe(this, (pair) -> {
+            if (mCallStateView == null) {
+                return;
+            }
+
             if (pair == null) {
                 mCallStateView.stop();
                 mCallStateView.setText("");
