@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.CallLog;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
@@ -176,7 +177,14 @@ public class TelecomActivity extends FragmentActivity implements
                     }
                 }
                 break;
-
+            case Intent.ACTION_VIEW:
+                if (CallLog.Calls.CONTENT_TYPE.equals(intent.getType())) {
+                    if (TelecomActivityViewModel.DialerAppState.BLUETOOTH_ERROR
+                            != mDialerAppStateLiveData.getValue()) {
+                        showTabPage(TelecomPageTab.Page.CALL_HISTORY);
+                    }
+                }
+                break;
             default:
                 // Do nothing.
         }
