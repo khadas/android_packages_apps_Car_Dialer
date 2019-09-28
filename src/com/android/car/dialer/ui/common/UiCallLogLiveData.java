@@ -149,7 +149,8 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
             } else {
                 title = mContext.getString(R.string.unknown);
             }
-            PhoneNumber phoneNumber = contact != null ? contact.getPhoneNumber(number) : null;
+            PhoneNumber phoneNumber = contact != null
+                    ? contact.getPhoneNumber(mContext, number) : null;
 
             UiCallLog uiCallLog = new UiCallLog(
                     title,
