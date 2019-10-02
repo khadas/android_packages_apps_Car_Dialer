@@ -30,5 +30,5 @@
     <com.android.car.apps.common.widget.CarTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"/>
+        android:layout_height="?attr/tabBarSize"/>
 </LinearLayout>
