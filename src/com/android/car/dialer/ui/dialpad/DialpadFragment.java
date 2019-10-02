@@ -225,7 +225,8 @@ public class DialpadFragment extends AbstractDialpadFragment {
                             : R.string.emergency_call_description);
             ViewUtils.setVisible(mDeleteButton, false);
         } else {
-            mTitleView.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+            mTitleView.setGravity(
+                    getResources().getInteger(R.integer.config_dialed_number_gravity));
             if (number.length() <= MAX_DIAL_NUMBER) {
                 mTitleView.setText(
                         TelecomUtils.getFormattedNumber(getContext(), number.toString()));
