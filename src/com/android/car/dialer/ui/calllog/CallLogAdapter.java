@@ -91,8 +91,8 @@ public class CallLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof  CallLogViewHolder) {
-            ((CallLogViewHolder) holder).onBind((UiCallLog) mUiCallLogs.get(position));
+        if (holder instanceof CallLogViewHolder) {
+            ((CallLogViewHolder) holder).bind((UiCallLog) mUiCallLogs.get(position));
         } else {
             ((HeaderViewHolder) holder).setHeaderTitle((String) mUiCallLogs.get(position));
         }
