@@ -17,12 +17,17 @@
     <!-- The configurable text for a keypad button. -->
     <declare-styleable name="KeypadButton">
         <!-- The keypad number, such as "1". -->
-        <attr name="numberText" format="string" />
+        <attr name="numberText" format="string"/>
 
         <!-- The letters below the number, such as "ABC". -->
-        <attr name="letterText" format="string" />
+        <attr name="letterText" format="string"/>
 
         <!-- An image that appears below the number, such as a voicemail icon. -->
-        <attr name="image" format="reference" />
+        <attr name="image" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="Theme">
+        <!-- Tab bar height that only applies to portrait layout where tabs are under action bar.-->
+        <attr name="tabBarSize" format="dimension"/>
     </declare-styleable>
 </resources>
