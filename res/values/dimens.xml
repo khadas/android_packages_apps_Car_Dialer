@@ -15,6 +15,7 @@
 -->
 <resources>
     <dimen name="action_bar_height">96dp</dimen>
+    <dimen name="tab_bar_height">@dimen/action_bar_height</dimen>
     <!-- Dialer -->
     <dimen name="dialer_card_elevation">2dp</dimen>
 
