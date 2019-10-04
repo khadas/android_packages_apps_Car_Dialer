@@ -73,7 +73,8 @@ public abstract class DialerBaseFragment extends Fragment {
                 android.R.attr.actionBarSize);
         // Tabs are not child of the toolbar and tabs are visible.
         if (toolbar.findViewById(R.id.tab_layout) == null && backStackEntryCount == 1) {
-            topBarHeight += topBarHeight;
+            int tabBarHeight = Themes.getAttrDimensionPixelSize(getContext(), R.attr.tabBarSize);
+            topBarHeight += tabBarHeight;
         }
         return topBarHeight;
     }
