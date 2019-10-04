@@ -68,7 +68,7 @@ limitations under the License.
             android:layout_height="@dimen/in_call_button_size"
             android:background="@drawable/dialer_ripple_background"
             android:scaleType="center"
-            android:src="@drawable/ic_bluetooth_activatable"/>
+            android:src="@drawable/ic_audio_route_vehicle_activatable"/>
 
         <TextView
             android:id="@+id/voice_channel_text"
