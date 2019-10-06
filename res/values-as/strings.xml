@@ -59,6 +59,6 @@
     <string name="setting_title" msgid="1296639422364732365">"ছেটিংসমূহ"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"আৰম্ভণিৰ স্ক্ৰীণ"</string>
     <string name="sort_order_title" msgid="975104366728292702">"সম্পৰ্কৰ ক্ৰম"</string>
-    <string name="give_name_first_title" msgid="9036752103567139094">"প্ৰথম নাম"</string>
+    <string name="given_name_first_title" msgid="8072187841056104968">"প্ৰথম নাম"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"উপাধি"</string>
 </resources>

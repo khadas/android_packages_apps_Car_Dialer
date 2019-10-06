@@ -59,6 +59,6 @@
     <string name="setting_title" msgid="1296639422364732365">"Mga Setting"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Screen ng simula"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Pagkakasunud-sunod ng contact"</string>
-    <string name="give_name_first_title" msgid="9036752103567139094">"Pangalan"</string>
+    <string name="given_name_first_title" msgid="8072187841056104968">"Pangalan"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Apelyido"</string>
 </resources>
