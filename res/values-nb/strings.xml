@@ -22,7 +22,7 @@
     <string name="bluetooth_disabled" msgid="1275246762067907843">"For å ringe eller motta anrop, slå på Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Koble sammen telefonen og bilen for å ringe eller motta anrop."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Koble til Bluetooth"</string>
-    <string name="emergency_button_text" msgid="3467659545392931727">"Nødsituasjon"</string>
+    <string name="emergency_button_text" msgid="3467659545392931727">"Nødssituasjon"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Nødanrop"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Denne kontakten kan ha blitt slettet."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Kan ikke ringe dette nummeret. Sjekk at det er riktig, og prøv på nytt."</string>
@@ -59,6 +59,6 @@
     <string name="setting_title" msgid="1296639422364732365">"Innstillinger"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Startskjerm"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Kontaktrekkefølge"</string>
-    <string name="give_name_first_title" msgid="9036752103567139094">"Fornavn"</string>
+    <string name="given_name_first_title" msgid="8072187841056104968">"Fornavn"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Etternavn"</string>
 </resources>
