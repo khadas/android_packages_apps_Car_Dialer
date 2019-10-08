@@ -111,7 +111,6 @@ limitations under the License.
         android:layout_height="match_parent"
         android:src="@drawable/ic_arrow_right"
         android:scaleType="center"
-        android:tint="@color/secondary_icon_color"
         android:background="?android:attr/selectableItemBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
