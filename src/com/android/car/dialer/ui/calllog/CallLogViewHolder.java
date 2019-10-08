@@ -23,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -65,7 +66,10 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
         mDivider = itemView.findViewById(R.id.divider);
     }
 
-    public void onBind(UiCallLog uiCallLog) {
+    /**
+     * Binds the view holder with relevant data.
+     */
+    public void bind(UiCallLog uiCallLog) {
         TelecomUtils.setContactBitmapAsync(
                 mAvatarView.getContext(),
                 mAvatarView,
@@ -103,15 +107,16 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
         }
 
         Contact contact = InMemoryPhoneBook.get().lookupContactEntry(uiCallLog.getNumber());
+        boolean forceShowActionButton = itemView.getResources().getBoolean(
+                R.bool.config_show_calllog_action_button_for_non_contact);
 
-        if (contact == null) {
-            mActionButton.setVisibility(View.GONE);
-            mDivider.setVisibility(View.GONE);
-            return;
+        ViewUtils.setVisible(mDivider, contact != null || forceShowActionButton);
+        ViewUtils.setVisible(mActionButton, contact != null || forceShowActionButton);
+        ViewUtils.setEnabled(mActionButton, contact != null);
+
+        if (contact != null) {
+            ViewUtils.setOnClickListener(mActionButton,
+                    view -> mOnShowContactDetailListener.onShowContactDetail(contact));
         }
-        mDivider.setVisibility(View.VISIBLE);
-        mActionButton.setVisibility(View.VISIBLE);
-        mActionButton.setOnClickListener(
-                view -> mOnShowContactDetailListener.onShowContactDetail(contact));
     }
 }
