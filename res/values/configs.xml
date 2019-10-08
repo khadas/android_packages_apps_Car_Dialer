@@ -25,4 +25,9 @@
     <item name="config_background_image_error_alpha" format="float" type="dimen">1.0</item>
 
     <bool name="config_show_detailed_user_profile_on_dialpad">false</bool>
+
+    <!-- A config determines whether to show divider and callog_action_button for callog items
+    that are not stored as contacts. "true" will show divider and button as disable state and
+    "false" will make divider and button invisible for non contacts. -->
+    <bool name="config_show_calllog_action_button_for_non_contact">false</bool>
 </resources>
