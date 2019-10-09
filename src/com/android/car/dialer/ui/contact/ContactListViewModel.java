@@ -28,13 +28,14 @@ import androidx.lifecycle.MediatorLiveData;
 import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.SharedPreferencesLiveData;
 import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
-import com.android.car.dialer.widget.WorkerExecutor;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
@@ -69,6 +70,7 @@ public class ContactListViewModel extends AndroidViewModel {
         private final SharedPreferencesLiveData mPreferencesLiveData;
         private final Context mContext;
 
+        private final ExecutorService mExecutorService;
         private Future<?> mRunnableFuture;
 
         private SortedContactListLiveData(Context context,
@@ -77,6 +79,7 @@ public class ContactListViewModel extends AndroidViewModel {
             mContext = context;
             mContactListLiveData = contactListLiveData;
             mPreferencesLiveData = sharedPreferencesLiveData;
+            mExecutorService = Executors.newSingleThreadExecutor();
 
             addSource(mPreferencesLiveData, (trigger) -> updateSortedContactList());
             addSource(mContactListLiveData, (trigger) -> updateSortedContactList());
@@ -104,8 +107,7 @@ public class ContactListViewModel extends AndroidViewModel {
                 Collections.sort(contactList, comparator);
                 postValue(new Pair<>(sortMethod, contactList));
             };
-            mRunnableFuture = WorkerExecutor.getInstance().getSingleThreadExecutor().submit(
-                    runnable);
+            mRunnableFuture = mExecutorService.submit(runnable);
         }
 
         @Override
