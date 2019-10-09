@@ -31,10 +31,10 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.storage.FavoriteNumberRepository;
-import com.android.car.dialer.widget.WorkerExecutor;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.WorkerExecutor;
 
 import java.util.List;
 import java.util.concurrent.Future;
