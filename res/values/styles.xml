@@ -118,6 +118,12 @@
     <style name="TextAppearance.CallLogTitleDefault" parent="@style/TextAppearance.Body1"/>
     <!-- Customized text color for missed calls can be added here -->
     <style name="TextAppearance.CallLogTitleMissedCall" parent="@style/TextAppearance.Body1"/>
+    <style name="TextAppearance.CallLogCallCountDefault" parent="@style/TextAppearance.Body3"/>
+    <!-- Customized text color for missed calls can be added here -->
+    <style name="TextAppearance.CallLogCallCountMissedCall" parent="@style/TextAppearance.Body3"/>
+    <style name="TextAppearance.CallLogTimestampDefault" parent="@style/TextAppearance.Body3"/>
+    <!-- Customized text color for missed calls can be added here -->
+    <style name="TextAppearance.CallLogTimestampMissedCall" parent="@style/TextAppearance.Body3"/>
 
     <!-- Contact details -->
     <style name="TextAppearance.ContactDetailsTitle" parent="@style/TextAppearance.Display2"/>
