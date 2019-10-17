@@ -75,21 +75,25 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
                 mAvatarView,
                 uiCallLog.getAvatarUri(),
                 uiCallLog.getTitle());
-        mTitleView.setText(uiCallLog.getTitle());
-        if (uiCallLog.getMostRecentCallType() == CallHistoryLiveData.CallType.MISSED_TYPE) {
-            mTitleView.setTextAppearance(R.style.TextAppearance_CallLogTitleMissedCall);
-        } else {
-            mTitleView.setTextAppearance(R.style.TextAppearance_CallLogTitleDefault);
-        }
 
+        mTitleView.setText(uiCallLog.getTitle());
         for (PhoneCallLog.Record record : uiCallLog.getCallRecords()) {
             mCallTypeIconsView.add(record.getCallType());
         }
-
         mCallCountTextView.setText(mCallTypeIconsView.getCallCountText());
         mCallCountTextView.setVisibility(
                 mCallTypeIconsView.getCallCountText() == null ? View.GONE : View.VISIBLE);
         mTextView.setText(uiCallLog.getText());
+
+        if (uiCallLog.getMostRecentCallType() == CallHistoryLiveData.CallType.MISSED_TYPE) {
+            mTitleView.setTextAppearance(R.style.TextAppearance_CallLogTitleMissedCall);
+            mCallCountTextView.setTextAppearance(R.style.TextAppearance_CallLogCallCountMissedCall);
+            mTextView.setTextAppearance(R.style.TextAppearance_CallLogTimestampMissedCall);
+        } else {
+            mTitleView.setTextAppearance(R.style.TextAppearance_CallLogTitleDefault);
+            mCallCountTextView.setTextAppearance(R.style.TextAppearance_CallLogCallCountDefault);
+            mTextView.setTextAppearance(R.style.TextAppearance_CallLogTimestampDefault);
+        }
 
         mPlaceCallView.setOnClickListener(
                 view -> UiCallManager.get().placeCall(uiCallLog.getNumber()));
