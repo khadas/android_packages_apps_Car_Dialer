@@ -31,7 +31,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
-import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
@@ -52,10 +51,12 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
     private Contact mContact;
     private LiveData<FutureData<Contact>> mContactDetailsLiveData;
+    private ContactDetailsViewModel mContactDetailsViewModel;
+
+    private boolean mShowActionBarView;
     private View mActionBarView;
     private ImageView mAvatarView;
     private TextView mNameView;
-    private ContactDetailsViewModel mContactDetailsViewModel;
 
     /** Creates a new ContactDetailsFragment using a {@link Contact}. */
     public static ContactDetailsFragment newInstance(Contact contact) {
@@ -79,6 +80,8 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
                 ContactDetailsViewModel.class);
         mContactDetailsLiveData = mContactDetailsViewModel.getContactDetails(mContact);
 
+        mShowActionBarView = getResources().getBoolean(
+                R.bool.config_show_contact_details_action_bar_view);
         mActionBarView = LayoutInflater.from(getContext()).inflate(
                 R.layout.contact_details_action_bar, null);
         mAvatarView = mActionBarView.findViewById(R.id.contact_details_action_bar_avatar);
@@ -96,7 +99,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
                 mContact, this);
         getRecyclerView().setAdapter(contactDetailsAdapter);
-        if (!DialerUtils.isShortScreen(getContext())) {
+        if (mShowActionBarView) {
             getRecyclerView().setScrollBarPadding(getTopBarHeight(), 0);
         }
         mContactDetailsLiveData.observe(this, contact -> {
@@ -128,19 +131,18 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
     @Override
     public void setupActionBar(@NonNull ActionBar actionBar) {
-        actionBar.setCustomView(mActionBarView);
+        actionBar.setCustomView(mShowActionBarView ? mActionBarView : null);
         actionBar.setTitle(null);
 
-        // Remove the action bar background on non-short screens
-        // On short screens the avatar and name is in the action bar so we keep it
-        if (mAvatarView == null) {
+        // Remove the action bar background if the action bar view is not shown.
+        if (!mShowActionBarView) {
             setActionBarBackground(null);
         }
     }
 
     @Override
     protected int getTopOffset() {
-        if (DialerUtils.isShortScreen(getContext())) {
+        if (mShowActionBarView) {
             return super.getTopOffset();
         } else {
             return 0;
