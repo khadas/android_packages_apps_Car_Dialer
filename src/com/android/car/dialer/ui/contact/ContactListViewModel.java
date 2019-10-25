@@ -18,6 +18,7 @@ package com.android.car.dialer.ui.contact;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -40,16 +41,18 @@ import java.util.concurrent.Future;
  */
 public class ContactListViewModel extends AndroidViewModel {
 
+    public static final int SORT_BY_FIRST_NAME = 1;
+    public static final int SORT_BY_LAST_NAME = 2;
+
     private final Context mContext;
-    private final LiveData<List<Contact>> mSortedContactListLiveData;
+    private final LiveData<Pair<Integer, List<Contact>>> mSortedContactListLiveData;
 
     public ContactListViewModel(@NonNull Application application) {
         super(application);
         mContext = application.getApplicationContext();
 
-        String key = mContext.getString(R.string.sort_order_key);
         SharedPreferencesLiveData preferencesLiveData =
-                new SharedPreferencesLiveData(mContext, key);
+                new SharedPreferencesLiveData(mContext, R.string.sort_order_key);
         LiveData<List<Contact>> contactListLiveData = InMemoryPhoneBook.get().getContactsLiveData();
         mSortedContactListLiveData = new SortedContactListLiveData(
                 mContext, contactListLiveData, preferencesLiveData);
@@ -58,11 +61,12 @@ public class ContactListViewModel extends AndroidViewModel {
     /**
      * Returns a live data which represents a list of all contacts.
      */
-    public LiveData<List<Contact>> getAllContacts() {
+    public LiveData<Pair<Integer, List<Contact>>> getAllContacts() {
         return mSortedContactListLiveData;
     }
 
-    private static class SortedContactListLiveData extends MediatorLiveData<List<Contact>> {
+    private static class SortedContactListLiveData
+            extends MediatorLiveData<Pair<Integer, List<Contact>>> {
 
         private final LiveData<List<Contact>> mContactListLiveData;
         private final SharedPreferencesLiveData mPreferencesLiveData;
@@ -109,17 +113,20 @@ public class ContactListViewModel extends AndroidViewModel {
             }
 
             String key = mPreferencesLiveData.getKey();
-            String defaultValue = mContext.getResources().getStringArray(
-                    R.array.contact_order_entry_values)[0];
+            String firstNameSort = mContext.getResources().getString(
+                    R.string.give_name_first_title);
 
             List<Contact> contactList = mContactListLiveData.getValue();
             Comparator<Contact> comparator;
+            Integer sortMethod;
             if (mPreferencesLiveData.getValue() == null
-                    || mPreferencesLiveData.getValue().getString(key, defaultValue)
-                    .equals(defaultValue)) {
+                    || firstNameSort.equals(
+                    mPreferencesLiveData.getValue().getString(key, firstNameSort))) {
                 comparator = mFirstNameComparator;
+                sortMethod = SORT_BY_FIRST_NAME;
             } else {
                 comparator = mLastNameComparator;
+                sortMethod = SORT_BY_LAST_NAME;
             }
 
             // SingleThreadPoolExecutor is used here to avoid multiple threads sorting the list
@@ -130,7 +137,7 @@ public class ContactListViewModel extends AndroidViewModel {
 
             Runnable runnable = () -> {
                 Collections.sort(contactList, comparator);
-                postValue(contactList);
+                postValue(new Pair<>(sortMethod, contactList));
             };
             mRunnableFuture = WorkerExecutor.getInstance().getSingleThreadExecutor().submit(
                     runnable);

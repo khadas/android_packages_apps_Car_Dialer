@@ -20,20 +20,18 @@
      and they are used as key mapping to fragments. The array can only be a subset of predefined
      strings in any order. Tabs will be added in the same order as defined in the array.-->
     <string-array name="tabs_config">
-        <!--Add favorite tab back when we have favorite functionality-->
-        <!--<item>FAVORITE</item>-->
         <item>CALL_HISTORY</item>
         <item>CONTACTS</item>
+        <item>FAVORITE</item>
         <item>DIAL_PAD</item>
     </string-array>
 
     <string-array name="tabs_title">
         <!-- This array is mapped to tabs_config. -->
         <!-- And it should be consistent with the mapping in the TelecomPageTab.Factory -->
-        <!--Add favorite tab back when we have favorite functionality-->
-        <!--<item>@string/favorites_title</item>-->
         <item>@string/call_history_title</item>
         <item>@string/contacts_title</item>
+        <item>@string/favorites_title</item>
         <item>@string/dialpad_title</item>
     </string-array>
 

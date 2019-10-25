@@ -16,6 +16,7 @@
   -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -30,7 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,16 +41,17 @@
             android:text="@string/favorites_empty"
             android:layout_marginBottom="@dimen/favorite_add_button_and_text_separation"/>
 
-        <TextView
+        <com.android.car.apps.common.UxrButton
             android:id="@+id/add_favorite_button"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/touch_target_size"
             android:text="@string/add_favorite_button"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/hero_button_text_color"
             android:background="@drawable/hero_button_background"
-            android:paddingStart="@dimen/favorite_add_button_padding"
-            android:paddingEnd="@dimen/favorite_add_button_padding"
-            android:gravity="center"/>
+            android:paddingHorizontal="@dimen/favorite_add_button_padding"
+            android:gravity="center"
+            app:carUxRestrictions="UX_RESTRICTIONS_NO_SETUP"/>
 
     </LinearLayout>
 

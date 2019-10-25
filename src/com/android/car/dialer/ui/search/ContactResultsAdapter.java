@@ -17,7 +17,6 @@
 package com.android.car.dialer.ui.search;
 
 import android.database.Cursor;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.telephony.common.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +36,10 @@ import java.util.List;
 public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultViewHolder> {
 
     interface OnShowContactDetailListener {
-        void onShowContactDetail(Uri contactLookupUri);
+        void onShowContactDetail(Contact contact);
     }
 
-    private final List<ContactDetails> mContacts = new ArrayList<>();
+    private final List<Contact> mContacts = new ArrayList<>();
     private final OnShowContactDetailListener mOnShowContactDetailListener;
 
     public ContactResultsAdapter(OnShowContactDetailListener onShowContactDetailListener) {
@@ -58,7 +58,7 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
      * Sets the list of contacts that should be displayed. The given {@link Cursor} can be safely
      * closed after this call.
      */
-    public void setData(List<ContactDetails> data) {
+    public void setData(List<Contact> data) {
         mContacts.clear();
         mContacts.addAll(data);
         notifyDataSetChanged();
