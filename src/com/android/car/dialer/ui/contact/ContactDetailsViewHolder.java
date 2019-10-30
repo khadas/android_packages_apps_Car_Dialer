@@ -17,6 +17,7 @@
 package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,12 +26,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.BackgroundImageView;
+import com.android.car.apps.common.LetterTileDrawable;
+import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 /** ViewHolder for {@link ContactDetailsFragment}. */
 class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
@@ -40,7 +49,9 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
 
     // Applies to header
     @Nullable
-    private final ImageView mAvatar;
+    private final ImageView mAvatarView;
+    @Nullable
+    private final BackgroundImageView mBackgroundImageView;
 
     // Applies to phone number items
     @Nullable
@@ -61,23 +72,67 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         mFavoriteActionView = v.findViewById(R.id.contact_details_favorite_button);
         mTitle = v.findViewById(R.id.title);
         mText = v.findViewById(R.id.text);
-        mAvatar = v.findViewById(R.id.avatar);
-        if (mAvatar != null) {
-            mAvatar.setOutlineProvider(ContactAvatarOutputlineProvider.get());
+        mAvatarView = v.findViewById(R.id.avatar);
+        if (mAvatarView != null) {
+            mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         }
+        mBackgroundImageView = v.findViewById(R.id.background_image);
 
         mPhoneNumberPresenter = phoneNumberPresenter;
     }
 
     public void bind(Context context, Contact contact) {
-        TelecomUtils.setContactBitmapAsync(context, mAvatar, contact, null);
-
         if (contact == null) {
-            mTitle.setText(R.string.error_contact_deleted);
+            ViewUtils.setText(mTitle, R.string.error_contact_deleted);
+            LetterTileDrawable letterTile = TelecomUtils.createLetterTile(context, null);
+            if (mAvatarView != null) {
+                mAvatarView.setImageDrawable(letterTile);
+            }
+            if (mBackgroundImageView != null) {
+                mBackgroundImageView.setAlpha(context.getResources().getFloat(
+                        R.dimen.config_background_image_error_alpha));
+                mBackgroundImageView.setBackgroundColor(letterTile.getColor());
+            }
             return;
         }
 
-        mTitle.setText(contact.getDisplayName());
+        ViewUtils.setText(mTitle, contact.getDisplayName());
+
+        if (mAvatarView == null && mBackgroundImageView == null) {
+            return;
+        }
+
+        LetterTileDrawable letterTile = TelecomUtils.createLetterTile(context,
+                contact.getDisplayName());
+        Glide.with(context)
+                .load(contact.getAvatarUri())
+                .apply(new RequestOptions().centerCrop().error(letterTile))
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(Drawable resource,
+                            Transition<? super Drawable> glideAnimation) {
+                        if (mAvatarView != null) {
+                            mAvatarView.setImageDrawable(resource);
+                        }
+                        if (mBackgroundImageView != null) {
+                            mBackgroundImageView.setAlpha(context.getResources().getFloat(
+                                    R.dimen.config_background_image_alpha));
+                            mBackgroundImageView.setBackgroundDrawable(resource);
+                        }
+                    }
+
+                    @Override
+                    public void onLoadFailed(Drawable errorDrawable) {
+                        if (mAvatarView != null) {
+                            mAvatarView.setImageDrawable(letterTile);
+                        }
+                        if (mBackgroundImageView != null) {
+                            mBackgroundImageView.setAlpha(context.getResources().getFloat(
+                                    R.dimen.config_background_image_error_alpha));
+                            mBackgroundImageView.setBackgroundColor(letterTile.getColor());
+                        }
+                    }
+                });
     }
 
     public void bind(Context context, Contact contact, PhoneNumber phoneNumber) {
@@ -94,15 +149,12 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
             mText.setTextAppearance(R.style.TextAppearance_ContactDetailsListSubtitle);
         }
 
-        mCallActionView.setOnClickListener(v -> placeCall(phoneNumber));
+        mCallActionView.setOnClickListener(
+                v -> UiCallManager.get().placeCall(phoneNumber.getRawNumber()));
         mFavoriteActionView.setActivated(phoneNumber.isFavorite());
         mFavoriteActionView.setOnClickListener(v -> {
             mPhoneNumberPresenter.onClick(contact, phoneNumber);
             mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());
         });
-    }
-
-    private void placeCall(PhoneNumber number) {
-        UiCallManager.get().placeCall(number.getRawNumber());
     }
 }

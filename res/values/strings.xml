@@ -34,6 +34,10 @@
     <string name="error_contact_deleted">This contact might have been deleted.</string>
     <!-- Toast text when user has inputted an invalid phone number [CHAR LIMIT=NONE] -->
     <string name="error_invalid_phone_number">Can\'t dial this number. Check it and try again.</string>
+    <!-- Toast text when telephony service is not ready [CHAR LIMIT=NONE] -->
+    <string name="error_telephony_not_available">
+        Phone call is not available. Please try again later.
+    </string>
 
     <!-- Decline an in coming call [CHAR LIMIT=20] -->
     <string name="decline_call">Decline</string>
@@ -129,6 +133,12 @@
         " - Default"
     </string>
 
+    <!-- Description for the favorite phone number in add to favorite flow [CHAR LIMIT=30] -->
+    <string name="favorite_number_description">
+        <xliff:g id="label" example="Mobile">%1$s</xliff:g>
+        " - Favorite"
+    </string>
+
     <!-- Heads Up Notification -->
     <!-- Name of incoming call notification channel in app info [CHAR LIMIT=50] -->
     <string name="in_call_notification_channel_name">Incoming call notification</string>
@@ -157,9 +167,14 @@
     <!-- Title of the settings to sort contact order [CHAR LIMIT=40]-->
     <string name="sort_order_title">Contact order</string>
     <string name="sort_order_key" translatable="false">contact_order</string>
-    <!-- Title of the settings for sorting Contacts in different orders -->
+
+    <!-- Keys and titles of the settings for sorting Contacts in different orders -->
+    <!-- Key of given name -->
+    <string name="given_name_first_key" translatable="false">given_name</string>
+    <!-- Key of family name -->
+    <string name="family_name_first_key" translatable="false">family_name</string>
     <!-- Title of given name [CHAR LIMIT=40]-->
-    <string name="give_name_first_title">First name</string>
+    <string name="given_name_first_title">First name</string>
     <!-- Title of family name [CHAR LIMIT=40]-->
     <string name="family_name_first_title">Last name</string>
 </resources>

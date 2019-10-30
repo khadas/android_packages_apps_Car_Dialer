@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
@@ -67,6 +68,8 @@ public class InCallViewModel extends AndroidViewModel implements
     private final LiveData<Call> mSecondaryCallLiveData;
     private final LiveData<CallDetail> mSecondaryCallDetailLiveData;
     private final LiveData<Integer> mAudioRouteLiveData;
+    private final MutableLiveData<Boolean> mDialpadIsOpen;
+    private final ShowOnholdCallLiveData mShowOnholdCall;
     private LiveData<Long> mCallConnectTimeLiveData;
     private LiveData<Pair<Integer, Long>> mCallStateAndConnectTimeLiveData;
     private final Context mContext;
@@ -143,9 +146,20 @@ public class InCallViewModel extends AndroidViewModel implements
 
         mAudioRouteLiveData = new AudioRouteLiveData(mContext);
 
+        mDialpadIsOpen = new MutableLiveData<>();
+        // Set initial value to avoid NPE
+        mDialpadIsOpen.setValue(false);
+
+        mShowOnholdCall = new ShowOnholdCallLiveData(mSecondaryCallLiveData, mDialpadIsOpen);
+
         Intent intent = new Intent(mContext, InCallServiceImpl.class);
         intent.setAction(InCallServiceImpl.ACTION_LOCAL_BIND);
         mContext.bindService(intent, mInCallServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    /** Returns the live data which monitors all the calls. */
+    public LiveData<List<Call>> getAllCallList() {
+        return mCallListLiveData;
     }
 
     /** Returns the live data which monitors the current incoming call. */
@@ -210,6 +224,16 @@ public class InCallViewModel extends AndroidViewModel implements
      */
     public LiveData<Integer> getAudioRoute() {
         return mAudioRouteLiveData;
+    }
+
+    /** Return the {@link MutableLiveData} for dialpad open state. */
+    public MutableLiveData<Boolean> getDialpadOpenState() {
+        return mDialpadIsOpen;
+    }
+
+    /** Return the livedata monitors onhold call status. */
+    public LiveData<Boolean> shouldShowOnholdCall() {
+        return mShowOnholdCall;
     }
 
     @Override
@@ -296,5 +320,40 @@ public class InCallViewModel extends AndroidViewModel implements
             }
         }
         return filteredResults;
+    }
+
+    private static class ShowOnholdCallLiveData extends MediatorLiveData<Boolean> {
+
+        private final LiveData<Call> mSecondaryCallLiveData;
+        private final MutableLiveData<Boolean> mDialpadIsOpen;
+
+        private ShowOnholdCallLiveData(LiveData<Call> secondaryCallLiveData,
+                MutableLiveData<Boolean> dialpadState) {
+            mSecondaryCallLiveData = secondaryCallLiveData;
+            mDialpadIsOpen = dialpadState;
+            setValue(false);
+
+            addSource(mSecondaryCallLiveData, v -> update());
+            addSource(mDialpadIsOpen, v -> update());
+        }
+
+        private void update() {
+            Boolean shouldShowOnholdCall = !mDialpadIsOpen.getValue();
+            Call onholdCall = mSecondaryCallLiveData.getValue();
+            if (shouldShowOnholdCall && onholdCall != null
+                    && onholdCall.getState() == Call.STATE_HOLDING) {
+                setValue(true);
+            } else {
+                setValue(false);
+            }
+        }
+
+        @Override
+        public void setValue(Boolean newValue) {
+            // Only set value and notify observers when the value changes.
+            if (getValue() != newValue) {
+                super.setValue(newValue);
+            }
+        }
     }
 }
