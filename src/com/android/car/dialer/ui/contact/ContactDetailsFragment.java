@@ -109,7 +109,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         getArguments().clear();
         if (mAvatarView != null) {
             mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
-            TelecomUtils.setContactBitmapAsync(getContext(), mAvatarView, contact, null);
+            TelecomUtils.setContactBitmapAsync(getContext(), mAvatarView, contact);
         }
 
         if (mNameView != null) {

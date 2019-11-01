@@ -86,8 +86,8 @@ public class CallHistoryFragmentTest {
                 CallHistoryLiveData.CallType.INCOMING_TYPE);
         PhoneCallLog.Record record2 = new PhoneCallLog.Record(TIME_STAMP_2,
                 CallHistoryLiveData.CallType.OUTGOING_TYPE);
-        UiCallLog uiCallLog = new UiCallLog(UI_CALLOG_TITLE, UI_CALLOG_TEXT, PHONE_NUMBER, mMockUri,
-                Arrays.asList(record1, record2));
+        UiCallLog uiCallLog = new UiCallLog(UI_CALLOG_TITLE, UI_CALLOG_TEXT, PHONE_NUMBER, null,
+                mMockUri, Arrays.asList(record1, record2));
 
         MutableLiveData<List<Object>> callLog = new MutableLiveData<>();
         callLog.setValue(Arrays.asList(HEADER, uiCallLog));
