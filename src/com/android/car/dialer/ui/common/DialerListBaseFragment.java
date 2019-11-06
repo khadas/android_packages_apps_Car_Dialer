@@ -48,8 +48,6 @@ public class DialerListBaseFragment extends DialerBaseFragment {
         mLoadingFrameLayout = view.findViewById(R.id.loading_frame_layout);
         mRecyclerView = view.findViewById(R.id.list_view);
         mRecyclerView.setLayoutManager(createLayoutManager());
-        mRecyclerView.setPaddingRelative(mRecyclerView.getPaddingStart(), getTopOffset(),
-                mRecyclerView.getPaddingEnd(), mRecyclerView.getPaddingBottom());
         return view;
     }
 
@@ -76,15 +74,6 @@ public class DialerListBaseFragment extends DialerBaseFragment {
     @NonNull
     protected CarUiRecyclerView getRecyclerView() {
         return mRecyclerView;
-    }
-
-    /**
-     * Gets the top padding for the list. By default it includes the action bar's height
-     */
-    protected int getTopOffset() {
-        int listTopPadding = getContext().getResources().getDimensionPixelSize(
-                R.dimen.list_top_padding);
-        return getTopBarHeight() + listTopPadding;
     }
 
     /**
@@ -116,5 +105,16 @@ public class DialerListBaseFragment extends DialerBaseFragment {
             boolean showActionButton) {
         mLoadingFrameLayout.showEmpty(iconResId, messageResId, actionButtonTextResId,
                 actionButtonOnClickListener, showActionButton);
+    }
+
+    @Override
+    public void onToolbarHeightChange(int toolbarHeight) {
+        int listTopPadding = getContext().getResources().getDimensionPixelSize(
+                R.dimen.list_top_padding);
+        mRecyclerView.setPaddingRelative(
+                mRecyclerView.getPaddingStart(),
+                toolbarHeight + listTopPadding,
+                mRecyclerView.getPaddingEnd(),
+                mRecyclerView.getPaddingBottom());
     }
 }
