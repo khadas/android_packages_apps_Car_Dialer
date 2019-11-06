@@ -23,13 +23,23 @@
     <style name="TextAppearance.DialpadDisplayName" parent="@style/TextAppearance.Body1"/>
 
     <style name="KeypadNumber">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:textSize">@dimen/car_key1_size</item>
     </style>
 
     <style name="KeypadLetter">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textSize">@dimen/car_key2_size</item>
+    </style>
+
+    <style name="KeypadImage">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:tint">@color/car_key2</item>
     </style>
 
     <!-- Phone -->
