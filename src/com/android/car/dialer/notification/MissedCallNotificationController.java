@@ -147,11 +147,12 @@ public final class MissedCallNotificationController {
         updateFuture = NotificationUtils.getDisplayNameAndRoundedAvatar(
                 mContext, phoneNumber)
                 .thenAcceptAsync((pair) -> {
+                    int callLogSize = callLog.getAllCallRecords().size();
                     Notification.Builder builder = new Notification.Builder(mContext, CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_phone)
                             .setLargeIcon(pair.second)
-                            .setContentTitle(mContext.getString(R.string.notification_missed_call)
-                                    + String.format(" (%d)", callLog.getAllCallRecords().size()))
+                            .setContentTitle(mContext.getResources().getQuantityString(
+                                    R.plurals.notification_missed_call, callLogSize, callLogSize))
                             .setContentText(pair.first)
                             .setContentIntent(getContentPendingIntent())
                             .setDeleteIntent(getDeleteIntent())
