@@ -54,7 +54,7 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"အဝင်ခေါ်ဆိုမှု အကြောင်းကြားချက်"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"အဝင်ခေါ်ဆိုမှု"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"လွတ်သွားသော ခေါ်ဆိုမှု အကြောင်းကြားချက်"</string>
-    <string name="notification_missed_call" msgid="7127823385811396529">"လွတ်သွားသော ခေါ်ဆိုမှု"</string>
+    <!-- no translation found for notification_missed_call (1018870358427938752) -->
     <string name="onhold_call_label" msgid="1937027519810985499">"ဖုန်းကိုင်ထားသည်"</string>
     <string name="setting_title" msgid="1296639422364732365">"ဆက်တင်များ"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"စတင်မှု ဖန်သားပြင်"</string>

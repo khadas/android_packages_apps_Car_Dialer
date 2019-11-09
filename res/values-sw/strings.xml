@@ -54,7 +54,7 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Arifa ya simu inayoingia"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Simu inayoingia"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Arifa ya simu ambayo hukujibu"</string>
-    <string name="notification_missed_call" msgid="7127823385811396529">"Simu ambayo hukujibu"</string>
+    <!-- no translation found for notification_missed_call (1018870358427938752) -->
     <string name="onhold_call_label" msgid="1937027519810985499">"Imesitishwa."</string>
     <string name="setting_title" msgid="1296639422364732365">"Mipangilio"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Skrini ya kwanza"</string>
