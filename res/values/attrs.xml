@@ -29,6 +29,13 @@
     <declare-styleable name="Theme">
         <!-- Tab bar height that only applies to portrait layout where tabs are under action bar.-->
         <attr name="tabBarSize" format="dimension"/>
+
+        <!-- Toolbar title mode -->
+        <attr name="toolbarTitleMode" format="enum">
+            <enum name="app_name" value="0"/>
+            <enum name="none" value="1"/>
+            <enum name="device_name" value="2"/>
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="LoadingFrameLayout">
