@@ -32,6 +32,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.apps.common.widget.PagedRecyclerView;
+import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -84,13 +85,15 @@ public class ContactListFragmentTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        MutableLiveData<Pair<Integer, List<Contact>>> contactList = new MutableLiveData<>();
-        contactList.setValue(new Pair<>(ContactSortingInfo.SORT_BY_LAST_NAME,
-                Arrays.asList(mMockContact1, mMockContact2, mMockContact3)));
+        MutableLiveData<FutureData<Pair<Integer, List<Contact>>>> contactList =
+                new MutableLiveData<>();
+        contactList.setValue(
+                new FutureData<>(false, new Pair<>(ContactSortingInfo.SORT_BY_LAST_NAME,
+                        Arrays.asList(mMockContact1, mMockContact2, mMockContact3))));
         ShadowAndroidViewModelFactory.add(ContactListViewModel.class, mMockContactListViewModel);
         when(mMockContactListViewModel.getAllContacts()).thenReturn(contactList);
-        MutableLiveData<Contact> contactDetail = new MutableLiveData<>();
-        contactDetail.setValue(mMockContact1);
+        MutableLiveData<FutureData<Contact>> contactDetail = new MutableLiveData<>();
+        contactDetail.setValue(new FutureData<>(false, mMockContact1));
         ShadowAndroidViewModelFactory.add(ContactDetailsViewModel.class,
                 mMockContactDetailsViewModel);
         when(mMockContactDetailsViewModel.getContactDetails(any())).thenReturn(contactDetail);

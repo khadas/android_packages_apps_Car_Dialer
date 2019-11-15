@@ -100,8 +100,6 @@
     <dimen name="favorite_card_space_horizontal">@*android:dimen/car_padding_3</dimen>
     <dimen name="favorite_card_space_vertical">@*android:dimen/car_padding_2</dimen>
     <dimen name="favorites_avatar_margin_bottom">@*android:dimen/car_padding_3</dimen>
-    <dimen name="favorite_add_button_and_text_separation">@*android:dimen/car_padding_5</dimen>
-    <dimen name="favorite_add_button_padding">@*android:dimen/car_padding_4</dimen>
 
     <!-- Add faovirte flow dimensions -->
     <dimen name="add_favorite_number_list_height">@dimen/list_item_height</dimen>
@@ -155,5 +153,10 @@
     <!-- Toolbar -->
     <!-- Half of the difference between car_margin and touch_target_size-->
     <dimen name="menu_item_margin_x">18dp</dimen>
+
+    <!-- Loading status view dimensions -->
+    <dimen name="loading_info_icon_size">56dp</dimen>
+    <dimen name="loading_info_icon_margin_bottom">@*android:dimen/car_padding_3</dimen>
+    <dimen name="loading_info_button_margin_top">@*android:dimen/car_padding_5</dimen>
 
 </resources>

@@ -21,6 +21,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.android.car.arch.common.FutureData;
+import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.storage.FavoriteNumberRepository;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
@@ -31,16 +33,20 @@ import java.util.List;
  * View model for {@link FavoriteFragment}.
  */
 public class FavoriteViewModel extends AndroidViewModel {
-    private FavoriteNumberRepository mFavoriteNumberRepository;
+    private final FavoriteNumberRepository mFavoriteNumberRepository;
+    private final LiveData<FutureData<List<Contact>>> mFavoriteContacts;
 
     public FavoriteViewModel(Application application) {
         super(application);
         mFavoriteNumberRepository = FavoriteNumberRepository.getRepository(application);
+        mFavoriteContacts = LiveDataFunctions.loadingSwitchMap(
+                mFavoriteNumberRepository.getFavoriteContacts(),
+                input -> LiveDataFunctions.dataOf(input == null || input.isEmpty() ? null : input));
     }
 
     /** Returns favorite contact list live data. */
-    public LiveData<List<Contact>> getFavoriteContacts() {
-        return mFavoriteNumberRepository.getFavoriteContacts();
+    public LiveData<FutureData<List<Contact>>> getFavoriteContacts() {
+        return mFavoriteContacts;
     }
 
     /**

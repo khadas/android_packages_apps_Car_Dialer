@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.common.DialerUtils;
@@ -50,7 +51,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     private static final String KEY_CONTACT_ENTITY = "ContactEntity";
 
     private Contact mContact;
-    private LiveData<Contact> mContactDetailsLiveData;
+    private LiveData<FutureData<Contact>> mContactDetailsLiveData;
     private View mActionBarView;
     private ImageView mAvatarView;
     private TextView mNameView;
@@ -99,9 +100,13 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
             getRecyclerView().setScrollBarPadding(getTopBarHeight(), 0);
         }
         mContactDetailsLiveData.observe(this, contact -> {
-            mContact = contact;
-            onContactChanged(contact);
-            contactDetailsAdapter.setContact(contact);
+            if (contact.isLoading()) {
+                showLoading();
+            } else {
+                onContactChanged(contact.getData());
+                contactDetailsAdapter.setContact(contact.getData());
+                showContent();
+            }
         });
     }
 
@@ -145,7 +150,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(KEY_CONTACT_ENTITY, mContactDetailsLiveData.getValue());
+        outState.putParcelable(KEY_CONTACT_ENTITY, mContact);
     }
 
     @Override

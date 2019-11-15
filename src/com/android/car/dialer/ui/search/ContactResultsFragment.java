@@ -79,7 +79,10 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
         mContactResultsViewModel = ViewModelProviders.of(this).get(
                 ContactResultsViewModel.class);
         mContactResultsViewModel.getContactSearchResults().observe(this,
-                contactResults -> mAdapter.setData(contactResults));
+                contactResults -> {
+                    mAdapter.setData(contactResults);
+                    showContent();
+                });
 
         // Set the initial search query, if one was provided from a Intent.ACTION_SEARCH
         if (getArguments() != null) {
