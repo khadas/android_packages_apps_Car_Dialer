@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.telephony.common.Contact;
 
@@ -51,7 +52,16 @@ public class ContactListFragment extends DialerListBaseFragment implements
 
         ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
                 ContactListViewModel.class);
-        contactListViewModel.getAllContacts().observe(this, mContactListAdapter::setContactList);
+        contactListViewModel.getAllContacts().observe(this, contacts -> {
+            if (contacts.isLoading()) {
+                showLoading();
+            } else if (contacts.getData() == null) {
+                showEmpty(R.drawable.ic_contact, R.string.contact_list_empty);
+            } else {
+                mContactListAdapter.setContactList(contacts.getData());
+                showContent();
+            }
+        });
     }
 
     @Override

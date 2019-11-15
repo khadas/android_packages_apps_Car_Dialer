@@ -28,6 +28,7 @@ import android.widget.TextView;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.apps.common.widget.PagedRecyclerView;
+import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -84,8 +85,8 @@ public class ContactDetailsFragmentTest {
 
         UiCallManager.set(mMockUiCallManager);
 
-        MutableLiveData<Contact> contactDetails = new MutableLiveData<>();
-        contactDetails.setValue(mMockContact);
+        MutableLiveData<FutureData<Contact>> contactDetails = new MutableLiveData<>();
+        contactDetails.setValue(new FutureData<>(false, mMockContact));
         ShadowAndroidViewModelFactory.add(ContactDetailsViewModel.class,
                 mMockContactDetailsViewModel);
         when(mMockContactDetailsViewModel.getContactDetails(mMockContact)).thenReturn(
