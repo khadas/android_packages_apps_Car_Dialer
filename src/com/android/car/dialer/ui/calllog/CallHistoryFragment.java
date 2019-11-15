@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsFragment;
 import com.android.car.telephony.common.Contact;
@@ -52,7 +53,16 @@ public class CallHistoryFragment extends DialerListBaseFragment implements
         CallHistoryViewModel viewModel = ViewModelProviders.of(this).get(
                 CallHistoryViewModel.class);
 
-        viewModel.getCallHistory().observe(this, mCallLogAdapter::setUiCallLogs);
+        viewModel.getCallHistory().observe(this, uiCallLogs -> {
+            if (uiCallLogs.isLoading()) {
+                showLoading();
+            } else if (uiCallLogs.getData().isEmpty()) {
+                showEmpty(R.drawable.ic_history, R.string.call_logs_empty);
+            } else {
+                mCallLogAdapter.setUiCallLogs(uiCallLogs.getData());
+                showContent();
+            }
+        });
     }
 
     @Override

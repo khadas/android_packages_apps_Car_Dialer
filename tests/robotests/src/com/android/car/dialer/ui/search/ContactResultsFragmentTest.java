@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.apps.common.widget.PagedRecyclerView;
+import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -118,8 +119,8 @@ public class ContactResultsFragmentTest {
         mContactSearchResultsLiveData.setValue(
                 Arrays.asList(mContact1, mContact2, mContact3));
 
-        MutableLiveData<Contact> contactDetailLiveData = new MutableLiveData<>();
-        contactDetailLiveData.setValue(mMockContact);
+        MutableLiveData<FutureData<Contact>> contactDetailLiveData = new MutableLiveData<>();
+        contactDetailLiveData.setValue(new FutureData<>(false, mMockContact));
         ShadowAndroidViewModelFactory
                 .add(ContactDetailsViewModel.class, mMockContactDetailsViewModel);
         when(mMockContactDetailsViewModel.getContactDetails(any()))

@@ -25,6 +25,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
+import com.android.car.arch.common.FutureData;
+import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.SharedPreferencesLiveData;
 import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
@@ -44,6 +46,7 @@ import java.util.concurrent.Future;
 public class ContactListViewModel extends AndroidViewModel {
     private final Context mContext;
     private final LiveData<Pair<Integer, List<Contact>>> mSortedContactListLiveData;
+    private final LiveData<FutureData<Pair<Integer, List<Contact>>>> mContactList;
 
     public ContactListViewModel(@NonNull Application application) {
         super(application);
@@ -54,13 +57,15 @@ public class ContactListViewModel extends AndroidViewModel {
         LiveData<List<Contact>> contactListLiveData = InMemoryPhoneBook.get().getContactsLiveData();
         mSortedContactListLiveData = new SortedContactListLiveData(
                 mContext, contactListLiveData, preferencesLiveData);
+        mContactList = LiveDataFunctions.loadingSwitchMap(mSortedContactListLiveData,
+                input -> LiveDataFunctions.dataOf(input));
     }
 
     /**
      * Returns a live data which represents a list of all contacts.
      */
-    public LiveData<Pair<Integer, List<Contact>>> getAllContacts() {
-        return mSortedContactListLiveData;
+    public LiveData<FutureData<Pair<Integer, List<Contact>>>> getAllContacts() {
+        return mContactList;
     }
 
     private static class SortedContactListLiveData
@@ -86,7 +91,13 @@ public class ContactListViewModel extends AndroidViewModel {
         }
 
         private void updateSortedContactList() {
-            if (mContactListLiveData.getValue() == null) {
+            // Don't set null value to trigger an update when there is no value set.
+            if (mContactListLiveData.getValue() == null && getValue() == null) {
+                return;
+            }
+
+            if (mContactListLiveData.getValue() == null
+                    || mContactListLiveData.getValue().isEmpty()) {
                 setValue(null);
                 return;
             }
