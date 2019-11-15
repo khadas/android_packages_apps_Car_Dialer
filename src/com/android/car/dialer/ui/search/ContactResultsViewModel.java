@@ -43,7 +43,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** {link AndroidViewModel} used for search functionality. */
+/**
+ * {link AndroidViewModel} used for search functionality.
+ */
 public class ContactResultsViewModel extends AndroidViewModel {
     private static final String[] CONTACT_DETAILS_PROJECTION = {
             ContactsContract.Contacts._ID,
@@ -143,9 +145,11 @@ public class ContactResultsViewModel extends AndroidViewModel {
 
             List<Contact> contacts = new ArrayList<>();
             while (cursor.moveToNext()) {
-                int lookupColIdx = cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
+                int lookupKeyColIdx = cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
+                int accountNameColIdx = cursor.getColumnIndex(
+                        ContactsContract.RawContacts.ACCOUNT_NAME);
                 Contact contact = InMemoryPhoneBook.get().lookupContactByKey(
-                        cursor.getString(lookupColIdx));
+                        cursor.getString(lookupKeyColIdx), cursor.getString(accountNameColIdx));
                 if (contact != null) {
                     contacts.add(contact);
                 }
