@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.apps.common.widget.PagedRecyclerView;
+import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -49,10 +50,10 @@ import java.util.List;
 
 @Config(shadows = {ShadowAndroidViewModelFactory.class})
 @RunWith(CarDialerRobolectricTestRunner.class)
-public class FavoriteListFragmentTest {
+public class FavoriteFragmentTest {
     private static final String RAW_NUMBER = "6502530000";
 
-    private FavoriteListFragment mFavoriteFragment;
+    private FavoriteFragment mFavoriteFragment;
     private FavoriteContactViewHolder mViewHolder;
     @Mock
     private UiCallManager mMockUiCallManager;
@@ -70,12 +71,12 @@ public class FavoriteListFragmentTest {
         UiCallManager.set(mMockUiCallManager);
 
         when(mMockPhoneNumber.getRawNumber()).thenReturn(RAW_NUMBER);
-        MutableLiveData<List<Contact>> favoriteContacts = new MutableLiveData<>();
-        favoriteContacts.setValue(Arrays.asList(mMockContact));
+        MutableLiveData<FutureData<List<Contact>>> favoriteContacts = new MutableLiveData<>();
+        favoriteContacts.setValue(new FutureData<>(false, Arrays.asList(mMockContact)));
         ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
         when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(favoriteContacts);
 
-        mFavoriteFragment = FavoriteListFragment.newInstance();
+        mFavoriteFragment = FavoriteFragment.newInstance();
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().resume().get();
         fragmentTestActivity.setFragment(mFavoriteFragment);

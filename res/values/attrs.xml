@@ -30,4 +30,10 @@
         <!-- Tab bar height that only applies to portrait layout where tabs are under action bar.-->
         <attr name="tabBarSize" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="LoadingFrameLayout">
+        <attr name="progressViewLayout" format="reference"/>
+        <attr name="emptyViewLayout" format="reference"/>
+        <attr name="errorViewLayout" format="reference"/>
+    </declare-styleable>
 </resources>

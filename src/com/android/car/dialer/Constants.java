@@ -40,4 +40,7 @@ public final class Constants {
     public static class JobIds {
         public static final int NOTIFICATION_SERVICE = 2019;
     }
+
+    /**See {@link android.content.res.Resources#getIdentifier(String, String, String)}*/
+    public static int INVALID_RES_ID = 0;
 }
