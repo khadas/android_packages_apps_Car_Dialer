@@ -20,6 +20,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -60,19 +61,16 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
             LiveData<List<Contact>> contactListLiveData) {
         mContext = context;
         addSource(callHistoryLiveData, this::onCallHistoryChanged);
-        addSource(contactListLiveData, (contacts) -> {
-            // Don't call onCallHistoryChanged() before the call history is loaded.
-            // Otherwise, we'll set our value to an empty list instead of just being
-            // uninitialized while loading. This will cause us to lose our scroll position.
-            List<PhoneCallLog> callLogs = callHistoryLiveData.getValue();
-            if (callLogs != null) {
-                onCallHistoryChanged(callLogs);
-            }
-        });
+        addSource(contactListLiveData,
+                (contacts) -> onCallHistoryChanged(callHistoryLiveData.getValue()));
         addSource(heartBeatLiveData, (trigger) -> updateRelativeTime());
     }
 
     private void onCallHistoryChanged(List<PhoneCallLog> callLogs) {
+        // If there is no value set, don't set null value to trigger an update.
+        if (callLogs == null && getValue() == null) {
+            return;
+        }
         setValue(convert(callLogs));
     }
 
@@ -115,6 +113,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
         }
     }
 
+    @NonNull
     private List<Object> convert(List<PhoneCallLog> phoneCallLogs) {
         if (phoneCallLogs == null) {
             return Collections.emptyList();
