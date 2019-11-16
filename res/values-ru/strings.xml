@@ -41,6 +41,10 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"Сегодня"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Вчера"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Раньше"</string>
+    <!-- no translation found for call_logs_empty (3470906879155560897) -->
+    <skip />
+    <!-- no translation found for contact_list_empty (2397367061689908457) -->
+    <skip />
     <string name="add_favorite_button" msgid="7914955940249767808">"Настроить быстрый набор"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"У вас пока нет избранных контактов."</string>
     <string name="search_title" msgid="5412680850141871664">"Поиск в контактах"</string>
@@ -54,7 +58,12 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Уведомление при входящем вызове"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Входящий вызов"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Уведомление о пропущенном вызове"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="one"><xliff:g id="NUMBER">%1$d</xliff:g> пропущенный вызов </item>
+      <item quantity="few"><xliff:g id="NUMBER">%1$d</xliff:g> пропущенных вызова </item>
+      <item quantity="many"><xliff:g id="NUMBER">%1$d</xliff:g> пропущенных вызовов </item>
+      <item quantity="other"><xliff:g id="NUMBER">%1$d</xliff:g> пропущенного вызова </item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"На удержании"</string>
     <string name="setting_title" msgid="1296639422364732365">"Настройки"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Начальный экран"</string>

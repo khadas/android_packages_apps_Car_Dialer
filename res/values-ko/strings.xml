@@ -41,6 +41,10 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"오늘"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"어제"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"이전"</string>
+    <!-- no translation found for call_logs_empty (3470906879155560897) -->
+    <skip />
+    <!-- no translation found for contact_list_empty (2397367061689908457) -->
+    <skip />
     <string name="add_favorite_button" msgid="7914955940249767808">"즐겨찾기 추가"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"아직 즐겨찾기를 추가하지 않았습니다."</string>
     <string name="search_title" msgid="5412680850141871664">"연락처 검색"</string>
@@ -54,7 +58,10 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"수신 전화 알림"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"수신 전화"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"부재중 전화 알림림"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="other">부재중 전화(<xliff:g id="NUMBER">%1$d</xliff:g>건) </item>
+      <item quantity="one">부재중 전화</item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"대기 중"</string>
     <string name="setting_title" msgid="1296639422364732365">"설정"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"시작 화면"</string>

@@ -41,6 +41,10 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"Денес"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Вчера"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Постари"</string>
+    <!-- no translation found for call_logs_empty (3470906879155560897) -->
+    <skip />
+    <!-- no translation found for contact_list_empty (2397367061689908457) -->
+    <skip />
     <string name="add_favorite_button" msgid="7914955940249767808">"Додај омилен"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Сѐ уште немате додадено омилени"</string>
     <string name="search_title" msgid="5412680850141871664">"Пребарајте контакти"</string>
@@ -54,7 +58,10 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Известување за дојдовен време"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Дојдовен повик"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Известување за пропуштен повик"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="one">Пропуштени повици (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+      <item quantity="other">Пропуштени повици (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"На чекање"</string>
     <string name="setting_title" msgid="1296639422364732365">"Поставки"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Почетен екран"</string>
