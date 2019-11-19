@@ -41,6 +41,10 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"আজি"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"কালি"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"পুৰণি"</string>
+    <!-- no translation found for call_logs_empty (3470906879155560897) -->
+    <skip />
+    <!-- no translation found for contact_list_empty (2397367061689908457) -->
+    <skip />
     <string name="add_favorite_button" msgid="7914955940249767808">"এটা প্ৰিয় সম্পৰ্ক যোগ কৰক"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"আপুনি এতিয়ালৈকে কোনো প্ৰিয় যোগ কৰা নাই"</string>
     <string name="search_title" msgid="5412680850141871664">"সম্পর্কসমূহ সন্ধান কৰক"</string>
@@ -54,7 +58,10 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"অন্তৰ্গামী কলৰ জাননী"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"অন্তৰ্গামী কল"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"মিছড কলৰ জাননী"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="one">মিছড কল(<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+      <item quantity="other">মিছড কল(<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"হ’ল্ডত আছে"</string>
     <string name="setting_title" msgid="1296639422364732365">"ছেটিংসমূহ"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"আৰম্ভণিৰ স্ক্ৰীণ"</string>

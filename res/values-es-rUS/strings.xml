@@ -41,6 +41,10 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"Hoy"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Ayer"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Anteriores"</string>
+    <!-- no translation found for call_logs_empty (3470906879155560897) -->
+    <skip />
+    <!-- no translation found for contact_list_empty (2397367061689908457) -->
+    <skip />
     <string name="add_favorite_button" msgid="7914955940249767808">"Agregar un favorito"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Todavía no agregaste ningún favorito"</string>
     <string name="search_title" msgid="5412680850141871664">"Buscar contactos"</string>
@@ -54,7 +58,10 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notificación de llamada entrante"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Llamada entrante"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Notificación de llamada perdida"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="other">Llamadas perdidas (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+      <item quantity="one">Llamada perdida</item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"En espera"</string>
     <string name="setting_title" msgid="1296639422364732365">"Configuración"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Pantalla de inicio"</string>

@@ -41,6 +41,8 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"Hoje"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Ontem"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Mais antigas"</string>
+    <string name="call_logs_empty" msgid="3470906879155560897">"As chamadas recebidas e realizadas aparecem aqui"</string>
+    <string name="contact_list_empty" msgid="2397367061689908457">"Você ainda não tem contatos"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Adicionar favorito"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Você ainda não adicionou favoritos"</string>
     <string name="search_title" msgid="5412680850141871664">"Pesquisar contatos"</string>
@@ -54,7 +56,10 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notificação de chamada recebida"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Chamada recebida"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Notificação de chamada perdida"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="one">Chamada perdida (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+      <item quantity="other">Chamadas perdidas (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"Em espera"</string>
     <string name="setting_title" msgid="1296639422364732365">"Configurações"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Tela inicial"</string>

@@ -41,6 +41,8 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"Dnes"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Včera"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Staršie"</string>
+    <string name="call_logs_empty" msgid="3470906879155560897">"Tu sa vám zobrazujú prichádzajúce a odchádzajúce hovory"</string>
+    <string name="contact_list_empty" msgid="2397367061689908457">"Zatiaľ nemáte žiadne kontakty"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Pridať obľúbený kontakt"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Zatiaľ ste nepridali žiadne obľúbené kontakty"</string>
     <string name="search_title" msgid="5412680850141871664">"Hľadať v kontaktoch"</string>
@@ -54,7 +56,12 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Upozornenie na prichádzajúci hovor"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Prichádzajúci hovor"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Upozornenie na zmeškaný hovor"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="few">Zmeškané hovory (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+      <item quantity="many">Missed calls(<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+      <item quantity="other">Zmeškané hovory (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+      <item quantity="one">Zmeškaný hovor</item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"Pozdržané"</string>
     <string name="setting_title" msgid="1296639422364732365">"Nastavenia"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Úvodná obrazovka"</string>

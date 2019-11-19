@@ -41,6 +41,8 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"วันนี้"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"เมื่อวานนี้"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"เก่ากว่า"</string>
+    <string name="call_logs_empty" msgid="3470906879155560897">"สายเรียกเข้าและโทรออกจะปรากฏที่นี่"</string>
+    <string name="contact_list_empty" msgid="2397367061689908457">"คุณยังไม่มีรายชื่อติดต่อ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"เพิ่มรายการโปรด"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"คุณยังไม่ได้เพิ่มรายการโปรดใดๆ"</string>
     <string name="search_title" msgid="5412680850141871664">"ค้นหารายชื่อติดต่อ"</string>
@@ -54,7 +56,10 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"การแจ้งเตือนสายเรียกเข้า"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"สายเรียกเข้า"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"การแจ้งเตือนสายที่ไม่ได้รับ"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="other">สายที่ไม่ได้รับ(<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
+      <item quantity="one">สายที่ไม่ได้รับ</item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"พักสาย"</string>
     <string name="setting_title" msgid="1296639422364732365">"การตั้งค่า"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"หน้าจอเริ่มต้น"</string>
