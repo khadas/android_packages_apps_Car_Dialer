@@ -133,8 +133,8 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
             String relativeTime = getRelativeTime(phoneCallLog.getLastCallEndTimestamp());
             if (TelecomUtils.isVoicemailNumber(mContext, number)) {
                 String title = mContext.getString(R.string.voicemail);
-                UiCallLog uiCallLog = new UiCallLog(title,
-                        relativeTime, number, null, phoneCallLog.getAllCallRecords());
+                UiCallLog uiCallLog = new UiCallLog(title, relativeTime, number, null, null,
+                        phoneCallLog.getAllCallRecords());
                 uiCallLogs.add(uiCallLog);
                 continue;
             }
@@ -155,6 +155,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
                     title,
                     getSecondaryText(getType(phoneNumber), relativeTime),
                     number,
+                    contact != null ? contact.getInitials() : null,
                     contact != null ? contact.getAvatarUri() : null,
                     phoneCallLog.getAllCallRecords());
 

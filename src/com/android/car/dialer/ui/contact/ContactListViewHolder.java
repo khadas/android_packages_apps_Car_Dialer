@@ -65,7 +65,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
      * Binds the view holder with relevant data.
      */
     public void onBind(Contact contact, boolean showHeader, String header) {
-        TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact, null);
+        TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact);
         ViewUtils.setVisible(mHeaderView, showHeader);
         if (showHeader) {
             ViewUtils.setText(mHeaderView, header);
