@@ -41,6 +41,8 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"Ma"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Tegnap"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Korábbi"</string>
+    <string name="call_logs_empty" msgid="3470906879155560897">"A bejövő és kimenő hívások jelennek meg itt."</string>
+    <string name="contact_list_empty" msgid="2397367061689908457">"Még nem rendelkezik egyetlen névjeggyel sem"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Kedvenc hozzáadása"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Még nem adott hozzá kedvenceket"</string>
     <string name="search_title" msgid="5412680850141871664">"Keresés a névjegyek közt"</string>
@@ -54,7 +56,10 @@
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Bejövő hívásról szóló értesítés"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Bejövő hívás"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Nem fogadott hívásról szóló értesítés"</string>
-    <!-- no translation found for notification_missed_call (1018870358427938752) -->
+    <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
+      <item quantity="other"><xliff:g id="NUMBER">%1$d</xliff:g> nem fogadott hívás</item>
+      <item quantity="one">Nem fogadott hívás</item>
+    </plurals>
     <string name="onhold_call_label" msgid="1937027519810985499">"Várakoztatva"</string>
     <string name="setting_title" msgid="1296639422364732365">"Beállítások"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Kezdőképernyő"</string>
