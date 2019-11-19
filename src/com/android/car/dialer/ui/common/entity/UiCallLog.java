@@ -18,6 +18,8 @@ package com.android.car.dialer.ui.common.entity;
 
 import android.net.Uri;
 
+import androidx.annotation.Nullable;
+
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.telephony.common.PhoneCallLog;
 
@@ -31,17 +33,28 @@ import java.util.List;
 public class UiCallLog {
     private final String mTitle;
     private final String mNumber;
+    @Nullable
+    private final String mInitials;
     private final Uri mAvatarUri;
     private final List<PhoneCallLog.Record> mCallRecords;
     private String mText;
 
-    public UiCallLog(String title, String text, String number, Uri avatarUri,
-            List<PhoneCallLog.Record> callRecords) {
+    public UiCallLog(String title, String text, String number, @Nullable String initials,
+            Uri avatarUri, List<PhoneCallLog.Record> callRecords) {
         mTitle = title;
         mText = text;
         mNumber = number;
+        mInitials = initials;
         mAvatarUri = avatarUri;
         mCallRecords = new ArrayList<>(callRecords);
+    }
+
+    /**
+     * Returns the initials of a call log item. Returns null if this item is not a contact.
+     */
+    @Nullable
+    public String getInitials() {
+        return mInitials;
     }
 
     /**
@@ -73,6 +86,7 @@ public class UiCallLog {
     }
 
     /** Returns the avatar of the contact associated with the number. */
+    @Nullable
     public Uri getAvatarUri() {
         return mAvatarUri;
     }
