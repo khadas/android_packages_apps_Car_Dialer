@@ -27,8 +27,6 @@
     <dimen name="fab_outline_size">104dp</dimen>
     <dimen name="fab_ripple_radius">52dp</dimen>
 
-    <dimen name="contact_details_avatar_size">126dp</dimen>
-
     <!-- Components -->
     <dimen name="control_bar_height">128dp</dimen>
 </resources>
