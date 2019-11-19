@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsFragment;
@@ -57,7 +58,7 @@ public class CallHistoryFragment extends DialerListBaseFragment implements
             if (uiCallLogs.isLoading()) {
                 showLoading();
             } else if (uiCallLogs.getData().isEmpty()) {
-                showEmpty(R.drawable.ic_history, R.string.call_logs_empty);
+                showEmpty(Constants.INVALID_RES_ID, R.string.call_logs_empty);
             } else {
                 mCallLogAdapter.setUiCallLogs(uiCallLogs.getData());
                 showContent();

@@ -27,16 +27,21 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.telephony.common.Contact;
 
-/** Contains a list of favorite contacts. */
+/**
+ * Contains a list of favorite contacts.
+ */
 public class FavoriteFragment extends DialerListBaseFragment {
 
-    /** Constructs a new {@link FavoriteFragment} */
+    /**
+     * Constructs a new {@link FavoriteFragment}
+     */
     public static FavoriteFragment newInstance() {
         return new FavoriteFragment();
     }
@@ -56,9 +61,8 @@ public class FavoriteFragment extends DialerListBaseFragment {
             if (contacts.isLoading()) {
                 showLoading();
             } else if (contacts.getData() == null) {
-                showEmpty(R.drawable.ic_favorite, R.string.favorites_empty,
-                        R.string.add_favorite_button,
-                        v -> onAddFavoriteClicked(), true);
+                showEmpty(Constants.INVALID_RES_ID, R.string.favorites_empty,
+                        R.string.add_favorite_button, v -> onAddFavoriteClicked(), true);
             } else {
                 adapter.setFavoriteContacts(contacts.getData());
                 showContent();
