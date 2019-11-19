@@ -63,7 +63,7 @@ public abstract class InCallFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDefaultAvatar = TelecomUtils.createLetterTile(getContext(), null);
+        mDefaultAvatar = TelecomUtils.createLetterTile(getContext(), null, null);
     }
 
     /**
@@ -125,7 +125,7 @@ public abstract class InCallFragment extends Fragment {
                 }
 
                 LetterTileDrawable letterTile = TelecomUtils.createLetterTile(
-                        getContext(), info.getDisplayName());
+                        getContext(), info.getInitials(), info.getDisplayName());
 
                 Glide.with(this)
                         .load(info.getAvatarUri())

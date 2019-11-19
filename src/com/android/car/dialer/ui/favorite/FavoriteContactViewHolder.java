@@ -83,6 +83,6 @@ class FavoriteContactViewHolder extends RecyclerView.ViewHolder {
         }
         mText.setText(secondaryText);
 
-        TelecomUtils.setContactBitmapAsync(context, mIcon, contact, null);
+        TelecomUtils.setContactBitmapAsync(context, mIcon, contact);
     }
 }
