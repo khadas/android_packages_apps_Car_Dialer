@@ -54,7 +54,7 @@ public class OnHoldCallUserProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDefaultAvatar = TelecomUtils.createLetterTile(getContext(), null);
+        mDefaultAvatar = TelecomUtils.createLetterTile(getContext(), null, null);
     }
 
     @Nullable
@@ -91,11 +91,12 @@ public class OnHoldCallUserProfileFragment extends Fragment {
         String number = callDetail.getNumber();
         mTitle.setText(TelecomUtils.getFormattedNumber(getContext(), number));
         mAvatarView.setImageDrawable(mDefaultAvatar);
+
         mPhoneNumberInfoFuture = TelecomUtils.getPhoneNumberInfo(getContext(), number)
                 .thenAcceptAsync((info) -> {
                     mTitle.setText(info.getDisplayName());
                     TelecomUtils.setContactBitmapAsync(getContext(), mAvatarView,
-                            info.getAvatarUri(), info.getDisplayName());
+                            info.getAvatarUri(), info.getInitials(), info.getDisplayName());
                 }, getContext().getMainExecutor());
     }
 
