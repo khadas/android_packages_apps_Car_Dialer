@@ -84,7 +84,7 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     public void bind(Context context, Contact contact) {
         if (contact == null) {
             ViewUtils.setText(mTitle, R.string.error_contact_deleted);
-            LetterTileDrawable letterTile = TelecomUtils.createLetterTile(context, null);
+            LetterTileDrawable letterTile = TelecomUtils.createLetterTile(context, null, null);
             if (mAvatarView != null) {
                 mAvatarView.setImageDrawable(letterTile);
             }
@@ -103,7 +103,7 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         }
 
         LetterTileDrawable letterTile = TelecomUtils.createLetterTile(context,
-                contact.getDisplayName());
+                contact.getInitials(), contact.getDisplayName());
         Glide.with(context)
                 .load(contact.getAvatarUri())
                 .apply(new RequestOptions().centerCrop().error(letterTile))
