@@ -58,7 +58,7 @@ public class DialerListBaseFragment extends DialerBaseFragment {
      */
     @LayoutRes
     protected int getLayoutResource() {
-        return R.layout.list_fragment;
+        return R.layout.loading_list_fragment;
     }
 
     /**
