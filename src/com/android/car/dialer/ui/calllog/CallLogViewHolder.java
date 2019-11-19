@@ -74,6 +74,7 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
                 mAvatarView.getContext(),
                 mAvatarView,
                 uiCallLog.getAvatarUri(),
+                uiCallLog.getInitials(),
                 uiCallLog.getTitle());
 
         mTitleView.setText(uiCallLog.getTitle());

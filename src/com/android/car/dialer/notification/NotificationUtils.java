@@ -48,7 +48,8 @@ final class NotificationUtils {
                             .getDimensionPixelSize(R.dimen.avatar_icon_size);
                     Icon largeIcon = loadContactAvatar(context, info.getAvatarUri(), size);
                     if (largeIcon == null) {
-                        largeIcon = createLetterTile(context, info.getDisplayName(), size);
+                        largeIcon = createLetterTile(context, info.getInitials(),
+                                /* identifier */ info.getDisplayName(), size);
                     }
 
                     return new Pair<>(info.getDisplayName(), largeIcon);
@@ -74,8 +75,10 @@ final class NotificationUtils {
         return null;
     }
 
-    private static Icon createLetterTile(Context context, String displayName, int avatarSize) {
-        LetterTileDrawable letterTileDrawable = TelecomUtils.createLetterTile(context, displayName);
+    private static Icon createLetterTile(Context context, @Nullable String initials,
+            String identifier, int avatarSize) {
+        LetterTileDrawable letterTileDrawable = TelecomUtils.createLetterTile(context, initials,
+                identifier);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(
                 context.getResources(), letterTileDrawable.toBitmap(avatarSize));
         return createFromRoundedBitmapDrawable(context, roundedBitmapDrawable, avatarSize);

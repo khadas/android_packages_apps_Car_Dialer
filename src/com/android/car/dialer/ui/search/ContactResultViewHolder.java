@@ -59,7 +59,6 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
                 v -> mOnShowContactDetailListener.onShowContactDetail(contact));
 
         mContactName.setText(contact.getDisplayName());
-        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact.getAvatarUri(),
-                contact.getDisplayName());
+        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact);
     }
 }

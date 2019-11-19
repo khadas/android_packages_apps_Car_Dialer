@@ -258,9 +258,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
                 R.string.primary_number_description, readableLabel) : readableLabel);
         ViewUtils.setVisible(mLabel, true);
 
-        if (mAvatar != null) {
-            TelecomUtils.setContactBitmapAsync(getContext(), mAvatar, contact, null);
-        }
+        TelecomUtils.setContactBitmapAsync(getContext(), mAvatar, contact);
         ViewUtils.setVisible(mAvatar, true);
     }
 
