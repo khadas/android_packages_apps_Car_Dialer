@@ -30,4 +30,7 @@
     that are not stored as contacts. "true" will show divider and button as disable state and
     "false" will make divider and button invisible for non contacts. -->
     <bool name="config_show_calllog_action_button_for_non_contact">false</bool>
+
+    <!-- A config determines if to show the action bar view in the contact details page.-->
+    <bool name="config_show_contact_details_action_bar_view">false</bool>
 </resources>
