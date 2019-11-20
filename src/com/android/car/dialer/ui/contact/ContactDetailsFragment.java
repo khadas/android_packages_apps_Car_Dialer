@@ -99,8 +99,8 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
                 mContact, this);
         getRecyclerView().setAdapter(contactDetailsAdapter);
-        if (mShowActionBarView) {
-            getRecyclerView().setScrollBarPadding(getTopBarHeight(), 0);
+        if (!mShowActionBarView) {
+            getRecyclerView().setScrollBarPadding(super.getTopBarHeight(), 0);
         }
         mContactDetailsLiveData.observe(this, contact -> {
             if (contact.isLoading()) {
