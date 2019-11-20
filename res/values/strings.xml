@@ -70,8 +70,6 @@
     <string name="contacts_title">Contacts</string>
     <!-- Title for the dialpad [CHAR LIMIT=30] -->
     <string name="dialpad_title">Dialpad</string>
-    <!-- Toolbar title for tabbed pages -->
-    <string name="default_toolbar_title" translatable="false"></string>
 
     <!-- Headers for call history -->
     <!-- Header in call log to group calls from the current day. [CHAR LIMIT=30] -->

@@ -44,12 +44,17 @@ import java.util.Set;
  */
 public class TelecomActivityViewModel extends AndroidViewModel {
     private static final String TAG = "CD.TelecomActivityViewModel";
-    /** A constant which indicates that there's no Bluetooth error. */
+    /**
+     * A constant which indicates that there's no Bluetooth error.
+     */
     public static final String NO_BT_ERROR = "NO_ERROR";
 
     private final Context mApplicationContext;
     private final LiveData<String> mErrorStringLiveData;
     private final MutableLiveData<Integer> mDialerAppStateLiveData;
+
+    private final ToolbarTitleLiveData mToolbarTitleLiveData;
+    private final MutableLiveData<Integer> mToolbarTitleMode;
 
     /**
      * App state indicates if bluetooth is connected or it should just show the content fragments.
@@ -67,6 +72,9 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         super(application);
         mApplicationContext = application.getApplicationContext();
 
+        mToolbarTitleMode = new MediatorLiveData<>();
+        mToolbarTitleLiveData = new ToolbarTitleLiveData(mApplicationContext, mToolbarTitleMode);
+
         if (BluetoothAdapter.getDefaultAdapter() == null) {
             MutableLiveData<String> bluetoothUnavailableLiveData = new MutableLiveData<>();
             bluetoothUnavailableLiveData.setValue(
@@ -82,6 +90,22 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData);
+    }
+
+    /**
+     * Returns the {@link LiveData} for the toolbar title, which provides the toolbar title
+     * depending on the {@link R.attr#toolbarTitleMode}.
+     */
+    public LiveData<String> getToolbarTitle() {
+        return mToolbarTitleLiveData;
+    }
+
+    /**
+     * Returns the {@link MutableLiveData} of the toolbar title mode. The value should be set by the
+     * {@link TelecomActivity}.
+     */
+    public MutableLiveData<Integer> getToolbarTitleMode() {
+        return mToolbarTitleMode;
     }
 
     public MutableLiveData<Integer> getDialerAppState() {
