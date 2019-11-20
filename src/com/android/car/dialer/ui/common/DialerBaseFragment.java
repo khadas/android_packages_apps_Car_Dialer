@@ -24,10 +24,13 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.apps.common.util.Themes;
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.TelecomActivity;
+import com.android.car.dialer.ui.TelecomActivityViewModel;
 
 /** The base class for top level dialer content {@link Fragment}s. */
 public abstract class DialerBaseFragment extends Fragment {
@@ -46,7 +49,11 @@ public abstract class DialerBaseFragment extends Fragment {
 
     /** Customizes the action bar. Can be overridden in subclasses. */
     public void setupActionBar(@NonNull ActionBar actionBar) {
-        actionBar.setTitle(getActionBarTitle());
+        TelecomActivityViewModel viewModel = ViewModelProviders.of(getActivity()).get(
+                TelecomActivityViewModel.class);
+        LiveData<String> toolbarTitleLiveData = viewModel.getToolbarTitle();
+        toolbarTitleLiveData.observe(this,
+                toolbarTitle -> setActionBarTitle(actionBar, toolbarTitle));
         actionBar.setCustomView(null);
         setActionBarBackground(getContext().getDrawable(R.color.app_bar_background_color));
     }
@@ -57,11 +64,6 @@ public abstract class DialerBaseFragment extends Fragment {
         if (parentActivity instanceof DialerFragmentParent) {
             ((DialerFragmentParent) parentActivity).pushContentFragment(fragment, fragmentTag);
         }
-    }
-
-    /** Return the action bar title. */
-    protected CharSequence getActionBarTitle() {
-        return getString(R.string.default_toolbar_title);
     }
 
     protected int getTopBarHeight() {
@@ -77,6 +79,11 @@ public abstract class DialerBaseFragment extends Fragment {
             topBarHeight += tabBarHeight;
         }
         return topBarHeight;
+    }
+
+    protected final void setActionBarTitle(@NonNull ActionBar actionBar,
+            @Nullable CharSequence title) {
+        actionBar.setTitle(title);
     }
 
     protected final void setActionBarBackground(@Nullable Drawable drawable) {
