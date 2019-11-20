@@ -36,6 +36,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 
@@ -73,11 +74,9 @@ import java.util.List;
 public class TelecomActivity extends FragmentActivity implements
         DialerBaseFragment.DialerFragmentParent, FragmentManager.OnBackStackChangedListener {
     private static final String TAG = "CD.TelecomActivity";
-
     private LiveData<String> mBluetoothErrorMsgLiveData;
     private LiveData<Integer> mDialerAppStateLiveData;
     private LiveData<List<Call>> mOngoingCallListLiveData;
-
     // View objects for this activity.
     private CarTabLayout<TelecomPageTab> mTabLayout;
     private TelecomPageTab.Factory mTabFactory;
@@ -87,6 +86,7 @@ public class TelecomActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         L.d(TAG, "onCreate");
         setContentView(R.layout.telecom_activity);
 
@@ -104,6 +104,8 @@ public class TelecomActivity extends FragmentActivity implements
         mDialerAppStateLiveData = viewModel.getDialerAppState();
         mDialerAppStateLiveData.observe(this,
                 dialerAppState -> updateCurrentFragment(dialerAppState));
+        MutableLiveData<Integer> toolbarTitleMode = viewModel.getToolbarTitleMode();
+        toolbarTitleMode.setValue(Themes.getAttrInteger(this, R.attr.toolbarTitleMode));
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
         mOngoingCallListLiveData = inCallViewModel.getOngoingCallList();
