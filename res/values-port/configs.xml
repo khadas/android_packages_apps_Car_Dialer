@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
   Copyright (C) 2019 The Android Open Source Project
 
@@ -14,9 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
 <resources>
-    <!-- Titles -->
-    <!-- Toolbar title for tabbed pages -->
-    <string name="default_toolbar_title">@string/phone_app_name</string>
+    <!-- Use app name as toolbar title. Supported value see @attr/toolbarTitleMode -->
+    <integer name="config_toolbar_title_mode">0</integer>
 </resources>

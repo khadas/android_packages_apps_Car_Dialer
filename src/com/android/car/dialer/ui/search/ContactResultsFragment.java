@@ -127,7 +127,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
     @Override
     public void setupActionBar(@NonNull ActionBar actionBar) {
-        super.setupActionBar(actionBar);
+        setActionBarTitle(actionBar, null);
+        setActionBarBackground(getContext().getDrawable(R.color.app_bar_background_color));
 
         // We have to use the setCustomView that accepts a LayoutParams to get the SearchView
         // to take up the full height and width of the action bar.
@@ -189,11 +190,6 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     /** Triggered by search view text change. */
     private void onNewQuery(String newQuery) {
         mContactResultsViewModel.setSearchQuery(newQuery);
-    }
-
-    @Override
-    protected CharSequence getActionBarTitle() {
-        return null;
     }
 
     @Override
