@@ -42,7 +42,7 @@
 
         <activity android:name=".ui.TelecomActivity"
                   android:launchMode="singleTask"
-                  android:theme="@style/Theme.Dialer"
+                  android:theme="@style/Theme.Dialer.Telecom"
                   android:label="@string/phone_app_name"
                   android:exported="true"
                   android:resizeableActivity="true">
@@ -83,7 +83,7 @@
 
         <activity android:name=".ui.activecall.InCallActivity"
                   android:launchMode="singleInstance"
-                  android:theme="@style/Theme.Dialer"
+                  android:theme="@style/Theme.Dialer.InCall"
                   android:label="@string/phone_app_name">
             <meta-data android:name="distractionOptimized" android:value="true"/>
         </activity>
