@@ -41,10 +41,8 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"ଆଜି"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"ଗତକାଲି"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"ପୁରୁଣା"</string>
-    <!-- no translation found for call_logs_empty (3470906879155560897) -->
-    <skip />
-    <!-- no translation found for contact_list_empty (2397367061689908457) -->
-    <skip />
+    <string name="call_logs_empty" msgid="3470906879155560897">"ଆପଣଙ୍କର ଇନ୍‍କମିଂ ଏବଂ ଆଉଟ୍‍‍ଗୋଇଂ କଲ୍‍ଗୁଡ଼ିକ ଏଠାରେ ଦେଖାଯିବ"</string>
+    <string name="contact_list_empty" msgid="2397367061689908457">"ଆପଣଙ୍କ ପାଖରେ ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଯୋଗାଯୋଗ ନାହିଁ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ଏକ ପସନ୍ଦ ଯୋଗ କରନ୍ତୁ"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"ଆପଣ ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପସନ୍ଦ ଯୋଗ କରିନାହାଁନ୍ତି"</string>
     <string name="search_title" msgid="5412680850141871664">"ଯୋଗାଯୋଗଗୁଡ଼ିକୁ ଖୋଜନ୍ତୁ"</string>
