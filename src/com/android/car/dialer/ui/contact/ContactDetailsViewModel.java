@@ -38,7 +38,9 @@ import com.android.car.telephony.common.WorkerExecutor;
 import java.util.List;
 import java.util.concurrent.Future;
 
-/** View model for the contact details page. */
+/**
+ * View model for the contact details page.
+ */
 public class ContactDetailsViewModel extends AndroidViewModel {
     private final FavoriteNumberRepository mFavoriteNumberRepository;
 
@@ -87,6 +89,7 @@ public class ContactDetailsViewModel extends AndroidViewModel {
 
     private class ContactDetailsLiveData extends MediatorLiveData<Contact> {
         private final Uri mContactLookupUri;
+        private final String mAccountName;
         private final WorkerExecutor mWorkerExecutor;
         private final Context mContext;
         private Contact mContact;
@@ -97,6 +100,7 @@ public class ContactDetailsViewModel extends AndroidViewModel {
             mWorkerExecutor = WorkerExecutor.getInstance();
             mContact = contact;
             mContactLookupUri = mContact.getLookupUri();
+            mAccountName = mContact.getAccountName();
             addSource(InMemoryPhoneBook.get().getContactsLiveData(), this::onContactListChanged);
             addSource(mFavoriteNumberRepository.getFavoriteContacts(),
                     this::onFavoriteContactsChanged);
@@ -105,7 +109,7 @@ public class ContactDetailsViewModel extends AndroidViewModel {
         private void onContactListChanged(List<Contact> contacts) {
             if (mContact != null) {
                 Contact inMemoryContact = InMemoryPhoneBook.get().lookupContactByKey(
-                        mContact.getLookupKey());
+                        mContact.getLookupKey(), mContact.getAccountName());
                 if (inMemoryContact != null) {
                     setValue(inMemoryContact);
                     return;
@@ -127,7 +131,8 @@ public class ContactDetailsViewModel extends AndroidViewModel {
 
                         List<String> pathSegments = refreshedContactLookupUri.getPathSegments();
                         String lookupKey = pathSegments.get(pathSegments.size() - 2);
-                        Contact contact = InMemoryPhoneBook.get().lookupContactByKey(lookupKey);
+                        Contact contact = InMemoryPhoneBook.get().lookupContactByKey(lookupKey,
+                                mContact == null ? mAccountName : mContact.getAccountName());
                         postValue(contact);
                     }
             );
@@ -138,7 +143,7 @@ public class ContactDetailsViewModel extends AndroidViewModel {
                 return;
             }
             Contact inMemoryContact = InMemoryPhoneBook.get().lookupContactByKey(
-                    mContact.getLookupKey());
+                    mContact.getLookupKey(), mContact.getAccountName());
             setValue(inMemoryContact);
         }
 
