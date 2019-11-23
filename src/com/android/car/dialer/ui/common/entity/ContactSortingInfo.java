@@ -39,7 +39,7 @@ public class ContactSortingInfo {
      * @see android.provider.ContactsContract.Contacts#DISPLAY_NAME_PRIMARY
      */
     private static final Comparator<Contact> sFirstNameComparator =
-            (o1, o2) -> o1.compareByDisplayName(o2);
+            (o1, o2) -> o1.compareBySortKeyPrimary(o2);
 
     /**
      * Sort by the alternative display order of a name. For western names it will be "Family,
@@ -50,7 +50,7 @@ public class ContactSortingInfo {
      * @see android.provider.ContactsContract.Contacts#DISPLAY_NAME_ALTERNATIVE
      */
     private static final Comparator<Contact> sLastNameComparator =
-            (o1, o2) -> o1.compareByAltDisplayName(o2);
+            (o1, o2) -> o1.compareBySortKeyAlt(o2);
 
     /**
      * A static method that return how Contacts are sorted
