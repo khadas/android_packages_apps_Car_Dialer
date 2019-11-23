@@ -41,10 +41,8 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"Aujourd\'hui"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Hier"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Plus anciens"</string>
-    <!-- no translation found for call_logs_empty (3470906879155560897) -->
-    <skip />
-    <!-- no translation found for contact_list_empty (2397367061689908457) -->
-    <skip />
+    <string name="call_logs_empty" msgid="3470906879155560897">"Vos appels entrants et vos appels en cours s\'affichent ici"</string>
+    <string name="contact_list_empty" msgid="2397367061689908457">"Vous n\'avez pas encore de contacts"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Ajouter un favori"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"Pour le moment, vous n\'avez ajouté aucun contact aux favoris"</string>
     <string name="search_title" msgid="5412680850141871664">"Recherchez dans les contacts"</string>

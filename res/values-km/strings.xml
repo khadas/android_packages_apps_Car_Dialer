@@ -41,10 +41,8 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"ថ្ងៃនេះ"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"ម្សិលមិញ"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"ចាស់ៗ"</string>
-    <!-- no translation found for call_logs_empty (3470906879155560897) -->
-    <skip />
-    <!-- no translation found for contact_list_empty (2397367061689908457) -->
-    <skip />
+    <string name="call_logs_empty" msgid="3470906879155560897">"ការ​ហៅ​ចូល និង​ចេញ​របស់​អ្នក​បង្ហាញ​នៅ​ទីនេះ"</string>
+    <string name="contact_list_empty" msgid="2397367061689908457">"អ្នកមិនទាន់មានទំនាក់ទំនងណាមួយនៅឡើយទេ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"បញ្ចូលសំណព្វ"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"អ្នក​មិនទាន់​​បាន​បញ្ចូល​​សំណព្វ​ណា​មួយ​នៅ​ឡើយ​ទេ"</string>
     <string name="search_title" msgid="5412680850141871664">"ស្វែងរកទំនាក់ទំនង"</string>
