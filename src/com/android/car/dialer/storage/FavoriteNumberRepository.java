@@ -209,7 +209,7 @@ public class FavoriteNumberRepository {
                     Contact contact = Contact.fromCursor(mContext, cursor);
                     contact.getNumbers().clear();
                     Contact inMemoryContact = InMemoryPhoneBook.get().lookupContactByKey(
-                            contact.getLookupKey());
+                            contact.getLookupKey(), contact.getAccountName());
                     for (PhoneNumber inMemoryPhoneNumber : inMemoryContact.getNumbers()) {
                         if (numberMatches(favoriteNumber, inMemoryPhoneNumber)) {
                             contact.getNumbers().add(inMemoryPhoneNumber);
