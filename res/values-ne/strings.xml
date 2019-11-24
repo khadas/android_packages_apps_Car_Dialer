@@ -41,10 +41,8 @@
     <string name="call_log_header_today" msgid="2069013936632793214">"आज"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"हिजो"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"अझ पुरानो"</string>
-    <!-- no translation found for call_logs_empty (3470906879155560897) -->
-    <skip />
-    <!-- no translation found for contact_list_empty (2397367061689908457) -->
-    <skip />
+    <string name="call_logs_empty" msgid="3470906879155560897">"तपाईंका आगमन तथा बहिर्गमन कलहरू यहाँ देखिन्छन्"</string>
+    <string name="contact_list_empty" msgid="2397367061689908457">"तपाईंसँग अहिलेसम्म कुनै पनि सम्पर्क ठेगाना छैन"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"सम्पर्क सूचीमा भएको कुनै मन पर्ने व्यक्ति थप्नु…"</string>
     <string name="favorites_empty" msgid="6712416359691979975">"तपाईंले अहिलेसम्म कुनै पनि मन पर्ने सम्पर्क ठेगाना थप्नुभएको छैन"</string>
     <string name="search_title" msgid="5412680850141871664">"सम्पर्क ठेगानाहरू खोज्नुहोस्"</string>
