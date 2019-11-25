@@ -117,7 +117,7 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
                         if (mBackgroundImageView != null) {
                             mBackgroundImageView.setAlpha(context.getResources().getFloat(
                                     R.dimen.config_background_image_alpha));
-                            mBackgroundImageView.setBackgroundDrawable(resource);
+                            mBackgroundImageView.setBackgroundDrawable(resource, false);
                         }
                     }
 
