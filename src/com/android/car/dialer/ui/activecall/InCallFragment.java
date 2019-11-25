@@ -136,7 +136,7 @@ public abstract class InCallFragment extends Fragment {
                                     Transition<? super Drawable> glideAnimation) {
                                 mBackgroundImage.setAlpha(getResources().getFloat(
                                         R.dimen.config_background_image_alpha));
-                                mBackgroundImage.setBackgroundDrawable(resource);
+                                mBackgroundImage.setBackgroundDrawable(resource, false);
                                 mAvatarView.setImageDrawable(resource);
                             }
 
