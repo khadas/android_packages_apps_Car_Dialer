@@ -18,6 +18,8 @@ package com.android.car.dialer.ui.dialpad;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
@@ -35,6 +37,7 @@ import com.android.car.dialer.testutils.ShadowCallLogCalls;
 import com.android.car.dialer.testutils.ShadowInMemoryPhoneBook;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
+import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
 
 import org.junit.After;
@@ -201,6 +204,7 @@ public class DialpadFragmentTest {
     public void testDisplayName() {
         ShadowInMemoryPhoneBook phoneBook = Shadow.extract(InMemoryPhoneBook.get());
         when(mMockContact.getDisplayName()).thenReturn(DISPALY_NAME);
+        when(mMockContact.getPhoneNumber(any(), any())).thenReturn(mock(PhoneNumber.class));
         phoneBook.add(DIAL_NUMBER, mMockContact);
 
         mDialpadFragment = DialpadFragment.newPlaceCallDialpad();

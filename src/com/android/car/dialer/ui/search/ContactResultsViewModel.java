@@ -33,6 +33,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.SharedPreferencesLiveData;
+import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.ObservableAsyncQuery;
@@ -40,7 +41,6 @@ import com.android.car.telephony.common.QueryParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /** {link AndroidViewModel} used for search functionality. */
@@ -83,11 +83,9 @@ public class ContactResultsViewModel extends AndroidViewModel {
         private final Context mContext;
         private final SearchQueryParamProvider mSearchQueryParamProvider;
         private final ObservableAsyncQuery mObservableAsyncQuery;
+        private final LiveData<String> mSearchQueryLiveData;
+        private final LiveData<List<Contact>> mContactListLiveData;
         private final SharedPreferencesLiveData mSharedPreferencesLiveData;
-        private final Comparator<Contact> mFirstNameComparator =
-                (o1, o2) -> o1.compareByDisplayName(o2);
-        private final Comparator<Contact> mLastNameComparator =
-                (o1, o2) -> o1.compareByAltDisplayName(o2);
 
         ContactResultsLiveData(Context context,
                 LiveData<String> searchQueryLiveData,
@@ -97,8 +95,10 @@ public class ContactResultsViewModel extends AndroidViewModel {
             mObservableAsyncQuery = new ObservableAsyncQuery(mSearchQueryParamProvider,
                     context.getContentResolver(), this::onQueryFinished);
 
-            addSource(InMemoryPhoneBook.get().getContactsLiveData(), this::onContactsChange);
-            addSource(searchQueryLiveData, this::onSearchQueryChanged);
+            mContactListLiveData = InMemoryPhoneBook.get().getContactsLiveData();
+            addSource(mContactListLiveData, this::onContactsChange);
+            mSearchQueryLiveData = searchQueryLiveData;
+            addSource(mSearchQueryLiveData, this::onSearchQueryChanged);
 
             mSharedPreferencesLiveData = sharedPreferencesLiveData;
             addSource(mSharedPreferencesLiveData, this::onSortOrderChanged);
@@ -109,14 +109,15 @@ public class ContactResultsViewModel extends AndroidViewModel {
                 mObservableAsyncQuery.stopQuery();
                 setValue(Collections.emptyList());
             } else {
-                mObservableAsyncQuery.startQuery();
+                onSearchQueryChanged(mSearchQueryLiveData.getValue());
             }
         }
 
         private void onSearchQueryChanged(String searchQuery) {
             if (TextUtils.isEmpty(searchQuery)) {
                 mObservableAsyncQuery.stopQuery();
-                setValue(Collections.emptyList());
+                List<Contact> contacts = mContactListLiveData.getValue();
+                setValue(contacts == null ? Collections.emptyList() : contacts);
             } else {
                 mObservableAsyncQuery.startQuery();
             }
@@ -129,7 +130,8 @@ public class ContactResultsViewModel extends AndroidViewModel {
 
             List<Contact> contacts = new ArrayList<>();
             contacts.addAll(getValue());
-            Collections.sort(contacts, getComparator());
+            Collections.sort(contacts,
+                    ContactSortingInfo.getSortingInfo(mContext, mSharedPreferencesLiveData).first);
             setValue(contacts);
         }
 
@@ -148,21 +150,10 @@ public class ContactResultsViewModel extends AndroidViewModel {
                     contacts.add(contact);
                 }
             }
-            Collections.sort(contacts, getComparator());
+            Collections.sort(contacts,
+                    ContactSortingInfo.getSortingInfo(mContext, mSharedPreferencesLiveData).first);
             setValue(contacts);
             cursor.close();
-        }
-
-        private Comparator<Contact> getComparator() {
-            String firstNameSort = mContext.getResources().getString(
-                    R.string.give_name_first_title);
-            String key = mSharedPreferencesLiveData.getKey();
-            if (firstNameSort.equals(
-                    mSharedPreferencesLiveData.getValue().getString(key, firstNameSort))) {
-                return mFirstNameComparator;
-            } else {
-                return mLastNameComparator;
-            }
         }
     }
 

@@ -39,6 +39,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -55,30 +56,33 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             ImmutableMap.<Integer, AudioRouteInfo>builder()
                     .put(CallAudioState.ROUTE_WIRED_HEADSET, new AudioRouteInfo(
                             R.string.audio_route_handset,
-                            R.drawable.ic_smartphone,
-                            R.drawable.ic_smartphone_activatable))
+                            R.drawable.ic_audio_route_headset,
+                            R.drawable.ic_audio_route_headset_activatable))
                     .put(CallAudioState.ROUTE_EARPIECE, new AudioRouteInfo(
                             R.string.audio_route_handset,
-                            R.drawable.ic_smartphone,
-                            R.drawable.ic_smartphone_activatable))
+                            R.drawable.ic_audio_route_earpiece,
+                            R.drawable.ic_audio_route_earpiece_activatable))
                     .put(CallAudioState.ROUTE_BLUETOOTH, new AudioRouteInfo(
                             R.string.audio_route_vehicle,
-                            R.drawable.ic_bluetooth,
-                            R.drawable.ic_bluetooth_activatable))
+                            R.drawable.ic_audio_route_vehicle,
+                            R.drawable.ic_audio_route_vehicle_activatable))
                     .put(CallAudioState.ROUTE_SPEAKER, new AudioRouteInfo(
                             R.string.audio_route_phone_speaker,
-                            R.drawable.ic_speaker_phone,
-                            R.drawable.ic_speaker_phone_activatable))
+                            R.drawable.ic_audio_route_speaker,
+                            R.drawable.ic_audio_route_speaker_activatable))
                     .build();
 
     private AlertDialog mAudioRouteSelectionDialog;
     private AudioRouteListAdapter mAudioRouteAdapter;
-    private ImageView mMuteButton;
+    private View mMuteButton;
+    private View mAudioRouteView;
     private ImageView mAudioRouteButton;
-    private ImageView mPauseButton;
-    private LiveData<Call> mCallLiveData;
+    private TextView mAudioRouteText;
+    private View mPauseButton;
+    private LiveData<Call> mPrimaryCallLiveData;
     private MutableLiveData<Boolean> mDialpadState;
-    private int mCallState;
+    private LiveData<List<Call>> mCallListLiveData;
+    private int mPrimaryCallState;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,12 +106,13 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 InCallViewModel.class);
 
         inCallViewModel.getPrimaryCallState().observe(this, this::setCallState);
-        mCallLiveData = inCallViewModel.getPrimaryCall();
+        mPrimaryCallLiveData = inCallViewModel.getPrimaryCall();
         inCallViewModel.getAudioRoute().observe(this, this::updateViewBasedOnAudioRoute);
 
-        OngoingCallStateViewModel ongoingCallStateViewModel = ViewModelProviders.of(
-                getActivity()).get(OngoingCallStateViewModel.class);
-        mDialpadState = ongoingCallStateViewModel.getDialpadState();
+        mDialpadState = inCallViewModel.getDialpadOpenState();
+
+        mCallListLiveData = inCallViewModel.getAllCallList();
+        mCallListLiveData.observe(this, v -> updatePauseButtonEnabledState());
     }
 
     @Nullable
@@ -136,26 +141,28 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         endCallButton.setOnClickListener(v -> onEndCall());
 
         List<Integer> audioRoutes = UiCallManager.get().getSupportedAudioRoute();
+        mAudioRouteView = fragmentView.findViewById(R.id.voice_channel_view);
         mAudioRouteButton = fragmentView.findViewById(R.id.voice_channel_button);
+        mAudioRouteText = fragmentView.findViewById(R.id.voice_channel_text);
         if (audioRoutes.size() > 1) {
-            mAudioRouteButton.setOnClickListener((v) -> {
-                mAudioRouteButton.setActivated(true);
+            mAudioRouteView.setOnClickListener((v) -> {
+                mAudioRouteView.setActivated(true);
                 mAudioRouteAdapter.setActiveAudioRoute(UiCallManager.get().getAudioRoute());
                 mAudioRouteSelectionDialog.show();
             });
         }
 
         mAudioRouteSelectionDialog.setOnDismissListener(
-                (dialog) -> mAudioRouteButton.setActivated(false));
+                (dialog) -> mAudioRouteView.setActivated(false));
 
         mPauseButton = fragmentView.findViewById(R.id.pause_button);
         mPauseButton.setOnClickListener((v) -> {
-            if (mCallState == Call.STATE_ACTIVE) {
+            if (mPrimaryCallState == Call.STATE_ACTIVE) {
                 onHoldCall();
-            } else if (mCallState == Call.STATE_HOLDING) {
+            } else if (mPrimaryCallState == Call.STATE_HOLDING) {
                 onUnholdCall();
             } else {
-                L.i(TAG, "Pause button is clicked while call in %s state", mCallState);
+                L.i(TAG, "Pause button is clicked while call in %s state", mPrimaryCallState);
             }
         });
         updatePauseButtonEnabledState();
@@ -175,20 +182,18 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     /** Set the call state and change the view for the pause button accordingly */
     private void setCallState(int callState) {
         L.d(TAG, "Call State: %s", callState);
-        mCallState = callState;
+        mPrimaryCallState = callState;
         updatePauseButtonEnabledState();
     }
 
     private void updatePauseButtonEnabledState() {
-        if (mCallState == Call.STATE_HOLDING) {
-            mPauseButton.setEnabled(true);
-            mPauseButton.setActivated(true);
-        } else if (mCallState == Call.STATE_ACTIVE) {
-            mPauseButton.setEnabled(true);
-            mPauseButton.setActivated(false);
-        } else {
-            mPauseButton.setEnabled(false);
-        }
+        boolean hasOnlyOneCall = mCallListLiveData.getValue() != null
+                && mCallListLiveData.getValue().size() == 1;
+        boolean shouldEnablePauseButton = hasOnlyOneCall && (mPrimaryCallState == Call.STATE_HOLDING
+                || mPrimaryCallState == Call.STATE_ACTIVE);
+
+        mPauseButton.setEnabled(shouldEnablePauseButton);
+        mPauseButton.setActivated(mPrimaryCallState == Call.STATE_HOLDING);
     }
 
     private void onMuteMic() {
@@ -200,20 +205,20 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     }
 
     private void onHoldCall() {
-        if (mCallLiveData.getValue() != null) {
-            mCallLiveData.getValue().hold();
+        if (mPrimaryCallLiveData.getValue() != null) {
+            mPrimaryCallLiveData.getValue().hold();
         }
     }
 
     private void onUnholdCall() {
-        if (mCallLiveData.getValue() != null) {
-            mCallLiveData.getValue().unhold();
+        if (mPrimaryCallLiveData.getValue() != null) {
+            mPrimaryCallLiveData.getValue().unhold();
         }
     }
 
     private void onEndCall() {
-        if (mCallLiveData.getValue() != null) {
-            mCallLiveData.getValue().disconnect();
+        if (mPrimaryCallLiveData.getValue() != null) {
+            mPrimaryCallLiveData.getValue().disconnect();
         }
     }
 
@@ -228,7 +233,11 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         }
 
         L.i(TAG, "Audio Route State: " + audioRoute);
-        mAudioRouteButton.setImageResource(getAudioRouteInfo(audioRoute).mIconActivatable);
+        AudioRouteInfo audioRouteInfo = getAudioRouteInfo(audioRoute);
+        if (mAudioRouteButton != null) {
+            mAudioRouteButton.setImageResource(audioRouteInfo.mIconActivatable);
+        }
+        ViewUtils.setText(mAudioRouteText, audioRouteInfo.mLabel);
 
         updateMuteButtonEnabledState(audioRoute);
     }
