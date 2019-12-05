@@ -144,7 +144,6 @@
     <dimen name="large_avatar_icon_size">96dp</dimen>
     <dimen name="primary_icon_enclosing_circle_size">64dp</dimen>
     <dimen name="inline_icon_size">24dp</dimen>
-    <dimen name="preference_list_margin">@*android:dimen/car_margin</dimen>
     <dimen name="contact_avatar_corner_radius_percent" format="float">0.5</dimen>
     <dimen name="touch_target_width">156dp</dimen>
     <dimen name="subheader_list_height">76dp</dimen>
