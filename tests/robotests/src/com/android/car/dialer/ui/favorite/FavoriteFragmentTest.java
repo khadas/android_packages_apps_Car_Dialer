@@ -26,7 +26,6 @@ import static org.mockito.Mockito.when;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.car.apps.common.widget.PagedRecyclerView;
 import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
@@ -35,6 +34,7 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -81,7 +81,7 @@ public class FavoriteFragmentTest {
                 FragmentTestActivity.class).create().resume().get();
         fragmentTestActivity.setFragment(mFavoriteFragment);
 
-        PagedRecyclerView recyclerView = mFavoriteFragment.getView().findViewById(R.id.list_view);
+        CarUiRecyclerView recyclerView = mFavoriteFragment.getView().findViewById(R.id.list_view);
         // set up layout for recyclerView
         recyclerView.layoutBothForTesting(0, 0, 100, 1000);
         mViewHolder = (FavoriteContactViewHolder) recyclerView.findViewHolderForLayoutPosition(0);
