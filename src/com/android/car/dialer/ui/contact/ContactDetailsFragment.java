@@ -16,25 +16,32 @@
 
 package com.android.car.dialer.ui.contact;
 
-import android.app.ActionBar;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
-import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
+import com.android.car.ui.toolbar.Toolbar;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 /**
  * A fragment that shows the name of the contact, the photo and all listed phone numbers. It is
@@ -54,11 +61,11 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     private ContactDetailsViewModel mContactDetailsViewModel;
 
     private boolean mShowActionBarView;
-    private View mActionBarView;
-    private ImageView mAvatarView;
-    private TextView mNameView;
+    private boolean mShowActionBarAvatar;
 
-    /** Creates a new ContactDetailsFragment using a {@link Contact}. */
+    /**
+     * Creates a new ContactDetailsFragment using a {@link Contact}.
+     */
     public static ContactDetailsFragment newInstance(Contact contact) {
         ContactDetailsFragment fragment = new ContactDetailsFragment();
         Bundle args = new Bundle();
@@ -70,7 +77,6 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
 
         mContact = getArguments().getParcelable(KEY_CONTACT_ENTITY);
         if (mContact == null && savedInstanceState != null) {
@@ -82,16 +88,8 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
         mShowActionBarView = getResources().getBoolean(
                 R.bool.config_show_contact_details_action_bar_view);
-        mActionBarView = LayoutInflater.from(getContext()).inflate(
-                R.layout.contact_details_action_bar, null);
-        mAvatarView = mActionBarView.findViewById(R.id.contact_details_action_bar_avatar);
-        mNameView = mActionBarView.findViewById(R.id.contact_details_action_bar_name);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.menu_contacts_search).setVisible(false);
-        menu.findItem(R.id.menu_dialer_setting).setVisible(false);
+        mShowActionBarAvatar = getResources().getBoolean(
+                R.bool.config_show_contact_details_action_bar_avatar);
     }
 
     @Override
@@ -99,9 +97,6 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
                 mContact, this);
         getRecyclerView().setAdapter(contactDetailsAdapter);
-        if (!mShowActionBarView) {
-            getRecyclerView().setScrollBarPadding(super.getTopBarHeight(), 0);
-        }
         mContactDetailsLiveData.observe(this, contact -> {
             if (contact.isLoading()) {
                 showLoading();
@@ -115,38 +110,66 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
     private void onContactChanged(Contact contact) {
         getArguments().clear();
-        if (mAvatarView != null) {
-            mAvatarView.setOutlineProvider(ContactAvatarOutputlineProvider.get());
-            TelecomUtils.setContactBitmapAsync(getContext(), mAvatarView, contact);
-        }
+        Toolbar toolbar = getActivity().findViewById(R.id.car_ui_toolbar);
+        toolbar.setTitle(null);
+        toolbar.setLogo(null);
+        if (mShowActionBarView) {
+            toolbar.setTitle(contact == null ? getString(R.string.error_contact_deleted)
+                    : contact.getDisplayName());
+            if (mShowActionBarAvatar) {
+                int avatarSize = getResources().getDimensionPixelSize(
+                        R.dimen.contact_details_action_bar_avatar_size);
+                LetterTileDrawable letterTile = TelecomUtils.createLetterTile(getContext(),
+                        contact == null ? null : contact.getInitials(),
+                        contact == null ? null : contact.getDisplayName());
+                Uri avatarUri = contact == null ? null : contact.getAvatarUri();
+                Glide.with(this)
+                        .asBitmap()
+                        .load(avatarUri)
+                        .apply(new RequestOptions().override(avatarSize).error(letterTile))
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap,
+                                    Transition<? super Bitmap> transition) {
+                                RoundedBitmapDrawable roundedBitmapDrawable = createFromBitmap(
+                                        bitmap, avatarSize);
+                                toolbar.setLogo(roundedBitmapDrawable);
+                            }
 
-        if (mNameView != null) {
-            if (contact != null) {
-                mNameView.setText(contact.getDisplayName());
-            } else {
-                mNameView.setText(R.string.error_contact_deleted);
+                            @Override
+                            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                RoundedBitmapDrawable roundedBitmapDrawable = createFromLetterTile(
+                                        letterTile, avatarSize);
+                                toolbar.setLogo(roundedBitmapDrawable);
+                            }
+                        });
             }
         }
     }
 
     @Override
-    public void setupActionBar(@NonNull ActionBar actionBar) {
-        actionBar.setCustomView(mShowActionBarView ? mActionBarView : null);
-        actionBar.setTitle(null);
+    public void setupToolbar(@NonNull Toolbar toolbar) {
+        toolbar.setState(getToolbarState());
+        toolbar.setMenuItems(null);
 
-        // Remove the action bar background if the action bar view is not shown.
+        // Remove the tool bar background if we don't show the action bar view.
         if (!mShowActionBarView) {
-            setActionBarBackground(null);
+            setShowToolbarBackground(false);
         }
     }
 
     @Override
-    protected int getTopOffset() {
+    public void onToolbarHeightChange(int toolbarHeight) {
         if (mShowActionBarView) {
-            return super.getTopOffset();
+            super.onToolbarHeightChange(toolbarHeight);
         } else {
-            return 0;
+            getRecyclerView().setScrollBarPadding(toolbarHeight, 0);
         }
+    }
+
+    @Override
+    protected Toolbar.State getToolbarState() {
+        return Toolbar.State.SUBPAGE;
     }
 
     @Override
@@ -163,5 +186,20 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         } else {
             mContactDetailsViewModel.addToFavorite(contact, phoneNumber);
         }
+    }
+
+    private RoundedBitmapDrawable createFromLetterTile(LetterTileDrawable letterTileDrawable,
+            int avatarSize) {
+        return createFromBitmap(letterTileDrawable.toBitmap(avatarSize), avatarSize);
+    }
+
+    private RoundedBitmapDrawable createFromBitmap(Bitmap bitmap, int avatarSize) {
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(
+                getResources(), bitmap);
+        float radiusPercent = getResources()
+                .getFloat(R.dimen.contact_avatar_corner_radius_percent);
+        float radius = avatarSize * radiusPercent;
+        roundedBitmapDrawable.setCornerRadius(radius);
+        return roundedBitmapDrawable;
     }
 }

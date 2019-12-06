@@ -53,7 +53,8 @@ LOCAL_STATIC_ANDROID_LIBRARIES += \
 LOCAL_RESOURCE_DIR += \
     $(LOCAL_PATH)/../libs/car-apps-common/res \
     $(LOCAL_PATH)/../libs/car-telephony-common/res \
-    $(LOCAL_PATH)/../libs/car-theme-lib/res
+    $(LOCAL_PATH)/../libs/car-theme-lib/res \
+    $(LOCAL_PATH)/../libs/car-ui-lib/res \
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     androidx-constraintlayout_constraintlayout-solver \
