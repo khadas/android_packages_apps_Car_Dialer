@@ -17,7 +17,10 @@
 package com.android.car.dialer.ui.contact;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.PostalAddress;
 import com.android.car.telephony.common.TelecomUtils;
 
 import com.bumptech.glide.Glide;
@@ -41,7 +45,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
-/** ViewHolder for {@link ContactDetailsFragment}. */
+/**
+ * ViewHolder for {@link ContactDetailsFragment}.
+ */
 class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     // Applies to all
     @NonNull
@@ -53,13 +59,21 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     @Nullable
     private final BackgroundImageView mBackgroundImageView;
 
-    // Applies to phone number items
+    // Applies to phone number items and address items
     @Nullable
     private final TextView mText;
+
+    // Applies to phone number items
     @Nullable
     private final View mCallActionView;
     @Nullable
     private final View mFavoriteActionView;
+
+    // Applies to address items
+    @Nullable
+    private final View mAddressView;
+    @Nullable
+    private final View mNavigationButton;
 
     @NonNull
     private final ContactDetailsAdapter.PhoneNumberPresenter mPhoneNumberPresenter;
@@ -70,6 +84,8 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         super(v);
         mCallActionView = v.findViewById(R.id.call_action_id);
         mFavoriteActionView = v.findViewById(R.id.contact_details_favorite_button);
+        mAddressView = v.findViewById(R.id.address_button);
+        mNavigationButton = v.findViewById(R.id.navigation_button);
         mTitle = v.findViewById(R.id.title);
         mText = v.findViewById(R.id.text);
         mAvatarView = v.findViewById(R.id.avatar);
@@ -156,5 +172,23 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
             mPhoneNumberPresenter.onClick(contact, phoneNumber);
             mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());
         });
+    }
+
+    public void bind(Context context, @NonNull PostalAddress postalAddress) {
+        String address = postalAddress.getFormattedAddress();
+        Resources resources = context.getResources();
+
+        mTitle.setText(address);
+        ViewUtils.setText(mText, postalAddress.getReadableLabel(resources));
+
+        mAddressView.setOnClickListener(
+                v -> openMapWithAddressUri(context, postalAddress.getAddressUri(resources)));
+        mNavigationButton.setOnClickListener(
+                v -> openMapWithAddressUri(context, postalAddress.getNavigationUri(resources)));
+    }
+
+    private void openMapWithAddressUri(Context context, Uri addressUri) {
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, addressUri);
+        context.startActivity(mapIntent);
     }
 }

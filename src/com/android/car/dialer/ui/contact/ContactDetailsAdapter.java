@@ -29,6 +29,7 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.PostalAddress;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,8 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
     private static final String TAG = "CD.ContactDetailsAdapter";
 
     private static final int ID_HEADER = 1;
-    private static final int ID_CONTENT = 2;
+    private static final int ID_NUMBER = 2;
+    private static final int ID_ADDRESS = 3;
 
     interface PhoneNumberPresenter {
         void onClick(Contact contact, PhoneNumber phoneNumber);
@@ -65,6 +67,9 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
         mItems.add(contact);
         if (contact != null) {
             mItems.addAll(contact.getNumbers());
+            if (mContext.getResources().getBoolean(R.bool.config_show_postal_address)) {
+                mItems.addAll(contact.getPostalAddresses());
+            }
         }
         notifyDataSetChanged();
     }
@@ -74,8 +79,13 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
         Object obj = mItems.get(position);
         if (obj == null || obj instanceof Contact) {
             return ID_HEADER;
+        } else if (obj instanceof PhoneNumber) {
+            return ID_NUMBER;
+        } else if (obj instanceof PostalAddress) {
+            return ID_ADDRESS;
         } else {
-            return ID_CONTENT;
+            L.w(TAG, "Unknown view type");
+            return -1;
         }
     }
 
@@ -91,11 +101,14 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
             case ID_HEADER:
                 layoutResId = R.layout.contact_details_name_image;
                 break;
-            case ID_CONTENT:
+            case ID_NUMBER:
                 layoutResId = R.layout.contact_details_number;
                 break;
+            case ID_ADDRESS:
+                layoutResId = R.layout.contact_details_address;
+                break;
             default:
-                L.e(TAG, "Unknown view type: %d", viewType);
+                L.w(TAG, "Unknown view type: %d", viewType);
                 return null;
         }
 
@@ -110,11 +123,14 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
             case ID_HEADER:
                 viewHolder.bind(mContext, (Contact) mItems.get(position));
                 break;
-            case ID_CONTENT:
+            case ID_NUMBER:
                 viewHolder.bind(mContext, mContact, (PhoneNumber) mItems.get(position));
                 break;
+            case ID_ADDRESS:
+                viewHolder.bind(mContext, (PostalAddress) mItems.get(position));
+                break;
             default:
-                L.e(TAG, "Unknown view type %d ", viewHolder.getItemViewType());
+                L.w(TAG, "Unknown view type %d ", viewHolder.getItemViewType());
                 return;
         }
     }
