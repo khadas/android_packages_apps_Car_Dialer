@@ -18,25 +18,27 @@ package com.android.car.dialer.ui.favorite;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.FavoritePhoneNumberListAdapter;
 import com.android.car.dialer.ui.search.ContactResultsFragment;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.ui.AlertDialogBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/** A fragment that allows the user to search for and select favorite phone numbers */
+/**
+ * A fragment that allows the user to search for and select favorite phone numbers
+ */
 public class AddFavoriteFragment extends ContactResultsFragment {
 
-    /** Creates a new instance of AddFavoriteFragment */
+    /**
+     * Creates a new instance of AddFavoriteFragment
+     */
     public static AddFavoriteFragment newInstance() {
         return new AddFavoriteFragment();
     }
@@ -64,14 +66,9 @@ public class AddFavoriteFragment extends ContactResultsFragment {
                 }
         );
 
-        View dialogView = LayoutInflater.from(getContext()).inflate(
-                R.layout.add_to_favorite_dialog, null, false);
-        RecyclerView recyclerView = dialogView.findViewById(R.id.list);
-        recyclerView.setAdapter(mDialogAdapter);
-
-        mCurrentDialog = new AlertDialog.Builder(getContext())
+        mCurrentDialog = new AlertDialogBuilder(getContext())
                 .setTitle(R.string.select_number_dialog_title)
-                .setView(dialogView)
+                .setAdapter(mDialogAdapter, null)
                 .setNegativeButton(R.string.cancel_add_favorites_dialog, null)
                 .setPositiveButton(R.string.confirm_add_favorites_dialog,
                         (d, which) -> {
