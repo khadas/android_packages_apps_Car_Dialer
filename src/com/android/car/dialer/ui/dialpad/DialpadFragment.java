@@ -16,7 +16,6 @@
 
 package com.android.car.dialer.ui.dialpad;
 
-import android.app.ActionBar;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -43,11 +42,14 @@ import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
+import com.android.car.ui.toolbar.Toolbar;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMap;
 
-/** Fragment that controls the dialpad. */
+/**
+ * Fragment that controls the dialpad.
+ */
 public class DialpadFragment extends AbstractDialpadFragment {
     private static final String TAG = "CD.DialpadFragment";
 
@@ -96,7 +98,9 @@ public class DialpadFragment extends AbstractDialpadFragment {
         return fragment;
     }
 
-    /** Creates a new instance used for emergency dialing. */
+    /**
+     * Creates a new instance used for emergency dialing.
+     */
     public static DialpadFragment newEmergencyDialpad() {
         return newDialpad(MODE_EMERGENCY);
     }
@@ -122,8 +126,6 @@ public class DialpadFragment extends AbstractDialpadFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dialpad_fragment, container, false);
-        // Offset the dialpad to under the tabs in normal dial mode.
-        rootView.setPadding(0, getTopOffset(), 0, 0);
 
         mTitleView = rootView.findViewById(R.id.title);
         mTitleView.setTextAppearance(
@@ -172,12 +174,12 @@ public class DialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    public void setupActionBar(ActionBar actionBar) {
+    public void setupToolbar(Toolbar toolbar) {
         // Only setup the actionbar if we're in dial mode.
         // In all the other modes, there will be another fragment in the activity
         // at the same time, and we don't want to mess up it's action bar.
         if (mMode == MODE_DIAL) {
-            super.setupActionBar(actionBar);
+            super.setupToolbar(toolbar);
         }
     }
 
@@ -239,6 +241,12 @@ public class DialpadFragment extends AbstractDialpadFragment {
         presentContactInfo(number.toString());
     }
 
+    @Override
+    public void onToolbarHeightChange(int toolbarHeight) {
+        // Offset the dialpad to under the tabs in normal dial mode.
+        getView().setPadding(0, mMode == MODE_DIAL ? toolbarHeight : 0, 0, 0);
+    }
+
     private void presentContactInfo(@NonNull String number) {
         Contact contact = InMemoryPhoneBook.get().lookupContactEntry(number);
         ViewUtils.setText(mDisplayName, contact == null ? "" : contact.getDisplayName());
@@ -265,12 +273,5 @@ public class DialpadFragment extends AbstractDialpadFragment {
     private void resetContactInfo() {
         ViewUtils.setVisible(mLabel, false);
         ViewUtils.setVisible(mAvatar, false);
-    }
-
-    private int getTopOffset() {
-        if (mMode == MODE_DIAL) {
-            return getTopBarHeight();
-        }
-        return 0;
     }
 }
