@@ -146,13 +146,9 @@ public class ContactResultsViewModel extends AndroidViewModel {
             List<Contact> contacts = new ArrayList<>();
             while (cursor.moveToNext()) {
                 int lookupKeyColIdx = cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
-                int accountNameColIdx = cursor.getColumnIndex(
-                        ContactsContract.RawContacts.ACCOUNT_NAME);
-                Contact contact = InMemoryPhoneBook.get().lookupContactByKey(
-                        cursor.getString(lookupKeyColIdx), cursor.getString(accountNameColIdx));
-                if (contact != null) {
-                    contacts.add(contact);
-                }
+                List<Contact> lookupResults = InMemoryPhoneBook.get().lookupContactByKey(
+                        cursor.getString(lookupKeyColIdx));
+                contacts.addAll(lookupResults);
             }
             Collections.sort(contacts,
                     ContactSortingInfo.getSortingInfo(mContext, mSharedPreferencesLiveData).first);
