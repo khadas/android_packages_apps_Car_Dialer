@@ -21,7 +21,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,6 +37,7 @@ import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.dialer.ui.common.entity.HeaderViewHolder;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.dialer.widget.CallTypeIconsView;
+import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneCallLog;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
@@ -72,9 +72,9 @@ public class CallHistoryFragmentTest {
     @Mock
     private UiCallManager mMockUiCallManager;
     @Mock
-    private Uri mMockUri;
-    @Mock
     private CallHistoryViewModel mMockCallHistoryViewModel;
+    @Mock
+    private Contact mMockContact;
 
     @Before
     public void setup() {
@@ -87,8 +87,8 @@ public class CallHistoryFragmentTest {
                 CallHistoryLiveData.CallType.INCOMING_TYPE);
         PhoneCallLog.Record record2 = new PhoneCallLog.Record(TIME_STAMP_2,
                 CallHistoryLiveData.CallType.OUTGOING_TYPE);
-        UiCallLog uiCallLog = new UiCallLog(UI_CALLOG_TITLE, UI_CALLOG_TEXT, PHONE_NUMBER, null,
-                mMockUri, Arrays.asList(record1, record2));
+        UiCallLog uiCallLog = new UiCallLog(UI_CALLOG_TITLE, UI_CALLOG_TEXT, PHONE_NUMBER,
+                mMockContact, Arrays.asList(record1, record2));
 
         MutableLiveData<FutureData<List<Object>>> callLog = new MutableLiveData<>();
         callLog.setValue(new FutureData<>(false, Arrays.asList(HEADER, uiCallLog)));
