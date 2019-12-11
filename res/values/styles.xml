@@ -126,4 +126,12 @@
         <item name="android:fadingEdgeLength">@*android:dimen/car_textview_fading_edge_length</item>
     </style>
 
+    <style name="LoadingInfoMessageStyle" parent="FullScreenErrorMessageStyle">
+        <item name="android:textAppearance">@style/TextAppearance.Display3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="LoadingInfoSecondaryMessageStyle" parent="FullScreenErrorMessageStyle">
+        <item name="android:textAppearance">@style/TextAppearance.Body2</item>
+    </style>
+    <style name="LoadingInfoActionButtonStyle" parent="FullScreenErrorButtonStyle"/>
 </resources>
