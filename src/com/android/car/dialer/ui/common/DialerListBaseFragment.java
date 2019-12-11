@@ -91,20 +91,22 @@ public class DialerListBaseFragment extends DialerBaseFragment {
     }
 
     /**
-     * Shows the empty view with icon and message.
+     * Shows the empty view with icon, message and secondary message.
      */
-    protected void showEmpty(@DrawableRes int iconResId, @StringRes int messageResId) {
-        mLoadingFrameLayout.showEmpty(iconResId, messageResId);
+    protected void showEmpty(@DrawableRes int iconResId, @StringRes int messageResId,
+            @StringRes int secondaryMessageResId) {
+        mLoadingFrameLayout.showEmpty(iconResId, messageResId, secondaryMessageResId);
     }
 
     /**
-     * Shows the empty view with icon, message and action button.
+     * Shows the empty view with icon, message, secondary message and action button.
      */
     protected void showEmpty(@DrawableRes int iconResId, @StringRes int messageResId,
+            @StringRes int secondaryMessageResId,
             @StringRes int actionButtonTextResId, View.OnClickListener actionButtonOnClickListener,
             boolean showActionButton) {
-        mLoadingFrameLayout.showEmpty(iconResId, messageResId, actionButtonTextResId,
-                actionButtonOnClickListener, showActionButton);
+        mLoadingFrameLayout.showEmpty(iconResId, messageResId, secondaryMessageResId,
+                actionButtonTextResId, actionButtonOnClickListener, showActionButton);
     }
 
     @Override
