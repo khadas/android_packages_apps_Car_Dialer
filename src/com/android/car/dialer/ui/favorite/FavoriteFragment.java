@@ -62,7 +62,8 @@ public class FavoriteFragment extends DialerListBaseFragment {
                 showLoading();
             } else if (contacts.getData() == null) {
                 showEmpty(Constants.INVALID_RES_ID, R.string.favorites_empty,
-                        R.string.add_favorite_button, v -> onAddFavoriteClicked(), true);
+                        R.string.no_favorites_added, R.string.add_favorite_button,
+                        v -> onAddFavoriteClicked(), true);
             } else {
                 adapter.setFavoriteContacts(contacts.getData());
                 showContent();

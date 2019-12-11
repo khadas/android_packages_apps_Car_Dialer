@@ -57,7 +57,8 @@ public class ContactListFragment extends DialerListBaseFragment implements
             if (contacts.isLoading()) {
                 showLoading();
             } else if (contacts.getData() == null) {
-                showEmpty(Constants.INVALID_RES_ID, R.string.contact_list_empty);
+                showEmpty(Constants.INVALID_RES_ID, R.string.contact_list_empty,
+                        R.string.available_after_sync);
             } else {
                 mContactListAdapter.setContactList(contacts.getData());
                 showContent();
