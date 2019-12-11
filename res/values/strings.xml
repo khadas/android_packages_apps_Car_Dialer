@@ -65,7 +65,7 @@
     <!-- Title for the favorites [CHAR LIMIT=30] -->
     <string name="favorites_title">Favorites</string>
     <!-- Title for the call history [CHAR LIMIT=30] -->
-    <string name="call_history_title">Call History</string>
+    <string name="call_history_title">Recents</string>
     <!-- Title for the contacts [CHAR LIMIT=30] -->
     <string name="contacts_title">Contacts</string>
     <!-- Title for the dialpad [CHAR LIMIT=30] -->
@@ -79,16 +79,21 @@
     <!-- Header in call log to group calls from before yesterday. [CHAR LIMIT=30] -->
     <string name="call_log_header_older">Older</string>
 
-    <!-- Message shown when on the call history page without any call logs available [CHAR_LIMIT=80] -->
-    <string name="call_logs_empty">Your incoming and outgoing calls show up here</string>
+    <!-- Message shown when on the call history page without any call logs available [CHAR_LIMIT=50] -->
+    <string name="call_logs_empty">No recents</string>
 
-    <!-- Message shown when on the contact list page without any contacts available [CHAR_LIMIT=80] -->
-    <string name="contact_list_empty">You don\'t have any contacts yet</string>
+    <!-- Message shown when on the contact list page without any contacts available [CHAR_LIMIT=50] -->
+    <string name="contact_list_empty">No contacts</string>
 
+    <!-- Secondary message shown when the contact list page or call history page do not have any contents but will be available after syncing from phone [CHAR_LIMIT=200] -->
+    <string name="available_after_sync">Available after syncing. Make sure you have allowed to share contacts on your phone.</string>
+
+    <!-- Error message shown when on the favorites page without any favorites added [CHAR_LIMIT=50] -->
+    <string name="favorites_empty">No favorites</string>
+    <!-- Secondary error message shown when on the favorites page without any favorites added [CHAR_LIMIT=80] -->
+    <string name="no_favorites_added">You haven\'t added any favorites yet</string>
     <!-- Button to add start choosing a contact to add as a new favorite [CHAR_LIMIT=50] -->
     <string name="add_favorite_button">Add a favorite</string>
-    <!-- Error message shown when on the favorites page without any favorites added [CHAR_LIMIT=80] -->
-    <string name="favorites_empty">You haven\'t added any favorites yet</string>
     <!-- Button to cancel the dialog where you pick a phone number to add as a favorite -->
     <string name="cancel_add_favorites_dialog" translatable="false">@android:string/cancel</string>
     <!-- Button to confirm the dialog where you pick a phone number to add as a favorite -->
