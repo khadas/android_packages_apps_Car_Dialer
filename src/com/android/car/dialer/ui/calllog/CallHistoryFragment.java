@@ -58,7 +58,8 @@ public class CallHistoryFragment extends DialerListBaseFragment implements
             if (uiCallLogs.isLoading()) {
                 showLoading();
             } else if (uiCallLogs.getData().isEmpty()) {
-                showEmpty(Constants.INVALID_RES_ID, R.string.call_logs_empty);
+                showEmpty(Constants.INVALID_RES_ID, R.string.call_logs_empty,
+                        R.string.available_after_sync);
             } else {
                 mCallLogAdapter.setUiCallLogs(uiCallLogs.getData());
                 showContent();
