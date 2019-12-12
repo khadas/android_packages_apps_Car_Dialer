@@ -41,6 +41,7 @@ import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.dialer.ui.favorite.FavoriteViewModel;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.PostalAddress;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
 import org.junit.Before;
@@ -53,6 +54,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,6 +82,8 @@ public class ContactListFragmentTest {
     private Contact mMockContact3;
     @Mock
     private PhoneNumber mMockPhoneNumber;
+    @Mock
+    private PostalAddress mMockPostalAddress;
 
     @Before
     public void setUp() {
@@ -135,7 +139,22 @@ public class ContactListFragmentTest {
     }
 
     @Test
-    public void testClickShowContactDetailView_showContactDetail() {
+    public void testClickCallActionButton_ContactHasNoNumbers_callActionButtonNotEnabled() {
+        when(mMockContact1.getNumbers()).thenReturn(new ArrayList<>());
+        setUpFragment();
+
+        View callActionView = mViewHolder.itemView.findViewById(R.id.call_action_id);
+
+        assertThat(callActionView.isEnabled()).isFalse();
+        assertThat(callActionView.getVisibility() == View.VISIBLE).isEqualTo(
+                mViewHolder.itemView.getResources().getBoolean(
+                        R.bool.config_show_contact_detail_button_for_empty_contact));
+    }
+
+    @Test
+    public void testClickShowContactDetailView_withPhoneNumberAndAddress_showContactDetail() {
+        when(mMockContact1.getNumbers()).thenReturn(Arrays.asList(mMockPhoneNumber));
+        when(mMockContact1.getPostalAddresses()).thenReturn(Arrays.asList(mMockPostalAddress));
         setUpFragment();
 
         View showContactDetailActionView = mViewHolder.itemView.findViewById(
@@ -146,6 +165,46 @@ public class ContactListFragmentTest {
 
         // verify contact detail is shown.
         verifyShowContactDetail();
+    }
+
+    @Test
+    public void testClickShowContactDetailView_withAddressButNoPhoneNumber_dependOnConfig() {
+        when(mMockContact1.getPostalAddresses()).thenReturn(Arrays.asList(mMockPostalAddress));
+        setUpFragment();
+
+        View showContactDetailActionView = mViewHolder.itemView.findViewById(
+                R.id.show_contact_detail_id);
+
+        boolean showPostalAddress = mViewHolder.itemView.getResources().getBoolean(
+                R.bool.config_show_postal_address);
+        boolean forceShowButton = mViewHolder.itemView.getResources().getBoolean(
+                R.bool.config_show_contact_detail_button_for_empty_contact);
+
+        assertThat(showContactDetailActionView.isEnabled()).isEqualTo(showPostalAddress);
+        assertThat(showContactDetailActionView.getVisibility() == View.VISIBLE)
+                .isEqualTo(showPostalAddress || forceShowButton);
+
+        if (showPostalAddress) {
+            assertThat(showContactDetailActionView.hasOnClickListeners()).isTrue();
+
+            showContactDetailActionView.performClick();
+
+            // verify contact detail is shown.
+            verifyShowContactDetail();
+        }
+    }
+
+    @Test
+    public void testClickShowContactDetailView_NoPhoneNumberAndNoAddress_NotEnabled() {
+        setUpFragment();
+
+        View showContactDetailActionView = mViewHolder.itemView.findViewById(
+                R.id.show_contact_detail_id);
+
+        assertThat(showContactDetailActionView.isEnabled()).isFalse();
+        assertThat(showContactDetailActionView.getVisibility() == View.VISIBLE).isEqualTo(
+                mViewHolder.itemView.getResources().getBoolean(
+                        R.bool.config_show_contact_detail_button_for_empty_contact));
     }
 
     private void setUpFragment() {
