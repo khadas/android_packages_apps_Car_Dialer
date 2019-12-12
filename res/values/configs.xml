@@ -40,4 +40,7 @@
 
     <!-- No toolbar title. Supported value see @attr/toolbarTitleMode -->
     <integer name="config_toolbar_title_mode">1</integer>
+
+    <!-- Config gate the full screen incall ui -->
+    <bool name="config_show_fullscreen_incall_ui">true</bool>
 </resources>
