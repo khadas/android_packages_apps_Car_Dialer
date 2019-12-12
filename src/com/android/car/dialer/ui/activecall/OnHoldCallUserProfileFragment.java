@@ -101,12 +101,7 @@ public class OnHoldCallUserProfileFragment extends Fragment {
     }
 
     private void swapCalls() {
-        // Unholds onhold call
-        if (mSecondaryCallLiveData.getValue() != null) {
-            mSecondaryCallLiveData.getValue().unhold();
-        }
-
-        // hold primary call
+        // Hold primary call and the secondary call will automatically come to the foreground.
         if (mPrimaryCallLiveData.getValue().getState() != Call.STATE_HOLDING) {
             mPrimaryCallLiveData.getValue().hold();
         }
