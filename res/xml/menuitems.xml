@@ -16,12 +16,11 @@
   -->
 <MenuItems xmlns:app="http://schemas.android.com/apk/res-auto">
     <MenuItem
+        app:search="true"
         app:id="@+id/menu_item_search"
-        app:icon="@drawable/ic_search"
         app:onClick="onMenuItemClicked"/>
     <MenuItem
+        app:settings="true"
         app:id="@+id/menu_item_setting"
-        app:icon="@drawable/ic_setting"
-        app:uxRestrictions="UX_RESTRICTIONS_FULLY_RESTRICTED"
         app:onClick="onMenuItemClicked"/>
 </MenuItems>
