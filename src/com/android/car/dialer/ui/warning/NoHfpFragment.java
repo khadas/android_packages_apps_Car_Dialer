@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.warning;
 
+import android.car.drivingstate.CarUxRestrictions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,6 +29,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.car.apps.common.UxrButton;
+import com.android.car.apps.common.util.CarPackageManagerUtils;
 import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -100,12 +103,17 @@ public class NoHfpFragment extends Fragment {
         emergencyButton.setOnClickListener(v -> dialerAppStateLiveData.setValue(
                 TelecomActivityViewModel.DialerAppState.EMERGENCY_DIALPAD));
 
-        view.findViewById(R.id.connect_bluetooth_button).setOnClickListener(v -> {
-            Intent launchIntent = new Intent();
-            launchIntent.setAction(Bluetooth_Setting_ACTION);
-            launchIntent.addCategory(Bluetooth_Setting_CATEGORY);
-            startActivity(launchIntent);
-        });
+        Intent launchIntent = new Intent();
+        launchIntent.setAction(Bluetooth_Setting_ACTION);
+        launchIntent.addCategory(Bluetooth_Setting_CATEGORY);
+
+        UxrButton bluetoothButton = view.findViewById(R.id.connect_bluetooth_button);
+        boolean isDistractionOptimized = CarPackageManagerUtils.getInstance(getActivity())
+                .isDistractionOptimized(getActivity().getPackageManager(), launchIntent);
+        bluetoothButton.setUxRestrictions(isDistractionOptimized
+                ? CarUxRestrictions.UX_RESTRICTIONS_BASELINE
+                : CarUxRestrictions.UX_RESTRICTIONS_NO_SETUP);
+        bluetoothButton.setOnClickListener(v -> startActivity(launchIntent));
 
         return view;
     }
