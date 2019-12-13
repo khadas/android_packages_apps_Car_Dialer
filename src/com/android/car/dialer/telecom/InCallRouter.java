@@ -18,11 +18,11 @@ package com.android.car.dialer.telecom;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.telecom.Call;
 
 import androidx.annotation.MainThread;
 
+import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.InCallNotificationController;
 import com.android.car.dialer.ui.activecall.InCallActivity;
@@ -41,15 +41,17 @@ class InCallRouter {
     private static final String TAG = "CD.InCallRouter";
 
     private final Context mContext;
-    private final Handler mMainHandler;
     private final InCallNotificationController mInCallNotificationController;
     private final ArrayList<InCallServiceImpl.ActiveCallListChangedCallback>
             mActiveCallListChangedCallbacks = new ArrayList<>();
     private final ProjectionCallHandler mProjectionCallHandler;
 
+    private final boolean mShowFullscreenIncallUi;
+
     InCallRouter(Context context) {
         mContext = context;
-        mMainHandler = Handler.getMain();
+        mShowFullscreenIncallUi = context.getResources().getBoolean(
+                R.bool.config_show_fullscreen_incall_ui);
         mInCallNotificationController = InCallNotificationController.get();
         mProjectionCallHandler = new ProjectionCallHandler(context);
     }
@@ -108,7 +110,9 @@ class InCallRouter {
         mActiveCallListChangedCallbacks.remove(callback);
     }
 
-    /** Dispatches the call to {@link InCallServiceImpl.ActiveCallListChangedCallback}. */
+    /**
+     * Dispatches the call to {@link InCallServiceImpl.ActiveCallListChangedCallback}.
+     */
     private boolean routeToActiveCallListChangedCallback(Call call) {
         boolean isHandled = false;
         for (InCallServiceImpl.ActiveCallListChangedCallback callback :
@@ -121,7 +125,9 @@ class InCallRouter {
         return isHandled;
     }
 
-    /** Presents the ringing call in HUN. */
+    /**
+     * Presents the ringing call in HUN.
+     */
     private void routeToNotification(Call call) {
         mInCallNotificationController.showInCallNotification(call);
         call.registerCallback(new Call.Callback() {
@@ -135,8 +141,14 @@ class InCallRouter {
         });
     }
 
-    /** Launches {@link InCallActivity} and presents the on going call in the in call page. */
+    /**
+     * Launches {@link InCallActivity} and presents the on going call in the in call page.
+     */
     private void routeToInCallPage(Call call) {
+        // It has been configured not to show the fullscreen incall ui.
+        if (!mShowFullscreenIncallUi) {
+            return;
+        }
         // Don't launch the in call page if state is disconnected. Otherwise, the InCallActivity
         // finishes right after onCreate() and flashes.
         if (call.getState() != Call.STATE_DISCONNECTED) {
