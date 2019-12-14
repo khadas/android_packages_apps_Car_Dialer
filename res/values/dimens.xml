@@ -150,6 +150,6 @@
     <!-- Loading status view dimensions -->
     <dimen name="loading_info_icon_size">56dp</dimen>
     <dimen name="loading_info_icon_margin_bottom">@*android:dimen/car_padding_3</dimen>
-    <dimen name="loading_info_button_margin_top">@*android:dimen/car_padding_5</dimen>
+    <dimen name="loading_info_button_margin_top">@*android:dimen/car_padding_2</dimen>
 
 </resources>
