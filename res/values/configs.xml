@@ -31,6 +31,11 @@
     "false" will make divider and button invisible for non contacts. -->
     <bool name="config_show_calllog_action_button_for_non_contact">false</bool>
 
+    <!-- A config determines whether to show divider and the button on the right side for contacts
+    without any contact details. "true" will show divider and button as disable state and "false"
+    will make divider and button invisible for empty contacts. -->
+    <bool name="config_show_contact_detail_button_for_empty_contact">false</bool>
+
     <!-- A config determines whether to show postal address in contact details page. -->
     <bool name="config_show_postal_address">true</bool>
     <!-- A config determines whether to show the action bar view in the contact details page.-->
