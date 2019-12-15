@@ -79,24 +79,35 @@
         app:layout_constraintStart_toStartOf="@id/contact_list_guideline_begin"
         app:layout_constraintEnd_toEndOf="@id/contact_list_guideline_end"/>
 
-    <ImageView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/show_contact_detail_id"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_arrow_right"
-        android:scaleType="center"
-        android:tint="@color/secondary_icon_color"
-        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="@id/contact_list_guideline_end"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/contact_list_guideline_end"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <View
-        android:layout_width="@dimen/vertical_divider_width"
-        android:layout_height="match_parent"
-        android:background="@color/divider_color"
-        android:layout_marginTop="@dimen/vertical_divider_inset"
-        android:layout_marginBottom="@dimen/vertical_divider_inset"
-        app:layout_constraintStart_toStartOf="@id/contact_list_guideline_end"/>
+        <View
+            android:layout_width="@dimen/vertical_divider_width"
+            android:layout_height="match_parent"
+            android:background="@color/divider_color"
+            android:layout_marginTop="@dimen/vertical_divider_inset"
+            android:layout_marginBottom="@dimen/vertical_divider_inset"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/contact_list_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_arrow_right"
+            android:background="?android:attr/selectableItemBackground"
+            android:duplicateParentState="true"
+            android:scaleType="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/contact_list_guideline_end"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
