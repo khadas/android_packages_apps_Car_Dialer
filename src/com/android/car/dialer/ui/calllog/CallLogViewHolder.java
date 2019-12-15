@@ -96,14 +96,18 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
             mTextView.setTextAppearance(R.style.TextAppearance_CallLogTimestampDefault);
         }
 
-        mPlaceCallView.setOnClickListener(
+        ViewUtils.setOnClickListener(mPlaceCallView,
                 view -> UiCallManager.get().placeCall(uiCallLog.getNumber()));
 
         setUpActionButton(uiCallLog);
     }
 
-    public void onRecycle() {
+    /**
+     * Recycles views.
+     */
+    public void recycle() {
         mCallTypeIconsView.clear();
+        ViewUtils.setOnClickListener(mPlaceCallView, null);
     }
 
     private void setUpActionButton(UiCallLog uiCallLog) {
@@ -122,6 +126,8 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
         if (contact != null) {
             ViewUtils.setOnClickListener(mActionButton,
                     view -> mOnShowContactDetailListener.onShowContactDetail(contact));
+        } else {
+            ViewUtils.setOnClickListener(mActionButton, null);
         }
     }
 }

@@ -64,7 +64,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
     /**
      * Binds the view holder with relevant data.
      */
-    public void onBind(Contact contact, boolean showHeader, String header) {
+    public void bind(Contact contact, boolean showHeader, String header) {
         TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact);
         ViewUtils.setVisible(mHeaderView, showHeader);
         if (showHeader) {
@@ -72,13 +72,11 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
         }
         mTitleView.setText(contact.getDisplayName());
         setLabelText(contact);
-        mShowContactDetailView.setOnClickListener(
-                view -> mOnShowContactDetailListener.onShowContactDetail(contact));
-        mCallActionView.setOnClickListener(view -> {
-            DialerUtils.promptForPrimaryNumber(itemView.getContext(), contact,
-                    (phoneNumber, always) -> UiCallManager.get().placeCall(
-                            phoneNumber.getRawNumber()));
-        });
+
+        boolean forceShowButton = itemView.getResources().getBoolean(
+                R.bool.config_show_contact_detail_button_for_empty_contact);
+        setCallActionView(contact, forceShowButton);
+        setShowContactDetailView(contact, forceShowButton);
     }
 
     private void setLabelText(Contact contact) {
@@ -100,5 +98,59 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
         }
 
         mTextView.setText(readableLabel);
+    }
+
+    private void setCallActionView(Contact contact, boolean forceShowButton) {
+        if (mCallActionView == null) {
+            return;
+        }
+
+        boolean hasPhoneNumbers = contact != null && !contact.getNumbers().isEmpty();
+
+        ViewUtils.setEnabled(mCallActionView, hasPhoneNumbers);
+        ViewUtils.setVisible(mCallActionView, hasPhoneNumbers || forceShowButton);
+
+        if (hasPhoneNumbers) {
+            ViewUtils.setOnClickListener(mCallActionView, view -> {
+                DialerUtils.promptForPrimaryNumber(itemView.getContext(), contact,
+                        (phoneNumber, always) -> UiCallManager.get().placeCall(
+                                phoneNumber.getRawNumber()));
+            });
+        }  else {
+            ViewUtils.setOnClickListener(mCallActionView, null);
+        }
+    }
+
+    private void setShowContactDetailView(Contact contact, boolean forceShowButton) {
+        if (mShowContactDetailView == null) {
+            return;
+        }
+
+        boolean hasContactDetail = contact != null
+                && (!contact.getNumbers().isEmpty() || hasPostalAddress(contact));
+
+        ViewUtils.setEnabled(mShowContactDetailView, hasContactDetail);
+        ViewUtils.setVisible(mShowContactDetailView, hasContactDetail || forceShowButton);
+
+        if (hasContactDetail) {
+            ViewUtils.setOnClickListener(mShowContactDetailView,
+                    view -> mOnShowContactDetailListener.onShowContactDetail(contact));
+        } else {
+            ViewUtils.setOnClickListener(mShowContactDetailView, null);
+        }
+    }
+
+    private boolean hasPostalAddress(@NonNull Contact contact) {
+        boolean showPostalAddress = itemView.getResources().getBoolean(
+                R.bool.config_show_postal_address);
+        return showPostalAddress && (!contact.getPostalAddresses().isEmpty());
+    }
+
+    /**
+     * Recycles views.
+     */
+    public void recycle() {
+        ViewUtils.setOnClickListener(mCallActionView, null);
+        ViewUtils.setOnClickListener(mShowContactDetailView, null);
     }
 }
