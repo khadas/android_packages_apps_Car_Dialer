@@ -111,7 +111,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         if (holder instanceof CallLogViewHolder) {
-            ((CallLogViewHolder) holder).onRecycle();
+            ((CallLogViewHolder) holder).recycle();
         }
     }
 
