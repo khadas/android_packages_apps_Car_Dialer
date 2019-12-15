@@ -30,21 +30,26 @@
     <string name="decline_call" msgid="2505987200485272226">"Rədd edin"</string>
     <string name="answer_call" msgid="3272474440561548115">"Cavab"</string>
     <string name="call_back" msgid="5745638356098600872">"Geriyə zəng"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"Avtomobilin bluetooth\'u"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Dinamik"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"Dəstək"</string>
+    <!-- no translation found for audio_route_vehicle (6250361588960528769) -->
+    <skip />
+    <!-- no translation found for audio_route_phone_speaker (4608904003558187244) -->
+    <skip />
+    <!-- no translation found for audio_route_handset (9133081623895172144) -->
+    <skip />
     <string name="dial_a_number" msgid="7432322177412387160">"Nömrə yığın"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Sevimlilər"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"Zəng Tarixçəsi"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"Sonuncular"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontaktlar"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Yığım paneli"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"Bu gün"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Dünən"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Əvvəlki"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"Gələn və gedən zəngləriniz burada görünür"</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"Hələ heç bir kontakt yoxdur"</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"Sonuncular yoxdur"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"Kontakt yoxdur"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"Sinxronlaşdırmadan sonra əlçatandır. Telefonda kontaktların paylaşılmasına icazə verdiyinizə əmin olun."</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"Sevimlilər yoxdur"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"Hələ heç bir sevimli element əlavə etməmisiniz"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Sevimli kontakt əlavə edin"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"Hələ heç bir sevimli element əlavə etməmisiniz"</string>
     <string name="search_title" msgid="5412680850141871664">"Kontaktları axtarın"</string>
     <string name="search_hint" msgid="3099066132607042439">"Kontaktları axtarın"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Çoxsaylı"</string>
