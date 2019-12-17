@@ -22,9 +22,6 @@
     <!-- Dialpad page -->
     <color name="call_button_outline">@*android:color/car_green_500</color>
 
-    <!--Contact details-->
-    <color name="contact_details_icon_tint">@color/primary_icon_color</color>
-
     <color name="car_key2">@color/car_key2_dark</color>
     <color name="car_key2_light">@*android:color/car_grey_400</color>
     <color name="car_key2_dark">@*android:color/car_grey_700</color>
