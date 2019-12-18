@@ -30,12 +30,9 @@
     <string name="decline_call" msgid="2505987200485272226">"უარყოფა"</string>
     <string name="answer_call" msgid="3272474440561548115">"პასუხი"</string>
     <string name="call_back" msgid="5745638356098600872">"გადარეკვა"</string>
-    <!-- no translation found for audio_route_vehicle (6250361588960528769) -->
-    <skip />
-    <!-- no translation found for audio_route_phone_speaker (4608904003558187244) -->
-    <skip />
-    <!-- no translation found for audio_route_handset (9133081623895172144) -->
-    <skip />
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"მანქანის დინამიკები"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"ტელეფონის დინამიკი"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"ტელეფონი"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"ნომრის აკრეფა"</string>
     <string name="favorites_title" msgid="4767723901530488145">"რჩეულები"</string>
     <string name="call_history_title" msgid="7997887846276371553">"ბოლოდროინდელი"</string>
