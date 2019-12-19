@@ -126,15 +126,7 @@ public class ContactResultsViewModel extends AndroidViewModel {
         }
 
         private void onSortOrderChanged(SharedPreferences unusedSharedPreferences) {
-            if (getValue() == null) {
-                return;
-            }
-
-            List<Contact> contacts = new ArrayList<>();
-            contacts.addAll(getValue());
-            Collections.sort(contacts,
-                    ContactSortingInfo.getSortingInfo(mContext, mSharedPreferencesLiveData).first);
-            setValue(contacts);
+            setValue(getValue());
         }
 
         private void onQueryFinished(@Nullable Cursor cursor) {
@@ -150,10 +142,18 @@ public class ContactResultsViewModel extends AndroidViewModel {
                         cursor.getString(lookupKeyColIdx));
                 contacts.addAll(lookupResults);
             }
-            Collections.sort(contacts,
-                    ContactSortingInfo.getSortingInfo(mContext, mSharedPreferencesLiveData).first);
             setValue(contacts);
             cursor.close();
+        }
+
+        @Override
+        public void setValue(List<Contact> contacts) {
+            if (contacts != null && !contacts.isEmpty()) {
+                Collections.sort(contacts,
+                        ContactSortingInfo.getSortingInfo(mContext,
+                                mSharedPreferencesLiveData).first);
+            }
+            super.setValue(contacts);
         }
     }
 
