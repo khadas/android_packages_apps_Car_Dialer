@@ -30,21 +30,23 @@
     <string name="decline_call" msgid="2505987200485272226">"ਅਸਵੀਕਾਰ ਕਰੋ"</string>
     <string name="answer_call" msgid="3272474440561548115">"ਜਵਾਬ ਦਿਓ"</string>
     <string name="call_back" msgid="5745638356098600872">"ਵਾਪਸ ਕਾਲ ਕਰੋ"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"ਵਾਹਨ ਬਲੂਟੁੱਥ"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"ਸਪੀਕਰਫ਼ੋਨ"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"ਹੈਂਡਸੈੱਟ"</string>
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"ਕਾਰ ਦੇ ਸਪੀਕਰ"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"ਫ਼ੋਨ ਦਾ ਸਪੀਕਰ"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"ਫ਼ੋਨ"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"ਨੰਬਰ ਡਾਇਲ ਕਰੋ"</string>
     <string name="favorites_title" msgid="4767723901530488145">"ਮਨਪਸੰਦ"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"ਕਾਲ ਇਤਿਹਾਸ"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"ਹਾਲੀਆ"</string>
     <string name="contacts_title" msgid="9201954388634537346">"ਸੰਪਰਕ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ਡਾਇਲਪੈਡ"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"ਅੱਜ"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"ਕੱਲ੍ਹ"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"ਵਧੇਰੇ ਪੁਰਾਣੀਆਂ"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"ਤੁਹਾਡੀਆਂ ਇਨਕਮਿੰਗ ਅਤੇ ਆਊਟਗੋਇੰਗ ਕਾਲਾਂ ਇੱਥੇ ਦਿਸਦੀਆਂ ਹਨ"</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"ਤੁਹਾਡੇ ਕੋਲ ਹਾਲੇ ਕੋਈ ਵੀ ਸੰਪਰਕ ਨਹੀਂ ਹੈ"</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"ਕੋਈ ਹਾਲੀਆ ਕਾਲ ਲੌਗ ਨਹੀਂ"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"ਕੋਈ ਸੰਪਰਕ ਨਹੀਂ ਹੈ"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"ਸਮਕਾਲੀਕਰਨ ਕੀਤੇ ਜਾਣ ਤੋਂ ਬਾਅਦ ਸੰਪਰਕ ਉਪਲਬਧ ਹੋਣਗੇ। ਪੱਕਾ ਕਰੋ ਕਿ ਤੁਸੀਂ ਆਪਣੇ ਫ਼ੋਨ \'ਤੇ ਸੰਪਰਕਾਂ ਸਾਂਝਾ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦਿੱਤੀ ਹੋਈ ਹੈ।"</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"ਕੋਈ ਮਨਪਸੰਦ ਨਹੀਂ"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"ਤੁਸੀਂ ਹਾਲੇ ਤੱਕ ਕੋਈ ਵੀ ਸੰਪਰਕ ਮਨਪਸੰਦ ਵਜੋਂ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤਾ ਹੈ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ਕੋਈ ਮਨਪਸੰਦ ਸੰਪਰਕ ਸ਼ਾਮਲ ਕਰੋ"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"ਤੁਸੀਂ ਹਾਲੇ ਤੱਕ ਕੋਈ ਵੀ ਸੰਪਰਕ ਮਨਪਸੰਦ ਵਜੋਂ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤਾ ਹੈ"</string>
     <string name="search_title" msgid="5412680850141871664">"ਸੰਪਰਕ ਖੋਜੋ"</string>
     <string name="search_hint" msgid="3099066132607042439">"ਸੰਪਰਕ ਖੋਜੋ"</string>
     <string name="type_multiple" msgid="3402949522797441236">"ਇੱਕ ਤੋਂ ਵਧੇਰੇ"</string>
