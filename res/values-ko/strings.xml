@@ -30,21 +30,23 @@
     <string name="decline_call" msgid="2505987200485272226">"거부"</string>
     <string name="answer_call" msgid="3272474440561548115">"통화"</string>
     <string name="call_back" msgid="5745638356098600872">"전화 걸기"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"차량 블루투스"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"스피커폰"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"핸드셋"</string>
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"차량용 스피커"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"휴대전화 스피커"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"휴대전화"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"전화번호 입력"</string>
     <string name="favorites_title" msgid="4767723901530488145">"즐겨찾기"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"통화 기록"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"최근 통화"</string>
     <string name="contacts_title" msgid="9201954388634537346">"연락처"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"다이얼패드"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"오늘"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"어제"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"이전"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"수신 및 발신 전화가 여기에 표시됩니다."</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"아직 연락처가 없습니다."</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"최근 통화 없음"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"연락처 없음"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"동기화 후 사용할 수 있습니다. 휴대전화에서 연락처를 공유하도록 허용했는지 확인하세요."</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"즐겨찾기 없음"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"아직 즐겨찾기를 추가하지 않았습니다."</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"즐겨찾기 추가"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"아직 즐겨찾기를 추가하지 않았습니다."</string>
     <string name="search_title" msgid="5412680850141871664">"연락처 검색"</string>
     <string name="search_hint" msgid="3099066132607042439">"연락처 검색"</string>
     <string name="type_multiple" msgid="3402949522797441236">"여러 전화번호"</string>

@@ -30,21 +30,23 @@
     <string name="decline_call" msgid="2505987200485272226">"Rad etish"</string>
     <string name="answer_call" msgid="3272474440561548115">"Javob berish"</string>
     <string name="call_back" msgid="5745638356098600872">"Telefon"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"Avtomobildagi bluetooth"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Karnaylar"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"Telefon"</string>
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"Avtomobil karnaylari"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Telefon karnayi"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"Telefon"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Raqam terish"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Saralanganlar"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"Tarix"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"Oxirgilar"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontaktlar"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Raqamlar paneli"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"Bugun"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Kecha"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Eskiroq"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"Kiruvchi va chiquvchi chaqiruvlaringiz tarixi shu yerda chiqadi."</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"Kontaktlar mavjud emas"</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"Hech narsa topilmadi"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"Hech qanday kontakt topilmadi"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"Sinxronizatsiyadan keyin chiqadi Buning uchun telefoningizda kontaktlarni ulashishga ruxsat berilgan boʻlishi lozim."</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"Hech narsa topilmadi"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"Hech qaysi kontakt saralanmagan"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Saralanganlarga kiritish"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"Herch qaysi kontakt saralanmagan"</string>
     <string name="search_title" msgid="5412680850141871664">"Kontaktlar ichidan qidiring"</string>
     <string name="search_hint" msgid="3099066132607042439">"Kontaktlar ichidan qidiring"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Bir nechta"</string>
