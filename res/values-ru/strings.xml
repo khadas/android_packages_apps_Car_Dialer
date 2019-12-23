@@ -30,21 +30,23 @@
     <string name="decline_call" msgid="2505987200485272226">"Отклонить"</string>
     <string name="answer_call" msgid="3272474440561548115">"Ответить"</string>
     <string name="call_back" msgid="5745638356098600872">"Перезвонить"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth в автомобиле"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Громкая связь"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"Телефон"</string>
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"Автомобильные колонки"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Встроенный динамик"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"Телефон"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Набрать номер"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Избранное"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"Звонки"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"Недавние"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Контакты"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Кнопки"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"Сегодня"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Вчера"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Раньше"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"Здесь будут показаны входящие и исходящие вызовы."</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"Нет контактов."</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"Нет недавних"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"Нет контактов"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"Будет доступно после синхронизации. Убедитесь, что вы разрешили доступ к списку контактов на телефоне."</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"Здесь пока ничего нет"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"У вас пока нет избранных контактов"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Настроить быстрый набор"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"У вас пока нет избранных контактов."</string>
     <string name="search_title" msgid="5412680850141871664">"Поиск в контактах"</string>
     <string name="search_hint" msgid="3099066132607042439">"Поиск в контактах"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Несколько"</string>

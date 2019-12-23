@@ -30,21 +30,23 @@
     <string name="decline_call" msgid="2505987200485272226">"Refuzo"</string>
     <string name="answer_call" msgid="3272474440561548115">"Përgjigju"</string>
     <string name="call_back" msgid="5745638356098600872">"Telefono mbrapsht"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"Bluetooth-i i automjetit"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Altoparlanti"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"Receptori"</string>
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"Altoparlantët e makinës"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Altoparlanti i telefonit"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"Telefoni"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Formo një numër"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Të preferuarat"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"Historiku i telefonatave"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"Të fundit"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontaktet"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Blloku i formimit të numrit"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"Sot"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Dje"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Më të vjetra"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"Telefonatat e tua hyrëse dhe dalëse shfaqen këtu"</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"Nuk ke ende kontakte"</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"Nuk ka të fundit"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"Nuk ka asnjë kontakt"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"Ofrohet pas sinkronizimit. Sigurohu që ke lejuar ndarjen e kontakteve në telefonin tënd."</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"Nuk ka të preferuara"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"Nuk ke shtuar ende asnjë të preferuar"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Shto një të preferuar"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"Nuk ke shtuar ende asnjë të preferuar"</string>
     <string name="search_title" msgid="5412680850141871664">"Kërko për kontakte"</string>
     <string name="search_hint" msgid="3099066132607042439">"Kërko për kontakte"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Disa"</string>

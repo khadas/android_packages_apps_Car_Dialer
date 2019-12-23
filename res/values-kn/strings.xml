@@ -30,21 +30,23 @@
     <string name="decline_call" msgid="2505987200485272226">"ನಿರಾಕರಿಸಿ"</string>
     <string name="answer_call" msgid="3272474440561548115">"ಉತ್ತರ"</string>
     <string name="call_back" msgid="5745638356098600872">"ಪುನಃ ಕರೆ ಮಾಡಿ"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"ವಾಹನದ ಬ್ಲೂಟೂತ್"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"ಸ್ಪೀಕರ್ ಫೋನ್"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"ಹ್ಯಾಂಡ್‌ಸೆಟ್"</string>
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"ಕಾರ್ ಸ್ಪೀಕರ್‌ಗಳು"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"ಫೋನ್ ಸ್ಪೀಕರ್"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"ಫೋನ್"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"ಸಂಖ್ಯೆಯೊಂದನ್ನು ಡಯಲ್ ಮಾಡಿ"</string>
     <string name="favorites_title" msgid="4767723901530488145">"ಮೆಚ್ಚಿನವುಗಳು"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"ಕರೆ ಇತಿಹಾಸ"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"ಇತ್ತೀಚಿನವು"</string>
     <string name="contacts_title" msgid="9201954388634537346">"ಸಂಪರ್ಕಗಳು"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ಡಯಲ್‌ಪ್ಯಾಡ್‌"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"ಇಂದು"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"ನಿನ್ನೆ"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"ಹಳೆಯದು"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"ನಿಮ್ಮ ಒಳಬರುವ ಮತ್ತು ಹೊರಹೋಗುವ ಕರೆಗಳು ಇಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ"</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"ನೀವು ಇನ್ನೂ ಯಾವುದೇ ಸಂಪರ್ಕಗಳನ್ನು ಹೊಂದಿಲ್ಲ"</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"ಯಾವುದೇ ಇತ್ತೀಚಿನವುಗಳಿಲ್ಲ"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"ಯಾವುದೇ ಸಂಪರ್ಕಗಳಿಲ್ಲ"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"ಸಿಂಕ್ ಮಾಡಿದ ನಂತರ ಲಭ್ಯವಿದೆ. ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ ಸಂಪರ್ಕಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಲು ನೀವು ಅನುಮತಿಸಿದ್ದೀರಿ ಎಂಬುದನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"ಯಾವುದೇ ಮೆಚ್ಚಿನವುಗಳಿಲ್ಲ"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"ನೀವು ಇದುವರೆಗೆ ಯಾವುದೇ ಮೆಚ್ಚಿನವುಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ಮೆಚ್ಚಿನದನ್ನು ಸೇರಿಸಿ"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"ನೀವು ಇದುವರೆಗೂ ಯಾವುದೇ ಮೆಚ್ಚಿನವುಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ"</string>
     <string name="search_title" msgid="5412680850141871664">"ಸಂಪರ್ಕಗಳನ್ನು ಹುಡುಕಿ"</string>
     <string name="search_hint" msgid="3099066132607042439">"ಸಂಪರ್ಕಗಳನ್ನು ಹುಡುಕಿ"</string>
     <string name="type_multiple" msgid="3402949522797441236">"ಹಲವಾರು"</string>
