@@ -30,21 +30,23 @@
     <string name="decline_call" msgid="2505987200485272226">"Մերժել"</string>
     <string name="answer_call" msgid="3272474440561548115">"Պատասխանել"</string>
     <string name="call_back" msgid="5745638356098600872">"Հետ զանգել"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"Մեքենայի Bluetooth"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"Բարձրախոս"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"Լսափող"</string>
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"Մեքենայի բարձրախոսներ"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Հեռախոսի բարձրախոս"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"Հեռախոս"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Հավաքել համար"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Ընտրանի"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"Զանգերի պատմություն"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"Վերջինները"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Կոնտակտներ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Թվաշար"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"Այսօր"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Երեկ"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Ավելի հին"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"Այստեղ ցուցադրվում են ձեր մուտքային և ելքային զանգերը"</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"Դեռ կոնտակտներ չունեք"</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"Վերջին զանգեր չկան"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"Կոնտակտներ չկան"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"Հասանելի կլինի համաժամացումից հետո։ Համոզվեք, որ ձեր հեռախոսում թույլատրել եք կիսվել կոնտակտներով։"</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"Նախընտրած կոնտակտներ չկան"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"Ցանկում դեռ նախընտրած կոնտակտներ չեք ավելացրել"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Ավելացնել ընտրանիում"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"Ցանկում դեռ նախընտրած կոնտակտներ չեք ավելացրել"</string>
     <string name="search_title" msgid="5412680850141871664">"Որոնեք կոնտակտներ"</string>
     <string name="search_hint" msgid="3099066132607042439">"Որոնեք կոնտակտներ"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Մի քանի"</string>

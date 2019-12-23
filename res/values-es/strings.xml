@@ -30,12 +30,9 @@
     <string name="decline_call" msgid="2505987200485272226">"Rechazar"</string>
     <string name="answer_call" msgid="3272474440561548115">"Responder"</string>
     <string name="call_back" msgid="5745638356098600872">"Llamar"</string>
-    <!-- no translation found for audio_route_vehicle (6250361588960528769) -->
-    <skip />
-    <!-- no translation found for audio_route_phone_speaker (4608904003558187244) -->
-    <skip />
-    <!-- no translation found for audio_route_handset (9133081623895172144) -->
-    <skip />
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"Altavoces del coche"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Altavoz del teléfono"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"Teléfono"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Marcar un número"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Favoritos"</string>
     <string name="call_history_title" msgid="7997887846276371553">"Recientes"</string>

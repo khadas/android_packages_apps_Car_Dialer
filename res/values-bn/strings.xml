@@ -30,21 +30,23 @@
     <string name="decline_call" msgid="2505987200485272226">"প্রত্যাখ্যান করুন"</string>
     <string name="answer_call" msgid="3272474440561548115">"উত্তর দিন"</string>
     <string name="call_back" msgid="5745638356098600872">"কল ব্যাক করুন"</string>
-    <string name="audio_route_vehicle" msgid="6274519162997743620">"গাড়ির ব্লুটুথ"</string>
-    <string name="audio_route_phone_speaker" msgid="407520293892557697">"স্পিকার ফোন"</string>
-    <string name="audio_route_handset" msgid="1100259514278439355">"হ্যান্ডসেট"</string>
+    <string name="audio_route_vehicle" msgid="6250361588960528769">"গাড়ির স্পিকার"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"ফেনের স্পিকার"</string>
+    <string name="audio_route_handset" msgid="9133081623895172144">"ফোন"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"নম্বর ডায়াল করুন"</string>
     <string name="favorites_title" msgid="4767723901530488145">"পছন্দসই"</string>
-    <string name="call_history_title" msgid="1495905524218923242">"কলের ইতিহাস"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"সাম্প্রতিক"</string>
     <string name="contacts_title" msgid="9201954388634537346">"পরিচিতি"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ডায়ালপ্যাড"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"আজ"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"গতকাল"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"আরও পুরনো"</string>
-    <string name="call_logs_empty" msgid="3470906879155560897">"আপনার ইনকামিং এবং আউটগোয়িং কলগুলি এখানে দেখানো হবে"</string>
-    <string name="contact_list_empty" msgid="2397367061689908457">"এখনও পর্যন্ত আপনার পরিচিতির সূচি খালি আছে"</string>
+    <string name="call_logs_empty" msgid="3084720078894119049">"কোনও সাম্প্রতিক কল নেই"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"কোনও পরিচিতি নেই"</string>
+    <string name="available_after_sync" msgid="4774137797015755653">"সিঙ্ক হওয়ার পরে পাওয়া যাবে। আপনার ফোনে পরিচিতি শেয়ার করার অনুমতি দিয়েছেন কিনা, ভাল করে দেখে নিন।"</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"কোনও পছন্দসই নেই"</string>
+    <string name="no_favorites_added" msgid="2359050103464783907">"আপনি এখনও পর্যন্ত কাউকে পছন্দসই হিসেবে যোগ করেননি"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"একটি পছন্দ যোগ করুন"</string>
-    <string name="favorites_empty" msgid="6712416359691979975">"আপনি এখনও পর্যন্ত কাউকে পছন্দসই হিসেবে যোগ করেননি"</string>
     <string name="search_title" msgid="5412680850141871664">"পরিচিতি খুঁজুন"</string>
     <string name="search_hint" msgid="3099066132607042439">"পরিচিতি খুঁজুন"</string>
     <string name="type_multiple" msgid="3402949522797441236">"একাধিক"</string>
