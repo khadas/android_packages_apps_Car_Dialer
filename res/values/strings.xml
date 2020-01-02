@@ -86,7 +86,7 @@
     <string name="contact_list_empty">No contacts</string>
 
     <!-- Secondary message shown when the contact list page or call history page do not have any contents but will be available after syncing from phone [CHAR_LIMIT=200] -->
-    <string name="available_after_sync">Available after syncing. Make sure you have allowed to share contacts on your phone.</string>
+    <string name="available_after_sync">Available after syncing. Make sure you have allowed sharing contacts on your phone.</string>
 
     <!-- Error message shown when on the favorites page without any favorites added [CHAR_LIMIT=50] -->
     <string name="favorites_empty">No favorites</string>
