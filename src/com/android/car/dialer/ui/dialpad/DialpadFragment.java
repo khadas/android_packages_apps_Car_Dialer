@@ -216,7 +216,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
 
     @Override
     void presentDialedNumber(@NonNull StringBuffer number) {
-        if (getActivity() == null) {
+        if (getView() == null) {
             return;
         }
 
