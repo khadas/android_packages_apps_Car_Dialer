@@ -25,6 +25,7 @@ import androidx.core.app.JobIntentService;
 
 import com.android.car.dialer.Constants;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.telephony.common.TelecomUtils;
 
 import java.util.List;
@@ -37,6 +38,7 @@ import java.util.List;
 public class NotificationService extends JobIntentService {
     static final String ACTION_ANSWER_CALL = "CD.ACTION_ANSWER_CALL";
     static final String ACTION_DECLINE_CALL = "CD.ACTION_DECLINE_CALL";
+    static final String ACTION_SHOW_FULLSCREEN_UI = "CD.ACTION_SHOW_FULLSCREEN_UI";
     static final String ACTION_CALL_BACK_MISSED = "CD.ACTION_CALL_BACK_MISSED";
     static final String ACTION_MESSAGE_MISSED = "CD.ACTION_MESSAGE_MISSED";
     static final String ACTION_READ_ALL_MISSED = "CD.ACTION_READ_ALL_MISSED";
@@ -62,9 +64,19 @@ public class NotificationService extends JobIntentService {
         switch (action) {
             case ACTION_ANSWER_CALL:
                 answerCall(callId);
+                InCallNotificationController.get().cancelInCallNotification(callId);
                 break;
             case ACTION_DECLINE_CALL:
                 declineCall(callId);
+                InCallNotificationController.get().cancelInCallNotification(callId);
+                break;
+            case ACTION_SHOW_FULLSCREEN_UI:
+                Intent inCallActivityIntent = new Intent(getApplicationContext(),
+                        InCallActivity.class);
+                inCallActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                inCallActivityIntent.putExtra(Constants.Intents.EXTRA_SHOW_INCOMING_CALL, true);
+                startActivity(inCallActivityIntent);
+                InCallNotificationController.get().cancelInCallNotification(callId);
                 break;
             case ACTION_CALL_BACK_MISSED:
                 UiCallManager.get().placeCall(callId);
