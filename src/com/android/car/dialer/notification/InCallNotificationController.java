@@ -29,13 +29,12 @@ import android.text.TextUtils;
 
 import androidx.annotation.StringRes;
 
-import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.telephony.common.CallDetail;
 
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 /** Controller that manages the heads up notification for incoming calls. */
@@ -81,6 +80,7 @@ public final class InCallNotificationController {
     private final Context mContext;
     private final NotificationManager mNotificationManager;
     private final Notification.Builder mNotificationBuilder;
+    private final Set<String> mActiveInCallNotifications;
     private CompletableFuture<Void> mNotificationFuture;
 
     @TargetApi(26)
@@ -94,19 +94,14 @@ public final class InCallNotificationController {
                 NotificationManager.IMPORTANCE_HIGH);
         mNotificationManager.createNotificationChannel(notificationChannel);
 
-        Intent intent = new Intent(mContext, InCallActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(Constants.Intents.EXTRA_SHOW_INCOMING_CALL, true);
-        PendingIntent fullscreenIntent = PendingIntent.getActivity(mContext, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
         mNotificationBuilder = new Notification.Builder(mContext, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_phone)
                 .setContentText(mContext.getString(R.string.notification_incoming_call))
-                .setFullScreenIntent(fullscreenIntent, /* highPriority= */true)
                 .setCategory(Notification.CATEGORY_CALL)
                 .setOngoing(true)
                 .setAutoCancel(false);
+
+        mActiveInCallNotifications = new HashSet<>();
     }
 
 
@@ -121,8 +116,10 @@ public final class InCallNotificationController {
 
         CallDetail callDetail = CallDetail.fromTelecomCallDetail(call.getDetails());
         String number = callDetail.getNumber();
-        String tag = call.getDetails().getTelecomCallId();
+        String callId = call.getDetails().getTelecomCallId();
+        mActiveInCallNotifications.add(callId);
         mNotificationBuilder
+                .setFullScreenIntent(getFullscreenIntent(call), /* highPriority= */true)
                 .setLargeIcon((Icon) null)
                 .setContentTitle(number)
                 .setActions(
@@ -131,21 +128,20 @@ public final class InCallNotificationController {
                         getAction(call, R.string.decline_call,
                                 NotificationService.ACTION_DECLINE_CALL));
         mNotificationManager.notify(
-                tag,
+                callId,
                 NOTIFICATION_ID,
                 mNotificationBuilder.build());
 
         mNotificationFuture = NotificationUtils.getDisplayNameAndRoundedAvatar(mContext, number)
                 .thenAcceptAsync((pair) -> {
                     // Check that the notification hasn't already been dismissed
-                    if (Arrays.stream(mNotificationManager.getActiveNotifications()).anyMatch((n) ->
-                            n.getId() == NOTIFICATION_ID && TextUtils.equals(n.getTag(), tag))) {
+                    if (mActiveInCallNotifications.contains(callId)) {
                         mNotificationBuilder
                                 .setLargeIcon(pair.second)
                                 .setContentTitle(pair.first);
 
                         mNotificationManager.notify(
-                                tag,
+                                callId,
                                 NOTIFICATION_ID,
                                 mNotificationBuilder.build());
                     }
@@ -156,8 +152,26 @@ public final class InCallNotificationController {
     public void cancelInCallNotification(Call call) {
         L.d(TAG, "cancelInCallNotification");
         if (call.getDetails() != null) {
-            mNotificationManager.cancel(call.getDetails().getTelecomCallId(), NOTIFICATION_ID);
+            String callId = call.getDetails().getTelecomCallId();
+            cancelInCallNotification(callId);
         }
+    }
+
+    /**
+     * Cancel the incoming call notification for the given call id. Any action that dismisses the
+     * notification needs to call this explicitly.
+     */
+    void cancelInCallNotification(String callId) {
+        if (TextUtils.isEmpty(callId)) {
+            return;
+        }
+        mActiveInCallNotifications.remove(callId);
+        mNotificationManager.cancel(callId, NOTIFICATION_ID);
+    }
+
+    private PendingIntent getFullscreenIntent(Call call) {
+        Intent intent = getIntent(NotificationService.ACTION_SHOW_FULLSCREEN_UI, call);
+        return PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private Notification.Action getAction(Call call, @StringRes int actionText,
