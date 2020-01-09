@@ -18,7 +18,9 @@ package com.android.car.dialer.ui.common;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -55,6 +57,17 @@ public abstract class DialerBaseFragment extends Fragment {
         mToolbarHeight = new MutableLiveData<>();
     }
 
+    @CallSuper
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Toolbar toolbar = getActivity().findViewById(R.id.car_ui_toolbar);
+        // Null check for unit tests to pass
+        if (toolbar != null) {
+            setupToolbar(toolbar);
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -64,7 +77,7 @@ public abstract class DialerBaseFragment extends Fragment {
     /**
      * Customizes the tool bar. Can be overridden in subclasses.
      */
-    public void setupToolbar(@NonNull Toolbar toolbar) {
+    protected void setupToolbar(@NonNull Toolbar toolbar) {
         TelecomActivityViewModel viewModel = ViewModelProviders.of(getActivity()).get(
                 TelecomActivityViewModel.class);
         LiveData<String> toolbarTitleLiveData = viewModel.getToolbarTitle();
@@ -79,7 +92,7 @@ public abstract class DialerBaseFragment extends Fragment {
 
         setShowToolbarBackground(true);
 
-        setToolbarHeight(toolbar.getHeight());
+        setToolbarHeight(toolbar);
     }
 
     /**
@@ -106,7 +119,13 @@ public abstract class DialerBaseFragment extends Fragment {
     /**
      * Sets the toolbar height.
      */
-    public final void setToolbarHeight(int toolbarHeight) {
+    protected final void setToolbarHeight(Toolbar toolbar) {
+        int toolbarFirstRowHeight = getResources().getDimensionPixelSize(
+                R.dimen.car_ui_toolbar_first_row_height);
+        int toolbarHeight = toolbar.isTabsInSecondRow() && getToolbarState() == Toolbar.State.HOME
+                ? toolbarFirstRowHeight + getResources().getDimensionPixelSize(
+                R.dimen.car_ui_toolbar_second_row_height)
+                : toolbarFirstRowHeight;
         mToolbarHeight.setValue(toolbarHeight);
     }
 

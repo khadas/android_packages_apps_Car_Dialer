@@ -89,6 +89,7 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getRecyclerView().setAdapter(mAdapter);
 
         mOnScrollChangeListener = new RecyclerView.OnScrollListener() {
@@ -114,7 +115,7 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    public void setupToolbar(@NonNull Toolbar toolbar) {
+    protected void setupToolbar(@NonNull Toolbar toolbar) {
         super.setupToolbar(toolbar);
         mToolbar = toolbar;
         mToolbar.registerOnSearchListener(this);

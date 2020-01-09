@@ -94,6 +94,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ContactDetailsAdapter contactDetailsAdapter = new ContactDetailsAdapter(getContext(),
                 mContact, this);
         getRecyclerView().setAdapter(contactDetailsAdapter);
@@ -111,6 +112,10 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     private void onContactChanged(Contact contact) {
         getArguments().clear();
         Toolbar toolbar = getActivity().findViewById(R.id.car_ui_toolbar);
+        // Null check to have unit tests to pass.
+        if (toolbar == null) {
+            return;
+        }
         toolbar.setTitle(null);
         toolbar.setLogo(null);
         if (mShowActionBarView) {
@@ -148,7 +153,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    public void setupToolbar(@NonNull Toolbar toolbar) {
+    protected void setupToolbar(@NonNull Toolbar toolbar) {
         toolbar.setState(getToolbarState());
         toolbar.setMenuItems(null);
 
@@ -156,6 +161,8 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
         if (!mShowActionBarView) {
             setShowToolbarBackground(false);
         }
+
+        setToolbarHeight(toolbar);
     }
 
     @Override

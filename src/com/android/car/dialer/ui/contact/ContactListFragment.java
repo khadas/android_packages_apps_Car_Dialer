@@ -42,6 +42,7 @@ public class ContactListFragment extends DialerListBaseFragment implements
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         // Don't recreate the adapter if we already have one, so that the list items
         // will display immediately upon the view being recreated. If they're not displayed
         // immediately, we won't remember our scroll position.
