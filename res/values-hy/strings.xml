@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Ավելի հին"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Վերջին զանգեր չկան"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Կոնտակտներ չկան"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Հասանելի կլինի համաժամացումից հետո։ Համոզվեք, որ ձեր հեռախոսում թույլատրել եք կիսվել կոնտակտներով։"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Հասանելի կլինի համաժամացումից հետո։ Համոզվեք, որ ձեր հեռախոսում թույլատրել եք կիսվել կոնտակտներով։"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Նախընտրած կոնտակտներ չկան"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Ցանկում դեռ նախընտրած կոնտակտներ չեք ավելացրել"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Ավելացնել ընտրանիում"</string>

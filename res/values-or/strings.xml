@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"ପୁରୁଣା"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"ବର୍ତ୍ତମାନ କୌଣସି କଲ୍ ନାହିଁ"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"କୌଣସି ଯୋଗାଯୋଗ ନାହିଁ"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"ସିଙ୍କ୍ ହେବା ପରେ ଉପଲବ୍ଧ ହେବ। ଆପଣ ଆପଣଙ୍କ ଫୋନ୍‌ରେ ଯୋଗାଯୋଗଗୁଡ଼ିକୁ ସେୟାର୍ କରିବାକୁ ଅନୁମତି ଦେଇଛନ୍ତି ବୋଲି ସୁନିଶ୍ଚିତ କରନ୍ତୁ।"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"ସିଙ୍କ୍ ହେବା ପରେ ଉପଲବ୍ଧ ହେବ। ଆପଣ ଆପଣଙ୍କ ଫୋନରେ ସେୟାର୍ କରାଯାଉଥିବା ଯୋଗାଯୋଗଗୁଡ଼ିକୁ ଅନୁମତି ଦେଇଛନ୍ତି ବୋଲି ସୁନିଶ୍ଚିତ କରନ୍ତୁ।"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"କୌଣସି ପସନ୍ଦ ନାହିଁ"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"ଆପଣ ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପସନ୍ଦ ଯୋଗ କରିନାହାଁନ୍ତି"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ଏକ ପସନ୍ଦ ଯୋଗ କରନ୍ତୁ"</string>

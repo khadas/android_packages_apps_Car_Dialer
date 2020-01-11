@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Постари"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Нема неодамнешни"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Нема контакти"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Достапни по синхронизирањето. Проверете дали сте овозможиле споделување контакти на телефонот."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Достапни по синхронизирањето. Проверете дали сте овозможиле споделување контакти на телефонот."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Нема омилени"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Сѐ уште немате додадено омилени"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Додај омилен"</string>

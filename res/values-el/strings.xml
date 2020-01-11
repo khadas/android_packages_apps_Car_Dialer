@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Παλαιότερες"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Δεν υπάρχουν πρόσφατα"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Δεν υπάρχουν επαφές"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Διαθέσιμο μετά τον συγχρονισμό. Βεβαιωθείτε ότι έχετε επιτρέψει την κοινοποίηση των επαφών στο τηλέφωνό σας."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Διαθέσιμο μετά τον συγχρονισμό. Βεβαιωθείτε ότι έχετε επιτρέψει την κοινή χρήση επαφών στο τηλέφωνό σας."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Δεν υπάρχουν αγαπημένα"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Δεν έχετε προσθέσει ακόμα αγαπημένα"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Προσθήκη αγαπημένης"</string>

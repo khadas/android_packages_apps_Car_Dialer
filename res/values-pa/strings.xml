@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"ਵਧੇਰੇ ਪੁਰਾਣੀਆਂ"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"ਕੋਈ ਹਾਲੀਆ ਕਾਲ ਲੌਗ ਨਹੀਂ"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"ਕੋਈ ਸੰਪਰਕ ਨਹੀਂ ਹੈ"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"ਸਮਕਾਲੀਕਰਨ ਕੀਤੇ ਜਾਣ ਤੋਂ ਬਾਅਦ ਸੰਪਰਕ ਉਪਲਬਧ ਹੋਣਗੇ। ਪੱਕਾ ਕਰੋ ਕਿ ਤੁਸੀਂ ਆਪਣੇ ਫ਼ੋਨ \'ਤੇ ਸੰਪਰਕਾਂ ਸਾਂਝਾ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦਿੱਤੀ ਹੋਈ ਹੈ।"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"ਸਮਕਾਲੀਕਰਨ ਕੀਤੇ ਜਾਣ ਤੋਂ ਬਾਅਦ ਸੰਪਰਕ ਉਪਲਬਧ ਹੋਣਗੇ। ਪੱਕਾ ਕਰੋ ਕਿ ਤੁਸੀਂ ਆਪਣੇ ਫ਼ੋਨ \'ਤੇ ਸੰਪਰਕਾਂ ਸਾਂਝਾ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦਿੱਤੀ ਹੋਈ ਹੈ।"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"ਕੋਈ ਮਨਪਸੰਦ ਨਹੀਂ"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"ਤੁਸੀਂ ਹਾਲੇ ਤੱਕ ਕੋਈ ਵੀ ਸੰਪਰਕ ਮਨਪਸੰਦ ਵਜੋਂ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤਾ ਹੈ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ਕੋਈ ਮਨਪਸੰਦ ਸੰਪਰਕ ਸ਼ਾਮਲ ਕਰੋ"</string>

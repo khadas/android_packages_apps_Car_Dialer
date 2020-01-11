@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"పాతది"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"ఇటీవలివి లేేవు"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"కాంటాక్ట్‌లు లేవు"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"సింక్ అయిన తర్వాత అందుబాటులో ఉంటాయి. మీ ఫోన్‌లో కాంటాక్ట్‌లను షేర్ చేయడానికి మీరు అనుమతించినట్లు నిర్ధారించుకోండి."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"సింక్ అయిన తర్వాత అందుబాటులో ఉంటుంది. మీ ఫోన్‌లో కాంటాక్ట్‌లను షేర్ చేయడాన్ని మీరు అనుమతించినట్లు నిర్ధారించుకోండి."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"ఇష్టమైనవి లేవు"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"మీరు ఇష్టమైనవి ఏవీ ఇంకా జోడించలేదు"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ఇష్టమైన వారిని జోడించండి"</string>

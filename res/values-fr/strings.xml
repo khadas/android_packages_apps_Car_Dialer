@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Plus anciens"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Aucun appel récent"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Aucun contact"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Contenu disponible après la synchronisation. Assurez-vous d\'avoir autorisé le partage des contacts sur votre téléphone."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Contenu disponible après la synchronisation. Assurez-vous d\'avoir autorisé le partage des contacts sur votre téléphone."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Aucun favori"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Pour le moment, vous n\'avez ajouté aucun favori"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Ajouter un favori"</string>

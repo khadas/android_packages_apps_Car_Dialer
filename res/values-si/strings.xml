@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"පැරණි"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"මෑත නැත"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"සම්බන්ධතා නැත"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"සමමුහු කිරීමෙන් පසු ලබා ගත හැකිය. ඔබේ දුරකථනයෙන් සම්බන්ධතා බෙදා ගැනීමට ඔබට ඉඩ දී ඇති බවට වග බලා ගන්න."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"සමමුහු කිරීමෙන් පසු ලබා ගත හැක. ඔබ ඔබේ දුරකථනයෙන් සම්බන්ධතා බෙදා ගැනීමට ඉඩ දී ඇති බවට වග බලා ගන්න."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"ප්‍රියතම නැත"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"ඔබ තවම ප්‍රියතමයන් එක් කර නොමැත"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"ප්‍රියතමයක් එක් කරන්න"</string>

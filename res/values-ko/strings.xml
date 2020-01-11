@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"이전"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"최근 통화 없음"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"연락처 없음"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"동기화 후 사용할 수 있습니다. 휴대전화에서 연락처를 공유하도록 허용했는지 확인하세요."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"동기화 후 사용할 수 있습니다. 휴대전화에서 연락처를 공유하도록 허용했는지 확인하세요."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"즐겨찾기 없음"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"아직 즐겨찾기를 추가하지 않았습니다."</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"즐겨찾기 추가"</string>

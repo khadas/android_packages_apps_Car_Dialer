@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"જૂના"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"તાજેતરના કૉલનો કોઈ ઇતિહાસ ઉપલબ્ધ નથી"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"કોઈ સંપર્ક નથી"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"સિંક કર્યા પછી ઉપલબ્ધ રહેશે. ખાતરી કરો કે તમે તમારા ફોન પર સંપર્કો શેર કરવાની મંજૂરી આપી છે."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"સિંક કર્યા પછી ઉપલબ્ધ રહેશે. ખાતરી કરો કે તમે તમારા ફોન પર સંપર્કો શેર કરવાની મંજૂરી આપી છે."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"કોઈ મનપસંદ નથી"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"તમે હજી સુધી કોઈ મનપસંદ ઉમેર્યા નથી"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"મનપસંદ સંપર્ક તરીકે ઉમેરો"</string>

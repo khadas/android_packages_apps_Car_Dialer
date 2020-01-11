@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Ouer"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Geen onlangse nie"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Geen kontakte nie"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Beskikbaar ná sinkronisering. Maak seker dat jy die deling van kontakte op jou foon toegelaat het."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Beskikbaar ná sinkronisering. Maak seker dat jy die deling van kontakte op jou foon toegelaat het."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Geen gunstelinge nie"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Jy het nog geen gunstelinge bygevoeg nie"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Voeg \'n gunsteling by"</string>

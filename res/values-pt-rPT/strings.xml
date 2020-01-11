@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Mais antigas"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Não existem recentes."</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Não existem contactos."</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Disponível após a sincronização. Certifique-se de que permitiu partilhar contactos no telemóvel."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Disponível após a sincronização. Certifique-se de que permitiu a partilha de contactos no seu telemóvel."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Não existem favoritos."</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Ainda não adicionou nenhum favorito."</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Adicionar um favorito"</string>

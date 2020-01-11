@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"เก่ากว่า"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"ไม่มีข้อมูลล่าสุด"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"ไม่มีรายชื่อติดต่อ"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"พร้อมใช้งานหลังการซิงค์ ตรวจสอบว่าคุณได้อนุญาตให้แชร์รายชื่อติดต่อในโทรศัพท์แล้ว"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"พร้อมใช้งานหลังการซิงค์ ตรวจสอบว่าคุณได้อนุญาตให้แชร์รายชื่อติดต่อในโทรศัพท์แล้ว"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"ไม่มีรายการโปรด"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"คุณยังไม่ได้เพิ่มรายการโปรดใดๆ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"เพิ่มรายการโปรด"</string>

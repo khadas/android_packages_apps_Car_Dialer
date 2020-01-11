@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"較舊"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"沒有近期通話記錄"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"沒有聯絡人"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"內容會在同步處理後顯示。請確認你已允許分享手機上的聯絡人資料。"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"內容會在同步處理後顯示。請確認你已允許分享手機上的聯絡人資料。"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"沒有常用聯絡人"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"你尚未新增任何常用聯絡人"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"新增常用聯絡人"</string>

@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Старіші"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Немає останніх"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Контактів немає"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Буде доступно після синхронізації. Переконайтеся, що ви дозволили доступ до контактів на телефоні."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Буде доступно після синхронізації. Переконайтеся, що ви дозволили доступ до контактів на телефоні."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Немає вибраних контактів"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"У списку ще немає вибраних контактів"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Додати у вибране"</string>

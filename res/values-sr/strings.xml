@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Старије"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Нема недавних ставки"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Нема контаката"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Доступно после синхронизовања. Проверите да ли сте дозволили дељење контаката на телефону."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Доступно после синхронизовања. Проверите да ли сте дозволили дељење контаката на телефону."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Нема омиљених ставки"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Још нисте додали омиљене ставке"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Додајте омиљен контакт"</string>

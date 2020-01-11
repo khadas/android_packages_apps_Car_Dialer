@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Staršie"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Žiadne nedávne"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Žiadne kontakty"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"K dispozícii po synchronizácii. Overte, či ste v telefóne povolili zdieľanie kontaktov."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"K dispozícii po synchronizácii. Overte, či ste v telefóne povolili zdieľanie kontaktov."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Žiadne obľúbené kontakty"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Zatiaľ ste nepridali žiadne obľúbené kontakty"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Pridať obľúbený kontakt"</string>

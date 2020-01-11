@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"পুৰণি"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"কোনো শেহতীয়া কল নাই"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"কোনো সম্পৰ্ক নাই"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"ছিংক কৰাৰ পাছত উপলব্ধ। আপুনি আপোনাৰ ফ\'নত সম্পর্কসমূহ শ্বেয়াৰ কৰিবলৈ অনুমতি দিছে বুলি নিশ্চিত কৰক।"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"ছিংক কৰাৰ পাছত উপলব্ধ। আপুনি আপোনাৰ ফ\'নত সম্পর্কসমূহ শ্বেয়াৰ কৰিবলৈ অনুমতি দিয়াটো নিশ্চিত কৰক।"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"কোনো প্ৰিয় নাই"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"আপুনি এতিয়ালৈকে আপোনাৰ প্ৰিয়সমূহ যোগ কৰা নাই"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"এটা প্ৰিয় সম্পৰ্ক যোগ কৰক"</string>

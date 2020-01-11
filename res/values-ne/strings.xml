@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"अझ पुरानो"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"हालैका कलहरू छैनन्"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"कुनै पनि सम्पर्क छैन"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"सिंक गरेपछि उपलब्ध हुन्छ। तपाईंले फोनमा सम्पर्कहरू साझा गर्न दिनुभएको छ भन्ने सुनिश्चित गर्नुहोस्।"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"सिंक गरेपछि उपलब्ध हुन्छ। तपाईंले फोनमा सम्पर्कहरू साझा गर्न दिनुभएको छ भन्ने सुनिश्चित गर्नुहोस्।"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"मन पर्ने कुराहरू छैनन्"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"तपाईंले अहिलेसम्म कुनै पनि मन पर्ने कुराहरू थप्नुभएको छैन"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"सम्पर्क सूचीमा भएको कुनै मन पर्ने व्यक्ति थप्नु…"</string>

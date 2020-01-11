@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"زیادہ پرانا"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"کوئی حالیہ نہیں"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"کوئی رابطے نہیں"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"مطابقت پذیری کے بعد دستیاب ہے۔ یقینی بنائیں کہ آپ نے اپنے فون پر رابطوں کو اشتراک کرنے کی اجازت دی ہے۔"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"مطابقت پذیری کے بعد دستیاب ہے۔ یقینی بنائیں کہ آپ نے اپنے فون پر رابطوں کا اشتراک کرنے کی اجازت دی ہے۔"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"کوئی پسندیدہ نہیں"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"آپ نے ابھی تک کوئی پسندیدگی شامل نہیں کی ہے"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"پسندیدگی شامل کریں"</string>

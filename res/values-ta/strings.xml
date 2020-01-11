@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"பழையவை"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"சமீபத்தியவை எதுவுமில்லை"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"தொடர்புகள் எதுவுமில்லை"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"ஒத்திசைவிற்குப் பிறகு தெரியும். உங்கள் மொபைலில் தொடர்புகளைப் பகிர்வதற்கான அனுமதியை வழங்கியுள்ளீர்கள் என்பதை உறுதிசெய்யவும்."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"ஒத்திசைவிற்குப் பிறகு தெரியும். உங்கள் மொபைலில் தொடர்புகளைப் பகிர்வதை அனுமதித்துள்ளீர்கள் என்பதை உறுதிப்படுத்திக்கொள்ளவும்."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"பிடித்தவை எதுவுமில்லை"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"பிடித்தவை எதையும் நீங்கள் இதுவரை சேர்க்கவில்லை"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"பிடித்ததைச் சேர்"</string>

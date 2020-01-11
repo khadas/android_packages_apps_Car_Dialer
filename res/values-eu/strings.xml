@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Zaharragoak"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Ez da egon deirik azkenaldian"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Ez dago kontakturik"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Sinkronizatu ostean egongo dira erabilgarri. Ziurtatu telefonoko kontaktuak partekatzeko baimena eman duzula."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Sinkronizatu ostean egongo dira erabilgarri. Ziurtatu eman duzula telefonoko kontaktuak partekatzeko baimena."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Ez dago gogokorik"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Ez duzu gehitu gogokorik oraindik"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Gehitu gogoko bat"</string>
