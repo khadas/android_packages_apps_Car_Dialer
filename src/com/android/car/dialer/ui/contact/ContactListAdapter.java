@@ -32,7 +32,9 @@ import com.android.car.telephony.common.Contact;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Adapter for contact list. */
+/**
+ * Adapter for contact list.
+ */
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHolder> {
     private static final String TAG = "CD.ContactListAdapter";
 
@@ -79,12 +81,18 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
 
         boolean showHeader = position == 0
                 || (!header.equals(getHeader(mContactList.get(position - 1))));
-        holder.onBind(contact, showHeader, header);
+        holder.bind(contact, showHeader, header);
     }
 
     @Override
     public int getItemCount() {
         return mContactList.size();
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ContactListViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.recycle();
     }
 
     private String getHeader(Contact contact) {

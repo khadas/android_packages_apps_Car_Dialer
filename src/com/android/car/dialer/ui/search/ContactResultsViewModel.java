@@ -43,7 +43,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** {link AndroidViewModel} used for search functionality. */
+/**
+ * {link AndroidViewModel} used for search functionality.
+ */
 public class ContactResultsViewModel extends AndroidViewModel {
     private static final String[] CONTACT_DETAILS_PROJECTION = {
             ContactsContract.Contacts._ID,
@@ -124,15 +126,7 @@ public class ContactResultsViewModel extends AndroidViewModel {
         }
 
         private void onSortOrderChanged(SharedPreferences unusedSharedPreferences) {
-            if (getValue() == null) {
-                return;
-            }
-
-            List<Contact> contacts = new ArrayList<>();
-            contacts.addAll(getValue());
-            Collections.sort(contacts,
-                    ContactSortingInfo.getSortingInfo(mContext, mSharedPreferencesLiveData).first);
-            setValue(contacts);
+            setValue(getValue());
         }
 
         private void onQueryFinished(@Nullable Cursor cursor) {
@@ -143,17 +137,23 @@ public class ContactResultsViewModel extends AndroidViewModel {
 
             List<Contact> contacts = new ArrayList<>();
             while (cursor.moveToNext()) {
-                int lookupColIdx = cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
-                Contact contact = InMemoryPhoneBook.get().lookupContactByKey(
-                        cursor.getString(lookupColIdx));
-                if (contact != null) {
-                    contacts.add(contact);
-                }
+                int lookupKeyColIdx = cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
+                List<Contact> lookupResults = InMemoryPhoneBook.get().lookupContactByKey(
+                        cursor.getString(lookupKeyColIdx));
+                contacts.addAll(lookupResults);
             }
-            Collections.sort(contacts,
-                    ContactSortingInfo.getSortingInfo(mContext, mSharedPreferencesLiveData).first);
             setValue(contacts);
             cursor.close();
+        }
+
+        @Override
+        public void setValue(List<Contact> contacts) {
+            if (contacts != null && !contacts.isEmpty()) {
+                Collections.sort(contacts,
+                        ContactSortingInfo.getSortingInfo(mContext,
+                                mSharedPreferencesLiveData).first);
+            }
+            super.setValue(contacts);
         }
     }
 

@@ -14,15 +14,17 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
-<vector
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="@dimen/primary_icon_size"
-    android:height="@dimen/primary_icon_size"
-    android:tint="@color/primary_icon_color"
-    android:viewportWidth="24.0"
-    android:viewportHeight="24.0">
-    <path android:fillColor="#000000"
-          android:pathData="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-    <path android:pathData="M0 0h24v24H0z"/>
-</vector>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleLarge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

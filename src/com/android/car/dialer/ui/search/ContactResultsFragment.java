@@ -16,15 +16,9 @@
 
 package com.android.car.dialer.ui.search;
 
-import android.app.ActionBar;
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,13 +31,14 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsFragment;
 import com.android.car.telephony.common.Contact;
+import com.android.car.ui.toolbar.Toolbar;
 
 /**
  * A fragment that will take a search query, look up contacts that match and display those
  * results as a list.
  */
 public class ContactResultsFragment extends DialerListBaseFragment implements
-        ContactResultsAdapter.OnShowContactDetailListener {
+        ContactResultsAdapter.OnShowContactDetailListener, Toolbar.OnSearchListener {
 
     /**
      * Creates a new instance of the {@link ContactResultsFragment}.
@@ -63,23 +58,24 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
     private static final String TAG = "CD.ContactResultsFragment";
     private static final String SEARCH_QUERY = "SearchQuery";
-    private static final String KEY_KEYBOARD_SHOWN = "KeyboardShown";
 
     private ContactResultsViewModel mContactResultsViewModel;
     private final ContactResultsAdapter mAdapter = new ContactResultsAdapter(this);
 
     private RecyclerView.OnScrollListener mOnScrollChangeListener;
-    private SearchView mSearchView;
+    private Toolbar mToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
 
         mContactResultsViewModel = ViewModelProviders.of(this).get(
                 ContactResultsViewModel.class);
         mContactResultsViewModel.getContactSearchResults().observe(this,
-                contactResults -> mAdapter.setData(contactResults));
+                contactResults -> {
+                    mAdapter.setData(contactResults);
+                    showContent();
+                });
 
         // Set the initial search query, if one was provided from a Intent.ACTION_SEARCH
         if (getArguments() != null) {
@@ -103,7 +99,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (dy != 0) {
-                    mSearchView.clearFocus();
+                    // Clear the focus to dismiss the keyboard.
+                    mToolbar.clearFocus();
                 }
             }
         };
@@ -117,85 +114,44 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.menu_contacts_search).setVisible(false);
-        menu.findItem(R.id.menu_dialer_setting).setVisible(false);
-    }
-
-    @Override
-    public void setupActionBar(@NonNull ActionBar actionBar) {
-        super.setupActionBar(actionBar);
-
-        // We have to use the setCustomView that accepts a LayoutParams to get the SearchView
-        // to take up the full height and width of the action bar.
-        View v = getLayoutInflater().inflate(R.layout.search_view, null);
-        actionBar.setCustomView(v, new ActionBar.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-
-        SearchView searchView = actionBar.getCustomView().findViewById(R.id.search_view);
-        SearchManager searchManager =
-                (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-        // We need to call setIconified(false) so the SearchView is a text box instead of just
-        // an icon, but doing so also focuses on it and shows the keyboard.
-        searchView.setIconified(false);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                L.d(TAG, "onQueryTextSubmit: %s", query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                L.d(TAG, "onQueryTextChange: %s", newText);
-                onNewQuery(newText);
-                return false;
-            }
-        });
-
-        // Don't collapse the search view by clicking the clear button on an empty input
-        searchView.setOnCloseListener(() -> true);
-
-        mSearchView = searchView;
+    public void setupToolbar(@NonNull Toolbar toolbar) {
+        super.setupToolbar(toolbar);
+        mToolbar = toolbar;
+        mToolbar.registerOnSearchListener(this);
+        mToolbar.setSearchIcon(R.drawable.ic_app_icon);
         setSearchQuery(mContactResultsViewModel.getSearchQuery());
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mSearchView.clearFocus();
+        mToolbar.unregisterOnSearchListener(this);
     }
 
-    /**
-     * Sets the search query that should be used to filter contacts.
-     */
+    /** Sets the search query that should be used to filter contacts. */
     public void setSearchQuery(String query) {
-        if (mSearchView != null) {
-            // This will update the search field and trigger the onNewQuery.
-            // "submit" flag is false so it won't send search intent and ending in infinite loop.
-            mSearchView.setQuery(query, /* submit= */false);
+        if (mToolbar != null) {
+            mToolbar.setSearchQuery(query);
         } else {
-            onNewQuery(query);
+            onSearch(query);
         }
     }
 
     /** Triggered by search view text change. */
-    private void onNewQuery(String newQuery) {
-        mContactResultsViewModel.setSearchQuery(newQuery);
-    }
-
     @Override
-    protected CharSequence getActionBarTitle() {
-        return null;
+    public void onSearch(String newQuery) {
+        L.d(TAG, "onSearch: %s", newQuery);
+        mContactResultsViewModel.setSearchQuery(newQuery);
     }
 
     @Override
     public void onShowContactDetail(Contact contact) {
         Fragment contactDetailsFragment = ContactDetailsFragment.newInstance(contact);
         pushContentFragment(contactDetailsFragment, ContactDetailsFragment.FRAGMENT_TAG);
+    }
+
+    @Override
+    protected Toolbar.State getToolbarState() {
+        return Toolbar.State.SEARCH;
     }
 }

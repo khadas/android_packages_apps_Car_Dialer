@@ -31,7 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.car.apps.common.widget.PagedRecyclerView;
+import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -41,6 +41,8 @@ import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.dialer.ui.favorite.FavoriteViewModel;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.PostalAddress;
+import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -52,6 +54,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,18 +82,22 @@ public class ContactListFragmentTest {
     private Contact mMockContact3;
     @Mock
     private PhoneNumber mMockPhoneNumber;
+    @Mock
+    private PostalAddress mMockPostalAddress;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        MutableLiveData<Pair<Integer, List<Contact>>> contactList = new MutableLiveData<>();
-        contactList.setValue(new Pair<>(ContactSortingInfo.SORT_BY_LAST_NAME,
-                Arrays.asList(mMockContact1, mMockContact2, mMockContact3)));
+        MutableLiveData<FutureData<Pair<Integer, List<Contact>>>> contactList =
+                new MutableLiveData<>();
+        contactList.setValue(
+                new FutureData<>(false, new Pair<>(ContactSortingInfo.SORT_BY_LAST_NAME,
+                        Arrays.asList(mMockContact1, mMockContact2, mMockContact3))));
         ShadowAndroidViewModelFactory.add(ContactListViewModel.class, mMockContactListViewModel);
         when(mMockContactListViewModel.getAllContacts()).thenReturn(contactList);
-        MutableLiveData<Contact> contactDetail = new MutableLiveData<>();
-        contactDetail.setValue(mMockContact1);
+        MutableLiveData<FutureData<Contact>> contactDetail = new MutableLiveData<>();
+        contactDetail.setValue(new FutureData<>(false, mMockContact1));
         ShadowAndroidViewModelFactory.add(ContactDetailsViewModel.class,
                 mMockContactDetailsViewModel);
         when(mMockContactDetailsViewModel.getContactDetails(any())).thenReturn(contactDetail);
@@ -132,7 +139,22 @@ public class ContactListFragmentTest {
     }
 
     @Test
-    public void testClickShowContactDetailView_showContactDetail() {
+    public void testClickCallActionButton_ContactHasNoNumbers_callActionButtonNotEnabled() {
+        when(mMockContact1.getNumbers()).thenReturn(new ArrayList<>());
+        setUpFragment();
+
+        View callActionView = mViewHolder.itemView.findViewById(R.id.call_action_id);
+
+        assertThat(callActionView.isEnabled()).isFalse();
+        assertThat(callActionView.getVisibility() == View.VISIBLE).isEqualTo(
+                mViewHolder.itemView.getResources().getBoolean(
+                        R.bool.config_show_contact_detail_button_for_empty_contact));
+    }
+
+    @Test
+    public void testClickShowContactDetailView_withPhoneNumberAndAddress_showContactDetail() {
+        when(mMockContact1.getNumbers()).thenReturn(Arrays.asList(mMockPhoneNumber));
+        when(mMockContact1.getPostalAddresses()).thenReturn(Arrays.asList(mMockPostalAddress));
         setUpFragment();
 
         View showContactDetailActionView = mViewHolder.itemView.findViewById(
@@ -145,13 +167,53 @@ public class ContactListFragmentTest {
         verifyShowContactDetail();
     }
 
+    @Test
+    public void testClickShowContactDetailView_withAddressButNoPhoneNumber_dependOnConfig() {
+        when(mMockContact1.getPostalAddresses()).thenReturn(Arrays.asList(mMockPostalAddress));
+        setUpFragment();
+
+        View showContactDetailActionView = mViewHolder.itemView.findViewById(
+                R.id.show_contact_detail_id);
+
+        boolean showPostalAddress = mViewHolder.itemView.getResources().getBoolean(
+                R.bool.config_show_postal_address);
+        boolean forceShowButton = mViewHolder.itemView.getResources().getBoolean(
+                R.bool.config_show_contact_detail_button_for_empty_contact);
+
+        assertThat(showContactDetailActionView.isEnabled()).isEqualTo(showPostalAddress);
+        assertThat(showContactDetailActionView.getVisibility() == View.VISIBLE)
+                .isEqualTo(showPostalAddress || forceShowButton);
+
+        if (showPostalAddress) {
+            assertThat(showContactDetailActionView.hasOnClickListeners()).isTrue();
+
+            showContactDetailActionView.performClick();
+
+            // verify contact detail is shown.
+            verifyShowContactDetail();
+        }
+    }
+
+    @Test
+    public void testClickShowContactDetailView_NoPhoneNumberAndNoAddress_NotEnabled() {
+        setUpFragment();
+
+        View showContactDetailActionView = mViewHolder.itemView.findViewById(
+                R.id.show_contact_detail_id);
+
+        assertThat(showContactDetailActionView.isEnabled()).isFalse();
+        assertThat(showContactDetailActionView.getVisibility() == View.VISIBLE).isEqualTo(
+                mViewHolder.itemView.getResources().getBoolean(
+                        R.bool.config_show_contact_detail_button_for_empty_contact));
+    }
+
     private void setUpFragment() {
         mContactListFragment = ContactListFragment.newInstance();
         mFragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().resume().get();
         mFragmentTestActivity.setFragment(mContactListFragment);
 
-        PagedRecyclerView recyclerView = mContactListFragment.getView()
+        CarUiRecyclerView recyclerView = mContactListFragment.getView()
                 .findViewById(R.id.list_view);
         //Force RecyclerView to layout to ensure findViewHolderForLayoutPosition works.
         recyclerView.layoutBothForTesting(0, 0, 100, 1000);

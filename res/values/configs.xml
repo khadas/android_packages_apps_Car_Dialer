@@ -25,4 +25,27 @@
     <item name="config_background_image_error_alpha" format="float" type="dimen">1.0</item>
 
     <bool name="config_show_detailed_user_profile_on_dialpad">false</bool>
+
+    <!-- A config determines whether to show divider and callog_action_button for callog items
+    that are not stored as contacts. "true" will show divider and button as disable state and
+    "false" will make divider and button invisible for non contacts. -->
+    <bool name="config_show_calllog_action_button_for_non_contact">false</bool>
+
+    <!-- A config determines whether to show divider and the button on the right side for contacts
+    without any contact details. "true" will show divider and button as disable state and "false"
+    will make divider and button invisible for empty contacts. -->
+    <bool name="config_show_contact_detail_button_for_empty_contact">false</bool>
+
+    <!-- A config determines whether to show postal address in contact details page. -->
+    <bool name="config_show_postal_address">true</bool>
+    <!-- A config determines whether to show the action bar view in the contact details page.-->
+    <bool name="config_show_contact_details_action_bar_view">false</bool>
+    <!-- A config determines if to show the action bar avatar in the contact details page.-->
+    <bool name="config_show_contact_details_action_bar_avatar">true</bool>
+
+    <!-- No toolbar title. Supported value see @attr/toolbarTitleMode -->
+    <integer name="config_toolbar_title_mode">1</integer>
+
+    <!-- Config gate the full screen incall ui -->
+    <bool name="config_show_fullscreen_incall_ui">true</bool>
 </resources>

@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer.ui.settings;
+package com.android.car.dialer;
 
-import android.os.Bundle;
+import android.graphics.Typeface;
 
-import com.android.car.dialer.R;
-import com.android.car.ui.preference.PreferenceFragment;
+import org.robolectric.annotation.Implementation;
+import org.robolectric.annotation.Implements;
 
 /**
- * A fragment that displays the settings page
+ * This is to shadow an extra function that old versions of Robolectric don't cover.
  */
-public class DialerSettingsFragment extends PreferenceFragment {
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.settings_page, rootKey);
+@Implements(value = Typeface.class)
+public class ShadowTypeface extends org.robolectric.shadows.ShadowTypeface {
+
+    @Implementation
+    public static Typeface create(Typeface family, int weight, boolean italic) {
+        return create(family, 0);
     }
 }

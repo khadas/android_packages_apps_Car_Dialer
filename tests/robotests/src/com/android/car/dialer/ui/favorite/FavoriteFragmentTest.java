@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.car.apps.common.widget.PagedRecyclerView;
+import com.android.car.arch.common.FutureData;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -34,6 +34,7 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,10 +50,10 @@ import java.util.List;
 
 @Config(shadows = {ShadowAndroidViewModelFactory.class})
 @RunWith(CarDialerRobolectricTestRunner.class)
-public class FavoriteListFragmentTest {
+public class FavoriteFragmentTest {
     private static final String RAW_NUMBER = "6502530000";
 
-    private FavoriteListFragment mFavoriteFragment;
+    private FavoriteFragment mFavoriteFragment;
     private FavoriteContactViewHolder mViewHolder;
     @Mock
     private UiCallManager mMockUiCallManager;
@@ -70,17 +71,17 @@ public class FavoriteListFragmentTest {
         UiCallManager.set(mMockUiCallManager);
 
         when(mMockPhoneNumber.getRawNumber()).thenReturn(RAW_NUMBER);
-        MutableLiveData<List<Contact>> favoriteContacts = new MutableLiveData<>();
-        favoriteContacts.setValue(Arrays.asList(mMockContact));
+        MutableLiveData<FutureData<List<Contact>>> favoriteContacts = new MutableLiveData<>();
+        favoriteContacts.setValue(new FutureData<>(false, Arrays.asList(mMockContact)));
         ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
         when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(favoriteContacts);
 
-        mFavoriteFragment = FavoriteListFragment.newInstance();
+        mFavoriteFragment = FavoriteFragment.newInstance();
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().resume().get();
         fragmentTestActivity.setFragment(mFavoriteFragment);
 
-        PagedRecyclerView recyclerView = mFavoriteFragment.getView().findViewById(R.id.list_view);
+        CarUiRecyclerView recyclerView = mFavoriteFragment.getView().findViewById(R.id.list_view);
         // set up layout for recyclerView
         recyclerView.layoutBothForTesting(0, 0, 100, 1000);
         mViewHolder = (FavoriteContactViewHolder) recyclerView.findViewHolderForLayoutPosition(0);

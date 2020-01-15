@@ -17,9 +17,7 @@
 package com.android.car.dialer.ui.contact;
 
 import android.app.Application;
-import android.content.ContentUris;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
@@ -28,18 +26,21 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 
+import com.android.car.arch.common.FutureData;
+import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.storage.FavoriteNumberRepository;
-import com.android.car.dialer.widget.WorkerExecutor;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.WorkerExecutor;
 
 import java.util.List;
 import java.util.concurrent.Future;
 
-/** View model for the contact details page. */
+/**
+ * View model for the contact details page.
+ */
 public class ContactDetailsViewModel extends AndroidViewModel {
     private final FavoriteNumberRepository mFavoriteNumberRepository;
 
@@ -56,14 +57,14 @@ public class ContactDetailsViewModel extends AndroidViewModel {
      *                InMemoryPhoneBook} changes. It always uses the in memory instance to get the
      *                favorite state for phone numbers.
      */
-    public LiveData<Contact> getContactDetails(@Nullable Contact contact) {
+    public LiveData<FutureData<Contact>> getContactDetails(@Nullable Contact contact) {
         if (contact == null) {
-            MutableLiveData<Contact> deletedContactDetailsLiveData = new MutableLiveData<>();
-            deletedContactDetailsLiveData.setValue(null);
-            return deletedContactDetailsLiveData;
+            return LiveDataFunctions.dataOf(new FutureData<>(false, null));
         }
 
-        return new ContactDetailsLiveData(getApplication(), contact);
+        LiveData<Contact> contactLiveData = new ContactDetailsLiveData(getApplication(), contact);
+        return LiveDataFunctions.loadingSwitchMap(contactLiveData,
+                input -> LiveDataFunctions.dataOf(input));
     }
 
     /**
@@ -87,30 +88,32 @@ public class ContactDetailsViewModel extends AndroidViewModel {
     }
 
     private class ContactDetailsLiveData extends MediatorLiveData<Contact> {
+        private final Uri mContactLookupUri;
+        private final String mAccountName;
         private final WorkerExecutor mWorkerExecutor;
         private final Context mContext;
         private Contact mContact;
         private Future<?> mRunnableFuture;
 
-        private ContactDetailsLiveData(Context context, Contact contact) {
+        private ContactDetailsLiveData(Context context, @NonNull Contact contact) {
             mContext = context;
             mWorkerExecutor = WorkerExecutor.getInstance();
             mContact = contact;
+            mContactLookupUri = mContact.getLookupUri();
+            mAccountName = mContact.getAccountName();
             addSource(InMemoryPhoneBook.get().getContactsLiveData(), this::onContactListChanged);
             addSource(mFavoriteNumberRepository.getFavoriteContacts(),
                     this::onFavoriteContactsChanged);
         }
 
         private void onContactListChanged(List<Contact> contacts) {
-            if (mContact == null) {
-                return;
-            }
-
-            Contact inMemoryContact = InMemoryPhoneBook.get().lookupContactByKey(
-                    mContact.getLookupKey());
-            if (inMemoryContact != null) {
-                setValue(inMemoryContact);
-                return;
+            if (mContact != null) {
+                Contact inMemoryContact = InMemoryPhoneBook.get().lookupContactByKey(
+                        mContact.getLookupKey(), mContact.getAccountName());
+                if (inMemoryContact != null) {
+                    setValue(inMemoryContact);
+                    return;
+                }
             }
 
             if (mRunnableFuture != null) {
@@ -119,32 +122,18 @@ public class ContactDetailsViewModel extends AndroidViewModel {
             mRunnableFuture = mWorkerExecutor.getSingleThreadExecutor().submit(
                     () -> {
                         Uri refreshedContactLookupUri = ContactsContract.Contacts.getLookupUri(
-                                mContext.getContentResolver(), mContact.getLookupUri());
+                                mContext.getContentResolver(),
+                                mContact == null ? mContactLookupUri : mContact.getLookupUri());
                         if (refreshedContactLookupUri == null) {
                             postValue(null);
                             return;
                         }
-                        long contactId = ContentUris.parseId(refreshedContactLookupUri);
-                        try (Cursor cursor = mContext.getContentResolver().query(
-                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                /* projection= */null,
-                                /* selection= */
-                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ? ",
-                                new String[]{String.valueOf(contactId)},
-                                /* orderBy= */null)) {
-                            if (cursor == null) {
-                                postValue(null);
-                                return;
-                            }
 
-                            if (cursor.moveToFirst()) {
-                                String lookupKey = cursor.getString(cursor.getColumnIndex(
-                                        ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY));
-                                Contact contact = InMemoryPhoneBook.get().lookupContactByKey(
-                                        lookupKey);
-                                postValue(contact);
-                            }
-                        }
+                        List<String> pathSegments = refreshedContactLookupUri.getPathSegments();
+                        String lookupKey = pathSegments.get(pathSegments.size() - 2);
+                        Contact contact = InMemoryPhoneBook.get().lookupContactByKey(lookupKey,
+                                mContact == null ? mAccountName : mContact.getAccountName());
+                        postValue(contact);
                     }
             );
         }
@@ -154,7 +143,7 @@ public class ContactDetailsViewModel extends AndroidViewModel {
                 return;
             }
             Contact inMemoryContact = InMemoryPhoneBook.get().lookupContactByKey(
-                    mContact.getLookupKey());
+                    mContact.getLookupKey(), mContact.getAccountName());
             setValue(inMemoryContact);
         }
 

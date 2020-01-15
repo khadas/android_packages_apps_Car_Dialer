@@ -16,15 +16,14 @@
 
 package com.android.car.dialer.ui.common;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.Resources;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
+import com.android.car.ui.AlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ public class DialerUtils {
             List<PhoneNumber> numbers,
             PhoneNumberSelectionCallback callback) {
         final List<PhoneNumber> selectedPhoneNumber = new ArrayList<>();
-        new AlertDialog.Builder(context)
+        new AlertDialogBuilder(context)
                 .setTitle(R.string.select_number_dialog_title)
                 .setSingleChoiceItems(
                         new PhoneNumberListAdapter(context, numbers),
@@ -106,17 +105,5 @@ public class DialerUtils {
         } else {
             L.w(TAG, "contact %s doesn't have any phone number", contact.getDisplayName());
         }
-    }
-
-    /** Returns true if this a short height screen */
-    public static boolean isShortScreen(Context context) {
-        Resources resources = context.getResources();
-        return resources.getBoolean(R.bool.screen_size_short);
-    }
-
-    /** Returns true if this a tall height screen */
-    public static boolean isTallScreen(Context context) {
-        Resources resources = context.getResources();
-        return resources.getBoolean(R.bool.screen_size_tall);
     }
 }

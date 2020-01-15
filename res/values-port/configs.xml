@@ -14,16 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:width="@*android:dimen/car_margin"
-        android:drawable="@android:color/transparent"/>
-
-    <item
-        android:gravity="center"
-        android:width="@dimen/primary_icon_size"
-        android:height="@dimen/primary_icon_size"
-        android:drawable="@drawable/ic_app_icon">
-    </item>
-</layer-list>
+<resources>
+    <!-- Use app name as toolbar title. Supported value see @attr/toolbarTitleMode -->
+    <integer name="config_toolbar_title_mode">0</integer>
+</resources>

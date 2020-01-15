@@ -40,7 +40,9 @@ import com.android.car.telephony.common.PhoneCallLog;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /** Controller that manages the missed call notifications. */
@@ -93,7 +95,7 @@ public final class MissedCallNotificationController {
     private final UnreadMissedCallLiveData mUnreadMissedCallLiveData;
     private final Observer<List<PhoneCallLog>> mUnreadMissedCallObserver;
     private final List<PhoneCallLog> mCurrentPhoneCallLogList;
-    private CompletableFuture<Void> mUpdateNotificationFuture;
+    private final Map<String, CompletableFuture<Void>> mUpdateFutures;
 
     @TargetApi(26)
     private MissedCallNotificationController(Context context) {
@@ -109,6 +111,8 @@ public final class MissedCallNotificationController {
         mUnreadMissedCallLiveData = UnreadMissedCallLiveData.newInstance(context);
         mUnreadMissedCallObserver = this::updateNotifications;
         mUnreadMissedCallLiveData.observeForever(mUnreadMissedCallObserver);
+
+        mUpdateFutures = new HashMap<>();
     }
 
     /**
@@ -134,18 +138,21 @@ public final class MissedCallNotificationController {
 
     private void showMissedCallNotification(PhoneCallLog callLog) {
         L.d(TAG, "show missed call notification %s", callLog);
-        if (mUpdateNotificationFuture != null) {
-            mUpdateNotificationFuture.cancel(true);
-        }
         String phoneNumber = callLog.getPhoneNumberString();
-        mUpdateNotificationFuture = NotificationUtils.getDisplayNameAndRoundedAvatar(
+        String tag = getTag(callLog);
+        CompletableFuture<Void> updateFuture = mUpdateFutures.get(tag);
+        if (updateFuture != null) {
+            updateFuture.cancel(true);
+        }
+        updateFuture = NotificationUtils.getDisplayNameAndRoundedAvatar(
                 mContext, phoneNumber)
                 .thenAcceptAsync((pair) -> {
+                    int callLogSize = callLog.getAllCallRecords().size();
                     Notification.Builder builder = new Notification.Builder(mContext, CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_phone)
                             .setLargeIcon(pair.second)
-                            .setContentTitle(mContext.getString(R.string.notification_missed_call)
-                                    + String.format(" (%d)", callLog.getAllCallRecords().size()))
+                            .setContentTitle(mContext.getResources().getQuantityString(
+                                    R.plurals.notification_missed_call, callLogSize, callLogSize))
                             .setContentText(pair.first)
                             .setContentIntent(getContentPendingIntent())
                             .setDeleteIntent(getDeleteIntent())
@@ -161,15 +168,18 @@ public final class MissedCallNotificationController {
                     }
 
                     mNotificationManager.notify(
-                            getTag(callLog),
+                            tag,
                             NOTIFICATION_ID,
                             builder.build());
                 }, mContext.getMainExecutor());
+        mUpdateFutures.put(tag, updateFuture);
     }
 
     private void cancelMissedCallNotification(PhoneCallLog phoneCallLog) {
         L.d(TAG, "cancel missed call notification %s", phoneCallLog);
-        mNotificationManager.cancel(getTag(phoneCallLog), NOTIFICATION_ID);
+        String tag = getTag(phoneCallLog);
+        mNotificationManager.cancel(tag, NOTIFICATION_ID);
+        mUpdateFutures.remove(tag);
     }
 
     private PendingIntent getContentPendingIntent() {

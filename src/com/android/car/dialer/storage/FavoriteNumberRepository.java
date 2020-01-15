@@ -58,7 +58,9 @@ public class FavoriteNumberRepository {
 
     private static volatile FavoriteNumberRepository sFavoriteNumberRepository;
 
-    /** Returns the single instance of the {@link FavoriteNumberRepository}. */
+    /**
+     * Returns the single instance of the {@link FavoriteNumberRepository}.
+     */
     public static FavoriteNumberRepository getRepository(final Context context) {
         if (sFavoriteNumberRepository == null) {
             synchronized (FavoriteNumberRepository.class) {
@@ -86,17 +88,23 @@ public class FavoriteNumberRepository {
         mFavoriteContacts = new FavoriteContactLiveData(mContext);
     }
 
-    /** Returns the favorite number list. */
+    /**
+     * Returns the favorite number list.
+     */
     public LiveData<List<FavoriteNumberEntity>> getFavoriteNumbers() {
         return mFavoriteNumbers;
     }
 
-    /** Returns the favorite contact list. */
+    /**
+     * Returns the favorite contact list.
+     */
     public LiveData<List<Contact>> getFavoriteContacts() {
         return mFavoriteContacts;
     }
 
-    /** Add a phone number to favorite. */
+    /**
+     * Add a phone number to favorite.
+     */
     public void addToFavorite(Contact contact, PhoneNumber phoneNumber) {
         FavoriteNumberEntity favoriteNumber = new FavoriteNumberEntity();
         favoriteNumber.setContactId(contact.getId());
@@ -108,7 +116,9 @@ public class FavoriteNumberRepository {
         sSerializedExecutor.execute(() -> mFavoriteNumberDao.insert(favoriteNumber));
     }
 
-    /** Remove a phone number from favorite. */
+    /**
+     * Remove a phone number from favorite.
+     */
     public void removeFromFavorite(Contact contact, PhoneNumber phoneNumber) {
         List<FavoriteNumberEntity> favoriteNumbers = mFavoriteNumbers.getValue();
         if (favoriteNumbers == null) {
@@ -121,7 +131,9 @@ public class FavoriteNumberRepository {
         }
     }
 
-    /** Remove favorite entries for devices that has been unpaired. */
+    /**
+     * Remove favorite entries for devices that has been unpaired.
+     */
     public void cleanup(Set<BluetoothDevice> pairedDevices) {
         L.d(TAG, "remove entries for unpaired devices except %s", pairedDevices);
         sSerializedExecutor.execute(() -> {
@@ -143,8 +155,11 @@ public class FavoriteNumberRepository {
         }
 
         mConvertAllRunnableFuture = sSerializedExecutor.submit(() -> {
+            // Don't set null value to trigger unnecessary update when results are null.
             if (mFavoriteNumbers.getValue() == null) {
-                results.postValue(Collections.emptyList());
+                if (results.getValue() != null) {
+                    results.postValue(Collections.emptyList());
+                }
                 return;
             }
 
@@ -194,7 +209,7 @@ public class FavoriteNumberRepository {
                     Contact contact = Contact.fromCursor(mContext, cursor);
                     contact.getNumbers().clear();
                     Contact inMemoryContact = InMemoryPhoneBook.get().lookupContactByKey(
-                            contact.getLookupKey());
+                            contact.getLookupKey(), contact.getAccountName());
                     for (PhoneNumber inMemoryPhoneNumber : inMemoryContact.getNumbers()) {
                         if (numberMatches(favoriteNumber, inMemoryPhoneNumber)) {
                             contact.getNumbers().add(inMemoryPhoneNumber);

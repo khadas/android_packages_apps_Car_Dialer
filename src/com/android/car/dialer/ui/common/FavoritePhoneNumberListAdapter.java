@@ -20,9 +20,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.telephony.common.Contact;
@@ -32,13 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that presents the {@link PhoneNumber} and its type as two line list
+ * {@link BaseAdapter} that presents the {@link PhoneNumber} and its type as two line list
  * item with stars to indicate favorite state or user selection to add to favorite. Currently
  * favorite phone number is set to disabled so user can not take any action for an existing favorite
  * phone number.
  */
-public class FavoritePhoneNumberListAdapter extends
-        RecyclerView.Adapter<FavoritePhoneNumberListAdapter.PhoneNumberViewHolder> {
+public class FavoritePhoneNumberListAdapter extends BaseAdapter {
     private final Context mContext;
     private final FavoritePhoneNumberPresenter mFavoritePhoneNumberPresenter;
     private final List<PhoneNumber> mPhoneNumbers;
@@ -49,7 +47,9 @@ public class FavoritePhoneNumberListAdapter extends
      * listener.
      */
     public interface FavoritePhoneNumberPresenter {
-        /** Provides the click listener for the given phone number and its present view. */
+        /**
+         * Provides the click listener for the given phone number and its present view.
+         */
         void onItemClicked(PhoneNumber phoneNumber, View itemView);
     }
 
@@ -60,7 +60,9 @@ public class FavoritePhoneNumberListAdapter extends
         mPhoneNumbers = new ArrayList<>();
     }
 
-    /** Sets the phone numbers to display */
+    /**
+     * Sets the phone numbers to display
+     */
     public void setPhoneNumbers(Contact contact, List<PhoneNumber> phoneNumbers) {
         mPhoneNumbers.clear();
         mContact = contact;
@@ -69,58 +71,57 @@ public class FavoritePhoneNumberListAdapter extends
         notifyDataSetChanged();
     }
 
-    @Override
-    public PhoneNumberViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(
-                R.layout.add_favorite_number_list_item, parent, false);
-        return new PhoneNumberViewHolder(itemView, mFavoritePhoneNumberPresenter);
-    }
-
-    @Override
-    public void onBindViewHolder(PhoneNumberViewHolder holder, int position) {
-        holder.bind(mPhoneNumbers.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return mPhoneNumbers.size();
-    }
-
     public Contact getContact() {
         return mContact;
     }
 
-    static class PhoneNumberViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public int getCount() {
+        return mPhoneNumbers.size();
+    }
 
-        private final FavoritePhoneNumberPresenter mFavoritePhoneNumberPresenter;
-        private final TextView mPhoneNumberView;
-        private final TextView mPhoneNumberDescriptionView;
+    @Override
+    public PhoneNumber getItem(int position) {
+        return mPhoneNumbers.get(position);
+    }
 
-        PhoneNumberViewHolder(View itemView,
-                FavoritePhoneNumberPresenter favoritePhoneNumberPresenter) {
-            super(itemView);
-            mFavoritePhoneNumberPresenter = favoritePhoneNumberPresenter;
-            mPhoneNumberView = itemView.findViewById(R.id.phone_number);
-            mPhoneNumberDescriptionView = itemView.findViewById(R.id.phone_number_description);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View itemView;
+        if (convertView == null) {
+            itemView = LayoutInflater.from(mContext).inflate(
+                    R.layout.add_favorite_number_list_item, parent, false);
+        } else {
+            itemView = convertView;
         }
+        PhoneNumber phoneNumber = getItem(position);
+        bind(phoneNumber, itemView);
+        return itemView;
+    }
 
-        void bind(PhoneNumber phoneNumber) {
-            mPhoneNumberView.setText(phoneNumber.getRawNumber());
-            CharSequence readableLabel = phoneNumber.getReadableLabel(itemView.getResources());
+    void bind(PhoneNumber phoneNumber, View itemView) {
+        TextView phoneNumberView = itemView.findViewById(R.id.phone_number);
+        TextView phoneNumberDescriptionView = itemView.findViewById(R.id.phone_number_description);
+        phoneNumberView.setText(phoneNumber.getRawNumber());
+        CharSequence readableLabel = phoneNumber.getReadableLabel(itemView.getResources());
 
-            if (phoneNumber.isFavorite()) {
-                mPhoneNumberDescriptionView.setText(
-                        itemView.getResources().getString(R.string.favorite_number_description,
-                                readableLabel));
-                itemView.setActivated(true);
-                itemView.setEnabled(false);
-            } else {
-                mPhoneNumberDescriptionView.setText(readableLabel);
-                itemView.setActivated(false);
-                itemView.setEnabled(true);
-                itemView.setOnClickListener(
-                        view -> mFavoritePhoneNumberPresenter.onItemClicked(phoneNumber, itemView));
-            }
+        if (phoneNumber.isFavorite()) {
+            phoneNumberDescriptionView.setText(
+                    itemView.getResources().getString(R.string.favorite_number_description,
+                            readableLabel));
+            itemView.setActivated(true);
+            itemView.setEnabled(false);
+        } else {
+            phoneNumberDescriptionView.setText(readableLabel);
+            itemView.setActivated(false);
+            itemView.setEnabled(true);
+            itemView.setOnClickListener(
+                    view -> mFavoritePhoneNumberPresenter.onItemClicked(phoneNumber, itemView));
         }
     }
 }
