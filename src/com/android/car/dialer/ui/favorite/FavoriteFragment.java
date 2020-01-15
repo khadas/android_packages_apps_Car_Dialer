@@ -48,6 +48,7 @@ public class FavoriteFragment extends DialerListBaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getRecyclerView().addItemDecoration(new ItemSpacingDecoration());
         getRecyclerView().setItemAnimator(null);
 

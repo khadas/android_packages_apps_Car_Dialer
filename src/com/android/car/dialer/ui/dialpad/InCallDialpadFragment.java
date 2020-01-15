@@ -114,7 +114,7 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    public void setupToolbar(Toolbar toolbar) {
+    protected void setupToolbar(Toolbar toolbar) {
         // No-op
     }
 
