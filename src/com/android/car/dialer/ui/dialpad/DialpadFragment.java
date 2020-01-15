@@ -174,7 +174,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    public void setupToolbar(Toolbar toolbar) {
+    protected void setupToolbar(Toolbar toolbar) {
         // Only setup the actionbar if we're in dial mode.
         // In all the other modes, there will be another fragment in the activity
         // at the same time, and we don't want to mess up it's action bar.
