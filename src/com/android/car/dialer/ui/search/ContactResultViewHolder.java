@@ -24,13 +24,16 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.TelecomUtils;
 
+import com.bumptech.glide.Glide;
+
 /**
- * A {@link androidx.recyclerview.widget.RecyclerView.ViewHolder} that will parse relevant
- * views out of a {@code contact_result} layout.
+ * A {@link androidx.recyclerview.widget.RecyclerView.ViewHolder} that will parse relevant views out
+ * of a {@code contact_result} layout.
  */
 public class ContactResultViewHolder extends RecyclerView.ViewHolder {
     private final Context mContext;
@@ -54,11 +57,21 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
      * Populates the view that is represented by this ViewHolder with the information in the
      * provided {@link Contact}.
      */
-    public void bind(Contact contact) {
-        mContactCard.setOnClickListener(
-                v -> mOnShowContactDetailListener.onShowContactDetail(contact));
-
+    void bind(Contact contact) {
         mContactName.setText(contact.getDisplayName());
         TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact);
+
+        if (DialerUtils.hasContactDetail(itemView.getResources(), contact)) {
+            mContactCard.setOnClickListener(
+                    v -> mOnShowContactDetailListener.onShowContactDetail(contact));
+        } else {
+            itemView.setEnabled(false);
+        }
+    }
+
+    void recycle() {
+        itemView.setEnabled(true);
+        mContactCard.setOnClickListener(null);
+        Glide.with(mContext).clear(mContactPicture);
     }
 }

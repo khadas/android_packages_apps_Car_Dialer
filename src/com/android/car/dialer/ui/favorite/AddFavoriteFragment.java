@@ -18,6 +18,7 @@ package com.android.car.dialer.ui.favorite;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -89,7 +90,12 @@ public class AddFavoriteFragment extends ContactResultsFragment {
             return;
         }
 
-        mDialogAdapter.setPhoneNumbers(contact, contact.getNumbers());
-        mCurrentDialog.show();
+        if (contact.getNumbers().isEmpty()) {
+            Toast.makeText(getContext(), R.string.no_phone_numbers, Toast.LENGTH_SHORT).show();
+            mCurrentDialog.dismiss();
+        } else {
+            mDialogAdapter.setPhoneNumbers(contact, contact.getNumbers());
+            mCurrentDialog.show();
+        }
     }
 }

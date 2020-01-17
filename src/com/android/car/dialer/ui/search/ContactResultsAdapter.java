@@ -77,6 +77,11 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
     }
 
     @Override
+    public void onViewRecycled(ContactResultViewHolder holder) {
+        holder.recycle();
+    }
+
+    @Override
     public int getItemViewType(int position) {
         // Only one type of view is created, so no need for an individualized view type.
         return 0;
