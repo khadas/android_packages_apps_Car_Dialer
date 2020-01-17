@@ -167,11 +167,17 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
 
         mCallActionView.setOnClickListener(
                 v -> UiCallManager.get().placeCall(phoneNumber.getRawNumber()));
-        mFavoriteActionView.setActivated(phoneNumber.isFavorite());
-        mFavoriteActionView.setOnClickListener(v -> {
-            mPhoneNumberPresenter.onClick(contact, phoneNumber);
-            mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());
-        });
+        mFavoriteActionView.setActivated(phoneNumber.isFavorite() || contact.isStarred());
+        if (contact.isStarred()) {
+            mFavoriteActionView.setEnabled(false);
+            mFavoriteActionView.setOnClickListener(null);
+        } else {
+            mFavoriteActionView.setEnabled(true);
+            mFavoriteActionView.setOnClickListener(v -> {
+                mPhoneNumberPresenter.onClick(contact, phoneNumber);
+                mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());
+            });
+        }
     }
 
     public void bind(Context context, @NonNull PostalAddress postalAddress) {

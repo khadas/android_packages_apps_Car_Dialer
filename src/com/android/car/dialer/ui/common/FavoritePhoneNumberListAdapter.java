@@ -31,10 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link BaseAdapter} that presents the {@link PhoneNumber} and its type as two line list
- * item with stars to indicate favorite state or user selection to add to favorite. Currently
- * favorite phone number is set to disabled so user can not take any action for an existing favorite
- * phone number.
+ * {@link BaseAdapter} that presents the {@link PhoneNumber} and its type as two line list item with
+ * stars to indicate favorite state or user selection to add to favorite. Currently favorite phone
+ * number is set to disabled so user can not take any action for an existing favorite phone number.
  */
 public class FavoritePhoneNumberListAdapter extends BaseAdapter {
     private final Context mContext;
@@ -110,7 +109,9 @@ public class FavoritePhoneNumberListAdapter extends BaseAdapter {
         phoneNumberView.setText(phoneNumber.getRawNumber());
         CharSequence readableLabel = phoneNumber.getReadableLabel(itemView.getResources());
 
-        if (phoneNumber.isFavorite()) {
+        // If contact is a favorite contact downloaded via bluetooth, or the phone number has
+        // been added to the local device, disable the favorite action button.
+        if (mContact.isStarred() || phoneNumber.isFavorite()) {
             phoneNumberDescriptionView.setText(
                     itemView.getResources().getString(R.string.favorite_number_description,
                             readableLabel));

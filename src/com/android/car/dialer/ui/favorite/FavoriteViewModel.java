@@ -20,6 +20,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 import com.android.car.arch.common.FutureData;
 import com.android.car.arch.common.LiveDataFunctions;
@@ -27,6 +28,7 @@ import com.android.car.dialer.storage.FavoriteNumberRepository;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,16 +37,43 @@ import java.util.List;
 public class FavoriteViewModel extends AndroidViewModel {
     private final FavoriteNumberRepository mFavoriteNumberRepository;
     private final LiveData<FutureData<List<Contact>>> mFavoriteContacts;
+    private final LiveData<List<Contact>> mBluetoothFavoriteContacts;
 
     public FavoriteViewModel(Application application) {
         super(application);
         mFavoriteNumberRepository = FavoriteNumberRepository.getRepository(application);
+        mBluetoothFavoriteContacts = new BluetoothFavoriteContactsLiveData(application);
+
+        MediatorLiveData<List<Contact>> favoriteContacts = new MediatorLiveData<>();
+        favoriteContacts.addSource(mFavoriteNumberRepository.getFavoriteContacts(), contacts -> {
+            List<Contact> contactList = new ArrayList<>();
+            if (mBluetoothFavoriteContacts.getValue() != null) {
+                contactList.addAll(mBluetoothFavoriteContacts.getValue());
+            }
+            if (contacts != null) {
+                contactList.addAll(contacts);
+            }
+            favoriteContacts.setValue(contactList);
+        });
+        favoriteContacts.addSource(mBluetoothFavoriteContacts, contacts -> {
+            List<Contact> contactList = new ArrayList<>();
+            if (contacts != null) {
+                contactList.addAll(contacts);
+            }
+            if (mFavoriteNumberRepository.getFavoriteContacts().getValue() != null) {
+                contactList.addAll(mFavoriteNumberRepository.getFavoriteContacts().getValue());
+            }
+            favoriteContacts.setValue(contactList);
+        });
         mFavoriteContacts = LiveDataFunctions.loadingSwitchMap(
-                mFavoriteNumberRepository.getFavoriteContacts(),
+                favoriteContacts,
                 input -> LiveDataFunctions.dataOf(input == null || input.isEmpty() ? null : input));
+
     }
 
-    /** Returns favorite contact list live data. */
+    /**
+     * Returns favorite contact list live data.
+     */
     public LiveData<FutureData<List<Contact>>> getFavoriteContacts() {
         return mFavoriteContacts;
     }
