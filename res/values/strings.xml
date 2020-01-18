@@ -141,14 +141,24 @@
     <!-- Description for the default phone number of the contact [CHAR LIMIT=30] -->
     <string name="primary_number_description">
         <xliff:g id="label" example="Mobile">%1$s</xliff:g>
-        " - Default"
+        ", default"
     </string>
 
-    <!-- Description for the favorite phone number in add to favorite flow [CHAR LIMIT=30] -->
+    <!-- Description for the phone favorite number in the add-to-favorite flow [CHAR LIMIT=30] -->
     <string name="favorite_number_description">
+        "Favorite - "
         <xliff:g id="label" example="Mobile">%1$s</xliff:g>
-        " - Favorite"
     </string>
+    <!-- Description for the local favorite number in the add-to-favorite flow and the contact details page [CHAR LIMIT=30] -->
+    <string name="local_favorite_number_description">
+        "Local favorite - "
+        <xliff:g id="label" example="Mobile">%1$s</xliff:g>
+    </string>
+
+    <!-- Header for phone favorite numbers [CHAR LIMIT=30] -->
+    <string name="phone_favorites">Favorites</string>
+    <!-- Header for local favorite numbers [CHAR LIMIT=30] -->
+    <string name="local_favorites">Local favorites</string>
 
     <!-- Heads Up Notification -->
     <!-- Name of incoming call notification channel in app info [CHAR LIMIT=50] -->

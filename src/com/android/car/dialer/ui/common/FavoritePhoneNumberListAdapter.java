@@ -109,13 +109,20 @@ public class FavoritePhoneNumberListAdapter extends BaseAdapter {
         phoneNumberView.setText(phoneNumber.getRawNumber());
         CharSequence readableLabel = phoneNumber.getReadableLabel(itemView.getResources());
 
-        // If contact is a favorite contact downloaded via bluetooth, or the phone number has
-        // been added to the local device, disable the favorite action button.
-        if (mContact.isStarred() || phoneNumber.isFavorite()) {
+        if (phoneNumber.isFavorite()) {
+            // This phone number is marked as favorite locally. Disable the favorite action button.
+            phoneNumberDescriptionView.setText(
+                    itemView.getResources().getString(R.string.local_favorite_number_description,
+                            readableLabel));
+            itemView.setActivated(true);
+            itemView.setEnabled(false);
+        } else if (mContact.isStarred()) {
+            // This contact is downloaded from phone, all phone numbers under this contact will show
+            // under the favorite tab. Disable the favorite action button.
             phoneNumberDescriptionView.setText(
                     itemView.getResources().getString(R.string.favorite_number_description,
                             readableLabel));
-            itemView.setActivated(true);
+            itemView.setActivated(false);
             itemView.setEnabled(false);
         } else {
             phoneNumberDescriptionView.setText(readableLabel);
