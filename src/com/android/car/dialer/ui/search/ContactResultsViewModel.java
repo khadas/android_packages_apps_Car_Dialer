@@ -109,7 +109,7 @@ public class ContactResultsViewModel extends AndroidViewModel {
         private void onContactsChange(List<Contact> contactList) {
             if (contactList == null || contactList.isEmpty()) {
                 mObservableAsyncQuery.stopQuery();
-                setValue(Collections.emptyList());
+                setValue(null);
             } else {
                 onSearchQueryChanged(mSearchQueryLiveData.getValue());
             }
@@ -118,8 +118,7 @@ public class ContactResultsViewModel extends AndroidViewModel {
         private void onSearchQueryChanged(String searchQuery) {
             if (TextUtils.isEmpty(searchQuery)) {
                 mObservableAsyncQuery.stopQuery();
-                List<Contact> contacts = mContactListLiveData.getValue();
-                setValue(contacts == null ? Collections.emptyList() : contacts);
+                setValue(mContactListLiveData.getValue());
             } else {
                 mObservableAsyncQuery.startQuery();
             }
@@ -131,7 +130,7 @@ public class ContactResultsViewModel extends AndroidViewModel {
 
         private void onQueryFinished(@Nullable Cursor cursor) {
             if (cursor == null) {
-                setValue(Collections.emptyList());
+                setValue(null);
                 return;
             }
 
@@ -146,14 +145,17 @@ public class ContactResultsViewModel extends AndroidViewModel {
             cursor.close();
         }
 
+        /**
+         * Sort and replace null list with empty list.
+         */
         @Override
-        public void setValue(List<Contact> contacts) {
+        public void setValue(@Nullable List<Contact> contacts) {
             if (contacts != null && !contacts.isEmpty()) {
                 Collections.sort(contacts,
                         ContactSortingInfo.getSortingInfo(mContext,
                                 mSharedPreferencesLiveData).first);
             }
-            super.setValue(contacts);
+            super.setValue(contacts == null ? Collections.EMPTY_LIST : contacts);
         }
     }
 
