@@ -67,7 +67,7 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     @Nullable
     private final View mCallActionView;
     @Nullable
-    private final View mFavoriteActionView;
+    private final ImageView mFavoriteActionView;
 
     // Applies to address items
     @Nullable
@@ -152,31 +152,41 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Context context, Contact contact, PhoneNumber phoneNumber) {
-
         mTitle.setText(phoneNumber.getRawNumber());
 
-        // Present the phone number type.
+        // Present the phone number type and local favorite state.
         CharSequence readableLabel = phoneNumber.getReadableLabel(context.getResources());
+        CharSequence favoriteLabel = phoneNumber.isFavorite() ? context.getString(
+                R.string.local_favorite_number_description, readableLabel) : readableLabel;
         if (phoneNumber.isPrimary()) {
-            mText.setText(context.getString(R.string.primary_number_description, readableLabel));
+            mText.setText(context.getString(R.string.primary_number_description, favoriteLabel));
             mText.setTextAppearance(R.style.TextAppearance_DefaultNumberLabel);
         } else {
-            mText.setText(readableLabel);
+            mText.setText(favoriteLabel);
             mText.setTextAppearance(R.style.TextAppearance_ContactDetailsListSubtitle);
         }
 
         mCallActionView.setOnClickListener(
                 v -> UiCallManager.get().placeCall(phoneNumber.getRawNumber()));
-        mFavoriteActionView.setActivated(phoneNumber.isFavorite() || contact.isStarred());
-        if (contact.isStarred()) {
-            mFavoriteActionView.setEnabled(false);
-            mFavoriteActionView.setOnClickListener(null);
-        } else {
-            mFavoriteActionView.setEnabled(true);
-            mFavoriteActionView.setOnClickListener(v -> {
+
+        if (phoneNumber.isFavorite() || !contact.isStarred()) {
+            // If the phone number is marked as favorite locally, enable the action button to
+            // allow users to remove from local favorites.
+            // If the phone number is not a local favorite or a favorite from phone, allow users
+            // to mark it as favorite locally.
+            ViewUtils.setActivated(mFavoriteActionView, phoneNumber.isFavorite());
+            ViewUtils.setEnabled(mFavoriteActionView, true);
+            ViewUtils.setOnClickListener(mFavoriteActionView, v -> {
                 mPhoneNumberPresenter.onClick(contact, phoneNumber);
                 mFavoriteActionView.setActivated(!mFavoriteActionView.isActivated());
             });
+        } else {
+            // The contact is favorite contact downloaded from phone. Disable the favorite action
+            // button so the phone numbers can not be marked as favorite locally as it is not
+            // necessary.
+            ViewUtils.setActivated(mFavoriteActionView, false);
+            ViewUtils.setEnabled(mFavoriteActionView, false);
+            ViewUtils.setOnClickListener(mFavoriteActionView, null);
         }
     }
 
