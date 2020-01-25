@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.favorite;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import com.android.car.telephony.common.Contact;
  * Contains a list of favorite contacts.
  */
 public class FavoriteFragment extends DialerListBaseFragment {
+    private FavoriteAdapter mFavoriteAdapter;
 
     /**
      * Constructs a new {@link FavoriteFragment}
@@ -52,12 +54,12 @@ public class FavoriteFragment extends DialerListBaseFragment {
         getRecyclerView().addItemDecoration(new ItemSpacingDecoration());
         getRecyclerView().setItemAnimator(null);
 
-        FavoriteAdapter adapter = new FavoriteAdapter();
-        adapter.setOnAddFavoriteClickedListener(this::onAddFavoriteClicked);
+        mFavoriteAdapter = new FavoriteAdapter();
+        mFavoriteAdapter.setOnAddFavoriteClickedListener(this::onAddFavoriteClicked);
 
         FavoriteViewModel favoriteViewModel = ViewModelProviders.of(getActivity()).get(
                 FavoriteViewModel.class);
-        adapter.setOnListItemClickedListener(this::onItemClicked);
+        mFavoriteAdapter.setOnListItemClickedListener(this::onItemClicked);
         favoriteViewModel.getFavoriteContacts().observe(this, contacts -> {
             if (contacts.isLoading()) {
                 showLoading();
@@ -66,20 +68,18 @@ public class FavoriteFragment extends DialerListBaseFragment {
                         R.string.no_favorites_added, R.string.add_favorite_button,
                         v -> onAddFavoriteClicked(), true);
             } else {
-                adapter.setFavoriteContacts(contacts.getData());
+                mFavoriteAdapter.setFavoriteContacts(contacts.getData());
                 showContent();
             }
         });
 
-        getRecyclerView().setAdapter(adapter);
+        getRecyclerView().setAdapter(mFavoriteAdapter);
     }
 
     @NonNull
     @Override
     protected RecyclerView.LayoutManager createLayoutManager() {
-        int numOfColumn = getContext().getResources().getInteger(
-                R.integer.favorite_fragment_grid_column);
-        return new GridLayoutManager(getContext(), numOfColumn);
+        return new FavoriteLayoutManager(getContext());
     }
 
     private void onItemClicked(Contact contact) {
@@ -109,6 +109,23 @@ public class FavoriteFragment extends DialerListBaseFragment {
             }
 
             outRect.set(leftPadding, verticalPadding, 0, verticalPadding);
+        }
+    }
+
+    private class FavoriteLayoutManager extends GridLayoutManager {
+        private FavoriteLayoutManager(Context context) {
+            super(context,
+                    context.getResources().getInteger(R.integer.favorite_fragment_grid_column));
+            SpanSizeLookup spanSizeLookup = new SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (mFavoriteAdapter.getItemViewType(position) == FavoriteAdapter.TYPE_HEADER) {
+                        return getSpanCount();
+                    }
+                    return 1;
+                }
+            };
+            setSpanSizeLookup(spanSizeLookup);
         }
     }
 }

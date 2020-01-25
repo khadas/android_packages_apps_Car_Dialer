@@ -71,7 +71,7 @@ public class FavoriteFragmentTest {
         UiCallManager.set(mMockUiCallManager);
 
         when(mMockPhoneNumber.getRawNumber()).thenReturn(RAW_NUMBER);
-        MutableLiveData<FutureData<List<Contact>>> favoriteContacts = new MutableLiveData<>();
+        MutableLiveData<FutureData<List<Object>>> favoriteContacts = new MutableLiveData<>();
         favoriteContacts.setValue(new FutureData<>(false, Arrays.asList(mMockContact)));
         ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
         when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(favoriteContacts);
