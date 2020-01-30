@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Za zamani"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Hakuna za hivi majuzi"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Hakuna anwani"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Inapatikana baada ya kusawazisha. Hakikisha kuwa umeruhusu ili ushiriki anwani kwenye simu yako."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Inapatikana baada ya kusawazisha. Hakikisha kuwa umeruhusu kushiriki anwani kwenye simu yako."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Hakuna vipendwa"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Bado hujaongeza vipendwa"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Ongeza anwani unazowasiliana nazo sana"</string>
@@ -53,8 +53,11 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Chagua nambari ya simu"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Mara moja tu"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Kila wakati"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Chaguomsingi"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g> - Kipendwa"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g>, chaguomsingi"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"Kipendwa - <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"Kivutio kilicho karibu -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Vipendwa"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"Vivutio vilivyo karibu"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Arifa ya simu inayoingia"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Simu inayoingia"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Arifa ya simu ambayo hukujibu"</string>

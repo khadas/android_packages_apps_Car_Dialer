@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Starsze"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Brak ostatnich"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Brak kontaktów"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Lista kontaktów będzie dostępna po ukończeniu synchronizacji. Upewnij się, że na telefonie jest włączone udostępnianie kontaktów."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Strona będzie dostępna po ukończeniu synchronizacji. Upewnij się, że na telefonie jest włączone udostępnianie kontaktów."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Brak ulubionych"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Nie masz jeszcze nikogo w ulubionych"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Dodaj ulubiony kontakt"</string>
@@ -53,8 +53,11 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Wybierz numer telefonu"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Tylko raz"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Zawsze"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – numer domyślny"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g> – dodaj do ulubionych"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g>, domyślny"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"Ulubiony – <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"Ulubione miejsce – <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Ulubione"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"Ulubione miejsca"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Powiadomienie o połączeniu przychodzącym"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Połączenie przychodzące"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Powiadomienie o nieodebranym połączeniu"</string>

@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"আরও পুরনো"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"কোনও সাম্প্রতিক কল নেই"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"কোনও পরিচিতি নেই"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"সিঙ্ক হওয়ার পরে পাওয়া যাবে। আপনার ফোনে পরিচিতি শেয়ার করার অনুমতি দিয়েছেন কিনা, ভাল করে দেখে নিন।"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"সিঙ্ক হওয়ার পরে পাওয়া যাবে। আপনার ফোনে পরিচিতিগুলি শেয়ার করার অনুমতি দিয়েছেন কিনা তা দেখে নিন।"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"কোনও পছন্দসই নেই"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"আপনি এখনও পর্যন্ত কাউকে পছন্দসই হিসেবে যোগ করেননি"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"একটি পছন্দ যোগ করুন"</string>
@@ -53,8 +53,16 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"কোনও একটি ফোন নম্বর বেছে নিন"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"শুধু একবার"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"সবসময়"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ডিফল্ট"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - পছন্দ"</string>
+    <!-- no translation found for primary_number_description (1211198148918329509) -->
+    <skip />
+    <!-- no translation found for favorite_number_description (8175362259853807385) -->
+    <skip />
+    <!-- no translation found for local_favorite_number_description (3723823871011997275) -->
+    <skip />
+    <!-- no translation found for phone_favorites (2257447553252980575) -->
+    <skip />
+    <!-- no translation found for local_favorites (4954852813126882412) -->
+    <skip />
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ইনকামিং কলের বিজ্ঞপ্তি"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ইনকামিং কল"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"মিসড কলের বিজ্ঞপ্তি"</string>

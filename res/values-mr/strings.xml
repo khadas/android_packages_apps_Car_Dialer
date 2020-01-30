@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"जुने"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"अलीकडील कोणतेही नाहीत"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"कोणतेही संपर्क नाहीत"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"सिंक केल्यानंतर उपलब्ध होईल. तुम्ही तुमच्या फोनमधून संपर्क शेअर करण्याची अनुमती दिली असल्याची खात्री करा."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"सिंक केल्यानंतर उपलब्ध होईल. तुम्ही तुमच्या फोनमधून संपर्क शेअर करण्याची अनुमती दिली असल्याची खात्री करा."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"कोणतेही आवडते नाहीत"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"तुम्ही सध्या कोणतेही आवडते जोडलेले नाहीत."</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"आवडते जोडा"</string>
@@ -53,8 +53,16 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"फोन नंबर निवडा"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"फक्त एकदा"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"नेहमी"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - डीफॉल्ट"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - आवडते"</string>
+    <!-- no translation found for primary_number_description (1211198148918329509) -->
+    <skip />
+    <!-- no translation found for favorite_number_description (8175362259853807385) -->
+    <skip />
+    <!-- no translation found for local_favorite_number_description (3723823871011997275) -->
+    <skip />
+    <!-- no translation found for phone_favorites (2257447553252980575) -->
+    <skip />
+    <!-- no translation found for local_favorites (4954852813126882412) -->
+    <skip />
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"येणाऱ्या कॉलची सूचना"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"येणारा कॉल"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"मिस्ड कॉलची सूचना"</string>

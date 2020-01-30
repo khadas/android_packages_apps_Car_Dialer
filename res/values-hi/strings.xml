@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"पहले के"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"हाल का कॉल लॉग उपलब्ध नहीं है"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"कोई संपर्क नहीं"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"सिंक करने के बाद संपर्क उपलब्ध होंगे. पक्का कर लें कि आपने फ़ोन पर संपर्क शेयर करने की मंज़ूरी दी है."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"सिंक करने के बाद जानकारी उपलब्ध हाेगी. पक्का कर लें कि आपने फ़ोन पर संपर्काें काे शेयर करने की अनुमति दी है."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"कोई पसंदीदा संपर्क नहीं"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"आपने अब तक पसंदीदा संपर्क के तौर पर किसी को नहीं जोड़ा है"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"पसंदीदा संपर्क जोड़ें"</string>
@@ -53,8 +53,11 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"फ़ोन नंबर चुनें"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"सिर्फ़ एक बार"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"हमेशा"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - डिफ़ॉल्ट"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - पसंदीदा"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , डिफ़ॉल्ट"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"पसंदीदा नंबर - <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"पसंदीदा स्थानीय नंबर - <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"पसंदीदा नंबर"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"पसंदीदा स्थानीय नंबर"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"आने वाले कॉल (इनकमिंग) की सूचना"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"आने वाला कॉल (इनकमिंग)"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"मिस्ड कॉल (छूटी हुई कॉल) की सूचना"</string>

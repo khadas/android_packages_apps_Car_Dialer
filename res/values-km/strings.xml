@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"ចាស់ៗ"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"គ្មានថ្មីទេ"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"គ្មានទំនាក់ទំនងទេ"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"មានបន្ទាប់ពីធ្វើសមកាលកម្ម។ សូមប្រាកដថា អ្នក​បានអនុញ្ញាតឱ្យចែករំលែកទំនាក់ទំនងនៅលើទូរសព្ទរបស់អ្នក។"</string>
+    <string name="available_after_sync" msgid="33765918799197782">"មានបន្ទាប់ពីធ្វើសមកាលកម្ម។ សូមប្រាកដថា អ្នក​បានអនុញ្ញាត​ឱ្យចែករំលែក​ទំនាក់ទំនង​នៅលើទូរសព្ទ​របស់អ្នក។"</string>
     <string name="favorites_empty" msgid="5794510741132758130">"គ្មានសំណព្វទេ"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"អ្នក​មិនទាន់​​បាន​បញ្ចូល​​សំណព្វ​ណា​មួយ​នៅ​ឡើយ​ទេ"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"បញ្ចូលសំណព្វ"</string>
@@ -53,8 +53,11 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ជ្រើសរើស​លេខទូរសព្ទ"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"តែ​ម្ដង"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"ជានិច្ច"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - លំនាំដើម"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - សំណព្វ"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> លំនាំដើម"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"សំណព្វ -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"លេខ​សំណព្វ​ក្នុងតំបន់ -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"សំណព្វ"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"លេខ​សំណព្វ​ក្នុងតំបន់"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ការជូនដំណឹង​អំពីការហៅចូល"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ការ​ហៅ​ចូល"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"ការជូនដំណឹង​អំពីការខកខាន​ទទួល"</string>

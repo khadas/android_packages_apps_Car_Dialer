@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Ouder"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Geen recente items"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Geen contacten"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Beschikbaar na synchronisatie. Zorg ervoor dat je het delen van contacten op je telefoon hebt toegestaan."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Beschikbaar na synchronisatie. Zorg ervoor dat je het delen van contacten op je telefoon hebt toegestaan."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Geen favorieten"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Je hebt nog geen favorieten toegevoegd"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Een favoriet toevoegen"</string>
@@ -53,8 +53,11 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Een telefoonnummer kiezen"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Eén keer"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Altijd"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> - Standaard"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - favoriet"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g>, standaard"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"Favoriet - <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"Lokale favoriet - <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Favorieten"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"Lokale favorieten"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Melding over inkomend gesprek"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Inkomend gesprek"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Melding voor gemist gesprek"</string>

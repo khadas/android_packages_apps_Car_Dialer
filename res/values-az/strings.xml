@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Əvvəlki"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Sonuncular yoxdur"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Kontakt yoxdur"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Sinxronlaşdırmadan sonra əlçatandır. Telefonda kontaktların paylaşılmasına icazə verdiyinizə əmin olun."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Sinxronlaşdırmadan sonra əlçatandır. Telefonda kontaktların paylaşılmasına icazə verdiyinizə əmin olun."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Sevimlilər yoxdur"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Hələ heç bir sevimli element əlavə etməmisiniz"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Sevimli kontakt əlavə edin"</string>
@@ -53,8 +53,11 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Telefon nömrəsi seçin"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Sadəcə bir dəfə"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Həmişə"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Defolt"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - Sevimli"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , defolt"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"Sevimli -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"Yerli sevimli -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Sevimlilər"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"Yerli sevimlilər"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Gələn zəng bildirişi"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Gələn zəng"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Buraxılmış zəng bildirişi"</string>

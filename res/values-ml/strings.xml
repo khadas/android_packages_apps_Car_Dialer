@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"പഴയത്"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"അടുത്തിടെയുള്ളവയൊന്നുമില്ല"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"കോൺടാക്റ്റുകളൊന്നുമില്ല"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"സമന്വയിപ്പിച്ചതിന് ശേഷം ലഭ്യമാകും. ഫോണിൽ കോൺടാക്റ്റുകൾ പങ്കിടാൻ നിങ്ങൾ അനുവദിച്ചിട്ടുണ്ടെന്ന് ഉറപ്പാക്കുക."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"സമന്വയിപ്പിച്ചതിന് ശേഷം ലഭ്യമാകും. കോൺടാക്റ്റുകൾ പങ്കിടൽ നിങ്ങളുടെ ഫോണിൽ അനുവദിച്ചിട്ടുണ്ടെന്ന് ഉറപ്പാക്കുക."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"പ്രിയപ്പെട്ടവയൊന്നുമില്ല"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"നിങ്ങൾ ഇതുവരെ പ്രിയപ്പെട്ടവയൊന്നും ചേർത്തിട്ടില്ല"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"പ്രിയപ്പെട്ടത് ചേർക്കുക"</string>
@@ -53,8 +53,16 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"ഫോൺ നമ്പർ തിരഞ്ഞെടുക്കുക"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"ഒരിക്കൽ മാത്രം"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"എപ്പോഴും"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ഡിഫോൾട്ട്"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - പ്രിയപ്പെട്ടത്"</string>
+    <!-- no translation found for primary_number_description (1211198148918329509) -->
+    <skip />
+    <!-- no translation found for favorite_number_description (8175362259853807385) -->
+    <skip />
+    <!-- no translation found for local_favorite_number_description (3723823871011997275) -->
+    <skip />
+    <!-- no translation found for phone_favorites (2257447553252980575) -->
+    <skip />
+    <!-- no translation found for local_favorites (4954852813126882412) -->
+    <skip />
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ഇൻകമിംഗ് കോൾ അറിയിപ്പ്"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ഇന്‍‌കമിംഗ് കോള്‍"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"മിസ്‌ഡ് കോൾ അറിയിപ്പ്"</string>
