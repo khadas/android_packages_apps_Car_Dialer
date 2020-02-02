@@ -53,16 +53,11 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"এটা ফ’ন নম্বৰ বাছনি কৰক"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"মাত্ৰ এবাৰ"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"সদায়"</string>
-    <!-- no translation found for primary_number_description (1211198148918329509) -->
-    <skip />
-    <!-- no translation found for favorite_number_description (8175362259853807385) -->
-    <skip />
-    <!-- no translation found for local_favorite_number_description (3723823871011997275) -->
-    <skip />
-    <!-- no translation found for phone_favorites (2257447553252980575) -->
-    <skip />
-    <!-- no translation found for local_favorites (4954852813126882412) -->
-    <skip />
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , ডিফ’ল্ট"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"প্ৰিয় -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"স্থানীয় প্ৰিয় -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"প্ৰিয়সমূহ"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"স্থানীয় প্ৰিয়সমূহ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"অন্তৰ্গামী কলৰ জাননী"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"অন্তৰ্গামী কল"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"মিছড কলৰ জাননী"</string>
