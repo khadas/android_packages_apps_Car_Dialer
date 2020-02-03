@@ -44,6 +44,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowLooper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -119,6 +120,7 @@ public class FavoriteFragmentTest {
         when(mMockContact.getNumbers()).thenReturn(
                 Arrays.asList(mMockPhoneNumber, otherMockPhoneNumber));
 
+        ShadowLooper.pauseMainLooper();
         mViewHolder.itemView.performClick();
 
         verify(mMockUiCallManager, never()).placeCall(any());

@@ -53,6 +53,7 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
+import org.robolectric.shadows.ShadowLooper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -132,6 +133,7 @@ public class ContactListFragmentTest {
 
         assertThat(ShadowAlertDialog.getLatestAlertDialog()).isNull();
         View callActionView = mViewHolder.itemView.findViewById(R.id.call_action_id);
+        ShadowLooper.pauseMainLooper();
         callActionView.performClick();
 
         verify(mMockUiCallManager, never()).placeCall(any());
