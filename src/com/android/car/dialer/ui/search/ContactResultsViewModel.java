@@ -171,8 +171,7 @@ public class ContactResultsViewModel extends AndroidViewModel {
         public QueryParam getQueryParam() {
             Uri lookupUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI,
                     Uri.encode(mSearchQueryLiveData.getValue()));
-            return new QueryParam(lookupUri, CONTACT_DETAILS_PROJECTION,
-                    ContactsContract.Contacts.HAS_PHONE_NUMBER + "!=0",
+            return new QueryParam(lookupUri, CONTACT_DETAILS_PROJECTION, null,
                     /* selectionArgs= */null, /* orderBy= */null);
         }
     }

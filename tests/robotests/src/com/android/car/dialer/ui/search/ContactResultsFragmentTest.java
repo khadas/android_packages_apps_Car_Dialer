@@ -37,6 +37,7 @@ import com.android.car.dialer.ui.contact.ContactDetailsFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsViewModel;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
+import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
 import org.junit.After;
@@ -50,6 +51,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Config(shadows = {ShadowAndroidViewModelFactory.class})
@@ -71,6 +73,8 @@ public class ContactResultsFragmentTest {
     private Contact mMockContact;
     @Mock
     private Contact mContact1, mContact2, mContact3;
+    @Mock
+    private PhoneNumber mPhoneNumber;
 
     @Before
     public void setUp() {
@@ -84,8 +88,11 @@ public class ContactResultsFragmentTest {
                 ContactResultsViewModel.class, mMockContactResultsViewModel);
 
         when(mContact1.getDisplayName()).thenReturn(DISPLAY_NAMES[0]);
+        when(mContact1.getNumbers()).thenReturn(Collections.singletonList(mPhoneNumber));
         when(mContact2.getDisplayName()).thenReturn(DISPLAY_NAMES[1]);
+        when(mContact2.getNumbers()).thenReturn(Collections.singletonList(mPhoneNumber));
         when(mContact3.getDisplayName()).thenReturn(DISPLAY_NAMES[2]);
+        when(mContact3.getNumbers()).thenReturn(Collections.singletonList(mPhoneNumber));
     }
 
     @After

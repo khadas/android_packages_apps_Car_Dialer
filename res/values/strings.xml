@@ -150,6 +150,9 @@
         " - Favorite"
     </string>
 
+    <!-- Message in the add-to-favorite flow that no phone number available for this contact [CHAR_LIMIT=50] -->
+    <string name="no_phone_numbers">No phone numbers</string>
+
     <!-- Heads Up Notification -->
     <!-- Name of incoming call notification channel in app info [CHAR LIMIT=50] -->
     <string name="in_call_notification_channel_name">Incoming call notification</string>
