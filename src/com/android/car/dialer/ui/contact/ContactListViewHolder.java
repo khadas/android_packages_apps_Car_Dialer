@@ -126,8 +126,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
             return;
         }
 
-        boolean hasContactDetail = contact != null
-                && (!contact.getNumbers().isEmpty() || hasPostalAddress(contact));
+        boolean hasContactDetail = DialerUtils.hasContactDetail(itemView.getResources(), contact);
 
         ViewUtils.setEnabled(mShowContactDetailView, hasContactDetail);
         ViewUtils.setVisible(mShowContactDetailView, hasContactDetail || forceShowButton);
@@ -138,12 +137,6 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
         } else {
             ViewUtils.setOnClickListener(mShowContactDetailView, null);
         }
-    }
-
-    private boolean hasPostalAddress(@NonNull Contact contact) {
-        boolean showPostalAddress = itemView.getResources().getBoolean(
-                R.bool.config_show_postal_address);
-        return showPostalAddress && (!contact.getPostalAddresses().isEmpty());
     }
 
     /**

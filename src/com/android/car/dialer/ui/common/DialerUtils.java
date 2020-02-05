@@ -17,6 +17,10 @@
 package com.android.car.dialer.ui.common;
 
 import android.content.Context;
+import android.content.res.Resources;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
@@ -105,5 +109,24 @@ public class DialerUtils {
         } else {
             L.w(TAG, "contact %s doesn't have any phone number", contact.getDisplayName());
         }
+    }
+
+    /**
+     * Returns true if the contact has postal address and show postal address config is true.
+     */
+    private static boolean hasPostalAddress(Resources resources, @NonNull Contact contact) {
+        boolean showPostalAddress = resources.getBoolean(
+                R.bool.config_show_postal_address);
+        return showPostalAddress && (!contact.getPostalAddresses().isEmpty());
+    }
+
+    /**
+     * Returns true if the contact has either phone number or postal address to show.
+     */
+    public static boolean hasContactDetail(Resources resources, @Nullable Contact contact) {
+        boolean hasContactDetail = contact != null
+                && (!contact.getNumbers().isEmpty() || DialerUtils.hasPostalAddress(
+                resources, contact));
+        return hasContactDetail;
     }
 }
