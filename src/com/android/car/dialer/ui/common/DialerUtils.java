@@ -28,6 +28,8 @@ import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.AlertDialogBuilder;
+import com.android.car.ui.recyclerview.CarUiRadioButtonListItem;
+import com.android.car.ui.recyclerview.CarUiRadioButtonListItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +47,9 @@ public class DialerUtils {
     public interface PhoneNumberSelectionCallback {
         /**
          * Called when a phone number is chosen.
+         *
          * @param phoneNumber The phone number
-         * @param always Whether the user pressed "aways" or "just once"
+         * @param always      Whether the user pressed "aways" or "just once"
          */
         void onPhoneNumberSelected(PhoneNumber phoneNumber, boolean always);
     }
@@ -58,16 +61,28 @@ public class DialerUtils {
     public static void showPhoneNumberSelector(Context context,
             List<PhoneNumber> numbers,
             PhoneNumberSelectionCallback callback) {
+
         final List<PhoneNumber> selectedPhoneNumber = new ArrayList<>();
+        List<CarUiRadioButtonListItem> items = new ArrayList<>();
+        CarUiRadioButtonListItemAdapter adapter = new CarUiRadioButtonListItemAdapter(items);
+
+        for (PhoneNumber number : numbers) {
+            CharSequence readableLabel = number.getReadableLabel(context.getResources());
+            CarUiRadioButtonListItem item = new CarUiRadioButtonListItem();
+            item.setTitle(number.isPrimary()
+                    ? context.getString(R.string.primary_number_description, readableLabel)
+                    : readableLabel);
+            item.setBody(number.getNumber());
+            item.setOnCheckedChangeListener((i, isChecked) -> {
+                selectedPhoneNumber.clear();
+                selectedPhoneNumber.add(number);
+            });
+            items.add(item);
+        }
+
         new AlertDialogBuilder(context)
                 .setTitle(R.string.select_number_dialog_title)
-                .setSingleChoiceItems(
-                        new PhoneNumberListAdapter(context, numbers),
-                        -1,
-                        ((dialog, which) -> {
-                            selectedPhoneNumber.clear();
-                            selectedPhoneNumber.add(numbers.get(which));
-                        }))
+                .setSingleChoiceItems(adapter, null)
                 .setNeutralButton(R.string.select_number_dialog_just_once_button,
                         (dialog, which) -> {
                             if (!selectedPhoneNumber.isEmpty()) {
