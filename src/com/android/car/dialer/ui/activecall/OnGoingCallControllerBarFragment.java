@@ -147,7 +147,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         if (audioRoutes.size() > 1) {
             mAudioRouteView.setOnClickListener((v) -> {
                 mAudioRouteView.setActivated(true);
-                mAudioRouteAdapter.setActiveAudioRoute(UiCallManager.get().getAudioRoute());
                 mAudioRouteSelectionDialog.show();
             });
         }
@@ -229,10 +228,13 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
     private void updateViewBasedOnAudioRoute(@Nullable Integer audioRoute) {
         if (audioRoute == null) {
+            mAudioRouteAdapter.setActiveAudioRoute(0);
             return;
         }
 
         L.i(TAG, "Audio Route State: " + audioRoute);
+        mAudioRouteAdapter.setActiveAudioRoute(audioRoute.intValue());
+
         AudioRouteInfo audioRouteInfo = getAudioRouteInfo(audioRoute);
         if (mAudioRouteButton != null) {
             mAudioRouteButton.setImageResource(audioRouteInfo.mIconActivatable);
