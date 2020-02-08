@@ -16,11 +16,10 @@
 
 package com.android.car.dialer.ui.common.entity;
 
-import android.net.Uri;
-
 import androidx.annotation.Nullable;
 
 import com.android.car.dialer.livedata.CallHistoryLiveData;
+import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneCallLog;
 
 import java.util.ArrayList;
@@ -32,29 +31,26 @@ import java.util.List;
  */
 public class UiCallLog {
     private final String mTitle;
+    private String mText;
     private final String mNumber;
     @Nullable
-    private final String mInitials;
-    private final Uri mAvatarUri;
+    private final Contact mContact;
     private final List<PhoneCallLog.Record> mCallRecords;
-    private String mText;
 
-    public UiCallLog(String title, String text, String number, @Nullable String initials,
-            Uri avatarUri, List<PhoneCallLog.Record> callRecords) {
+    public UiCallLog(String title, String text, String number, @Nullable Contact contact,
+            List<PhoneCallLog.Record> callRecords) {
         mTitle = title;
         mText = text;
         mNumber = number;
-        mInitials = initials;
-        mAvatarUri = avatarUri;
+        mContact = contact;
         mCallRecords = new ArrayList<>(callRecords);
     }
 
     /**
-     * Returns the initials of a call log item. Returns null if this item is not a contact.
+     * Updates the body text.
      */
-    @Nullable
-    public String getInitials() {
-        return mInitials;
+    public void setText(String text) {
+        mText = text;
     }
 
     /**
@@ -72,23 +68,18 @@ public class UiCallLog {
     }
 
     /**
-     * Updates the body text.
-     */
-    public void setText(String text) {
-        mText = text;
-    }
-
-    /**
      * Returns the number of this call log.
      */
     public String getNumber() {
         return mNumber;
     }
 
-    /** Returns the avatar of the contact associated with the number. */
+    /**
+     * Returns the related contact of a call log item. Returns null if this item is not a contact.
+     */
     @Nullable
-    public Uri getAvatarUri() {
-        return mAvatarUri;
+    public Contact getContact() {
+        return mContact;
     }
 
     /**
