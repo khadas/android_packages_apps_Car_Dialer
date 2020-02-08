@@ -229,10 +229,13 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
     private void updateViewBasedOnAudioRoute(@Nullable Integer audioRoute) {
         if (audioRoute == null) {
+            mAudioRouteAdapter.setActiveAudioRoute(0);
             return;
         }
 
         L.i(TAG, "Audio Route State: " + audioRoute);
+        mAudioRouteAdapter.setActiveAudioRoute(audioRoute.intValue());
+
         AudioRouteInfo audioRouteInfo = getAudioRouteInfo(audioRoute);
         if (mAudioRouteButton != null) {
             mAudioRouteButton.setImageResource(audioRouteInfo.mIconActivatable);
