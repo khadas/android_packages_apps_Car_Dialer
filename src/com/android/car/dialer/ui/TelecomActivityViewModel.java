@@ -203,16 +203,16 @@ public class TelecomActivityViewModel extends AndroidViewModel {
                     isBluetoothEnabled,
                     hasPairedDevices,
                     isHfpConnected);
-            if (!isBluetoothEnabled) {
-                setValue(mContext.getString(R.string.bluetooth_disabled));
-            } else if (!hasPairedDevices) {
-                setValue(mContext.getString(R.string.bluetooth_unpaired));
-            } else if (!isHfpConnected) {
-                setValue(mContext.getString(R.string.no_hfp));
-            } else {
+            if (isHfpConnected) {
                 if (!NO_BT_ERROR.equals(getValue())) {
                     setValue(NO_BT_ERROR);
                 }
+            } else if (!isBluetoothEnabled) {
+                setValue(mContext.getString(R.string.bluetooth_disabled));
+            } else if (!hasPairedDevices) {
+                setValue(mContext.getString(R.string.bluetooth_unpaired));
+            } else {
+                setValue(mContext.getString(R.string.no_hfp));
             }
         }
 
