@@ -17,24 +17,19 @@
 package com.android.car.dialer.ui.favorite;
 
 import android.app.AlertDialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.common.FavoritePhoneNumberListAdapter;
 import com.android.car.dialer.ui.search.ContactResultsFragment;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.ui.AlertDialogBuilder;
-import com.android.car.ui.recyclerview.CarUiContentListItem;
-import com.android.car.ui.recyclerview.CarUiListItem;
-import com.android.car.ui.recyclerview.CarUiListItemAdapter;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -50,12 +45,7 @@ public class AddFavoriteFragment extends ContactResultsFragment {
     }
 
     private AlertDialog mCurrentDialog;
-    private CarUiListItemAdapter mDialogAdapter;
-    private List<CarUiListItem> mFavoritePhoneNumberList;
-    private Set<PhoneNumber> mSelectedNumbers;
-    private Contact mSelectedContact;
-    private Drawable mFavoriteIcon;
-    private Drawable mFavoriteIconEmpty;
+    private FavoritePhoneNumberListAdapter mDialogAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,68 +53,34 @@ public class AddFavoriteFragment extends ContactResultsFragment {
 
         FavoriteViewModel favoriteViewModel = ViewModelProviders.of(getActivity()).get(
                 FavoriteViewModel.class);
-        mSelectedNumbers = new HashSet<>();
+        Set<PhoneNumber> selectedNumbers = new HashSet<>();
 
-        mFavoriteIcon = getResources().getDrawable(R.drawable.ic_favorite_activatable, null);
-        mFavoriteIcon.setTintList(
-                getResources().getColorStateList(R.color.primary_icon_selector, null));
-
-        mFavoritePhoneNumberList = new ArrayList<>();
-        mDialogAdapter = new CarUiListItemAdapter(mFavoritePhoneNumberList);
+        mDialogAdapter = new FavoritePhoneNumberListAdapter(getContext(),
+                (phoneNumber, itemView) -> {
+                    boolean isActivated = itemView.isActivated();
+                    itemView.setActivated(!isActivated);
+                    if (isActivated) {
+                        selectedNumbers.remove(phoneNumber);
+                    } else {
+                        selectedNumbers.add(phoneNumber);
+                    }
+                }
+        );
 
         mCurrentDialog = new AlertDialogBuilder(getContext())
                 .setTitle(R.string.select_number_dialog_title)
-                .setAdapter(mDialogAdapter)
+                .setAdapter(mDialogAdapter, null)
                 .setNegativeButton(R.string.cancel_add_favorites_dialog, null)
                 .setPositiveButton(R.string.confirm_add_favorites_dialog,
                         (d, which) -> {
-                            for (PhoneNumber number : mSelectedNumbers) {
-                                favoriteViewModel.addToFavorite(mSelectedContact,
+                            for (PhoneNumber number : selectedNumbers) {
+                                favoriteViewModel.addToFavorite(mDialogAdapter.getContact(),
                                         number);
                             }
-                            mSelectedNumbers.clear();
+                            selectedNumbers.clear();
                             getFragmentManager().popBackStackImmediate();
                         })
                 .create();
-    }
-
-    private void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
-        mFavoritePhoneNumberList.clear();
-        for (PhoneNumber number : phoneNumbers) {
-            CarUiContentListItem item = new CarUiContentListItem(CarUiContentListItem.Action.ICON);
-            item.setTitle(number.getNumber());
-            item.setSupplementalIcon(mFavoriteIcon.getConstantState().newDrawable());
-            setFavoriteItemState(item, number);
-
-            item.setOnItemClickedListener((listItem) -> {
-                if (mSelectedNumbers.contains(number)) {
-                    mSelectedNumbers.remove(number);
-                    listItem.setActivated(false);
-                } else {
-                    mSelectedNumbers.add(number);
-                    listItem.setActivated(true);
-                }
-                mDialogAdapter.notifyItemChanged(mFavoritePhoneNumberList.indexOf(listItem));
-            });
-            mFavoritePhoneNumberList.add(item);
-        }
-        mDialogAdapter.notifyDataSetChanged();
-    }
-
-    private void setFavoriteItemState(CarUiContentListItem item, PhoneNumber number) {
-        CharSequence readableLabel = number.getReadableLabel(getResources());
-
-        if (number.isFavorite()) {
-            // This phone number is marked as favorite locally. Disable the favorite action button.
-            item.setEnabled(false);
-            item.setActivated(true);
-            item.setBody(getResources().getString(R.string.favorite_number_description,
-                    readableLabel));
-        } else {
-            item.setEnabled(true);
-            item.setActivated(false);
-            item.setBody(readableLabel);
-        }
     }
 
     @Override
@@ -134,12 +90,11 @@ public class AddFavoriteFragment extends ContactResultsFragment {
             return;
         }
 
-        mSelectedContact = contact;
         if (contact.getNumbers().isEmpty()) {
             Toast.makeText(getContext(), R.string.no_phone_numbers, Toast.LENGTH_SHORT).show();
             mCurrentDialog.dismiss();
         } else {
-            setPhoneNumbers(contact.getNumbers());
+            mDialogAdapter.setPhoneNumbers(contact, contact.getNumbers());
             mCurrentDialog.show();
         }
     }
