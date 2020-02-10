@@ -18,6 +18,7 @@
     <color name="phone_call">@*android:color/car_green_700</color>
     <color name="phone_end_call">@*android:color/car_red_500a</color>
     <color name="onhold_call_background">@*android:color/car_grey_868</color>
+    <color name="audio_output_accent">@*android:color/car_accent</color>
 
     <!-- Dialpad page -->
     <color name="call_button_outline">@*android:color/car_green_500</color>
