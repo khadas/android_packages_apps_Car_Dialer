@@ -44,7 +44,7 @@ import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
-import com.android.car.ui.toolbar.Toolbar;
+import com.android.car.ui.toolbar.ToolbarController;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMap;
@@ -187,7 +187,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    protected void setupToolbar(Toolbar toolbar) {
+    protected void setupToolbar(ToolbarController toolbar) {
         // Only setup the actionbar if we're in dial mode.
         // In all the other modes, there will be another fragment in the activity
         // at the same time, and we don't want to mess up it's action bar.
@@ -258,12 +258,6 @@ public class DialpadFragment extends AbstractDialpadFragment {
         } else {
             presentContactInfo(number.toString());
         }
-    }
-
-    @Override
-    public void onToolbarHeightChange(int toolbarHeight) {
-        // Offset the dialpad to under the tabs in normal dial mode.
-        getView().setPadding(0, mMode == MODE_DIAL ? toolbarHeight : 0, 0, 0);
     }
 
     private void presentContactInfo(@NonNull String number) {

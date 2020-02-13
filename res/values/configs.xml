@@ -41,8 +41,8 @@
     <!-- A config determines if to show the action bar avatar in the contact details page.-->
     <bool name="config_show_contact_details_action_bar_avatar">true</bool>
 
-    <!-- No toolbar title. Supported value see @attr/toolbarTitleMode -->
-    <integer name="config_toolbar_title_mode">1</integer>
+    <!-- Use app name as toolbar title. Supported value see @attr/toolbarTitleMode -->
+    <integer name="config_toolbar_title_mode">0</integer>
 
     <!-- Config gate the full screen incall ui -->
     <bool name="config_show_fullscreen_incall_ui">true</bool>

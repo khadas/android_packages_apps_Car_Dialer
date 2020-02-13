@@ -15,7 +15,7 @@ limitations under the License.
 -->
 <resources>
     <!-- The base theme for the Dialer app. -->
-    <style name="Theme.Dialer" parent="Theme.CarUi">
+    <style name="Theme.Dialer" parent="Theme.CarUi.WithToolbar">
         <item name="android:listDivider">@drawable/list_divider</item>
         <item name="android:buttonStyle">@style/Widget.Dialer.Button</item>
         <item name="android:textDirection">locale</item>
@@ -25,8 +25,14 @@ limitations under the License.
         <item name="toolbarTitleMode">@integer/config_toolbar_title_mode</item>
     </style>
 
-    <style name="Theme.Dialer.InCall"/>
+    <style name="Theme.Dialer.InCall">
+        <item name="carUiToolbar">false</item>
+    </style>
 
     <style name="Theme.Dialer.Setting"/>
+
+    <style name="Theme.Dialer.ErrorActivity">
+        <item name="carUiToolbar">false</item>
+    </style>
 
 </resources>

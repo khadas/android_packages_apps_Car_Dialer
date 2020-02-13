@@ -51,6 +51,11 @@
             <meta-data android:name="distractionOptimized" android:value="true"/>
             <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
             <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.DIAL"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -63,11 +68,6 @@
                 <action android:name="android.intent.action.DIAL"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="tel"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
             <intent-filter>
@@ -95,6 +95,11 @@
                   android:launchMode="singleTask"
                   android:theme="@style/Theme.Dialer.Setting"
                   android:label="@string/setting_title">
+        </activity>
+
+        <activity android:name=".ui.NoHfpActivity"
+                  android:launchMode="singleTask"
+                  android:theme="@style/Theme.Dialer.ErrorActivity">
         </activity>
 
         <service android:name="com.android.car.dialer.telecom.InCallServiceImpl"
@@ -126,14 +131,6 @@
                 <action android:name="android.bluetooth.device.action.BOND_STATE_CHANGED"/>
             </intent-filter>
         </receiver>
-
-        <!-- Workaround for b/113294940, remove when converting to Android.bp -->
-        <provider
-            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-            tools:replace="android:authorities"
-            android:authorities="${applicationId}"
-            android:exported="false"
-            android:multiprocess="true" />
 
     </application>
 </manifest>

@@ -32,6 +32,7 @@ import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.contact.ContactDetailsFragment;
 import com.android.car.telephony.common.Contact;
 import com.android.car.ui.toolbar.Toolbar;
+import com.android.car.ui.toolbar.ToolbarController;
 
 /**
  * A fragment that will take a search query, look up contacts that match and display those
@@ -63,7 +64,7 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     private final ContactResultsAdapter mAdapter = new ContactResultsAdapter(this);
 
     private RecyclerView.OnScrollListener mOnScrollChangeListener;
-    private Toolbar mToolbar;
+    private ToolbarController mToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (dy != 0) {
                     // Clear the focus to dismiss the keyboard.
-                    mToolbar.clearFocus();
+                    getActivity().getCurrentFocus().clearFocus();
                 }
             }
         };
@@ -115,7 +116,7 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    protected void setupToolbar(@NonNull Toolbar toolbar) {
+    protected void setupToolbar(@NonNull ToolbarController toolbar) {
         super.setupToolbar(toolbar);
         mToolbar = toolbar;
         mToolbar.registerOnSearchListener(this);
