@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Любим в локалните – <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"Любими"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Любими в локалните"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Няма телефонни номера"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Известие за входящо обаждане"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Входящо обаждане"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Известие за пропуснато обаждане"</string>

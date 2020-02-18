@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Intandokazi yasendaweni -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"Izintandokazi"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Izintandokazi zasendaweni"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Azikho izinombolo zefoni"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Isaziso sekholi engenayo"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Ikholi engenayo"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Isaziso sekholi ephuthiwe"</string>

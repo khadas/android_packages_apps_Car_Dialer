@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"அறிமுகமானவரில் பிடித்த எண் -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"பிடித்த எண்கள்"</string>
     <string name="local_favorites" msgid="4954852813126882412">"அறிமுகமானவரில் பிடித்த எண்கள்"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"மொபைல் எண்கள் இல்லை"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"உள்வரும் அழைப்புக்கான அறிவிப்பு"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"உள்வரும் அழைப்பு"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"தவறிய அழைப்புக்கான அறிவிப்பு"</string>
