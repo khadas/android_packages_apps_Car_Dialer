@@ -53,8 +53,12 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Khetha inombolo yefoni"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Kanye nje"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Njalo"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Okuzenzakalelayo"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - Intandokazi"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , okuzenzakalelayo"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"Intandokazi -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"Intandokazi yasendaweni -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Izintandokazi"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"Izintandokazi zasendaweni"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Azikho izinombolo zefoni"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Isaziso sekholi engenayo"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Ikholi engenayo"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Isaziso sekholi ephuthiwe"</string>

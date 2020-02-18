@@ -53,8 +53,12 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Επιλέξτε αριθμό τηλεφώνου"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Μόνο μία φορά"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Πάντα"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Προεπιλογή"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - Αγαπημένο"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , προεπιλογή"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"Αγαπημένο -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"Τοπικό αγαπημένο -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Αγαπημένα"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"Τοπικά αγαπημένα"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Δεν υπάρχουν αριθμοί τηλεφώνου."</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Ειδοποίηση εισερχόμενης κλήσης"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Εισερχόμενη κλήση"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Ειδοποίηση αναπάντητης κλήσης"</string>

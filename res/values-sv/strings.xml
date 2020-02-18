@@ -53,8 +53,12 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Välj ett telefonnummer"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Bara en gång"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Alltid"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  – standard"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g> – markera som favorit"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g>, standardinställning"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"Favorit – <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"Lokal favorit – <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Favoriter"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"Lokala favoriter"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Inga telefonnummer"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Avisering om inkommande samtal"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Inkommande samtal"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Avisering om missat samtal"</string>

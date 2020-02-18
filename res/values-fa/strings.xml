@@ -53,8 +53,12 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"انتخاب شماره تلفن"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"فقط یک‌بار"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"همیشه"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - پیش‌فرض"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g> - مورد دلخواه"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> ، پیش‌فرض"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"دلخواه -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"کسب‌وکار محبوب محلی -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"موارد دلخواه"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"کسب‌وکارهای محبوب محلی"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"شماره تلفنی وجود ندارد"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"اعلان تماس ورودی"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"تماس ورودی"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"اعلان تماس بی‌پاسخ"</string>

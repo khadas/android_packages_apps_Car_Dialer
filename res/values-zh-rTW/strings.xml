@@ -35,7 +35,7 @@
     <string name="audio_route_handset" msgid="9133081623895172144">"手機聽筒"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"撥號"</string>
     <string name="favorites_title" msgid="4767723901530488145">"常用聯絡人"</string>
-    <string name="call_history_title" msgid="7997887846276371553">"近期通話記錄"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"近期通話"</string>
     <string name="contacts_title" msgid="9201954388634537346">"聯絡人"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"撥號鍵盤"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"今天"</string>
@@ -53,8 +53,12 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"選擇電話號碼"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"僅限一次"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"一律允許"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> - 預設"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g> - 加入收藏"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g>，預設"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"常用聯絡人 - <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"本機常用聯絡人 - <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"常用聯絡人"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"本機常用聯絡人"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"沒有可用的電話號碼"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"來電通知"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"來電"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"未接來電通知"</string>

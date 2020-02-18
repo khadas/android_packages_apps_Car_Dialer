@@ -53,8 +53,12 @@
     <string name="select_number_dialog_title" msgid="5770700626013782205">"දුරකථන අංකයක් තෝරා ගන්න"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"එක් වරක්"</string>
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"සැමවිටම"</string>
-    <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - පෙරනිමි"</string>
-    <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - ප්‍රියතමය"</string>
+    <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , පෙරනිමි"</string>
+    <string name="favorite_number_description" msgid="8175362259853807385">"ප්‍රියතම -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="local_favorite_number_description" msgid="3723823871011997275">"ප්‍රදේශයේ ජනප්‍රිය -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"ප්‍රියතම"</string>
+    <string name="local_favorites" msgid="4954852813126882412">"ප්‍රදේශයේ ජනප්‍රියතම ඒවා"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"දුරකථන අංක නැත"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"එන ඇමතුම් දැනුම්දීම"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"එන ඇමතුම"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"මඟ හැරුණු ඇමතුම් දැනුම්දීම"</string>
