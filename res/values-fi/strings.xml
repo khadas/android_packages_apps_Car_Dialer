@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Vanhemmat"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Ei viimeaikaisia"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Ei yhteystietoja"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Saatavilla synkronoinnin jälkeen. Varmista, että olet sallinut yhteystietojen jakamisen puhelimella."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Saatavilla synkronoinnin jälkeen. Varmista, että olet sallinut puhelimen yhteystietojen jakamisen."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Ei suosikkeja"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Et ole vielä lisännyt suosikkeja"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Lisää suosikki"</string>
@@ -55,6 +55,7 @@
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Aina"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  – Oletus"</string>
     <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  – Suosikki"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Ei puhelinnumeroita"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Ilmoitus saapuvasta puhelusta"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Saapuva puhelu"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Ilmoitus vastaamattomasta puhelusta"</string>
@@ -68,4 +69,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Yhteystietojen järjestys"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Etunimi"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Sukunimi"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Toista puhelun ääni täällä:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>

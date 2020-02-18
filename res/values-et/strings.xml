@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Vanemad"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Hiljutisi pole"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Kontakte ei ole"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Saadaval pärast sünkroonimist. Veenduge, et oleksite oma telefonis lubanud kontaktide jagamise."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Saadaval pärast sünkroonimist. Veenduge, et oleksite oma seadmes lubanud kontaktide jagamise."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Lemmikuid pole"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Te ei ole veel lemmikuid lisanud"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Lisa lemmik"</string>
@@ -55,6 +55,7 @@
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Alati"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – vaikeseade"</string>
     <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  – lemmik"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Telefoninumbreid pole"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Sissetuleva kõne märguanne"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Sissetulev kõne"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Vastamata kõne märguanne"</string>
@@ -68,4 +69,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Kontaktide järjestus"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Eesnimi"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Perekonnanimi"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Kõne heliväljund:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>

@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Za zamani"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Hakuna za hivi majuzi"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Hakuna anwani"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Inapatikana baada ya kusawazisha. Hakikisha kuwa umeruhusu ili ushiriki anwani kwenye simu yako."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Inapatikana baada ya kusawazisha. Hakikisha kuwa umeruhusu kushiriki anwani kwenye simu yako."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Hakuna vipendwa"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Bado hujaongeza vipendwa"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Ongeza anwani unazowasiliana nazo sana"</string>
@@ -55,6 +55,7 @@
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Kila wakati"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - Chaguomsingi"</string>
     <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g> - Kipendwa"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Hakuna nambari za simu"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Arifa ya simu inayoingia"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Simu inayoingia"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Arifa ya simu ambayo hukujibu"</string>
@@ -68,4 +69,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Mpangilio wa anwani"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Jina la kwanza"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Jina la mwisho"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Toa sauti ya simu kwenye:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>

@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"Starší"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Žádné nejnovější"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Žádné kontakty"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"Dostupné po synchronizaci. Ověřte, zda jste v telefonu povolili sdílení kontaktů."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"Dostupné po synchronizaci. Ověřte, zda jste v telefonu povolili sdílení kontaktů."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Žádné oblíbené položky"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Zatím jste nepřidali žádné oblíbené kontakty"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Přidat oblíbený kontakt"</string>
@@ -55,6 +55,7 @@
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"Vždy"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g> – výchozí"</string>
     <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g> – přidat mezi oblíbené"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Žádná telefonní čísla"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Oznámení o příchozím hovoru"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Příchozí hovor"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Zmeškané oznámení o hovoru"</string>
@@ -70,4 +71,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Pořadí kontaktů"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Jméno"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Příjmení"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Směrování zvuku odchozího hovoru:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>

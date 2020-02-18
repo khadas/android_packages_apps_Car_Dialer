@@ -43,7 +43,7 @@
     <string name="call_log_header_older" msgid="3971634717537073179">"പഴയത്"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"അടുത്തിടെയുള്ളവയൊന്നുമില്ല"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"കോൺടാക്റ്റുകളൊന്നുമില്ല"</string>
-    <string name="available_after_sync" msgid="4774137797015755653">"സമന്വയിപ്പിച്ചതിന് ശേഷം ലഭ്യമാകും. ഫോണിൽ കോൺടാക്റ്റുകൾ പങ്കിടാൻ നിങ്ങൾ അനുവദിച്ചിട്ടുണ്ടെന്ന് ഉറപ്പാക്കുക."</string>
+    <string name="available_after_sync" msgid="33765918799197782">"സമന്വയിപ്പിച്ചതിന് ശേഷം ലഭ്യമാകും. കോൺടാക്റ്റുകൾ പങ്കിടൽ നിങ്ങളുടെ ഫോണിൽ അനുവദിച്ചിട്ടുണ്ടെന്ന് ഉറപ്പാക്കുക."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"പ്രിയപ്പെട്ടവയൊന്നുമില്ല"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"നിങ്ങൾ ഇതുവരെ പ്രിയപ്പെട്ടവയൊന്നും ചേർത്തിട്ടില്ല"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"പ്രിയപ്പെട്ടത് ചേർക്കുക"</string>
@@ -55,6 +55,7 @@
     <string name="select_number_dialog_always_button" msgid="6862338683635863764">"എപ്പോഴും"</string>
     <string name="primary_number_description" msgid="7428950659304219592">"<xliff:g id="LABEL">%1$s</xliff:g>  - ഡിഫോൾട്ട്"</string>
     <string name="favorite_number_description" msgid="6490014728613395653">"<xliff:g id="LABEL">%1$s</xliff:g>  - പ്രിയപ്പെട്ടത്"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"ഫോൺ നമ്പറുകളൊന്നുമില്ല"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ഇൻകമിംഗ് കോൾ അറിയിപ്പ്"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ഇന്‍‌കമിംഗ് കോള്‍"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"മിസ്‌ഡ് കോൾ അറിയിപ്പ്"</string>
@@ -68,4 +69,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"കോൺടാക്റ്റ് ഓർഡർ"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"ഫസ്റ്റ് നെയിം"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"ലാസ്റ്റ് നെയിം"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"ഇനിപ്പറയുന്നതിലേക്ക് കോൾ ഓഡിയോ ഔട്ട്പുട്ട് ചെയ്യുക:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>
