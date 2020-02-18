@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.telecom.Call;
+import android.telecom.CallAudioState;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
@@ -53,7 +54,7 @@ import java.util.List;
  * in call page should use a different ViewModel.
  */
 public class InCallViewModel extends AndroidViewModel implements
-        InCallServiceImpl.ActiveCallListChangedCallback {
+        InCallServiceImpl.ActiveCallListChangedCallback, InCallServiceImpl.CallAudioStateCallback {
     private static final String TAG = "CD.InCallViewModel";
 
     private final MutableLiveData<List<Call>> mCallListLiveData;
@@ -68,6 +69,7 @@ public class InCallViewModel extends AndroidViewModel implements
     private final LiveData<Call> mSecondaryCallLiveData;
     private final LiveData<CallDetail> mSecondaryCallDetailLiveData;
     private final LiveData<Integer> mAudioRouteLiveData;
+    private MutableLiveData<CallAudioState> mCallAudioStateLiveData;
     private final MutableLiveData<Boolean> mDialpadIsOpen;
     private final ShowOnholdCallLiveData mShowOnholdCall;
     private LiveData<Long> mCallConnectTimeLiveData;
@@ -86,6 +88,7 @@ public class InCallViewModel extends AndroidViewModel implements
             }
             updateCallList();
             mInCallService.addActiveCallListChangedCallback(InCallViewModel.this);
+            mInCallService.addCallAudioStateChangedCallback(InCallViewModel.this);
         }
 
         @Override
@@ -114,6 +117,7 @@ public class InCallViewModel extends AndroidViewModel implements
 
         mIncomingCallLiveData = new MutableLiveData<>();
         mOngoingCallListLiveData = new MutableLiveData<>();
+        mCallAudioStateLiveData = new MutableLiveData<>();
         mCallComparator = new CallComparator();
         mCallListLiveData = new MutableLiveData<List<Call>>() {
             @Override
@@ -231,6 +235,13 @@ public class InCallViewModel extends AndroidViewModel implements
         return mAudioRouteLiveData;
     }
 
+    /**
+     * Returns current call audio state.
+     */
+    public MutableLiveData<CallAudioState> getCallAudioState() {
+        return mCallAudioStateLiveData;
+    }
+
     /** Return the {@link MutableLiveData} for dialpad open state. */
     public MutableLiveData<Boolean> getDialpadOpenState() {
         return mDialpadIsOpen;
@@ -257,6 +268,12 @@ public class InCallViewModel extends AndroidViewModel implements
         return false;
     }
 
+    @Override
+    public void onCallAudioStateChanged(CallAudioState callAudioState) {
+        L.i(TAG, "onCallAudioStateChanged %s %s", callAudioState, this);
+        mCallAudioStateLiveData.setValue(callAudioState);
+    }
+
     private void updateCallList() {
         List<Call> callList = new ArrayList<>();
         callList.addAll(mInCallService.getCalls());
@@ -271,6 +288,7 @@ public class InCallViewModel extends AndroidViewModel implements
                 call.unregisterCallback(mCallStateChangedCallback);
             }
             mInCallService.removeActiveCallListChangedCallback(this);
+            mInCallService.removeCallAudioStateChangedCallback(this);
         }
         mInCallService = null;
     }
