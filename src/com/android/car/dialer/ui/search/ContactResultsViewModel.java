@@ -17,40 +17,23 @@
 package com.android.car.dialer.ui.search;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.SharedPreferencesLiveData;
-import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
-import com.android.car.telephony.common.Contact;
-import com.android.car.telephony.common.InMemoryPhoneBook;
-import com.android.car.telephony.common.ObservableAsyncQuery;
-import com.android.car.telephony.common.QueryParam;
+import com.android.car.dialer.ui.common.ContactResultsLiveData;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * {link AndroidViewModel} used for search functionality.
  */
 public class ContactResultsViewModel extends AndroidViewModel {
-    private static final String[] CONTACT_DETAILS_PROJECTION = {
-            ContactsContract.Contacts._ID,
-            ContactsContract.Contacts.LOOKUP_KEY
-    };
 
     private final ContactResultsLiveData mContactSearchResultsLiveData;
     private final MutableLiveData<String> mSearchQueryLiveData;
@@ -65,7 +48,10 @@ public class ContactResultsViewModel extends AndroidViewModel {
                 mSearchQueryLiveData, mSharedPreferencesLiveData);
     }
 
-    void setSearchQuery(String searchQuery) {
+    /**
+     * Sets search query.
+     */
+    public void setSearchQuery(String searchQuery) {
         if (TextUtils.equals(mSearchQueryLiveData.getValue(), searchQuery)) {
             return;
         }
@@ -73,107 +59,17 @@ public class ContactResultsViewModel extends AndroidViewModel {
         mSearchQueryLiveData.setValue(searchQuery);
     }
 
-    LiveData<List<Contact>> getContactSearchResults() {
+    /**
+     * Returns live data of search results.
+     */
+    public LiveData<List<ContactResultsLiveData.ContactResultListItem>> getContactSearchResults() {
         return mContactSearchResultsLiveData;
     }
 
-    String getSearchQuery() {
+    /**
+     * Returns search query.
+     */
+    public String getSearchQuery() {
         return mSearchQueryLiveData.getValue();
-    }
-
-    private static class ContactResultsLiveData extends MediatorLiveData<List<Contact>> {
-        private final Context mContext;
-        private final SearchQueryParamProvider mSearchQueryParamProvider;
-        private final ObservableAsyncQuery mObservableAsyncQuery;
-        private final LiveData<String> mSearchQueryLiveData;
-        private final LiveData<List<Contact>> mContactListLiveData;
-        private final SharedPreferencesLiveData mSharedPreferencesLiveData;
-
-        ContactResultsLiveData(Context context,
-                LiveData<String> searchQueryLiveData,
-                SharedPreferencesLiveData sharedPreferencesLiveData) {
-            mContext = context;
-            mSearchQueryParamProvider = new SearchQueryParamProvider(searchQueryLiveData);
-            mObservableAsyncQuery = new ObservableAsyncQuery(mSearchQueryParamProvider,
-                    context.getContentResolver(), this::onQueryFinished);
-
-            mContactListLiveData = InMemoryPhoneBook.get().getContactsLiveData();
-            addSource(mContactListLiveData, this::onContactsChange);
-            mSearchQueryLiveData = searchQueryLiveData;
-            addSource(mSearchQueryLiveData, this::onSearchQueryChanged);
-
-            mSharedPreferencesLiveData = sharedPreferencesLiveData;
-            addSource(mSharedPreferencesLiveData, this::onSortOrderChanged);
-        }
-
-        private void onContactsChange(List<Contact> contactList) {
-            if (contactList == null || contactList.isEmpty()) {
-                mObservableAsyncQuery.stopQuery();
-                setValue(null);
-            } else {
-                onSearchQueryChanged(mSearchQueryLiveData.getValue());
-            }
-        }
-
-        private void onSearchQueryChanged(String searchQuery) {
-            if (TextUtils.isEmpty(searchQuery)) {
-                mObservableAsyncQuery.stopQuery();
-                setValue(mContactListLiveData.getValue());
-            } else {
-                mObservableAsyncQuery.startQuery();
-            }
-        }
-
-        private void onSortOrderChanged(SharedPreferences unusedSharedPreferences) {
-            setValue(getValue());
-        }
-
-        private void onQueryFinished(@Nullable Cursor cursor) {
-            if (cursor == null) {
-                setValue(null);
-                return;
-            }
-
-            List<Contact> contacts = new ArrayList<>();
-            while (cursor.moveToNext()) {
-                int lookupKeyColIdx = cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
-                List<Contact> lookupResults = InMemoryPhoneBook.get().lookupContactByKey(
-                        cursor.getString(lookupKeyColIdx));
-                contacts.addAll(lookupResults);
-            }
-            setValue(contacts);
-            cursor.close();
-        }
-
-        /**
-         * Sort and replace null list with empty list.
-         */
-        @Override
-        public void setValue(@Nullable List<Contact> contacts) {
-            if (contacts != null && !contacts.isEmpty()) {
-                Collections.sort(contacts,
-                        ContactSortingInfo.getSortingInfo(mContext,
-                                mSharedPreferencesLiveData).first);
-            }
-            super.setValue(contacts == null ? Collections.EMPTY_LIST : contacts);
-        }
-    }
-
-    private static class SearchQueryParamProvider implements QueryParam.Provider {
-        private final LiveData<String> mSearchQueryLiveData;
-
-        private SearchQueryParamProvider(LiveData<String> searchQueryLiveData) {
-            mSearchQueryLiveData = searchQueryLiveData;
-        }
-
-        @Nullable
-        @Override
-        public QueryParam getQueryParam() {
-            Uri lookupUri = Uri.withAppendedPath(
-                    ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
-                    Uri.encode(mSearchQueryLiveData.getValue()));
-            return new QueryParam(lookupUri, CONTACT_DETAILS_PROJECTION, null,
-                    /* selectionArgs= */null, /* orderBy= */null);
-        }
     }
 }
