@@ -205,4 +205,8 @@
     <string name="given_name_first_title">First name</string>
     <!-- Title of family name [CHAR LIMIT=40]-->
     <string name="family_name_first_title">Last name</string>
+
+    <!-- Audio route selection dialog. Placeholder resources for overriding -->
+    <string name="audio_route_dialog_title">Output call audio to:</string>
+    <string name="audio_route_dialog_subtitle"></string>
 </resources>
