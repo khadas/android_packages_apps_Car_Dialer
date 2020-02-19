@@ -85,6 +85,8 @@
     <dimen name="dialpad_info_title_text_size_min">24sp</dimen>
     <dimen name="dialpad_contact_avatar_size">64dp</dimen>
     <dimen name="dialpad_contact_label_margin">12dp</dimen>
+    <dimen name="dialpad_info_margin_end">112dp</dimen>
+    <dimen name="dialpad_info_margin_start">154dp</dimen>
 
     <!-- Keypad dimensions -->
     <dimen name="keypad_minimum_size">@dimen/touch_target_size</dimen>
@@ -127,6 +129,7 @@
     <dimen name="list_item_padding">@*android:dimen/car_keyline_1</dimen>
     <dimen name="list_divider_inset">@*android:dimen/car_keyline_1</dimen>
     <dimen name="list_divider_height">@*android:dimen/car_list_divider_height</dimen>
+    <dimen name="horizontal_divider_inset">@*android:dimen/car_padding_2</dimen>
     <dimen name="vertical_divider_inset">@*android:dimen/car_padding_2</dimen>
     <dimen name="vertical_divider_width">2dp</dimen>
     <dimen name="primary_icon_size">@*android:dimen/car_primary_icon_size</dimen>

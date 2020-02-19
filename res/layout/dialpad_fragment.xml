@@ -39,9 +39,8 @@
     <FrameLayout
         android:layout_height="0dp"
         android:layout_width="0dp"
-        app:layout_constraintDimensionRatio="W, 1:1"
-        app:layout_constraintTop_toTopOf="@id/dialpad_fragment"
-        app:layout_constraintBottom_toBottomOf="@id/dialpad_fragment"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent">
         <include layout="@layout/dialpad_info"/>
