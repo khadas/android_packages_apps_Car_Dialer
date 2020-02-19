@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Vietinis mėgstamiausias – <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"Mėgstamiausi"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Vietiniai mėgstamiausi"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Nėra jokių telefono numerių"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Pranešimas apie gaunamąjį skambutį"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Gaunamasis skambutis"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Praleisto skambučio pranešimas"</string>
@@ -73,4 +74,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Kontaktų rūšiavimo tvarka"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Vardas"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Pavardė"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Skambučio garso išvestis į:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>

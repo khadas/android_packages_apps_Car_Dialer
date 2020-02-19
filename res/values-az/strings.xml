@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Yerli sevimli -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"Sevimlilər"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Yerli sevimlilər"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Telefon nömrəsi yoxdur"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Gələn zəng bildirişi"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Gələn zəng"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Buraxılmış zəng bildirişi"</string>
@@ -71,4 +72,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Kontakt sırası"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Ad"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Soyad"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Zəng audiosunu buraya göndərin:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>

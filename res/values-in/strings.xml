@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Favorit lokal -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"Favorit"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Favorit lokal"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Nomor telepon tidak ada"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notifikasi panggilan masuk"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Panggilan masuk"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Notifikasi panggilan tak terjawab"</string>
@@ -71,4 +72,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Urutan kontak"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Nama depan"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Nama belakang"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Bunyikan audio panggilan telepon ke:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>

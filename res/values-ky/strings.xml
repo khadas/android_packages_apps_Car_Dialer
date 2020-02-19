@@ -25,8 +25,8 @@
     <string name="emergency_button_text" msgid="3467659545392931727">"Тез жардам"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Шашылыш чалуу"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Бул байланыш өчүрүлгөн болушу керек."</string>
-    <string name="error_invalid_phone_number" msgid="5349049631580646136">"Бул телефон номери терилбей жатат. Аны текшерип, кайра аракет кылыңыз."</string>
-    <string name="error_telephony_not_available" msgid="8715829862083386178">"Телефонго чалуу мүмкүн эмес. Кийинчерээк кайталаңыз."</string>
+    <string name="error_invalid_phone_number" msgid="5349049631580646136">"Бул телефон номери терилбей жатат. Аны текшерип, кайталап көрүңүз."</string>
+    <string name="error_telephony_not_available" msgid="8715829862083386178">"Телефонго чалуу мүмкүн эмес. Бир аздан кийин кайталап көрүңүз."</string>
     <string name="decline_call" msgid="2505987200485272226">"Баш тартуу"</string>
     <string name="answer_call" msgid="3272474440561548115">"Жооп берүү"</string>
     <string name="call_back" msgid="5745638356098600872">"Кайра чалуу"</string>
@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Жергиликтүү сүйүктүү номер -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"Сүйүктүүлөр"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Жергиликтүү сүйүктүү номер"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Телефон номерлери жок"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Кириш чалуу билдирмеси"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Кирүүчү чалуу"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Жооп берилбеген чалуу жөнүндө билдирүү"</string>
@@ -71,4 +72,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Байланыштын ирети"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Аты"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Фамилиясы"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Төмөнкүгө телефон чалуу:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>
