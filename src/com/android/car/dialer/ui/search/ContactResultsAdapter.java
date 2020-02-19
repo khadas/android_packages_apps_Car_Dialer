@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.common.ContactResultsLiveData;
 import com.android.car.telephony.common.Contact;
 
 import java.util.ArrayList;
@@ -39,7 +40,8 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
         void onShowContactDetail(Contact contact);
     }
 
-    private final List<Contact> mContacts = new ArrayList<>();
+    private final List<ContactResultsLiveData.ContactResultListItem> mContactResults =
+            new ArrayList<>();
     private final OnShowContactDetailListener mOnShowContactDetailListener;
 
     public ContactResultsAdapter(OnShowContactDetailListener onShowContactDetailListener) {
@@ -50,7 +52,7 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
      * Clears all contact results from this adapter.
      */
     public void clear() {
-        mContacts.clear();
+        mContactResults.clear();
         notifyDataSetChanged();
     }
 
@@ -58,9 +60,9 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
      * Sets the list of contacts that should be displayed. The given {@link Cursor} can be safely
      * closed after this call.
      */
-    public void setData(List<Contact> data) {
-        mContacts.clear();
-        mContacts.addAll(data);
+    public void setData(List<ContactResultsLiveData.ContactResultListItem> data) {
+        mContactResults.clear();
+        mContactResults.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -73,7 +75,7 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
 
     @Override
     public void onBindViewHolder(ContactResultViewHolder holder, int position) {
-        holder.bind(mContacts.get(position));
+        holder.bindSearchResult(mContactResults.get(position));
     }
 
     @Override
@@ -89,6 +91,13 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
 
     @Override
     public int getItemCount() {
-        return mContacts.size();
+        return mContactResults.size();
+    }
+
+    /**
+     * Returns contact results.
+     */
+    public List<ContactResultsLiveData.ContactResultListItem> getContactResults() {
+        return mContactResults;
     }
 }

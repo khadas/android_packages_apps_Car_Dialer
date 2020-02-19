@@ -24,8 +24,6 @@
     <item name="config_background_image_alpha" format="float" type="dimen">1.0</item>
     <item name="config_background_image_error_alpha" format="float" type="dimen">1.0</item>
 
-    <bool name="config_show_detailed_user_profile_on_dialpad">false</bool>
-
     <!-- A config determines whether to show divider and callog_action_button for callog items
     that are not stored as contacts. "true" will show divider and button as disable state and
     "false" will make divider and button invisible for non contacts. -->
@@ -48,4 +46,12 @@
 
     <!-- Config gate the full screen incall ui -->
     <bool name="config_show_fullscreen_incall_ui">true</bool>
+
+    <!-- A config determines whether to show type down list on Dialpad -->
+    <bool name="config_show_type_down_list_on_dialpad">true</bool>
+    <!-- A config determines whether to show user profile for input number only when type down is
+    not showing. This config works only when config_show_type_down_list_on_dialpad is false. -->
+    <bool name="config_show_detailed_user_profile_on_dialpad">false</bool>
+    <!-- A percent determines the size of the area for type down list on Dialpad in portrait mode. -->
+    <item name="config_type_down_guideline_percent" format="float" type="dimen">0.3</item>
 </resources>

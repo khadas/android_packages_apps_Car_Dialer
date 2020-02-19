@@ -21,9 +21,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.common.ContactResultsLiveData;
 import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
@@ -36,18 +39,23 @@ import com.bumptech.glide.Glide;
  * of a {@code contact_result} layout.
  */
 public class ContactResultViewHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "CD.ContactResultVH";
+
     private final Context mContext;
     private final View mContactCard;
     private final TextView mContactName;
+    private final TextView mContactNumber;
     private final ImageView mContactPicture;
     private final ContactResultsAdapter.OnShowContactDetailListener mOnShowContactDetailListener;
 
     public ContactResultViewHolder(View view,
-            ContactResultsAdapter.OnShowContactDetailListener onShowContactDetailListener) {
+            @Nullable ContactResultsAdapter.OnShowContactDetailListener
+                    onShowContactDetailListener) {
         super(view);
         mContext = view.getContext();
         mContactCard = view.findViewById(R.id.contact_result);
         mContactName = view.findViewById(R.id.contact_name);
+        mContactNumber = view.findViewById(R.id.phone_number);
         mContactPicture = view.findViewById(R.id.contact_picture);
         mContactPicture.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         mOnShowContactDetailListener = onShowContactDetailListener;
@@ -57,7 +65,9 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
      * Populates the view that is represented by this ViewHolder with the information in the
      * provided {@link Contact}.
      */
-    void bind(Contact contact) {
+    public void bindSearchResult(ContactResultsLiveData.ContactResultListItem contactResult) {
+        Contact contact = contactResult.getContact();
+
         mContactName.setText(contact.getDisplayName());
         TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact);
 
@@ -67,6 +77,21 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
         } else {
             itemView.setEnabled(false);
         }
+    }
+
+    /**
+     * Populates the view that is represented by this ViewHolder with the information in the
+     * provided {@link Contact}.
+     */
+    public void bindTypeDownResult(ContactResultsLiveData.ContactResultListItem contactResult) {
+        Contact contact = contactResult.getContact();
+        String number = contactResult.getNumber();
+
+        mContactNumber.setText(number);
+        mContactName.setText(contact.getDisplayName());
+        mContactCard.setOnClickListener(
+                v -> UiCallManager.get().placeCall(mContactNumber.getText().toString()));
+        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact);
     }
 
     void recycle() {
