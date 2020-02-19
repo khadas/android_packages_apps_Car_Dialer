@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"મનપસંદ સ્થાનિક નંબર -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"મનપસંદ"</string>
     <string name="local_favorites" msgid="4954852813126882412">"મનપસંદ સ્થાનિક નંબર"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"કોઈ ફોન નંબર નથી"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"ઇનકમિંગ કૉલના નોટિફિકેશન"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"ઇનકમિંગ કૉલ"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"ચૂકી ગયેલ કૉલનું નોટિફિકેશન"</string>

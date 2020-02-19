@@ -58,6 +58,7 @@
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Favorito do lugar (<xliff:g id="LABEL">%1$s</xliff:g>)"</string>
     <string name="phone_favorites" msgid="2257447553252980575">"Favoritos"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Favoritos do lugar"</string>
+    <string name="no_phone_numbers" msgid="8738691115921148445">"Non hai ningún número de teléfono"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Notificación de chamada entrante"</string>
     <string name="notification_incoming_call" msgid="1722904631804432389">"Chamada entrante"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Notificación de chamada perdida"</string>
