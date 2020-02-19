@@ -72,4 +72,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"연락처 순서"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"이름"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"성"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"다음으로 통화 오디오 출력:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>

@@ -74,4 +74,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"Kontaktų rūšiavimo tvarka"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Vardas"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Pavardė"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"Skambučio garso išvestis į:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>
