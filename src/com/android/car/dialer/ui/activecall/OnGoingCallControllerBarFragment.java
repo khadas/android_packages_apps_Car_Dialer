@@ -17,11 +17,13 @@
 package com.android.car.dialer.ui.activecall;
 
 import android.app.AlertDialog;
-import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.CallAudioState.CallAudioRoute;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,16 +38,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.ui.AlertDialogBuilder;
+import com.android.car.ui.recyclerview.CarUiContentListItem;
+import com.android.car.ui.recyclerview.CarUiListItem;
+import com.android.car.ui.recyclerview.CarUiListItemAdapter;
 
 import com.google.common.collect.ImmutableMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** A Fragment of the bar which controls on going call. */
@@ -73,7 +78,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                     .build();
 
     private AlertDialog mAudioRouteSelectionDialog;
-    private AudioRouteListAdapter mAudioRouteAdapter;
     private View mMuteButton;
     private View mAudioRouteView;
     private ImageView mAudioRouteButton;
@@ -83,24 +87,65 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     private MutableLiveData<Boolean> mDialpadState;
     private LiveData<List<Call>> mCallListLiveData;
     private int mPrimaryCallState;
+    private int mActiveRoute;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View dialogView = LayoutInflater.from(getContext()).inflate(
-                R.layout.audio_route_switch_dialog, null, false);
-        RecyclerView list = dialogView.findViewById(R.id.list);
-        list.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        mAudioRouteSelectionDialog = new AlertDialog.Builder(getContext())
-                .setView(dialogView)
-                .create();
-
         List<Integer> availableRoutes = UiCallManager.get().getSupportedAudioRoute();
-        int activeRoute = UiCallManager.get().getAudioRoute();
-        mAudioRouteAdapter = new AudioRouteListAdapter(getContext(), availableRoutes, activeRoute);
-        list.setAdapter(mAudioRouteAdapter);
+        mActiveRoute = UiCallManager.get().getAudioRoute();
+
+        if (availableRoutes.contains(CallAudioState.ROUTE_EARPIECE)
+                && availableRoutes.contains(CallAudioState.ROUTE_WIRED_HEADSET)) {
+            // Keep either ROUTE_EARPIECE or ROUTE_WIRED_HEADSET, but not both of them.
+            availableRoutes.remove(CallAudioState.ROUTE_WIRED_HEADSET);
+        }
+
+        List<CarUiListItem> listItems = new ArrayList<>();
+        CarUiListItemAdapter adapter = new CarUiListItemAdapter(listItems);
+
+        for (Integer audioRoute : availableRoutes) {
+            CarUiContentListItem item = new CarUiContentListItem(CarUiContentListItem.Action.NONE);
+            AudioRouteInfo routeInfo = getAudioRouteInfo(audioRoute);
+            Drawable drawable = getResources().getDrawable(routeInfo.mIcon, null);
+            drawable.setTintList(
+                    getResources().getColorStateList(R.color.icon_accent_activatable, null));
+            item.setIcon(drawable);
+            item.setOnItemClickedListener((i) -> {
+                onSetAudioRoute(audioRoute);
+                // Reset the spannable titles for each item
+                for (CarUiListItem listItem : listItems) {
+                    CarUiContentListItem contentItem = (CarUiContentListItem) listItem;
+                    CharSequence title = contentItem.getTitle();
+                    contentItem.setTitle(title.toString());
+                    contentItem.setActivated(false);
+                }
+                i.setActivated(true);
+                // Set the spannable title for clicked item
+                String routeTitle = getString(routeInfo.mLabel);
+                item.setTitle(mActiveRoute == audioRoute
+                        ? withAccentColor(routeTitle)
+                        : routeTitle);
+                adapter.notifyDataSetChanged();
+            });
+            String routeTitle = getString(routeInfo.mLabel);
+
+            item.setTitle(mActiveRoute == audioRoute ? withAccentColor(routeTitle) : routeTitle);
+            item.setActivated(mActiveRoute == audioRoute);
+            listItems.add(item);
+        }
+
+        AlertDialogBuilder audioRouteSelectionDialogBuilder = new AlertDialogBuilder(getContext())
+                .setAdapter(adapter)
+                .setTitle(getString(R.string.audio_route_dialog_title));
+
+        String subtitle = getString(R.string.audio_route_dialog_subtitle);
+        if (!subtitle.isEmpty()) {
+            audioRouteSelectionDialogBuilder.setSubtitle(subtitle);
+        }
+
+        mAudioRouteSelectionDialog = audioRouteSelectionDialogBuilder.create();
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
                 InCallViewModel.class);
@@ -147,7 +192,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         if (audioRoutes.size() > 1) {
             mAudioRouteView.setOnClickListener((v) -> {
                 mAudioRouteView.setActivated(true);
-                mAudioRouteAdapter.setActiveAudioRoute(UiCallManager.get().getAudioRoute());
                 mAudioRouteSelectionDialog.show();
             });
         }
@@ -177,6 +221,14 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         if (mAudioRouteSelectionDialog.isShowing()) {
             mAudioRouteSelectionDialog.dismiss();
         }
+    }
+
+    private CharSequence withAccentColor(String routeTitle) {
+        ForegroundColorSpan activeRouteSpan = new ForegroundColorSpan(
+                getResources().getColor(R.color.audio_output_accent, null));
+        SpannableString spannableTitle = new SpannableString(routeTitle);
+        spannableTitle.setSpan(activeRouteSpan, 0, routeTitle.length(), 0);
+        return spannableTitle;
     }
 
     /** Set the call state and change the view for the pause button accordingly */
@@ -224,17 +276,16 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
     private void onSetAudioRoute(@CallAudioRoute int audioRoute) {
         UiCallManager.get().setAudioRoute(audioRoute);
+        mActiveRoute = audioRoute;
         mAudioRouteSelectionDialog.dismiss();
     }
 
     private void updateViewBasedOnAudioRoute(@Nullable Integer audioRoute) {
         if (audioRoute == null) {
-            mAudioRouteAdapter.setActiveAudioRoute(0);
             return;
         }
 
         L.i(TAG, "Audio Route State: " + audioRoute);
-        mAudioRouteAdapter.setActiveAudioRoute(audioRoute.intValue());
 
         AudioRouteInfo audioRouteInfo = getAudioRouteInfo(audioRoute);
         if (mAudioRouteButton != null) {
@@ -275,66 +326,6 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             mLabel = label;
             mIcon = icon;
             mIconActivatable = iconActivatable;
-        }
-    }
-
-    private class AudioRouteListAdapter extends
-            RecyclerView.Adapter<AudioRouteItemViewHolder> {
-        private List<Integer> mSupportedRoutes;
-        private Context mContext;
-        private int mActiveAudioRoute;
-
-        AudioRouteListAdapter(Context context,
-                List<Integer> supportedRoutes,
-                int activeAudioRoute) {
-            mSupportedRoutes = supportedRoutes;
-            mActiveAudioRoute = activeAudioRoute;
-            mContext = context;
-            if (mSupportedRoutes.contains(CallAudioState.ROUTE_EARPIECE)
-                    && mSupportedRoutes.contains(CallAudioState.ROUTE_WIRED_HEADSET)) {
-                // Keep either ROUTE_EARPIECE or ROUTE_WIRED_HEADSET, but not both of them.
-                mSupportedRoutes.remove(CallAudioState.ROUTE_WIRED_HEADSET);
-            }
-        }
-
-        public void setActiveAudioRoute(int route) {
-            if (mActiveAudioRoute != route) {
-                mActiveAudioRoute = route;
-                notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public AudioRouteItemViewHolder onCreateViewHolder(ViewGroup container, int position) {
-            View listItemView = LayoutInflater.from(mContext).inflate(
-                    R.layout.audio_route_list_item, container, false);
-            return new AudioRouteItemViewHolder(listItemView);
-        }
-
-        @Override
-        public void onBindViewHolder(AudioRouteItemViewHolder viewHolder, int position) {
-            int audioRoute = mSupportedRoutes.get(position);
-            AudioRouteInfo routeInfo = getAudioRouteInfo(audioRoute);
-            viewHolder.mBody.setText(routeInfo.mLabel);
-            viewHolder.mIcon.setImageResource(routeInfo.mIcon);
-            viewHolder.itemView.setActivated(audioRoute == mActiveAudioRoute);
-            viewHolder.itemView.setOnClickListener((v) -> onSetAudioRoute(audioRoute));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mSupportedRoutes.size();
-        }
-    }
-
-    private static class AudioRouteItemViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView mIcon;
-        public final TextView mBody;
-
-        public AudioRouteItemViewHolder(View itemView) {
-            super(itemView);
-            mIcon = itemView.findViewById(R.id.icon);
-            mBody = itemView.findViewById(R.id.body);
         }
     }
 }
