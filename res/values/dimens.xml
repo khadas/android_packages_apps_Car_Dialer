@@ -17,13 +17,10 @@
     <!-- Dialer -->
     <dimen name="dialer_card_elevation">2dp</dimen>
 
-    <!-- Audio route dimentions -->
-    <dimen name="audio_route_height">@dimen/control_bar_height</dimen>
-    <dimen name="audio_route_content_padding">@dimen/list_item_padding</dimen>
-    <dimen name="audio_route_icon_size">@dimen/primary_icon_size</dimen>
+    <!-- TODO: UNUSED! REMOVE THIS. b/149125789-->
     <dimen name="audio_route_constraint_guide_begin">@dimen/list_item_guideline</dimen>
 
-    <!-- Call list dimentions -->
+    <!-- Call list dimensions -->
     <dimen name="call_history_item_height">@dimen/list_item_height</dimen>
     <dimen name="call_history_item_padding">@dimen/list_item_padding</dimen>
     <dimen name="call_history_guideline_begin">@dimen/list_item_guideline_begin</dimen>
@@ -99,10 +96,6 @@
     <dimen name="favorite_card_space_vertical">@*android:dimen/car_padding_2</dimen>
     <dimen name="favorites_avatar_margin_bottom">@*android:dimen/car_padding_3</dimen>
 
-    <!-- Add faovirte flow dimensions -->
-    <dimen name="add_favorite_number_list_height">@dimen/list_item_height</dimen>
-    <dimen name="add_favorite_number_list_padding">@dimen/list_item_padding</dimen>
-
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/touch_target_size</dimen>
 
@@ -145,7 +138,6 @@
     <dimen name="touch_target_width">156dp</dimen>
     <dimen name="subheader_list_height">76dp</dimen>
     <dimen name="control_bar_height">96dp</dimen>
-    <dimen name="phone_number_radio_list_padding">@*android:dimen/car_padding_2</dimen>
 
     <!-- Loading status view dimensions -->
     <dimen name="loading_info_icon_size">56dp</dimen>
