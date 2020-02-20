@@ -41,7 +41,9 @@ import com.android.car.telephony.common.QueryParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * {link AndroidViewModel} used for search functionality.
@@ -134,14 +136,14 @@ public class ContactResultsViewModel extends AndroidViewModel {
                 return;
             }
 
-            List<Contact> contacts = new ArrayList<>();
+            Set<Contact> contacts = new HashSet<>();
             while (cursor.moveToNext()) {
                 int lookupKeyColIdx = cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
                 List<Contact> lookupResults = InMemoryPhoneBook.get().lookupContactByKey(
                         cursor.getString(lookupKeyColIdx));
                 contacts.addAll(lookupResults);
             }
-            setValue(contacts);
+            setValue(new ArrayList<>(contacts));
             cursor.close();
         }
 
