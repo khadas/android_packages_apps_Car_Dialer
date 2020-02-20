@@ -88,6 +88,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     private LiveData<List<Call>> mCallListLiveData;
     private int mPrimaryCallState;
     private int mActiveRoute;
+    private MutableLiveData<CallAudioState> mCallAudioState;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -155,6 +156,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         inCallViewModel.getAudioRoute().observe(this, this::updateViewBasedOnAudioRoute);
 
         mDialpadState = inCallViewModel.getDialpadOpenState();
+        mCallAudioState = inCallViewModel.getCallAudioState();
 
         mCallListLiveData = inCallViewModel.getAllCallList();
         mCallListLiveData.observe(this, v -> updatePauseButtonEnabledState());
@@ -177,6 +179,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 onMuteMic();
             }
         });
+
+        mCallAudioState.observe(this, state -> mMuteButton.setActivated(state.isMuted()));
 
         View dialPadButton = fragmentView.findViewById(R.id.toggle_dialpad_button);
         dialPadButton.setOnClickListener(v -> mDialpadState.setValue(!mDialpadState.getValue()));
