@@ -122,6 +122,9 @@ public class ContactResultsLiveData extends
         cursor.close();
     }
 
+    /**
+     * Sort and replace null list with empty list.
+     */
     @Override
     public void setValue(List<ContactResultListItem> contactResults) {
         if (contactResults != null && !contactResults.isEmpty()) {
@@ -129,7 +132,7 @@ public class ContactResultsLiveData extends
                     mContext, mSortOrderPreferenceLiveData).first.compare(o1.mContact,
                     o2.mContact));
         }
-        super.setValue(contactResults);
+        super.setValue(contactResults == null ? Collections.EMPTY_LIST : contactResults);
     }
 
     private static class SearchQueryParamProvider implements QueryParam.Provider {
