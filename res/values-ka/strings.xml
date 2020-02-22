@@ -72,4 +72,6 @@
     <string name="sort_order_title" msgid="975104366728292702">"კონტაქტების თანმიმდევრობა"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"სახელი"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"გვარი"</string>
+    <string name="audio_route_dialog_title" msgid="2904553846970171054">"ზარის აუდიოს გამოტანა:"</string>
+    <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
 </resources>
