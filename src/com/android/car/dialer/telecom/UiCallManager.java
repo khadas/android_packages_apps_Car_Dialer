@@ -28,17 +28,17 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
-import android.telecom.CallAudioState.CallAudioRoute;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.TelecomUtils;
-import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -245,7 +245,7 @@ public class UiCallManager {
     /**
      * Re-route the audio out phone of the ongoing phone call.
      */
-    public void setAudioRoute(@CallAudioRoute int audioRoute) {
+    public void setAudioRoute(int audioRoute) {
         if (mBluetoothHeadsetClient != null && isBluetoothCall()) {
             for (BluetoothDevice device : mBluetoothHeadsetClient.getConnectedDevices()) {
                 List<BluetoothHeadsetClientCall> currentCalls =
