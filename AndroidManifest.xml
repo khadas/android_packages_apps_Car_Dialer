@@ -110,12 +110,6 @@
             android:permission="android.permission.BIND_JOB_SERVICE">
         </service>
 
-        <!-- BroadcastReceiver for receiving Intents from Notification mechanism. -->
-        <receiver
-            android:directBootAware="true"
-            android:exported="false"
-            android:name="com.android.car.dialer.notification.NotificationReceiver"/>
-
         <receiver
             android:directBootAware="true"
             android:name="com.android.car.dialer.notification.MissedCallReceiver">

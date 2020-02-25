@@ -195,8 +195,8 @@ public final class MissedCallNotificationController {
 
     private PendingIntent getDeleteIntent() {
         Intent intent = new Intent(NotificationService.ACTION_READ_ALL_MISSED, null, mContext,
-                NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                NotificationService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(
                 mContext,
                 0,
                 intent,
@@ -207,7 +207,7 @@ public final class MissedCallNotificationController {
     private Notification.Action getAction(String phoneNumberString, @StringRes int actionText,
             String intentAction) {
         CharSequence text = mContext.getString(actionText);
-        PendingIntent intent = PendingIntent.getBroadcast(
+        PendingIntent intent = PendingIntent.getService(
                 mContext,
                 0,
                 getIntent(intentAction, phoneNumberString),
@@ -216,7 +216,7 @@ public final class MissedCallNotificationController {
     }
 
     private Intent getIntent(String action, String phoneNumberString) {
-        Intent intent = new Intent(action, null, mContext, NotificationReceiver.class);
+        Intent intent = new Intent(action, null, mContext, NotificationService.class);
         intent.putExtra(NotificationService.EXTRA_CALL_ID, phoneNumberString);
         return intent;
     }
