@@ -48,6 +48,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Represents a list of {@link UiCallLog}s and label {@link String}s for UI representation. This
@@ -58,6 +61,8 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
     private static final String TAG = "CD.UiCallLogLiveData";
 
     private static final String TYPE_AND_RELATIVE_TIME_JOINER = ", ";
+    private final ExecutorService mExecutorService;
+    private Future<?> mRunnableFuture;
     private Context mContext;
 
     public UiCallLogLiveData(Context context,
@@ -65,6 +70,8 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
             CallHistoryLiveData callHistoryLiveData,
             LiveData<List<Contact>> contactListLiveData) {
         mContext = context;
+        mExecutorService = Executors.newSingleThreadExecutor();
+
         addSource(callHistoryLiveData, this::onCallHistoryChanged);
         addSource(contactListLiveData,
                 (contacts) -> onCallHistoryChanged(callHistoryLiveData.getValue()));
@@ -76,7 +83,14 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
         if (callLogs == null && getValue() == null) {
             return;
         }
-        setValue(convert(callLogs));
+
+        if (mRunnableFuture != null) {
+            mRunnableFuture.cancel(true);
+        }
+        Runnable runnable = () -> {
+            postValue(convert(callLogs));
+        };
+        mRunnableFuture = mExecutorService.submit(runnable);
     }
 
     private void updateRelativeTime() {
