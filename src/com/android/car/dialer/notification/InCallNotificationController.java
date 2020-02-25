@@ -171,13 +171,13 @@ public final class InCallNotificationController {
 
     private PendingIntent getFullscreenIntent(Call call) {
         Intent intent = getIntent(NotificationService.ACTION_SHOW_FULLSCREEN_UI, call);
-        return PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getService(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private Notification.Action getAction(Call call, @StringRes int actionText,
             String intentAction) {
         CharSequence text = mContext.getString(actionText);
-        PendingIntent intent = PendingIntent.getBroadcast(
+        PendingIntent intent = PendingIntent.getService(
                 mContext,
                 0,
                 getIntent(intentAction, call),
@@ -186,7 +186,7 @@ public final class InCallNotificationController {
     }
 
     private Intent getIntent(String action, Call call) {
-        Intent intent = new Intent(action, null, mContext, NotificationReceiver.class);
+        Intent intent = new Intent(action, null, mContext, NotificationService.class);
         intent.putExtra(NotificationService.EXTRA_CALL_ID, call.getDetails().getTelecomCallId());
         return intent;
     }
