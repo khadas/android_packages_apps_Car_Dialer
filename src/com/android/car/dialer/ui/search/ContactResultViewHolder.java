@@ -24,6 +24,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.ContactResultsLiveData;
@@ -57,7 +58,9 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
         mContactName = view.findViewById(R.id.contact_name);
         mContactNumber = view.findViewById(R.id.phone_number);
         mContactPicture = view.findViewById(R.id.contact_picture);
-        mContactPicture.setOutlineProvider(ContactAvatarOutputlineProvider.get());
+        if (mContactPicture != null) {
+            mContactPicture.setOutlineProvider(ContactAvatarOutputlineProvider.get());
+        }
         mOnShowContactDetailListener = onShowContactDetailListener;
     }
 
@@ -68,7 +71,7 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
     public void bindSearchResult(ContactResultsLiveData.ContactResultListItem contactResult) {
         Contact contact = contactResult.getContact();
 
-        mContactName.setText(contact.getDisplayName());
+        ViewUtils.setText(mContactName, contact.getDisplayName());
         TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact);
 
         if (DialerUtils.hasContactDetail(itemView.getResources(), contact)) {
@@ -87,8 +90,8 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
         Contact contact = contactResult.getContact();
         String number = contactResult.getNumber();
 
-        mContactNumber.setText(number);
-        mContactName.setText(contact.getDisplayName());
+        ViewUtils.setText(mContactNumber, number);
+        ViewUtils.setText(mContactName, contact.getDisplayName());
         mContactCard.setOnClickListener(
                 v -> UiCallManager.get().placeCall(mContactNumber.getText().toString()));
         TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact);
@@ -97,6 +100,8 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
     void recycle() {
         itemView.setEnabled(true);
         mContactCard.setOnClickListener(null);
-        Glide.with(mContext).clear(mContactPicture);
+        if (mContactPicture != null) {
+            Glide.with(mContext).clear(mContactPicture);
+        }
     }
 }

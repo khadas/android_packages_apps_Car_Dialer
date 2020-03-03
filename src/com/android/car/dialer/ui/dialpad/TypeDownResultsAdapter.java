@@ -16,6 +16,11 @@
 
 package com.android.car.dialer.ui.dialpad;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.android.car.dialer.R;
 import com.android.car.dialer.ui.search.ContactResultViewHolder;
 import com.android.car.dialer.ui.search.ContactResultsAdapter;
 
@@ -26,6 +31,13 @@ public class TypeDownResultsAdapter extends ContactResultsAdapter {
 
     public TypeDownResultsAdapter() {
         super(null);
+    }
+
+    @Override
+    public ContactResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.type_down_list_item, parent, false);
+        return new ContactResultViewHolder(view, null);
     }
 
     @Override
