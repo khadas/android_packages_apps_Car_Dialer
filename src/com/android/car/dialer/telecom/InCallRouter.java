@@ -22,6 +22,7 @@ import android.telecom.Call;
 
 import androidx.annotation.MainThread;
 
+import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.InCallNotificationController;
@@ -83,8 +84,10 @@ class InCallRouter {
         int state = call.getState();
         if (state == Call.STATE_RINGING) {
             routeToNotification(call);
-        } else {
-            routeToInCallPage(call);
+        } else if (state != Call.STATE_DISCONNECTED) {
+            // Don't launch the in call page if state is disconnected.
+            // Otherwise, the InCallActivity finishes right after onCreate() and flashes.
+            routeToInCallPage(false);
         }
     }
 
@@ -134,7 +137,11 @@ class InCallRouter {
             @Override
             public void onStateChanged(Call call, int state) {
                 L.d(TAG, "Ringing call state changed to %d", state);
-                routeToInCallPage(call);
+                if (call.getState() != Call.STATE_DISCONNECTED) {
+                    // Don't launch the in call page if state is disconnected. Otherwise, the
+                    // InCallActivity finishes right after onCreate() and flashes.
+                    routeToInCallPage(false);
+                }
                 mInCallNotificationController.cancelInCallNotification(call);
                 call.unregisterCallback(this);
             }
@@ -144,16 +151,14 @@ class InCallRouter {
     /**
      * Launches {@link InCallActivity} and presents the on going call in the in call page.
      */
-    private void routeToInCallPage(Call call) {
+    void routeToInCallPage(boolean showDialpad) {
         // It has been configured not to show the fullscreen incall ui.
         if (!mShowFullscreenIncallUi) {
             return;
         }
-        // Don't launch the in call page if state is disconnected. Otherwise, the InCallActivity
-        // finishes right after onCreate() and flashes.
-        if (call.getState() != Call.STATE_DISCONNECTED) {
-            Intent launchIntent = new Intent(mContext, InCallActivity.class);
-            mContext.startActivity(launchIntent);
-        }
+
+        Intent launchIntent = new Intent(mContext, InCallActivity.class);
+        launchIntent.putExtra(Constants.Intents.EXTRA_SHOW_INCOMING_CALL, showDialpad);
+        mContext.startActivity(launchIntent);
     }
 }
