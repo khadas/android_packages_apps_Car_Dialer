@@ -37,6 +37,7 @@ import android.telecom.CallAudioState;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.testutils.ShadowCar;
+import com.android.car.dialer.ui.activecall.InCallActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +49,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ServiceController;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowContextWrapper;
+import org.robolectric.shadows.ShadowIntent;
 import org.robolectric.shadows.ShadowLooper;
 
 /**
@@ -160,5 +163,17 @@ public class InCallServiceImplTest {
 
         mInCallServiceImpl.onCallAudioStateChanged(mMockCallAudioState);
         verify(mCallAudioStateCallback).onCallAudioStateChanged(any());
+    }
+
+    @Test
+    public void testOnBringToForeground() {
+        ShadowApplication shadow = shadowOf(mInCallServiceImpl.getApplication());
+
+        mInCallServiceImpl.onCallAdded(mMockTelecomCall);
+        mInCallServiceImpl.onBringToForeground(false);
+
+        Intent intent = shadow.getNextStartedActivity();
+        ShadowIntent shadowIntent = shadowOf(intent);
+        assertThat(InCallActivity.class).isEqualTo(shadowIntent.getIntentClass());
     }
 }
