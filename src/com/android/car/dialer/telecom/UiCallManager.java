@@ -42,11 +42,6 @@ import com.android.car.telephony.common.TelecomUtils;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telephony.ITelephony;
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
-import com.google.i18n.phonenumbers.PhoneNumberUtil.ValidationResult;
-import com.google.i18n.phonenumbers.Phonenumber;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -307,24 +302,13 @@ public class UiCallManager {
     }
 
     /**
-     * Runs basic validation check of a phone number, to verify it is the correct length
-     * in an internationalized way. Further validation on whether the number actually exists
-     * is left for the phone carrier.
+     * Runs basic validation check of a phone number, to verify it is not empty.
      */
     private boolean isValidNumber(String number) {
-        Phonenumber.PhoneNumber phoneNumber = TelecomUtils.createI18nPhoneNumber(mContext,
-                number);
-        if (phoneNumber != null) {
-            for (PhoneNumberType type : PhoneNumberType.values()) {
-                ValidationResult result =
-                        PhoneNumberUtil.getInstance().isPossibleNumberForTypeWithReason(phoneNumber,
-                                type);
-                if (result != ValidationResult.TOO_SHORT && result != ValidationResult.TOO_LONG) {
-                    return true;
-                }
-            }
+        if (TextUtils.isEmpty(number)) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     public void callVoicemail() {
