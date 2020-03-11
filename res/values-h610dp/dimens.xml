@@ -24,6 +24,8 @@
     <!-- Control bar bottom padding -->
     <dimen name="in_call_controller_bar_margin_bottom">@*android:dimen/car_padding_2</dimen>
 
+    <dimen name="type_down_list_item_height">@dimen/list_item_height</dimen>
+
     <dimen name="fab_outline_size">104dp</dimen>
     <dimen name="fab_ripple_radius">52dp</dimen>
 
