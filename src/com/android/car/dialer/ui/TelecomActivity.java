@@ -17,6 +17,7 @@
 package com.android.car.dialer.ui;
 
 import android.app.SearchManager;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -76,6 +77,7 @@ public class TelecomActivity extends FragmentActivity implements
     // View objects for this activity.
     private TelecomPageTab.Factory mTabFactory;
     private Toolbar mCarUiToolbar;
+    private BluetoothDevice mBluetoothDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,7 @@ public class TelecomActivity extends FragmentActivity implements
                 dialerAppState -> updateCurrentFragment(dialerAppState));
         MutableLiveData<Integer> toolbarTitleMode = viewModel.getToolbarTitleMode();
         toolbarTitleMode.setValue(Themes.getAttrInteger(this, R.attr.toolbarTitleMode));
+        viewModel.getRefreshTabsLiveData().observe(this, this::refreshTabs);
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
         mOngoingCallListLiveData = inCallViewModel.getOngoingCallList();
@@ -103,6 +106,13 @@ public class TelecomActivity extends FragmentActivity implements
         mOngoingCallListLiveData.observe(this, this::maybeStartInCallActivity);
 
         handleIntent();
+    }
+
+    private void refreshTabs(boolean refreshTabs) {
+        L.v(TAG, "hfp connected device list Changes.");
+        if (refreshTabs) {
+            setupTabLayout();
+        }
     }
 
     @Override
@@ -245,6 +255,7 @@ public class TelecomActivity extends FragmentActivity implements
     private void setupTabLayout() {
         boolean wasContentFragmentRestored = false;
         mTabFactory = new TelecomPageTab.Factory(this, getSupportFragmentManager());
+        mCarUiToolbar.clearAllTabs();
         for (int i = 0; i < mTabFactory.getTabCount(); i++) {
             TelecomPageTab tab = mTabFactory.createTab(getBaseContext(), i);
             mCarUiToolbar.addTab(tab);

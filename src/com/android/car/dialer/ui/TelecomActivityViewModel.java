@@ -27,11 +27,13 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.BluetoothHfpStateLiveData;
 import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
+import com.android.car.dialer.livedata.HfpDeviceListLiveData;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiBluetoothMonitor;
 
@@ -52,9 +54,12 @@ public class TelecomActivityViewModel extends AndroidViewModel {
     private final Context mApplicationContext;
     private final LiveData<String> mErrorStringLiveData;
     private final MutableLiveData<Integer> mDialerAppStateLiveData;
+    private final LiveData<Boolean> mRefreshTabsLiveData;
 
     private final ToolbarTitleLiveData mToolbarTitleLiveData;
     private final MutableLiveData<Integer> mToolbarTitleMode;
+
+    private BluetoothDevice mBluetoothDevice;
 
     /**
      * App state indicates if bluetooth is connected or it should just show the content fragments.
@@ -90,6 +95,22 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData);
+
+        HfpDeviceListLiveData hfpDeviceListLiveData = new HfpDeviceListLiveData(getApplication());
+        mRefreshTabsLiveData = Transformations.map(hfpDeviceListLiveData, (hfpDeviceList) -> {
+            if (hfpDeviceList != null && !hfpDeviceList.isEmpty()) {
+                if (!hfpDeviceList.contains(mBluetoothDevice)) {
+                    mBluetoothDevice = hfpDeviceList.get(0);
+                    return true;
+                }
+            } else {
+                if (mBluetoothDevice != null) {
+                    mBluetoothDevice = null;
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     /**
@@ -108,6 +129,9 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         return mToolbarTitleMode;
     }
 
+    /**
+     * Returns the state of Dialer App.
+     */
     public MutableLiveData<Integer> getDialerAppState() {
         return mDialerAppStateLiveData;
     }
@@ -118,6 +142,13 @@ public class TelecomActivityViewModel extends AndroidViewModel {
      */
     public LiveData<String> getErrorMessage() {
         return mErrorStringLiveData;
+    }
+
+    /**
+     * Returns the live data which monitors whether to refresh Dialer.
+     */
+    public LiveData<Boolean> getRefreshTabsLiveData() {
+        return mRefreshTabsLiveData;
     }
 
     private static class DialerAppStateLiveData extends MediatorLiveData<Integer> {
