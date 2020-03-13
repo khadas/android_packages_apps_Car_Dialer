@@ -36,7 +36,10 @@ import com.android.car.telephony.common.QueryParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Represents a list of {@link Contact} based on the search query
@@ -54,16 +57,19 @@ public class ContactResultsLiveData extends
     private final LiveData<String> mSearchQueryLiveData;
     private final LiveData<List<Contact>> mContactListLiveData;
     private final SharedPreferencesLiveData mSortOrderPreferenceLiveData;
+    private boolean mShowOnlyOneEntry;
 
     /**
-     * @param searchQueryLiveData         represents a list of strings that are used to query the
-     *                                    data
+     * @param searchQueryLiveData represents a list of strings that are used to query the data
      * @param sortOrderPreferenceLiveData has the information on how to order the acquired contacts.
+     * @param showOnlyOneEntry determines whether to show only entry per contact.
      */
     public ContactResultsLiveData(Context context,
             LiveData<String> searchQueryLiveData,
-            SharedPreferencesLiveData sortOrderPreferenceLiveData) {
+            SharedPreferencesLiveData sortOrderPreferenceLiveData,
+            boolean showOnlyOneEntry) {
         mContext = context;
+        mShowOnlyOneEntry = showOnlyOneEntry;
         mSearchQueryParamProvider = new SearchQueryParamProvider(searchQueryLiveData);
         mObservableAsyncQuery = new ObservableAsyncQuery(mSearchQueryParamProvider,
                 context.getContentResolver(), this::onQueryFinished);
@@ -75,6 +81,18 @@ public class ContactResultsLiveData extends
 
         mSortOrderPreferenceLiveData = sortOrderPreferenceLiveData;
         addSource(mSortOrderPreferenceLiveData, this::onSortOrderChanged);
+    }
+
+    /**
+     * This constructor only allows one entry per contact.
+     *
+     * @param searchQueryLiveData represents a list of strings that are used to query the data
+     * @param sortOrderPreferenceLiveData has the information on how to order the acquired contacts.
+     */
+    public ContactResultsLiveData(Context context,
+            LiveData<String> searchQueryLiveData,
+            SharedPreferencesLiveData sortOrderPreferenceLiveData) {
+        this(context, searchQueryLiveData, sortOrderPreferenceLiveData, true);
     }
 
     private void onContactsChange(List<Contact> contactList) {
@@ -105,7 +123,7 @@ public class ContactResultsLiveData extends
             return;
         }
 
-        List<ContactResultListItem> contacts = new ArrayList<>();
+        List<ContactResultListItem> contactResults = new ArrayList<>();
         while (cursor.moveToNext()) {
             int lookupKeyColIdx = cursor.getColumnIndex(
                     ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY);
@@ -114,11 +132,18 @@ public class ContactResultsLiveData extends
             String number = cursor.getString(numberIdx);
             List<Contact> lookupResults = InMemoryPhoneBook.get().lookupContactByKey(lookupKey);
             for (Contact contact : lookupResults) {
-                contacts.add(new ContactResultListItem(contact, number));
+                contactResults.add(new ContactResultListItem(contact, number));
             }
         }
 
-        setValue(contacts);
+        if (mShowOnlyOneEntry) {
+            Set<Contact> set = new HashSet<>();
+            contactResults = contactResults.stream()
+                    .filter(o -> set.add(o.getContact()))
+                    .collect(Collectors.toList());
+        }
+
+        setValue(contactResults);
         cursor.close();
     }
 
@@ -173,8 +198,8 @@ public class ContactResultsLiveData extends
         }
 
         /**
-         * Returns the number. It is a string read from column {@link
-         * ContactsContract.CommonDataKinds.Phone#NUMBER}.
+         * Returns the number. It is a string read from column
+         * {@link ContactsContract.CommonDataKinds.Phone#NUMBER}.
          */
         public String getNumber() {
             return mNumber;
