@@ -18,6 +18,7 @@ limitations under the License.
     <style name="Theme.Dialer" parent="Theme.CarUi">
         <item name="android:listDivider">@drawable/list_divider</item>
         <item name="android:buttonStyle">@style/Widget.Dialer.Button</item>
+        <item name="android:textDirection">locale</item>
     </style>
 
     <style name="Theme.Dialer.Telecom">
