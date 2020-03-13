@@ -33,6 +33,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -54,7 +55,7 @@ import java.util.List;
 
 /** A Fragment of the bar which controls on going call. */
 public class OnGoingCallControllerBarFragment extends Fragment {
-    private static String TAG = "CDialer.OngoingCallCtlFrg";
+    private static final String TAG = "CD.OngoingCallCtlFrg";
 
     private static final ImmutableMap<Integer, AudioRouteInfo> AUDIO_ROUTES =
             ImmutableMap.<Integer, AudioRouteInfo>builder()
@@ -76,6 +77,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                             R.drawable.ic_audio_route_speaker_activatable))
                     .build();
 
+    private InCallViewModel mInCallViewModel;
+
     private AlertDialog mAudioRouteSelectionDialog;
     private List<CarUiListItem> mAudioRouteListItems;
     private List<Integer> mAvailableRoutes;
@@ -84,8 +87,11 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     private View mAudioRouteView;
     private ImageView mAudioRouteButton;
     private TextView mAudioRouteText;
+    private View mMergeButton;
     private View mPauseButton;
     private LiveData<Call> mPrimaryCallLiveData;
+    private LiveData<List<Call>> mOngoingCallListLiveData;
+    private LiveData<Pair<Call, Call>> mOngoingCallPairLiveData;
     private MutableLiveData<Boolean> mDialpadState;
     private LiveData<List<Call>> mCallListLiveData;
     private int mPrimaryCallState;
@@ -135,18 +141,31 @@ public class OnGoingCallControllerBarFragment extends Fragment {
 
         mAudioRouteSelectionDialog = audioRouteSelectionDialogBuilder.create();
 
-        InCallViewModel inCallViewModel = ViewModelProviders.of(getActivity()).get(
-                InCallViewModel.class);
+        mInCallViewModel = ViewModelProviders.of(getActivity()).get(InCallViewModel.class);
 
-        inCallViewModel.getPrimaryCallState().observe(this, this::setCallState);
-        mPrimaryCallLiveData = inCallViewModel.getPrimaryCall();
-        inCallViewModel.getAudioRoute().observe(this, this::updateViewBasedOnAudioRoute);
+        mInCallViewModel.getPrimaryCallState().observe(this, this::setCallState);
+        mPrimaryCallLiveData = mInCallViewModel.getPrimaryCall();
+        mOngoingCallPairLiveData = mInCallViewModel.getOngoingCallPair();
 
-        mDialpadState = inCallViewModel.getDialpadOpenState();
-        mCallAudioState = inCallViewModel.getCallAudioState();
+        mOngoingCallListLiveData = mInCallViewModel.getOngoingCallList();
+        mInCallViewModel.getAudioRoute().observe(this, this::updateViewBasedOnAudioRoute);
+        mDialpadState = mInCallViewModel.getDialpadOpenState();
+        mCallAudioState = mInCallViewModel.getCallAudioState();
 
-        mCallListLiveData = inCallViewModel.getAllCallList();
+        mCallListLiveData = mInCallViewModel.getAllCallList();
         mCallListLiveData.observe(this, v -> updatePauseButtonEnabledState());
+
+        mOngoingCallPairLiveData.observe(this, pair -> {
+            boolean isPrimaryCallConference = pair.first != null
+                    && pair.first.getDetails().hasProperty(Call.Details.PROPERTY_CONFERENCE);
+            if (!isPrimaryCallConference && pair.second != null) {
+                mPauseButton.setVisibility(View.GONE);
+                mMergeButton.setVisibility(View.VISIBLE);
+            } else {
+                mPauseButton.setVisibility(View.VISIBLE);
+                mMergeButton.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Nullable
@@ -190,6 +209,11 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         mAudioRouteSelectionDialog.setOnDismissListener(
                 (dialog) -> mAudioRouteView.setActivated(false));
 
+        mMergeButton = fragmentView.findViewById(R.id.merge_button);
+        mMergeButton.setOnClickListener((v) -> {
+            mInCallViewModel.mergeConference();
+        });
+
         mPauseButton = fragmentView.findViewById(R.id.pause_button);
         mPauseButton.setOnClickListener((v) -> {
             if (mPrimaryCallState == Call.STATE_ACTIVE) {
@@ -200,6 +224,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
                 L.i(TAG, "Pause button is clicked while call in %s state", mPrimaryCallState);
             }
         });
+
         updatePauseButtonEnabledState();
 
         return fragmentView;
@@ -242,8 +267,8 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     }
 
     private void updatePauseButtonEnabledState() {
-        boolean hasOnlyOneCall = mCallListLiveData.getValue() != null
-                && mCallListLiveData.getValue().size() == 1;
+        boolean hasOnlyOneCall = mOngoingCallListLiveData.getValue() != null
+                && mOngoingCallListLiveData.getValue().size() == 1;
         boolean shouldEnablePauseButton = hasOnlyOneCall && (mPrimaryCallState == Call.STATE_HOLDING
                 || mPrimaryCallState == Call.STATE_ACTIVE);
 

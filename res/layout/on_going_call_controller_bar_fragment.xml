@@ -52,14 +52,13 @@ limitations under the License.
         app:layout_constraintEnd_toStartOf="@+id/voice_channel_view"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/voice_channel_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/end_call_button"
-        app:layout_constraintEnd_toStartOf="@+id/pause_button"
+        app:layout_constraintEnd_toStartOf="@+id/button_wrapper"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -76,17 +75,32 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:visibility="gone"/>
 
-    </LinearLayout>
+    </FrameLayout>
 
-    <ImageView
-        android:id="@+id/pause_button"
-        android:layout_width="@dimen/in_call_button_size"
-        android:layout_height="@dimen/in_call_button_size"
-        android:background="@drawable/dialer_ripple_background"
-        android:scaleType="center"
-        android:src="@drawable/ic_pause_activatable"
+    <LinearLayout
+        android:id="@+id/button_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/voice_channel_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/merge_button"
+            android:layout_width="@dimen/in_call_button_size"
+            android:layout_height="@dimen/in_call_button_size"
+            android:background="@drawable/dialer_ripple_background"
+            android:scaleType="center"
+            android:src="@drawable/ic_merge"/>
+
+        <ImageView
+            android:id="@+id/pause_button"
+            android:layout_width="@dimen/in_call_button_size"
+            android:layout_height="@dimen/in_call_button_size"
+            android:background="@drawable/dialer_ripple_background"
+            android:scaleType="center"
+            android:src="@drawable/ic_pause_activatable"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

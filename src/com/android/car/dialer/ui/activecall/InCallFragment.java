@@ -164,9 +164,8 @@ public abstract class InCallFragment extends Fragment {
             mUserProfileCallStateText.start();
         } else {
             mUserProfileCallStateText.stop();
-            mUserProfileCallStateText.setText(
-                    TelecomUtils.callStateToUiString(getContext(),
-                            callStateAndConnectTime.first));
+            mUserProfileCallStateText.setText(TelecomUtils.callStateToUiString(getContext(),
+                    callStateAndConnectTime.first));
         }
     }
 
