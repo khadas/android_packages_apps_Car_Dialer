@@ -39,7 +39,8 @@
         android:name=".DialerApplication"
         android:directBootAware="true"
         android:label="@string/phone_app_name"
-        android:icon="@drawable/ic_app_icon">
+        android:icon="@drawable/ic_app_icon"
+        android:supportsRtl="true">
 
         <activity android:name=".ui.TelecomActivity"
                   android:launchMode="singleTask"
