@@ -72,4 +72,18 @@ public class ContactResultsViewModel extends AndroidViewModel {
     public String getSearchQuery() {
         return mSearchQueryLiveData.getValue();
     }
+
+    /**
+     * Returns Search Query LiveData.
+     */
+    public MutableLiveData<String> getSearchQueryLiveData() {
+        return mSearchQueryLiveData;
+    }
+
+    /**
+     * Returns Shared Preferences LiveData.
+     */
+    public SharedPreferencesLiveData getSharedPreferencesLiveData() {
+        return mSharedPreferencesLiveData;
+    }
 }

@@ -38,7 +38,6 @@ import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.search.ContactResultsViewModel;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
@@ -82,7 +81,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
                     .build();
     private final TypeDownResultsAdapter mAdapter = new TypeDownResultsAdapter();
 
-    private ContactResultsViewModel mContactResultsViewModel;
+    private TypeDownResultsViewModel mTypeDownResultsViewModel;
     private TextView mTitleView;
     @Nullable
     private TextView mDisplayName;
@@ -128,9 +127,9 @@ public class DialpadFragment extends AbstractDialpadFragment {
         L.d(TAG, "onCreate mode: %s", mMode);
         mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
 
-        mContactResultsViewModel = ViewModelProviders.of(this).get(
-                ContactResultsViewModel.class);
-        mContactResultsViewModel.getContactSearchResults().observe(this,
+        mTypeDownResultsViewModel = ViewModelProviders.of(this).get(
+                TypeDownResultsViewModel.class);
+        mTypeDownResultsViewModel.getContactSearchResults().observe(this,
                 contactResults -> mAdapter.setData(contactResults));
     }
 
@@ -255,7 +254,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
         if (getResources().getBoolean(R.bool.config_show_type_down_list_on_dialpad)) {
             resetContactInfo();
             ViewUtils.setVisible(mRecyclerView, true);
-            mContactResultsViewModel.setSearchQuery(number.toString());
+            mTypeDownResultsViewModel.setSearchQuery(number.toString());
         } else {
             presentContactInfo(number.toString());
         }
