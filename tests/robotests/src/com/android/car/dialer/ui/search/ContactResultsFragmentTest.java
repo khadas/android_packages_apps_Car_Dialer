@@ -156,7 +156,7 @@ public class ContactResultsFragmentTest {
 
         mListView = mContactResultsFragment.getView().findViewById(R.id.list_view);
         // Set up layout for recyclerView
-        mListView.layoutBothForTesting(0, 0, 100, 1000);
+        mListView.layout(0, 0, 100, 1000);
     }
 
     private void verifyChildAt(int position) {

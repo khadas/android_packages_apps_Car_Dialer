@@ -83,7 +83,7 @@ public class FavoriteFragmentTest {
 
         CarUiRecyclerView recyclerView = mFavoriteFragment.getView().findViewById(R.id.list_view);
         // set up layout for recyclerView
-        recyclerView.layoutBothForTesting(0, 0, 100, 1000);
+        recyclerView.layout(0, 0, 100, 1000);
         mViewHolder = (FavoriteContactViewHolder) recyclerView.findViewHolderForLayoutPosition(0);
     }
 

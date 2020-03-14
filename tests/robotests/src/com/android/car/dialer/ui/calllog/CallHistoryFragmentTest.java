@@ -103,7 +103,7 @@ public class CallHistoryFragmentTest {
         CarUiRecyclerView recyclerView = mCallHistoryFragment.getView()
                 .findViewById(R.id.list_view);
         // set up layout for recyclerView
-        recyclerView.layoutBothForTesting(0, 0, 100, 1000);
+        recyclerView.layout(0, 0, 100, 1000);
         mHeaderViewHolder = recyclerView.findViewHolderForLayoutPosition(0);
         mCalllogViewHolder = recyclerView.findViewHolderForLayoutPosition(1);
     }
