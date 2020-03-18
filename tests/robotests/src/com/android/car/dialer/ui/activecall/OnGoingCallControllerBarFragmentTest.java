@@ -66,6 +66,7 @@ public class OnGoingCallControllerBarFragmentTest {
     private MutableLiveData<CallDetail> mCallDetailLiveData;
     private MutableLiveData<Boolean> mDialpadStateLiveData;
     private MutableLiveData<List<Call>> mCallListLiveData;
+    private MutableLiveData<CallAudioState> mCallAudioStateLiveData;
     private List<Call> mCallList;
     @Mock
     private Call mMockCall;
@@ -89,6 +90,7 @@ public class OnGoingCallControllerBarFragmentTest {
         mCallDetailLiveData = new MutableLiveData<>();
         mDialpadStateLiveData = new MutableLiveData<>();
         mCallListLiveData = new MutableLiveData<>();
+        mCallAudioStateLiveData = new MutableLiveData<>();
         mCallList = new ArrayList<>();
         mCallList.add(mMockCall);
         mCallListLiveData.setValue(mCallList);
@@ -238,6 +240,7 @@ public class OnGoingCallControllerBarFragmentTest {
         when(mMockInCallViewModel.getPrimaryCallState()).thenReturn(mCallStateLiveData);
         when(mMockInCallViewModel.getDialpadOpenState()).thenReturn(mDialpadStateLiveData);
         when(mMockInCallViewModel.getAllCallList()).thenReturn(mCallListLiveData);
+        when(mMockInCallViewModel.getCallAudioState()).thenReturn(mCallAudioStateLiveData);
 
         MutableLiveData<Integer> audioRouteLiveData = new MutableLiveData<>();
         audioRouteLiveData.setValue(CallAudioState.ROUTE_BLUETOOTH);

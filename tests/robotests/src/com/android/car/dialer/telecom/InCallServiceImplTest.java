@@ -33,6 +33,7 @@ import android.car.CarProjectionManager;
 import android.content.Context;
 import android.content.Intent;
 import android.telecom.Call;
+import android.telecom.CallAudioState;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.testutils.ShadowCar;
@@ -70,7 +71,9 @@ public class InCallServiceImplTest {
     @Mock
     private Call.Details mMockCallDetails;
     @Mock
-    private InCallServiceImpl.Callback mCallback;
+    private CallAudioState mMockCallAudioState;
+    @Mock
+    private InCallServiceImpl.CallAudioStateCallback mCallAudioStateCallback;
     @Mock
     private InCallServiceImpl.ActiveCallListChangedCallback mActiveCallListChangedCallback;
 
@@ -88,7 +91,6 @@ public class InCallServiceImplTest {
         inCallServiceController.create().bind();
         mInCallServiceImpl = inCallServiceController.get();
 
-        mInCallServiceImpl.registerCallback(mCallback);
         mInCallServiceImpl.addActiveCallListChangedCallback(mActiveCallListChangedCallback);
         ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
 
@@ -102,8 +104,6 @@ public class InCallServiceImplTest {
         mInCallServiceImpl.onCallAdded(mMockTelecomCall);
 
         ArgumentCaptor<Call> callCaptor = ArgumentCaptor.forClass(Call.class);
-        verify(mCallback).onTelecomCallAdded(callCaptor.capture());
-        assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
 
         verify(mActiveCallListChangedCallback).onTelecomCallAdded(callCaptor.capture());
         assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
@@ -119,8 +119,6 @@ public class InCallServiceImplTest {
         mInCallServiceImpl.onCallRemoved(mMockTelecomCall);
 
         ArgumentCaptor<Call> callCaptor = ArgumentCaptor.forClass(Call.class);
-        verify(mCallback).onTelecomCallRemoved(callCaptor.capture());
-        assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
 
         verify(mActiveCallListChangedCallback).onTelecomCallRemoved(callCaptor.capture());
         assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
@@ -132,8 +130,6 @@ public class InCallServiceImplTest {
         mInCallServiceImpl.onCallAdded(mMockTelecomCall);
 
         ArgumentCaptor<Call> callCaptor = ArgumentCaptor.forClass(Call.class);
-        verify(mCallback).onTelecomCallAdded(callCaptor.capture());
-        assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
 
         verify(mActiveCallListChangedCallback).onTelecomCallAdded(callCaptor.capture());
         assertThat(callCaptor.getValue()).isEqualTo(mMockTelecomCall);
@@ -148,17 +144,6 @@ public class InCallServiceImplTest {
     }
 
     @Test
-    public void testUnregisterCallback() {
-        mInCallServiceImpl.unregisterCallback(mCallback);
-
-        mInCallServiceImpl.onCallAdded(mMockTelecomCall);
-        verify(mCallback, never()).onTelecomCallAdded(any());
-
-        mInCallServiceImpl.onCallRemoved(mMockTelecomCall);
-        verify(mCallback, never()).onTelecomCallRemoved(any());
-    }
-
-    @Test
     public void testRemoveActiveCallListChangedCallback() {
         mInCallServiceImpl.removeActiveCallListChangedCallback(mActiveCallListChangedCallback);
 
@@ -167,5 +152,13 @@ public class InCallServiceImplTest {
 
         mInCallServiceImpl.onCallRemoved(mMockTelecomCall);
         verify(mActiveCallListChangedCallback, never()).onTelecomCallRemoved(any());
+    }
+
+    @Test
+    public void testAddCallAudioStateChangedCallback() {
+        mInCallServiceImpl.addCallAudioStateChangedCallback(mCallAudioStateCallback);
+
+        mInCallServiceImpl.onCallAudioStateChanged(mMockCallAudioState);
+        verify(mCallAudioStateCallback).onCallAudioStateChanged(any());
     }
 }
