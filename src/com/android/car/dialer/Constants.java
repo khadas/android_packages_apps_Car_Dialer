@@ -34,6 +34,8 @@ public final class Constants {
                 "com.android.car.dialer.EXTRA_ACTION_READ_MISSED";
         /** Intent extra flag to show incoming call. */
         public static final String EXTRA_SHOW_INCOMING_CALL = "show_incoming_call";
+
+        public static final String EXTRA_SHOW_DIALPAD = "show_dialpad";
     }
 
     /** Constants used by {@link androidx.core.app.JobIntentService}s. */
@@ -41,6 +43,6 @@ public final class Constants {
         public static final int NOTIFICATION_SERVICE = 2019;
     }
 
-    /**See {@link android.content.res.Resources#getIdentifier(String, String, String)}*/
+    /** See {@link android.content.res.Resources#getIdentifier(String, String, String)} */
     public static int INVALID_RES_ID = 0;
 }

@@ -41,6 +41,7 @@ public class InCallActivity extends FragmentActivity {
     private Fragment mOngoingCallFragment;
     private Fragment mIncomingCallFragment;
 
+    private InCallViewModel mInCallViewModel;
     private MutableLiveData<Boolean> mShowIncomingCall;
     private LiveData<Call> mIncomingCallLiveData;
 
@@ -56,12 +57,12 @@ public class InCallActivity extends FragmentActivity {
         mIncomingCallFragment = getSupportFragmentManager().findFragmentById(
                 R.id.incoming_call_fragment);
 
-        mShowIncomingCall = new MutableLiveData();
-        InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
+        mShowIncomingCall = new MutableLiveData<>();
+        mInCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
         mIncomingCallLiveData = LiveDataFunctions.iff(mShowIncomingCall,
-                inCallViewModel.getIncomingCall());
-        LiveDataFunctions.pair(inCallViewModel.getOngoingCallList(), mIncomingCallLiveData).observe(
-                this, this::updateVisibility);
+                mInCallViewModel.getIncomingCall());
+        LiveDataFunctions.pair(mInCallViewModel.getOngoingCallList(),
+                mIncomingCallLiveData).observe(this, this::updateVisibility);
 
         handleIntent();
     }
@@ -97,9 +98,11 @@ public class InCallActivity extends FragmentActivity {
     private void handleIntent() {
         Intent intent = getIntent();
 
-        if (intent != null && getIntent().getBooleanExtra(
-                Constants.Intents.EXTRA_SHOW_INCOMING_CALL, false)) {
-            mShowIncomingCall.setValue(true);
+        if (intent != null) {
+            mShowIncomingCall.setValue(
+                    getIntent().getBooleanExtra(Constants.Intents.EXTRA_SHOW_INCOMING_CALL, false));
+            mInCallViewModel.getDialpadOpenState().setValue(
+                    getIntent().getBooleanExtra(Constants.Intents.EXTRA_SHOW_DIALPAD, false));
         } else {
             mShowIncomingCall.setValue(false);
         }
