@@ -15,7 +15,6 @@
  */
 package com.android.car.dialer.telecom;
 
-import android.annotation.Nullable;
 import android.bluetooth.BluetoothDevice;
 import android.car.Car;
 import android.car.CarProjectionManager;
@@ -29,8 +28,10 @@ import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+
 import com.android.car.dialer.log.L;
-import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.Collections;
 import java.util.List;

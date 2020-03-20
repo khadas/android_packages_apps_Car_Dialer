@@ -16,7 +16,6 @@
 
 package com.android.car.dialer.notification;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -83,7 +82,6 @@ public final class InCallNotificationController {
     private final Set<String> mActiveInCallNotifications;
     private CompletableFuture<Void> mNotificationFuture;
 
-    @TargetApi(26)
     private InCallNotificationController(Context context) {
         mContext = context;
         mNotificationManager =
@@ -106,7 +104,6 @@ public final class InCallNotificationController {
 
 
     /** Show a new incoming call notification or update the existing incoming call notification. */
-    @TargetApi(26)
     public void showInCallNotification(Call call) {
         L.d(TAG, "showInCallNotification");
 

@@ -16,7 +16,6 @@
 
 package com.android.car.dialer.notification;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -97,7 +96,6 @@ public final class MissedCallNotificationController {
     private final List<PhoneCallLog> mCurrentPhoneCallLogList;
     private final Map<String, CompletableFuture<Void>> mUpdateFutures;
 
-    @TargetApi(26)
     private MissedCallNotificationController(Context context) {
         mContext = context;
         mNotificationManager =

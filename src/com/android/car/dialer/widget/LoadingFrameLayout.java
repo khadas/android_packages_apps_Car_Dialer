@@ -16,7 +16,6 @@
 
 package com.android.car.dialer.widget;
 
-import android.annotation.StringRes;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -32,6 +31,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.Constants;
