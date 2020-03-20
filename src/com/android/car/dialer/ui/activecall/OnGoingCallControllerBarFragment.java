@@ -21,7 +21,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
-import android.telecom.CallAudioState.CallAudioRoute;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
@@ -278,7 +277,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         }
     }
 
-    private void onSetAudioRoute(@CallAudioRoute int audioRoute) {
+    private void onSetAudioRoute(int audioRoute) {
         UiCallManager.get().setAudioRoute(audioRoute);
         mActiveRoute = audioRoute;
         updateAudioRouteListItems();
