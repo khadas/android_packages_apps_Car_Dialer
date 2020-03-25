@@ -228,7 +228,7 @@ public class LoadingFrameLayout extends FrameLayout {
         if (mState != state) {
             L.d(TAG, "Switch to state: %d", state);
             // Hides, or shows, all the children, including the loading and error views.
-            setChildVisibility(state == State.CONTENT ? View.VISIBLE : View.GONE);
+            ViewUtils.setVisible((View) findViewById(R.id.list_view), state == State.CONTENT);
 
             // Corrects the visibility setting for error and loading views since they are
             // shown independently of the views content.
@@ -237,13 +237,6 @@ public class LoadingFrameLayout extends FrameLayout {
             mEmptyView.setVisibilityFromState(state);
 
             mState = state;
-        }
-    }
-
-    private void setChildVisibility(int visibility) {
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            getChildAt(i).setVisibility(visibility);
         }
     }
 
