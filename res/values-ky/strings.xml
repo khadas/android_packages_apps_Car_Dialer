@@ -42,7 +42,7 @@
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Кечээ"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Эскирээк"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Акыркылар жок"</string>
-    <string name="contact_list_empty" msgid="4225504548491888138">"Байланыш жок"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"Интернет жок"</string>
     <string name="available_after_sync" msgid="33765918799197782">"Шайкештирүүдөн кийин жеткиликтүү. Телефонуңуздагы байланыштарды бөлүшүүгө уруксат берилгенин текшериңиз."</string>
     <string name="favorites_empty" msgid="5794510741132758130">"Сүйүктүүлөр тизмеси бош"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Азырынча бир да сүйүктүү байланышыңыз жок"</string>
