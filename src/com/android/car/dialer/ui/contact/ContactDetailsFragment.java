@@ -36,7 +36,9 @@ import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
+import com.android.car.ui.core.CarUi;
 import com.android.car.ui.toolbar.Toolbar;
+import com.android.car.ui.toolbar.ToolbarController;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -111,7 +113,7 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
 
     private void onContactChanged(Contact contact) {
         getArguments().clear();
-        Toolbar toolbar = getActivity().findViewById(R.id.car_ui_toolbar);
+        ToolbarController toolbar = CarUi.getToolbar(getActivity());
         // Null check to have unit tests to pass.
         if (toolbar == null) {
             return;
@@ -153,25 +155,9 @@ public class ContactDetailsFragment extends DialerListBaseFragment implements
     }
 
     @Override
-    protected void setupToolbar(@NonNull Toolbar toolbar) {
+    protected void setupToolbar(@NonNull ToolbarController toolbar) {
         toolbar.setState(getToolbarState());
         toolbar.setMenuItems(null);
-
-        // Remove the tool bar background if we don't show the action bar view.
-        if (!mShowActionBarView) {
-            setShowToolbarBackground(false);
-        }
-
-        setToolbarHeight(toolbar);
-    }
-
-    @Override
-    public void onToolbarHeightChange(int toolbarHeight) {
-        if (mShowActionBarView) {
-            super.onToolbarHeightChange(toolbarHeight);
-        } else {
-            getRecyclerView().setScrollBarPadding(toolbarHeight, 0);
-        }
     }
 
     @Override

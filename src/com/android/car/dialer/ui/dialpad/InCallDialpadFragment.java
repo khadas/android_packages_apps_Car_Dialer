@@ -34,7 +34,7 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.activecall.InCallViewModel;
 import com.android.car.telephony.common.TelecomUtils;
-import com.android.car.ui.toolbar.Toolbar;
+import com.android.car.ui.toolbar.ToolbarController;
 
 /** Dialpad fragment used in the ongoing call page. */
 public class InCallDialpadFragment extends AbstractDialpadFragment {
@@ -114,17 +114,12 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    protected void setupToolbar(Toolbar toolbar) {
+    protected void setupToolbar(ToolbarController toolbar) {
         // No-op
     }
 
     @Override
     public void onKeypadKeyLongPressed(int keycode) {
-        // No-op
-    }
-
-    @Override
-    public void onToolbarHeightChange(int toolbarHeight) {
         // No-op
     }
 }

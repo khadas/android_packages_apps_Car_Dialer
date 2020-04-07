@@ -26,15 +26,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.apps.common.UxrButton;
 import com.android.car.apps.common.util.CarPackageManagerUtils;
 import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.TelecomActivityViewModel;
+import com.android.car.dialer.ui.dialpad.DialpadFragment;
 
 /**
  * A fragment that informs the user that there is no bluetooth device attached that can make
@@ -95,13 +93,13 @@ public class NoHfpFragment extends Fragment {
             mErrorMessageView.setText(mErrorMessage);
         }
 
-        TelecomActivityViewModel viewModel = ViewModelProviders.of(getActivity()).get(
-                TelecomActivityViewModel.class);
-        MutableLiveData<Integer> dialerAppStateLiveData = viewModel.getDialerAppState();
         View emergencyButton = view.findViewById(R.id.emergency_call_button);
         ViewUtils.setVisible(emergencyButton, UiCallManager.get().isEmergencyCallSupported());
-        emergencyButton.setOnClickListener(v -> dialerAppStateLiveData.setValue(
-                TelecomActivityViewModel.DialerAppState.EMERGENCY_DIALPAD));
+        emergencyButton.setOnClickListener(v -> getParentFragmentManager()
+                .beginTransaction()
+                .replace(android.R.id.content, DialpadFragment.newEmergencyDialpad())
+                .addToBackStack(null)
+                .commit());
 
         Intent launchIntent = new Intent();
         launchIntent.setAction(Bluetooth_Setting_ACTION);

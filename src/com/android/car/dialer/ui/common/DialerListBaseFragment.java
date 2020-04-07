@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.widget.LoadingFrameLayout;
+import com.android.car.ui.baselayout.Insets;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
 /**
@@ -46,7 +47,7 @@ public class DialerListBaseFragment extends DialerBaseFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutResource(), container, false);
         mLoadingFrameLayout = view.findViewById(R.id.loading_frame_layout);
-        mRecyclerView = view.findViewById(R.id.list_view);
+        mRecyclerView = view.requireViewById(R.id.list_view);
         mRecyclerView.setLayoutManager(createLayoutManager());
         return view;
     }
@@ -110,13 +111,11 @@ public class DialerListBaseFragment extends DialerBaseFragment {
     }
 
     @Override
-    public void onToolbarHeightChange(int toolbarHeight) {
-        int listTopPadding = getContext().getResources().getDimensionPixelSize(
+    public void onCarUiInsetsChanged(Insets insets) {
+        int listTopPadding = requireContext().getResources().getDimensionPixelSize(
                 R.dimen.list_top_padding);
-        mRecyclerView.setPaddingRelative(
-                mRecyclerView.getPaddingStart(),
-                toolbarHeight + listTopPadding,
-                mRecyclerView.getPaddingEnd(),
-                mRecyclerView.getPaddingBottom());
+        mRecyclerView.setPadding(0, insets.getTop() + listTopPadding, 0, insets.getBottom());
+        requireView().setPadding(insets.getLeft(), 0,
+                insets.getRight(), 0);
     }
 }
