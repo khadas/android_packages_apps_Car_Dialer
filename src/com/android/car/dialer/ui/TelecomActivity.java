@@ -20,15 +20,12 @@ import android.app.SearchManager;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
@@ -39,63 +36,63 @@ import androidx.preference.PreferenceManager;
 import com.android.car.apps.common.util.Themes;
 import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
+import com.android.car.dialer.livedata.BluetoothErrorStringLiveData;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.NotificationService;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.activecall.InCallActivity;
 import com.android.car.dialer.ui.activecall.InCallViewModel;
-import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
-import com.android.car.dialer.ui.contact.ContactListFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
-import com.android.car.dialer.ui.favorite.FavoriteFragment;
 import com.android.car.dialer.ui.search.ContactResultsFragment;
 import com.android.car.dialer.ui.settings.DialerSettingsActivity;
-import com.android.car.dialer.ui.warning.NoHfpFragment;
+import com.android.car.ui.baselayout.Insets;
+import com.android.car.ui.baselayout.InsetsChangedListener;
+import com.android.car.ui.core.CarUi;
 import com.android.car.ui.toolbar.MenuItem;
-import com.android.car.ui.toolbar.Toolbar;
+import com.android.car.ui.toolbar.ToolbarController;
 
 import java.util.List;
 
 /**
- * Main activity for the Dialer app. It contains two layers:
- * <ul>
- * <li>Overlay layer for {@link NoHfpFragment}
- * <li>Content layer for {@link FavoriteFragment} {@link CallHistoryFragment} {@link
- * ContactListFragment} and {@link DialpadFragment}
+ * Main activity for the Dialer app. It hosts most of the fragments for the app.
  *
  * <p>Start {@link InCallActivity} if there are ongoing calls
  *
  * <p>Based on call and connectivity status, it will choose the right page to display.
  */
 public class TelecomActivity extends FragmentActivity implements
-        DialerBaseFragment.DialerFragmentParent {
+        DialerBaseFragment.DialerFragmentParent, InsetsChangedListener {
     private static final String TAG = "CD.TelecomActivity";
     private LiveData<String> mBluetoothErrorMsgLiveData;
-    private LiveData<Integer> mDialerAppStateLiveData;
     private LiveData<List<Call>> mOngoingCallListLiveData;
     // View objects for this activity.
     private TelecomPageTab.Factory mTabFactory;
-    private Toolbar mCarUiToolbar;
     private BluetoothDevice mBluetoothDevice;
+    private ToolbarController mCarUiToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         L.d(TAG, "onCreate");
+
         setContentView(R.layout.telecom_activity);
 
-        mCarUiToolbar = findViewById(R.id.car_ui_toolbar);
+        mCarUiToolbar = CarUi.requireToolbar(this);
 
         setupTabLayout();
 
         TelecomActivityViewModel viewModel = ViewModelProviders.of(this).get(
                 TelecomActivityViewModel.class);
         mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
-        mDialerAppStateLiveData = viewModel.getDialerAppState();
-        mDialerAppStateLiveData.observe(this,
-                dialerAppState -> updateCurrentFragment(dialerAppState));
+        mBluetoothErrorMsgLiveData.observe(this, (String error) -> {
+            if (!BluetoothErrorStringLiveData.NO_BT_ERROR.equals(error)) {
+                startActivity(new Intent(this, NoHfpActivity.class));
+                finish();
+            }
+        });
+
         MutableLiveData<Integer> toolbarTitleMode = viewModel.getToolbarTitleMode();
         toolbarTitleMode.setValue(Themes.getAttrInteger(this, R.attr.toolbarTitleMode));
         viewModel.getRefreshTabsLiveData().observe(this, this::refreshTabs);
@@ -134,10 +131,7 @@ public class TelecomActivity extends FragmentActivity implements
         switch (action) {
             case Intent.ACTION_DIAL:
                 number = PhoneNumberUtils.getNumberFromIntent(intent, this);
-                if (TelecomActivityViewModel.DialerAppState.BLUETOOTH_ERROR
-                        != mDialerAppStateLiveData.getValue()) {
-                    showDialPadFragment(number);
-                }
+                showDialPadFragment(number);
                 break;
 
             case Intent.ACTION_CALL:
@@ -151,20 +145,14 @@ public class TelecomActivity extends FragmentActivity implements
                 break;
 
             case Constants.Intents.ACTION_SHOW_PAGE:
-                if (TelecomActivityViewModel.DialerAppState.BLUETOOTH_ERROR
-                        != mDialerAppStateLiveData.getValue()) {
-                    showTabPage(intent.getStringExtra(Constants.Intents.EXTRA_SHOW_PAGE));
-                    if (intent.getBooleanExtra(Constants.Intents.EXTRA_ACTION_READ_MISSED, false)) {
-                        NotificationService.readAllMissedCall(this);
-                    }
+                showTabPage(intent.getStringExtra(Constants.Intents.EXTRA_SHOW_PAGE));
+                if (intent.getBooleanExtra(Constants.Intents.EXTRA_ACTION_READ_MISSED, false)) {
+                    NotificationService.readAllMissedCall(this);
                 }
                 break;
             case Intent.ACTION_VIEW:
                 if (CallLog.Calls.CONTENT_TYPE.equals(intent.getType())) {
-                    if (TelecomActivityViewModel.DialerAppState.BLUETOOTH_ERROR
-                            != mDialerAppStateLiveData.getValue()) {
-                        showTabPage(TelecomPageTab.Page.CALL_HISTORY);
-                    }
+                    showTabPage(TelecomPageTab.Page.CALL_HISTORY);
                 }
                 break;
             default:
@@ -175,81 +163,6 @@ public class TelecomActivity extends FragmentActivity implements
 
         // This is to start the incall activity when user taps on the dialer launch icon rapidly
         maybeStartInCallActivity(mOngoingCallListLiveData.getValue());
-    }
-
-    /**
-     * Update the current visible fragment of this Activity based on the state of the application.
-     * <ul>
-     * <li> If bluetooth is not connected or there is an active call, show overlay, lock drawer,
-     * hide action bar and hide the content layer.
-     * <li> Otherwise, show the content layer, show action bar, hide the overlay and reset drawer
-     * lock mode.
-     */
-    private void updateCurrentFragment(
-            @TelecomActivityViewModel.DialerAppState int dialerAppState) {
-        L.d(TAG, "updateCurrentFragment, dialerAppState: %d", dialerAppState);
-
-        boolean isOverlayFragmentVisible =
-                TelecomActivityViewModel.DialerAppState.DEFAULT != dialerAppState;
-        findViewById(R.id.content_container)
-                .setVisibility(isOverlayFragmentVisible ? View.GONE : View.VISIBLE);
-        findViewById(R.id.overlay_container)
-                .setVisibility(isOverlayFragmentVisible ? View.VISIBLE : View.GONE);
-
-        switch (dialerAppState) {
-            case TelecomActivityViewModel.DialerAppState.BLUETOOTH_ERROR:
-                showNoHfpOverlay(mBluetoothErrorMsgLiveData.getValue());
-                break;
-
-            case TelecomActivityViewModel.DialerAppState.EMERGENCY_DIALPAD:
-                setOverlayFragment(DialpadFragment.newEmergencyDialpad());
-                break;
-
-            case TelecomActivityViewModel.DialerAppState.DEFAULT:
-            default:
-                clearOverlayFragment();
-                break;
-        }
-    }
-
-    private void showNoHfpOverlay(String errorMsg) {
-        Fragment overlayFragment = getCurrentOverlayFragment();
-        if (overlayFragment instanceof NoHfpFragment) {
-            ((NoHfpFragment) overlayFragment).setErrorMessage(errorMsg);
-        } else {
-            setOverlayFragment(NoHfpFragment.newInstance(errorMsg));
-        }
-    }
-
-    private void setOverlayFragment(@NonNull Fragment overlayFragment) {
-        L.d(TAG, "setOverlayFragment: %s", overlayFragment);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.overlay_container, overlayFragment)
-                .commitNow();
-    }
-
-    private void clearOverlayFragment() {
-        L.d(TAG, "clearOverlayFragment");
-
-        Fragment overlayFragment = getCurrentOverlayFragment();
-        if (overlayFragment == null) {
-            return;
-        }
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .remove(overlayFragment)
-                .commitNow();
-    }
-
-    /**
-     * Returns the fragment that is currently being displayed as the overlay view on top.
-     */
-    @Nullable
-    private Fragment getCurrentOverlayFragment() {
-        return getSupportFragmentManager().findFragmentById(R.id.overlay_container);
     }
 
     private void setupTabLayout() {
@@ -326,7 +239,7 @@ public class TelecomActivity extends FragmentActivity implements
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_fragment_container, fragment, fragmentTag)
+                .replace(R.id.fragment_container, fragment, fragmentTag)
                 .addToBackStack(fragmentTag)
                 .commit();
     }
@@ -337,7 +250,7 @@ public class TelecomActivity extends FragmentActivity implements
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_fragment_container, topContentFragment, fragmentTag)
+                .replace(R.id.fragment_container, topContentFragment, fragmentTag)
                 .addToBackStack(fragmentTag)
                 .commit();
     }
@@ -383,7 +296,7 @@ public class TelecomActivity extends FragmentActivity implements
 
     private void navigateToContactResultsFragment(String query) {
         Fragment topFragment = getSupportFragmentManager().findFragmentById(
-                R.id.content_fragment_container);
+                R.id.fragment_container);
 
         // Top fragment is ContactResultsFragment, update search query
         if (topFragment instanceof ContactResultsFragment) {
@@ -419,10 +332,10 @@ public class TelecomActivity extends FragmentActivity implements
         return mTabFactory.getTabIndex(sharedPreferences.getString(key, defaultValue));
     }
 
-    /**
-     * Sets the background of the Activity's tool bar to a {@link Drawable}
-     */
-    public void setShowToolbarBackground(boolean showToolbarBackground) {
-        mCarUiToolbar.setBackgroundShown(showToolbarBackground);
+    @Override
+    public void onCarUiInsetsChanged(Insets insets) {
+        // Do nothing, this is just a marker that we will handle the insets in fragments.
+        // This is only necessary because the fragments are not immediately added to the
+        // activity when calling .commit()
     }
 }
