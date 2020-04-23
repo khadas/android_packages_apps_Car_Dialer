@@ -222,11 +222,13 @@ public class UiCallManager {
      * The available routes are defined in {@link CallAudioState}.
      */
     public int getAudioRoute() {
-        if (isBluetoothCall()
-                && mBluetoothHeadsetClient != null
-                && !mBluetoothHeadsetClient.getConnectedDevices().isEmpty()) {
+        List<BluetoothDevice> devices = mBluetoothHeadsetClient != null
+                ? mBluetoothHeadsetClient.getConnectedDevices()
+                : Collections.emptyList();
+
+        if (isBluetoothCall() && !devices.isEmpty()) {
             // TODO: Make this handle multiple devices
-            BluetoothDevice device = mBluetoothHeadsetClient.getConnectedDevices().get(0);
+            BluetoothDevice device = devices.get(0);
             int audioState = mBluetoothHeadsetClient.getAudioState(device);
 
             if (audioState == BluetoothHeadsetClient.STATE_AUDIO_CONNECTED) {
