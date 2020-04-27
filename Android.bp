@@ -47,11 +47,10 @@ android_app {
         "libphonenumber",
         "androidx.sqlite_sqlite-framework",
         "androidx.sqlite_sqlite",
-        "car-androidx-room-common-nodeps",
-        "car-androidx-room-runtime-nodeps",
+        "androidx.room_room-runtime",
     ],
 
-    plugins: ["car-androidx-room-compiler"],
+    plugins: ["androidx.room_room-compiler-plugin"],
 
     optimize: {
         enabled: false,
@@ -106,11 +105,10 @@ android_app {
         "libphonenumber",
         "androidx.sqlite_sqlite-framework",
         "androidx.sqlite_sqlite",
-        "car-androidx-room-common-nodeps",
-        "car-androidx-room-runtime-nodeps",
+        "androidx.room_room-runtime",
     ],
 
-    plugins: ["car-androidx-room-compiler"],
+    plugins: ["androidx.room_room-compiler-plugin"],
 
     optimize: {
         enabled: false,
