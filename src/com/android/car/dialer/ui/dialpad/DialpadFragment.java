@@ -125,7 +125,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
         super.onCreate(savedInstanceState);
         mMode = getArguments().getInt(DIALPAD_MODE_KEY);
         L.d(TAG, "onCreate mode: %s", mMode);
-        mToneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, TONE_RELATIVE_VOLUME);
+        mToneGenerator = new ToneGenerator(AudioManager.STREAM_DTMF, TONE_RELATIVE_VOLUME);
 
         mTypeDownResultsViewModel = ViewModelProviders.of(this).get(
                 TypeDownResultsViewModel.class);
