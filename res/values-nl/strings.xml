@@ -17,7 +17,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="phone_app_name" msgid="238824437273544459">"Telefoon"</string>
-    <string name="no_hfp" msgid="7371139867234667691">"Als je wilt bellen, moet je je telefoon eerst via Bluetooth verbinden met de auto."</string>
+    <string name="no_hfp" msgid="7371139867234667691">"Als je wilt bellen, moet je je telefoon eerst via bluetooth verbinden met de auto."</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth is niet beschikbaar."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Schakel Bluetooth in als je gesprekken wilt plaatsen of ontvangen."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Als je gesprekken wilt plaatsen of ontvangen, koppel je je telefoon met de auto."</string>

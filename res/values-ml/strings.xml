@@ -22,7 +22,7 @@
     <string name="bluetooth_disabled" msgid="1275246762067907843">"കോളുകൾ ചെയ്യാനോ സ്വീകരിക്കാനോ Bluetooth ഓണാക്കുക."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"കോളുകൾ ചെയ്യാനോ സ്വീകരിക്കാനോ ഫോൺ കാറുമായി ജോടിയാക്കുക."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Bluetooth-ലേക്ക് കണക്‌റ്റ് ചെയ്യുക"</string>
-    <string name="emergency_button_text" msgid="3467659545392931727">"അടിയന്തിരാവശ്യം"</string>
+    <string name="emergency_button_text" msgid="3467659545392931727">"അടിയന്തരാവശ്യം"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"എമർജൻസി കോൾ"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"ഈ കോൺടാക്‌റ്റ് ഇല്ലാതാക്കിയിരിക്കാം."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"ഈ നമ്പർ ഡയൽ ചെയ്യാൻ കഴിയില്ല. അത് പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക."</string>
