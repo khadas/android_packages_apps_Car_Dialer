@@ -44,7 +44,7 @@
         android:id="@+id/dialpad_contact_avatar"
         android:layout_height="@dimen/dialpad_contact_avatar_size"
         android:layout_width="@dimen/dialpad_contact_avatar_size"
-        app:layout_constraintTop_toTopOf="@id/label"
+        app:layout_constraintTop_toBottomOf="@id/label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
