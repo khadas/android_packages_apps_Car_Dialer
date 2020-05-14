@@ -23,6 +23,7 @@ import android.telecom.Call;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
@@ -32,13 +33,13 @@ import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.InCallNotificationController;
-
-import java.util.List;
+import com.android.car.telephony.common.CallDetail;
 
 /** Activity for ongoing call and incoming call. */
 public class InCallActivity extends FragmentActivity {
     private static final String TAG = "CD.InCallActivity";
     private Fragment mOngoingCallFragment;
+    private Fragment mOngoingConfCallFragment;
     private Fragment mIncomingCallFragment;
 
     private InCallViewModel mInCallViewModel;
@@ -54,14 +55,23 @@ public class InCallActivity extends FragmentActivity {
 
         mOngoingCallFragment = getSupportFragmentManager().findFragmentById(
                 R.id.ongoing_call_fragment);
+        mOngoingConfCallFragment = getSupportFragmentManager().findFragmentById(
+                R.id.ongoing_conf_call_fragment);
         mIncomingCallFragment = getSupportFragmentManager().findFragmentById(
                 R.id.incoming_call_fragment);
+
+        // Initially hide all fragments to prevent animation flicker
+        getSupportFragmentManager().beginTransaction()
+                .hide(mIncomingCallFragment)
+                .hide(mOngoingCallFragment)
+                .hide(mOngoingConfCallFragment)
+                .commit();
 
         mShowIncomingCall = new MutableLiveData<>();
         mInCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
         mIncomingCallLiveData = LiveDataFunctions.iff(mShowIncomingCall,
                 mInCallViewModel.getIncomingCall());
-        LiveDataFunctions.pair(mInCallViewModel.getOngoingCallList(),
+        LiveDataFunctions.pair(mInCallViewModel.getPrimaryCallDetail(),
                 mIncomingCallLiveData).observe(this, this::updateVisibility);
 
         handleIntent();
@@ -85,14 +95,32 @@ public class InCallActivity extends FragmentActivity {
         handleIntent();
     }
 
-    private void updateVisibility(Pair<List<Call>, Call> callList) {
-        if ((callList.first == null || callList.first.isEmpty()) && callList.second == null) {
+    private void updateVisibility(Pair<CallDetail, Call> callList) {
+        CallDetail detail = callList.first;
+        Call incomingCall = callList.second;
+
+        if (detail == null && incomingCall == null) {
             L.d(TAG, "No call to show. Finish InCallActivity");
             finish();
             return;
         }
 
-        updateIncomingCallVisibility(callList.second);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        if (incomingCall == null) {
+            ft.show(detail.isConference() ? mOngoingConfCallFragment : mOngoingCallFragment)
+                    .hide(detail.isConference() ? mOngoingCallFragment : mOngoingConfCallFragment)
+                    .hide(mIncomingCallFragment);
+
+            mShowIncomingCall.setValue(false);
+            setIntent(null);
+        } else {
+            ft.show(mIncomingCallFragment)
+                    .hide(mOngoingCallFragment)
+                    .hide(mOngoingConfCallFragment);
+        }
+
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out).commit();
     }
 
     private void handleIntent() {
@@ -105,26 +133,6 @@ public class InCallActivity extends FragmentActivity {
                     getIntent().getBooleanExtra(Constants.Intents.EXTRA_SHOW_DIALPAD, false));
         } else {
             mShowIncomingCall.setValue(false);
-        }
-    }
-
-    private void updateIncomingCallVisibility(Call incomingCall) {
-        if (incomingCall == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .show(mOngoingCallFragment)
-                    .hide(mIncomingCallFragment)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .commit();
-            mShowIncomingCall.setValue(false);
-            setIntent(null);
-        } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .show(mIncomingCallFragment)
-                    .hide(mOngoingCallFragment)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .commit();
         }
     }
 }
