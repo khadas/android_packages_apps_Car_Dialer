@@ -17,10 +17,12 @@
 package com.android.car.dialer.ui.activecall;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,9 +49,9 @@ public class OnHoldCallUserProfileFragment extends Fragment {
     private ImageView mAvatarView;
     private View mSwapCallsView;
     private LiveData<Call> mPrimaryCallLiveData;
-    private LiveData<Call> mSecondaryCallLiveData;
     private CompletableFuture<Void> mPhoneNumberInfoFuture;
     private LetterTileDrawable mDefaultAvatar;
+    private Chronometer mTimeTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,9 +76,23 @@ public class OnHoldCallUserProfileFragment extends Fragment {
                 InCallViewModel.class);
         inCallViewModel.getSecondaryCallDetail().observe(this, this::updateProfile);
         mPrimaryCallLiveData = inCallViewModel.getPrimaryCall();
-        mSecondaryCallLiveData = inCallViewModel.getSecondaryCall();
+
+        mTimeTextView = fragmentView.findViewById(R.id.time);
+        inCallViewModel.getSecondaryCallConnectTime().observe(this, this::updateConnectTime);
 
         return fragmentView;
+    }
+
+    /** Presents the onhold call duration. */
+    protected void updateConnectTime(Long connectTime) {
+        if (connectTime == null) {
+            mTimeTextView.stop();
+            mTimeTextView.setText("");
+            return;
+        }
+        mTimeTextView.setBase(connectTime
+                - System.currentTimeMillis() + SystemClock.elapsedRealtime());
+        mTimeTextView.start();
     }
 
     private void updateProfile(@Nullable CallDetail callDetail) {
@@ -84,13 +100,19 @@ public class OnHoldCallUserProfileFragment extends Fragment {
             return;
         }
 
+        mAvatarView.setImageDrawable(mDefaultAvatar);
+
         if (mPhoneNumberInfoFuture != null) {
             mPhoneNumberInfoFuture.cancel(true);
         }
 
+        if (callDetail.isConference()) {
+            mTitle.setText(getString(R.string.ongoing_conf_title));
+            return;
+        }
+
         String number = callDetail.getNumber();
         mTitle.setText(TelecomUtils.getFormattedNumber(getContext(), number));
-        mAvatarView.setImageDrawable(mDefaultAvatar);
 
         mPhoneNumberInfoFuture = TelecomUtils.getPhoneNumberInfo(getContext(), number)
                 .thenAcceptAsync((info) -> {

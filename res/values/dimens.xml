@@ -57,17 +57,20 @@
     <dimen name="in_call_controller_bar_margin">@*android:dimen/car_padding_5</dimen>
     <dimen name="in_call_controller_bar_margin_bottom">0dp</dimen>
     <dimen name="in_call_avatar_icon_size">196dp</dimen>
+    <dimen name="in_call_avatar_icon_size_small">98dp</dimen>
     <dimen name="in_call_phone_number_margin_top">@*android:dimen/car_padding_2</dimen>
     <dimen name="in_call_state_margin_top">@*android:dimen/car_padding_2</dimen>
     <dimen name="in_call_margin_between_avatar_and_text">48dp</dimen>
     <dimen name="in_call_user_profile_margin">@*android:dimen/car_margin</dimen>
-    <dimen name="onhold_user_info_height">@dimen/list_item_height</dimen>
+    <dimen name="in_call_user_profile_list_margin">20dp</dimen>
+    <dimen name="onhold_user_info_height">90dp</dimen>
     <dimen name="onhold_profile_margin_x">@dimen/list_item_padding</dimen>
     <dimen name="onhold_profile_margin_y">@*android:dimen/car_padding_3</dimen>
     <dimen name="onhold_profile_corner_radius">8dp</dimen>
     <dimen name="onhold_profile_avatar_margin">@*android:dimen/car_keyline_1</dimen>
     <dimen name="onhold_profile_guideline">@dimen/list_item_guideline</dimen>
-    <dimen name="swap_call_button_margin">@*android:dimen/car_keyline_1</dimen>
+    <dimen name="onhold_profile_status_margin">6dp</dimen>
+    <dimen name="user_profile_list_item_height">150dp</dimen>
 
     <!-- Ringing call dimensions -->
     <dimen name="ringing_call_button_touch_target_size">@dimen/touch_target_size</dimen>
@@ -134,6 +137,7 @@
     <dimen name="vertical_divider_inset">@*android:dimen/car_padding_2</dimen>
     <dimen name="vertical_divider_width">2dp</dimen>
     <dimen name="primary_icon_size">@*android:dimen/car_primary_icon_size</dimen>
+    <dimen name="small_avatar_icon_size">56dp</dimen>
     <dimen name="avatar_icon_size">76dp</dimen>
     <dimen name="large_avatar_icon_size">96dp</dimen>
     <dimen name="primary_icon_enclosing_circle_size">64dp</dimen>

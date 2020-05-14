@@ -58,7 +58,6 @@ public class OngoingCallFragment extends InCallFragment {
         inCallViewModel.getCallStateAndConnectTime().observe(this, this::updateCallDescription);
 
         mDialpadState = inCallViewModel.getDialpadOpenState();
-        mDialpadState.setValue(savedInstanceState == null ? false : !mDialpadFragment.isHidden());
         mDialpadState.observe(this, isDialpadOpen -> {
             if (isDialpadOpen) {
                 onOpenDialpad();
