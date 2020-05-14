@@ -179,7 +179,8 @@
 
     <!-- Onhold User Profile Info -->
     <!-- Text to show the call is onhold [CHAR LIMIT=40]-->
-    <string name="onhold_call_label">On Hold</string>
+    <string name="onhold_call_separator">•</string>
+    <string name="swap_call_label">Switch calls</string>
 
     <!-- Contact list headers -->
     <!-- Contact list label for contact names starting with special characters -->
@@ -209,4 +210,10 @@
     <!-- Audio route selection dialog. Placeholder resources for overriding -->
     <string name="audio_route_dialog_title">Output call audio to:</string>
     <string name="audio_route_dialog_subtitle"></string>
+
+    <!-- Ongoing Conference Call -->
+    <!-- Title of conference page -->
+    <string name="ongoing_conf_title">Conference</string>
+    <string name="ongoing_conf_title_format">%1$s (%2$d) -\u0020</string>
+
 </resources>
