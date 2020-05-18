@@ -81,7 +81,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
 
         boolean showHeader = position == 0
                 || (!header.equals(getHeader(mContactList.get(position - 1))));
-        holder.bind(contact, showHeader, header);
+        holder.bind(contact, showHeader, header, mSortMethod);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
 
     private String getHeader(Contact contact) {
         String label;
-        if (mSortMethod.equals(ContactSortingInfo.SORT_BY_LAST_NAME)) {
+        if (ContactSortingInfo.SORT_BY_LAST_NAME.equals(mSortMethod)) {
             label = contact.getPhonebookLabelAlt();
         } else {
             label = contact.getPhonebookLabel();

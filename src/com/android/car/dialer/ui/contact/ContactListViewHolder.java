@@ -28,6 +28,7 @@ import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerUtils;
+import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
@@ -64,13 +65,14 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
     /**
      * Binds the view holder with relevant data.
      */
-    public void bind(Contact contact, boolean showHeader, String header) {
+    public void bind(Contact contact, boolean showHeader, String header, Integer sortMethod) {
         TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact);
         ViewUtils.setVisible(mHeaderView, showHeader);
         if (showHeader) {
             ViewUtils.setText(mHeaderView, header);
         }
-        mTitleView.setText(contact.getDisplayName());
+        mTitleView.setText(ContactSortingInfo.SORT_BY_FIRST_NAME.equals(sortMethod)
+                ? contact.getDisplayName() : contact.getDisplayNameAlt());
         setLabelText(contact);
 
         boolean forceShowButton = itemView.getResources().getBoolean(
