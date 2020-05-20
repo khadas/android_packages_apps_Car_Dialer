@@ -66,7 +66,8 @@
       <item quantity="other">부재중 전화(<xliff:g id="NUMBER">%1$d</xliff:g>건) </item>
       <item quantity="one">부재중 전화</item>
     </plurals>
-    <string name="onhold_call_label" msgid="1937027519810985499">"대기 중"</string>
+    <string name="onhold_call_separator" msgid="2357788035385100805">"•"</string>
+    <string name="swap_call_label" msgid="309322319645637302">"통화 전환"</string>
     <string name="setting_title" msgid="1296639422364732365">"설정"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"시작 화면"</string>
     <string name="sort_order_title" msgid="975104366728292702">"연락처 순서"</string>
@@ -74,4 +75,6 @@
     <string name="family_name_first_title" msgid="7721976826282427987">"성"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"다음으로 통화 오디오 출력:"</string>
     <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
+    <string name="ongoing_conf_title" msgid="4161590966144000887">"다자간 통화"</string>
+    <string name="ongoing_conf_title_format" msgid="7667048745156395220">"%1$s(%2$d) - "</string>
 </resources>

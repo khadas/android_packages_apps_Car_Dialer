@@ -66,7 +66,8 @@
       <item quantity="other">Javobsiz chaqiruvlar (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
       <item quantity="one">Javobsiz chaqiruv</item>
     </plurals>
-    <string name="onhold_call_label" msgid="1937027519810985499">"Kutish holatida"</string>
+    <string name="onhold_call_separator" msgid="2357788035385100805">"•"</string>
+    <string name="swap_call_label" msgid="309322319645637302">"Chaqiruvlarni almashtirish"</string>
     <string name="setting_title" msgid="1296639422364732365">"Sozlamalar"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Bosh ekran"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Kontaktlar tartibi"</string>
@@ -74,4 +75,6 @@
     <string name="family_name_first_title" msgid="7721976826282427987">"Familiyalar asosida"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"Chaqiruv audiosi chiqishi:"</string>
     <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
+    <string name="ongoing_conf_title" msgid="4161590966144000887">"Konferensiya"</string>
+    <string name="ongoing_conf_title_format" msgid="7667048745156395220">"%1$s (%2$d) - "</string>
 </resources>
