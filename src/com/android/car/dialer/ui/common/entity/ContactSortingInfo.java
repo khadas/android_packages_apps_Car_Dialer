@@ -29,8 +29,8 @@ import java.util.Comparator;
  * Information about how Contacts are sorted.
  */
 public class ContactSortingInfo {
-    public static final int SORT_BY_FIRST_NAME = 1;
-    public static final int SORT_BY_LAST_NAME = 2;
+    public static final Integer SORT_BY_FIRST_NAME = 1;
+    public static final Integer SORT_BY_LAST_NAME = 2;
     /**
      * Sort by the default display order of a name. For western names it will be "Given Family".
      * For unstructured names like east asian this will be the only order.
