@@ -93,6 +93,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
     private ImageView mAvatar;
     private ImageButton mDeleteButton;
     private int mMode;
+    private boolean mHasTypeDown;
 
     private ToneGenerator mToneGenerator;
 
@@ -136,7 +137,9 @@ public class DialpadFragment extends AbstractDialpadFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dialpad_fragment, container, false);
+        mHasTypeDown = getResources().getBoolean(R.bool.config_show_type_down_list_on_dialpad);
+        View rootView = inflater.inflate(mHasTypeDown ? R.layout.dialpad_fragment_with_type_down
+                : R.layout.dialpad_fragment_without_type_down, container, false);
 
         mTitleView = rootView.findViewById(R.id.title);
         mTitleView.setTextAppearance(
@@ -144,7 +147,9 @@ public class DialpadFragment extends AbstractDialpadFragment {
                         : R.style.TextAppearance_DialNumber);
         mDisplayName = rootView.findViewById(R.id.display_name);
         mRecyclerView = rootView.findViewById(R.id.list_view);
-        mRecyclerView.setAdapter(mAdapter);
+        if (mRecyclerView != null) {
+            mRecyclerView.setAdapter(mAdapter);
+        }
         mLabel = rootView.findViewById(R.id.label);
         mAvatar = rootView.findViewById(R.id.dialpad_contact_avatar);
         if (mAvatar != null) {
@@ -251,7 +256,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
             ViewUtils.setVisible(mDeleteButton, true);
         }
 
-        if (getResources().getBoolean(R.bool.config_show_type_down_list_on_dialpad)) {
+        if (mHasTypeDown) {
             resetContactInfo();
             ViewUtils.setVisible(mRecyclerView, true);
             mTypeDownResultsViewModel.setSearchQuery(number.toString());
