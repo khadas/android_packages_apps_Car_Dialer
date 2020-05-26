@@ -152,6 +152,4 @@ limitations under the License.
         app:layout_constraintLeft_toRightOf="@id/zero"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <include layout="@layout/keypad_dividers"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
