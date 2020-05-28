@@ -91,7 +91,8 @@ public class ProjectionCallHandlerTest {
         mTelecomManager.registerPhoneAccount(mNonHfpAccount);
         mTelecomManager.registerPhoneAccount(mAccountWithNoAddress);
 
-        mProjectionCallHandler = new ProjectionCallHandler(mTelecomManager, mCarProjectionManager);
+        mProjectionCallHandler = new ProjectionCallHandler(mContext, mTelecomManager,
+                car -> mCarProjectionManager);
     }
 
     @Test
