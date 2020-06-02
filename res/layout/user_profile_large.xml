@@ -31,6 +31,7 @@ limitations under the License.
         android:paddingStart="@dimen/in_call_margin_between_avatar_and_text">
         <TextView
             android:id="@+id/user_profile_title"
+            android:theme="@style/Theme.Dialer.BidiText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.InCallUserTitle"
@@ -39,6 +40,7 @@ limitations under the License.
             android:id="@+id/user_profile_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/Theme.Dialer.BidiText"
             android:textAppearance="@style/TextAppearance.InCallUserPhoneNumber"
             android:singleLine="true"
             android:layout_marginTop="@dimen/in_call_phone_number_margin_top"/>

@@ -21,6 +21,11 @@ limitations under the License.
         <item name="android:textDirection">locale</item>
     </style>
 
+    <style name="Theme.Dialer.BidiText" parent="Theme.Dialer">
+        <item name="android:textDirection">ltr</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
     <style name="Theme.Dialer.Telecom">
         <item name="toolbarTitleMode">@integer/config_toolbar_title_mode</item>
     </style>
