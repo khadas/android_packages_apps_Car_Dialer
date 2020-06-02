@@ -59,8 +59,8 @@
     <string name="phone_favorites" msgid="2257447553252980575">"پسندیدگیاں"</string>
     <string name="local_favorites" msgid="4954852813126882412">"مقامی پسندیدگیاں"</string>
     <string name="no_phone_numbers" msgid="8738691115921148445">"کوئی فون نمبر نہیں ہے"</string>
-    <string name="in_call_notification_channel_name" msgid="1978093630512401778">"موصول ہونے والی کال کی اطلاع"</string>
-    <string name="notification_incoming_call" msgid="1722904631804432389">"موصول ہونے والی کال"</string>
+    <string name="in_call_notification_channel_name" msgid="1978093630512401778">"اِن کمنگ کال کی اطلاع"</string>
+    <string name="notification_incoming_call" msgid="1722904631804432389">"اِن کمنگ کال"</string>
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"چھوٹی ہوئی کال کی اطلاع"</string>
     <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
       <item quantity="other">چھوٹی ہوئی کالز(<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
