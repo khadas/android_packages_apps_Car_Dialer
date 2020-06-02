@@ -57,6 +57,7 @@ limitations under the License.
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:theme="@style/Theme.Dialer.BidiText"
         android:layout_marginEnd="@dimen/call_history_text_margin_end"
         android:singleLine="true"
         app:layout_constraintVertical_chainStyle="packed"
