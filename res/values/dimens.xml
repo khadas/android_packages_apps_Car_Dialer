@@ -17,9 +17,6 @@
     <!-- Dialer -->
     <dimen name="dialer_card_elevation">2dp</dimen>
 
-    <!-- TODO: UNUSED! REMOVE THIS. b/149125789-->
-    <dimen name="audio_route_constraint_guide_begin">@dimen/list_item_guideline</dimen>
-
     <!-- Call list dimensions -->
     <dimen name="call_history_item_height">@dimen/list_item_height</dimen>
     <dimen name="call_history_item_padding">@dimen/list_item_padding</dimen>
