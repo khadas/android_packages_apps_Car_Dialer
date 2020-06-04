@@ -25,6 +25,7 @@ limitations under the License.
         android:id="@+id/user_profile_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/Theme.Dialer.BidiText"
         android:textAppearance="@style/TextAppearance.InCallUserTitle"
         android:paddingTop="@dimen/in_call_margin_between_avatar_and_text"
         android:singleLine="true"/>
@@ -32,6 +33,7 @@ limitations under the License.
         android:id="@+id/user_profile_phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/Theme.Dialer.BidiText"
         android:textAppearance="@style/TextAppearance.InCallUserPhoneNumber"
         android:singleLine="true"
         android:paddingTop="@dimen/in_call_phone_number_margin_top"/>
