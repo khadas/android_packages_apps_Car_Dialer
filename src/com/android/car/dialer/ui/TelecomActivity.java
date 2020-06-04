@@ -17,7 +17,6 @@
 package com.android.car.dialer.ui;
 
 import android.app.SearchManager;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -66,9 +65,9 @@ public class TelecomActivity extends FragmentActivity implements
     private static final String TAG = "CD.TelecomActivity";
     private LiveData<String> mBluetoothErrorMsgLiveData;
     private LiveData<List<Call>> mOngoingCallListLiveData;
+    private LiveData<Boolean> mRefreshUiLiveData;
     // View objects for this activity.
     private TelecomPageTab.Factory mTabFactory;
-    private BluetoothDevice mBluetoothDevice;
     private ToolbarController mCarUiToolbar;
 
     @Override
@@ -81,10 +80,14 @@ public class TelecomActivity extends FragmentActivity implements
 
         mCarUiToolbar = CarUi.requireToolbar(this);
 
-        setupTabLayout();
+        setupTabLayout(false);
 
         TelecomActivityViewModel viewModel = ViewModelProviders.of(this).get(
                 TelecomActivityViewModel.class);
+
+        mRefreshUiLiveData = viewModel.getRefreshTabsLiveData();
+        mRefreshUiLiveData.observe(this, v -> refreshUi());
+
         mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
         mBluetoothErrorMsgLiveData.observe(this, (String error) -> {
             if (!BluetoothErrorStringLiveData.NO_BT_ERROR.equals(error)) {
@@ -95,19 +98,13 @@ public class TelecomActivity extends FragmentActivity implements
 
         MutableLiveData<Integer> toolbarTitleMode = viewModel.getToolbarTitleMode();
         toolbarTitleMode.setValue(Themes.getAttrInteger(this, R.attr.toolbarTitleMode));
-        viewModel.getRefreshTabsLiveData().observe(this, this::refreshTabs);
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
         mOngoingCallListLiveData = inCallViewModel.getOngoingCallList();
+        // The mOngoingCallListLiveData needs to be active to get calculated.
+        mOngoingCallListLiveData.observe(this, this::maybeStartInCallActivity);
 
         handleIntent();
-    }
-
-    private void refreshTabs(boolean refreshTabs) {
-        L.v(TAG, "hfp connected device list Changes.");
-        if (refreshTabs) {
-            setupTabLayout();
-        }
     }
 
     @Override
@@ -163,12 +160,11 @@ public class TelecomActivity extends FragmentActivity implements
         maybeStartInCallActivity(mOngoingCallListLiveData.getValue());
     }
 
-    private void setupTabLayout() {
+    private void setupTabLayout(boolean forceInit) {
         boolean wasContentFragmentRestored = false;
         mTabFactory = new TelecomPageTab.Factory(this, getSupportFragmentManager());
-        mCarUiToolbar.clearAllTabs();
         for (int i = 0; i < mTabFactory.getTabCount(); i++) {
-            TelecomPageTab tab = mTabFactory.createTab(getBaseContext(), i);
+            TelecomPageTab tab = mTabFactory.createTab(getBaseContext(), i, forceInit);
             mCarUiToolbar.addTab(tab);
 
             if (tab.wasFragmentRestored()) {
@@ -191,6 +187,12 @@ public class TelecomActivity extends FragmentActivity implements
                     Fragment fragment = telecomPageTab.getFragment();
                     setContentFragment(fragment, telecomPageTab.getFragmentTag());
                 });
+    }
+
+    private void refreshUi() {
+        L.v(TAG, "hfp connected device list changes");
+        mCarUiToolbar.clearAllTabs();
+        setupTabLayout(true);
     }
 
     /**
