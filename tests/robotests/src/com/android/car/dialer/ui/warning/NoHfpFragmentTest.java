@@ -30,7 +30,7 @@ import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.TestDialerApplication;
-import com.android.car.dialer.telecom.UiBluetoothMonitor;
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowCar;
 
