@@ -35,6 +35,7 @@
 
         <TextView
             android:id="@+id/title"
+            android:theme="@style/Theme.Dialer.BidiText"
             android:textAppearance="@style/TextAppearance.ContactDetailsListTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
