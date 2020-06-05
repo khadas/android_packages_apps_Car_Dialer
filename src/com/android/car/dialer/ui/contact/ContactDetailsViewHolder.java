@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -198,13 +197,12 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
         ViewUtils.setText(mText, postalAddress.getReadableLabel(resources));
 
         mAddressView.setOnClickListener(
-                v -> openMapWithAddressUri(context, postalAddress.getAddressUri(resources)));
+                v -> openMapWithMapIntent(context, postalAddress.getAddressIntent(resources)));
         mNavigationButton.setOnClickListener(
-                v -> openMapWithAddressUri(context, postalAddress.getNavigationUri(resources)));
+                v -> openMapWithMapIntent(context, postalAddress.getNavigationIntent(resources)));
     }
 
-    private void openMapWithAddressUri(Context context, Uri addressUri) {
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, addressUri);
+    private void openMapWithMapIntent(Context context, Intent mapIntent) {
         context.startActivity(mapIntent);
     }
 }
