@@ -27,6 +27,7 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.ui.search.ContactResultsFragment;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.AlertDialogBuilder;
 import com.android.car.ui.recyclerview.CarUiContentListItem;
 import com.android.car.ui.recyclerview.CarUiListItem;
@@ -92,7 +93,7 @@ public class AddFavoriteFragment extends ContactResultsFragment {
         mFavoritePhoneNumberList.clear();
         for (PhoneNumber number : phoneNumbers) {
             CarUiContentListItem item = new CarUiContentListItem(CarUiContentListItem.Action.ICON);
-            item.setTitle(number.getNumber());
+            item.setTitle(TelecomUtils.getBidiWrappedNumber(number.getNumber()));
             item.setSupplementalIcon(mFavoriteIcon.getConstantState().newDrawable());
             setFavoriteItemState(item, number);
 

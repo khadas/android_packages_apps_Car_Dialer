@@ -31,6 +31,7 @@ import androidx.annotation.StringRes;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.CallDetail;
+import com.android.car.telephony.common.TelecomUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -118,7 +119,7 @@ public final class InCallNotificationController {
         mNotificationBuilder
                 .setFullScreenIntent(getFullscreenIntent(call), /* highPriority= */true)
                 .setLargeIcon((Icon) null)
-                .setContentTitle(number)
+                .setContentTitle(TelecomUtils.getBidiWrappedNumber(number))
                 .setActions(
                         getAction(call, R.string.answer_call,
                                 NotificationService.ACTION_ANSWER_CALL),
@@ -135,7 +136,7 @@ public final class InCallNotificationController {
                     if (mActiveInCallNotifications.contains(callId)) {
                         mNotificationBuilder
                                 .setLargeIcon(pair.second)
-                                .setContentTitle(pair.first);
+                                .setContentTitle(TelecomUtils.getBidiWrappedNumber(pair.first));
 
                         mNotificationManager.notify(
                                 callId,
