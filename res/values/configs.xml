@@ -47,6 +47,9 @@
     <!-- Config gate the full screen incall ui -->
     <bool name="config_show_fullscreen_incall_ui">true</bool>
 
+    <!-- Config for enabling incoming call HUN fullscreen intent -->
+    <bool name="config_show_hun_fullscreen_incall_ui">true</bool>
+
     <!-- A config determines whether to show type down list on Dialpad -->
     <bool name="config_show_type_down_list_on_dialpad">true</bool>
     <!-- A config determines whether to show user profile for input number only when type down is

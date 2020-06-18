@@ -46,6 +46,8 @@ public final class InCallNotificationController {
 
     private static InCallNotificationController sInCallNotificationController;
 
+    private boolean mShowFullscreenIncallUi;
+
     /**
      * Initialized a globally accessible {@link InCallNotificationController} which can be retrieved
      * by {@link #get}. If this function is called a second time before calling {@link #tearDown()},
@@ -85,6 +87,9 @@ public final class InCallNotificationController {
 
     private InCallNotificationController(Context context) {
         mContext = context;
+
+        mShowFullscreenIncallUi = mContext.getResources().getBoolean(
+                R.bool.config_show_hun_fullscreen_incall_ui);
         mNotificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -116,8 +121,12 @@ public final class InCallNotificationController {
         String number = callDetail.getNumber();
         String callId = call.getDetails().getTelecomCallId();
         mActiveInCallNotifications.add(callId);
+
+        if (mShowFullscreenIncallUi) {
+            mNotificationBuilder.setFullScreenIntent(
+                    getFullscreenIntent(call), /* highPriority= */true);
+        }
         mNotificationBuilder
-                .setFullScreenIntent(getFullscreenIntent(call), /* highPriority= */true)
                 .setLargeIcon((Icon) null)
                 .setContentTitle(TelecomUtils.getBidiWrappedNumber(number))
                 .setActions(
