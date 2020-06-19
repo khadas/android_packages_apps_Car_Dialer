@@ -16,6 +16,8 @@
 
 package com.android.car.dialer.ui.warning;
 
+import android.car.Car;
+import android.car.content.pm.CarPackageManager;
 import android.car.drivingstate.CarUxRestrictions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,6 +48,9 @@ public class NoHfpFragment extends Fragment {
     private TextView mErrorMessageView;
     private String mErrorMessage;
 
+    private Car mCar;
+    private CarPackageManager mCarPackageManager;
+
     /**
      * Returns an instance of the {@link NoHfpFragment} with the given error message as the one to
      * display.
@@ -67,6 +72,14 @@ public class NoHfpFragment extends Fragment {
         if (args != null) {
             mErrorMessage = args.getString(ERROR_MESSAGE_KEY);
         }
+        mCar = Car.createCar(getActivity());
+        mCarPackageManager = (CarPackageManager) mCar.getCarManager(Car.PACKAGE_SERVICE);
+    }
+
+    @Override
+    public void onDestroy() {
+        mCar.disconnect();
+        super.onDestroy();
     }
 
     /**
@@ -106,8 +119,8 @@ public class NoHfpFragment extends Fragment {
         launchIntent.addCategory(Bluetooth_Setting_CATEGORY);
 
         UxrButton bluetoothButton = view.findViewById(R.id.connect_bluetooth_button);
-        boolean isDistractionOptimized = CarPackageManagerUtils.getInstance(getActivity())
-                .isDistractionOptimized(getActivity().getPackageManager(), launchIntent);
+        boolean isDistractionOptimized = CarPackageManagerUtils.isDistractionOptimized(
+                mCarPackageManager, getActivity().getPackageManager(), launchIntent);
         bluetoothButton.setUxRestrictions(isDistractionOptimized
                 ? CarUxRestrictions.UX_RESTRICTIONS_BASELINE
                 : CarUxRestrictions.UX_RESTRICTIONS_NO_SETUP);
