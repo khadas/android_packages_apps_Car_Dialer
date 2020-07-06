@@ -18,8 +18,8 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="phone_app_name" msgid="238824437273544459">"Telefonoa"</string>
     <string name="no_hfp" msgid="7371139867234667691">"Dei egiteko, konektatu telefonoa autoarekin Bluetooth bidez."</string>
-    <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth konexioa ez dago erabilgarri."</string>
-    <string name="bluetooth_disabled" msgid="1275246762067907843">"Deiak jaso edo egiteko, aktibatu Bluetooth konexioa."</string>
+    <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth-a ez dago erabilgarri."</string>
+    <string name="bluetooth_disabled" msgid="1275246762067907843">"Deiak jaso edo egiteko, aktibatu Bluetooth-a."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Deiak jaso edo egiteko, parekatu telefonoa autoarekin."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Konektatu Bluetooth-era"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Larrialdi-deia"</string>

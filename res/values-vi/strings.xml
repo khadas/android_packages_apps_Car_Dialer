@@ -66,7 +66,7 @@
       <item quantity="other">Cuộc gọi nhỡ (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
       <item quantity="one">Cuộc gọi nhỡ</item>
     </plurals>
-    <string name="onhold_call_label" msgid="1937027519810985499">"Đang chờ"</string>
+    <string name="onhold_call_label" msgid="1937027519810985499">"Đang giữ máy"</string>
     <string name="setting_title" msgid="1296639422364732365">"Cài đặt"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Màn hình bắt đầu"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Thứ tự danh bạ"</string>
