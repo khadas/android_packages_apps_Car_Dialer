@@ -59,14 +59,14 @@
     <dimen name="in_call_state_margin_top">@dimen/car_ui_padding_2</dimen>
     <dimen name="in_call_margin_between_avatar_and_text">48dp</dimen>
     <dimen name="in_call_user_profile_margin">@dimen/car_ui_margin</dimen>
-    <dimen name="in_call_user_profile_list_margin">20dp</dimen>
+    <dimen name="in_call_user_profile_list_margin">60dp</dimen>
     <dimen name="onhold_user_info_height">90dp</dimen>
     <dimen name="onhold_profile_margin_x">@dimen/list_item_padding</dimen>
     <dimen name="onhold_profile_margin_y">@dimen/car_ui_padding_3</dimen>
     <dimen name="onhold_profile_corner_radius">8dp</dimen>
     <dimen name="onhold_profile_avatar_margin">@dimen/car_keyline_1</dimen>
     <dimen name="onhold_profile_guideline">@dimen/list_item_guideline</dimen>
-    <dimen name="onhold_profile_status_margin">6dp</dimen>
+    <dimen name="onhold_profile_status_margin">12dp</dimen>
     <dimen name="user_profile_list_item_height">150dp</dimen>
 
     <!-- Ringing call dimensions -->

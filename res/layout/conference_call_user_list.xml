@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:layout_marginBottom="35dp"
-        android:layout_marginLeft="135dp"
+        android:layout_marginLeft="170dp"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

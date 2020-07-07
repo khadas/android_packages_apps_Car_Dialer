@@ -79,7 +79,7 @@ public class ConferenceProfileViewHolder extends RecyclerView.ViewHolder {
                             && !phoneNumberLabel.equals(info.getDisplayName())) {
                         mNumber.setText(phoneNumberLabel);
                     } else {
-                        mNumber.setText(null);
+                        mNumber.setText(mContext.getString(R.string.unknown));
                     }
 
                     LetterTileDrawable letterTile = TelecomUtils.createLetterTile(

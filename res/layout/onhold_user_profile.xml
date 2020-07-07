@@ -47,29 +47,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.Dialer.BidiText"
-            android:layout_marginEnd="@dimen/onhold_profile_status_margin"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:singleLine="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/title_separator"/>
+
+        <TextView
+            android:id="@id/title_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/onhold_profile_status_margin"
+            android:layout_marginEnd="@dimen/onhold_profile_status_margin"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:singleLine="true"
+            android:text="@string/onhold_call_separator"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/title"
             app:layout_constraintEnd_toStartOf="@+id/time"/>
 
         <Chronometer
             android:id="@id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/onhold_profile_status_margin"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/onhold_time_color"
             android:singleLine="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/title"
-            app:layout_constraintEnd_toStartOf="@+id/separator"/>
+            app:layout_constraintStart_toEndOf="@id/title_separator"
+            app:layout_constraintEnd_toStartOf="@+id/time_separator"/>
 
         <TextView
-            android:id="@id/separator"
+            android:id="@id/time_separator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/onhold_profile_status_margin"
@@ -92,7 +104,7 @@
             android:textColor="@color/onhold_label_color"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/separator"
+            app:layout_constraintStart_toEndOf="@id/time_separator"
             app:layout_constraintEnd_toStartOf="@+id/swap_call"/>
 
         <TextView
