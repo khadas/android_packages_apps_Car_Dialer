@@ -201,6 +201,12 @@
     <string name="pref_connected_phone_title">Connected Phone </string>
     <string name="pref_connected_phone_key" translatable="false">connected_phone</string>
 
+    <!-- Title of no incoming call heads-up notification(HUN) setting -->
+    <string name="pref_no_incoming_call_hun_title">Privacy</string>
+    <string name="pref_no_incoming_call_hun_key" translatable="false">no_incoming_call_hun</string>
+    <!-- Summary of no incoming call heads-up notification(HUN) setting -->
+    <string name="pref_no_incoming_call_hun_summary">Only show call alerts in cluster</string>
+
     <!-- Keys and titles of the settings for sorting Contacts in different orders -->
     <!-- Key of given name -->
     <string name="given_name_first_key" translatable="false">given_name</string>

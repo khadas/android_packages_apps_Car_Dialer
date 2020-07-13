@@ -50,6 +50,12 @@
     <!-- Config for enabling incoming call HUN fullscreen intent -->
     <bool name="config_show_hun_fullscreen_incall_ui">true</bool>
 
+    <!-- A config determines whether to show a heads up notification when there's a incoming call-->
+    <bool name="config_should_show_incoming_call_hun">true</bool>
+    <!-- A config determines whether to show an entry in setting to config showing a heads up
+    notification when there's a incoming call-->
+    <bool name="config_should_show_incoming_call_hun_setting">false</bool>
+
     <!-- A config determines whether to show type down list on Dialpad -->
     <bool name="config_show_type_down_list_on_dialpad">true</bool>
     <!-- A config determines whether to show user profile for input number only when type down is

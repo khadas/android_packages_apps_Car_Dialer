@@ -121,7 +121,7 @@ public class InCallServiceImpl extends InCallService {
     @Override
     public void onBringToForeground(boolean showDialpad) {
         L.d(TAG, "onBringToForeground: %s", showDialpad);
-        mInCallRouter.routeToInCallPage(showDialpad);
+        mInCallRouter.routeToFullScreenIncomingCallPage(showDialpad);
     }
 
     public void addCallAudioStateChangedCallback(CallAudioStateCallback callback) {
