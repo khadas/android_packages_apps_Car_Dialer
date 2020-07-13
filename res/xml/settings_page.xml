@@ -19,6 +19,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/setting_title">
 
+    <Preference
+        android:key="@string/pref_connected_phone_key"
+        android:title="@string/pref_connected_phone_title"/>
+
     <ListPreference
         android:key="@string/pref_start_page_key"
         android:title="@string/pref_start_page_title"
