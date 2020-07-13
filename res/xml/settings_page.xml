@@ -17,11 +17,19 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/setting_title">
 
     <Preference
         android:key="@string/pref_connected_phone_key"
         android:title="@string/pref_connected_phone_title"/>
+
+    <SwitchPreference
+        android:defaultValue="@bool/config_should_show_incoming_call_hun"
+        android:key="@string/pref_no_incoming_call_hun_key"
+        android:title="@string/pref_no_incoming_call_hun_title"
+        android:summary="@string/pref_no_incoming_call_hun_summary"
+        app:isPreferenceVisible="@bool/config_should_show_incoming_call_hun_setting"/>
 
     <ListPreference
         android:key="@string/pref_start_page_key"

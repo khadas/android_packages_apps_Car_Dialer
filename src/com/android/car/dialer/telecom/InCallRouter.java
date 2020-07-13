@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.telecom.Call;
 
 import androidx.annotation.MainThread;
+import androidx.preference.PreferenceManager;
 
 import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
@@ -83,11 +84,15 @@ class InCallRouter {
 
         int state = call.getState();
         if (state == Call.STATE_RINGING) {
-            routeToNotification(call);
+            if (shouldShowIncomingCallHun()) {
+                routeToNotification(call);
+            }
+            // Otherwise, no operations. Incoming call will be displayed outside of Dialer app
+            // such as cluster.
         } else if (state != Call.STATE_DISCONNECTED) {
             // Don't launch the in call page if state is disconnected.
             // Otherwise, the InCallActivity finishes right after onCreate() and flashes.
-            routeToInCallPage(false);
+            routeToFullScreenIncomingCallPage(false);
         }
     }
 
@@ -140,7 +145,7 @@ class InCallRouter {
                 if (call.getState() != Call.STATE_DISCONNECTED) {
                     // Don't launch the in call page if state is disconnected. Otherwise, the
                     // InCallActivity finishes right after onCreate() and flashes.
-                    routeToInCallPage(false);
+                    routeToFullScreenIncomingCallPage(false);
                 }
                 mInCallNotificationController.cancelInCallNotification(call);
                 call.unregisterCallback(this);
@@ -151,7 +156,7 @@ class InCallRouter {
     /**
      * Launches {@link InCallActivity} and presents the on going call in the in call page.
      */
-    void routeToInCallPage(boolean showDialpad) {
+    void routeToFullScreenIncomingCallPage(boolean showDialpad) {
         // It has been configured not to show the fullscreen incall ui.
         if (!mShowFullscreenIncallUi) {
             return;
@@ -160,5 +165,10 @@ class InCallRouter {
         Intent launchIntent = new Intent(mContext, InCallActivity.class);
         launchIntent.putExtra(Constants.Intents.EXTRA_SHOW_INCOMING_CALL, showDialpad);
         mContext.startActivity(launchIntent);
+    }
+
+    private boolean shouldShowIncomingCallHun() {
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .getBoolean(mContext.getString(R.string.pref_no_incoming_call_hun_key), true);
     }
 }
