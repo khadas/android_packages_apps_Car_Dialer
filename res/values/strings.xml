@@ -197,6 +197,10 @@
     <string name="sort_order_title">Contact order</string>
     <string name="sort_order_key" translatable="false">contact_order</string>
 
+    <!-- Title of connected phone setting -->
+    <string name="pref_connected_phone_title">Connected Phone </string>
+    <string name="pref_connected_phone_key" translatable="false">connected_phone</string>
+
     <!-- Keys and titles of the settings for sorting Contacts in different orders -->
     <!-- Key of given name -->
     <string name="given_name_first_key" translatable="false">given_name</string>
