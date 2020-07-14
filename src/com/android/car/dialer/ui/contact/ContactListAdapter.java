@@ -23,11 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.telephony.common.Contact;
+import com.android.car.ui.recyclerview.ContentLimitingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * Adapter for contact list.
  */
-public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHolder> {
+public class ContactListAdapter extends ContentLimitingAdapter<ContactListViewHolder> {
     private static final String TAG = "CD.ContactListAdapter";
 
     interface OnShowContactDetailListener {
@@ -68,14 +68,14 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
 
     @NonNull
     @Override
-    public ContactListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactListViewHolder onCreateViewHolderImpl(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.contact_list_item, parent,
                 false);
         return new ContactListViewHolder(itemView, mOnShowContactDetailListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactListViewHolder holder, int position) {
+    public void onBindViewHolderImpl(@NonNull ContactListViewHolder holder, int position) {
         Contact contact = mContactList.get(position);
         String header = getHeader(contact);
 
@@ -85,13 +85,18 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListViewHold
     }
 
     @Override
-    public int getItemCount() {
+    public int getUnrestrictedItemCount() {
         return mContactList.size();
     }
 
     @Override
-    public void onViewRecycled(@NonNull ContactListViewHolder holder) {
-        super.onViewRecycled(holder);
+    public int getConfigurationId() {
+        return R.id.contact_list_uxr_config;
+    }
+
+    @Override
+    public void onViewRecycledImpl(@NonNull ContactListViewHolder holder) {
+        // Calling super.onViewRecycled() will cause an infinite loop.
         holder.recycle();
     }
 

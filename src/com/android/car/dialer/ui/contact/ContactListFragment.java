@@ -51,6 +51,7 @@ public class ContactListFragment extends DialerListBaseFragment implements
                     getContext(), /* onShowContactDetailListener= */this);
         }
         getRecyclerView().setAdapter(mContactListAdapter);
+        getUxrContentLimiter().setAdapter(mContactListAdapter);
 
         ContactListViewModel contactListViewModel = ViewModelProviders.of(this).get(
                 ContactListViewModel.class);
