@@ -44,8 +44,11 @@
     <!-- Use app name as toolbar title. Supported value see @attr/toolbarTitleMode -->
     <integer name="config_toolbar_title_mode">0</integer>
 
-    <!-- Config gate the full screen incall ui -->
+    <!-- A config determines whether to show the full screen ui when call is answered-->
     <bool name="config_show_fullscreen_incall_ui">true</bool>
+    <!-- A config determines whether to show an entry in setting to config showing full screen UI
+    when call is answered-->
+    <bool name="config_should_show_active_call_setting">false</bool>
 
     <!-- Config for enabling incoming call HUN fullscreen intent -->
     <bool name="config_show_hun_fullscreen_incall_ui">true</bool>
