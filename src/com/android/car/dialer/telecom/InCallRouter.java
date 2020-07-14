@@ -48,12 +48,8 @@ class InCallRouter {
             mActiveCallListChangedCallbacks = new ArrayList<>();
     private final ProjectionCallHandler mProjectionCallHandler;
 
-    private final boolean mShowFullscreenIncallUi;
-
     InCallRouter(Context context) {
         mContext = context;
-        mShowFullscreenIncallUi = context.getResources().getBoolean(
-                R.bool.config_show_fullscreen_incall_ui);
         mInCallNotificationController = InCallNotificationController.get();
         mProjectionCallHandler = new ProjectionCallHandler(context);
     }
@@ -158,7 +154,7 @@ class InCallRouter {
      */
     void routeToFullScreenIncomingCallPage(boolean showDialpad) {
         // It has been configured not to show the fullscreen incall ui.
-        if (!mShowFullscreenIncallUi) {
+        if (!shouldShowFullScreenUi()) {
             return;
         }
 
@@ -170,5 +166,11 @@ class InCallRouter {
     private boolean shouldShowIncomingCallHun() {
         return PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getBoolean(mContext.getString(R.string.pref_no_incoming_call_hun_key), true);
+    }
+
+    private boolean shouldShowFullScreenUi() {
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .getBoolean(mContext.getString(R.string.pref_no_fullscreen_active_call_ui_key),
+                        true);
     }
 }
