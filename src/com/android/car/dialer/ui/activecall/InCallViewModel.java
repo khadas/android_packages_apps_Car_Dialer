@@ -126,6 +126,9 @@ public class InCallViewModel extends AndroidViewModel implements
                 List<Call> activeCallList = filter(callList,
                         call -> call != null && call.getState() != Call.STATE_RINGING);
                 activeCallList.sort(mCallComparator);
+                if (mInCallService != null) {
+                    mInCallService.maybeStartInCallActivity(activeCallList);
+                }
                 mOngoingCallListLiveData.setValue(activeCallList);
                 mIncomingCallLiveData.setValue(firstMatch(callList,
                         call -> call != null && call.getState() == Call.STATE_RINGING));
