@@ -149,6 +149,9 @@ public class InCallViewModel extends AndroidViewModel implements
                         call -> call.getParent() == null);
                 mConferenceCallListLiveData.setValue(conferenceList);
                 mOngoingCallListLiveData.setValue(ongoingCallList);
+                if (mInCallService != null) {
+                    mInCallService.maybeStartInCallActivity(ongoingCallList);
+                }
                 mIncomingCallLiveData.setValue(firstMatch(callList,
                         call -> call != null && call.getState() == Call.STATE_RINGING));
 
