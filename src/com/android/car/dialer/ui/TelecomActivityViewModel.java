@@ -23,22 +23,26 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.BluetoothHfpStateLiveData;
 import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
-import com.android.car.dialer.livedata.HfpDeviceListLiveData;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.UiBluetoothMonitor;
+import com.android.car.dialer.ui.common.SingleLiveEvent;
+
+import com.google.common.annotations.VisibleForTesting;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -54,12 +58,10 @@ public class TelecomActivityViewModel extends AndroidViewModel {
     private final Context mApplicationContext;
     private final LiveData<String> mErrorStringLiveData;
     private final MutableLiveData<Integer> mDialerAppStateLiveData;
-    private final LiveData<Boolean> mRefreshTabsLiveData;
+    private RefreshUiEvent mRefreshTabsLiveData;
 
     private final ToolbarTitleLiveData mToolbarTitleLiveData;
     private final MutableLiveData<Integer> mToolbarTitleMode;
-
-    private BluetoothDevice mBluetoothDevice;
 
     /**
      * App state indicates if bluetooth is connected or it should just show the content fragments.
@@ -92,25 +94,12 @@ public class TelecomActivityViewModel extends AndroidViewModel {
                     uiBluetoothMonitor.getHfpStateLiveData(),
                     uiBluetoothMonitor.getPairListLiveData(),
                     uiBluetoothMonitor.getBluetoothStateLiveData());
+
+            mRefreshTabsLiveData = new RefreshUiEvent(
+                    uiBluetoothMonitor.getHfpDeviceListLiveData());
         }
 
         mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData);
-
-        HfpDeviceListLiveData hfpDeviceListLiveData = new HfpDeviceListLiveData(getApplication());
-        mRefreshTabsLiveData = Transformations.map(hfpDeviceListLiveData, (hfpDeviceList) -> {
-            if (hfpDeviceList != null && !hfpDeviceList.isEmpty()) {
-                if (!hfpDeviceList.contains(mBluetoothDevice)) {
-                    mBluetoothDevice = hfpDeviceList.get(0);
-                    return true;
-                }
-            } else {
-                if (mBluetoothDevice != null) {
-                    mBluetoothDevice = null;
-                    return true;
-                }
-            }
-            return false;
-        });
     }
 
     /**
@@ -261,6 +250,49 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         private boolean hasPairedDevices() {
             Set<BluetoothDevice> pairedDevices = mPairedListLiveData.getValue();
             return pairedDevices == null || !pairedDevices.isEmpty();
+        }
+    }
+
+    /**
+     * This is an event live data to determine if the Ui needs to be refreshed.
+     */
+    @VisibleForTesting
+    static class RefreshUiEvent extends SingleLiveEvent<Boolean> {
+        private BluetoothDevice mBluetoothDevice;
+
+        @VisibleForTesting
+        RefreshUiEvent(LiveData<List<BluetoothDevice>> hfpDeviceListLiveData) {
+            addSource(hfpDeviceListLiveData, v -> update(v));
+        }
+
+        private void update(List<BluetoothDevice> hfpDeviceList) {
+            L.v(TAG, "HfpDeviceList update");
+            if (mBluetoothDevice != null && !listContainsDevice(hfpDeviceList, mBluetoothDevice)) {
+                setValue(true);
+            }
+            mBluetoothDevice = getFirstDevice(hfpDeviceList);
+        }
+
+        private boolean deviceListIsEmpty(@Nullable List<BluetoothDevice> hfpDeviceList) {
+            return hfpDeviceList == null || hfpDeviceList.isEmpty();
+        }
+
+        private boolean listContainsDevice(@Nullable List<BluetoothDevice> hfpDeviceList,
+                @NonNull BluetoothDevice device) {
+            if (!deviceListIsEmpty(hfpDeviceList) && hfpDeviceList.contains(device)) {
+                return true;
+            }
+
+            return false;
+        }
+
+        @Nullable
+        private BluetoothDevice getFirstDevice(@Nullable List<BluetoothDevice> hfpDeviceList) {
+            if (deviceListIsEmpty(hfpDeviceList)) {
+                return null;
+            } else {
+                return hfpDeviceList.get(0);
+            }
         }
     }
 }

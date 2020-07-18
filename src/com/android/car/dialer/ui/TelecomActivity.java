@@ -17,7 +17,6 @@
 package com.android.car.dialer.ui;
 
 import android.app.SearchManager;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -74,10 +73,10 @@ public class TelecomActivity extends FragmentActivity implements
     private LiveData<String> mBluetoothErrorMsgLiveData;
     private LiveData<Integer> mDialerAppStateLiveData;
     private LiveData<List<Call>> mOngoingCallListLiveData;
+    private LiveData<Boolean> mRefreshUiLiveData;
     // View objects for this activity.
     private TelecomPageTab.Factory mTabFactory;
     private Toolbar mCarUiToolbar;
-    private BluetoothDevice mBluetoothDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,29 +87,25 @@ public class TelecomActivity extends FragmentActivity implements
 
         mCarUiToolbar = findViewById(R.id.car_ui_toolbar);
 
-        setupTabLayout();
+        setupTabLayout(false);
 
         TelecomActivityViewModel viewModel = ViewModelProviders.of(this).get(
                 TelecomActivityViewModel.class);
+
+        mRefreshUiLiveData = viewModel.getRefreshTabsLiveData();
+        mRefreshUiLiveData.observe(this, v -> refreshUi());
+
         mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
         mDialerAppStateLiveData = viewModel.getDialerAppState();
         mDialerAppStateLiveData.observe(this,
                 dialerAppState -> updateCurrentFragment(dialerAppState));
         MutableLiveData<Integer> toolbarTitleMode = viewModel.getToolbarTitleMode();
         toolbarTitleMode.setValue(Themes.getAttrInteger(this, R.attr.toolbarTitleMode));
-        viewModel.getRefreshTabsLiveData().observe(this, this::refreshTabs);
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
         mOngoingCallListLiveData = inCallViewModel.getOngoingCallList();
 
         handleIntent();
-    }
-
-    private void refreshTabs(boolean refreshTabs) {
-        L.v(TAG, "hfp connected device list Changes.");
-        if (refreshTabs) {
-            setupTabLayout();
-        }
     }
 
     @Override
@@ -250,12 +245,12 @@ public class TelecomActivity extends FragmentActivity implements
         return getSupportFragmentManager().findFragmentById(R.id.overlay_container);
     }
 
-    private void setupTabLayout() {
+    private void setupTabLayout(boolean forceInit) {
         boolean wasContentFragmentRestored = false;
         mTabFactory = new TelecomPageTab.Factory(this, getSupportFragmentManager());
-        mCarUiToolbar.clearAllTabs();
+
         for (int i = 0; i < mTabFactory.getTabCount(); i++) {
-            TelecomPageTab tab = mTabFactory.createTab(getBaseContext(), i);
+            TelecomPageTab tab = mTabFactory.createTab(getBaseContext(), i, forceInit);
             mCarUiToolbar.addTab(tab);
 
             if (tab.wasFragmentRestored()) {
@@ -278,6 +273,12 @@ public class TelecomActivity extends FragmentActivity implements
                     Fragment fragment = telecomPageTab.getFragment();
                     setContentFragment(fragment, telecomPageTab.getFragmentTag());
                 });
+    }
+
+    private void refreshUi() {
+        L.v(TAG, "hfp connected device list changes");
+        mCarUiToolbar.clearAllTabs();
+        setupTabLayout(true);
     }
 
     /**

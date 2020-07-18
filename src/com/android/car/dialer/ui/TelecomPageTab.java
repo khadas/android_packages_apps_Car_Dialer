@@ -70,10 +70,11 @@ public class TelecomPageTab extends TabLayout.Tab {
     /**
      * Either restore fragment from saved state or create new instance.
      */
-    private void initFragment(FragmentManager fragmentManager, @Page String page) {
+    private void initFragment(FragmentManager fragmentManager, @Page String page,
+            boolean shouldForceRecreateFragment) {
         mFragmentTag = makeFragmentTag(page);
         mFragment = fragmentManager.findFragmentByTag(mFragmentTag);
-        if (mFragment == null) {
+        if (mFragment == null || shouldForceRecreateFragment) {
             mFragment = mFactory.createFragment(page);
             mWasFragmentRestored = false;
             return;
@@ -160,12 +161,12 @@ public class TelecomPageTab extends TabLayout.Tab {
         /**
          * Create the tab for the given {@param tabIndex}
          */
-        public TelecomPageTab createTab(Context context, int tabIndex) {
+        public TelecomPageTab createTab(Context context, int tabIndex, boolean forceInit) {
             String page = mTabs[tabIndex];
             TelecomPageTab telecomPageTab = new TelecomPageTab(
                     context.getDrawable(TAB_ICONS.get(page)),
                     context.getString(TAB_LABELS.get(page)), this);
-            telecomPageTab.initFragment(mFragmentManager, page);
+            telecomPageTab.initFragment(mFragmentManager, page, forceInit);
             return telecomPageTab;
         }
 
