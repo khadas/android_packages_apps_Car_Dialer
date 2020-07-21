@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer.telecom;
+package com.android.car.dialer.bluetooth;
 
 import android.content.Context;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.android.car.dialer.livedata.BluetoothHfpStateLiveData;
 import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
+import com.android.car.dialer.livedata.HfpDeviceListLiveData;
+import com.android.car.dialer.log.L;
 
 /**
  * Class that responsible for getting status of bluetooth connections.
  */
 public class UiBluetoothMonitor {
-    private static String TAG = "Em.BtMonitor";
+    private static final String TAG = "CD.BtMonitor";
 
     private static UiBluetoothMonitor sUiBluetoothMonitor;
 
@@ -35,31 +40,55 @@ public class UiBluetoothMonitor {
     private BluetoothHfpStateLiveData mHfpStateLiveData;
     private BluetoothPairListLiveData mPairListLiveData;
     private BluetoothStateLiveData mBluetoothStateLiveData;
+    private HfpDeviceListLiveData mHfpDeviceListLiveData;
+
+    private Observer mHfpStateObserver;
+    private Observer mPairListObserver;
+    private Observer mBluetoothStateObserver;
+    private Observer mHfpDeviceListObserver;
 
     /**
-     * Initialized a globally accessible {@link UiBluetoothMonitor} which can be retrieved by
-     * {@link #get}. If this function is called a second time before calling {@link #tearDown()},
-     * an exception will be thrown.
+     * Initialized a globally accessible {@link UiBluetoothMonitor} which can be retrieved by {@link
+     * #get}.
      *
      * @param applicationContext Application context.
      */
-    // TODO: Create a singleton abstract class for Dialer common service.
     public static UiBluetoothMonitor init(Context applicationContext) {
         if (sUiBluetoothMonitor == null) {
             sUiBluetoothMonitor = new UiBluetoothMonitor(applicationContext);
-        } else {
-            throw new IllegalStateException("UiBluetoothMonitor has been initialized.");
         }
 
-        return sUiBluetoothMonitor;
+        return get();
     }
 
+    /**
+     * Gets the global {@link UiBluetoothMonitor} instance. Make sure {@link #init(Context)} is
+     * called before calling this method.
+     */
     public static UiBluetoothMonitor get() {
+        if (sUiBluetoothMonitor == null) {
+            throw new IllegalStateException(
+                    "Call UiBluetoothMonitor.init(Context) before calling this function");
+        }
         return sUiBluetoothMonitor;
     }
 
     private UiBluetoothMonitor(Context applicationContext) {
         mContext = applicationContext;
+        mHfpStateLiveData = new BluetoothHfpStateLiveData(mContext);
+        mPairListLiveData = new BluetoothPairListLiveData(mContext);
+        mBluetoothStateLiveData = new BluetoothStateLiveData(mContext);
+        mHfpDeviceListLiveData = new HfpDeviceListLiveData(mContext);
+
+        mHfpStateObserver = o -> L.i(TAG, "HfpState is updated");
+        mPairListObserver = o -> L.i(TAG, "PairList is updated");
+        mBluetoothStateObserver = o -> L.i(TAG, "BluetoothState is updated");
+        mHfpDeviceListObserver = o -> L.i(TAG, "HfpDeviceList is updated");
+
+        mHfpStateLiveData.observeForever(mHfpStateObserver);
+        mPairListLiveData.observeForever(mPairListObserver);
+        mBluetoothStateLiveData.observeForever(mBluetoothStateObserver);
+        mHfpDeviceListLiveData.observeForever(mHfpDeviceListObserver);
     }
 
     /**
@@ -67,6 +96,11 @@ public class UiBluetoothMonitor {
      * {@link #get()} won't return a valid {@link UiBluetoothMonitor} after calling this function.
      */
     public void tearDown() {
+        removeObserver(mHfpStateLiveData, mHfpStateObserver);
+        removeObserver(mPairListLiveData, mPairListObserver);
+        removeObserver(mBluetoothStateLiveData, mBluetoothStateObserver);
+        removeObserver(mHfpDeviceListLiveData, mHfpDeviceListObserver);
+
         sUiBluetoothMonitor = null;
     }
 
@@ -74,9 +108,6 @@ public class UiBluetoothMonitor {
      * Returns a LiveData which monitors the HFP profile state changes.
      */
     public BluetoothHfpStateLiveData getHfpStateLiveData() {
-        if (mHfpStateLiveData == null) {
-            mHfpStateLiveData = new BluetoothHfpStateLiveData(mContext);
-        }
         return mHfpStateLiveData;
     }
 
@@ -84,9 +115,6 @@ public class UiBluetoothMonitor {
      * Returns a LiveData which monitors the paired device list changes.
      */
     public BluetoothPairListLiveData getPairListLiveData() {
-        if (mPairListLiveData == null) {
-            mPairListLiveData = new BluetoothPairListLiveData(mContext);
-        }
         return mPairListLiveData;
     }
 
@@ -94,9 +122,19 @@ public class UiBluetoothMonitor {
      * Returns a LiveData which monitors the Bluetooth state changes.
      */
     public BluetoothStateLiveData getBluetoothStateLiveData() {
-        if (mBluetoothStateLiveData == null) {
-            mBluetoothStateLiveData = new BluetoothStateLiveData(mContext);
-        }
         return mBluetoothStateLiveData;
+    }
+
+    /**
+     * Returns a SingleLiveEvent which monitors whether to refresh Dialer.
+     */
+    public HfpDeviceListLiveData getHfpDeviceListLiveData() {
+        return mHfpDeviceListLiveData;
+    }
+
+    private void removeObserver(LiveData liveData, Observer observer) {
+        if (liveData != null && liveData.hasObservers()) {
+            liveData.removeObserver(observer);
+        }
     }
 }

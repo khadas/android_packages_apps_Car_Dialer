@@ -24,8 +24,8 @@ import android.content.Context;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.UiBluetoothMonitor;
 
 import java.util.Set;
 
