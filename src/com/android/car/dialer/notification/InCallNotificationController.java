@@ -97,7 +97,6 @@ public final class InCallNotificationController {
 
         mNotificationBuilder = new Notification.Builder(mContext, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_phone)
-                .setContentText(mContext.getString(R.string.notification_incoming_call))
                 .setCategory(Notification.CATEGORY_CALL)
                 .setOngoing(true)
                 .setAutoCancel(false);
@@ -123,6 +122,7 @@ public final class InCallNotificationController {
                 .setFullScreenIntent(getFullscreenIntent(call), /* highPriority= */true)
                 .setLargeIcon((Icon) null)
                 .setContentTitle(TelecomUtils.getBidiWrappedNumber(number))
+                .setContentText(mContext.getString(R.string.notification_incoming_call))
                 .setActions(
                         getAction(call, R.string.answer_call,
                                 NotificationService.ACTION_ANSWER_CALL),
