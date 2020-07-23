@@ -34,14 +34,14 @@ public class TypeDownResultsAdapter extends ContactResultsAdapter {
     }
 
     @Override
-    public ContactResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ContactResultViewHolder onCreateViewHolderImpl(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.type_down_list_item, parent, false);
         return new ContactResultViewHolder(view, null);
     }
 
     @Override
-    public void onBindViewHolder(ContactResultViewHolder holder, int position) {
+    public void onBindViewHolderImpl(ContactResultViewHolder holder, int position) {
         holder.bindTypeDownResult(getContactResults().get(position));
     }
 }
