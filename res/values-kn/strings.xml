@@ -66,12 +66,20 @@
       <item quantity="one">ಮಿಸ್ಡ್‌ ಕರೆಗಳು (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
       <item quantity="other">ಮಿಸ್ಡ್‌ ಕರೆಗಳು (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
     </plurals>
-    <string name="onhold_call_label" msgid="1937027519810985499">"ತಡೆಹಿಡಿಯಲಾಗಿದೆ"</string>
+    <string name="onhold_call_separator" msgid="2357788035385100805">"•"</string>
+    <string name="swap_call_label" msgid="309322319645637302">"ಕರೆಗಳನ್ನು ಸ್ವಿಚ್ ಮಾಡಿ"</string>
     <string name="setting_title" msgid="1296639422364732365">"ಸೆಟ್ಟಿಂಗ್‌ಗಳು"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"ಸ್ಕ್ರೀನ್ ಪ್ರಾರಂಭಿಸಿ"</string>
     <string name="sort_order_title" msgid="975104366728292702">"ಸಂಪರ್ಕದ ಕ್ರಮ"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"ಕನೆಕ್ಟ್ ಮಾಡಿರುವ ಫೋನ್"</string>
+    <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"ಗೌಪ್ಯತೆ"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"ಕಾರ್‌ನ ಕ್ಲಸ್ಟರ್ ಪರದೆಯಲ್ಲಿ ಕರೆಯ ಅಲರ್ಟ್‌ಗಳನ್ನು ಮಾತ್ರ ತೋರಿಸಿ"</string>
+    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"ಸಕ್ರಿಯ ಕರೆ"</string>
+    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"ಕರೆಗೆ ಉತ್ತರಿಸುವಾಗ ಸಕ್ರಿಯ ಕರೆ ಎಂಬ ವೀಕ್ಷಣೆಯನ್ನು ತೋರಿಸಿ"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"ಮೊದಲ ಹೆಸರು"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"ಕೊನೆಯ ಹೆಸರು"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"ಇದಕ್ಕೆ ಕರೆಯ ಆಡಿಯೊ ಔಟ್‌ಪುಟ್:"</string>
     <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
+    <string name="ongoing_conf_title" msgid="4161590966144000887">"ಕಾನ್ಫರೆನ್ಸ್"</string>
+    <string name="ongoing_conf_title_format" msgid="7667048745156395220">"%1$s (%2$d) - "</string>
 </resources>
