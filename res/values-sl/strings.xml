@@ -72,6 +72,11 @@
     <string name="setting_title" msgid="1296639422364732365">"Nastavitve"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Začetni zaslon"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Vrstni red stikov"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"Povezan telefon"</string>
+    <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Zasebnost"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Prikaz samo opozoril o klicih v gruči"</string>
+    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"Aktivni klic"</string>
+    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"Prikaz pogleda aktivnega klica ob sprejemu klica"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Ime"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Priimek"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"Izberite izhod za zvok klica:"</string>

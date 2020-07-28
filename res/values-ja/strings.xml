@@ -70,6 +70,11 @@
     <string name="setting_title" msgid="1296639422364732365">"設定"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"起動画面"</string>
     <string name="sort_order_title" msgid="975104366728292702">"連絡先の順序"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"接続済みのスマートフォン"</string>
+    <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"プライバシー"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"クラスタに通話の通知のみを表示"</string>
+    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"進行中の通話"</string>
+    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"電話に出るときに [進行中の通話] ビューを表示"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"名"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"姓"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"通話音声の出力先:"</string>

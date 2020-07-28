@@ -70,6 +70,11 @@
     <string name="setting_title" msgid="1296639422364732365">"Paramètres"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Écran de démarrage"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Ordre des contacts"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"Téléphone connecté"</string>
+    <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Confidentialité"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Afficher les alertes d\'appels seulement dans le groupe d\'instruments"</string>
+    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"Appel actif"</string>
+    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"Afficher l\'écran de l\'appel actif lorsque vous répondez à un appel"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Prénom"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Nom de famille"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"Sortie de l\'appel audio sur :"</string>

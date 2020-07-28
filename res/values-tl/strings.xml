@@ -70,6 +70,11 @@
     <string name="setting_title" msgid="1296639422364732365">"Mga Setting"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Screen ng simula"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Pagkakasunud-sunod ng contact"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"Nakakonektang Telepono"</string>
+    <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Privacy"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Ipakita lang ang mga alerto sa tawag nang naka-cluster"</string>
+    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"Aktibong Tawag"</string>
+    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"Ipakita ang view ng aktibong tawag kapag sasagot ng tawag"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Pangalan"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Apelyido"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"Gamiting output ng audio ng tawag ang:"</string>

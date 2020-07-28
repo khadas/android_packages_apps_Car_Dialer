@@ -72,6 +72,11 @@
     <string name="setting_title" msgid="1296639422364732365">"Nastavenia"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Úvodná obrazovka"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Poradie kontaktov"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"Pripojený telefón"</string>
+    <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Ochrana súkromia"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Upozornenia na hovory zobrazovať iba v klastri"</string>
+    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"Aktívny hovor"</string>
+    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"Pri prijatí hovoru zobraziť prehľad aktívneho hovoru"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Krstné meno"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Priezvisko"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"Smerovanie zvuku odchádzajúceho hovoru:"</string>

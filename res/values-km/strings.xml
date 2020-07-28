@@ -70,6 +70,11 @@
     <string name="setting_title" msgid="1296639422364732365">"ការកំណត់"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"​អេក្រង់ចាប់​ផ្ដើម"</string>
     <string name="sort_order_title" msgid="975104366728292702">"លំដាប់​ទំនាក់ទំនង"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"ទូរសព្ទ​ដែលបានភ្ជាប់"</string>
+    <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"ឯកជនភាព"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"បង្ហាញការជូនដំណឹង​អំពីការហៅទូរសព្ទ​ជាក្រុមតែប៉ុណ្ណោះ"</string>
+    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"ការហៅ​ទូរសព្ទ​ដែល​សកម្ម"</string>
+    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"បង្ហាញទិដ្ឋភាព​នៃការហៅទូរសព្ទ​ដែលសកម្ម នៅពេលទទួល​ទូរសព្ទ"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"នាម​ខ្លួន"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"នាមត្រកូល"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"បញ្ចេញសំឡេង​ហៅទូរសព្ទទៅ៖"</string>

@@ -70,6 +70,11 @@
     <string name="setting_title" msgid="1296639422364732365">"Instellings"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Beginskerm"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Kontakvolgorde"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"Foon is gekoppel"</string>
+    <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Privaatheid"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Wys net oproepopletberigte in groep"</string>
+    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"Aktiewe oproep"</string>
+    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"Wys aktieweoproepaansig wanneer jy \'n oproep antwoord"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Voornaam"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Van"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"Voer oproepoudio uit na:"</string>
