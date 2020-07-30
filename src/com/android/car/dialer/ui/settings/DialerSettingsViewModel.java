@@ -17,24 +17,25 @@
 package com.android.car.dialer.ui.settings;
 
 import android.app.Application;
+import android.bluetooth.BluetoothDevice;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.android.car.dialer.livedata.HfpDeviceListLiveData;
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 
 /**
  * ViewModel for {@link DialerSettingsFragment}
  */
 public class DialerSettingsViewModel extends AndroidViewModel {
     private static final String EMPTY_STRING = "";
-    private final HfpDeviceListLiveData mHfpDeviceListLiveData;
+    private final LiveData<BluetoothDevice> mFirstHfpDeviceLiveData;
 
     public DialerSettingsViewModel(@NonNull Application application) {
         super(application);
-        mHfpDeviceListLiveData = new HfpDeviceListLiveData(application.getApplicationContext());
+        mFirstHfpDeviceLiveData = UiBluetoothMonitor.get().getFirstHfpConnectedDevice();
     }
 
     /**
@@ -42,9 +43,7 @@ public class DialerSettingsViewModel extends AndroidViewModel {
      * device connected.
      */
     public LiveData<String> getFirstHfpConnectedDeviceName() {
-        return Transformations.map(mHfpDeviceListLiveData, (devices) ->
-                devices != null && !devices.isEmpty()
-                        ? devices.get(0).getName()
-                        : EMPTY_STRING);
+        return Transformations.map(mFirstHfpDeviceLiveData, (device) ->
+                device != null ? device.getName() : EMPTY_STRING);
     }
 }
