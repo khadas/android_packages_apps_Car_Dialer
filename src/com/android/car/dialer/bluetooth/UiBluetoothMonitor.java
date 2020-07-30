@@ -16,10 +16,12 @@
 
 package com.android.car.dialer.bluetooth;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 
 import com.android.car.dialer.livedata.BluetoothHfpStateLiveData;
 import com.android.car.dialer.livedata.BluetoothPairListLiveData;
@@ -130,6 +132,17 @@ public class UiBluetoothMonitor {
      */
     public HfpDeviceListLiveData getHfpDeviceListLiveData() {
         return mHfpDeviceListLiveData;
+    }
+
+    /**
+     * Returns a LiveData which monitors the first HFP Bluetooth device on the connected device
+     * list.
+     */
+    public LiveData<BluetoothDevice> getFirstHfpConnectedDevice() {
+        return Transformations.map(mHfpDeviceListLiveData, (devices) ->
+                devices != null && !devices.isEmpty()
+                        ? devices.get(0)
+                        : null);
     }
 
     private void removeObserver(LiveData liveData, Observer observer) {
