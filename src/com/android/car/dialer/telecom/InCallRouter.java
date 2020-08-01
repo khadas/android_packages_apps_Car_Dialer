@@ -164,13 +164,13 @@ class InCallRouter {
     }
 
     private boolean shouldShowIncomingCallHun() {
-        return PreferenceManager.getDefaultSharedPreferences(mContext)
-                .getBoolean(mContext.getString(R.string.pref_no_incoming_call_hun_key), true);
+        return !PreferenceManager.getDefaultSharedPreferences(mContext)
+                .getBoolean(mContext.getString(R.string.pref_no_incoming_call_hun_key), false);
     }
 
     private boolean shouldShowFullScreenUi() {
         return PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getBoolean(mContext.getString(R.string.pref_no_fullscreen_active_call_ui_key),
-                        true);
+                        false);
     }
 }
