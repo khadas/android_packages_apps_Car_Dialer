@@ -164,13 +164,18 @@ class InCallRouter {
     }
 
     private boolean shouldShowIncomingCallHun() {
+        boolean shouldSuppressHunByDefault =
+                mContext.getResources().getBoolean(R.bool.config_should_suppress_incoming_call_hun);
         return !PreferenceManager.getDefaultSharedPreferences(mContext)
-                .getBoolean(mContext.getString(R.string.pref_no_incoming_call_hun_key), false);
+                .getBoolean(mContext.getString(R.string.pref_no_incoming_call_hun_key),
+                        shouldSuppressHunByDefault);
     }
 
     private boolean shouldShowFullScreenUi() {
+        boolean shouldShowFullScreenUiByDefault =
+                mContext.getResources().getBoolean(R.bool.config_show_fullscreen_incall_ui);
         return PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getBoolean(mContext.getString(R.string.pref_no_fullscreen_active_call_ui_key),
-                        false);
+                        shouldShowFullScreenUiByDefault);
     }
 }
