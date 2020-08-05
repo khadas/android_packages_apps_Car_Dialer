@@ -32,15 +32,24 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.widget.LoadingFrameLayout;
 import com.android.car.ui.baselayout.Insets;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
+import com.android.car.ui.recyclerview.ContentLimiting;
+import com.android.car.uxr.LifeCycleObserverUxrContentLimiter;
+import com.android.car.uxr.UxrContentLimiter;
+import com.android.car.uxr.UxrContentLimiterImpl;
 
 /**
  * Base fragment that inflates a {@link RecyclerView}. It handles the top offset for first row item
  * so the list can scroll underneath the top bar.
+ *
+ * <p>It also provides a {@link UxrContentLimiter} to children classes so they can "register" their
+ * associated {@link RecyclerView.Adapter} objects to listen to changes to
+ * {@link android.car.drivingstate.CarUxRestrictions}.
  */
 public class DialerListBaseFragment extends DialerBaseFragment {
 
     private LoadingFrameLayout mLoadingFrameLayout;
     private CarUiRecyclerView mRecyclerView;
+    private LifeCycleObserverUxrContentLimiter mUxrContentLimiter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +58,21 @@ public class DialerListBaseFragment extends DialerBaseFragment {
         mLoadingFrameLayout = view.findViewById(R.id.loading_frame_layout);
         mRecyclerView = view.requireViewById(R.id.list_view);
         mRecyclerView.setLayoutManager(createLayoutManager());
+        mUxrContentLimiter = new LifeCycleObserverUxrContentLimiter(
+                new UxrContentLimiterImpl(getContext(), R.xml.uxr_config));
+        getLifecycle().addObserver(mUxrContentLimiter);
         return view;
+    }
+
+    /**
+     * Returns the {@link UxrContentLimiter} instance in use by this class.
+     *
+     * <p>Together with {@link UxrContentLimiter#setAdapter(ContentLimiting)}, this can be used to
+     * "register" compatible {@link RecyclerView.Adapter} object to listen to changes to
+     * {@link android.car.drivingstate.CarUxRestrictions}.
+     */
+    protected UxrContentLimiter getUxrContentLimiter() {
+        return mUxrContentLimiter;
     }
 
     /**
