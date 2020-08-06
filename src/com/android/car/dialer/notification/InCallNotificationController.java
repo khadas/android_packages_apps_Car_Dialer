@@ -99,7 +99,7 @@ public final class InCallNotificationController {
         mNotificationManager.createNotificationChannel(notificationChannel);
 
         mNotificationBuilder = new Notification.Builder(mContext, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_phone)
+                .setSmallIcon(R.drawable.ic_app_icon)
                 .setCategory(Notification.CATEGORY_CALL)
                 .setOngoing(true)
                 .setAutoCancel(false);
