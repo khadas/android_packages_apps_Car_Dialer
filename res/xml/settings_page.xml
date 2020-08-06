@@ -32,7 +32,7 @@
         app:isPreferenceVisible="@bool/config_should_show_active_call_setting"/>
 
     <SwitchPreference
-        android:defaultValue="@bool/config_should_show_incoming_call_hun"
+        android:defaultValue="@bool/config_should_suppress_incoming_call_hun"
         android:key="@string/pref_no_incoming_call_hun_key"
         android:title="@string/pref_no_incoming_call_hun_title"
         android:summary="@string/pref_no_incoming_call_hun_summary"

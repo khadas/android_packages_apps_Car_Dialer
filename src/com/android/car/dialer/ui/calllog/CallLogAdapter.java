@@ -29,12 +29,13 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.common.entity.HeaderViewHolder;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.telephony.common.Contact;
+import com.android.car.ui.recyclerview.ContentLimitingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** Adapter for call history list. */
-public class CallLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CallLogAdapter extends ContentLimitingAdapter {
 
     private static final String TAG = "CD.CallLogAdapter";
 
@@ -77,7 +78,8 @@ public class CallLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolderImpl(
+            @NonNull ViewGroup parent, int viewType) {
         if (viewType == EntryType.TYPE_CALLLOG) {
             View rootView = LayoutInflater.from(mContext)
                     .inflate(R.layout.call_history_list_item, parent, false);
@@ -90,7 +92,8 @@ public class CallLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolderImpl(
+            @NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof CallLogViewHolder) {
             ((CallLogViewHolder) holder).bind((UiCallLog) mUiCallLogs.get(position));
         } else {
@@ -100,7 +103,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     @EntryType
-    public int getItemViewType(int position) {
+    public int getItemViewTypeImpl(int position) {
         if (mUiCallLogs.get(position) instanceof UiCallLog) {
             return EntryType.TYPE_CALLLOG;
         } else {
@@ -109,14 +112,19 @@ public class CallLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+    public void onViewRecycledImpl(@NonNull RecyclerView.ViewHolder holder) {
         if (holder instanceof CallLogViewHolder) {
             ((CallLogViewHolder) holder).recycle();
         }
     }
 
     @Override
-    public int getItemCount() {
+    public int getUnrestrictedItemCount() {
         return mUiCallLogs.size();
+    }
+
+    @Override
+    public int getConfigurationId() {
+        return R.id.call_log_list_uxr_config;
     }
 }

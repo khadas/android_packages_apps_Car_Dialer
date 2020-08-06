@@ -54,7 +54,7 @@
     <bool name="config_show_hun_fullscreen_incall_ui">true</bool>
 
     <!-- A config determines whether to show a heads up notification when there's a incoming call-->
-    <bool name="config_should_show_incoming_call_hun">true</bool>
+    <bool name="config_should_suppress_incoming_call_hun">false</bool>
     <!-- A config determines whether to show an entry in setting to config showing a heads up
     notification when there's a incoming call-->
     <bool name="config_should_show_incoming_call_hun_setting">false</bool>
