@@ -122,6 +122,7 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     public void onDestroyView() {
         super.onDestroyView();
         getRecyclerView().removeOnScrollListener(mOnScrollChangeListener);
+        mToolbar.unregisterOnSearchListener(this);
     }
 
     @Override
@@ -131,12 +132,6 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
         mToolbar.registerOnSearchListener(this);
         mToolbar.setSearchIcon(R.drawable.ic_app_icon);
         setSearchQuery(mContactResultsViewModel.getSearchQuery());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mToolbar.unregisterOnSearchListener(this);
     }
 
     /** Sets the search query that should be used to filter contacts. */
