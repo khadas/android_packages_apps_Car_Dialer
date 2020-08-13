@@ -34,12 +34,15 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerListBaseFragment;
 import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.telephony.common.Contact;
+import com.android.car.ui.recyclerview.DelegatingContentLimitingAdapter;
 
 /**
  * Contains a list of favorite contacts.
  */
 public class FavoriteFragment extends DialerListBaseFragment {
-    private FavoriteAdapter mFavoriteAdapter;
+
+    private DelegatingContentLimitingAdapter<FavoriteContactViewHolder>
+            mContentLimitingAdapter;
 
     /**
      * Constructs a new {@link FavoriteFragment}
@@ -54,12 +57,12 @@ public class FavoriteFragment extends DialerListBaseFragment {
         getRecyclerView().addItemDecoration(new ItemSpacingDecoration());
         getRecyclerView().setItemAnimator(null);
 
-        mFavoriteAdapter = new FavoriteAdapter();
-        mFavoriteAdapter.setOnAddFavoriteClickedListener(this::onAddFavoriteClicked);
+        FavoriteAdapter favoriteAdapter = new FavoriteAdapter();
+        favoriteAdapter.setOnAddFavoriteClickedListener(this::onAddFavoriteClicked);
 
         FavoriteViewModel favoriteViewModel = ViewModelProviders.of(getActivity()).get(
                 FavoriteViewModel.class);
-        mFavoriteAdapter.setOnListItemClickedListener(this::onItemClicked);
+        favoriteAdapter.setOnListItemClickedListener(this::onItemClicked);
         favoriteViewModel.getFavoriteContacts().observe(this, contacts -> {
             if (contacts.isLoading()) {
                 showLoading();
@@ -68,12 +71,17 @@ public class FavoriteFragment extends DialerListBaseFragment {
                         R.string.no_favorites_added, R.string.add_favorite_button,
                         v -> onAddFavoriteClicked(), true);
             } else {
-                mFavoriteAdapter.setFavoriteContacts(contacts.getData());
+                favoriteAdapter.setFavoriteContacts(contacts.getData());
                 showContent();
             }
         });
 
-        getRecyclerView().setAdapter(mFavoriteAdapter);
+        mContentLimitingAdapter =
+                new DelegatingContentLimitingAdapter<>(
+                        favoriteAdapter,
+                        R.id.favorite_list_uxr_config);
+        getRecyclerView().setAdapter(mContentLimitingAdapter);
+        getUxrContentLimiter().setAdapter(mContentLimitingAdapter);
     }
 
     @NonNull
@@ -119,7 +127,10 @@ public class FavoriteFragment extends DialerListBaseFragment {
             SpanSizeLookup spanSizeLookup = new SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    if (mFavoriteAdapter.getItemViewType(position) == FavoriteAdapter.TYPE_HEADER) {
+                    if (mContentLimitingAdapter.getItemViewType(position)
+                            == FavoriteAdapter.TYPE_HEADER
+                            || mContentLimitingAdapter.getItemViewType(position)
+                            == mContentLimitingAdapter.getScrollingLimitedMessageViewType()) {
                         return getSpanCount();
                     }
                     return 1;
