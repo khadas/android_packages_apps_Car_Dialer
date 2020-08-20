@@ -34,6 +34,8 @@
     will make divider and button invisible for empty contacts. -->
     <bool name="config_show_contact_detail_button_for_empty_contact">false</bool>
 
+    <!-- A config determines whether to show the header with an avatar and contact name in the contact details page. -->
+    <bool name="config_show_contact_details_header">true</bool>
     <!-- A config determines whether to show postal address in contact details page. -->
     <bool name="config_show_postal_address">true</bool>
     <!-- A config determines whether to show the action bar view in the contact details page.-->
