@@ -33,6 +33,8 @@ import com.android.car.dialer.ui.contact.ContactDetailsFragment;
 import com.android.car.telephony.common.Contact;
 import com.android.car.ui.toolbar.Toolbar;
 import com.android.car.ui.toolbar.ToolbarController;
+import com.android.car.uxr.LifeCycleObserverUxrContentLimiter;
+import com.android.car.uxr.UxrContentLimiterImpl;
 
 /**
  * A fragment that will take a search query, look up contacts that match and display those
@@ -66,6 +68,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
     private RecyclerView.OnScrollListener mOnScrollChangeListener;
     private ToolbarController mToolbar;
 
+    private LifeCycleObserverUxrContentLimiter mUxrContentLimiter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +90,10 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
             }
             getArguments().clear();
         }
+
+        mUxrContentLimiter = new LifeCycleObserverUxrContentLimiter(
+                new UxrContentLimiterImpl(getContext(), R.xml.uxr_config));
+        getLifecycle().addObserver(mUxrContentLimiter);
     }
 
     @Override
@@ -107,6 +115,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
             }
         };
         getRecyclerView().addOnScrollListener(mOnScrollChangeListener);
+
+        mUxrContentLimiter.setAdapter(mAdapter);
     }
 
     @Override
