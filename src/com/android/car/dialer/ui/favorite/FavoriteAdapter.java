@@ -108,6 +108,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
                 Header header = (Header) mFavoriteContacts.get(position);
                 viewHolder.onBind(header);
                 viewHolder.itemView.setOnClickListener(null);
+                viewHolder.itemView.setFocusable(false);
                 break;
             case TYPE_ADD_FAVORITE:
                 viewHolder.itemView.setOnClickListener(v -> {

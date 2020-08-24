@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.widget.LoadingFrameLayout;
+import com.android.car.ui.FocusArea;
 import com.android.car.ui.baselayout.Insets;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 import com.android.car.ui.recyclerview.ContentLimiting;
@@ -49,6 +50,7 @@ public class DialerListBaseFragment extends DialerBaseFragment {
 
     private LoadingFrameLayout mLoadingFrameLayout;
     private CarUiRecyclerView mRecyclerView;
+    private FocusArea mFocusArea;
     private LifeCycleObserverUxrContentLimiter mUxrContentLimiter;
 
     @Override
@@ -58,6 +60,7 @@ public class DialerListBaseFragment extends DialerBaseFragment {
         mLoadingFrameLayout = view.findViewById(R.id.loading_frame_layout);
         mRecyclerView = view.requireViewById(R.id.list_view);
         mRecyclerView.setLayoutManager(createLayoutManager());
+        mFocusArea = view.requireViewById(R.id.loading_focus_area);
         mUxrContentLimiter = new LifeCycleObserverUxrContentLimiter(
                 new UxrContentLimiterImpl(getContext(), R.xml.uxr_config));
         getLifecycle().addObserver(mUxrContentLimiter);
@@ -138,7 +141,7 @@ public class DialerListBaseFragment extends DialerBaseFragment {
         int listTopPadding = requireContext().getResources().getDimensionPixelSize(
                 R.dimen.list_top_padding);
         mRecyclerView.setPadding(0, insets.getTop() + listTopPadding, 0, insets.getBottom());
-        requireView().setPadding(insets.getLeft(), 0,
-                insets.getRight(), 0);
+        mFocusArea.setHighlightPadding(0, insets.getTop() + listTopPadding, 0, insets.getBottom());
+        requireView().setPadding(insets.getLeft(), 0, insets.getRight(), 0);
     }
 }
