@@ -31,7 +31,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.livedata.HeartBeatLiveData;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
@@ -67,7 +66,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
 
     public UiCallLogLiveData(Context context,
             HeartBeatLiveData heartBeatLiveData,
-            CallHistoryLiveData callHistoryLiveData,
+            LiveData<List<PhoneCallLog>> callHistoryLiveData,
             LiveData<List<Contact>> contactListLiveData) {
         mContext = context;
         mExecutorService = Executors.newSingleThreadExecutor();
@@ -184,10 +183,9 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
                             int typeColumn = cursor.getColumnIndex(PhoneLookup.TYPE);
                             int labelColumn = cursor.getColumnIndex(PhoneLookup.LABEL);
 
-                            List<Contact> lookupResults =
-                                    InMemoryPhoneBook.get().lookupContactByKey(
-                                            cursor.getString(lookupKeyColIdx));
-                            contact = lookupResults.size() > 0 ? lookupResults.get(0) : null;
+                            contact = inMemoryPhoneBook.lookupContactByKey(
+                                    cursor.getString(lookupKeyColIdx),
+                                    phoneCallLog.getAccountName());
                             int type = cursor.getInt(typeColumn);
                             String label = cursor.getString(labelColumn);
                             typeLabel = ContactsContract.CommonDataKinds.Phone.getTypeLabel(

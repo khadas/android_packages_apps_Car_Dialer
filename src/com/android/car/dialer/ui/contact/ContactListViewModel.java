@@ -24,10 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.android.car.arch.common.FutureData;
 import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.R;
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.SharedPreferencesLiveData;
 import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.telephony.common.Contact;
@@ -54,7 +57,10 @@ public class ContactListViewModel extends AndroidViewModel {
 
         SharedPreferencesLiveData preferencesLiveData =
                 new SharedPreferencesLiveData(mContext, R.string.sort_order_key);
-        LiveData<List<Contact>> contactListLiveData = InMemoryPhoneBook.get().getContactsLiveData();
+        LiveData<List<Contact>> contactListLiveData = Transformations.switchMap(
+                UiBluetoothMonitor.get().getFirstHfpConnectedDevice(), (device) -> device != null
+                        ? InMemoryPhoneBook.get().getContactsLiveDataByAccount(device.getAddress())
+                        : new MutableLiveData<>());
         mSortedContactListLiveData = new SortedContactListLiveData(
                 mContext, contactListLiveData, preferencesLiveData);
         mContactList = LiveDataFunctions.loadingSwitchMap(mSortedContactListLiveData,
