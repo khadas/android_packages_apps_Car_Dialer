@@ -15,14 +15,24 @@
   ~ limitations under the License
   -->
 <Mapping xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- We use a default value of -1 to denote UNLIMITED -->
+    <!-- Use a default value of -1 to denote UNLIMITED -->
     <ListConfig
         app:id="@+id/call_log_list_uxr_config"
         app:maxLength="-1"
     />
-    <!-- We use a default value of -1 to denote UNLIMITED -->
+    <!-- Use a default value of -1 to denote UNLIMITED -->
     <ListConfig
         app:id="@+id/contact_list_uxr_config"
+        app:maxLength="-1"
+    />
+    <!-- Use a default value of -1 to denote UNLIMITED -->
+    <ListConfig
+        app:id="@+id/search_result_uxr_config"
+        app:maxLength="-1"
+    />
+    <!-- Use a default value of -1 to denote UNLIMITED -->
+    <ListConfig
+        app:id="@+id/favorite_list_uxr_config"
         app:maxLength="-1"
     />
 </Mapping>

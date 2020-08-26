@@ -64,7 +64,14 @@ class ContactDetailsAdapter extends RecyclerView.Adapter<ContactDetailsViewHolde
         L.d(TAG, "setContact %s", contact);
         mContact = contact;
         mItems.clear();
-        mItems.add(contact);
+
+        boolean showHeader = mContext.getResources()
+                .getBoolean(R.bool.config_show_contact_details_header);
+
+        if (showHeader || contact == null) {
+            // We add null contacts to display an error message
+            mItems.add(contact);
+        }
         if (contact != null) {
             mItems.addAll(contact.getNumbers());
             if (mContext.getResources().getBoolean(R.bool.config_show_postal_address)) {

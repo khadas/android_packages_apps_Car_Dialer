@@ -59,27 +59,25 @@ public class CallHistoryLiveData extends AsyncQueryLiveData<List<PhoneCallLog>> 
      * Creates a new instance of call history live data which loads all types of call history
      * with a limit of 100 logs.
      */
-    public static CallHistoryLiveData newInstance(Context context) {
-        return newInstance(context, CALL_TYPE_ALL, DEFAULT_CALL_LOG_LIMIT);
+    public static CallHistoryLiveData newInstance(Context context, String accountName) {
+        return newInstance(context, CALL_TYPE_ALL, DEFAULT_CALL_LOG_LIMIT, accountName);
     }
 
-    /**
-     * Returns a new instance of last call live data.
-     */
-    public static CallHistoryLiveData newLastCallLiveData(Context context) {
-        return newInstance(context, CALL_TYPE_ALL, 1);
-    }
-
-    private static CallHistoryLiveData newInstance(Context context, int callType, int limit) {
+    private static CallHistoryLiveData newInstance(Context context, int callType, int limit,
+            String accountName) {
         StringBuilder where = new StringBuilder();
         List<String> selectionArgs = new ArrayList<>();
-        limit = limit < 0 ? 0 : limit;
+        limit = Math.max(limit, 0);
 
         if (callType != CALL_TYPE_ALL) {
             // add a filter for call type
-            where.append(String.format("(%s = ?)", CallLog.Calls.TYPE));
+            where.append("(" + CallLog.Calls.TYPE + " = ?)");
             selectionArgs.add(Integer.toString(callType));
+            where.append(" AND ");
         }
+        where.append("(" + CallLog.Calls.PHONE_ACCOUNT_ID + " = ?)");
+        selectionArgs.add(accountName);
+
         String selection = where.length() > 0 ? where.toString() : null;
 
         Uri uri = CallLog.Calls.CONTENT_URI.buildUpon()

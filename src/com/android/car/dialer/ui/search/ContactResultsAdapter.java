@@ -21,11 +21,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.ContactResultsLiveData;
 import com.android.car.telephony.common.Contact;
+import com.android.car.ui.recyclerview.ContentLimitingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ import java.util.List;
  * An adapter that will parse a list of contacts given by a {@link Cursor} that display the
  * results as a list.
  */
-public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultViewHolder> {
+public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultViewHolder> {
 
     interface OnShowContactDetailListener {
         void onShowContactDetail(Contact contact);
@@ -67,30 +66,30 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
     }
 
     @Override
-    public ContactResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ContactResultViewHolder onCreateViewHolderImpl(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.contact_result, parent, false);
         return new ContactResultViewHolder(view, mOnShowContactDetailListener);
     }
 
     @Override
-    public void onBindViewHolder(ContactResultViewHolder holder, int position) {
+    public void onBindViewHolderImpl(ContactResultViewHolder holder, int position) {
         holder.bindSearchResult(mContactResults.get(position));
     }
 
     @Override
-    public void onViewRecycled(ContactResultViewHolder holder) {
+    public void onViewRecycledImpl(ContactResultViewHolder holder) {
         holder.recycle();
     }
 
     @Override
-    public int getItemViewType(int position) {
+    public int getItemViewTypeImpl(int position) {
         // Only one type of view is created, so no need for an individualized view type.
         return 0;
     }
 
     @Override
-    public int getItemCount() {
+    public int getUnrestrictedItemCount() {
         return mContactResults.size();
     }
 
@@ -99,5 +98,10 @@ public class ContactResultsAdapter extends RecyclerView.Adapter<ContactResultVie
      */
     public List<ContactResultsLiveData.ContactResultListItem> getContactResults() {
         return mContactResults;
+    }
+
+    @Override
+    public int getConfigurationId() {
+        return R.id.search_result_uxr_config;
     }
 }
