@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNotNull;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
@@ -39,8 +38,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadow.api.Shadow;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
 @Config(shadows = ShadowBluetoothAdapterForDialer.class)
@@ -59,16 +57,12 @@ public class UiBluetoothMonitorTest {
 
         ShadowBluetoothAdapterForDialer shadowBluetoothAdapter = Shadow.extract(
                 BluetoothAdapter.getDefaultAdapter());
-        // Sets up Bluetooth Hfp state
-        shadowBluetoothAdapter.setState(BluetoothAdapter.STATE_ON);
-        shadowBluetoothAdapter.setProfileConnectionState(BluetoothProfile.HEADSET_CLIENT,
-                BluetoothProfile.STATE_CONNECTED);
         // Sets up Bluetooth pair list
-        Set<BluetoothDevice> bondedDevices = new HashSet<BluetoothDevice>();
-        bondedDevices.add(mMockbluetoothDevice);
-        shadowBluetoothAdapter.setBondedDevices(bondedDevices);
+        shadowBluetoothAdapter.setBondedDevices(Collections.singleton(mMockbluetoothDevice));
         // Sets up Bluetooth state
         shadowBluetoothAdapter.setEnabled(true);
+        // Sets up Bluetooth Hfp connected devices
+        shadowBluetoothAdapter.setHfpDevices(Collections.singletonList(mMockbluetoothDevice));
 
         mUiBluetoothMonitor = UiBluetoothMonitor.init(mContext);
     }
@@ -81,14 +75,6 @@ public class UiBluetoothMonitorTest {
     @Test
     public void testGet() {
         assertThat(UiBluetoothMonitor.get()).isEqualTo(mUiBluetoothMonitor);
-    }
-
-    @Test
-    public void testHfpStateLiveData() {
-        assertNotNull(mUiBluetoothMonitor.getHfpStateLiveData());
-        assertThat(mUiBluetoothMonitor.getHfpStateLiveData().hasActiveObservers()).isTrue();
-        assertThat(mUiBluetoothMonitor.getHfpStateLiveData().getValue()).isEqualTo(
-                BluetoothProfile.STATE_CONNECTED);
     }
 
     @Test
@@ -111,6 +97,7 @@ public class UiBluetoothMonitorTest {
     public void testHfpDeviceListLiveData() {
         assertNotNull(mUiBluetoothMonitor.getHfpDeviceListLiveData());
         assertThat(mUiBluetoothMonitor.getHfpDeviceListLiveData().hasActiveObservers()).isTrue();
+        assertThat(mUiBluetoothMonitor.getHfpDeviceListLiveData().getValue()).isNotEmpty();
     }
 
     @After
