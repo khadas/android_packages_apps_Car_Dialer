@@ -21,7 +21,6 @@ import android.content.Context;
 import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -31,6 +30,7 @@ import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.CallHistoryLiveData;
 import com.android.car.dialer.livedata.HeartBeatLiveData;
+import com.android.car.dialer.ui.common.DialerListViewModel;
 import com.android.car.dialer.ui.common.UiCallLogLiveData;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneCallLog;
@@ -38,7 +38,7 @@ import com.android.car.telephony.common.PhoneCallLog;
 import java.util.List;
 
 /** View model for CallHistoryFragment which provides call history live data. */
-public class CallHistoryViewModel extends AndroidViewModel {
+public class CallHistoryViewModel extends DialerListViewModel {
     private UiCallLogLiveData mUiCallLogLiveData;
     private LiveData<FutureData<List<Object>>> mUiCallLogFutureData;
 

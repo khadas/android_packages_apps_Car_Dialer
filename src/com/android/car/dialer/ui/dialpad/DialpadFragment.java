@@ -135,6 +135,8 @@ public class DialpadFragment extends AbstractDialpadFragment {
                 TypeDownResultsViewModel.class);
         mTypeDownResultsViewModel.getContactSearchResults().observe(this,
                 contactResults -> mAdapter.setData(contactResults));
+        mTypeDownResultsViewModel.getSortOrderLiveData().observe(this,
+                v -> mAdapter.setSortMethod(v));
 
         mUxrContentLimiter = new LifeCycleObserverUxrContentLimiter(
                 new UxrContentLimiterImpl(getContext(), R.xml.uxr_config));
@@ -295,7 +297,8 @@ public class DialpadFragment extends AbstractDialpadFragment {
                 R.string.primary_number_description, readableLabel) : readableLabel);
         ViewUtils.setVisible(mLabel, true);
 
-        TelecomUtils.setContactBitmapAsync(getContext(), mAvatar, contact);
+        TelecomUtils.setContactBitmapAsync(getContext(), mAvatar, contact,
+                mAdapter.getSortMethod());
         ViewUtils.setVisible(mAvatar, true);
     }
 

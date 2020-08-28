@@ -31,15 +31,17 @@ import java.util.List;
  */
 public class UiCallLog {
     private final String mTitle;
+    private final String mAltTitle;
     private String mText;
     private final String mNumber;
     @Nullable
     private final Contact mContact;
     private final List<PhoneCallLog.Record> mCallRecords;
 
-    public UiCallLog(String title, String text, String number, @Nullable Contact contact,
-            List<PhoneCallLog.Record> callRecords) {
+    public UiCallLog(String title, String altTitle, String text, String number,
+            @Nullable Contact contact, List<PhoneCallLog.Record> callRecords) {
         mTitle = title;
+        mAltTitle = altTitle;
         mText = text;
         mNumber = number;
         mContact = contact;
@@ -58,6 +60,15 @@ public class UiCallLog {
      */
     public String getTitle() {
         return mTitle;
+    }
+
+    /**
+     * Returns the alternative title of a call log item. If this phone number is stored as a
+     * contact, alternative title will be the contact's alternative display name. Otherwise, it will
+     * be the same as title.
+     */
+    public String getAltTitle() {
+        return mAltTitle;
     }
 
     /**

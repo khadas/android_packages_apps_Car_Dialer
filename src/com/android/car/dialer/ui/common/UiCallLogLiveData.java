@@ -151,13 +151,14 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
             String relativeTime = getRelativeTime(phoneCallLog.getLastCallEndTimestamp());
             if (TelecomUtils.isVoicemailNumber(mContext, number)) {
                 String title = mContext.getString(R.string.voicemail);
-                UiCallLog uiCallLog = new UiCallLog(title, relativeTime, number, null,
+                UiCallLog uiCallLog = new UiCallLog(title, title, relativeTime, number, null,
                         phoneCallLog.getAllCallRecords());
                 uiCallLogs.add(uiCallLog);
                 continue;
             }
 
             String title;
+            String altTitle = null;
             CharSequence typeLabel = "";
             Contact contact = null;
 
@@ -197,6 +198,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
 
             if (contact != null && contact.getDisplayName() != null) {
                 title = contact.getDisplayName();
+                altTitle = contact.getDisplayNameAlt();
             } else if (!TextUtils.isEmpty(number)) {
                 title = TelecomUtils.getFormattedNumber(mContext, number);
             } else {
@@ -207,6 +209,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
 
             UiCallLog uiCallLog = new UiCallLog(
                     title,
+                    altTitle == null ? title : altTitle,
                     getSecondaryText(
                             TextUtils.isEmpty(typeLabel) ? getType(phoneNumber) : typeLabel,
                             relativeTime),
