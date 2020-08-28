@@ -20,7 +20,6 @@ import android.annotation.IntDef;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -32,9 +31,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
-import com.android.car.dialer.livedata.BluetoothHfpStateLiveData;
 import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
+import com.android.car.dialer.livedata.HfpDeviceListLiveData;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.common.SingleLiveEvent;
 
@@ -91,7 +90,7 @@ public class TelecomActivityViewModel extends AndroidViewModel {
             UiBluetoothMonitor uiBluetoothMonitor = UiBluetoothMonitor.get();
             mErrorStringLiveData = new ErrorStringLiveData(
                     mApplicationContext,
-                    uiBluetoothMonitor.getHfpStateLiveData(),
+                    uiBluetoothMonitor.getHfpDeviceListLiveData(),
                     uiBluetoothMonitor.getPairListLiveData(),
                     uiBluetoothMonitor.getBluetoothStateLiveData());
 
@@ -179,28 +178,28 @@ public class TelecomActivityViewModel extends AndroidViewModel {
     }
 
     private static class ErrorStringLiveData extends MediatorLiveData<String> {
-        private LiveData<Integer> mHfpStateLiveData;
+        private LiveData<List<BluetoothDevice>> mHfpDeviceListLiveData;
         private LiveData<Set<BluetoothDevice>> mPairedListLiveData;
         private LiveData<Integer> mBluetoothStateLiveData;
 
         private Context mContext;
 
         ErrorStringLiveData(Context context,
-                BluetoothHfpStateLiveData hfpStateLiveData,
+                HfpDeviceListLiveData hfpDeviceListLiveData,
                 BluetoothPairListLiveData pairListLiveData,
                 BluetoothStateLiveData bluetoothStateLiveData) {
             mContext = context;
-            mHfpStateLiveData = hfpStateLiveData;
+            mHfpDeviceListLiveData = hfpDeviceListLiveData;
             mPairedListLiveData = pairListLiveData;
             mBluetoothStateLiveData = bluetoothStateLiveData;
             setValue(NO_BT_ERROR);
 
-            addSource(hfpStateLiveData, this::onHfpStateChanged);
+            addSource(hfpDeviceListLiveData, this::onHfpDeviceListChanged);
             addSource(pairListLiveData, this::onPairListChanged);
             addSource(bluetoothStateLiveData, this::onBluetoothStateChanged);
         }
 
-        private void onHfpStateChanged(Integer state) {
+        private void onHfpDeviceListChanged(List<BluetoothDevice> devices) {
             update();
         }
 
@@ -237,8 +236,8 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         private boolean isHfpConnected() {
-            Integer hfpState = mHfpStateLiveData.getValue();
-            return hfpState == null || hfpState == BluetoothProfile.STATE_CONNECTED;
+            List<BluetoothDevice> deviceList = mHfpDeviceListLiveData.getValue();
+            return deviceList != null && !deviceList.isEmpty();
         }
 
         private boolean isBluetoothEnabled() {

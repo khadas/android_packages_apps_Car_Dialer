@@ -26,8 +26,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadsetClient;
-import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 
@@ -50,25 +50,29 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadow.api.Shadow;
 
+import java.util.Collections;
+
 @RunWith(CarDialerRobolectricTestRunner.class)
 @Config(shadows = ShadowBluetoothAdapterForDialer.class)
-public class BluetoothHfpStateLiveDataTest {
+public class HfpDeviceListLiveDataTest {
     private static final String INTENT_ACTION =
             BluetoothHeadsetClient.ACTION_CONNECTION_STATE_CHANGED;
 
-    private BluetoothHfpStateLiveData mBluetoothHfpStateLiveData;
+    private HfpDeviceListLiveData mHfpDeviceListLiveData;
     private LifecycleRegistry mLifecycleRegistry;
     private BroadcastReceiverVerifier mReceiverVerifier;
     @Mock
     private LifecycleOwner mMockLifecycleOwner;
     @Mock
     private LiveDataObserver<Integer> mMockObserver;
+    @Mock
+    private BluetoothDevice mMockBluetoothDevice;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        mBluetoothHfpStateLiveData = new BluetoothHfpStateLiveData(RuntimeEnvironment.application);
+        mHfpDeviceListLiveData = new HfpDeviceListLiveData(RuntimeEnvironment.application);
         mLifecycleRegistry = new LifecycleRegistry(mMockLifecycleOwner);
         when(mMockLifecycleOwner.getLifecycle()).thenReturn(mLifecycleRegistry);
 
@@ -77,7 +81,7 @@ public class BluetoothHfpStateLiveDataTest {
 
     @Test
     public void testOnActive() {
-        mBluetoothHfpStateLiveData.observe(mMockLifecycleOwner,
+        mHfpDeviceListLiveData.observe(mMockLifecycleOwner,
                 (value) -> mMockObserver.onChanged(value));
         verify(mMockObserver, never()).onChanged(any());
 
@@ -91,36 +95,24 @@ public class BluetoothHfpStateLiveDataTest {
         ArgumentCaptor<Integer> valueCaptor = ArgumentCaptor.forClass(Integer.class);
         doNothing().when(mMockObserver).onChanged(valueCaptor.capture());
 
-        ShadowBluetoothAdapterForDialer shadowBluetoothAdapter =
-                (ShadowBluetoothAdapterForDialer) Shadow.extract(
-                        BluetoothAdapter.getDefaultAdapter());
-        shadowBluetoothAdapter.setState(BluetoothAdapter.STATE_ON);
-        shadowBluetoothAdapter.setProfileConnectionState(BluetoothProfile.HEADSET_CLIENT,
-                BluetoothProfile.STATE_CONNECTED);
+        ShadowBluetoothAdapterForDialer shadowBluetoothAdapter = Shadow.extract(
+                BluetoothAdapter.getDefaultAdapter());
 
-        mBluetoothHfpStateLiveData.observe(mMockLifecycleOwner,
+        shadowBluetoothAdapter.setHfpDevices(Collections.singletonList(mMockBluetoothDevice));
+        mHfpDeviceListLiveData.observe(mMockLifecycleOwner,
                 (value) -> mMockObserver.onChanged(value));
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
-        assertThat(BluetoothAdapter.getDefaultAdapter().getProfileConnectionState(
-                BluetoothProfile.HEADSET_CLIENT)).isEqualTo(BluetoothProfile.STATE_CONNECTED);
-        assertThat(mBluetoothHfpStateLiveData.getValue()).isEqualTo(
-                BluetoothProfile.STATE_CONNECTED);
-        assertThat(valueCaptor.getValue()).isEqualTo(BluetoothProfile.STATE_CONNECTED);
+        assertThat(mHfpDeviceListLiveData.getValue()).isNotEmpty();
 
-        shadowBluetoothAdapter.setProfileConnectionState(BluetoothProfile.HEADSET_CLIENT,
-                BluetoothProfile.STATE_DISCONNECTED);
+        shadowBluetoothAdapter.setHfpDevices(Collections.emptyList());
         mReceiverVerifier.getBroadcastReceiverFor(INTENT_ACTION)
                 .onReceive(mock(Context.class), mock(Intent.class));
-        assertThat(BluetoothAdapter.getDefaultAdapter().getProfileConnectionState(
-                BluetoothProfile.HEADSET_CLIENT)).isEqualTo(BluetoothProfile.STATE_DISCONNECTED);
-        assertThat(mBluetoothHfpStateLiveData.getValue()).isEqualTo(
-                BluetoothProfile.STATE_DISCONNECTED);
-        assertThat(valueCaptor.getValue()).isEqualTo(BluetoothProfile.STATE_DISCONNECTED);
+        assertThat(mHfpDeviceListLiveData.getValue()).isEmpty();
     }
 
     @Test
     public void testOnInactiveUnregister() {
-        mBluetoothHfpStateLiveData.observe(mMockLifecycleOwner,
+        mHfpDeviceListLiveData.observe(mMockLifecycleOwner,
                 (value) -> mMockObserver.onChanged(value));
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
         int preNumber = mReceiverVerifier.getReceiverNumber();
