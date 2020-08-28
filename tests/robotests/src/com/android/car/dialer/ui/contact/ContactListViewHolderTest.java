@@ -33,10 +33,10 @@ import android.widget.TextView;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.PostalAddress;
+import com.android.car.telephony.common.TelecomUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,7 +83,7 @@ public class ContactListViewHolderTest {
 
     @Test
     public void testDisplayName() {
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.title)).getText()).isEqualTo(
                 DISPLAY_NAME);
@@ -94,7 +94,7 @@ public class ContactListViewHolderTest {
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(LABEL_1);
     }
@@ -104,7 +104,7 @@ public class ContactListViewHolderTest {
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, TYPE, null,
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getResources().getText(
@@ -118,7 +118,7 @@ public class ContactListViewHolderTest {
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         when(phoneNumber.getLabel()).thenReturn(null);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo("");
     }
@@ -131,7 +131,7 @@ public class ContactListViewHolderTest {
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(false);
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getString(R.string.type_multiple));
@@ -146,7 +146,7 @@ public class ContactListViewHolderTest {
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getString(R.string.primary_number_description, LABEL_2));
@@ -161,7 +161,7 @@ public class ContactListViewHolderTest {
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getString(R.string.primary_number_description,
@@ -180,7 +180,7 @@ public class ContactListViewHolderTest {
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.text)).getText()).isEqualTo(
                 mContext.getString(R.string.primary_number_description, "null"));
@@ -192,7 +192,7 @@ public class ContactListViewHolderTest {
         PhoneNumber phoneNumber = PhoneNumber.newInstance(mContext, PHONE_NUMBER_1, 0, LABEL_1,
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         View callActionView = mItemView.findViewById(R.id.call_action_id);
         assertThat(callActionView.hasOnClickListeners()).isTrue();
@@ -213,7 +213,7 @@ public class ContactListViewHolderTest {
                 false, 0, null, null, 0);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(false);
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(ShadowAlertDialog.getLatestAlertDialog()).isNull();
         View callActionView = mItemView.findViewById(R.id.call_action_id);
@@ -234,7 +234,7 @@ public class ContactListViewHolderTest {
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber1, phoneNumber2));
         when(mMockContact.hasPrimaryPhoneNumber()).thenReturn(true);
         when(mMockContact.getPrimaryPhoneNumber()).thenReturn(phoneNumber2);
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         View callActionView = mItemView.findViewById(R.id.call_action_id);
         assertThat(callActionView.hasOnClickListeners()).isTrue();
@@ -250,7 +250,7 @@ public class ContactListViewHolderTest {
     public void testClickShowContactDetailView_hasContactDetail_showContactDetail() {
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         when(mMockContact.getNumbers()).thenReturn(Arrays.asList(phoneNumber));
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         View showContactDetailActionView = mItemView.findViewById(R.id.show_contact_detail_id);
         assertThat(showContactDetailActionView.hasOnClickListeners()).isTrue();
@@ -266,7 +266,7 @@ public class ContactListViewHolderTest {
     public void testClickShowContactDetailView_hasAddressButNoPhoneNumber_dependOnConfig() {
         PostalAddress postalAddress = mock(PostalAddress.class);
         when(mMockContact.getPostalAddresses()).thenReturn(Arrays.asList(postalAddress));
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         View showContactDetailActionView = mItemView.findViewById(R.id.show_contact_detail_id);
 
@@ -292,7 +292,7 @@ public class ContactListViewHolderTest {
 
     @Test
     public void testClickShowContactDetailView_NoContactDetail_ContactDetailButtonNotEnabled() {
-        mContactListViewHolder.bind(mMockContact, false, "", ContactSortingInfo.SORT_BY_FIRST_NAME);
+        mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         View showContactDetailActionView = mItemView.findViewById(R.id.show_contact_detail_id);
 

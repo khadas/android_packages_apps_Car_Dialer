@@ -28,7 +28,6 @@ import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.common.DialerUtils;
-import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
@@ -66,13 +65,14 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
      * Binds the view holder with relevant data.
      */
     public void bind(Contact contact, boolean showHeader, String header, Integer sortMethod) {
-        TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact);
+        TelecomUtils.setContactBitmapAsync(mAvatarView.getContext(), mAvatarView, contact,
+                sortMethod);
         ViewUtils.setVisible(mHeaderView, showHeader);
         if (showHeader) {
             ViewUtils.setText(mHeaderView, header);
         }
-        mTitleView.setText(ContactSortingInfo.SORT_BY_FIRST_NAME.equals(sortMethod)
-                ? contact.getDisplayName() : contact.getDisplayNameAlt());
+        mTitleView.setText(TelecomUtils.isSortByFirstName(sortMethod) ? contact.getDisplayName()
+                : contact.getDisplayNameAlt());
         setLabelText(contact);
 
         boolean forceShowButton = itemView.getResources().getBoolean(
@@ -118,7 +118,7 @@ public class ContactListViewHolder extends RecyclerView.ViewHolder {
                         (phoneNumber, always) -> UiCallManager.get().placeCall(
                                 phoneNumber.getRawNumber()));
             });
-        }  else {
+        } else {
             ViewUtils.setOnClickListener(mCallActionView, null);
         }
     }

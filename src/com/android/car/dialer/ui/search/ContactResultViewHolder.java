@@ -68,11 +68,14 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
      * Populates the view that is represented by this ViewHolder with the information in the
      * provided {@link Contact}.
      */
-    public void bindSearchResult(ContactResultsLiveData.ContactResultListItem contactResult) {
+    public void bindSearchResult(ContactResultsLiveData.ContactResultListItem contactResult,
+            Integer sortMethod) {
         Contact contact = contactResult.getContact();
 
-        ViewUtils.setText(mContactName, contact.getDisplayName());
-        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact);
+        ViewUtils.setText(mContactName,
+                TelecomUtils.isSortByFirstName(sortMethod) ? contact.getDisplayName()
+                        : contact.getDisplayNameAlt());
+        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact, sortMethod);
 
         if (DialerUtils.hasContactDetail(itemView.getResources(), contact)) {
             mContactCard.setOnClickListener(
@@ -86,15 +89,18 @@ public class ContactResultViewHolder extends RecyclerView.ViewHolder {
      * Populates the view that is represented by this ViewHolder with the information in the
      * provided {@link Contact}.
      */
-    public void bindTypeDownResult(ContactResultsLiveData.ContactResultListItem contactResult) {
+    public void bindTypeDownResult(ContactResultsLiveData.ContactResultListItem contactResult,
+            Integer sortMethod) {
         Contact contact = contactResult.getContact();
         String number = contactResult.getNumber();
 
         ViewUtils.setText(mContactNumber, number);
-        ViewUtils.setText(mContactName, contact.getDisplayName());
+        ViewUtils.setText(mContactName,
+                TelecomUtils.isSortByFirstName(sortMethod) ? contact.getDisplayName()
+                        : contact.getDisplayNameAlt());
         mContactCard.setOnClickListener(
                 v -> UiCallManager.get().placeCall(mContactNumber.getText().toString()));
-        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact);
+        TelecomUtils.setContactBitmapAsync(mContext, mContactPicture, contact, sortMethod);
     }
 
     void recycle() {

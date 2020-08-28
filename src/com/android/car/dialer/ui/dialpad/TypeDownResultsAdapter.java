@@ -42,6 +42,6 @@ public class TypeDownResultsAdapter extends ContactResultsAdapter {
 
     @Override
     public void onBindViewHolderImpl(ContactResultViewHolder holder, int position) {
-        holder.bindTypeDownResult(getContactResults().get(position));
+        holder.bindTypeDownResult(getContactResults().get(position), getSortMethod());
     }
 }

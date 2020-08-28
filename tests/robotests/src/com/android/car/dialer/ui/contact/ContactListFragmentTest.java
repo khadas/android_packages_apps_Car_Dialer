@@ -37,11 +37,11 @@ import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
-import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.dialer.ui.favorite.FavoriteViewModel;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.PostalAddress;
+import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
 import org.junit.Before;
@@ -93,7 +93,7 @@ public class ContactListFragmentTest {
         MutableLiveData<FutureData<Pair<Integer, List<Contact>>>> contactList =
                 new MutableLiveData<>();
         contactList.setValue(
-                new FutureData<>(false, new Pair<>(ContactSortingInfo.SORT_BY_LAST_NAME,
+                new FutureData<>(false, new Pair<>(TelecomUtils.SORT_BY_LAST_NAME,
                         Arrays.asList(mMockContact1, mMockContact2, mMockContact3))));
         ShadowAndroidViewModelFactory.add(ContactListViewModel.class, mMockContactListViewModel);
         when(mMockContactListViewModel.getAllContacts()).thenReturn(contactList);
