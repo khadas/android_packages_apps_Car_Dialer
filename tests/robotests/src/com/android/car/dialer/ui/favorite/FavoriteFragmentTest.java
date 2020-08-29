@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.arch.common.FutureData;
+import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -34,8 +35,10 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.PhoneNumber;
+import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,6 +79,8 @@ public class FavoriteFragmentTest {
         favoriteContacts.setValue(new FutureData<>(false, Arrays.asList(mMockContact)));
         ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
         when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(favoriteContacts);
+        when(mMockFavoriteViewModel.getSortOrderLiveData()).thenReturn(
+                LiveDataFunctions.dataOf(TelecomUtils.SORT_BY_FIRST_NAME));
 
         mFavoriteFragment = FavoriteFragment.newInstance();
         FragmentTestActivity fragmentTestActivity = Robolectric.buildActivity(
@@ -86,6 +91,11 @@ public class FavoriteFragmentTest {
         // set up layout for recyclerView
         recyclerView.layout(0, 0, 100, 1000);
         mViewHolder = (FavoriteContactViewHolder) recyclerView.findViewHolderForLayoutPosition(0);
+    }
+
+    @After
+    public void tearDown() {
+        UiCallManager.set(null);
     }
 
     @Test

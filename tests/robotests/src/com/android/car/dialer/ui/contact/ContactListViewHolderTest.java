@@ -38,6 +38,7 @@ import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.PostalAddress;
 import com.android.car.telephony.common.TelecomUtils;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -81,8 +82,14 @@ public class ContactListViewHolderTest {
         mContactListViewHolder = new ContactListViewHolder(mItemView, mMockListener);
     }
 
+    @After
+    public void tearDown() {
+        UiCallManager.set(null);
+    }
+
     @Test
     public void testDisplayName() {
+        when(mMockContact.getDisplayName()).thenReturn(DISPLAY_NAME);
         mContactListViewHolder.bind(mMockContact, false, "", TelecomUtils.SORT_BY_FIRST_NAME);
 
         assertThat(((TextView) mItemView.findViewById(R.id.title)).getText()).isEqualTo(

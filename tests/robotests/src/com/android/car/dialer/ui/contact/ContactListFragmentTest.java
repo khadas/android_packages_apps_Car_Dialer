@@ -44,6 +44,7 @@ import com.android.car.telephony.common.PostalAddress;
 import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -105,6 +106,11 @@ public class ContactListFragmentTest {
 
         ShadowAndroidViewModelFactory.add(FavoriteViewModel.class, mMockFavoriteViewModel);
         when(mMockFavoriteViewModel.getFavoriteContacts()).thenReturn(new MutableLiveData<>());
+    }
+
+    @After
+    public void tearDown() {
+        UiCallManager.set(null);
     }
 
     @Test
