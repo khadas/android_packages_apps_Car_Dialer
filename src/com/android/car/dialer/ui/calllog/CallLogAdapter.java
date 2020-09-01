@@ -22,10 +22,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.dialer.ui.common.entity.HeaderViewHolder;
 import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.telephony.common.Contact;
@@ -61,6 +63,8 @@ public class CallLogAdapter extends ContentLimitingAdapter {
     private List<Object> mUiCallLogs = new ArrayList<>();
     private Context mContext;
     private CallLogAdapter.OnShowContactDetailListener mOnShowContactDetailListener;
+    private LinearLayoutManager mLayoutManager;
+    private int mLimitingAnchorIndex = 0;
 
     public CallLogAdapter(Context context,
             CallLogAdapter.OnShowContactDetailListener onShowContactDetailListener) {
@@ -75,6 +79,11 @@ public class CallLogAdapter extends ContentLimitingAdapter {
         L.d(TAG, "setUiCallLogs: %d", uiCallLogs.size());
         mUiCallLogs.clear();
         mUiCallLogs.addAll(uiCallLogs);
+
+        // Update the data set size change along with the old anchor point.
+        // The anchor point won't take effect if content is not limited.
+        updateUnderlyingDataChanged(uiCallLogs.size(),
+                DialerUtils.validateListLimitingAnchor(uiCallLogs.size(), mLimitingAnchorIndex));
         notifyDataSetChanged();
     }
 
@@ -135,5 +144,23 @@ public class CallLogAdapter extends ContentLimitingAdapter {
     @Override
     public int getConfigurationId() {
         return R.id.call_log_list_uxr_config;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        mLayoutManager = null;
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    @Override
+    public int computeAnchorIndexWhenRestricting() {
+        mLimitingAnchorIndex = DialerUtils.getFirstVisibleItemPosition(mLayoutManager);
+        return mLimitingAnchorIndex;
     }
 }

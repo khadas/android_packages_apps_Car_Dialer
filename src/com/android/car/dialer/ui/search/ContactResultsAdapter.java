@@ -21,8 +21,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.car.dialer.R;
 import com.android.car.dialer.ui.common.ContactResultsLiveData;
+import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.telephony.common.Contact;
 import com.android.car.ui.recyclerview.ContentLimitingAdapter;
 
@@ -44,6 +49,7 @@ public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultV
     private final List<ContactResultsLiveData.ContactResultListItem> mContactResults =
             new ArrayList<>();
     private final OnShowContactDetailListener mOnShowContactDetailListener;
+    private LinearLayoutManager mLayoutManager;
 
     public ContactResultsAdapter(OnShowContactDetailListener onShowContactDetailListener) {
         mOnShowContactDetailListener = onShowContactDetailListener;
@@ -64,6 +70,8 @@ public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultV
     public void setData(List<ContactResultsLiveData.ContactResultListItem> data) {
         mContactResults.clear();
         mContactResults.addAll(data);
+        // New search result is available, move the window to the head of the new list.
+        updateUnderlyingDataChanged(data.size(), 0 /* Jump to the head */);
         notifyDataSetChanged();
     }
 
@@ -112,6 +120,23 @@ public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultV
     @Override
     public int getConfigurationId() {
         return R.id.search_result_uxr_config;
+    }
+
+    @Override
+    public int computeAnchorIndexWhenRestricting() {
+        return DialerUtils.getFirstVisibleItemPosition(mLayoutManager);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        mLayoutManager = null;
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 
     /**
