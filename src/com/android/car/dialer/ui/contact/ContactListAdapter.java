@@ -23,8 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.common.DialerUtils;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.recyclerview.ContentLimitingAdapter;
@@ -47,6 +50,8 @@ public class ContactListAdapter extends ContentLimitingAdapter<ContactListViewHo
     private final OnShowContactDetailListener mOnShowContactDetailListener;
 
     private Integer mSortMethod;
+    private LinearLayoutManager mLinearLayoutManager;
+    private int mLimitingAnchorIndex = 0;
 
     public ContactListAdapter(Context context,
             OnShowContactDetailListener onShowContactDetailListener) {
@@ -63,7 +68,15 @@ public class ContactListAdapter extends ContentLimitingAdapter<ContactListViewHo
             mContactList.addAll(contactListPair.second);
             mSortMethod = contactListPair.first;
         }
+        updateUnderlyingDataChanged(mContactList.size(),
+                DialerUtils.validateListLimitingAnchor(mContactList.size(), mLimitingAnchorIndex));
         notifyDataSetChanged();
+    }
+
+    @Override
+    public int computeAnchorIndexWhenRestricting() {
+        mLimitingAnchorIndex = DialerUtils.getFirstVisibleItemPosition(mLinearLayoutManager);
+        return mLimitingAnchorIndex;
     }
 
     @NonNull
@@ -110,5 +123,17 @@ public class ContactListAdapter extends ContentLimitingAdapter<ContactListViewHo
 
         return !TextUtils.isEmpty(label) ? label
                 : mContext.getString(R.string.header_for_type_other);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mLinearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        mLinearLayoutManager = null;
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 }
