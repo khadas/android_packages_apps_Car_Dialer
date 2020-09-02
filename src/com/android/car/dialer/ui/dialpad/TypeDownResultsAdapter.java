@@ -44,4 +44,9 @@ public class TypeDownResultsAdapter extends ContactResultsAdapter {
     public void onBindViewHolderImpl(ContactResultViewHolder holder, int position) {
         holder.bindTypeDownResult(getContactResults().get(position), getSortMethod());
     }
+
+    @Override
+    public int getConfigurationId() {
+        return R.id.dialpad_type_down_uxr_config;
+    }
 }

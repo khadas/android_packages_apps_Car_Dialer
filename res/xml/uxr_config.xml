@@ -32,6 +32,11 @@
     />
     <!-- Use a default value of -1 to denote UNLIMITED -->
     <ListConfig
+        app:id="@+id/dialpad_type_down_uxr_config"
+        app:maxLength="-1"
+    />
+    <!-- Use a default value of -1 to denote UNLIMITED -->
+    <ListConfig
         app:id="@+id/favorite_list_uxr_config"
         app:maxLength="-1"
     />
