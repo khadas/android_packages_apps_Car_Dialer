@@ -42,7 +42,6 @@ public class UiBluetoothMonitor {
     private BluetoothStateLiveData mBluetoothStateLiveData;
     private HfpDeviceListLiveData mHfpDeviceListLiveData;
 
-    private Observer mHfpStateObserver;
     private Observer mPairListObserver;
     private Observer mBluetoothStateObserver;
     private Observer mHfpDeviceListObserver;
@@ -79,7 +78,6 @@ public class UiBluetoothMonitor {
         mBluetoothStateLiveData = new BluetoothStateLiveData(mContext);
         mHfpDeviceListLiveData = new HfpDeviceListLiveData(mContext);
 
-        mHfpStateObserver = o -> L.i(TAG, "HfpState is updated");
         mPairListObserver = o -> L.i(TAG, "PairList is updated");
         mBluetoothStateObserver = o -> L.i(TAG, "BluetoothState is updated");
         mHfpDeviceListObserver = o -> L.i(TAG, "HfpDeviceList is updated");

@@ -34,6 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.util.Pair;
+import androidx.core.util.Preconditions;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -310,7 +311,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     }
 
     private void updateViewBasedOnAudioRoute(@Nullable Integer audioRoute) {
-        if (audioRoute == null) {
+        if (audioRoute == null || audioRoute.intValue() == 0) {
             return;
         }
 
@@ -335,14 +336,11 @@ public class OnGoingCallControllerBarFragment extends Fragment {
         }
     }
 
+    @NonNull
     private static AudioRouteInfo getAudioRouteInfo(int route) {
+        Preconditions.checkArgument(route != 0, "Unknown audio route: 0");
         AudioRouteInfo routeInfo = AUDIO_ROUTES.get(route);
-        if (routeInfo != null) {
-            return routeInfo;
-        } else {
-            L.e(TAG, "Unknown audio route: %s", route);
-            throw new RuntimeException("Unknown audio route: " + route);
-        }
+        return routeInfo;
     }
 
     private static final class AudioRouteInfo {

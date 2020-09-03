@@ -24,6 +24,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.HfpDeviceListLiveData;
 
 import java.util.List;
@@ -56,7 +57,7 @@ class ToolbarTitleLiveData extends MediatorLiveData<String> {
     ToolbarTitleLiveData(Context context, LiveData<Integer> toolbarTitleModeLiveData) {
         mContext = context;
         mToolbarTitleModeLiveData = toolbarTitleModeLiveData;
-        mHfpDeviceListLiveData = new HfpDeviceListLiveData(context);
+        mHfpDeviceListLiveData = UiBluetoothMonitor.get().getHfpDeviceListLiveData();
 
         addSource(mToolbarTitleModeLiveData, this::updateToolbarTitle);
     }

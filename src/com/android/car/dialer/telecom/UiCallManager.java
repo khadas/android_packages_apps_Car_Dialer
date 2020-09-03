@@ -15,11 +15,9 @@
  */
 package com.android.car.dialer.telecom;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadsetClient;
 import android.bluetooth.BluetoothHeadsetClientCall;
-import android.bluetooth.BluetoothProfile;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +35,7 @@ import android.widget.Toast;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.bluetooth.BluetoothHeadsetClientProvider;
 import com.android.car.dialer.log.L;
 import com.android.car.telephony.common.TelecomUtils;
 
@@ -59,7 +58,7 @@ public class UiCallManager {
 
     private TelecomManager mTelecomManager;
     private InCallServiceImpl mInCallService;
-    private BluetoothHeadsetClient mBluetoothHeadsetClient;
+    private BluetoothHeadsetClientProvider mBluetoothHeadsetClientProvider;
 
     /**
      * Initialized a globally accessible {@link UiCallManager} which can be retrieved by
@@ -106,21 +105,7 @@ public class UiCallManager {
         intent.setAction(InCallServiceImpl.ACTION_LOCAL_BIND);
         context.bindService(intent, mInCallServiceConnection, Context.BIND_AUTO_CREATE);
 
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        if (adapter != null) {
-            adapter.getProfileProxy(mContext, new BluetoothProfile.ServiceListener() {
-                @Override
-                public void onServiceConnected(int profile, BluetoothProfile proxy) {
-                    if (profile == BluetoothProfile.HEADSET_CLIENT) {
-                        mBluetoothHeadsetClient = (BluetoothHeadsetClient) proxy;
-                    }
-                }
-
-                @Override
-                public void onServiceDisconnected(int profile) {
-                }
-            }, BluetoothProfile.HEADSET_CLIENT);
-        }
+        mBluetoothHeadsetClientProvider = BluetoothHeadsetClientProvider.singleton(context);
     }
 
     private final ServiceConnection mInCallServiceConnection = new ServiceConnection() {
@@ -218,18 +203,25 @@ public class UiCallManager {
     }
 
     /**
-     * Returns the current audio route.
+     * Returns the current audio route. If {@link BluetoothHeadsetClient} hasn't been connected,
+     * return {@link CallAudioState#ROUTE_EARPIECE}.
      * The available routes are defined in {@link CallAudioState}.
      */
     public int getAudioRoute() {
-        List<BluetoothDevice> devices = mBluetoothHeadsetClient != null
-                ? mBluetoothHeadsetClient.getConnectedDevices()
-                : Collections.emptyList();
+        if (isBluetoothCall()) {
+            BluetoothHeadsetClient bluetoothHeadsetClient = mBluetoothHeadsetClientProvider.get();
+            List<BluetoothDevice> devices = bluetoothHeadsetClient != null
+                    ? bluetoothHeadsetClient.getConnectedDevices()
+                    : Collections.emptyList();
+            // BluetoothHeadsetClient might haven't been initialized that the proxy object hasn't
+            // been bind by calling BluetoothAdapter#getProfileProxy.
+            if (devices.isEmpty()) {
+                return CallAudioState.ROUTE_EARPIECE;
+            }
 
-        if (isBluetoothCall() && !devices.isEmpty()) {
             // TODO: Make this handle multiple devices
             BluetoothDevice device = devices.get(0);
-            int audioState = mBluetoothHeadsetClient.getAudioState(device);
+            int audioState = bluetoothHeadsetClient.getAudioState(device);
 
             if (audioState == BluetoothHeadsetClient.STATE_AUDIO_CONNECTED) {
                 return CallAudioState.ROUTE_BLUETOOTH;
@@ -248,15 +240,16 @@ public class UiCallManager {
      * Re-route the audio out phone of the ongoing phone call.
      */
     public void setAudioRoute(int audioRoute) {
-        if (mBluetoothHeadsetClient != null && isBluetoothCall()) {
-            for (BluetoothDevice device : mBluetoothHeadsetClient.getConnectedDevices()) {
+        BluetoothHeadsetClient bluetoothHeadsetClient = mBluetoothHeadsetClientProvider.get();
+        if (bluetoothHeadsetClient != null && isBluetoothCall()) {
+            for (BluetoothDevice device : bluetoothHeadsetClient.getConnectedDevices()) {
                 List<BluetoothHeadsetClientCall> currentCalls =
-                        mBluetoothHeadsetClient.getCurrentCalls(device);
+                        bluetoothHeadsetClient.getCurrentCalls(device);
                 if (currentCalls != null && !currentCalls.isEmpty()) {
                     if (audioRoute == CallAudioState.ROUTE_BLUETOOTH) {
-                        mBluetoothHeadsetClient.connectAudio(device);
+                        bluetoothHeadsetClient.connectAudio(device);
                     } else if ((audioRoute & CallAudioState.ROUTE_WIRED_OR_EARPIECE) != 0) {
-                        mBluetoothHeadsetClient.disconnectAudio(device);
+                        bluetoothHeadsetClient.disconnectAudio(device);
                     }
                 }
             }
