@@ -66,6 +66,4 @@
     <!-- A config determines whether to show user profile for input number only when type down is
     not showing. This config works only when config_show_type_down_list_on_dialpad is false. -->
     <bool name="config_show_detailed_user_profile_on_dialpad">false</bool>
-    <!-- A percent determines the size of the area for type down list on Dialpad in portrait mode. -->
-    <item name="config_type_down_guideline_percent" format="float" type="dimen">0.3</item>
 </resources>
