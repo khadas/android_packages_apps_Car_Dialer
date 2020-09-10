@@ -40,6 +40,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
     static final int TYPE_HEADER = 1;
     static final int TYPE_ADD_FAVORITE = 2;
 
+    private Integer mSortMethod;
+
     /**
      * Listener interface for when the add favorite button is clicked
      */
@@ -61,6 +63,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
         L.d(TAG, "setFavoriteContacts %s", favoriteContacts);
         mFavoriteContacts = (favoriteContacts != null) ? favoriteContacts : Collections.emptyList();
         notifyDataSetChanged();
+    }
+
+    /**
+     * Sets the sorting method for the list.
+     */
+    public void setSortMethod(Integer sortMethod) {
+        mSortMethod = sortMethod;
     }
 
     @Override
@@ -101,7 +110,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteContactViewHol
         switch (itemViewType) {
             case TYPE_CONTACT:
                 Contact contact = (Contact) mFavoriteContacts.get(position);
-                viewHolder.onBind(contact);
+                viewHolder.bind(contact, mSortMethod);
                 viewHolder.itemView.setOnClickListener(v -> onItemViewClicked(contact));
                 break;
             case TYPE_HEADER:

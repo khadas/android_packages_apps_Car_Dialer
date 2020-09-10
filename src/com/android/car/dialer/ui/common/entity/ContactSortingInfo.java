@@ -22,6 +22,7 @@ import android.util.Pair;
 import com.android.car.dialer.R;
 import com.android.car.dialer.livedata.SharedPreferencesLiveData;
 import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.TelecomUtils;
 
 import java.util.Comparator;
 
@@ -29,8 +30,6 @@ import java.util.Comparator;
  * Information about how Contacts are sorted.
  */
 public class ContactSortingInfo {
-    public static final Integer SORT_BY_FIRST_NAME = 1;
-    public static final Integer SORT_BY_LAST_NAME = 2;
     /**
      * Sort by the default display order of a name. For western names it will be "Given Family".
      * For unstructured names like east asian this will be the only order.
@@ -71,10 +70,10 @@ public class ContactSortingInfo {
                 || firstNameSort.equals(
                 preferencesLiveData.getValue().getString(key, defaultValue))) {
             comparator = sFirstNameComparator;
-            sortMethod = SORT_BY_FIRST_NAME;
+            sortMethod = TelecomUtils.SORT_BY_FIRST_NAME;
         } else {
             comparator = sLastNameComparator;
-            sortMethod = SORT_BY_LAST_NAME;
+            sortMethod = TelecomUtils.SORT_BY_LAST_NAME;
         }
 
         return new Pair<>(comparator, sortMethod);

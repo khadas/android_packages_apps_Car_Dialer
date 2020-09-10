@@ -75,6 +75,8 @@ public class FavoriteFragment extends DialerListBaseFragment {
                 showContent();
             }
         });
+        favoriteViewModel.getSortOrderLiveData().observe(this,
+                v -> favoriteAdapter.setSortMethod(v));
 
         mContentLimitingAdapter =
                 new DelegatingContentLimitingAdapter<>(

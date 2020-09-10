@@ -20,32 +20,27 @@ import android.app.Application;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.car.dialer.R;
-import com.android.car.dialer.livedata.SharedPreferencesLiveData;
 import com.android.car.dialer.ui.common.ContactResultsLiveData;
+import com.android.car.dialer.ui.common.DialerListViewModel;
 
 import java.util.List;
 
 /**
  * {link AndroidViewModel} used for search functionality.
  */
-public class ContactResultsViewModel extends AndroidViewModel {
+public class ContactResultsViewModel extends DialerListViewModel {
 
     private final ContactResultsLiveData mContactSearchResultsLiveData;
     private final MutableLiveData<String> mSearchQueryLiveData;
-    private final SharedPreferencesLiveData mSharedPreferencesLiveData;
 
     public ContactResultsViewModel(@NonNull Application application) {
         super(application);
         mSearchQueryLiveData = new MutableLiveData<>();
-        mSharedPreferencesLiveData =
-                new SharedPreferencesLiveData(application, R.string.sort_order_key);
         mContactSearchResultsLiveData = new ContactResultsLiveData(application,
-                mSearchQueryLiveData, mSharedPreferencesLiveData);
+                mSearchQueryLiveData, getSharedPreferencesLiveData());
     }
 
     /**
@@ -78,12 +73,5 @@ public class ContactResultsViewModel extends AndroidViewModel {
      */
     public MutableLiveData<String> getSearchQueryLiveData() {
         return mSearchQueryLiveData;
-    }
-
-    /**
-     * Returns Shared Preferences LiveData.
-     */
-    public SharedPreferencesLiveData getSharedPreferencesLiveData() {
-        return mSharedPreferencesLiveData;
     }
 }

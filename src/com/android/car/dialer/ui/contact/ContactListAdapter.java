@@ -25,8 +25,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.android.car.dialer.R;
-import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.recyclerview.ContentLimitingAdapter;
 
 import java.util.ArrayList;
@@ -102,7 +102,7 @@ public class ContactListAdapter extends ContentLimitingAdapter<ContactListViewHo
 
     private String getHeader(Contact contact) {
         String label;
-        if (ContactSortingInfo.SORT_BY_LAST_NAME.equals(mSortMethod)) {
+        if (TelecomUtils.SORT_BY_LAST_NAME.equals(mSortMethod)) {
             label = contact.getPhonebookLabelAlt();
         } else {
             label = contact.getPhonebookLabel();

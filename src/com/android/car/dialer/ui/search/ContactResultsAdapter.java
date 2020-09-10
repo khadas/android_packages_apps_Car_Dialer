@@ -35,6 +35,8 @@ import java.util.List;
  */
 public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultViewHolder> {
 
+    private Integer mSortMethod;
+
     interface OnShowContactDetailListener {
         void onShowContactDetail(Contact contact);
     }
@@ -65,6 +67,13 @@ public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultV
         notifyDataSetChanged();
     }
 
+    /**
+     * Sets the sorting method for the list.
+     */
+    public void setSortMethod(Integer sortMethod) {
+        mSortMethod = sortMethod;
+    }
+
     @Override
     public ContactResultViewHolder onCreateViewHolderImpl(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -74,7 +83,7 @@ public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultV
 
     @Override
     public void onBindViewHolderImpl(ContactResultViewHolder holder, int position) {
-        holder.bindSearchResult(mContactResults.get(position));
+        holder.bindSearchResult(mContactResults.get(position), mSortMethod);
     }
 
     @Override
@@ -103,5 +112,12 @@ public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultV
     @Override
     public int getConfigurationId() {
         return R.id.search_result_uxr_config;
+    }
+
+    /**
+     * Returns the sort method.
+     */
+    public Integer getSortMethod() {
+        return mSortMethod;
     }
 }

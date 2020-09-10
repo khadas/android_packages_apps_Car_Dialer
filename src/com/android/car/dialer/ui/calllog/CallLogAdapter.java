@@ -39,6 +39,8 @@ public class CallLogAdapter extends ContentLimitingAdapter {
 
     private static final String TAG = "CD.CallLogAdapter";
 
+    private Integer mSortMethod;
+
     /** IntDef for the different groups of calllog lists separated by time periods. */
     @IntDef({
             EntryType.TYPE_HEADER,
@@ -76,6 +78,13 @@ public class CallLogAdapter extends ContentLimitingAdapter {
         notifyDataSetChanged();
     }
 
+    /**
+     * Sets the sorting method for the list.
+     */
+    public void setSortMethod(Integer sortMethod) {
+        mSortMethod = sortMethod;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolderImpl(
@@ -95,7 +104,7 @@ public class CallLogAdapter extends ContentLimitingAdapter {
     public void onBindViewHolderImpl(
             @NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof CallLogViewHolder) {
-            ((CallLogViewHolder) holder).bind((UiCallLog) mUiCallLogs.get(position));
+            ((CallLogViewHolder) holder).bind((UiCallLog) mUiCallLogs.get(position), mSortMethod);
         } else {
             ((HeaderViewHolder) holder).setHeaderTitle((String) mUiCallLogs.get(position));
         }
