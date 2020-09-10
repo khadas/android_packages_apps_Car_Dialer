@@ -24,7 +24,6 @@ import static org.robolectric.Shadows.shadowOf;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
@@ -32,9 +31,9 @@ import com.android.car.dialer.R;
 import com.android.car.dialer.TestDialerApplication;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.BluetoothErrorStringLiveData;
-import com.android.car.dialer.livedata.BluetoothHfpStateLiveData;
 import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
+import com.android.car.dialer.livedata.HfpDeviceListLiveData;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowBluetoothAdapterForDialer;
 
@@ -44,9 +43,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadow.api.Shadow;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collections;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
 @Config(shadows = ShadowBluetoothAdapterForDialer.class)
@@ -54,7 +53,7 @@ public class TelecomActivityViewModelTest {
 
     private TelecomActivityViewModel mTelecomActivityViewModel;
     private Context mContext;
-    private BluetoothHfpStateLiveData mHfpStateLiveData;
+    private HfpDeviceListLiveData mHfpDeviceListLiveData;
     private BluetoothPairListLiveData mPairedListLiveData;
     private BluetoothStateLiveData mBluetoothStateLiveData;
 
@@ -72,7 +71,7 @@ public class TelecomActivityViewModelTest {
 
     @Test
     public void testDialerAppState_defaultBluetoothAdapterIsNull_bluetoothError() {
-        initializeBluetoothMonitor(false);
+        ShadowBluetoothAdapterForDialer.setBluetoothAvailable(false);
         initializeViewModel();
 
         assertThat(mTelecomActivityViewModel.getErrorMessage().getValue()).isEqualTo(
@@ -81,7 +80,7 @@ public class TelecomActivityViewModelTest {
 
     @Test
     public void testDialerAppState_bluetoothNotEnabled_bluetoothError() {
-        initializeBluetoothMonitor(true);
+        ShadowBluetoothAdapterForDialer.setBluetoothAvailable(true);
         ShadowBluetoothAdapterForDialer shadowBluetoothAdapter =
                 (ShadowBluetoothAdapterForDialer) shadowOf(BluetoothAdapter.getDefaultAdapter());
         shadowBluetoothAdapter.setEnabled(false);
@@ -95,11 +94,11 @@ public class TelecomActivityViewModelTest {
 
     @Test
     public void testDialerAppState_noPairedDevices_bluetoothError() {
-        initializeBluetoothMonitor(true);
-        ShadowBluetoothAdapterForDialer shadowBluetoothAdapter =
-                (ShadowBluetoothAdapterForDialer) shadowOf(BluetoothAdapter.getDefaultAdapter());
+        ShadowBluetoothAdapterForDialer.setBluetoothAvailable(true);
+        ShadowBluetoothAdapterForDialer shadowBluetoothAdapter = Shadow.extract(
+                BluetoothAdapter.getDefaultAdapter());
         shadowBluetoothAdapter.setEnabled(true);
-        shadowBluetoothAdapter.setBondedDevices(new HashSet<BluetoothDevice>());
+        shadowBluetoothAdapter.setBondedDevices(Collections.emptySet());
         initializeViewModel();
 
         assertThat(mBluetoothStateLiveData.getValue()).isEqualTo(
@@ -112,51 +111,48 @@ public class TelecomActivityViewModelTest {
 
     @Test
     public void testDialerAppState_hfpNoConnected_bluetoothError() {
-        initializeBluetoothMonitor(true);
-        ShadowBluetoothAdapterForDialer shadowBluetoothAdapter =
-                (ShadowBluetoothAdapterForDialer) shadowOf(BluetoothAdapter.getDefaultAdapter());
+        ShadowBluetoothAdapterForDialer.setBluetoothAvailable(true);
+        BluetoothDevice mockBluetoothDevice = mock(BluetoothDevice.class);
+        ShadowBluetoothAdapterForDialer shadowBluetoothAdapter = Shadow.extract(
+                BluetoothAdapter.getDefaultAdapter());
         shadowBluetoothAdapter.setEnabled(true);
-        shadowBluetoothAdapter.setBondedDevices(
-                new HashSet<>(Arrays.asList(mock(BluetoothDevice.class))));
-        shadowBluetoothAdapter.setProfileConnectionState(BluetoothProfile.HEADSET_CLIENT,
-                BluetoothProfile.STATE_DISCONNECTED);
+        shadowBluetoothAdapter.setBondedDevices(Collections.singleton(mockBluetoothDevice));
+        shadowBluetoothAdapter.setHfpDevices(Collections.emptyList());
         initializeViewModel();
 
         assertThat(mBluetoothStateLiveData.getValue()).isEqualTo(
                 BluetoothStateLiveData.BluetoothState.ENABLED);
         assertThat(mPairedListLiveData.getValue().isEmpty()).isFalse();
 
-        assertThat(mHfpStateLiveData.getValue() == BluetoothProfile.STATE_DISCONNECTED).isTrue();
+        assertThat(mHfpDeviceListLiveData.getValue().isEmpty()).isTrue();
         assertThat(mTelecomActivityViewModel.getErrorMessage().getValue()).isEqualTo(
                 mContext.getString(R.string.no_hfp));
     }
 
     @Test
     public void testDialerAppState_bluetoothAllSet_dialerAppStateDefault() {
-        initializeBluetoothMonitor(true);
-        ShadowBluetoothAdapterForDialer shadowBluetoothAdapter =
-                (ShadowBluetoothAdapterForDialer) shadowOf(BluetoothAdapter.getDefaultAdapter());
+        ShadowBluetoothAdapterForDialer.setBluetoothAvailable(true);
+        BluetoothDevice mockBluetoothDevice = mock(BluetoothDevice.class);
+        ShadowBluetoothAdapterForDialer shadowBluetoothAdapter = Shadow.extract(
+                BluetoothAdapter.getDefaultAdapter());
+        // Sets up Bluetooth pair list
+        shadowBluetoothAdapter.setBondedDevices(Collections.singleton(mockBluetoothDevice));
+        // Sets up Bluetooth state
         shadowBluetoothAdapter.setEnabled(true);
-        shadowBluetoothAdapter.setBondedDevices(
-                new HashSet<>(Arrays.asList(mock(BluetoothDevice.class))));
-        shadowBluetoothAdapter.setProfileConnectionState(BluetoothProfile.HEADSET_CLIENT,
-                BluetoothProfile.STATE_CONNECTED);
+        // Sets up Bluetooth Hfp connected devices
+        shadowBluetoothAdapter.setHfpDevices(Collections.singletonList(mockBluetoothDevice));
+
         initializeViewModel();
 
         assertThat(mTelecomActivityViewModel.getErrorMessage().getValue()).isEqualTo(
                 BluetoothErrorStringLiveData.NO_BT_ERROR);
     }
 
-    private void initializeBluetoothMonitor(boolean availability) {
-        ShadowBluetoothAdapterForDialer.setBluetoothAvailable(availability);
-
+    private void initializeViewModel() {
         UiBluetoothMonitor.init(mContext);
-        mHfpStateLiveData = UiBluetoothMonitor.get().getHfpStateLiveData();
+        mHfpDeviceListLiveData = UiBluetoothMonitor.get().getHfpDeviceListLiveData();
         mPairedListLiveData = UiBluetoothMonitor.get().getPairListLiveData();
         mBluetoothStateLiveData = UiBluetoothMonitor.get().getBluetoothStateLiveData();
-    }
-
-    private void initializeViewModel() {
         mTelecomActivityViewModel = new TelecomActivityViewModel((Application) mContext);
         // Observers needed so that the liveData's internal initialization is triggered
         mTelecomActivityViewModel.getErrorMessage().observeForever(s -> {

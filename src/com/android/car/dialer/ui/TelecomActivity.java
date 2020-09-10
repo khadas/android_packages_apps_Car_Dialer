@@ -101,8 +101,10 @@ public class TelecomActivity extends FragmentActivity implements
 
         InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
         mOngoingCallListLiveData = inCallViewModel.getOngoingCallList();
-        // The mOngoingCallListLiveData needs to be active to get calculated.
-        mOngoingCallListLiveData.observe(this, this::maybeStartInCallActivity);
+
+        // An observer must exist for the live data to be active.
+        // Otherwise getValue() may not return expected value.
+        mOngoingCallListLiveData.observe(this, list -> { /*no op*/ });
 
         handleIntent();
     }
