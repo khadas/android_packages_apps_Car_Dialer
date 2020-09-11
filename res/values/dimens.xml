@@ -96,6 +96,7 @@
     <dimen name="favorite_card_space_horizontal">@dimen/car_ui_padding_3</dimen>
     <dimen name="favorite_card_space_vertical">@dimen/car_ui_padding_2</dimen>
     <dimen name="favorites_avatar_margin_bottom">@dimen/car_ui_padding_3</dimen>
+    <dimen name="favorite_item_padding">@dimen/car_ui_padding_2</dimen>
 
     <dimen name="call_fab_elevation">8dp</dimen>
     <dimen name="bksp_button_width">@dimen/touch_target_size</dimen>
