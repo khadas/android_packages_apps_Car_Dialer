@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.contact;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -33,6 +34,7 @@ import com.android.car.apps.common.BackgroundImageView;
 import com.android.car.apps.common.LetterTileDrawable;
 import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
+import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
@@ -49,6 +51,8 @@ import com.bumptech.glide.request.transition.Transition;
  * ViewHolder for {@link ContactDetailsFragment}.
  */
 class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "CD.ContactDetailsVH";
+
     // Applies to all
     @NonNull
     private final TextView mTitle;
@@ -204,6 +208,10 @@ class ContactDetailsViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void openMapWithMapIntent(Context context, Intent mapIntent) {
-        context.startActivity(mapIntent);
+        try {
+            context.startActivity(mapIntent);
+        } catch (ActivityNotFoundException e) {
+            L.w(TAG, "Map is not available.");
+        }
     }
 }
