@@ -17,23 +17,18 @@
 package com.android.car.dialer.ui.calllog;
 
 import android.app.Application;
-import android.content.Context;
 import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.android.car.arch.common.FutureData;
 import com.android.car.arch.common.LiveDataFunctions;
-import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
-import com.android.car.dialer.livedata.CallHistoryLiveData;
+import com.android.car.dialer.bluetooth.CallHistoryManager;
 import com.android.car.dialer.livedata.HeartBeatLiveData;
 import com.android.car.dialer.ui.common.DialerListViewModel;
 import com.android.car.dialer.ui.common.UiCallLogLiveData;
 import com.android.car.telephony.common.InMemoryPhoneBook;
-import com.android.car.telephony.common.PhoneCallLog;
 
 import java.util.List;
 
@@ -46,7 +41,7 @@ public class CallHistoryViewModel extends DialerListViewModel {
         super(application);
         mUiCallLogLiveData = new UiCallLogLiveData(application.getApplicationContext(),
                 new HeartBeatLiveData(DateUtils.MINUTE_IN_MILLIS),
-                getFirstHfpDeviceCallLog(application.getApplicationContext()),
+                CallHistoryManager.get().getCallHistoryLiveData(),
                 InMemoryPhoneBook.get().getContactsLiveData());
 
         mUiCallLogFutureData = LiveDataFunctions.loadingSwitchMap(mUiCallLogLiveData,
@@ -56,12 +51,5 @@ public class CallHistoryViewModel extends DialerListViewModel {
     /** Returns the {@link LiveData} for call history list {@link FutureData}. */
     public LiveData<FutureData<List<Object>>> getCallHistory() {
         return mUiCallLogFutureData;
-    }
-
-    private LiveData<List<PhoneCallLog>> getFirstHfpDeviceCallLog(Context context) {
-        return Transformations.switchMap(
-                UiBluetoothMonitor.get().getFirstHfpConnectedDevice(), (device) -> device != null
-                        ? CallHistoryLiveData.newInstance(context, device.getAddress())
-                        : new MutableLiveData<>());
     }
 }
