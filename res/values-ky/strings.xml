@@ -47,8 +47,8 @@
     <string name="favorites_empty" msgid="5794510741132758130">"Сүйүктүүлөр тизмеси бош"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Азырынча бир да сүйүктүү байланышыңыз жок"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Сүйүктүү номер кошуу"</string>
-    <string name="search_title" msgid="5412680850141871664">"Байланыштарды издеңиз"</string>
-    <string name="search_hint" msgid="3099066132607042439">"Байланыштарды издеңиз"</string>
+    <string name="search_title" msgid="5412680850141871664">"Байланыштарды издөө"</string>
+    <string name="search_hint" msgid="3099066132607042439">"Байланыштарды издөө"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Бир нече"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Телефон номерин тандоо"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Бир жолу гана"</string>
