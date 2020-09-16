@@ -31,6 +31,7 @@
     <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
     <uses-permission android:name="android.car.permission.ACCESS_CAR_PROJECTION_STATUS"/>
 
     <!-- The Dialer needs to be directBootAware so that it can reflect the correct call state
