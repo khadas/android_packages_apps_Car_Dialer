@@ -19,25 +19,25 @@ package com.android.car.dialer.livedata;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadsetClient;
-import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.MediatorLiveData;
+
+import com.android.car.dialer.bluetooth.BluetoothHeadsetClientProvider;
 
 import java.util.Collections;
 import java.util.List;
 
 /** {@link LiveData} that monitors the hfp connected devices. */
-public class HfpDeviceListLiveData extends MutableLiveData<List<BluetoothDevice>> {
+public class HfpDeviceListLiveData extends MediatorLiveData<List<BluetoothDevice>> {
     private final Context mContext;
     private final BluetoothAdapter mBluetoothAdapter;
+    private final BluetoothHeadsetClientProvider mBluetoothHeadsetClientProvider;
     private final IntentFilter mIntentFilter;
-
-    private BluetoothHeadsetClient mBluetoothHeadsetClient;
 
     private BroadcastReceiver mBluetoothStateReceiver = new BroadcastReceiver() {
         @Override
@@ -51,21 +51,9 @@ public class HfpDeviceListLiveData extends MutableLiveData<List<BluetoothDevice>
         mContext = context;
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter != null) {
-            mBluetoothAdapter.getProfileProxy(mContext, new BluetoothProfile.ServiceListener() {
-                @Override
-                public void onServiceConnected(int profile, BluetoothProfile proxy) {
-                    if (profile == BluetoothProfile.HEADSET_CLIENT) {
-                        mBluetoothHeadsetClient = (BluetoothHeadsetClient) proxy;
-                        update();
-                    }
-                }
-
-                @Override
-                public void onServiceDisconnected(int profile) {
-                }
-            }, BluetoothProfile.HEADSET_CLIENT);
-        }
+        mBluetoothHeadsetClientProvider = BluetoothHeadsetClientProvider.singleton(context);
+        addSource(mBluetoothHeadsetClientProvider.isBluetoothHeadsetClientConnected(),
+                isConnected -> update());
 
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(BluetoothHeadsetClient.ACTION_CONNECTION_STATE_CHANGED);
@@ -73,6 +61,7 @@ public class HfpDeviceListLiveData extends MutableLiveData<List<BluetoothDevice>
 
     @Override
     protected void onActive() {
+        super.onActive();
         if (mBluetoothAdapter != null) {
             update();
             mContext.registerReceiver(mBluetoothStateReceiver, mIntentFilter);
@@ -84,11 +73,12 @@ public class HfpDeviceListLiveData extends MutableLiveData<List<BluetoothDevice>
         if (mBluetoothAdapter != null) {
             mContext.unregisterReceiver(mBluetoothStateReceiver);
         }
+        super.onInactive();
     }
 
     private void update() {
-        if (mBluetoothHeadsetClient != null) {
-            setValue(mBluetoothHeadsetClient.getConnectedDevices());
+        if (mBluetoothHeadsetClientProvider.get() != null) {
+            setValue(mBluetoothHeadsetClientProvider.get().getConnectedDevices());
         } else {
             setValue(Collections.emptyList());
         }
