@@ -111,6 +111,11 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+    <!-- Dialpad type down list query special style -->
+    <style name="TextAppearance.TypeDownListSpan" parent="TextAppearance.Body3">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Add to favorite flow dialog -->
     <style name="TextAppearance.AddFavoriteNumberTitle" parent="TextAppearance.Body1">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
