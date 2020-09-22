@@ -112,7 +112,10 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (dy != 0) {
                     // Clear the focus to dismiss the keyboard.
-                    getActivity().getCurrentFocus().clearFocus();
+                    View focusedView = getActivity().getCurrentFocus();
+                    if (focusedView != null) {
+                        focusedView.clearFocus();
+                    }
                 }
             }
         };
