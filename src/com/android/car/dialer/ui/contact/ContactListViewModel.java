@@ -21,10 +21,9 @@ import android.content.Context;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.android.car.arch.common.FutureData;
 import com.android.car.arch.common.LiveDataFunctions;
@@ -35,6 +34,7 @@ import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -55,10 +55,10 @@ public class ContactListViewModel extends DialerListViewModel {
         mContext = application.getApplicationContext();
 
         SharedPreferencesLiveData preferencesLiveData = getSharedPreferencesLiveData();
-        LiveData<List<Contact>> contactListLiveData = Transformations.switchMap(
-                UiBluetoothMonitor.get().getFirstHfpConnectedDevice(), (device) -> device != null
-                        ? InMemoryPhoneBook.get().getContactsLiveDataByAccount(device.getAddress())
-                        : new MutableLiveData<>());
+        LiveData<List<Contact>> contactListLiveData = LiveDataFunctions.switchMapNonNull(
+                UiBluetoothMonitor.get().getFirstHfpConnectedDevice(),
+                device -> InMemoryPhoneBook.get().getContactsLiveDataByAccount(
+                        device.getAddress()));
         mSortedContactListLiveData = new SortedContactListLiveData(
                 mContext, contactListLiveData, preferencesLiveData);
         mContactList = LiveDataFunctions.loadingSwitchMap(mSortedContactListLiveData,
@@ -90,37 +90,41 @@ public class ContactListViewModel extends DialerListViewModel {
             mPreferencesLiveData = sharedPreferencesLiveData;
             mExecutorService = Executors.newSingleThreadExecutor();
 
-            addSource(mPreferencesLiveData, (trigger) -> updateSortedContactList());
-            addSource(mContactListLiveData, (trigger) -> updateSortedContactList());
+            addSource(mPreferencesLiveData, trigger -> onSortOrderChanged());
+            addSource(mContactListLiveData, this::sortContacts);
         }
 
-        private void updateSortedContactList() {
-            // Don't set null value to trigger an update when there is no value set.
-            if (mContactListLiveData.getValue() == null && getValue() == null) {
+        private void onSortOrderChanged() {
+            // When sort order changes, do not set value to trigger an update if there is no data
+            // set yet. An update will switch the loading state to loaded.
+            if (mContactListLiveData.getValue() == null) {
                 return;
             }
+            sortContacts(mContactListLiveData.getValue());
+        }
 
-            if (mContactListLiveData.getValue() == null
-                    || mContactListLiveData.getValue().isEmpty()) {
+        private void sortContacts(@Nullable List<Contact> contactList) {
+            if (mRunnableFuture != null) {
+                mRunnableFuture.cancel(true);
+                mRunnableFuture = null;
+            }
+
+            if (contactList == null || contactList.isEmpty()) {
                 setValue(null);
                 return;
             }
 
-            List<Contact> contactList = mContactListLiveData.getValue();
             Pair<Comparator<Contact>, Integer> contactSortingInfo = ContactSortingInfo
                     .getSortingInfo(mContext, mPreferencesLiveData);
             Comparator<Contact> comparator = contactSortingInfo.first;
             Integer sortMethod = contactSortingInfo.second;
 
-            // SingleThreadPoolExecutor is used here to avoid multiple threads sorting the list
-            // at the same time.
-            if (mRunnableFuture != null) {
-                mRunnableFuture.cancel(true);
-            }
-
             Runnable runnable = () -> {
-                Collections.sort(contactList, comparator);
-                postValue(new Pair<>(sortMethod, contactList));
+                // Make a copy of the contact list to avoid the same list being sorted at the same
+                // time since the ViewModel is not single instance but the contact LiveData is.
+                List<Contact> contactListCopy = new ArrayList<>(contactList);
+                Collections.sort(contactListCopy, comparator);
+                postValue(new Pair<>(sortMethod, contactListCopy));
             };
             mRunnableFuture = mExecutorService.submit(runnable);
         }
@@ -130,6 +134,7 @@ public class ContactListViewModel extends DialerListViewModel {
             super.onInactive();
             if (mRunnableFuture != null) {
                 mRunnableFuture.cancel(true);
+                mRunnableFuture = null;
             }
         }
     }
