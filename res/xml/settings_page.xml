@@ -22,7 +22,9 @@
 
     <Preference
         android:key="@string/pref_connected_phone_key"
-        android:title="@string/pref_connected_phone_title"/>
+        android:title="@string/pref_connected_phone_title">
+        <intent android:action="android.settings.BLUETOOTH_SETTINGS"/>
+    </Preference>
 
     <SwitchPreference
         android:defaultValue="@bool/config_show_fullscreen_incall_ui"
