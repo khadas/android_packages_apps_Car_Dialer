@@ -81,6 +81,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
                     mAdapter.setData(contactResults);
                     showContent();
                 });
+        mContactResultsViewModel.getSortOrderLiveData().observe(this,
+                v -> mAdapter.setSortMethod(v));
 
         // Set the initial search query, if one was provided from a Intent.ACTION_SEARCH
         if (getArguments() != null) {
@@ -110,7 +112,10 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (dy != 0) {
                     // Clear the focus to dismiss the keyboard.
-                    getActivity().getCurrentFocus().clearFocus();
+                    View focusedView = getActivity().getCurrentFocus();
+                    if (focusedView != null) {
+                        focusedView.clearFocus();
+                    }
                 }
             }
         };

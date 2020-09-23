@@ -28,6 +28,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.arch.common.FutureData;
+import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
 import com.android.car.dialer.FragmentTestActivity;
 import com.android.car.dialer.R;
@@ -40,6 +41,7 @@ import com.android.car.dialer.widget.CallTypeIconsView;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneCallLog;
+import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 
 import org.junit.After;
@@ -87,13 +89,15 @@ public class CallHistoryFragmentTest {
                 CallHistoryLiveData.CallType.INCOMING_TYPE);
         PhoneCallLog.Record record2 = new PhoneCallLog.Record(TIME_STAMP_2,
                 CallHistoryLiveData.CallType.OUTGOING_TYPE);
-        UiCallLog uiCallLog = new UiCallLog(UI_CALLOG_TITLE, UI_CALLOG_TEXT, PHONE_NUMBER,
-                mMockContact, Arrays.asList(record1, record2));
+        UiCallLog uiCallLog = new UiCallLog(UI_CALLOG_TITLE, UI_CALLOG_TITLE, UI_CALLOG_TEXT,
+                PHONE_NUMBER, mMockContact, Arrays.asList(record1, record2));
 
         MutableLiveData<FutureData<List<Object>>> callLog = new MutableLiveData<>();
         callLog.setValue(new FutureData<>(false, Arrays.asList(HEADER, uiCallLog)));
         ShadowAndroidViewModelFactory.add(CallHistoryViewModel.class, mMockCallHistoryViewModel);
         when(mMockCallHistoryViewModel.getCallHistory()).thenReturn(callLog);
+        when(mMockCallHistoryViewModel.getSortOrderLiveData()).thenReturn(
+                LiveDataFunctions.dataOf(TelecomUtils.SORT_BY_FIRST_NAME));
 
         mCallHistoryFragment = CallHistoryFragment.newInstance();
         FragmentTestActivity mFragmentTestActivity = Robolectric.buildActivity(
@@ -110,6 +114,7 @@ public class CallHistoryFragmentTest {
 
     @After
     public void tearDown() {
+        UiCallManager.set(null);
         InMemoryPhoneBook.tearDown();
     }
 

@@ -18,6 +18,7 @@ package com.android.car.dialer;
 
 import android.app.Application;
 
+import com.android.car.dialer.bluetooth.CallHistoryManager;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.notification.InCallNotificationController;
 import com.android.car.dialer.notification.MissedCallNotificationController;
@@ -32,6 +33,7 @@ public class DialerApplication extends Application {
         InMemoryPhoneBook.init(this);
         UiCallManager.init(this);
         UiBluetoothMonitor.init(this);
+        CallHistoryManager.init(this);
         InCallNotificationController.init(this);
         MissedCallNotificationController.init(this);
     }

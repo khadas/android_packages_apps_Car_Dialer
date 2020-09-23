@@ -68,16 +68,18 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
     /**
      * Binds the view holder with relevant data.
      */
-    public void bind(UiCallLog uiCallLog) {
+    public void bind(UiCallLog uiCallLog, Integer sortMethod) {
         Contact contact = uiCallLog.getContact();
 
         TelecomUtils.setContactBitmapAsync(
                 mAvatarView.getContext(),
                 mAvatarView,
                 contact,
-                uiCallLog.getNumber());
+                uiCallLog.getNumber(),
+                sortMethod);
 
-        mTitleView.setText(uiCallLog.getTitle());
+        mTitleView.setText(TelecomUtils.isSortByFirstName(sortMethod) ? uiCallLog.getTitle()
+                : uiCallLog.getAltTitle());
         for (PhoneCallLog.Record record : uiCallLog.getCallRecords()) {
             mCallTypeIconsView.add(record.getCallType());
         }

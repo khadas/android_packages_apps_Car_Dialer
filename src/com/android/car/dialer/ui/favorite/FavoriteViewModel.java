@@ -18,7 +18,6 @@ package com.android.car.dialer.ui.favorite;
 
 import android.app.Application;
 
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
@@ -26,6 +25,7 @@ import com.android.car.arch.common.FutureData;
 import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.R;
 import com.android.car.dialer.storage.FavoriteNumberRepository;
+import com.android.car.dialer.ui.common.DialerListViewModel;
 import com.android.car.dialer.ui.common.entity.ActionButton;
 import com.android.car.dialer.ui.common.entity.Header;
 import com.android.car.telephony.common.Contact;
@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * View model for {@link FavoriteFragment}.
  */
-public class FavoriteViewModel extends AndroidViewModel {
+public class FavoriteViewModel extends DialerListViewModel {
     private final FavoriteNumberRepository mFavoriteNumberRepository;
     private final LiveData<FutureData<List<Object>>> mFavoriteContacts;
     private final LiveData<List<Contact>> mBluetoothFavoriteContacts;

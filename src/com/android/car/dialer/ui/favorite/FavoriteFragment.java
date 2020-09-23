@@ -72,9 +72,16 @@ public class FavoriteFragment extends DialerListBaseFragment {
                         v -> onAddFavoriteClicked(), true);
             } else {
                 favoriteAdapter.setFavoriteContacts(contacts.getData());
+                int contactCount = contacts.getData().size();
+                mContentLimitingAdapter.updateUnderlyingDataChanged(contactCount,
+                        DialerUtils.validateListLimitingAnchor(
+                                contactCount,
+                                favoriteAdapter.getLastLimitingAnchorIndex()));
                 showContent();
             }
         });
+        favoriteViewModel.getSortOrderLiveData().observe(this,
+                v -> favoriteAdapter.setSortMethod(v));
 
         mContentLimitingAdapter =
                 new DelegatingContentLimitingAdapter<>(

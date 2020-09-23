@@ -67,6 +67,8 @@ public class CallHistoryFragment extends DialerListBaseFragment implements
                 showContent();
             }
         });
+        viewModel.getSortOrderLiveData().observe(this,
+                v -> mCallLogAdapter.setSortMethod(v));
     }
 
     @Override

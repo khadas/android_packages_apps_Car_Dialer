@@ -95,6 +95,7 @@ public class ContactDetailsFragmentTest {
 
     @After
     public void tearDown() {
+        UiCallManager.set(null);
         InMemoryPhoneBook.tearDown();
     }
 

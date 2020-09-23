@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,7 +37,6 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 
 import com.android.car.dialer.CarDialerRobolectricTestRunner;
-import com.android.car.dialer.R;
 import com.android.car.dialer.TestDialerApplication;
 import com.android.car.dialer.testutils.ShadowServiceManagerOverride;
 import com.android.internal.telephony.ITelephony;
@@ -54,7 +52,6 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.ShadowContextImpl;
-import org.robolectric.shadows.ShadowToast;
 
 import java.util.List;
 
@@ -143,29 +140,6 @@ public class UiCallManagerTest {
         assertThat(uriCaptor.getValue().getScheme()).isEqualTo(TEL_SCHEME);
         assertThat(uriCaptor.getValue().getSchemeSpecificPart()).isEqualTo(phoneNumber);
         assertThat(uriCaptor.getValue().getFragment()).isNull();
-    }
-
-    @Test
-    public void testPlaceCall_invalidNumber() {
-        initUiCallManager();
-        String[] phoneNumbers = {
-                "xxxxx",
-                "51f"
-        };
-
-        for (String phoneNumber : phoneNumbers) {
-            checkPlaceCallForInvalidNumber(phoneNumber);
-        }
-    }
-
-    private void checkPlaceCallForInvalidNumber(String phoneNumber) {
-        ArgumentCaptor<Uri> uriCaptor = ArgumentCaptor.forClass(Uri.class);
-
-        assertThat(mUiCallManager.placeCall(phoneNumber)).isFalse();
-        verify(mMockTelecomManager, never()).placeCall(uriCaptor.capture(), isNull());
-
-        assertThat(ShadowToast.getTextOfLatestToast()).isEqualTo(
-                mContext.getString(R.string.error_invalid_phone_number));
     }
 
     @Test

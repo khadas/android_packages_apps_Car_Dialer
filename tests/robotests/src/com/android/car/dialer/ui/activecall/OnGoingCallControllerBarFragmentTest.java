@@ -42,6 +42,7 @@ import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.testutils.ShadowAndroidViewModelFactory;
 import com.android.car.telephony.common.CallDetail;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,6 +68,7 @@ public class OnGoingCallControllerBarFragmentTest {
     private MutableLiveData<Boolean> mDialpadStateLiveData;
     private MutableLiveData<List<Call>> mCallListLiveData;
     private MutableLiveData<CallAudioState> mCallAudioStateLiveData;
+    private MutableLiveData<Pair<Call, Call>> mOngoingCallPairLiveData;
     private List<Call> mCallList;
     @Mock
     private Call mMockCall;
@@ -91,6 +93,7 @@ public class OnGoingCallControllerBarFragmentTest {
         mDialpadStateLiveData = new MutableLiveData<>();
         mCallListLiveData = new MutableLiveData<>();
         mCallAudioStateLiveData = new MutableLiveData<>();
+        mOngoingCallPairLiveData = new MutableLiveData<>();
         mCallList = new ArrayList<>();
         mCallList.add(mMockCall);
         mCallListLiveData.setValue(mCallList);
@@ -101,6 +104,11 @@ public class OnGoingCallControllerBarFragmentTest {
         ShadowContextImpl shadowContext = Shadow.extract(
                 RuntimeEnvironment.application.getBaseContext());
         shadowContext.setSystemService(Context.TELECOM_SERVICE, mMockTelecomManager);
+    }
+
+    @After
+    public void tearDown() {
+        UiCallManager.set(null);
     }
 
     @Test
@@ -241,6 +249,8 @@ public class OnGoingCallControllerBarFragmentTest {
         when(mMockInCallViewModel.getDialpadOpenState()).thenReturn(mDialpadStateLiveData);
         when(mMockInCallViewModel.getAllCallList()).thenReturn(mCallListLiveData);
         when(mMockInCallViewModel.getCallAudioState()).thenReturn(mCallAudioStateLiveData);
+        when(mMockInCallViewModel.getOngoingCallPair()).thenReturn(mOngoingCallPairLiveData);
+        when(mMockInCallViewModel.getOngoingCallList()).thenReturn(mCallListLiveData);
 
         MutableLiveData<Integer> audioRouteLiveData = new MutableLiveData<>();
         audioRouteLiveData.setValue(CallAudioState.ROUTE_BLUETOOTH);

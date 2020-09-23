@@ -22,6 +22,10 @@ import static org.robolectric.Shadows.shadowOf;
 
 import android.app.Application;
 import android.app.NotificationManager;
+import android.car.Car;
+import android.car.CarProjectionManager;
+import android.car.drivingstate.CarUxRestrictions;
+import android.car.drivingstate.CarUxRestrictionsManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.telecom.CallAudioState;
@@ -30,11 +34,17 @@ import com.android.car.dialer.notification.InCallNotificationController;
 import com.android.car.dialer.notification.MissedCallNotificationController;
 import com.android.car.dialer.telecom.InCallServiceImpl;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.testutils.ShadowCar;
 
 /** Robolectric runtime application for Dialer. Must be Test + application class name. */
 public class TestDialerApplication extends Application {
 
     private InCallServiceImpl.LocalBinder mLocalBinder;
+
+    private Car mMockCar;
+    private CarUxRestrictionsManager mMockCarUxRestrictionsManager;
+    private CarUxRestrictions mMockCarUxRestrictions;
+    private CarProjectionManager mMockCarProjectionManager;
 
     @Override
     public void onCreate() {
@@ -47,6 +57,17 @@ public class TestDialerApplication extends Application {
         mLocalBinder = mock(InCallServiceImpl.LocalBinder.class);
         shadowOf(this).setComponentNameAndServiceForBindService(
                 new ComponentName(this, InCallServiceImpl.class), mLocalBinder);
+
+        mMockCar = mock(Car.class);
+        mMockCarUxRestrictionsManager = mock(CarUxRestrictionsManager.class);
+        mMockCarUxRestrictions = mock(CarUxRestrictions.class);
+        when(mMockCarUxRestrictionsManager.getCurrentCarUxRestrictions()).thenReturn(
+                mMockCarUxRestrictions);
+        when(mMockCar.getCarManager(Car.CAR_UX_RESTRICTION_SERVICE)).thenReturn(
+                mMockCarUxRestrictionsManager);
+        mMockCarProjectionManager = mock(CarProjectionManager.class);
+        when(mMockCar.getCarManager(Car.PROJECTION_SERVICE)).thenReturn(mMockCarProjectionManager);
+        ShadowCar.setCar(mMockCar);
     }
 
     public void initUiCallManager() {
@@ -70,6 +91,7 @@ public class TestDialerApplication extends Application {
         super.onTerminate();
         InCallNotificationController.tearDown();
         MissedCallNotificationController.get().tearDown();
+        ShadowCar.setCar(null);
     }
 
 }
