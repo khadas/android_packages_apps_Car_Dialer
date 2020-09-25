@@ -96,7 +96,7 @@ public final class MissedCallNotificationController {
     private final UnreadMissedCallLiveData mUnreadMissedCallLiveData;
     private final Observer<List<PhoneCallLog>> mUnreadMissedCallObserver;
     private final List<PhoneCallLog> mCurrentPhoneCallLogList;
-    private final Map<String, CompletableFuture<Void>> mUpdateFutures;
+    private final Map<String, CompletableFuture<Void>> mUpdateFutures = new HashMap<>();
 
     @TargetApi(26)
     private MissedCallNotificationController(Context context) {
@@ -112,8 +112,6 @@ public final class MissedCallNotificationController {
         mUnreadMissedCallLiveData = UnreadMissedCallLiveData.newInstance(context);
         mUnreadMissedCallObserver = this::updateNotifications;
         mUnreadMissedCallLiveData.observeForever(mUnreadMissedCallObserver);
-
-        mUpdateFutures = new HashMap<>();
     }
 
     /**
@@ -125,9 +123,7 @@ public final class MissedCallNotificationController {
                 phoneCallLogs == null ? Collections.emptyList() : phoneCallLogs;
         for (PhoneCallLog phoneCallLog : updatedPhoneCallLogs) {
             showMissedCallNotification(phoneCallLog);
-            if (mCurrentPhoneCallLogList.contains(phoneCallLog)) {
-                mCurrentPhoneCallLogList.remove(phoneCallLog);
-            }
+            mCurrentPhoneCallLogList.remove(phoneCallLog);
         }
 
         for (PhoneCallLog phoneCallLog : mCurrentPhoneCallLogList) {
@@ -141,11 +137,8 @@ public final class MissedCallNotificationController {
         L.d(TAG, "show missed call notification %s", callLog);
         String phoneNumber = callLog.getPhoneNumberString();
         String tag = getTag(callLog);
-        CompletableFuture<Void> updateFuture = mUpdateFutures.get(tag);
-        if (updateFuture != null) {
-            updateFuture.cancel(true);
-        }
-        updateFuture = NotificationUtils.getDisplayNameAndRoundedAvatar(
+        cancelLoadingRunnable(tag);
+        CompletableFuture<Void> updateFuture = NotificationUtils.getDisplayNameAndRoundedAvatar(
                 mContext, phoneNumber)
                 .thenAcceptAsync((pair) -> {
                     int callLogSize = callLog.getAllCallRecords().size();
@@ -179,7 +172,15 @@ public final class MissedCallNotificationController {
     private void cancelMissedCallNotification(PhoneCallLog phoneCallLog) {
         L.d(TAG, "cancel missed call notification %s", phoneCallLog);
         String tag = getTag(phoneCallLog);
+        cancelLoadingRunnable(tag);
         mNotificationManager.cancel(tag, NOTIFICATION_ID);
+    }
+
+    private void cancelLoadingRunnable(String tag) {
+        CompletableFuture<Void> completableFuture = mUpdateFutures.get(tag);
+        if (completableFuture != null) {
+            completableFuture.cancel(true);
+        }
         mUpdateFutures.remove(tag);
     }
 
@@ -208,18 +209,19 @@ public final class MissedCallNotificationController {
     private Notification.Action getAction(String phoneNumberString, @StringRes int actionText,
             String intentAction) {
         CharSequence text = mContext.getString(actionText);
-        PendingIntent intent = PendingIntent.getService(
-                mContext,
-                0,
-                getIntent(intentAction, phoneNumberString),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent intent = getIntent(intentAction, phoneNumberString);
         return new Notification.Action.Builder(null, text, intent).build();
     }
 
-    private Intent getIntent(String action, String phoneNumberString) {
+    private PendingIntent getIntent(String action, String phoneNumberString) {
         Intent intent = new Intent(action, null, mContext, NotificationService.class);
         intent.putExtra(NotificationService.EXTRA_CALL_ID, phoneNumberString);
-        return intent;
+        return PendingIntent.getService(
+                mContext,
+                // Unique id for PendingIntents with different extras
+                /* requestCode= */(int) System.currentTimeMillis(),
+                intent,
+                PendingIntent.FLAG_IMMUTABLE);
     }
 
     private String getTag(@NonNull PhoneCallLog phoneCallLog) {
