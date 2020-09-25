@@ -99,9 +99,9 @@ class ProjectionCallHandler implements InCallServiceImpl.ActiveCallListChangedCa
     @Override
     public boolean onTelecomCallAdded(Call telecomCall) {
         L.d(TAG, "onTelecomCallAdded(%s)", telecomCall);
-        if (mProjectionState != ProjectionStatus.PROJECTION_STATE_ACTIVE_BACKGROUND
-                && mProjectionState != ProjectionStatus.PROJECTION_STATE_ACTIVE_FOREGROUND) {
-            // Nothing's actively projecting, so no need to even check anything else.
+        if (mProjectionState != ProjectionStatus.PROJECTION_STATE_ACTIVE_FOREGROUND) {
+            // Nothing's actively projecting in the foreground, so no need to even check anything
+            // else.
             return false;
         }
 
