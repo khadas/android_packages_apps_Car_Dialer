@@ -32,10 +32,12 @@ import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 public class DialerSettingsViewModel extends AndroidViewModel {
     private static final String EMPTY_STRING = "";
     private final LiveData<BluetoothDevice> mFirstHfpDeviceLiveData;
+    private final LiveData<Boolean> mHasHfpDeviceConnectedLiveData;
 
     public DialerSettingsViewModel(@NonNull Application application) {
         super(application);
         mFirstHfpDeviceLiveData = UiBluetoothMonitor.get().getFirstHfpConnectedDevice();
+        mHasHfpDeviceConnectedLiveData = UiBluetoothMonitor.get().hasHfpDeviceConnected();
     }
 
     /**
@@ -46,4 +48,10 @@ public class DialerSettingsViewModel extends AndroidViewModel {
         return Transformations.map(mFirstHfpDeviceLiveData, (device) ->
                 device != null ? device.getName() : EMPTY_STRING);
     }
+
+    /** Returns a {@link LiveData} which monitors if there are any connected HFP devices. */
+    public LiveData<Boolean> hasHfpDeviceConnected() {
+        return mHasHfpDeviceConnectedLiveData;
+    }
+
 }

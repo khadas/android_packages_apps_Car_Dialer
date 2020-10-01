@@ -131,6 +131,12 @@ public class UiBluetoothMonitor {
                         : null);
     }
 
+    /** Returns a {@link LiveData} which monitors if there are any connected HFP devices. */
+    public LiveData<Boolean> hasHfpDeviceConnected() {
+        return Transformations.map(mHfpDeviceListLiveData,
+                devices -> devices != null && !devices.isEmpty());
+    }
+
     private void removeObserver(LiveData liveData, Observer observer) {
         if (liveData != null && liveData.hasObservers()) {
             liveData.removeObserver(observer);

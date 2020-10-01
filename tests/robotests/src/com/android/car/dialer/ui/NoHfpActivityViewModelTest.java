@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2020 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,9 +49,9 @@ import java.util.Collections;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
 @Config(shadows = ShadowBluetoothAdapterForDialer.class)
-public class TelecomActivityViewModelTest {
+public class NoHfpActivityViewModelTest {
 
-    private TelecomActivityViewModel mTelecomActivityViewModel;
+    private NoHfpActivityViewModel mNoHfpActivityViewModel;
     private Context mContext;
     private HfpDeviceListLiveData mHfpDeviceListLiveData;
     private BluetoothPairListLiveData mPairedListLiveData;
@@ -74,7 +74,7 @@ public class TelecomActivityViewModelTest {
         ShadowBluetoothAdapterForDialer.setBluetoothAvailable(false);
         initializeViewModel();
 
-        assertThat(mTelecomActivityViewModel.getErrorMessage().getValue()).isEqualTo(
+        assertThat(mNoHfpActivityViewModel.getBluetoothErrorStringLiveData().getValue()).isEqualTo(
                 mContext.getString(R.string.bluetooth_unavailable));
     }
 
@@ -88,7 +88,7 @@ public class TelecomActivityViewModelTest {
 
         assertThat(mBluetoothStateLiveData.getValue()).isEqualTo(
                 BluetoothStateLiveData.BluetoothState.DISABLED);
-        assertThat(mTelecomActivityViewModel.getErrorMessage().getValue()).isEqualTo(
+        assertThat(mNoHfpActivityViewModel.getBluetoothErrorStringLiveData().getValue()).isEqualTo(
                 mContext.getString(R.string.bluetooth_disabled));
     }
 
@@ -105,7 +105,7 @@ public class TelecomActivityViewModelTest {
                 BluetoothStateLiveData.BluetoothState.ENABLED);
 
         assertThat(mPairedListLiveData.getValue().isEmpty()).isTrue();
-        assertThat(mTelecomActivityViewModel.getErrorMessage().getValue()).isEqualTo(
+        assertThat(mNoHfpActivityViewModel.getBluetoothErrorStringLiveData().getValue()).isEqualTo(
                 mContext.getString(R.string.bluetooth_unpaired));
     }
 
@@ -125,12 +125,12 @@ public class TelecomActivityViewModelTest {
         assertThat(mPairedListLiveData.getValue().isEmpty()).isFalse();
 
         assertThat(mHfpDeviceListLiveData.getValue().isEmpty()).isTrue();
-        assertThat(mTelecomActivityViewModel.getErrorMessage().getValue()).isEqualTo(
+        assertThat(mNoHfpActivityViewModel.getBluetoothErrorStringLiveData().getValue()).isEqualTo(
                 mContext.getString(R.string.no_hfp));
     }
 
     @Test
-    public void testDialerAppState_bluetoothAllSet_dialerAppStateDefault() {
+    public void testDialerAppState_bluetoothAllSet_dialerAppNoError() {
         ShadowBluetoothAdapterForDialer.setBluetoothAvailable(true);
         BluetoothDevice mockBluetoothDevice = mock(BluetoothDevice.class);
         ShadowBluetoothAdapterForDialer shadowBluetoothAdapter = Shadow.extract(
@@ -144,7 +144,7 @@ public class TelecomActivityViewModelTest {
 
         initializeViewModel();
 
-        assertThat(mTelecomActivityViewModel.getErrorMessage().getValue()).isEqualTo(
+        assertThat(mNoHfpActivityViewModel.getBluetoothErrorStringLiveData().getValue()).isEqualTo(
                 BluetoothErrorStringLiveData.NO_BT_ERROR);
     }
 
@@ -153,9 +153,9 @@ public class TelecomActivityViewModelTest {
         mHfpDeviceListLiveData = UiBluetoothMonitor.get().getHfpDeviceListLiveData();
         mPairedListLiveData = UiBluetoothMonitor.get().getPairListLiveData();
         mBluetoothStateLiveData = UiBluetoothMonitor.get().getBluetoothStateLiveData();
-        mTelecomActivityViewModel = new TelecomActivityViewModel((Application) mContext);
+        mNoHfpActivityViewModel = new NoHfpActivityViewModel((Application) mContext);
         // Observers needed so that the liveData's internal initialization is triggered
-        mTelecomActivityViewModel.getErrorMessage().observeForever(s -> {
+        mNoHfpActivityViewModel.getBluetoothErrorStringLiveData().observeForever(o -> {
         });
     }
 }

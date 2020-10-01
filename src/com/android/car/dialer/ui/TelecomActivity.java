@@ -35,7 +35,6 @@ import androidx.preference.PreferenceManager;
 import com.android.car.apps.common.util.Themes;
 import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
-import com.android.car.dialer.livedata.BluetoothErrorStringLiveData;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.NotificationService;
 import com.android.car.dialer.telecom.UiCallManager;
@@ -45,6 +44,7 @@ import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 import com.android.car.dialer.ui.search.ContactResultsFragment;
 import com.android.car.dialer.ui.settings.DialerSettingsActivity;
+import com.android.car.dialer.ui.warning.OverlayFragment;
 import com.android.car.ui.baselayout.Insets;
 import com.android.car.ui.baselayout.InsetsChangedListener;
 import com.android.car.ui.core.CarUi;
@@ -63,7 +63,6 @@ import java.util.List;
 public class TelecomActivity extends FragmentActivity implements
         DialerBaseFragment.DialerFragmentParent, InsetsChangedListener {
     private static final String TAG = "CD.TelecomActivity";
-    private LiveData<String> mBluetoothErrorMsgLiveData;
     private LiveData<List<Call>> mOngoingCallListLiveData;
     private LiveData<Boolean> mRefreshUiLiveData;
     // View objects for this activity.
@@ -88,11 +87,10 @@ public class TelecomActivity extends FragmentActivity implements
         mRefreshUiLiveData = viewModel.getRefreshTabsLiveData();
         mRefreshUiLiveData.observe(this, v -> refreshUi());
 
-        mBluetoothErrorMsgLiveData = viewModel.getErrorMessage();
-        mBluetoothErrorMsgLiveData.observe(this, (String error) -> {
-            if (!BluetoothErrorStringLiveData.NO_BT_ERROR.equals(error)) {
-                startActivity(new Intent(this, NoHfpActivity.class));
-                finish();
+        LiveData<Boolean> hasHfpDeviceConnectedLiveData = viewModel.hasHfpDeviceConnected();
+        hasHfpDeviceConnectedLiveData.observe(this, hasHfpDeviceConnected -> {
+            if (!Boolean.TRUE.equals(hasHfpDeviceConnected)) {
+                new OverlayFragment().show(getSupportFragmentManager(), null);
             }
         });
 

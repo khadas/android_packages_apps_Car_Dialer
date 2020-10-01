@@ -20,21 +20,29 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.BluetoothErrorStringLiveData;
 
-/** View model for {@link NoHfpActivity} */
+/** View model for {@link NoHfpFragment} */
 public class NoHfpActivityViewModel extends AndroidViewModel {
 
-    private final BluetoothErrorStringLiveData mBluetoothErrorStringLiveData;
+    private final LiveData<Boolean> mHasHfpDeviceConnectedLiveData;
+    private final LiveData<String> mBluetoothErrorStringLiveData;
 
     public NoHfpActivityViewModel(@NonNull Application application) {
         super(application);
-
+        mHasHfpDeviceConnectedLiveData = UiBluetoothMonitor.get().hasHfpDeviceConnected();
         mBluetoothErrorStringLiveData = BluetoothErrorStringLiveData.get(application);
     }
 
-    public BluetoothErrorStringLiveData getBluetoothErrorStringLiveData() {
+    public LiveData<String> getBluetoothErrorStringLiveData() {
         return mBluetoothErrorStringLiveData;
+    }
+
+    /** Returns a {@link LiveData} which monitors if there are any connected HFP devices. */
+    public LiveData<Boolean> hasHfpDeviceConnected() {
+        return mHasHfpDeviceConnectedLiveData;
     }
 }
