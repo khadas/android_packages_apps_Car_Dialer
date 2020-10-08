@@ -147,6 +147,7 @@ public final class MissedCallNotificationController {
                     int callLogSize = callLog.getAllCallRecords().size();
                     Notification.Builder builder = new Notification.Builder(mContext, CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_phone)
+                            .setColor(mContext.getColor(R.color.notification_app_icon_color))
                             .setLargeIcon(pair.second)
                             .setContentTitle(mContext.getResources().getQuantityString(
                                     R.plurals.notification_missed_call, callLogSize, callLogSize))
