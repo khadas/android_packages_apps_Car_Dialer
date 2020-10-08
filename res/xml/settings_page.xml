@@ -41,14 +41,17 @@
         app:isPreferenceVisible="@bool/config_should_show_incoming_call_hun_setting"/>
 
     <ListPreference
+        android:defaultValue="@string/tab_config_default_value"
         android:key="@string/pref_start_page_key"
         android:title="@string/pref_start_page_title"
         android:entries="@array/tabs_title"
         android:entryValues="@array/tabs_config"/>
 
     <ListPreference
+        android:defaultValue="@string/sort_order_default_value"
         android:key="@string/sort_order_key"
         android:title="@string/sort_order_title"
         android:entries="@array/contact_order_entries"
         android:entryValues="@array/contact_order_entry_values"/>
+
 </PreferenceScreen>
