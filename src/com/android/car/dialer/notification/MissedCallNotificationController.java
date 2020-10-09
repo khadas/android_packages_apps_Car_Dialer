@@ -147,7 +147,7 @@ public final class MissedCallNotificationController {
                                     R.plurals.notification_missed_call, callLogSize, callLogSize))
                             .setContentText(TelecomUtils.getBidiWrappedNumber(pair.first))
                             .setContentIntent(getContentPendingIntent())
-                            .setDeleteIntent(getDeleteIntent())
+                            .setDeleteIntent(getDeleteIntent(callLog))
                             .setOnlyAlertOnce(true)
                             .setShowWhen(true)
                             .setWhen(callLog.getLastCallEndTimestamp())
@@ -193,14 +193,22 @@ public final class MissedCallNotificationController {
         return pendingIntent;
     }
 
-    private PendingIntent getDeleteIntent() {
-        Intent intent = new Intent(NotificationService.ACTION_READ_ALL_MISSED, null, mContext,
+    private PendingIntent getDeleteIntent(PhoneCallLog phoneCallLog) {
+        Intent intent = new Intent(NotificationService.ACTION_READ_MISSED, null, mContext,
                 NotificationService.class);
+        String phoneNumberString = phoneCallLog.getPhoneNumberString();
+        if (TextUtils.isEmpty(phoneNumberString)) {
+            // For unknown call, pass the call log id to mark as read
+            intent.putExtra(NotificationService.EXTRA_CALL_LOG_ID, phoneCallLog.getPhoneLogId());
+        } else {
+            intent.putExtra(NotificationService.EXTRA_PHONE_NUMBER, phoneNumberString);
+        }
         PendingIntent pendingIntent = PendingIntent.getService(
                 mContext,
-                0,
+                // Unique id for PendingIntents with different extras
+                /* requestCode= */(int) System.currentTimeMillis(),
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_IMMUTABLE);
         return pendingIntent;
     }
 
@@ -213,7 +221,7 @@ public final class MissedCallNotificationController {
 
     private PendingIntent getIntent(String action, String phoneNumberString) {
         Intent intent = new Intent(action, null, mContext, NotificationService.class);
-        intent.putExtra(NotificationService.EXTRA_CALL_ID, phoneNumberString);
+        intent.putExtra(NotificationService.EXTRA_PHONE_NUMBER, phoneNumberString);
         return PendingIntent.getService(
                 mContext,
                 // Unique id for PendingIntents with different extras

@@ -195,7 +195,8 @@ public final class InCallNotificationController {
     private Intent getIntent(String action, Call call) {
         Intent intent = new Intent(action, null, mContext, NotificationService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(NotificationService.EXTRA_CALL_ID, call.getDetails().getTelecomCallId());
+        intent.putExtra(NotificationService.EXTRA_PHONE_NUMBER,
+                call.getDetails().getTelecomCallId());
         return intent;
     }
 }
