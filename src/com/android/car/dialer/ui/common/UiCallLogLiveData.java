@@ -73,16 +73,11 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
 
         addSource(callHistoryLiveData, this::onCallHistoryChanged);
         addSource(contactListLiveData,
-                (contacts) -> onCallHistoryChanged(callHistoryLiveData.getValue()));
+                (contacts) -> onContactsChanged(callHistoryLiveData.getValue()));
         addSource(heartBeatLiveData, (trigger) -> updateRelativeTime());
     }
 
-    private void onCallHistoryChanged(List<PhoneCallLog> callLogs) {
-        // If there is no value set, don't set null value to trigger an update.
-        if (callLogs == null && getValue() == null) {
-            return;
-        }
-
+    private void onCallHistoryChanged(@Nullable List<PhoneCallLog> callLogs) {
         if (mRunnableFuture != null) {
             mRunnableFuture.cancel(true);
         }
@@ -90,6 +85,15 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
             postValue(convert(callLogs));
         };
         mRunnableFuture = mExecutorService.submit(runnable);
+    }
+
+    private void onContactsChanged(List<PhoneCallLog> callLogs) {
+        // When contacts change, do not set value to trigger an update when there are no
+        // call logs loaded yet. An update will switch the loading state to loaded in the ViewModel.
+        if (getValue() == null || getValue().isEmpty()) {
+            return;
+        }
+        onCallHistoryChanged(callLogs);
     }
 
     private void updateRelativeTime() {
@@ -132,7 +136,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
     }
 
     @NonNull
-    private List<Object> convert(List<PhoneCallLog> phoneCallLogs) {
+    private List<Object> convert(@Nullable List<PhoneCallLog> phoneCallLogs) {
         if (phoneCallLogs == null) {
             return Collections.emptyList();
         }
