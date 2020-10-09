@@ -26,9 +26,8 @@ import android.text.TextUtils;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
+import com.android.car.arch.common.LiveDataFunctions;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.SharedPreferencesLiveData;
 import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
@@ -77,11 +76,10 @@ public class ContactResultsLiveData extends
         mObservableAsyncQuery = new ObservableAsyncQuery(mSearchQueryParamProvider,
                 context.getContentResolver(), this::onQueryFinished);
 
-        mContactListLiveData = Transformations.switchMap(
-                UiBluetoothMonitor.get().getFirstHfpConnectedDevice(), (device) -> device != null
-                        ? InMemoryPhoneBook.get()
-                            .getContactsLiveDataByAccount(device.getAddress())
-                        : new MutableLiveData<>());
+        mContactListLiveData = LiveDataFunctions.switchMapNonNull(
+                UiBluetoothMonitor.get().getFirstHfpConnectedDevice(),
+                device -> InMemoryPhoneBook.get()
+                        .getContactsLiveDataByAccount(device.getAddress()));
         addSource(mContactListLiveData, this::onContactsChange);
         mSearchQueryLiveData = searchQueryLiveData;
         addSource(mSearchQueryLiveData, this::onSearchQueryChanged);
