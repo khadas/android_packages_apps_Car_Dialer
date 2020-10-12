@@ -59,8 +59,7 @@ public class ContactSortingInfo {
     public static Pair<Comparator<Contact>, Integer> getSortingInfo(Context context,
             SharedPreferencesLiveData preferencesLiveData) {
         String key = preferencesLiveData.getKey();
-        String defaultValue = context.getResources().getStringArray(
-                R.array.contact_order_entry_values)[0];
+        String defaultValue = context.getResources().getString(R.string.sort_order_default_value);
         String firstNameSort = context.getResources().getString(
                 R.string.given_name_first_key);
 
