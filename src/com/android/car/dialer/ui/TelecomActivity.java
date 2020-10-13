@@ -329,7 +329,7 @@ public class TelecomActivity extends FragmentActivity implements
 
     private int getTabFromSharedPreference() {
         String key = getResources().getString(R.string.pref_start_page_key);
-        String defaultValue = getResources().getStringArray(R.array.tabs_config)[0];
+        String defaultValue = getResources().getString(R.string.tab_config_default_value);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         return mTabFactory.getTabIndex(sharedPreferences.getString(key, defaultValue));
     }
