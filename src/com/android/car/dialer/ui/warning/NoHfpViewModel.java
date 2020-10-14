@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer.ui;
+package com.android.car.dialer.ui.warning;
 
 import android.app.Application;
 
@@ -23,18 +23,17 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
-import com.android.car.dialer.livedata.BluetoothErrorStringLiveData;
 
 /** View model for {@link NoHfpFragment} */
-public class NoHfpActivityViewModel extends AndroidViewModel {
+public class NoHfpViewModel extends AndroidViewModel {
 
     private final LiveData<Boolean> mHasHfpDeviceConnectedLiveData;
     private final LiveData<String> mBluetoothErrorStringLiveData;
 
-    public NoHfpActivityViewModel(@NonNull Application application) {
+    public NoHfpViewModel(@NonNull Application application) {
         super(application);
         mHasHfpDeviceConnectedLiveData = UiBluetoothMonitor.get().hasHfpDeviceConnected();
-        mBluetoothErrorStringLiveData = BluetoothErrorStringLiveData.get(application);
+        mBluetoothErrorStringLiveData = new BluetoothErrorStringLiveData(application);
     }
 
     public LiveData<String> getBluetoothErrorStringLiveData() {

@@ -34,9 +34,7 @@ import com.android.car.apps.common.UxrButton;
 import com.android.car.apps.common.util.CarPackageManagerUtils;
 import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
-import com.android.car.dialer.livedata.BluetoothErrorStringLiveData;
 import com.android.car.dialer.telecom.UiCallManager;
-import com.android.car.dialer.ui.NoHfpActivityViewModel;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 
 /**
@@ -73,7 +71,7 @@ public class NoHfpFragment extends Fragment {
         mErrorMessageView = view.findViewById(R.id.error_string);
 
         LiveData<String> errorStringLiveData = new ViewModelProvider(getActivity())
-                .get(NoHfpActivityViewModel.class)
+                .get(NoHfpViewModel.class)
                 .getBluetoothErrorStringLiveData();
 
         errorStringLiveData.observe(this, error -> {
