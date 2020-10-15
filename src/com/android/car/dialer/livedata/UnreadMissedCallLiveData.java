@@ -36,13 +36,15 @@ public class UnreadMissedCallLiveData extends AsyncQueryLiveData<List<PhoneCallL
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /** Get the {@link UnreadMissedCallLiveData} instance. */
-    public static UnreadMissedCallLiveData newInstance(Context context) {
+    public static UnreadMissedCallLiveData newInstance(Context context, String phoneAccountId) {
         StringBuilder where = new StringBuilder();
         List<String> selectionArgs = new ArrayList<>();
         where.append(String.format("(%s = ?)", CallLog.Calls.TYPE));
+        selectionArgs.add(Integer.toString(CallLog.Calls.MISSED_TYPE));
         where.append(String.format("AND (%s = 1)", CallLog.Calls.NEW));
         where.append(String.format("AND (%s IS NOT 1)", CallLog.Calls.IS_READ));
-        selectionArgs.add(Integer.toString(CallLog.Calls.MISSED_TYPE));
+        where.append(String.format("AND (%s = ?)", CallLog.Calls.PHONE_ACCOUNT_ID));
+        selectionArgs.add(phoneAccountId);
 
         String selection = where.length() > 0 ? where.toString() : null;
 
