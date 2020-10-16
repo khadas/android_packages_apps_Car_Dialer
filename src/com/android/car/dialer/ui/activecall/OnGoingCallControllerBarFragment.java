@@ -97,7 +97,7 @@ public class OnGoingCallControllerBarFragment extends Fragment {
     private LiveData<List<Call>> mCallListLiveData;
     private int mPrimaryCallState;
     private int mActiveRoute;
-    private MutableLiveData<CallAudioState> mCallAudioState;
+    private LiveData<CallAudioState> mCallAudioState;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
