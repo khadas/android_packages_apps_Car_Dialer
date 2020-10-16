@@ -20,11 +20,7 @@ import android.annotation.IntDef;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.telecom.Call;
 
 import androidx.annotation.NonNull;
@@ -33,7 +29,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.android.car.dialer.R;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
@@ -41,22 +36,20 @@ import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
 import com.android.car.dialer.livedata.HfpDeviceListLiveData;
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.telecom.InCallServiceImpl;
+import com.android.car.dialer.telecom.LocalCallHandler;
 import com.android.car.dialer.ui.common.SingleLiveEvent;
 
 import com.google.common.annotations.VisibleForTesting;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 /**
  * View model for {@link TelecomActivity}.
  */
-public class TelecomActivityViewModel extends AndroidViewModel implements
-        InCallServiceImpl.ActiveCallListChangedCallback {
+public class TelecomActivityViewModel extends AndroidViewModel {
     private static final String TAG = "CD.TelecomActivityViewModel";
     /**
      * A constant which indicates that there's no Bluetooth error.
@@ -71,43 +64,7 @@ public class TelecomActivityViewModel extends AndroidViewModel implements
     private final ToolbarTitleLiveData mToolbarTitleLiveData;
     private final MutableLiveData<Integer> mToolbarTitleMode;
 
-    private final MutableLiveData<List<Call>> mCallListLiveData;
-    private final LiveData<List<Call>> mOngoingCallListLiveData;
-
-    // Reuse the same instance so the callback won't be registered more than once.
-    private final Call.Callback mRingingCallStateChangedCallback = new Call.Callback() {
-        @Override
-        public void onStateChanged(Call call, int state) {
-            // Don't show in call activity by declining a ringing call to avoid UI flashing.
-            if (state != Call.STATE_DISCONNECTED) {
-                updateCallList();
-            }
-            call.unregisterCallback(this);
-        }
-    };
-
-    private InCallServiceImpl mInCallService;
-    private final ServiceConnection mInCallServiceConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder binder) {
-            L.d(TAG, "onServiceConnected: %s, service: %s", name, binder);
-            mInCallService = ((InCallServiceImpl.LocalBinder) binder).getService();
-            for (Call call : mInCallService.getCalls()) {
-                if (call.getState() == Call.STATE_RINGING) {
-                    call.registerCallback(mRingingCallStateChangedCallback);
-                }
-            }
-            mInCallService.addActiveCallListChangedCallback(TelecomActivityViewModel.this);
-            updateCallList();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            L.d(TAG, "onServiceDisconnected: %s", name);
-            mInCallService = null;
-        }
-    };
+    private final LocalCallHandler mLocalCallHandler;
 
     /**
      * App state indicates if bluetooth is connected or it should just show the content fragments.
@@ -147,20 +104,7 @@ public class TelecomActivityViewModel extends AndroidViewModel implements
 
         mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData);
 
-        mCallListLiveData = new MutableLiveData<>();
-        mOngoingCallListLiveData = Transformations.map(mCallListLiveData,
-                calls -> {
-                    List ongoingCallList = new ArrayList();
-                    for (Call call : calls) {
-                        if (call.getState() != Call.STATE_RINGING) {
-                            ongoingCallList.add(call);
-                        }
-                    }
-                    return ongoingCallList;
-                });
-        Intent intent = new Intent(mApplicationContext, InCallServiceImpl.class);
-        intent.setAction(InCallServiceImpl.ACTION_LOCAL_BIND);
-        mApplicationContext.bindService(intent, mInCallServiceConnection, Context.BIND_AUTO_CREATE);
+        mLocalCallHandler = new LocalCallHandler(mApplicationContext);
     }
 
     /**
@@ -203,41 +147,12 @@ public class TelecomActivityViewModel extends AndroidViewModel implements
 
     /** Returns the live data which monitors the ongoing call list. */
     public LiveData<List<Call>> getOngoingCallListLiveData() {
-        return mOngoingCallListLiveData;
-    }
-
-    @Override
-    public boolean onTelecomCallAdded(Call telecomCall) {
-        if (telecomCall.getState() == Call.STATE_RINGING) {
-            telecomCall.registerCallback(mRingingCallStateChangedCallback);
-        }
-        updateCallList();
-        return false;
-    }
-
-    @Override
-    public boolean onTelecomCallRemoved(Call telecomCall) {
-        telecomCall.unregisterCallback(mRingingCallStateChangedCallback);
-        updateCallList();
-        return false;
+        return mLocalCallHandler.getOngoingCallListLiveData();
     }
 
     @Override
     protected void onCleared() {
-        mApplicationContext.unbindService(mInCallServiceConnection);
-        if (mInCallService != null) {
-            for (Call call : mInCallService.getCalls()) {
-                call.unregisterCallback(mRingingCallStateChangedCallback);
-            }
-            mInCallService.removeActiveCallListChangedCallback(this);
-        }
-        mInCallService = null;
-    }
-
-    private void updateCallList() {
-        List<Call> callList = new ArrayList<>();
-        callList.addAll(mInCallService.getCalls());
-        mCallListLiveData.setValue(callList);
+        mLocalCallHandler.tearDown();
     }
 
     private static class DialerAppStateLiveData extends MediatorLiveData<Integer> {
