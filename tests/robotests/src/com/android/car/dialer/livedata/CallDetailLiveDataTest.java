@@ -75,14 +75,6 @@ public class CallDetailLiveDataTest {
 
     @Test
     public void testOnActiveRegistry() {
-        reset(mMockCall);
-        mCallDetailLiveData.onActive();
-
-        verify(mMockCall).registerCallback(any());
-    }
-
-    @Test
-    public void testOnLifecycleStart() {
         mCallDetailLiveData.observe(mMockLifecycleOwner, (value) -> mMockObserver.onChanged(value));
         verify(mMockObserver, never()).onChanged(any());
         assertThat(mCallDetailLiveData.hasObservers()).isTrue();
