@@ -33,18 +33,6 @@ public class CallDetailLiveData extends LiveData<CallDetail> {
 
     private Call mTelecomCall;
 
-    @Override
-    protected void onActive() {
-        super.onActive();
-        setTelecomCall(mTelecomCall);
-    }
-
-    @Override
-    protected void onInactive() {
-        super.onInactive();
-        setTelecomCall(null);
-    }
-
     private Call.Callback mCallback = new Call.Callback() {
         @Override
         public void onStateChanged(Call telecomCall, int state) {
