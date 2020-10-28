@@ -14,44 +14,34 @@
  * limitations under the License.
  */
 
-package com.android.car.dialer.ui.settings;
+package com.android.car.dialer.ui.warning;
 
 import android.app.Application;
-import android.bluetooth.BluetoothDevice;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
 
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 
-/**
- * ViewModel for {@link DialerSettingsFragment}
- */
-public class DialerSettingsViewModel extends AndroidViewModel {
-    private static final String EMPTY_STRING = "";
-    private final LiveData<BluetoothDevice> mFirstHfpDeviceLiveData;
-    private final LiveData<Boolean> mHasHfpDeviceConnectedLiveData;
+/** View model for {@link NoHfpFragment} */
+public class NoHfpViewModel extends AndroidViewModel {
 
-    public DialerSettingsViewModel(@NonNull Application application) {
+    private final LiveData<Boolean> mHasHfpDeviceConnectedLiveData;
+    private final LiveData<String> mBluetoothErrorStringLiveData;
+
+    public NoHfpViewModel(@NonNull Application application) {
         super(application);
-        mFirstHfpDeviceLiveData = UiBluetoothMonitor.get().getFirstHfpConnectedDevice();
         mHasHfpDeviceConnectedLiveData = UiBluetoothMonitor.get().hasHfpDeviceConnected();
+        mBluetoothErrorStringLiveData = new BluetoothErrorStringLiveData(application);
     }
 
-    /**
-     * Returns the LiveData for the first HFP device's name.  Returns an empty string if there's no
-     * device connected.
-     */
-    public LiveData<String> getFirstHfpConnectedDeviceName() {
-        return Transformations.map(mFirstHfpDeviceLiveData, (device) ->
-                device != null ? device.getName() : EMPTY_STRING);
+    public LiveData<String> getBluetoothErrorStringLiveData() {
+        return mBluetoothErrorStringLiveData;
     }
 
     /** Returns a {@link LiveData} which monitors if there are any connected HFP devices. */
     public LiveData<Boolean> hasHfpDeviceConnected() {
         return mHasHfpDeviceConnectedLiveData;
     }
-
 }

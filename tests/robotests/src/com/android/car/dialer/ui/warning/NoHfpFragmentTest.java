@@ -37,8 +37,6 @@ import org.robolectric.RuntimeEnvironment;
 
 @RunWith(CarDialerRobolectricTestRunner.class)
 public class NoHfpFragmentTest {
-    private static final String ERROR_MSG = "ERROR!!!";
-    private static final String UPDATED_ERROR_MSG = "ANOTHER ERROR!!!!";
 
     private NoHfpFragment mNoHfpFragment;
     private FragmentTestActivity mFragmentTestActivity;
@@ -50,7 +48,7 @@ public class NoHfpFragmentTest {
         ((TestDialerApplication) RuntimeEnvironment.application).initUiCallManager();
         UiBluetoothMonitor.init(RuntimeEnvironment.application);
 
-        mNoHfpFragment = NoHfpFragment.newInstance(ERROR_MSG);
+        mNoHfpFragment = new NoHfpFragment();
         mFragmentTestActivity = Robolectric.buildActivity(
                 FragmentTestActivity.class).create().start().resume().get();
         mFragmentTestActivity.setFragment(mNoHfpFragment);
@@ -65,16 +63,8 @@ public class NoHfpFragmentTest {
     public void createView_displayErrorMsg() {
         View rootView = mNoHfpFragment.getView();
         TextView errorMsgView = rootView.findViewById(R.id.error_string);
-        assertThat(errorMsgView.getText()).isEqualTo(ERROR_MSG);
-    }
-
-    @Test
-    public void setErrorMsg_updateErrorMsgView() {
-        mNoHfpFragment.setErrorMessage(UPDATED_ERROR_MSG);
-
-        View rootView = mNoHfpFragment.getView();
-        TextView errorMsgView = rootView.findViewById(R.id.error_string);
-        assertThat(errorMsgView.getText()).isEqualTo(UPDATED_ERROR_MSG);
+        assertThat(errorMsgView.getText()).isEqualTo(
+                mNoHfpFragment.getString(R.string.bluetooth_disabled));
     }
 
     @After
