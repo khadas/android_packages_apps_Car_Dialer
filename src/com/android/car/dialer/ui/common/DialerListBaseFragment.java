@@ -142,4 +142,12 @@ public class DialerListBaseFragment extends DialerBaseFragment {
                 mRecyclerView.getPaddingEnd(),
                 mRecyclerView.getPaddingBottom());
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mRecyclerView.setAdapter(null);
+        mRecyclerView.setLayoutManager(null);
+        mRecyclerView = null;
+    }
 }
