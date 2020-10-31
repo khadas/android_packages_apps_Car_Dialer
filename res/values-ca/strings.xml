@@ -26,7 +26,7 @@
     <string name="emergency_call_description" msgid="6700161437750325693">"Trucada d\'emergència"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"És possible que aquest contacte s\'hagi suprimit."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"No es pot marcar aquest número. Comprova\'l i tornar-ho a provar."</string>
-    <string name="error_telephony_not_available" msgid="8715829862083386178">"Les trucades no estan disponibles. Torna-ho a provar."</string>
+    <string name="error_telephony_not_available" msgid="8715829862083386178">"Les trucades telefòniques no estan disponibles. Torna-ho a provar."</string>
     <string name="decline_call" msgid="2505987200485272226">"Rebutja"</string>
     <string name="answer_call" msgid="3272474440561548115">"Respon"</string>
     <string name="call_back" msgid="5745638356098600872">"Torna la trucada"</string>

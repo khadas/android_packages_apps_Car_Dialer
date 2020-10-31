@@ -23,7 +23,7 @@
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Да бисте упућивали или примали позиве, упарите телефон са аутомобилом."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Повежи са Bluetooth-ом"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Хитан случај"</string>
-    <string name="emergency_call_description" msgid="6700161437750325693">"Хитни позив"</string>
+    <string name="emergency_call_description" msgid="6700161437750325693">"Хитан позив"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Овај контакт је можда избрисан."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Позивање овог броја није успело. Проверите га и пробајте поново."</string>
     <string name="error_telephony_not_available" msgid="8715829862083386178">"Телефонски позив није доступан. Пробајте поново касније."</string>
