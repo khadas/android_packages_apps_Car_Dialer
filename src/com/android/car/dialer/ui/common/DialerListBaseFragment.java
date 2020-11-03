@@ -142,6 +142,7 @@ public class DialerListBaseFragment extends DialerBaseFragment {
                 R.dimen.list_top_padding);
         mRecyclerView.setPadding(0, insets.getTop() + listTopPadding, 0, insets.getBottom());
         mFocusArea.setHighlightPadding(0, insets.getTop() + listTopPadding, 0, insets.getBottom());
+        mFocusArea.setBoundsOffset(0, insets.getTop() + listTopPadding, 0, insets.getBottom());
         requireView().setPadding(insets.getLeft(), 0, insets.getRight(), 0);
     }
 }
