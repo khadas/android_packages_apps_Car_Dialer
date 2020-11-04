@@ -126,9 +126,9 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         getRecyclerView().removeOnScrollListener(mOnScrollChangeListener);
         mToolbar.unregisterOnSearchListener(this);
+        super.onDestroyView();
     }
 
     @Override

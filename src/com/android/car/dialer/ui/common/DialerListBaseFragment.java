@@ -145,4 +145,12 @@ public class DialerListBaseFragment extends DialerBaseFragment {
         mFocusArea.setBoundsOffset(0, insets.getTop() + listTopPadding, 0, insets.getBottom());
         requireView().setPadding(insets.getLeft(), 0, insets.getRight(), 0);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mRecyclerView.setAdapter(null);
+        mRecyclerView.setLayoutManager(null);
+        mRecyclerView = null;
+    }
 }
