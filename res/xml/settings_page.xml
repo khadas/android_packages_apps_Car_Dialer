@@ -28,9 +28,9 @@
 
     <SwitchPreference
         android:defaultValue="@bool/config_show_fullscreen_incall_ui"
-        android:key="@string/pref_no_fullscreen_active_call_ui_key"
-        android:title="@string/pref_no_fullscreen_active_call_ui_title"
-        android:summary="@string/pref_no_fullscreen_active_call_ui_summary"
+        android:key="@string/pref_show_fullscreen_active_call_ui_key"
+        android:title="@string/pref_show_fullscreen_active_call_ui_title"
+        android:summary="@string/pref_show_fullscreen_active_call_ui_summary"
         app:isPreferenceVisible="@bool/config_should_show_active_call_setting"/>
 
     <SwitchPreference
