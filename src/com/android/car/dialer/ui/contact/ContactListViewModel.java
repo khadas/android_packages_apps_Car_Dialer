@@ -34,7 +34,6 @@ import com.android.car.dialer.ui.common.entity.ContactSortingInfo;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -74,12 +73,13 @@ public class ContactListViewModel extends DialerListViewModel {
 
     private static class SortedContactListLiveData
             extends MediatorLiveData<Pair<Integer, List<Contact>>> {
+        // Class static to make sure only one task is sorting contacts at one time.
+        private static ExecutorService sExecutorService = Executors.newSingleThreadExecutor();
 
         private final LiveData<List<Contact>> mContactListLiveData;
         private final SharedPreferencesLiveData mPreferencesLiveData;
         private final Context mContext;
 
-        private final ExecutorService mExecutorService;
         private Future<?> mRunnableFuture;
 
         private SortedContactListLiveData(Context context,
@@ -88,7 +88,6 @@ public class ContactListViewModel extends DialerListViewModel {
             mContext = context;
             mContactListLiveData = contactListLiveData;
             mPreferencesLiveData = sharedPreferencesLiveData;
-            mExecutorService = Executors.newSingleThreadExecutor();
 
             addSource(mPreferencesLiveData, trigger -> onSortOrderChanged());
             addSource(mContactListLiveData, this::sortContacts);
@@ -120,13 +119,10 @@ public class ContactListViewModel extends DialerListViewModel {
             Integer sortMethod = contactSortingInfo.second;
 
             Runnable runnable = () -> {
-                // Make a copy of the contact list to avoid the same list being sorted at the same
-                // time since the ViewModel is not single instance but the contact LiveData is.
-                List<Contact> contactListCopy = new ArrayList<>(contactList);
-                Collections.sort(contactListCopy, comparator);
-                postValue(new Pair<>(sortMethod, contactListCopy));
+                Collections.sort(contactList, comparator);
+                postValue(new Pair<>(sortMethod, contactList));
             };
-            mRunnableFuture = mExecutorService.submit(runnable);
+            mRunnableFuture = sExecutorService.submit(runnable);
         }
 
         @Override

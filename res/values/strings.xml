@@ -219,11 +219,11 @@
     <!-- Summary of no incoming call heads-up notification(HUN) setting -->
     <string name="pref_no_incoming_call_hun_summary">Only show call alerts in cluster</string>
 
-    <!-- Title of no full screen active call UI when answered UI setting-->
-    <string name="pref_no_fullscreen_active_call_ui_title">Active Call</string>
-    <string name="pref_no_fullscreen_active_call_ui_key" translatable="false">no_fullscreen_active_call_ui</string>
-    <!-- Summary of no full screen active call UI when answered UI setting -->
-    <string name="pref_no_fullscreen_active_call_ui_summary">Show active call view when answering call</string>
+    <!-- Title of showing full screen active call UI when answered UI setting-->
+    <string name="pref_show_fullscreen_active_call_ui_title">Active Call</string>
+    <string name="pref_show_fullscreen_active_call_ui_key" translatable="false">show_fullscreen_active_call_ui</string>
+    <!-- Summary of showing full screen active call UI when answered UI setting -->
+    <string name="pref_show_fullscreen_active_call_ui_summary">Show active call view when answering call</string>
 
     <!-- Keys and titles of the settings for sorting Contacts in different orders -->
     <!-- Key of given name -->

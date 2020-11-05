@@ -80,9 +80,7 @@ class InCallRouter {
 
         int state = call.getState();
         if (state == Call.STATE_RINGING) {
-            if (shouldShowIncomingCallHun()) {
-                routeToNotification(call);
-            }
+            routeToNotification(call);
             // Otherwise, no operations. Incoming call will be displayed outside of Dialer app
             // such as cluster.
         } else if (state != Call.STATE_DISCONNECTED) {
@@ -133,7 +131,9 @@ class InCallRouter {
      * Presents the ringing call in HUN.
      */
     private void routeToNotification(Call call) {
-        mInCallNotificationController.showInCallNotification(call);
+        if (shouldShowIncomingCallHun()) {
+            mInCallNotificationController.showInCallNotification(call);
+        }
         call.registerCallback(new Call.Callback() {
             @Override
             public void onStateChanged(Call call, int state) {
@@ -176,7 +176,7 @@ class InCallRouter {
         boolean shouldShowFullScreenUiByDefault =
                 mContext.getResources().getBoolean(R.bool.config_show_fullscreen_incall_ui);
         return PreferenceManager.getDefaultSharedPreferences(mContext)
-                .getBoolean(mContext.getString(R.string.pref_no_fullscreen_active_call_ui_key),
+                .getBoolean(mContext.getString(R.string.pref_show_fullscreen_active_call_ui_key),
                         shouldShowFullScreenUiByDefault);
     }
 }
