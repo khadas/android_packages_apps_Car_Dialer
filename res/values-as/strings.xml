@@ -34,10 +34,12 @@
     <string name="audio_route_phone_speaker" msgid="4608904003558187244">"ফ’নৰ স্পীকাৰ"</string>
     <string name="audio_route_handset" msgid="9133081623895172144">"ফ’ন"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"কোনো নম্বৰ ডায়েল কৰক"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"অগ্ৰাধিকাৰসমূহ"</string>
     <string name="call_history_title" msgid="7997887846276371553">"শেহতীয়াসমূহ"</string>
     <string name="contacts_title" msgid="9201954388634537346">"সম্পর্কবোৰ"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"অগ্ৰাধিকাৰসমূহ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ডায়েলপেড"</string>
+    <!-- no translation found for tab_config_default_value (993008650601917964) -->
+    <skip />
     <string name="call_log_header_today" msgid="2069013936632793214">"আজি"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"কালি"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"পুৰণি"</string>
@@ -74,10 +76,12 @@
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"সংযুক্ত ফ’ন"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"গোপনীয়তা"</string>
     <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"কেৱল ক্লাষ্টাৰত কলৰ সতৰ্কবাৰ্তাসমূহ দেখুৱাওক"</string>
-    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"সক্ৰিয় কল"</string>
-    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"কলৰ উত্তৰ দিওঁতে সক্ৰিয় কলৰ ভিউ দেখুৱাওক"</string>
+    <string name="pref_show_fullscreen_active_call_ui_title" msgid="6924304583510509581">"সক্ৰিয় কল"</string>
+    <string name="pref_show_fullscreen_active_call_ui_summary" msgid="1629142960991476502">"কলৰ উত্তৰ দিওঁতে সক্ৰিয় কলৰ ভিউ দেখুৱাওক"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"প্ৰথম নাম"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"উপাধি"</string>
+    <!-- no translation found for sort_order_default_value (5876201942256731358) -->
+    <skip />
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"কল অডিঅ\'ৰ বাবে এয়া ব্যৱহাৰ কৰক:"</string>
     <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
     <string name="ongoing_conf_title" msgid="4161590966144000887">"কনফাৰেন্স"</string>
