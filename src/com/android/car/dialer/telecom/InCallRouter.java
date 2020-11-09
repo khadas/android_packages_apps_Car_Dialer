@@ -159,7 +159,7 @@ class InCallRouter {
         }
 
         Intent launchIntent = new Intent(mContext, InCallActivity.class);
-        launchIntent.putExtra(Constants.Intents.EXTRA_SHOW_INCOMING_CALL, showDialpad);
+        launchIntent.putExtra(Constants.Intents.EXTRA_SHOW_DIALPAD, showDialpad);
         mContext.startActivity(launchIntent);
     }
 

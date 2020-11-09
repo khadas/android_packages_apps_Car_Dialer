@@ -21,6 +21,7 @@ import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.telecom.Call;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ import com.android.car.dialer.livedata.BluetoothPairListLiveData;
 import com.android.car.dialer.livedata.BluetoothStateLiveData;
 import com.android.car.dialer.livedata.HfpDeviceListLiveData;
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.telecom.LocalCallHandler;
 import com.android.car.dialer.ui.common.SingleLiveEvent;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -61,6 +63,8 @@ public class TelecomActivityViewModel extends AndroidViewModel {
 
     private final ToolbarTitleLiveData mToolbarTitleLiveData;
     private final MutableLiveData<Integer> mToolbarTitleMode;
+
+    private final LocalCallHandler mLocalCallHandler;
 
     /**
      * App state indicates if bluetooth is connected or it should just show the content fragments.
@@ -99,6 +103,8 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         mDialerAppStateLiveData = new DialerAppStateLiveData(mErrorStringLiveData);
+
+        mLocalCallHandler = new LocalCallHandler(mApplicationContext);
     }
 
     /**
@@ -137,6 +143,16 @@ public class TelecomActivityViewModel extends AndroidViewModel {
      */
     public LiveData<Boolean> getRefreshTabsLiveData() {
         return mRefreshTabsLiveData;
+    }
+
+    /** Returns the live data which monitors the ongoing call list. */
+    public LiveData<List<Call>> getOngoingCallListLiveData() {
+        return mLocalCallHandler.getOngoingCallListLiveData();
+    }
+
+    @Override
+    protected void onCleared() {
+        mLocalCallHandler.tearDown();
     }
 
     private static class DialerAppStateLiveData extends MediatorLiveData<Integer> {

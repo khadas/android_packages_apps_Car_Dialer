@@ -42,7 +42,6 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.NotificationService;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.activecall.InCallActivity;
-import com.android.car.dialer.ui.activecall.InCallViewModel;
 import com.android.car.dialer.ui.calllog.CallHistoryFragment;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.contact.ContactListFragment;
@@ -72,17 +71,19 @@ public class TelecomActivity extends FragmentActivity implements
     private static final String TAG = "CD.TelecomActivity";
     private LiveData<String> mBluetoothErrorMsgLiveData;
     private LiveData<Integer> mDialerAppStateLiveData;
-    private LiveData<List<Call>> mOngoingCallListLiveData;
     private LiveData<Boolean> mRefreshUiLiveData;
     // View objects for this activity.
     private TelecomPageTab.Factory mTabFactory;
     private Toolbar mCarUiToolbar;
+
+    private LiveData<List<Call>> mOngoingCallListLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         L.d(TAG, "onCreate");
+
         setContentView(R.layout.telecom_activity);
 
         mCarUiToolbar = findViewById(R.id.car_ui_toolbar);
@@ -102,12 +103,8 @@ public class TelecomActivity extends FragmentActivity implements
         MutableLiveData<Integer> toolbarTitleMode = viewModel.getToolbarTitleMode();
         toolbarTitleMode.setValue(Themes.getAttrInteger(this, R.attr.toolbarTitleMode));
 
-        InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
-        mOngoingCallListLiveData = inCallViewModel.getOngoingCallList();
-
-        // An observer must exist for the live data to be active.
-        // Otherwise getValue() may not return expected value.
-        mOngoingCallListLiveData.observe(this, list -> { /*no op*/ });
+        mOngoingCallListLiveData = viewModel.getOngoingCallListLiveData();
+        mOngoingCallListLiveData.observe(this, list -> maybeStartInCallActivity(list));
 
         handleIntent();
     }
