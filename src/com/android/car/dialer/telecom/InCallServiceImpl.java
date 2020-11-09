@@ -24,9 +24,7 @@ import android.telecom.CallAudioState;
 import android.telecom.InCallService;
 
 import com.android.car.dialer.log.L;
-import com.android.car.dialer.ui.activecall.InCallActivity;
 
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -124,20 +122,6 @@ public class InCallServiceImpl extends InCallService {
     public void onBringToForeground(boolean showDialpad) {
         L.d(TAG, "onBringToForeground: %s", showDialpad);
         mInCallRouter.routeToFullScreenIncomingCallPage(showDialpad);
-    }
-
-    /**
-     * Starts InCallActivity if the ongoing call list has changed.
-     */
-    public void maybeStartInCallActivity(List<Call> ongoingCallList) {
-        if (ongoingCallList == null || ongoingCallList.isEmpty()) {
-            return;
-        }
-
-        L.d(TAG, "Start InCallActivity");
-        Intent launchIntent = new Intent(getApplicationContext(), InCallActivity.class);
-        launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(launchIntent);
     }
 
     public void addCallAudioStateChangedCallback(CallAudioStateCallback callback) {

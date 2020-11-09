@@ -39,7 +39,6 @@ import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.NotificationService;
 import com.android.car.dialer.telecom.UiCallManager;
 import com.android.car.dialer.ui.activecall.InCallActivity;
-import com.android.car.dialer.ui.activecall.InCallViewModel;
 import com.android.car.dialer.ui.common.DialerBaseFragment;
 import com.android.car.dialer.ui.dialpad.DialpadFragment;
 import com.android.car.dialer.ui.search.ContactResultsFragment;
@@ -97,12 +96,8 @@ public class TelecomActivity extends FragmentActivity implements
         MutableLiveData<Integer> toolbarTitleMode = viewModel.getToolbarTitleMode();
         toolbarTitleMode.setValue(Themes.getAttrInteger(this, R.attr.toolbarTitleMode));
 
-        InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(InCallViewModel.class);
-        mOngoingCallListLiveData = inCallViewModel.getOngoingCallList();
-
-        // An observer must exist for the live data to be active.
-        // Otherwise getValue() may not return expected value.
-        mOngoingCallListLiveData.observe(this, list -> { /*no op*/ });
+        mOngoingCallListLiveData = viewModel.getOngoingCallListLiveData();
+        mOngoingCallListLiveData.observe(this, list -> maybeStartInCallActivity(list));
 
         handleIntent();
     }
