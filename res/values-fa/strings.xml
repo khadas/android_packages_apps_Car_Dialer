@@ -76,8 +76,8 @@
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"تلفن متصل"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"حریم‌خصوصی"</string>
     <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"هشدارهای تماس فقط به‌طور دسته‌ای نشان داده شود"</string>
-    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"تماس فعال"</string>
-    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"نمایش نمای تماس فعال هنگام پاسخ دادن به تماس"</string>
+    <string name="pref_show_fullscreen_active_call_ui_title" msgid="6924304583510509581">"تماس فعال"</string>
+    <string name="pref_show_fullscreen_active_call_ui_summary" msgid="1629142960991476502">"نشان دادن نمای تماس فعال هنگام پاسخ دادن به تماس"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"نام"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"نام خانوادگی"</string>
     <!-- no translation found for sort_order_default_value (5876201942256731358) -->

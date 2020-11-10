@@ -20,6 +20,7 @@ import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.telecom.Call;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.log.L;
+import com.android.car.dialer.telecom.LocalCallHandler;
 import com.android.car.dialer.ui.common.SingleLiveEvent;
 
 import java.util.List;
@@ -49,6 +51,8 @@ public class TelecomActivityViewModel extends AndroidViewModel {
 
     private final LiveData<Boolean> mHasHfpDeviceConnectedLiveData;
 
+    private final LocalCallHandler mLocalCallHandler;
+
     public TelecomActivityViewModel(Application application) {
         super(application);
         mApplicationContext = application.getApplicationContext();
@@ -62,6 +66,8 @@ public class TelecomActivityViewModel extends AndroidViewModel {
         }
 
         mHasHfpDeviceConnectedLiveData = UiBluetoothMonitor.get().hasHfpDeviceConnected();
+
+        mLocalCallHandler = new LocalCallHandler(mApplicationContext);
     }
 
     /**
@@ -90,6 +96,16 @@ public class TelecomActivityViewModel extends AndroidViewModel {
     /** Returns a {@link LiveData} which monitors if there are any connected HFP devices. */
     public LiveData<Boolean> hasHfpDeviceConnected() {
         return mHasHfpDeviceConnectedLiveData;
+    }
+
+    /** Returns the live data which monitors the ongoing call list. */
+    public LiveData<List<Call>> getOngoingCallListLiveData() {
+        return mLocalCallHandler.getOngoingCallListLiveData();
+    }
+
+    @Override
+    protected void onCleared() {
+        mLocalCallHandler.tearDown();
     }
 
     /**
