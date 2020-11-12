@@ -76,8 +76,8 @@
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"कनेक्ट गरिएको फोन"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"गोपनीयता"</string>
     <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"कलसम्बन्धी अलर्टहरू क्लस्टरमा मात्र देखाइयोस्"</string>
-    <string name="pref_no_fullscreen_active_call_ui_title" msgid="5306041252780754725">"सक्रिय कल"</string>
-    <string name="pref_no_fullscreen_active_call_ui_summary" msgid="2316908551231937870">"कल उठाउँदा एक्टिभ कल भ्यू देखाइयोस्"</string>
+    <string name="pref_show_fullscreen_active_call_ui_title" msgid="6924304583510509581">"एक्टिभ कल"</string>
+    <string name="pref_show_fullscreen_active_call_ui_summary" msgid="1629142960991476502">"कल उठाउँदा एक्टिभ कल भ्यू देखाइयोस्"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"नाम"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"थर"</string>
     <!-- no translation found for sort_order_default_value (5876201942256731358) -->
