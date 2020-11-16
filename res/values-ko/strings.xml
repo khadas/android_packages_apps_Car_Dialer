@@ -58,7 +58,7 @@
     <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g>, 기본값"</string>
     <string name="favorite_number_description" msgid="8175362259853807385">"즐겨찾는 연락처 -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="local_favorite_number_description" msgid="3723823871011997275">"즐겨찾는 근처 장소 -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="phone_favorites" msgid="2257447553252980575">"즐겨찾는 연락처"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"즐겨찾기"</string>
     <string name="local_favorites" msgid="4954852813126882412">"즐겨찾는 근처 장소"</string>
     <string name="no_phone_numbers" msgid="8738691115921148445">"전화번호가 없습니다."</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"수신 전화 알림"</string>

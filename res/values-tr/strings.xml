@@ -73,7 +73,7 @@
     <string name="setting_title" msgid="1296639422364732365">"Ayarlar"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Başlangıç ekranı"</string>
     <string name="sort_order_title" msgid="975104366728292702">"Kişi sırası"</string>
-    <string name="pref_connected_phone_title" msgid="5472866963149472593">"Telefona Bağlı"</string>
+    <string name="pref_connected_phone_title" msgid="5472866963149472593">"Bağlı telefon"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Gizlilik"</string>
     <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Yalnızca kümedeki arama uyarılarını göster"</string>
     <string name="pref_show_fullscreen_active_call_ui_title" msgid="6924304583510509581">"Aktif Arama"</string>

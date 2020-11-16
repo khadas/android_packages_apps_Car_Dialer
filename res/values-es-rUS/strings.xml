@@ -20,7 +20,7 @@
     <string name="no_hfp" msgid="7371139867234667691">"Para realizar la llamada, debes conectar el teléfono al auto mediante Bluetooth."</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth no está disponible."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Para realizar y recibir llamadas, activa el Bluetooth."</string>
-    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Para realizar y recibir llamadas, sincroniza el teléfono con el auto."</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Para realizar y recibir llamadas, vincula tu teléfono con el auto."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Conectarse a Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Emergencia"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Llamada de emergencia"</string>
