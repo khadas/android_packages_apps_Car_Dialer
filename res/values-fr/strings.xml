@@ -21,7 +21,7 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Le Bluetooth n\'est pas disponible."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Pour passer ou recevoir des appels, activez le Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Pour passer ou recevoir des appels, associez votre téléphone à la voiture."</string>
-    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Se connecter en Bluetooth"</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Se connecter au Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Urgence"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Appel d\'urgence"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Ce contact a peut-être été supprimé."</string>
@@ -34,7 +34,7 @@
     <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Haut-parleur du téléphone"</string>
     <string name="audio_route_handset" msgid="9133081623895172144">"Téléphone"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Composer un numéro"</string>
-    <string name="call_history_title" msgid="7997887846276371553">"Appels récents"</string>
+    <string name="call_history_title" msgid="7997887846276371553">"Récents"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Contacts"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Favoris"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Clavier"</string>

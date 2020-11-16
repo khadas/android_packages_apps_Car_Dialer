@@ -21,7 +21,7 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Il Bluetooth non è disponibile."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Per effettuare o ricevere chiamate, attiva il Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Per effettuare o ricevere chiamate, accoppia il telefono con l\'auto."</string>
-    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Connettiti a Bluetooth"</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Attiva Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Emergenza"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Chiamata di emergenza"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Questo contatto potrebbe essere stato eliminato."</string>

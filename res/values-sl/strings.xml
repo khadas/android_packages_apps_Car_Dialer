@@ -21,7 +21,7 @@
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth ni na voljo."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Če želite opravljati ali sprejemati klice, vklopite Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Če želite opravljati ali sprejemati klice, seznanite telefon in avtomobil."</string>
-    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Povezovanje z Bluetoothom"</string>
+    <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Poveži z Bluetoothom"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Nujni primer"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Klic v sili"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Ta stik je morda izbrisan."</string>

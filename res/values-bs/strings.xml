@@ -58,7 +58,7 @@
     <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , zadano"</string>
     <string name="favorite_number_description" msgid="8175362259853807385">"Omiljeni -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Lokalni omiljeni -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="phone_favorites" msgid="2257447553252980575">"Omiljeni"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Omiljeno"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Lokalni omiljeni"</string>
     <string name="no_phone_numbers" msgid="8738691115921148445">"Nema brojeva telefona"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Obavještenja tokom dolaznog poziva"</string>

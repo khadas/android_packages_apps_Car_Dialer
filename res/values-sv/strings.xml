@@ -20,7 +20,7 @@
     <string name="no_hfp" msgid="7371139867234667691">"Om du vill ringa ett samtal måste du först ansluta mobilen till bilen via Bluetooth."</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth är inte tillgängligt."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Aktivera Bluetooth om du vill ringa och ta emot samtal."</string>
-    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Koppla mobilen till bilen om du vill ringa eller ta emot samtal."</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Parkoppla mobilen med bilen om du vill ringa eller ta emot samtal."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Anslut till Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Nödsamtal"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Nödsamtal"</string>
