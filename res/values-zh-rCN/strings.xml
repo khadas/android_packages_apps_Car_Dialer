@@ -20,7 +20,7 @@
     <string name="no_hfp" msgid="7371139867234667691">"要完成通话，请先通过蓝牙将您的手机连接到汽车。"</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"蓝牙不可用。"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"要拨打或接听电话，请开启蓝牙。"</string>
-    <string name="bluetooth_unpaired" msgid="1600552386483652892">"要拨打或接听电话，请将您的手机与汽车配对。"</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"要拨打或接听电话，请将您的手机与车辆配对。"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"连接到蓝牙"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"紧急"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"紧急呼叫"</string>
@@ -58,7 +58,7 @@
     <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g>，默认号码"</string>
     <string name="favorite_number_description" msgid="8175362259853807385">"常用号码 — <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="local_favorite_number_description" msgid="3723823871011997275">"本地常用号码 — <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="phone_favorites" msgid="2257447553252980575">"常用号码"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"常用联系人"</string>
     <string name="local_favorites" msgid="4954852813126882412">"本地常用号码"</string>
     <string name="no_phone_numbers" msgid="8738691115921148445">"无电话号码"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"来电通知"</string>
