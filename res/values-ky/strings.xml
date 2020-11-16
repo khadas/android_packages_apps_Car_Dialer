@@ -20,7 +20,7 @@
     <string name="no_hfp" msgid="7371139867234667691">"Чалуу үчүн адегенде Bluetooth аркылуу телефонуңузду унаа менен байланыштырыңыз."</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth жеткиликсиз."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Телефон чалуу үчүн Bluetooth\'ду күйгүзүңүз."</string>
-    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Телефон чалуу үчүн телефонуңузду унаа менен жупташтырыңыз."</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Телефон чалуу же жооп берүү үчүн телефонуңузду унаага байланыштырыңыз"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Bluetooth\'га туташуу"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Тез жардам"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Шашылыш чалуу"</string>
@@ -36,7 +36,7 @@
     <string name="dial_a_number" msgid="7432322177412387160">"Номер терүү"</string>
     <string name="call_history_title" msgid="7997887846276371553">"Акыркылар"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Байланыштар"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"Сүйүктүүлөр"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"Тандалмалар"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Тергич"</string>
     <!-- no translation found for tab_config_default_value (993008650601917964) -->
     <skip />
@@ -46,7 +46,7 @@
     <string name="call_logs_empty" msgid="3084720078894119049">"Акыркылар жок"</string>
     <string name="contact_list_empty" msgid="4225504548491888138">"Интернет жок"</string>
     <string name="available_after_sync" msgid="33765918799197782">"Шайкештирүүдөн кийин жеткиликтүү. Телефонуңуздагы байланыштарды бөлүшүүгө уруксат берилгенин текшериңиз."</string>
-    <string name="favorites_empty" msgid="5794510741132758130">"Сүйүктүүлөр тизмеси бош"</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"Тандалмалар тизмеси бош"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Азырынча бир да сүйүктүү байланышыңыз жок"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Сүйүктүү номер кошуу"</string>
     <string name="search_title" msgid="5412680850141871664">"Байланыштарды издөө"</string>
@@ -58,7 +58,7 @@
     <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , демейки"</string>
     <string name="favorite_number_description" msgid="8175362259853807385">"Сүйүктүү -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Жергиликтүү сүйүктүү номер -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="phone_favorites" msgid="2257447553252980575">"Сүйүктүүлөр"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Тандалмалар"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Жергиликтүү сүйүктүү номер"</string>
     <string name="no_phone_numbers" msgid="8738691115921148445">"Телефон номерлери жок"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Кириш чалуу билдирмеси"</string>
@@ -72,7 +72,7 @@
     <string name="swap_call_label" msgid="309322319645637302">"Чалууларды которуштуруу"</string>
     <string name="setting_title" msgid="1296639422364732365">"Жөндөөлөр"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Баштоо экраны"</string>
-    <string name="sort_order_title" msgid="975104366728292702">"Байланыштын ирети"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"Байланыштардын ирети"</string>
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"Байланыштырылган телефон"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Купуялык"</string>
     <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Кластердеги чалуу аркылуу берилген эскертүүлөр гана көрсөтүлсүн"</string>
