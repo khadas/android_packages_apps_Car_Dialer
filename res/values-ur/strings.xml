@@ -36,7 +36,7 @@
     <string name="dial_a_number" msgid="7432322177412387160">"کوئی نمبر ڈائل کریں"</string>
     <string name="call_history_title" msgid="7997887846276371553">"حالیہ"</string>
     <string name="contacts_title" msgid="9201954388634537346">"رابطے"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"پسندیدگیاں"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"پسندیدہ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"ڈائل پیڈ"</string>
     <!-- no translation found for tab_config_default_value (993008650601917964) -->
     <skip />
@@ -58,7 +58,7 @@
     <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> ، ڈیفالٹ"</string>
     <string name="favorite_number_description" msgid="8175362259853807385">"پسندیدہ -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="local_favorite_number_description" msgid="3723823871011997275">"مقامی پسندیدہ -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="phone_favorites" msgid="2257447553252980575">"پسندیدگیاں"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"پسندیدہ"</string>
     <string name="local_favorites" msgid="4954852813126882412">"مقامی پسندیدگیاں"</string>
     <string name="no_phone_numbers" msgid="8738691115921148445">"کوئی فون نمبر نہیں ہے"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"اِن کمنگ کال کی اطلاع"</string>
@@ -71,7 +71,7 @@
     <string name="onhold_call_separator" msgid="2357788035385100805">"•"</string>
     <string name="swap_call_label" msgid="309322319645637302">"کالز سوئچ کریں"</string>
     <string name="setting_title" msgid="1296639422364732365">"ترتیبات"</string>
-    <string name="pref_start_page_title" msgid="1953465507368478503">"اسکرین شروع کریں"</string>
+    <string name="pref_start_page_title" msgid="1953465507368478503">"آغاز کی اسکرین"</string>
     <string name="sort_order_title" msgid="975104366728292702">"رابطہ کی ترتیب"</string>
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"منسلک کردہ فون"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"رازداری"</string>

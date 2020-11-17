@@ -36,7 +36,7 @@
     <string name="dial_a_number" msgid="7432322177412387160">"နံပါတ်ကို ခေါ်ဆိုရန်"</string>
     <string name="call_history_title" msgid="7997887846276371553">"လတ်တလော"</string>
     <string name="contacts_title" msgid="9201954388634537346">"အဆက်အသွယ်များ"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"အကြိုက်ဆုံး"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"အသုံးအများဆုံး"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"နံပါတ်ကွက်"</string>
     <!-- no translation found for tab_config_default_value (993008650601917964) -->
     <skip />
@@ -58,7 +58,7 @@
     <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> ၊ မူရင်း"</string>
     <string name="favorite_number_description" msgid="8175362259853807385">"အကြိုက်ဆုံး -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="local_favorite_number_description" msgid="3723823871011997275">"ဒေသတွင်း အကြိုက်ဆုံး -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="phone_favorites" msgid="2257447553252980575">"အကြိုက်ဆုံးများ"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"အသုံးအများဆုံး"</string>
     <string name="local_favorites" msgid="4954852813126882412">"ဒေသတွင်း အကြိုက်ဆုံး"</string>
     <string name="no_phone_numbers" msgid="8738691115921148445">"ဖုန်းနံပါတ် မရှိပါ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"အဝင်ခေါ်ဆိုမှု အကြောင်းကြားချက်"</string>
@@ -72,7 +72,7 @@
     <string name="swap_call_label" msgid="309322319645637302">"ခေါ်ဆိုမှုများ ပြောင်းရန်"</string>
     <string name="setting_title" msgid="1296639422364732365">"ဆက်တင်များ"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"စတင်မှု ဖန်သားပြင်"</string>
-    <string name="sort_order_title" msgid="975104366728292702">"အဆက်အသွယ် အစီအစဉ်"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"အဆက်အသွယ် အစဉ်"</string>
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"ချိတ်ဆက်ထားသည့်ဖုန်း"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"ပုဂ္ဂိုလ်ရေး"</string>
     <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"ခေါ်ဆိုမှုသတိပေးချက်များကို အုပ်စုလိုက်သာပြရန်"</string>
