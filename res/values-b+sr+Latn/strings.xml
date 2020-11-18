@@ -37,7 +37,7 @@
     <string name="call_history_title" msgid="7997887846276371553">"Nedavno"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontakti"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Omiljeno"</string>
-    <string name="dialpad_title" msgid="3746259645005208554">"Numerička tastatura"</string>
+    <string name="dialpad_title" msgid="3746259645005208554">"Brojčanik"</string>
     <!-- no translation found for tab_config_default_value (993008650601917964) -->
     <skip />
     <string name="call_log_header_today" msgid="2069013936632793214">"Danas"</string>

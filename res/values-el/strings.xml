@@ -72,7 +72,7 @@
     <string name="swap_call_label" msgid="309322319645637302">"Εναλλαγή κλήσεων"</string>
     <string name="setting_title" msgid="1296639422364732365">"Ρυθμίσεις"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Οθόνη έναρξης"</string>
-    <string name="sort_order_title" msgid="975104366728292702">"Παραγγελία επαφής"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"Σειρά επαφών"</string>
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"Συνδεδεμένο τηλέφωνο"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Απόρρητο"</string>
     <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Εμφάνιση ειδοποιήσεων κλήσεων μόνο σε σύμπλεγμα"</string>

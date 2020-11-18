@@ -33,7 +33,7 @@
     <string name="audio_route_vehicle" msgid="6250361588960528769">"Spika za gari"</string>
     <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Spika ya simu"</string>
     <string name="audio_route_handset" msgid="9133081623895172144">"Simu"</string>
-    <string name="dial_a_number" msgid="7432322177412387160">"Pigia nambari"</string>
+    <string name="dial_a_number" msgid="7432322177412387160">"Bonyeza nambari"</string>
     <string name="call_history_title" msgid="7997887846276371553">"Za hivi majuzi"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Anwani"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Vipendwa"</string>

@@ -71,8 +71,8 @@
     <string name="onhold_call_separator" msgid="2357788035385100805">"•"</string>
     <string name="swap_call_label" msgid="309322319645637302">"କଲଗୁଡ଼ିକୁ ସ୍ୱିଚ୍ କରନ୍ତୁ"</string>
     <string name="setting_title" msgid="1296639422364732365">"ସେଟିଂସ୍"</string>
-    <string name="pref_start_page_title" msgid="1953465507368478503">"ସ୍କ୍ରିନ୍ ଆରମ୍ଭ କରନ୍ତୁ"</string>
-    <string name="sort_order_title" msgid="975104366728292702">"ଯୋଗାଯୋଗ କ୍ରମରେ ସଜାନ୍ତୁ"</string>
+    <string name="pref_start_page_title" msgid="1953465507368478503">"ଆରମ୍ଭ ସ୍କ୍ରିନ୍"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"ଯୋଗାଯୋଗ କ୍ରମ"</string>
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"ସଂଯୁକ୍ତ ଫୋନ୍"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"ଗୋପନୀୟତା"</string>
     <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"କ୍ଲଷ୍ଟରରେ କଲ୍ ଆଲର୍ଟଗୁଡ଼ିକ କେବଳ ଦେଖାନ୍ତୁ"</string>
