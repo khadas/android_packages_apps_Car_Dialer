@@ -22,7 +22,7 @@
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Chcete-li přijímat a uskutečňovat hovory, zapněte Bluetooth."</string>
     <string name="bluetooth_unpaired" msgid="1600552386483652892">"Chcete-li uskutečňovat a přijímat hovory, spárujte telefon s autem."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Připojit k Bluetooth"</string>
-    <string name="emergency_button_text" msgid="3467659545392931727">"Stav nouze"</string>
+    <string name="emergency_button_text" msgid="3467659545392931727">"Tísňové volání"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Tísňové volání"</string>
     <string name="error_contact_deleted" msgid="6356539067659368396">"Tento kontakt byl zřejmě smazán."</string>
     <string name="error_invalid_phone_number" msgid="5349049631580646136">"Toto číslo nelze vytočit. Zkontrolujte ho a zkuste to znovu."</string>
