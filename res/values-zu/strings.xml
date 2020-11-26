@@ -20,7 +20,7 @@
     <string name="no_hfp" msgid="7371139867234667691">"Ukuze uqedele ikholi yakho, qala ngokuxhuma ifoni yakho emotweni yakho nge-Bluetooth."</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"I-Bluetooth ayitholakali."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Ukuze wenze noma wamukele amakholi, vula i-Bluetooth."</string>
-    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Ukuze wenze noma wamukele amakholi, bhanqa ifoni yakho nemoto."</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Ukuze wenze noma wamukele amakholi, bhangqa ifoni yakho nemoto."</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Xhumeka ku-Bluetooth"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Isimo esiphuthumayo"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Ikholi ephuthumayo"</string>

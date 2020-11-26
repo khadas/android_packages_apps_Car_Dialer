@@ -34,7 +34,7 @@
     <string name="audio_route_phone_speaker" msgid="4608904003558187244">"ဖုန်းစပီကာ"</string>
     <string name="audio_route_handset" msgid="9133081623895172144">"ဖုန်း"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"နံပါတ်ကို ခေါ်ဆိုရန်"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"အကြိုက်ဆုံး"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"အသုံးအများဆုံး"</string>
     <string name="call_history_title" msgid="7997887846276371553">"လတ်တလော"</string>
     <string name="contacts_title" msgid="9201954388634537346">"အဆက်အသွယ်များ"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"နံပါတ်ကွက်"</string>
@@ -66,7 +66,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"ဖုန်းကိုင်ထားသည်"</string>
     <string name="setting_title" msgid="1296639422364732365">"ဆက်တင်များ"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"စတင်မှု ဖန်သားပြင်"</string>
-    <string name="sort_order_title" msgid="975104366728292702">"အဆက်အသွယ် အစီအစဉ်"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"အဆက်အသွယ် အစဉ်"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"ရှေ့အမည်"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"နောက်အမည်"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"ဖုန်းခေါ်ဆိုမှု အသံ ထုတ်ရန်နေရာ-"</string>

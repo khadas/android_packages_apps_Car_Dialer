@@ -37,7 +37,7 @@
     <string name="favorites_title" msgid="4767723901530488145">"Таңдаулылар"</string>
     <string name="call_history_title" msgid="7997887846276371553">"Соңғылар"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Контактілер"</string>
-    <string name="dialpad_title" msgid="3746259645005208554">"Нөмір теру тақтасы"</string>
+    <string name="dialpad_title" msgid="3746259645005208554">"Теру тақтасы"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"Бүгін"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Кеше"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Бұрынғы"</string>

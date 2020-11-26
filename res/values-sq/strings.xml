@@ -34,7 +34,7 @@
     <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Altoparlanti i telefonit"</string>
     <string name="audio_route_handset" msgid="9133081623895172144">"Telefoni"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Formo një numër"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"Të preferuarat"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"Të preferuarit"</string>
     <string name="call_history_title" msgid="7997887846276371553">"Të fundit"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Kontaktet"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Blloku i formimit të numrit"</string>

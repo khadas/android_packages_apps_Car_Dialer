@@ -31,7 +31,7 @@
     <string name="answer_call" msgid="3272474440561548115">"উত্তর দিন"</string>
     <string name="call_back" msgid="5745638356098600872">"কল ব্যাক করুন"</string>
     <string name="audio_route_vehicle" msgid="6250361588960528769">"গাড়ির স্পিকার"</string>
-    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"ফেনের স্পিকার"</string>
+    <string name="audio_route_phone_speaker" msgid="4608904003558187244">"ফোনের স্পিকার"</string>
     <string name="audio_route_handset" msgid="9133081623895172144">"ফোন"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"নম্বর ডায়াল করুন"</string>
     <string name="favorites_title" msgid="4767723901530488145">"পছন্দসই"</string>

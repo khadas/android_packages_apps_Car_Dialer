@@ -36,7 +36,7 @@
     <string name="dial_a_number" msgid="7432322177412387160">"Szám tárcsázása"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Kedvencek"</string>
     <string name="call_history_title" msgid="7997887846276371553">"Legutóbbiak"</string>
-    <string name="contacts_title" msgid="9201954388634537346">"Címtár"</string>
+    <string name="contacts_title" msgid="9201954388634537346">"Névjegyek"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Tárcsázó"</string>
     <string name="call_log_header_today" msgid="2069013936632793214">"Ma"</string>
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Tegnap"</string>

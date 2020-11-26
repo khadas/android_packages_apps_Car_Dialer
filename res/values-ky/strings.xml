@@ -20,7 +20,7 @@
     <string name="no_hfp" msgid="7371139867234667691">"Чалуу үчүн адегенде Bluetooth аркылуу телефонуңузду унаа менен байланыштырыңыз."</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"Bluetooth жеткиликсиз."</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"Телефон чалуу үчүн Bluetooth\'ду күйгүзүңүз."</string>
-    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Телефон чалуу үчүн телефонуңузду унаа менен жупташтырыңыз."</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"Телефон чалуу же жооп берүү үчүн телефонуңузду унаага байланыштырыңыз"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"Bluetooth\'га туташуу"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"Тез жардам"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"Шашылыш чалуу"</string>
@@ -34,7 +34,7 @@
     <string name="audio_route_phone_speaker" msgid="4608904003558187244">"Телефондун динамиги"</string>
     <string name="audio_route_handset" msgid="9133081623895172144">"Телефон"</string>
     <string name="dial_a_number" msgid="7432322177412387160">"Номер терүү"</string>
-    <string name="favorites_title" msgid="4767723901530488145">"Сүйүктүүлөр"</string>
+    <string name="favorites_title" msgid="4767723901530488145">"Тандалмалар"</string>
     <string name="call_history_title" msgid="7997887846276371553">"Акыркылар"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Байланыштар"</string>
     <string name="dialpad_title" msgid="3746259645005208554">"Тергич"</string>
@@ -42,13 +42,13 @@
     <string name="call_log_header_yesterday" msgid="4613686845163357847">"Кечээ"</string>
     <string name="call_log_header_older" msgid="3971634717537073179">"Эскирээк"</string>
     <string name="call_logs_empty" msgid="3084720078894119049">"Акыркылар жок"</string>
-    <string name="contact_list_empty" msgid="4225504548491888138">"Байланыш жок"</string>
+    <string name="contact_list_empty" msgid="4225504548491888138">"Интернет жок"</string>
     <string name="available_after_sync" msgid="33765918799197782">"Шайкештирүүдөн кийин жеткиликтүү. Телефонуңуздагы байланыштарды бөлүшүүгө уруксат берилгенин текшериңиз."</string>
-    <string name="favorites_empty" msgid="5794510741132758130">"Сүйүктүүлөр тизмеси бош"</string>
+    <string name="favorites_empty" msgid="5794510741132758130">"Тандалмалар тизмеси бош"</string>
     <string name="no_favorites_added" msgid="2359050103464783907">"Азырынча бир да сүйүктүү байланышыңыз жок"</string>
     <string name="add_favorite_button" msgid="7914955940249767808">"Сүйүктүү номер кошуу"</string>
-    <string name="search_title" msgid="5412680850141871664">"Байланыштарды издеңиз"</string>
-    <string name="search_hint" msgid="3099066132607042439">"Байланыштарды издеңиз"</string>
+    <string name="search_title" msgid="5412680850141871664">"Байланыштарды издөө"</string>
+    <string name="search_hint" msgid="3099066132607042439">"Байланыштарды издөө"</string>
     <string name="type_multiple" msgid="3402949522797441236">"Бир нече"</string>
     <string name="select_number_dialog_title" msgid="5770700626013782205">"Телефон номерин тандоо"</string>
     <string name="select_number_dialog_just_once_button" msgid="1814381354393374660">"Бир жолу гана"</string>
@@ -66,7 +66,7 @@
     <string name="onhold_call_label" msgid="1937027519810985499">"Күтүү режиминде"</string>
     <string name="setting_title" msgid="1296639422364732365">"Жөндөөлөр"</string>
     <string name="pref_start_page_title" msgid="1953465507368478503">"Баштоо экраны"</string>
-    <string name="sort_order_title" msgid="975104366728292702">"Байланыштын ирети"</string>
+    <string name="sort_order_title" msgid="975104366728292702">"Байланыштардын ирети"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Аты"</string>
     <string name="family_name_first_title" msgid="7721976826282427987">"Фамилиясы"</string>
     <string name="audio_route_dialog_title" msgid="2904553846970171054">"Төмөнкүгө телефон чалуу:"</string>

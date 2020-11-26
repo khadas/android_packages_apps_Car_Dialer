@@ -20,7 +20,7 @@
     <string name="no_hfp" msgid="7371139867234667691">"要完成通话，请先通过蓝牙将您的手机连接到汽车。"</string>
     <string name="bluetooth_unavailable" msgid="5258854283739591569">"蓝牙不可用。"</string>
     <string name="bluetooth_disabled" msgid="1275246762067907843">"要拨打或接听电话，请开启蓝牙。"</string>
-    <string name="bluetooth_unpaired" msgid="1600552386483652892">"要拨打或接听电话，请将您的手机与汽车配对。"</string>
+    <string name="bluetooth_unpaired" msgid="1600552386483652892">"要拨打或接听电话，请将您的手机与车辆配对。"</string>
     <string name="connect_bluetooth_button_text" msgid="293188695227298042">"连接到蓝牙"</string>
     <string name="emergency_button_text" msgid="3467659545392931727">"紧急"</string>
     <string name="emergency_call_description" msgid="6700161437750325693">"紧急呼叫"</string>
