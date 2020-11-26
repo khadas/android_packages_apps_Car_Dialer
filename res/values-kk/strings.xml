@@ -37,7 +37,7 @@
     <string name="call_history_title" msgid="7997887846276371553">"Соңғылар"</string>
     <string name="contacts_title" msgid="9201954388634537346">"Контактілер"</string>
     <string name="favorites_title" msgid="4767723901530488145">"Таңдаулылар"</string>
-    <string name="dialpad_title" msgid="3746259645005208554">"Нөмір теру тақтасы"</string>
+    <string name="dialpad_title" msgid="3746259645005208554">"Теру тақтасы"</string>
     <!-- no translation found for tab_config_default_value (993008650601917964) -->
     <skip />
     <string name="call_log_header_today" msgid="2069013936632793214">"Бүгін"</string>
@@ -58,7 +58,7 @@
     <string name="primary_number_description" msgid="1211198148918329509">"<xliff:g id="LABEL">%1$s</xliff:g> , әдепкі нөмір"</string>
     <string name="favorite_number_description" msgid="8175362259853807385">"Таңдаулы нөмір -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
     <string name="local_favorite_number_description" msgid="3723823871011997275">"Жергілікті таңдаулы нөмір -  <xliff:g id="LABEL">%1$s</xliff:g>"</string>
-    <string name="phone_favorites" msgid="2257447553252980575">"Таңдаулы нөмірлер"</string>
+    <string name="phone_favorites" msgid="2257447553252980575">"Таңдаулылар"</string>
     <string name="local_favorites" msgid="4954852813126882412">"Жергілікті таңдаулы нөмірлер"</string>
     <string name="no_phone_numbers" msgid="8738691115921148445">"Телефон нөмірлері жоқ"</string>
     <string name="in_call_notification_channel_name" msgid="1978093630512401778">"Келген қоңырау туралы хабарландыру"</string>
