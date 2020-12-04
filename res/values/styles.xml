@@ -60,6 +60,7 @@
     <style name="DialpadPrimaryButton">
         <item name="android:layout_width">@dimen/fab_button_size</item>
         <item name="android:layout_height">@dimen/fab_button_size</item>
+        <item name="android:background">@drawable/dialer_ripple_background</item>
         <item name="android:elevation">@dimen/call_fab_elevation</item>
         <item name="android:scaleType">center</item>
     </style>

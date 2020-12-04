@@ -76,6 +76,7 @@ limitations under the License.
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/in_call_controller_bar_margin_bottom"
+            app:defaultFocus="@+id/end_call_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
