@@ -60,34 +60,37 @@ class ToolbarTitleLiveData extends MediatorLiveData<String> {
         mHfpDeviceListLiveData = UiBluetoothMonitor.get().getHfpDeviceListLiveData();
 
         addSource(mToolbarTitleModeLiveData, this::updateToolbarTitle);
+        addSource(mHfpDeviceListLiveData, this::updateDeviceName);
     }
 
     private void updateToolbarTitle(int toolbarTitleMode) {
         switch (toolbarTitleMode) {
             case ToolbarTitleMode.NONE:
-                removeSource(mHfpDeviceListLiveData);
                 setValue(null);
                 return;
             case ToolbarTitleMode.DEVICE_NAME:
-                addSource(mHfpDeviceListLiveData, this::updateDeviceName);
+                updateDeviceName(mHfpDeviceListLiveData.getValue());
                 return;
             case ToolbarTitleMode.APP_NAME:
             default:
-                removeSource(mHfpDeviceListLiveData);
                 setValue(mContext.getString(R.string.phone_app_name));
                 return;
         }
     }
 
     private void updateDeviceName(List<BluetoothDevice> hfpDeviceList) {
-        // When there is no hfp device connected, use the app name as title.
-        if (hfpDeviceList == null || hfpDeviceList.isEmpty()) {
-            setValue(mContext.getString(R.string.phone_app_name));
-            return;
-        }
+        Integer toolbarTitleMode = mToolbarTitleModeLiveData.getValue();
+        if (toolbarTitleMode != null
+                && ToolbarTitleMode.DEVICE_NAME == toolbarTitleMode.intValue()) {
+            // When there is no hfp device connected, use the app name as title.
+            if (hfpDeviceList == null || hfpDeviceList.isEmpty()) {
+                setValue(mContext.getString(R.string.phone_app_name));
+                return;
+            }
 
-        // TODO: handle multi-HFP cases. Right now return the first connected device in list.
-        BluetoothDevice bluetoothDevice = hfpDeviceList.get(0);
-        setValue(bluetoothDevice.getName());
+            // TODO: handle multi-HFP cases. Right now return the first connected device in list.
+            BluetoothDevice bluetoothDevice = hfpDeviceList.get(0);
+            setValue(bluetoothDevice.getName());
+        }
     }
 }
