@@ -132,6 +132,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
         L.d(TAG, "onCreate mode: %s", mMode);
         mToneGenerator = new ToneGenerator(AudioManager.STREAM_DTMF, TONE_RELATIVE_VOLUME);
 
+        mAdapter.setOnItemClickedListener(item -> clearDialedNumber());
         mTypeDownResultsViewModel = ViewModelProviders.of(this).get(
                 TypeDownResultsViewModel.class);
         mTypeDownResultsViewModel.getContactSearchResults().observe(this,
