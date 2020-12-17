@@ -66,7 +66,6 @@
     <string name="missed_call_notification_channel_name" msgid="1135686963409691772">"Notification d\'appel manqué"</string>
     <plurals name="notification_missed_call" formatted="false" msgid="1018870358427938752">
       <item quantity="one">Appel manqué (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
-      <item quantity="many">Missed calls(<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
       <item quantity="other">Appels manqués (<xliff:g id="NUMBER">%1$d</xliff:g>) </item>
     </plurals>
     <string name="onhold_call_separator" msgid="2357788035385100805">"•"</string>
