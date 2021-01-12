@@ -30,6 +30,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.telecom.CallAudioState;
 
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.notification.InCallNotificationController;
 import com.android.car.dialer.notification.MissedCallNotificationController;
 import com.android.car.dialer.telecom.InCallServiceImpl;
@@ -51,6 +52,7 @@ public class TestDialerApplication extends Application {
         super.onCreate();
         shadowOf(this).setSystemService(
                 Context.NOTIFICATION_SERVICE, mock(NotificationManager.class));
+        UiBluetoothMonitor.init(this);
         InCallNotificationController.init(this);
         MissedCallNotificationController.init(this);
 
