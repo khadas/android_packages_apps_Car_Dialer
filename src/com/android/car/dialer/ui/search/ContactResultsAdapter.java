@@ -86,7 +86,7 @@ public class ContactResultsAdapter extends ContentLimitingAdapter<ContactResultV
     public ContactResultViewHolder onCreateViewHolderImpl(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.contact_result, parent, false);
-        return new ContactResultViewHolder(view, mOnShowContactDetailListener);
+        return new ContactResultViewHolder(view, mOnShowContactDetailListener, null);
     }
 
     @Override
