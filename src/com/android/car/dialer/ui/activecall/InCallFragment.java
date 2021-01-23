@@ -40,9 +40,11 @@ import com.android.car.telephony.common.CallDetail;
 import com.android.car.telephony.common.TelecomUtils;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -135,24 +137,26 @@ public abstract class InCallFragment extends Fragment {
                 Glide.with(this)
                         .load(info.getAvatarUri())
                         .apply(new RequestOptions().centerCrop().error(letterTile))
-                        .into(new SimpleTarget<Drawable>() {
+                        .listener(new RequestListener<Drawable>() {
                             @Override
-                            public void onResourceReady(Drawable resource,
-                                    Transition<? super Drawable> glideAnimation) {
-                                mBackgroundImage.setAlpha(getResources().getFloat(
-                                        R.dimen.config_background_image_alpha));
-                                mBackgroundImage.setBackgroundDrawable(resource, false);
-                                mAvatarView.setImageDrawable(resource);
-                            }
-
-                            @Override
-                            public void onLoadFailed(Drawable errorDrawable) {
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                    Target<Drawable> target, boolean isFirstResource) {
                                 mBackgroundImage.setAlpha(getResources().getFloat(
                                         R.dimen.config_background_image_error_alpha));
                                 mBackgroundImage.setBackgroundColor(letterTile.getColor());
-                                mAvatarView.setImageDrawable(letterTile);
+                                return false;
                             }
-                        });
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model,
+                                    Target<Drawable> target, DataSource dataSource,
+                                    boolean isFirstResource) {
+                                mBackgroundImage.setAlpha(getResources().getFloat(
+                                        R.dimen.config_background_image_alpha));
+                                mBackgroundImage.setBackgroundDrawable(resource, false);
+                                return false;
+                            }
+                        }).into(mAvatarView);
             }, getContext().getMainExecutor());
     }
 
