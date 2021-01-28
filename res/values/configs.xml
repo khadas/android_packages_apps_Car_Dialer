@@ -66,4 +66,9 @@
     <!-- A config determines whether to show user profile for input number only when type down is
     not showing. This config works only when config_show_type_down_list_on_dialpad is false. -->
     <bool name="config_show_detailed_user_profile_on_dialpad">false</bool>
+
+    <!-- Maximum allowed digits to dial, when "no dialpad" UXR restriction is enforced. If
+     the parameter is set to "0", the dialing is restricted entirely, when the restriction is
+     in effect. "-1" or any other negative value means "ignore no dialpad" restriction. -->
+    <integer name="config_no_dialpad_uxr_max_allow_digits">-1</integer>
 </resources>
