@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -58,7 +59,18 @@ public class OngoingCallFragment extends InCallFragment {
         inCallViewModel.getCallStateAndConnectTime().observe(this, this::updateCallDescription);
 
         mDialpadState = inCallViewModel.getDialpadOpenState();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                if (mDialpadState.getValue()) {
+                    mDialpadState.setValue(Boolean.FALSE);
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         mDialpadState.observe(this, isDialpadOpen -> {
+            callback.setEnabled(isDialpadOpen);
             if (isDialpadOpen) {
                 onOpenDialpad();
             } else {
