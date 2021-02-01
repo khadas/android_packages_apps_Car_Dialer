@@ -19,6 +19,7 @@ package com.android.car.dialer.ui.search;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,6 +68,8 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
 
     private RecyclerView.OnScrollListener mOnScrollChangeListener;
     private ToolbarController mToolbar;
+    @Nullable
+    private RecyclerView mToolbarSearchResultsView;
 
     private LifeCycleObserverUxrContentLimiter mUxrContentLimiter;
 
@@ -120,6 +123,9 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
             }
         };
         getRecyclerView().addOnScrollListener(mOnScrollChangeListener);
+        if (mToolbarSearchResultsView != null) {
+            mToolbarSearchResultsView.setAdapter(mAdapter);
+        }
 
         mUxrContentLimiter.setAdapter(mAdapter);
     }
@@ -138,6 +144,18 @@ public class ContactResultsFragment extends DialerListBaseFragment implements
         mToolbar.registerOnSearchListener(this);
         mToolbar.setSearchIcon(R.drawable.ic_app_icon);
         setSearchQuery(mContactResultsViewModel.getSearchQuery());
+
+        if (mToolbar.canShowSearchResultsView()) {
+            mToolbarSearchResultsView = new RecyclerView(getContext());
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            mToolbarSearchResultsView.setLayoutParams(params);
+            mToolbarSearchResultsView.setLayoutManager(createLayoutManager());
+            mToolbarSearchResultsView.setAdapter(mAdapter);
+            mToolbarSearchResultsView.setBackground(
+                    getContext().getDrawable(R.drawable.car_ui_ime_wide_screen_background));
+            mToolbar.setSearchResultsView(mToolbarSearchResultsView);
+        }
     }
 
     /** Sets the search query that should be used to filter contacts. */
