@@ -16,6 +16,8 @@
 
 package com.android.car.dialer.ui.dialpad;
 
+import static com.android.car.dialer.ui.dialpad.DialpadRestrictionViewModel.shouldEnforceNoDialpadRestriction;
+
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -28,8 +30,10 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.car.dialer.R;
+import com.android.car.dialer.ui.dialpad.DialpadRestrictionViewModel.DialpadUxrMode;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -76,7 +80,6 @@ public class KeypadFragment extends Fragment {
         void onKeypadKeyUp(@DialKeyCode int keycode);
     }
 
-
     private KeypadCallback mKeypadCallback;
 
     @Override
@@ -90,7 +93,30 @@ public class KeypadFragment extends Fragment {
 
         View keypadView = inflater.inflate(R.layout.keypad, container, false);
         setupKeypadClickListeners(keypadView);
+
+        if (shouldEnforceNoDialpadRestriction(getContext())) {
+            DialpadRestrictionViewModel restrictionViewModel =
+                    new ViewModelProvider(getActivity()).get(DialpadRestrictionViewModel.class);
+
+            boolean isInCallKeypad = getParentFragment() instanceof InCallDialpadFragment;
+            restrictionViewModel.getDialpadMode().observe(
+                    this,
+                    dialpadUxrMode -> {
+                        if (isInCallKeypad) {
+                            // Disable the keypad in-call, if any restriction level is active.
+                            setKeypadEnabled(dialpadUxrMode == DialpadUxrMode.UNRESTRICTED);
+                        } else {
+                            setKeypadEnabled(isDialingAllowed(dialpadUxrMode));
+                        }
+                    });
+        }
+
         return keypadView;
+    }
+
+    private boolean isDialingAllowed(DialpadUxrMode dialpadUxrMode) {
+        return dialpadUxrMode != DialpadUxrMode.DISABLED
+                && dialpadUxrMode != DialpadUxrMode.RESTRICTED_LIMIT_REACHED;
     }
 
     /**
@@ -160,6 +186,13 @@ public class KeypadFragment extends Fragment {
             v.setOnLongClickListener(clickListener);
             v.setOnKeyListener(clickListener);
             v.setOnFocusChangeListener(clickListener);
+        }
+    }
+
+    private void setKeypadEnabled(boolean enabled) {
+        View rootView = getView();
+        for (int i = 0; i < sRIdMap.size(); i++) {
+            rootView.findViewById(sRIdMap.valueAt(i)).setEnabled(enabled);
         }
     }
 }
