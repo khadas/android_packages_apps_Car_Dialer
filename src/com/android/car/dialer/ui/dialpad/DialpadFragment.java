@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.ui.dialpad;
 
+import android.annotation.CallSuper;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -32,12 +33,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.apps.common.util.ViewUtils;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.UiCallManager;
+import com.android.car.dialer.ui.dialpad.DialpadRestrictionViewModel.DialpadUxrMode;
 import com.android.car.dialer.ui.view.ContactAvatarOutputlineProvider;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
@@ -94,6 +97,9 @@ public class DialpadFragment extends AbstractDialpadFragment {
     @Nullable
     private ImageView mAvatar;
     private ImageButton mDeleteButton;
+    @Nullable
+    private View mRestrictedDialingLabel;
+
     private int mMode;
     private boolean mHasTypeDown;
 
@@ -166,6 +172,7 @@ public class DialpadFragment extends AbstractDialpadFragment {
         if (mAvatar != null) {
             mAvatar.setOutlineProvider(ContactAvatarOutputlineProvider.get());
         }
+        mRestrictedDialingLabel = rootView.findViewById(R.id.restricted_dialing_mode_label);
 
         View callButton = rootView.findViewById(R.id.call_button);
         callButton.setOnClickListener(v -> {
@@ -246,23 +253,34 @@ public class DialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    void presentDialedNumber(@NonNull StringBuffer number) {
+    void presentDialedNumber(@NonNull String number, @NonNull DialpadUxrMode dialpadUxrMode) {
         if (getView() == null) {
             return;
         }
 
         if (number.length() == 0) {
             mTitleView.setGravity(Gravity.CENTER);
-            mTitleView.setText(
-                    mMode == MODE_DIAL ? R.string.dial_a_number
-                            : R.string.emergency_call_description);
+            if (dialpadUxrMode == DialpadUxrMode.UNRESTRICTED) {
+                mTitleView.setText(
+                        mMode == MODE_DIAL ? R.string.dial_a_number
+                                : R.string.emergency_call_description);
+            } else {
+                @StringRes int messageId;
+                if (mMode == MODE_EMERGENCY || dialpadUxrMode == DialpadUxrMode.RESTRICTED) {
+                    messageId = R.string.emergency_call_description;
+                } else if (dialpadUxrMode == DialpadUxrMode.DISABLED) {
+                    messageId = R.string.dialing_disabled_warning;
+                } else {
+                    messageId = R.string.dial_a_number;
+                }
+                mTitleView.setText(messageId);
+            }
             ViewUtils.setVisible(mDeleteButton, false);
         } else {
             mTitleView.setGravity(
                     getResources().getInteger(R.integer.config_dialed_number_gravity));
             if (number.length() <= MAX_DIAL_NUMBER) {
-                mTitleView.setText(
-                        TelecomUtils.getFormattedNumber(getContext(), number.toString()));
+                mTitleView.setText(TelecomUtils.getFormattedNumber(getContext(), number));
             } else {
                 mTitleView.setText(number.substring(number.length() - MAX_DIAL_NUMBER));
             }
@@ -272,9 +290,13 @@ public class DialpadFragment extends AbstractDialpadFragment {
         if (mHasTypeDown) {
             resetContactInfo();
             ViewUtils.setVisible(mRecyclerView, true);
-            mTypeDownResultsViewModel.setSearchQuery(number.toString());
+
+            // In case of emergency or restricted dialing clean the type-down.
+            mTypeDownResultsViewModel.setSearchQuery(
+                    mMode == MODE_DIAL && dialpadUxrMode == DialpadUxrMode.UNRESTRICTED
+                            ? number : "");
         } else {
-            presentContactInfo(number.toString());
+            presentContactInfo(number);
         }
     }
 
@@ -305,5 +327,19 @@ public class DialpadFragment extends AbstractDialpadFragment {
     private void resetContactInfo() {
         ViewUtils.setVisible(mLabel, false);
         ViewUtils.setVisible(mAvatar, false);
+    }
+
+    @CallSuper
+    @Override
+    protected void onDialpadUxrModeChange(DialpadUxrMode dialpadUxrMode) {
+        super.onDialpadUxrModeChange(dialpadUxrMode);
+
+        boolean isRestrictedOrEmergencyMode =
+                mMode == MODE_EMERGENCY ||  dialpadUxrMode != DialpadUxrMode.UNRESTRICTED;
+        mTitleView.setTextAppearance(isRestrictedOrEmergencyMode
+                ? R.style.TextAppearance_EmergencyDialNumber : R.style.TextAppearance_DialNumber);
+
+        ViewUtils.setVisible(
+                mRestrictedDialingLabel, dialpadUxrMode != DialpadUxrMode.UNRESTRICTED);
     }
 }
