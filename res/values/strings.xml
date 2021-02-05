@@ -246,4 +246,9 @@
     <string name="ongoing_conf_title">Conference</string>
     <string name="ongoing_conf_title_format">%1$s (%2$d) -\u0020</string>
 
+    <!-- Dialing disabled warning [CHAR LIMIT=40] -->
+    <string name="dialing_disabled_warning">Dialing disabled</string>
+    <!-- Restricted dialing mode description -->
+    <string name="restricted_dialing_mode_label">Dialpad usage is restricted while driving</string>
+
 </resources>

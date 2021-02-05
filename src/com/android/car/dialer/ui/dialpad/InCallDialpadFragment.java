@@ -33,6 +33,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.activecall.InCallViewModel;
+import com.android.car.dialer.ui.dialpad.DialpadRestrictionViewModel.DialpadUxrMode;
 import com.android.car.telephony.common.TelecomUtils;
 import com.android.car.ui.toolbar.ToolbarController;
 
@@ -85,7 +86,7 @@ public class InCallDialpadFragment extends AbstractDialpadFragment {
     }
 
     @Override
-    void presentDialedNumber(@NonNull StringBuffer number) {
+    void presentDialedNumber(@NonNull String number, @NonNull DialpadUxrMode dialpadUxrMode) {
         if (getActivity() == null) {
             return;
         }
