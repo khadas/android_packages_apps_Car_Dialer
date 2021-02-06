@@ -21,6 +21,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:padding="8dp"
+    android:gravity="center"
     android:textAppearance="@style/TextAppearance.Body2"
     android:text="@string/restricted_dialing_mode_label"
     android:alpha="0.8"
