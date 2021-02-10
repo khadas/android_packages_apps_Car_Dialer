@@ -138,6 +138,8 @@ public class DialpadFragment extends AbstractDialpadFragment {
         L.d(TAG, "onCreate mode: %s", mMode);
         mToneGenerator = new ToneGenerator(AudioManager.STREAM_DTMF, TONE_RELATIVE_VOLUME);
 
+        int limit = getResources().getInteger(R.integer.config_type_down_list_limit);
+        mAdapter.setUnrestrictedItemCount(limit);
         mAdapter.setOnItemClickedListener(item -> clearDialedNumber());
         mTypeDownResultsViewModel = ViewModelProviders.of(this).get(
                 TypeDownResultsViewModel.class);
