@@ -32,12 +32,26 @@ public class TypeDownResultsAdapter extends ContactResultsAdapter {
 
     private OnItemClickedListener mOnItemClickedListener;
 
+    private int mUnrestrictedItemCount = Integer.MAX_VALUE;
+
     public TypeDownResultsAdapter() {
         super(null);
     }
 
     public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
         mOnItemClickedListener = onItemClickedListener;
+    }
+
+    /**
+     * Sets the unrestricted item count. This sets the limit for when UXR is not enforced.
+     */
+    public void setUnrestrictedItemCount(int limit) {
+        mUnrestrictedItemCount = limit < 0 ? Integer.MAX_VALUE : limit;
+    }
+
+    @Override
+    public int getUnrestrictedItemCount() {
+        return Math.min(mUnrestrictedItemCount, getContactResults().size());
     }
 
     @Override
