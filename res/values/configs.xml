@@ -71,4 +71,8 @@
      the parameter is set to "0", the dialing is restricted entirely, when the restriction is
      in effect. "-1" or any other negative value means "ignore no dialpad" restriction. -->
     <integer name="config_no_dialpad_uxr_max_allow_digits">-1</integer>
+
+    <!-- Maximum number of unrestricted items in Dialpad typedown list when UXR is not enforced.
+     Any negative value is unlimited. -->
+    <integer name="config_type_down_list_limit">-1</integer>
 </resources>
