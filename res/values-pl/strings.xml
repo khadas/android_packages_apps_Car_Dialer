@@ -88,8 +88,6 @@
     <string name="audio_route_dialog_subtitle" msgid="8780526104805330121"></string>
     <string name="ongoing_conf_title" msgid="4161590966144000887">"Konferencja"</string>
     <string name="ongoing_conf_title_format" msgid="7667048745156395220">"%1$s (%2$d) – "</string>
-    <!-- no translation found for dialing_disabled_warning (8094136040809498594) -->
-    <skip />
-    <!-- no translation found for restricted_dialing_mode_label (2439439835180117206) -->
-    <skip />
+    <string name="dialing_disabled_warning" msgid="8094136040809498594">"Wybieranie numeru jest wyłączone"</string>
+    <string name="restricted_dialing_mode_label" msgid="2439439835180117206">"Nie można korzystać z klawiatury podczas jazdy"</string>
 </resources>
