@@ -30,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.android.car.apps.common.BackgroundImageView;
 import com.android.car.apps.common.LetterTileDrawable;
@@ -105,6 +106,12 @@ public abstract class InCallFragment extends Fragment {
         mPhoneNumberView.setVisibility(View.GONE);
         mAvatarView.setImageDrawable(mDefaultAvatar);
 
+        InCallViewModel inCallViewModel = ViewModelProviders.of(this).get(
+                InCallViewModel.class);
+        inCallViewModel.getContactListLiveData().observe(this, contacts -> updateProfile(number));
+    }
+
+    private void updateProfile(String number) {
         mPhoneNumberInfoFuture = TelecomUtils.getPhoneNumberInfo(getContext(), number)
             .thenAcceptAsync((info) -> {
                 if (getContext() == null) {
