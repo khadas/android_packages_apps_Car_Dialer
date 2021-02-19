@@ -30,12 +30,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.android.car.arch.common.LiveDataFunctions;
+import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.AudioRouteLiveData;
 import com.android.car.dialer.livedata.CallDetailLiveData;
 import com.android.car.dialer.livedata.CallStateLiveData;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.telecom.LocalCallHandler;
 import com.android.car.telephony.common.CallDetail;
+import com.android.car.telephony.common.Contact;
+import com.android.car.telephony.common.InMemoryPhoneBook;
 
 import com.google.common.collect.Lists;
 
@@ -71,6 +74,8 @@ public class InCallViewModel extends AndroidViewModel {
     private LiveData<Long> mCallConnectTimeLiveData;
     private LiveData<Long> mSecondaryCallConnectTimeLiveData;
     private LiveData<Pair<Integer, Long>> mCallStateAndConnectTimeLiveData;
+    private LiveData<List<Contact>> mContactListLiveData;
+
     private final Context mContext;
 
     // Reuse the same instance so the callback won't be registered more than once.
@@ -161,6 +166,11 @@ public class InCallViewModel extends AndroidViewModel {
         mDialpadIsOpen.setValue(false);
 
         mShowOnholdCall = new ShowOnholdCallLiveData(mSecondaryCallLiveData, mDialpadIsOpen);
+
+        mContactListLiveData = LiveDataFunctions.switchMapNonNull(
+                UiBluetoothMonitor.get().getFirstHfpConnectedDevice(),
+                device -> InMemoryPhoneBook.get().getContactsLiveDataByAccount(
+                        device.getAddress()));
     }
 
     /** Merge primary and secondary calls into a conference */
@@ -260,6 +270,13 @@ public class InCallViewModel extends AndroidViewModel {
      */
     public LiveData<Integer> getAudioRoute() {
         return mAudioRouteLiveData;
+    }
+
+    /**
+     * Returns contact list.
+     */
+    public LiveData<List<Contact>> getContactListLiveData() {
+        return mContactListLiveData;
     }
 
     /**
