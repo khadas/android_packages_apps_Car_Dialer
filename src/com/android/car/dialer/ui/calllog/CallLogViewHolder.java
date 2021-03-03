@@ -86,7 +86,7 @@ public class CallLogViewHolder extends RecyclerView.ViewHolder {
         mCallCountTextView.setText(mCallTypeIconsView.getCallCountText());
         mCallCountTextView.setVisibility(
                 mCallTypeIconsView.getCallCountText() == null ? View.GONE : View.VISIBLE);
-        mTextView.setText(uiCallLog.getText());
+        mTextView.setText(uiCallLog.getText(mTextView.getContext()));
 
         if (uiCallLog.getMostRecentCallType() == CallHistoryLiveData.CallType.MISSED_TYPE) {
             mTitleView.setTextAppearance(R.style.TextAppearance_CallLogTitleMissedCall);
