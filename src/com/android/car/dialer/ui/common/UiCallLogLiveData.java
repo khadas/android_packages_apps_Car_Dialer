@@ -40,9 +40,6 @@ import com.android.car.telephony.common.PhoneCallLog;
 import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -59,7 +56,6 @@ import java.util.concurrent.Future;
 public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
     private static final String TAG = "CD.UiCallLogLiveData";
 
-    private static final String TYPE_AND_RELATIVE_TIME_JOINER = ", ";
     private final ExecutorService mExecutorService;
     private Future<?> mRunnableFuture;
     private Context mContext;
@@ -81,9 +77,7 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
         if (mRunnableFuture != null) {
             mRunnableFuture.cancel(true);
         }
-        Runnable runnable = () -> {
-            postValue(convert(callLogs));
-        };
+        Runnable runnable = () -> postValue(convert(callLogs));
         mRunnableFuture = mExecutorService.submit(runnable);
     }
 
@@ -105,25 +99,9 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
         for (Object object : uiCallLogs) {
             if (object instanceof UiCallLog) {
                 UiCallLog uiCallLog = (UiCallLog) object;
-                String secondaryText = uiCallLog.getText();
-                List<String> splittedSecondaryText = Splitter.on(
-                        TYPE_AND_RELATIVE_TIME_JOINER).splitToList(secondaryText);
-
-                String oldRelativeTime;
-                String type = "";
-                if (splittedSecondaryText.size() == 1) {
-                    oldRelativeTime = splittedSecondaryText.get(0);
-                } else if (splittedSecondaryText.size() == 2) {
-                    type = splittedSecondaryText.get(0);
-                    oldRelativeTime = splittedSecondaryText.get(1);
-                } else {
-                    return;
-                }
 
                 String newRelativeTime = getRelativeTime(uiCallLog.getMostRecentCallEndTimestamp());
-                if (!oldRelativeTime.equals(newRelativeTime)) {
-                    String newSecondaryText = getSecondaryText(type, newRelativeTime);
-                    uiCallLog.setText(newSecondaryText);
+                if (uiCallLog.setRelativeTime(newRelativeTime)) {
                     hasChanged = true;
                 }
             }
@@ -154,8 +132,9 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
             String relativeTime = getRelativeTime(phoneCallLog.getLastCallEndTimestamp());
             if (TelecomUtils.isVoicemailNumber(mContext, number)) {
                 String title = mContext.getString(R.string.voicemail);
-                UiCallLog uiCallLog = new UiCallLog(title, title, relativeTime, number, null,
+                UiCallLog uiCallLog = new UiCallLog(title, title, number, null,
                         phoneCallLog.getAllCallRecords());
+                uiCallLog.setRelativeTime(relativeTime);
                 uiCallLogs.add(uiCallLog);
                 continue;
             }
@@ -213,13 +192,12 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
             UiCallLog uiCallLog = new UiCallLog(
                     title,
                     altTitle == null ? title : altTitle,
-                    getSecondaryText(
-                            TextUtils.isEmpty(typeLabel) ? getType(phoneNumber) : typeLabel,
-                            relativeTime),
                     number,
                     contact,
                     phoneCallLog.getAllCallRecords());
 
+            uiCallLog.setRelativeTime(relativeTime);
+            uiCallLog.setLabel(TextUtils.isEmpty(typeLabel) ? getType(phoneNumber) : typeLabel);
             uiCallLogs.add(uiCallLog);
         }
         L.i(TAG, "phoneCallLog size: %d, uiCallLog size: %d",
@@ -234,14 +212,6 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
         return validTimestamp ? DateUtils.getRelativeTimeSpanString(
                 millis, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_RELATIVE).toString() : "";
-    }
-
-    private String getSecondaryText(@Nullable CharSequence type, String relativeTime) {
-        if (!TextUtils.isEmpty(type)) {
-            return Joiner.on(TYPE_AND_RELATIVE_TIME_JOINER).join(type, relativeTime);
-        } else {
-            return relativeTime;
-        }
     }
 
     private CharSequence getType(@Nullable PhoneNumber phoneNumber) {

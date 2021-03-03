@@ -251,4 +251,7 @@
     <!-- Restricted dialing mode description -->
     <string name="restricted_dialing_mode_label">Dialpad usage is restricted while driving</string>
 
+    <!-- Delimiter to join two unrelated strings together, a comma followed by a whitespace. Use case: join phone number label and phone call timestamp in Recents page, "Mobile, 4 days ago" for example. -->
+    <string name="comma_delimiter">,\u0020</string>
+
 </resources>
