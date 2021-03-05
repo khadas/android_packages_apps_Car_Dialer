@@ -246,6 +246,7 @@ public class UiCallManager {
                 if (currentCalls != null && !currentCalls.isEmpty()) {
                     if (audioRoute == CallAudioState.ROUTE_BLUETOOTH) {
                         bluetoothHeadsetClient.connectAudio(device);
+                        setMuted(false);
                     } else if ((audioRoute & CallAudioState.ROUTE_WIRED_OR_EARPIECE) != 0) {
                         bluetoothHeadsetClient.disconnectAudio(device);
                     }
