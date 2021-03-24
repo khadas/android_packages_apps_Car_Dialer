@@ -22,6 +22,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.CallLog;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -31,13 +32,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import com.android.car.arch.common.LiveDataFunctions;
-import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.bluetooth.UiBluetoothMonitor;
 import com.android.car.dialer.livedata.UnreadMissedCallLiveData;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.ui.TelecomActivity;
-import com.android.car.dialer.ui.TelecomPageTab;
 import com.android.car.telephony.common.PhoneCallLog;
 import com.android.car.telephony.common.TelecomUtils;
 
@@ -160,7 +159,7 @@ public final class MissedCallNotificationController {
                             .setAutoCancel(false);
 
                     if (!TextUtils.isEmpty(phoneNumber)) {
-                        builder.addAction(getAction(phoneNumber, R.string.call_back,
+                        builder.addAction(getAction(phoneNumber, tag, R.string.call_back,
                                 NotificationService.ACTION_CALL_BACK_MISSED));
                         // TODO: add action button to send message
                     }
@@ -176,6 +175,18 @@ public final class MissedCallNotificationController {
     private void cancelMissedCallNotification(PhoneCallLog phoneCallLog) {
         L.d(TAG, "cancel missed call notification %s", phoneCallLog);
         String tag = getTag(phoneCallLog);
+        cancelMissedCallNotification(tag);
+    }
+
+    /**
+     * Explicitly cancels the notification that in some circumstances the database update operation
+     * has a delay to notify the cursor to reload.
+     */
+    void cancelMissedCallNotification(String tag) {
+        if (TextUtils.isEmpty(tag)) {
+            L.w(TAG, "Invalid notification tag, ignore canceling request.");
+            return;
+        }
         cancelLoadingRunnable(tag);
         mNotificationManager.cancel(tag, NOTIFICATION_ID);
     }
@@ -191,11 +202,10 @@ public final class MissedCallNotificationController {
     private PendingIntent getContentPendingIntent() {
         Intent intent = new Intent(mContext, TelecomActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(Constants.Intents.ACTION_SHOW_PAGE);
-        intent.putExtra(Constants.Intents.EXTRA_SHOW_PAGE, TelecomPageTab.Page.CALL_HISTORY);
-        intent.putExtra(Constants.Intents.EXTRA_ACTION_READ_MISSED, true);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setType(CallLog.Calls.CONTENT_TYPE);
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         return pendingIntent;
     }
 
@@ -209,6 +219,7 @@ public final class MissedCallNotificationController {
         } else {
             intent.putExtra(NotificationService.EXTRA_PHONE_NUMBER, phoneNumberString);
         }
+        intent.putExtra(NotificationService.EXTRA_NOTIFICATION_TAG, getTag(phoneCallLog));
         PendingIntent pendingIntent = PendingIntent.getService(
                 mContext,
                 // Unique id for PendingIntents with different extras
@@ -218,16 +229,17 @@ public final class MissedCallNotificationController {
         return pendingIntent;
     }
 
-    private Notification.Action getAction(String phoneNumberString, @StringRes int actionText,
-            String intentAction) {
+    private Notification.Action getAction(String phoneNumberString, String tag,
+            @StringRes int actionText, String intentAction) {
         CharSequence text = mContext.getString(actionText);
-        PendingIntent intent = getIntent(intentAction, phoneNumberString);
+        PendingIntent intent = getIntent(intentAction, phoneNumberString, tag);
         return new Notification.Action.Builder(null, text, intent).build();
     }
 
-    private PendingIntent getIntent(String action, String phoneNumberString) {
+    private PendingIntent getIntent(String action, String phoneNumberString, String tag) {
         Intent intent = new Intent(action, null, mContext, NotificationService.class);
         intent.putExtra(NotificationService.EXTRA_PHONE_NUMBER, phoneNumberString);
+        intent.putExtra(NotificationService.EXTRA_NOTIFICATION_TAG, tag);
         return PendingIntent.getService(
                 mContext,
                 // Unique id for PendingIntents with different extras
