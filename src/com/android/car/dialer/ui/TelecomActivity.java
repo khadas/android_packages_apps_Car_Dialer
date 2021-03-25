@@ -33,7 +33,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 
 import com.android.car.apps.common.util.Themes;
-import com.android.car.dialer.Constants;
 import com.android.car.dialer.R;
 import com.android.car.dialer.log.L;
 import com.android.car.dialer.notification.NotificationService;
@@ -133,16 +132,10 @@ public class TelecomActivity extends FragmentActivity implements
                 String searchQuery = intent.getStringExtra(SearchManager.QUERY);
                 navigateToContactResultsFragment(searchQuery);
                 break;
-
-            case Constants.Intents.ACTION_SHOW_PAGE:
-                showTabPage(intent.getStringExtra(Constants.Intents.EXTRA_SHOW_PAGE));
-                if (intent.getBooleanExtra(Constants.Intents.EXTRA_ACTION_READ_MISSED, false)) {
-                    NotificationService.readAllMissedCall(this);
-                }
-                break;
             case Intent.ACTION_VIEW:
                 if (CallLog.Calls.CONTENT_TYPE.equals(intent.getType())) {
                     showTabPage(TelecomPageTab.Page.CALL_HISTORY);
+                    NotificationService.readAllMissedCall(this);
                 }
                 break;
             default:
