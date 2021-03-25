@@ -16,6 +16,7 @@
 
 package com.android.car.dialer.livedata;
 
+import android.Manifest;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.CallLog;
@@ -53,7 +54,8 @@ public class UnreadMissedCallLiveData extends AsyncQueryLiveData<List<PhoneCallL
                 null,
                 selection,
                 selectionArgs.toArray(EMPTY_STRING_ARRAY),
-                CallLog.Calls.DEFAULT_SORT_ORDER);
+                CallLog.Calls.DEFAULT_SORT_ORDER,
+                Manifest.permission.READ_CALL_LOG);
         return new UnreadMissedCallLiveData(context, queryParam);
     }
 

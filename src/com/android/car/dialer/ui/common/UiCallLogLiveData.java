@@ -16,13 +16,7 @@
 
 package com.android.car.dialer.ui.common;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.PhoneLookup;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
@@ -37,7 +31,6 @@ import com.android.car.dialer.ui.common.entity.UiCallLog;
 import com.android.car.telephony.common.Contact;
 import com.android.car.telephony.common.InMemoryPhoneBook;
 import com.android.car.telephony.common.PhoneCallLog;
-import com.android.car.telephony.common.PhoneNumber;
 import com.android.car.telephony.common.TelecomUtils;
 
 import java.util.ArrayList;
@@ -139,65 +132,23 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
                 continue;
             }
 
-            String title;
-            String altTitle = null;
-            CharSequence typeLabel = "";
-            Contact contact = null;
-
             // If InMemoryPhoneBook hasn't finished loading, there is still a chance that this
             // number can be found there later. So query will not be proceeded now.
-            // TODO: will move to utils later.
-            if (inMemoryPhoneBook.isLoaded()) {
-                contact = inMemoryPhoneBook.lookupContactEntry(number);
-                if (contact == null && !TextUtils.isEmpty(number)) {
-                    ContentResolver cr = mContext.getContentResolver();
-                    try (Cursor cursor = cr.query(
-                            Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
-                                    Uri.encode(number)),
-                            new String[]{
-                                    PhoneLookup.LOOKUP_KEY,
-                                    PhoneLookup.TYPE,
-                                    PhoneLookup.LABEL,
-                            },
-                            null, null, null)) {
-
-                        if (cursor != null && cursor.moveToFirst()) {
-                            int lookupKeyColIdx = cursor.getColumnIndex(PhoneLookup.LOOKUP_KEY);
-                            int typeColumn = cursor.getColumnIndex(PhoneLookup.TYPE);
-                            int labelColumn = cursor.getColumnIndex(PhoneLookup.LABEL);
-
-                            contact = inMemoryPhoneBook.lookupContactByKey(
-                                    cursor.getString(lookupKeyColIdx),
-                                    phoneCallLog.getAccountName());
-                            int type = cursor.getInt(typeColumn);
-                            String label = cursor.getString(labelColumn);
-                            typeLabel = ContactsContract.CommonDataKinds.Phone.getTypeLabel(
-                                    mContext.getResources(), type, label);
-                        }
-                    }
-                }
-            }
-
-            if (contact != null && contact.getDisplayName() != null) {
-                title = contact.getDisplayName();
-                altTitle = contact.getDisplayNameAlt();
-            } else if (!TextUtils.isEmpty(number)) {
-                title = TelecomUtils.getFormattedNumber(mContext, number);
-            } else {
-                title = mContext.getString(R.string.unknown);
-            }
-            PhoneNumber phoneNumber = contact != null
-                    ? contact.getPhoneNumber(mContext, number) : null;
+            TelecomUtils.PhoneNumberInfo phoneNumberInfo =
+                    TelecomUtils.lookupNumberInBackground(mContext, number);
+            Contact contact = inMemoryPhoneBook.lookupContactByKey(
+                    phoneNumberInfo.getLookupKey(),
+                    phoneCallLog.getAccountName());
 
             UiCallLog uiCallLog = new UiCallLog(
-                    title,
-                    altTitle == null ? title : altTitle,
+                    phoneNumberInfo.getDisplayName(),
+                    phoneNumberInfo.getDisplayNameAlt(),
                     number,
                     contact,
                     phoneCallLog.getAllCallRecords());
 
             uiCallLog.setRelativeTime(relativeTime);
-            uiCallLog.setLabel(TextUtils.isEmpty(typeLabel) ? getType(phoneNumber) : typeLabel);
+            uiCallLog.setLabel(phoneNumberInfo.getTypeLabel());
             uiCallLogs.add(uiCallLog);
         }
         L.i(TAG, "phoneCallLog size: %d, uiCallLog size: %d",
@@ -212,10 +163,6 @@ public class UiCallLogLiveData extends MediatorLiveData<List<Object>> {
         return validTimestamp ? DateUtils.getRelativeTimeSpanString(
                 millis, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_RELATIVE).toString() : "";
-    }
-
-    private CharSequence getType(@Nullable PhoneNumber phoneNumber) {
-        return phoneNumber != null ? phoneNumber.getReadableLabel(mContext.getResources()) : "";
     }
 
     private String getHeader(long calllogTime) {

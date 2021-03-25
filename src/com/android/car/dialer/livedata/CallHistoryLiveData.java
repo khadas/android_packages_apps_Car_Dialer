@@ -18,6 +18,7 @@ package com.android.car.dialer.livedata;
 
 import static com.android.car.dialer.livedata.CallHistoryLiveData.CallType.CALL_TYPE_ALL;
 
+import android.Manifest;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -89,7 +90,8 @@ public class CallHistoryLiveData extends AsyncQueryLiveData<List<PhoneCallLog>> 
                 null,
                 selection,
                 selectionArgs.toArray(EMPTY_STRING_ARRAY),
-                CallLog.Calls.DEFAULT_SORT_ORDER);
+                CallLog.Calls.DEFAULT_SORT_ORDER,
+                Manifest.permission.READ_CALL_LOG);
         return new CallHistoryLiveData(context, queryParam);
     }
 
