@@ -75,7 +75,7 @@
     <string name="sort_order_title" msgid="975104366728292702">"Байланыштардын ирети"</string>
     <string name="pref_connected_phone_title" msgid="5472866963149472593">"Байланыштырылган телефон"</string>
     <string name="pref_no_incoming_call_hun_title" msgid="2314257779205958332">"Купуялык"</string>
-    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Кластердеги чалуу аркылуу берилген эскертүүлөр гана көрсөтүлсүн"</string>
+    <string name="pref_no_incoming_call_hun_summary" msgid="8833377984331845097">"Кластердеги чалуу аркылуу берилген эскертүүлөр гана көрүнсүн"</string>
     <string name="pref_show_fullscreen_active_call_ui_title" msgid="6924304583510509581">"Учурдагы чалуу"</string>
     <string name="pref_show_fullscreen_active_call_ui_summary" msgid="1629142960991476502">"Чалууга жооп берип жатканда ал экранда көрүнүп турсун"</string>
     <string name="given_name_first_title" msgid="8072187841056104968">"Аты"</string>
