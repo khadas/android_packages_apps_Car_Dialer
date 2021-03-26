@@ -56,7 +56,6 @@ public class AddFavoriteFragment extends ContactResultsFragment {
     private Set<PhoneNumber> mSelectedNumbers;
     private Contact mSelectedContact;
     private Drawable mFavoriteIcon;
-    private Drawable mFavoriteIconEmpty;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,9 +82,9 @@ public class AddFavoriteFragment extends ContactResultsFragment {
                                 favoriteViewModel.addToFavorite(mSelectedContact,
                                         number);
                             }
-                            mSelectedNumbers.clear();
-                            getFragmentManager().popBackStackImmediate();
+                            getParentFragmentManager().popBackStackImmediate();
                         })
+                .setOnDismissListener(dialog -> mSelectedNumbers.clear())
                 .create();
     }
 
